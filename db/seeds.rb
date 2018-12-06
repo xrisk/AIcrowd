@@ -469,7 +469,7 @@ if Rails.env == 'development'
     contact_phone: "666-999-666",
     posting_date: "2018-08-06",
     closing_date: "2019-11-06",
-    status_cd: "running",
+    status_cd: "open",
     description: "Guy needed to build new elements using generative networks",
     location: "Bangalore",
     country: "India",
