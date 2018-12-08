@@ -29,7 +29,7 @@ describe Participant do
 
     describe 'when handle format is valid' do
       it 'is_expected.to be valid' do
-        handles = %w(mridul_nagpal mridul.nagpal [mridulnagpal])
+        handles = %w(mridul_nagpal1 mridul.nagpal [mridulnagpal])
         handles.each do |valid_handle|
           @participant.name = valid_handle
           expect(@participant).to be_valid
