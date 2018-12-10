@@ -17,7 +17,7 @@
     <% unless @challenge.secondary_sort_order_cd == 'not_used' %>
       <h5><%= "#{@challenge.score_secondary_title}: #{@submission.score_secondary_display}" %></h5>
     <% end %>
-  <% end %>  
+  <% end %>
 
   <div class='flex-row'>
     <div class='grading_status_cd'>
@@ -35,15 +35,3 @@
 
 </div>
 <!--Detail header end-->
-
-<!--Detail media start-->
-<% if challenge.media_on_leaderboard %>
-  <div class="detail-media">
-    <%= concept(Leaderboard::Cell::Media,
-          @submission,
-          size: :large,
-          submission_id: submission_id,
-          current_participant: current_participant) %>
-  </div>
-<% end %>
-<!--Detail media end-->

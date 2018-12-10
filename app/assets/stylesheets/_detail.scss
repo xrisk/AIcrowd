@@ -1,5 +1,4 @@
 /* Submission detail */
-
 .detail {
   .fa-times {
     position: fixed;
@@ -15,12 +14,14 @@
     border-bottom: 1px solid $color-grey-10;
     z-index: -1;
   }
+
   .detail-header {
     padding: 59px 0 35px 0;
     h4 {
       padding: 4px 0 0 0;
     }
   }
+
   video {
     width: 100%;
     max-width: 800px;
@@ -47,4 +48,9 @@
 
     }
   }
+}
+
+.detail-gray {
+  background-color: $color-grey-03;
+  border-bottom: 1px solid $color-grey-10;
 }

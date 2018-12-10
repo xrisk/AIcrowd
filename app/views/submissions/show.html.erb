@@ -1,5 +1,4 @@
-<div class="detail">
-  <div class="detail-header-bg"></div>
+<div class="detail detail-gray">
   <%= link_to challenge_submissions_path(@submission.challenge_id) do %>
     <i class="fa fa-times" aria-hidden="true"></i>
   <% end %>
@@ -11,8 +10,18 @@
             participant: @presenter.participant,
             entry: @submission,
             submission_id: @submission.id } %>
+  </div>
+</div>
+<div class="detail">
+  <div class="row">
+    <%= render partial: 'submissions/show/header_media',
+          locals: {
+            challenge: @presenter.challenge,
+            participant: @presenter.participant,
+            entry: @submission,
+            submission_id: @submission.id } %>
     <%= render partial: 'submissions/show/meta', locals: { submission: @submission } %>
-    
+
 
     <%= render partial: 'submissions/show/share',
           locals: { submission: @submission }%>
