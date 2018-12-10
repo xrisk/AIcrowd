@@ -9,20 +9,34 @@ addons:
 services:
     - postgresql
     - redis-server
+    - docker
 
 rvm:
   - 2.5.1
 
 env:
-  - DB=postgres
-
+  global:
+    - DB=postgres
+    - AWS_ACCESS_KEY_ID="..."
+    - AWS_ENDPOINT="http://localhost:4572"
+    - AWS_REGION="us-east-1"
+    - AWS_S3_BUCKET="fake-bucket"
+    - AWS_SECRET_ACCESS_KEY="..."
+    - CROWDAI_API_KEY="e966ff27eeb35d738f701aec39f3f51b"
+    - DEVISE_SECRET_KEY="bf2c609dce6a10cd29b36c7e639d0e34"
+    - HOST="http://localhost:3000"
+    - MANDRILL_KEY="G_rHM-BQ9DF6IG2wKa3-Pw"
+    - SECRET_KEY_BASE="b40bed63477347e21a257ced8760f305"
+    - SMTP_ADDRESS="smtp.mandrillapp.com"
+    - SMTP_DOMAIN="localhost"
 before_script:
   - psql -c 'create database crowdai_test;' -U postgres
 
 before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
+  - docker run -d -p 4572:4572 localstack/localstack
+  - sleep 3 # give xvfb and localstack some time to start
 
 script:
   - bundle exec rake parallel:setup
@@ -30,4 +44,4 @@ script:
 
 branches:
   only:
-    - master
+    - enable-local-tests

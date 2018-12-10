@@ -20,6 +20,14 @@ development: &development
 
 test:
   <<: *development
+  AWS_S3_BUCKET: 'fake-bucket'
+  AWS_S3_SHARED_BUCKET: 'fake-shared-bucket'
+  AWS_ACCESS_KEY_ID: '...'
+  AWS_SECRET_ACCESS_KEY: '...'
+  AWS_REGION: 'us-east-1'
+  AWS_ENDPOINT: 'http://localhost:4572'
+  MANDRILL_KEY: "G_rHM-BQ9DF6IG2wKa3-Pw"
+#  CAPYBARA_BROWSER_NAME: 'firefox'
 
 staging:
   HOST:  "REDACTED"

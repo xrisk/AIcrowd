@@ -20,7 +20,6 @@ class ApplicationMailer < ActionMailer::Base
       global_merge_vars:  options[:global_merge_vars],
       attachments: options[:attachments]
     }
-
     res = MANDRILL.messages
       .send_template( options[:template], [], message)
 

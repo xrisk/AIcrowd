@@ -1,5 +1,4 @@
 class EuaUploader < CarrierWave::Uploader::Base
-
   storage :fog
 
   def store_dir

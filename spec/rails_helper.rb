@@ -15,12 +15,14 @@ Dir[File.dirname(__FILE__) + "/support/matchers/*.rb"]
   .each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
+browser = ENV['CAPYBARA_BROWSER_NAME'] && ENV['CAPYBARA_BROWSER_NAME'].to_sym || :chrome
 Capybara.register_driver :selenium do |app|
-  Capybara::Selenium::Driver.new(app, browser: :chrome)
+  Capybara::Selenium::Driver.new(app, browser: browser)
 end
+
 Capybara.server_port = 52508 + ENV['TEST_ENV_NUMBER'].to_i
 Capybara.asset_host = 'http://localhost:3000'
-Capybara::Screenshot.register_driver(:chrome) do |driver, path|
+Capybara::Screenshot.register_driver(browser) do |driver, path|
   filename = File.basename(path)
   driver.browser.save_screenshot("#{Rails.root}/tmp/capybara/#{filename}")
 end
@@ -67,8 +69,22 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     FactoryBot.lint
-    DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, :js => true) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  ### TODO: NATE: understand why this config block is necessary locally
+  ### but not on build server.  Am I missing an environment variable?
+  ### See discussion here: https://stackoverflow.com/questions/598933/how-do-i-change-the-default-www-example-com-domain-for-testing-in-rails
+  config.before(:each) do
+    @request && @request.host = 'localhost'
   end
 
   config.around(:each) do |example|

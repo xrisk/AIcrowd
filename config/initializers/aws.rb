@@ -1,11 +1,33 @@
-# direct AWS initializer for direct S3 uploads
-Aws.config.update({
-  region: ENV['AWS_REGION'],
-  credentials: Aws::Credentials.new(
-    ENV['AWS_ACCESS_KEY_ID'],
-    ENV['AWS_SECRET_ACCESS_KEY']
+if Rails.env.test?
+  Fog.mock!
+
+  Aws.config.update({
+    region: ENV['AWS_REGION'],
+    access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+    secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+    endpoint: ENV['AWS_ENDPOINT'],
+    force_path_style: true
+  })
+
+  storage = Fog::Storage.new({
+    :aws_access_key_id      => ENV['AWS_ACCESS_KEY_ID'],
+    :aws_secret_access_key  => ENV['AWS_SECRET_ACCESS_KEY'],
+    :provider               => 'AWS'
+  })
+
+  directory = storage.directories.create(
+    :key => ENV['AWS_S3_BUCKET']
   )
-})
+else
+  Aws.config.update({
+    region: ENV['AWS_REGION'],
+    credentials: Aws::Credentials.new(
+      ENV['AWS_ACCESS_KEY_ID'],
+      ENV['AWS_SECRET_ACCESS_KEY']
+    )
+  })
+end
+
 
 
 s3 = Aws::S3::Resource.new(region: ENV['AWS_REGION'])

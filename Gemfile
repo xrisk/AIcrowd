@@ -109,6 +109,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'pry-byebug'
   gem 'byebug'
   gem 'ffaker'
   gem 'rspec-cells'

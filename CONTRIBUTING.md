@@ -4,7 +4,7 @@ The following is a set of guidelines for contributing to crowdAI. These are just
 
 #### Table of Contents
 * [What should I know before I get started?](#what-should-i-know-before-i-get-started)
-  * [Code of Conduct](#code-of-conduct)   
+  * [Code of Conduct](#code-of-conduct)
 
 
 * [How Can I Contribute?](#how-can-i-contribute)
@@ -12,6 +12,7 @@ The following is a set of guidelines for contributing to crowdAI. These are just
   * [Reporting Bugs](#reporting-bugs)
   * [Suggesting Enhancements](#suggesting-enhancements)
   * [Installation](#installation)
+  * [Tests](#tests)
   * [Pull Requests](#pull-requests)
 
 ## What should I know before I get started?
@@ -107,7 +108,7 @@ Before creating enhancement suggestions, please check [this list](#before-submit
 
 #### How Do I Submit A (Good) Enhancement Suggestion?
 
-Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com/features/issues/). After going through [the necessary first steps](#before-submitting-an-enhancement-suggestion), you can create an issue on and provide the following information:  
+Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com/features/issues/). After going through [the necessary first steps](#before-submitting-an-enhancement-suggestion), you can create an issue on and provide the following information:
 
 * **Use a clear and descriptive title** for the issue to identify the suggestion.
 * **Provide a step-by-step description of the suggested enhancement** in as many details as possible.
@@ -163,7 +164,7 @@ For installation, prerequisites include postgresql and rvm. [Click here for a co
 5. Make a copy of `config/application.yml.example` and place it at `config/application.yml`.
 6. Run `rake db:migrate` to migrate schema to our database then run `rake db:seed` to seed our database created using postgres.
 7. Run the redis server using `sudo systemctl start redis`.
-8. Run the webpack-dev-server using `./bin/webpack-dev-server`. 
+8. Run the webpack-dev-server using `./bin/webpack-dev-server`.
 9. By default, start rails with `rails server` from the Rails root and open http://localhost:3000 in a web browser.
 
 ### Bundle exec
@@ -182,6 +183,43 @@ If you want to read more about using crowdAI, you can have a quick look through 
 * End files with a newline.
 * TODO: Add more pre-requisites for Pull Requests.
 * TODO: Add Documentation Styleguide.
+
+## Tests
+To run the test suite you first need to prepare the test db:
+`bundle exec rake db:test:prepare`
+
+The test suite also uses [localstack](https://github.com/localstack/localstack) in place of AWS.  Follow the installation procedure [here](https://github.com/localstack/localstack#installing) and in a separate terminal run:
+```
+localstack start
+```
+
+Another option is to run localstack via docker:
+
+```
+docker run -p 4572:4572 localstack/localstack
+```
+
+The tests can be run with either Chrome or Firefox drivers.  The default is chrome but if you run into issues (such as the browser hanging during tests) you can install geckodriver from [here](https://github.com/mozilla/geckodriver/releases), make sure `geckodriver` is in your path, and finally add the following line to `application.yml#test`:
+```
+CAPYBARA_BROWSER_NAME: 'firefox'
+```
+
+Finally, to run the tests:
+```
+rspec
+```
+
+To run a specific test file:
+
+```
+rspec path/to/test/file
+```
+
+Matching some string:
+
+```
+rspec path/to/test/file -e 'matching string'
+```
 
 ## Styleguides
 
