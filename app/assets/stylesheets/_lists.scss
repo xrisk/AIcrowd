@@ -9,8 +9,12 @@
 .list-tutorials, {
   line-height: 20px;
   margin-top: 0;
+  .details{
+    min-width: 0;
+  }
   li {
     display: flex;
+    min-width: 0;
     justify-content: space-between;
     padding: 20px 0;
     border-bottom: 1px solid $color-grey-10;
