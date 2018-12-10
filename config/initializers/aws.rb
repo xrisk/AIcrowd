@@ -1,6 +1,5 @@
-if Rails.env.test?
+if Rails.env.test? || Rails.env.development?
   Fog.mock!
-
   Aws.config.update({
     region: ENV['AWS_REGION'],
     access_key_id: ENV['AWS_ACCESS_KEY_ID'],
@@ -18,6 +17,8 @@ if Rails.env.test?
   directory = storage.directories.create(
     :key => ENV['AWS_S3_BUCKET']
   )
+  Aws::S3::Client.new().create_bucket(bucket: ENV['AWS_S3_BUCKET'])
+
 else
   Aws.config.update({
     region: ENV['AWS_REGION'],

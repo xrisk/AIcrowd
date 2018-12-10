@@ -3,8 +3,12 @@ CROWDAI_API_KEY: "8c69ef80a5eb4438ec326d200ce6ab39"
 
 development: &development
   HOST: 'http://localhost:3000'
-  AWS_S3_BUCKET: "REDACTED"
-  AWS_S3_SHARED_BUCKET: "REDACTED"
+  AWS_S3_BUCKET: 'fake-bucket'
+  AWS_S3_SHARED_BUCKET: 'fake-shared-bucket'
+  AWS_ACCESS_KEY_ID: '...'
+  AWS_SECRET_ACCESS_KEY: '...'
+  AWS_REGION: 'us-east-1'
+  AWS_ENDPOINT: 'http://localhost:4572'
   GRADER: "REDACTED"
   SMTP_ADDRESS: smtp.mandrillapp.com
   SMTP_DOMAIN: localhost
@@ -13,19 +17,11 @@ development: &development
   MANDRILL_KEY: "REDACTED"
   MAILCHIMP_API_KEY: "REDACTED"
   MAILCHIMP_LIST_ID: "REDACTED"
-  AWS_ACCESS_KEY_ID: "REDACTED"
-  AWS_SECRET_ACCESS_KEY: "REDACTED"
   DEVISE_SECRET_KEY: "bf2c609dce6a10cd29b36c7e639d0e34"
   SECRET_KEY_BASE: "b40bed63477347e21a257ced8760f305"
 
 test:
   <<: *development
-  AWS_S3_BUCKET: 'fake-bucket'
-  AWS_S3_SHARED_BUCKET: 'fake-shared-bucket'
-  AWS_ACCESS_KEY_ID: '...'
-  AWS_SECRET_ACCESS_KEY: '...'
-  AWS_REGION: 'us-east-1'
-  AWS_ENDPOINT: 'http://localhost:4572'
   MANDRILL_KEY: "G_rHM-BQ9DF6IG2wKa3-Pw"
 #  CAPYBARA_BROWSER_NAME: 'firefox'
 
