@@ -2,7 +2,7 @@ require "rails_helper"
 
 def fill_out_account_creation_form
   participant = build(:participant)
-  fill_in "Display name", with: participant.name
+  fill_in "User handle", with: participant.name
   fill_in "Email address", with: participant.email
   fill_in "Choose a password", with: participant.password
   fill_in "Re-type password", with: participant.password
