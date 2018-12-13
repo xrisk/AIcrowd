@@ -44,4 +44,4 @@ script:
 
 branches:
   only:
-    - enable-local-tests
+    - master
