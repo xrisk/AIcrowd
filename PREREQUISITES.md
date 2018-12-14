@@ -45,3 +45,21 @@ Install npm packages using: `npm install .`.
 **NOTE:** If you're having permission issues, please see https://docs.npmjs.com/getting-started/fixing-npm-permissions
 
 **WARNING:** Please refrain from using `sudo npm` as it's not only a bad practice, but may also put your security at a risk. For more on this, read https://pawelgrzybek.com/fix-priviliges-and-never-again-use-sudo-with-npm/
+
+### Localstack
+
+The test suite uses [localstack](https://github.com/localstack/localstack) in place of AWS.  Follow the installation procedure [here](https://github.com/localstack/localstack#installing) and in a separate terminal run:
+```
+localstack start
+```
+
+Another option is to run localstack via docker:
+
+```
+docker run -p 4572:4572 localstack/localstack
+```
+
+The tests can be run with either Chrome or Firefox drivers.  The default is chrome but if you run into issues (such as the browser hanging during tests) you can install geckodriver from [here](https://github.com/mozilla/geckodriver/releases), make sure `geckodriver` is in your path, and finally add the following line to `application.yml#test`:
+```
+CAPYBARA_BROWSER_NAME: 'firefox'
+```

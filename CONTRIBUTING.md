@@ -153,7 +153,7 @@ We welcome contributions, and are especially interested in welcoming [Beginner i
 
 ### Prerequisites
 
-For installation, prerequisites include postgresql and rvm. [Click here for a complete list and instructions](PREREQUISITES.md).
+For installation, prerequisites include localstack, postgresql and rvm. [Click here for a complete list and instructions](PREREQUISITES.md).
 
 ### Standard Installation
 
@@ -165,6 +165,7 @@ For installation, prerequisites include postgresql and rvm. [Click here for a co
 6. Run `rake db:migrate` to migrate schema to our database then run `rake db:seed` to seed our database created using postgres.
 7. Run the redis server using `sudo systemctl start redis`.
 8. Run the webpack-dev-server using `./bin/webpack-dev-server`.
+9. Run localstack using `localstack start` or `docker run -p 4572:4572 localstack/localstack`.
 9. By default, start rails with `rails server` from the Rails root and open http://localhost:3000 in a web browser.
 
 ### Bundle exec
@@ -185,26 +186,11 @@ If you want to read more about using crowdAI, you can have a quick look through 
 * TODO: Add Documentation Styleguide.
 
 ## Tests
+
 To run the test suite you first need to prepare the test db:
 `bundle exec rake db:test:prepare`
 
-The test suite also uses [localstack](https://github.com/localstack/localstack) in place of AWS.  Follow the installation procedure [here](https://github.com/localstack/localstack#installing) and in a separate terminal run:
-```
-localstack start
-```
-
-Another option is to run localstack via docker:
-
-```
-docker run -p 4572:4572 localstack/localstack
-```
-
-The tests can be run with either Chrome or Firefox drivers.  The default is chrome but if you run into issues (such as the browser hanging during tests) you can install geckodriver from [here](https://github.com/mozilla/geckodriver/releases), make sure `geckodriver` is in your path, and finally add the following line to `application.yml#test`:
-```
-CAPYBARA_BROWSER_NAME: 'firefox'
-```
-
-Finally, to run the tests:
+To run the tests:
 ```
 rspec
 ```
