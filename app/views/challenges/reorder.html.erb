@@ -1,0 +1,19 @@
+<div class='content'>
+  <div class="masthead">
+    <div class="row">
+      <h2>Reorder Challenges</h2>
+    </div>
+  </div>
+  <div class="row">
+      <ul id = "sortable", class="list-challenges">
+            <% @challenges.each do |challenge| %>
+              <li id = '<%= challenge.id %>'> <%= challenge.challenge %> </li>
+            <% end %>
+      </ul>
+        <%= form_tag assign_order_challenges_path do %>
+          <%= hidden_field_tag(:order) %>
+          <%= submit_tag "Save", class: 'btn btn-primary pull-left' %>
+        <% end %>
+  </div>
+</div>
+
