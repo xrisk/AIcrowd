@@ -19,7 +19,7 @@ feature 'Email Preferences' do
       log_in(participant)
       visit '/participants/edit'
       click_link 'Email Notifications'
-      expect(page).to have_content 'Receive the crowdAI Newsletter'
+      expect(page).to have_content 'Receive the AICrowd Newsletter'
     end
 
     scenario "Participant cannot access email preferences link for other participant" do
@@ -40,7 +40,7 @@ feature 'Email Preferences' do
       visit participant_path(participant2.slug)
       expect(page).to have_content 'Email Notifications'
       click_link 'Email Notifications'
-      expect(page).to have_content 'Receive the crowdAI Newsletter'
+      expect(page).to have_content 'Receive the AICrowd Newsletter'
     end
 
   end
