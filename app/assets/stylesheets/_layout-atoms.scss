@@ -3,12 +3,12 @@
 
 .logo {
   display: block;
-  background: url('misc/aicrowd-logo.png') no-repeat left center;
-  width: 42px;
-  height: 42px;
+  background: url('misc/logo-aicrowd.svg') no-repeat left center;
+  width: 124px;
+  height: 24px;
   @media screen and (max-width: 800px) {
     width: 101px;
-    height: 36px;
+    height: 20px;
   }
   @media screen and (max-width: 640px) {
     background: url('misc/crowdai-head.svg') no-repeat left center;
