@@ -14,7 +14,7 @@
         By <%= link_to blog.participant.name, participant_path(blog.participant) %>
       </span>
       <span>
-        <%= blog.posted_at.strftime("%-d %B %Y") %>
+        <%= local_time(blog.posted_at, "%-d %B %Y") %>
       </span>
     </div>
   </div>

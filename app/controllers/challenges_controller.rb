@@ -35,6 +35,25 @@ class ChallengesController < ApplicationController
     end
   end
 
+  def reorder
+    authorize Challenge
+    @challenges = policy_scope(Challenge)
+  end
+
+  def assign_order
+    authorize Challenge
+    @final_order = params[:order].split(",")
+
+    len = @final_order.length
+
+    @final_order.each do |i|
+      Challenge.friendly.find(i).update(featured_sequence: len)
+      len = len - 1
+    end
+
+    redirect_to challenges_url
+  end
+
   def show
     if !params[:version]  # dont' record page views on history pages
       @challenge.record_page_view

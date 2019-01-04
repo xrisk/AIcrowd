@@ -22,7 +22,7 @@
           <p>By
             <%= link_to article.participant.name, '#' %>
             &nbsp;
-            <%= article.created_at.strftime(Crowdai::DATE_FORMAT) %>
+            <%= local_time(article.created_at, Crowdai::DATE_FORMAT) %>
           </p>
         <% else %>
           <%= link_to participant_path(article.participant) do %>
@@ -31,7 +31,7 @@
           <p>By
             <%= link_to article.participant.name, participant_path(article.participant) %>
             &nbsp;
-            <%= article.created_at.strftime(Crowdai::DATE_FORMAT) %>
+            <%= local_time(article.created_at, Crowdai::DATE_FORMAT) %>
           </p>
         <% end %>
       </div>

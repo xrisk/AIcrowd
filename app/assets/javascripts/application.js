@@ -14,6 +14,7 @@
 //= require activestorage
 //= require cookies_eu
 //= require rails.validations
+//= require local-time
 
 // --------------------- Vendor ------------------------ //
 //= require jQuery-File-Upload
