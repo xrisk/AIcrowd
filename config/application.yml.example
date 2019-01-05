@@ -2,7 +2,7 @@ AWS_REGION: "REDACTED"
 CROWDAI_API_KEY: "8c69ef80a5eb4438ec326d200ce6ab39"
 
 development: &development
-  HOST: 'http://localhost:3000'
+  HOST: 'localhost'
   AWS_S3_BUCKET: 'fake-bucket'
   AWS_S3_SHARED_BUCKET: 'fake-shared-bucket'
   AWS_ACCESS_KEY_ID: '...'
