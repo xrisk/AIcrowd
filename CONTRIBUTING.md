@@ -162,11 +162,27 @@ For installation, prerequisites include localstack, postgresql and rvm. [Click h
 3. Enter the new **crowdai** directory with `cd crowdai`.
 4. Install gems with `bundle install` from the rails root folder, to install the gems you'll need. You may need to first run `bundle update` if you have older gems in your environment from previous Rails work.
 5. Make a copy of `config/application.yml.example` and place it at `config/application.yml`.
-6. Run `rake db:migrate` to migrate schema to our database then run `rake db:seed` to seed our database created using postgres.
+6. Export these environment variables :
+```
+export DB=postgres
+export AWS_ACCESS_KEY_ID="..."
+export AWS_ENDPOINT="http://localhost:4572"
+export AWS_REGION="us-east-1"
+export AWS_S3_BUCKET="fake-bucket"
+export AWS_SECRET_ACCESS_KEY="..."
+export CROWDAI_API_KEY="e966ff27eeb35d738f701aec39f3f51b"
+export DEVISE_SECRET_KEY="bf2c609dce6a10cd29b36c7e639d0e34"
+export HOST="localhost"
+export MANDRILL_KEY="G_rHM-BQ9DF6IG2wKa3-Pw"
+export SECRET_KEY_BASE="b40bed63477347e21a257ced8760f305"
+export SMTP_ADDRESS="smtp.mandrillapp.com"
+export SMTP_DOMAIN="localhost"
+```
 7. Run the redis server using `sudo systemctl start redis`.
-8. Run the webpack-dev-server using `./bin/webpack-dev-server`.
-9. Run localstack using `localstack start` or `docker run -p 4572:4572 localstack/localstack`.
-9. By default, start rails with `rails server` from the Rails root and open http://localhost:3000 in a web browser.
+8. Run localstack using `localstack start` or `docker run -p 4572:4572 localstack/localstack`.
+9. Run the webpack-dev-server using `./bin/webpack-dev-server`.
+10. Run `rake db:migrate` to migrate schema to our database then run `rake db:seed` to seed our database created using postgres.
+11. By default, start rails with `rails server` from the Rails root and open http://localhost:3000 in a web browser.
 
 ### Bundle exec
 
