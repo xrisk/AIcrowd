@@ -33,4 +33,4 @@ Rails.application.configure do
 end
 
 
-Rails.application.routes.default_url_options[:host] = ENV['HOST']
+Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']

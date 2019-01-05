@@ -24,7 +24,7 @@ env:
     - AWS_SECRET_ACCESS_KEY="..."
     - CROWDAI_API_KEY="e966ff27eeb35d738f701aec39f3f51b"
     - DEVISE_SECRET_KEY="bf2c609dce6a10cd29b36c7e639d0e34"
-    - HOST="http://localhost:3000"
+    - DOMAIN_NAME="http://localhost:3000"
     - MANDRILL_KEY="G_rHM-BQ9DF6IG2wKa3-Pw"
     - SECRET_KEY_BASE="b40bed63477347e21a257ced8760f305"
     - SMTP_ADDRESS="smtp.mandrillapp.com"

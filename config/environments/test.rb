@@ -24,4 +24,4 @@ Rails.application.configure do
   config.active_record.logger = nil
   config.active_storage.service = :test
 end
-Rails.application.routes.default_url_options[:host] = ENV['HOST']
+Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']
