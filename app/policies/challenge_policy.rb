@@ -12,6 +12,14 @@ class ChallengePolicy < ApplicationPolicy
     participant && (participant.admin? || @record.organizer_id == participant.organizer_id)
   end
 
+  def reorder?
+    participant && participant.admin?
+  end
+
+  def assign_order?
+    participant && participant.admin?
+  end
+
   def update?
     edit?
   end

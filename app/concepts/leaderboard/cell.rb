@@ -1,5 +1,5 @@
 class Leaderboard::Cell < Template::Cell
-
+  include LocalTimeHelper
   def challenge
     options[:challenge]
   end

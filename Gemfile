@@ -48,6 +48,7 @@ gem 'jquery-atwho-rails'
 gem 'kramdown'
 gem 'kaminari'
 gem 'lodash-rails'
+gem 'local_time'
 gem "loofah", ">= 2.2.3"
 gem 'maxminddb'
 gem 'mandrill-api'

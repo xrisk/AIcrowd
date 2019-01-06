@@ -29,7 +29,7 @@
   <% end %>
   <td class="entries"></td>
   <td class="last-submission">
-    <%= entry.created_at.strftime("%a, %e %b %Y %R") %>
+    <%= local_time(entry.created_at, "%a, %e %b %Y %H:%M") %>
   </td>
   <td class='action'></td>
   <td></td>

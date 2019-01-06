@@ -52,4 +52,8 @@ ActiveAdmin.register Challenge do
     link_to 'Delete all submissions', purge_admin_challenge_path(resource.id), method: :delete, data: { confirm: "You are about to delete all submissions for #{resource.challenge} challenge. Are you sure?" }
   end
 
+  action_item :reorder, only: :index do
+    link_to 'reorder', reorder_challenges_path
+  end
+
 end
