@@ -17,7 +17,6 @@ rvm:
 env:
   global:
     - DB=postgres
-    - ENV=test
 
 before_script:
   - cp config/application.yml.example config/application.yml
