@@ -19,7 +19,7 @@ describe Participant do
 
     describe 'when handle format is invalid' do
       it 'is_expected.to be invalid' do
-        handles = %w(mridul\ nagpal mridul@nagpal thisisaverylonguserhandle)
+        handles = %w(mridul\ nagpal mridul@nagpal thisisaverylonguserhandle 12345)
         handles.each do |invalid_handle|
           @participant.name = invalid_handle
           expect(@participant).not_to be_valid
