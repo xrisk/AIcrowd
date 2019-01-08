@@ -32,5 +32,5 @@ Our Contribution guidelines are available at [CONTRIBUTING.md](CONTRIBUTING.md)
 We are in the process of migrating our [documentation](doc/documentation.md) from the Wiki into this repository as markdown files.
 
 ## Contact
-You can always reach out to us at [info@aicrowd.com](mailto:info@aicrowd.com)
+You can always reach out to us at [hello@aicrowd.com](mailto:hello@aicrowd.com)
 and you are always welcome to join the CrowdAI Community banter on our Gitter channel at [https://gitter.im/crowdAI/Lobby](https://gitter.im/crowdAI/Lobby)

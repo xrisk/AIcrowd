@@ -20,7 +20,7 @@ The following is a set of guidelines for contributing to AICrowd. These are just
 
 This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code.
-Please report unacceptable behavior to [info@aicrowd.com](mailto:info@aicrowd.com).
+Please report unacceptable behavior to [hello@aicrowd.com](mailto:hello@aicrowd.com).
 
 ## How Can I Contribute?
 ### Types of Contributors
@@ -235,7 +235,7 @@ rspec path/to/test/file -e 'matching string'
 
 ## Contact
 When contributing to an open source project you might hit some problems, have some of those Eureka moments, and you simply might want to have a quick chat with us.
-You can always reach out to us at [info@aicrowd.com](mailto:info@aicrowd.com)
+You can always reach out to us at [hello@aicrowd.com](mailto:hello@aicrowd.com)
 and you are always welcome to join the AICrowd Community banter on our Gitter channel at [https://gitter.im/CrowdAI/Lobby](https://gitter.im/CrowdAI/Lobby)
 
 
