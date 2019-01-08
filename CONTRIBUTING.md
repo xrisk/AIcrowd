@@ -162,11 +162,11 @@ For installation, prerequisites include localstack, postgresql and rvm. [Click h
 3. Enter the new **AICrowd** directory with `cd AICrowd`.
 4. Install gems with `bundle install` from the rails root folder, to install the gems you'll need. You may need to first run `bundle update` if you have older gems in your environment from previous Rails work.
 5. Make a copy of `config/application.yml.example` and place it at `config/application.yml`.
-6. Run `rake db:migrate` to migrate schema to our database then run `rake db:seed` to seed our database created using postgres.
-7. Run the redis server using `sudo systemctl start redis`.
+6. Run the redis server using `sudo systemctl start redis`.
+7. Run localstack using `localstack start` or `docker run -p 4572:4572 localstack/localstack`.
 8. Run the webpack-dev-server using `./bin/webpack-dev-server`.
-9. Run localstack using `localstack start` or `docker run -p 4572:4572 localstack/localstack`.
-9. By default, start rails with `rails server` from the Rails root and open http://localhost:3000 in a web browser.
+9. Run `rake db:migrate` to migrate schema to our database then run `rake db:seed` to seed our database created using postgres.
+10. By default, start rails with `ENV=development rails server` from the Rails root and open http://localhost:3000 in a web browser.
 
 ### Bundle exec
 
