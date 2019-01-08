@@ -140,7 +140,7 @@ class Participant < ApplicationRecord
     if image.present?
       image.image.url(:medium)
     else
-      "//#{ENV['HOST']}/assets/image_not_found.png"
+      "//#{ENV['DOMAIN_NAME']}/assets/image_not_found.png"
     end
   end
 

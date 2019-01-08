@@ -30,13 +30,13 @@ RSpec.describe CommentNotificationMailer, type: :mailer, api: true do
     it 'produces a valid challenge link' do
       link = described_class.new.challenge_link(challenge)
       expect(link).to be_a_valid_html_fragment
-      expect(link).to include(ENV['HOST'])
+      expect(link).to include(ENV['DOMAIN_NAME'])
     end
 
     it 'produces a valid comment link' do
       link = described_class.new.comment_link(challenge)
       expect(link).to be_a_valid_html_fragment
-      expect(link).to include(ENV['HOST'])
+      expect(link).to include(ENV['DOMAIN_NAME'])
     end
   end
 

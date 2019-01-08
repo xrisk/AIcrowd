@@ -32,7 +32,7 @@ class EmailPreferencesTokenService
   private
   def preferences_token_url
     email_preferences = @participant.email_preferences.first
-    url = "#{ENV['HOST']}/participants/#{@participant.id}/email_preferences/#{email_preferences.id}/edit?preferences_token=#{generate_token}"
+    url = "#{ENV['DOMAIN_NAME']}/participants/#{@participant.id}/email_preferences/#{email_preferences.id}/edit?preferences_token=#{generate_token}"
   end
 
   def generate_token

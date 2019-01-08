@@ -36,7 +36,7 @@ RSpec.describe LeaderboardNotificationMailer, type: :mailer, api: true do
     it 'produces a valid leaderboard link' do
       leaderboard_link = described_class.new.leaderboard_link(submission)
       expect(leaderboard_link).to be_a_valid_html_fragment
-      expect(leaderboard_link).to include(ENV['HOST'])
+      expect(leaderboard_link).to include(ENV['DOMAIN_NAME'])
     end
   end
 
