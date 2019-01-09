@@ -1,4 +1,4 @@
-![CrowdAI Logo](app/assets/images/misc/crowdai-logo-smile.svg)
+![CrowdAI Logo](app/assets/images/misc/aicrowd-horizontal.svg)
 
 # crowdAI - The open platform for data science challenges
 
