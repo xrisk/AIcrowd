@@ -17,7 +17,7 @@
       <%= f.text_field :last_name %>
 
       <label>Personal Data</label>
-      <p id='gdpr-text'>Download your personal data that has been collected by crowdAI.</p>
+      <p id='gdpr-text'>Download your personal data that has been collected by AICrowd.</p>
       <div class="button-group">
         <%= link_to 'Download',
               gdpr_exports_path,
@@ -55,13 +55,13 @@
       <label>Bio</label>
       <%= f.text_area :bio %>
       <label>Github</label>
-      <%= f.text_field :github, placeholder: "URL (e.g. www.github.com/crowdai)", class: 'url' %>
+      <%= f.text_field :github, placeholder: "URL (e.g. www.github.com/AIcrowd)", class: 'url' %>
       <label>LinkedIn</label>
-      <%= f.text_field :linkedin, placeholder: "URL (e.g. www.linkedin.com/in/crowdai)", class: 'url' %>
+      <%= f.text_field :linkedin, placeholder: "URL (e.g. www.linkedin.com/in/aicrowd)", class: 'url' %>
       <label>Twitter</label>
-      <%= f.text_field :twitter, placeholder: "URL (e.g. www.twitter.com/crowdai)", class: 'url' %>
+      <%= f.text_field :twitter, placeholder: "URL (e.g. www.twitter.com/aicrowd)", class: 'url' %>
       <label>Website</label>
-      <%= f.text_field :website, placeholder: "URL (e.g. www.crowdai.org)", class: 'url' %>
+      <%= f.text_field :website, placeholder: "URL (e.g. www.aicrowd.com)", class: 'url' %>
       <div class="button-group">
         <%= f.button "Save", class: 'btn btn-primary' %>
         <%= link_to 'Cancel', participant_path(@participant), class: "btn btn-secondary" %>

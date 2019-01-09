@@ -76,8 +76,8 @@ class Participant < ApplicationRecord
   validates :twitter, :url => { allow_blank: true }
   validates :name,
     format: {
-      with: /\A[a-zA-Z0-9.\-_{}\[\]]+\z/,
-      message: 'User handle can contain letters, numbers and these characters -_.{}[] '
+      with: /\A(?=.*[a-zA-Z])[a-zA-Z0-9.\-_{}\[\]]+\z/,
+      message: 'User handle can contain numbers and these characters -_.{}[] and atleast one letter'
     },
     length: { minimum: 2, maximum: 15 },
     uniqueness: { case_sensitive: false }
@@ -140,7 +140,7 @@ class Participant < ApplicationRecord
     if image.present?
       image.image.url(:medium)
     else
-      "//#{ENV['HOST']}/assets/image_not_found.png"
+      "//#{ENV['DOMAIN_NAME']}/assets/image_not_found.png"
     end
   end
 

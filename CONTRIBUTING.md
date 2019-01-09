@@ -1,6 +1,6 @@
-# Contributing to crowdAI
+# Contributing to AICrowd
 
-The following is a set of guidelines for contributing to crowdAI. These are just guidelines, not rules, use your best judgement and feel free to propose changes as a pull request.
+The following is a set of guidelines for contributing to AICrowd. These are just guidelines, not rules, use your best judgement and feel free to propose changes as a pull request.
 
 #### Table of Contents
 * [What should I know before I get started?](#what-should-i-know-before-i-get-started)
@@ -20,7 +20,7 @@ The following is a set of guidelines for contributing to crowdAI. These are just
 
 This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md).
 By participating, you are expected to uphold this code.
-Please report unacceptable behavior to [info@crowdai.org](mailto:info@crowdai.org).
+Please report unacceptable behavior to [hello@aicrowd.com](mailto:hello@aicrowd.com).
 
 ## How Can I Contribute?
 ### Types of Contributors
@@ -28,14 +28,14 @@ Please report unacceptable behavior to [info@crowdai.org](mailto:info@crowdai.or
 
 ### Reporting Bugs
 
-This section guides you through submitting a bug report for crowdAI. Following these guidelines helps maintainers and the community understand your report :pencil:, reproduce the behavior :computer: :computer:, and find related reports :mag_right:.
+This section guides you through submitting a bug report for AICrowd. Following these guidelines helps maintainers and the community understand your report :pencil:, reproduce the behavior :computer: :computer:, and find related reports :mag_right:.
 
 Before creating bug reports, please check [this list](#before-submitting-a-bug-report) as you might find out that you don't need to create one. When you are creating a bug report, please [include as many details as possible](#how-do-i-submit-a-good-bug-report). If you'd like, you can use [this template](#template-for-submitting-bug-reports) to structure the information.
 
 #### Before Submitting A Bug Report
 
 * **Check the [FAQs on the forum](TO-DO: Addline)** for a list of common questions and problems.
-* **Perform a [cursory search](https://github.com/issues?q=+is%3Aissue+user%3AcrowdAI)** to see if the problem has already been reported. If it has, add a comment to the existing issue instead of opening a new one.
+* **Perform a [cursory search](https://github.com/issues?q=+is%3Aissue+user%3AAICrowd)** to see if the problem has already been reported. If it has, add a comment to the existing issue instead of opening a new one.
 
 
 #### How Do I Submit A (Good) Bug Report?
@@ -45,7 +45,7 @@ Bugs are tracked as [GitHub issues](https://guides.github.com/features/issues/).
 Explain the problem and include additional details to help maintainers reproduce the problem:
 
 * **Use a clear and descriptive title** for the issue to identify the problem.
-* **Describe the exact steps which reproduce the problem** in as many details as possible. For example, start by explaining how you started crowdAI, e.g. which command exactly you used in the terminal, or how you started crowdAI otherwise. When listing steps, **don't just say what you did, but explain how you did it**.
+* **Describe the exact steps which reproduce the problem** in as many details as possible. For example, start by explaining how you started AICrowd, e.g. which command exactly you used in the terminal, or how you started AICrowd otherwise. When listing steps, **don't just say what you did, but explain how you did it**.
 * **Provide specific examples to demonstrate the steps**. Include links to files or GitHub projects, or copy/pasteable snippets, which you use in those examples. If you're providing snippets in the issue, use [Markdown code blocks](https://help.github.com/articles/markdown-basics/#multiple-lines).
 * **Describe the behavior you observed after following the steps** and point out what exactly is the problem with that behavior.
 * **Explain which behavior you expected to see instead and why.**
@@ -56,14 +56,14 @@ Explain the problem and include additional details to help maintainers reproduce
 
 Provide more context by answering these questions:
 
-* **Did the problem start happening recently** (e.g. after updating to a new version of crowdAI) or was this always a problem?
-* If the problem started happening recently, **can you reproduce the problem in an older version of crowdAI?** What's the most recent version in which the problem doesn't happen? (TO-DO: Add links to older versions of crowdAI)
+* **Did the problem start happening recently** (e.g. after updating to a new version of AICrowd) or was this always a problem?
+* If the problem started happening recently, **can you reproduce the problem in an older version of AICrowd?** What's the most recent version in which the problem doesn't happen? (TO-DO: Add links to older versions of AICrowd)
 * **Can you reliably reproduce the issue?** If not, provide details about how often the problem happens and under which conditions it normally happens.
 
 Include details about your configuration and environment:
 
-* **Which version of crowdAI are you using?** (TO-DO: Add how to figure out the exact version of crowdAI)
-* **Are you running crowdAI in a virtual machine?** If so, which VM software are you using and which operating systems and versions are used for the host and the guest?
+* **Which version of AICrowd are you using?** (TO-DO: Add how to figure out the exact version of AICrowd)
+* **Are you running AICrowd in a virtual machine?** If so, which VM software are you using and which operating systems and versions are used for the host and the guest?
 
 #### Template For Submitting Bug Reports
 
@@ -87,23 +87,23 @@ Include details about your configuration and environment:
 
     ![Screenshots and GIFs which follow reproduction steps to demonstrate the problem](url)
 
-    **crowdAI version:** [Enter crowdAI version here]
+    **AICrowd version:** [Enter AICrowd version here]
     **OS and version:** [Enter OS name and version here]
 
     **Additional information:**
 
-    * Problem started happening recently, didn't happen in an older version of crowdAI: [Yes/No]
+    * Problem started happening recently, didn't happen in an older version of AICrowd: [Yes/No]
     * Problem can be reliably reproduced, doesn't happen randomly: [Yes/No]
 
 ### Suggesting Enhancements
 
-This section guides you through submitting an enhancement suggestion for crowdAI, including completely new features and minor improvements to existing functionality. Following these guidelines helps maintainers and the community understand your suggestion :pencil: and find related suggestions :mag_right:.
+This section guides you through submitting an enhancement suggestion for AICrowd, including completely new features and minor improvements to existing functionality. Following these guidelines helps maintainers and the community understand your suggestion :pencil: and find related suggestions :mag_right:.
 
 Before creating enhancement suggestions, please check [this list](#before-submitting-an-enhancement-suggestion) as you might find out that you don't need to create one. When you are creating an enhancement suggestion, please [include as many details as possible](#how-do-i-submit-a-good-enhancement-suggestion). If you'd like, you can use [this template](#template-for-submitting-enhancement-suggestions) to structure the information.
 
 #### Before Submitting An Enhancement Suggestion
 
-* **Perform a [cursory search](https://github.com/issues?q=+is%3Aissue+user%3AcrowdAI)** to see if the enhancement has already been suggested. If it has, add a comment to the existing issue instead of opening a new one.
+* **Perform a [cursory search](https://github.com/issues?q=+is%3Aissue+user%3AAICrowd)** to see if the enhancement has already been suggested. If it has, add a comment to the existing issue instead of opening a new one.
 * TODO: Add more pre-requisites for enhancement suggestion
 
 #### How Do I Submit A (Good) Enhancement Suggestion?
@@ -114,10 +114,10 @@ Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com
 * **Provide a step-by-step description of the suggested enhancement** in as many details as possible.
 * **Provide specific examples to demonstrate the steps**. Include copy/pasteable snippets which you use in those examples, as [Markdown code blocks](https://help.github.com/articles/markdown-basics/#multiple-lines).
 * **Describe the current behavior** and **explain which behavior you expected to see instead** and why.
-* **Include screenshots and animated GIFs** which help you demonstrate the steps or point out the part of crowdAI which the suggestion is related to. You can use [this tool](http://www.cockos.com/licecap/) to record GIFs on macOS and Windows, and [this tool](https://github.com/colinkeenan/silentcast) or [this tool](https://github.com/GNOME/byzanz) on Linux.
-* **Explain why this enhancement would be useful** to most crowdAI users.
+* **Include screenshots and animated GIFs** which help you demonstrate the steps or point out the part of AICrowd which the suggestion is related to. You can use [this tool](http://www.cockos.com/licecap/) to record GIFs on macOS and Windows, and [this tool](https://github.com/colinkeenan/silentcast) or [this tool](https://github.com/GNOME/byzanz) on Linux.
+* **Explain why this enhancement would be useful** to most AICrowd users.
 * **List some other similar open source projects or applications where this enhancement exists.**
-* **Specify which version of crowdAI you're using.** (TODO: Add how to figure out version of crowdAI)
+* **Specify which version of AICrowd you're using.** (TODO: Add how to figure out version of AICrowd)
 * **Specify the name and version of the OS you're using.**
 
 #### Template For Submitting Enhancement Suggestions
@@ -142,9 +142,9 @@ Enhancement suggestions are tracked as [GitHub issues](https://guides.github.com
 
     **Screenshots and GIFs**
 
-    ![Screenshots and GIFs which demonstrate the steps or part of crowdAI the enhancement suggestion is related to](url)
+    ![Screenshots and GIFs which demonstrate the steps or part of AICrowd the enhancement suggestion is related to](url)
 
-    **crowdAI Version:** [Enter crowdAI version here]
+    **AICrowd Version:** [Enter AICrowd version here]
     **OS and Version:** [Enter OS name and version here]
 
 ## Installation
@@ -157,9 +157,9 @@ For installation, prerequisites include localstack, postgresql and rvm. [Click h
 
 ### Standard Installation
 
-1. Fork our repo from https://github.com/crowdAI/crowdai.
-2. In the console, download a copy of your forked repo with `git clone https://github.com/your_username/crowdai.git` where `your_username` is your GitHub username.
-3. Enter the new **crowdai** directory with `cd crowdai`.
+1. Fork our repo from https://github.com/AICrowd/AICrowd.
+2. In the console, download a copy of your forked repo with `git clone https://github.com/your_username/AICrowd.git` where `your_username` is your GitHub username.
+3. Enter the new **AICrowd** directory with `cd AICrowd`.
 4. Install gems with `bundle install` from the rails root folder, to install the gems you'll need. You may need to first run `bundle update` if you have older gems in your environment from previous Rails work.
 5. Make a copy of `config/application.yml.example` and place it at `config/application.yml`.
 6. Run the redis server using `sudo systemctl start redis`.
@@ -176,7 +176,7 @@ Adding `bundle exec` ensures you're using the version of passenger you just inst
 `bundle exec rake db:migrate`, `bundle exec rake db:seed` are other examples of where this might be necessary.
 
 
-If you want to read more about using crowdAI, you can have a quick look through these resources in the Wiki.
+If you want to read more about using AICrowd, you can have a quick look through these resources in the Wiki.
 
 ### Pull Requests
 
@@ -235,8 +235,8 @@ rspec path/to/test/file -e 'matching string'
 
 ## Contact
 When contributing to an open source project you might hit some problems, have some of those Eureka moments, and you simply might want to have a quick chat with us.
-You can always reach out to us at [info@crowdai.org](mailto:info@crowdai.org)
-and you are always welcome to join the crowdAI Community banter on our Gitter channel at [https://gitter.im/crowdAI/Lobby](https://gitter.im/crowdAI/Lobby)
+You can always reach out to us at [hello@aicrowd.com](mailto:hello@aicrowd.com)
+and you are always welcome to join the AICrowd Community banter on our Gitter channel at [https://gitter.im/CrowdAI/Lobby](https://gitter.im/CrowdAI/Lobby)
 
 
 ## Attribution

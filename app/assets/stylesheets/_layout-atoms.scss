@@ -3,15 +3,16 @@
 
 .logo {
   display: block;
-  background: asset-url('misc/crowdai-logo.svg') no-repeat left center;
-  width: 121px;
+  background: asset-url('misc/logo-aicrowd.svg') no-repeat left center;
+  width: 124px;
   height: 24px;
+  
   @media screen and (max-width: 800px) {
     width: 101px;
     height: 20px;
   }
   @media screen and (max-width: 640px) {
-    background: asset-url('misc/crowdai-head.svg') no-repeat left center;
+    background: url('misc/aicrowd-head.svg') no-repeat left center;
     width: 28px;
     height: 28px;
   }

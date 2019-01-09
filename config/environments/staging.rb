@@ -16,10 +16,10 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
   config.active_storage.service = :local
 
-  config.action_mailer.default_url_options = { host: ENV["HOST"] }
+  config.action_mailer.default_url_options = { host: ENV["DOMAIN_NAME"] }
   config.action_controller.asset_host = "https://#{ENV['CLOUDFRONT_ASSETS_DOMAIN']}"
 end
-Rails.application.routes.default_url_options[:host] = ENV['HOST']
+Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']
 CarrierWave.configure do |config|
   config.asset_host = "https://#{ENV['CLOUDFRONT_IMAGES_DOMAIN']}"
 end
