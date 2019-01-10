@@ -16,7 +16,7 @@ ActiveAdmin.setup do |config|
   #
   # Note: Aim for an image that's 21px high so it fits in the header.
   #
-  config.site_title_image = "misc/crowdai-head.png"
+  # config.site_title_image = "misc/crowdai-head.png"
 
   # == Default Namespace
   #
@@ -302,7 +302,7 @@ module ActiveAdmin
       module FontAwesomeBuilder
         def build(*args)
           super(*args)
-          add_font_awesome
+          # add_font_awesome
         end
 
         def add_font_awesome
