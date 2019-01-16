@@ -11,7 +11,7 @@ class OrganizerApplicationNotificationMailer < ApplicationMailer
       participant_id:   nil,
       subject:          "Organizer Application Received",
       to:               organizer_application.email,
-      template:         "crowdAI General Template",
+      template:         "AICrowd General Template",
       global_merge_vars: [
         {
           name:           "NAME",
@@ -32,7 +32,7 @@ class OrganizerApplicationNotificationMailer < ApplicationMailer
   def email_body(organizer_application)
     "<div>" +
       "<h3>Organizer Application received.</h3>" +
-      "<p>We have received your application to become a crowdAI organizer. You will be contacted by a member of our team.</p>" +
+      "<p>We have received your application to become a AICrowd organizer. You will be contacted by a member of our team.</p>" +
       "<ul>" +
         "<li><b>Organization:</b> #{organizer_application.organization}</li>" +
         "<li><b>Contact Name:</b> #{organizer_application.contact_name}</li>" +

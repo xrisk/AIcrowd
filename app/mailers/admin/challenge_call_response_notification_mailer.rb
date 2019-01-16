@@ -10,9 +10,9 @@ class Admin::ChallengeCallResponseNotificationMailer < ApplicationMailer
   def format_options(participant,challenge_call_response)
     options = {
       participant_id:   participant.id,
-      subject:          "[ADMIN:crowdAI] Challenge Call response",
+      subject:          "[ADMIN:AICrowd] Challenge Call response",
       to:               participant.email,
-      template:         "crowdAI General Template",
+      template:         "AICrowd General Template",
       global_merge_vars: [
         {
           name:           "NAME",
@@ -43,7 +43,7 @@ class Admin::ChallengeCallResponseNotificationMailer < ApplicationMailer
       "<hr/>" +
       "<p>#{challenge_call_response.challenge_title}</p>" +
       "<p>#{challenge_call_response.challenge_description}</p>" +
-      "<a href='https://www.crowdai.org/admin/challenge_calls/#{challenge_call_response.challenge_call.slug}/challenge_call_responses/#{challenge_call_response.id}'>Full Description</a>" +
+      "<a href='https://www.aicrowd.com/admin/challenge_calls/#{challenge_call_response.challenge_call.slug}/challenge_call_responses/#{challenge_call_response.id}'>Full Description</a>" +
     "</div>"
   end
 

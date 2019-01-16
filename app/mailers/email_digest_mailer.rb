@@ -31,7 +31,7 @@ class EmailDigestMailer < ApplicationMailer
   end
 
   def build_subject(digest_type)
-    "[crowdAI] #{digest_type.capitalize} digest"
+    "[AICrowd] #{digest_type.capitalize} digest"
   end
 
   def build_body(participant,digest_type,comments,submissions,topics)
@@ -46,7 +46,7 @@ class EmailDigestMailer < ApplicationMailer
   end
 
   def body_header(digest_type)
-    "<div>Here's a #{digest_type} summary of activity in crowdAI.</div>"
+    "<div>Here's a #{digest_type} summary of activity in AICrowd.</div>"
   end
 
   def topics(participant,start_dttm)
@@ -102,7 +102,7 @@ class EmailDigestMailer < ApplicationMailer
       participant_id:   participant.id,
       subject:          subject,
       to:               participant.email,
-      template:         "crowdAI Email Digest Template",
+      template:         "AICrowd Email Digest Template",
       global_merge_vars: [
         {
           name:           "NAME",

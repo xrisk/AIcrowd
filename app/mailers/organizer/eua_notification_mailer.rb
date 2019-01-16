@@ -13,7 +13,7 @@ class Organizer::EuaNotificationMailer < ApplicationMailer
       participant_id:   organizer_participant.id,
       subject:          "[ImageCLEF CrowdAI] - New EUA uploaded for #{clef_task.task}",
       to:               organizer_participant.email,
-      template:         "crowdAI General Template",
+      template:         "AICrowd General Template",
       global_merge_vars: [
         {
           name:           "NAME",
@@ -38,7 +38,7 @@ class Organizer::EuaNotificationMailer < ApplicationMailer
   def email_body(participant,clef_task)
     challenge = clef_task.challenges.first
     "<div>" +
-        "<p>#{participant.name} has uploaded an End User Agreement (EUA) for task #{clef_task.task} on crowdAI. If you are responsible for this task, please check the participant's EUA. If the form is compliant, you can approve it by clicking on the approve button next to the participant's name. In case the EUA is faulty or incomplete the participant can re-upload a new EUA.</p>" +
+        "<p>#{participant.name} has uploaded an End User Agreement (EUA) for task #{clef_task.task} on AICrowd. If you are responsible for this task, please check the participant's EUA. If the form is compliant, you can approve it by clicking on the approve button next to the participant's name. In case the EUA is faulty or incomplete the participant can re-upload a new EUA.</p>" +
         "<p>You can approve the participant's EUA #{challenge_link(challenge)}</p>" +
     "</div>"
   end

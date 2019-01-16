@@ -2,7 +2,7 @@ class GdprExportMailer < ApplicationMailer
 
   def sendmail(participant_id:)
     participant = Participant.find(participant_id)
-    subject = "[crowdAI] Personal Data download"
+    subject = "[AICrowd] Personal Data download"
     csv_file = encoded_attachment(participant_id: participant_id)
 
     options = format_options(
@@ -20,12 +20,12 @@ class GdprExportMailer < ApplicationMailer
   def email_body
     %Q[
       <div>
-        <h3>Your requested crowdAI data</h3>
+        <h3>Your requested AICrowd data</h3>
         <p>
-          A request was made to download your personal data stored on crowdAI. This data is attached to this email.
+          A request was made to download your personal data stored on AICrowd. This data is attached to this email.
         </p>
         <p>
-          Should you wish to delete your data, deleting your crowdAI account will also remove all personal data contained in the attached file.
+          Should you wish to delete your data, deleting your AICrowd account will also remove all personal data contained in the attached file.
         </p>
         <br/>
       </div>
@@ -35,9 +35,9 @@ class GdprExportMailer < ApplicationMailer
   def format_options(participant:,body:,csv_file:)
     options = {
       participant_id:   participant.id,
-      subject:          "[crowdAI] Personal Data download",
+      subject:          "[AICrowd] Personal Data download",
       to:               participant.email,
-      template:         "crowdAI General Template",
+      template:         "AICrowd General Template",
       global_merge_vars: [
         {
           name:           'NAME',
@@ -55,7 +55,7 @@ class GdprExportMailer < ApplicationMailer
       attachments: [
         {
           type: "file/csv",
-          name: "crowdai_data.csv",
+          name: "aicrowd_data.csv",
           content: csv_file
         }
       ]

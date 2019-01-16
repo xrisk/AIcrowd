@@ -4,7 +4,7 @@ class DeviseMandrillMailer < Devise::Mailer
   def reset_password_instructions(record, token, opts={})
     options = {
       participant_id:   record.id,
-      subject:          "crowdAI Password Reset",
+      subject:          "AICrowd Password Reset",
       email:            record.email,
       global_merge_vars:  [
         {
@@ -16,7 +16,7 @@ class DeviseMandrillMailer < Devise::Mailer
           content:      edit_password_url(record, reset_password_token: token)
         }
       ],
-      template:         "crowdAI Devise reset_password_instructions"
+      template:         "AICrowd Devise reset_password_instructions"
     }
     mandrill_send options
   end
@@ -24,7 +24,7 @@ class DeviseMandrillMailer < Devise::Mailer
   def confirmation_instructions(record, token, opts={})
     options = {
       participant_id:   record.id,
-      subject:          "crowdAI Confirmation Instructions",
+      subject:          "AICrowd Confirmation Instructions",
       email:            record.email,
       global_merge_vars:  [
         {
@@ -36,7 +36,7 @@ class DeviseMandrillMailer < Devise::Mailer
           content:      confirmation_url(record, confirmation_token: token)
         }
       ],
-      template:         "crowdAI Devise confirmation_instructions"
+      template:         "AICrowd Devise confirmation_instructions"
     }
     mandrill_send options
   end
@@ -44,7 +44,7 @@ class DeviseMandrillMailer < Devise::Mailer
   def unlock_instructions(record, token, opts={})
     options = {
       participant_id:   record.id,
-      subject:          "crowdAI Unlock Instructions",
+      subject:          "AICrowd Unlock Instructions",
       email:            record.email,
       global_merge_vars:  [
         {
@@ -56,7 +56,7 @@ class DeviseMandrillMailer < Devise::Mailer
           content:      unlock_url(record, unlock_token: token)
         }
       ],
-      template:         "crowdAI Devise unlock_instructions"
+      template:         "AICrowd Devise unlock_instructions"
     }
     mandrill_send options
   end
@@ -64,8 +64,8 @@ class DeviseMandrillMailer < Devise::Mailer
   def mandrill_send(options={})
     message = {
       subject:      options[:subject],
-      from_name:    "crowdAI",
-      from_email:   "no-reply@crowdai.org",
+      from_name:    "AICrowd",
+      from_email:   "no-reply@aicrowd.com",
       to: [
         {
           email:    options[:email],

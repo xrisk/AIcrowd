@@ -7,8 +7,8 @@ FactoryBot.define do
           "reject_reason"=>nil}]
     message {
               {:subject=>"New discussion comment",
-               :from_name=>"crowdAI",
-               :from_email=>"no-reply@crowdai.org",
+               :from_name=>"AICrowd",
+               :from_email=>"no-reply@aicrowd.com",
                :to=>[{:email=>"micah@satterfieldzulauf.name", :type=>"to"}],
                :global_merge_vars=>[
                  {:name=>"NAME", :content=>"participant_1456@example.com"},

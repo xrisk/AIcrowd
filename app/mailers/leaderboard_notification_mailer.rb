@@ -14,9 +14,9 @@ class LeaderboardNotificationMailer < ApplicationMailer
 
     options = {
       participant_id:   participant.id,
-      subject:          "[crowdAI/#{challenge.challenge}] Leaderboard changed",
+      subject:          "[AICrowd/#{challenge.challenge}] Leaderboard changed",
       to:               participant.email,
-      template:         "crowdAI General Template",
+      template:         "AICrowd General Template",
       global_merge_vars: [
         {
           name:           "NAME",

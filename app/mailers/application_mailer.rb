@@ -9,8 +9,8 @@ class ApplicationMailer < ActionMailer::Base
 
     message = {
       subject:      options[:subject],
-      from_name:    "crowdAI",
-      from_email:   "no-reply@crowdai.org",
+      from_name:    "AICrowd",
+      from_email:   "no-reply@aicrowd.com",
       to: [
         {
           email:    options[:to],

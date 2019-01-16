@@ -14,9 +14,9 @@ class SubmissionGradedNotificationMailer < ApplicationMailer
 
     options = {
       participant_id:   participant.id,
-      subject:     "[crowdAI/#{challenge.challenge}] Submission graded",
+      subject:     "[AICrowd/#{challenge.challenge}] Submission graded",
       to:           participant.email,
-      template:     "crowdAI General Template",
+      template:     "AICrowd General Template",
       global_merge_vars: [
         {
           name:           "NAME",

@@ -30,12 +30,12 @@ RSpec.describe EmailDigestMailer, type: :mailer do
     describe '#build_subject' do
       it 'daily' do
         subj = described_class.new.build_subject('daily')
-        expect(subj).to eq("[crowdAI] Daily digest")
+        expect(subj).to eq("[AICrowd] Daily digest")
       end
 
       it 'weekly' do
         subj = described_class.new.build_subject('weekly')
-        expect(subj).to eq("[crowdAI] Weekly digest")
+        expect(subj).to eq("[AICrowd] Weekly digest")
       end
     end
 
@@ -69,11 +69,11 @@ RSpec.describe EmailDigestMailer, type: :mailer do
     describe '#body_header' do
       it 'daily' do
         header = described_class.new.body_header('daily')
-        expect(header).to eq("<div>Here's a daily summary of activity in crowdAI.</div>")
+        expect(header).to eq("<div>Here's a daily summary of activity in AICrowd.</div>")
       end
       it 'weekly' do
         header = described_class.new.body_header('weekly')
-        expect(header).to eq("<div>Here's a weekly summary of activity in crowdAI.</div>")
+        expect(header).to eq("<div>Here's a weekly summary of activity in AICrowd.</div>")
       end
     end
 

@@ -10,9 +10,9 @@ class Admin::OrganizerApplicationNotificationMailer < ApplicationMailer
   def format_options(participant,organizer_application)
     options = {
       participant_id:   participant.id,
-      subject:          "[ADMIN:crowdAI] Organizer Application Requested",
+      subject:          "[ADMIN:AICrowd] Organizer Application Requested",
       to:               participant.email,
-      template:         "crowdAI General Template",
+      template:         "AICrowd General Template",
       global_merge_vars: [
         {
           name:           "NAME",

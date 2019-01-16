@@ -4,9 +4,9 @@ res = [
         "status"=>"sent",
         "_id"=>"03153045634d41ef92b229c0bdeae317",
         "reject_reason"=>nil}],
-       {:subject=>"[crowdAI/Possimus qui consequatur et debitis.] Quia accusamus esse qui corrupti corporis quis et.",
-         :from_name=>"crowdAI",
-         :from_email=>"no-reply@crowdai.org",
+       {:subject=>"[AICrowd/Possimus qui consequatur et debitis.] Quia accusamus esse qui corrupti corporis quis et.",
+         :from_name=>"AICrowd",
+         :from_email=>"no-reply@aicrowd.com",
          :to=>[{:email=>"lela@example.com", :type=>"to"},{:email=>"lela2@example.com", :type=>"to"}],
          :global_merge_vars=>[{:name=>"NAME", :content=>"Example_name_10"},
                               {:name=>"BODY", :content=>"<p>A new post has been made to the <br/>[\"consequatur\", \"non\", \"cupiditate\", \"et\"]<br/>yo"},
@@ -31,15 +31,15 @@ describe MandrillSpecHelper do
     end
 
     it '#subject' do
-      expect(man.subject).to eq("[crowdAI/Possimus qui consequatur et debitis.] Quia accusamus esse qui corrupti corporis quis et.")
+      expect(man.subject).to eq("[AICrowd/Possimus qui consequatur et debitis.] Quia accusamus esse qui corrupti corporis quis et.")
     end
 
     it '#from_name' do
-      expect(man.from_name).to eq("crowdAI")
+      expect(man.from_name).to eq("AICrowd")
     end
 
     it '#from_email' do
-      expect(man.from_email).to eq("no-reply@crowdai.org")
+      expect(man.from_email).to eq("no-reply@aicrowd.com")
     end
 
     it '#email_array' do

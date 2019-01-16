@@ -14,9 +14,9 @@ class Admin::SubmissionNotificationMailer < ApplicationMailer
 
     options = {
       participant_id:   participant.id,
-      subject:          "[ADMIN:crowdAI/#{challenge.challenge}] Submission made",
+      subject:          "[ADMIN:AICrowd/#{challenge.challenge}] Submission made",
       to:               participant.email,
-      template:         "crowdAI General Template",
+      template:         "AICrowd General Template",
       global_merge_vars: [
         {
           name:           "NAME",
