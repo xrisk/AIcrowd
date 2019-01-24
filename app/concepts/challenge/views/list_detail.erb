@@ -1,13 +1,13 @@
 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
   <div class="card card-challenge">
-  
+
     <%= link_to challenge_path(challenge) do %>
       <%= concept(Image::Cell,challenge, current_participant: current_participant, klass: "card-img") %>
     <% end %>
 
     <%= link_to challenge_path(challenge), class:"card-img-overlay" do %>
       <span class="badge badge-primary">
-        <img src="assets/img/icon-time.svg">
+        <img src="/assets/img/icon-time.svg">
         <%= remaining_text %>
       </span>
     <% end %>
@@ -28,20 +28,20 @@
       <div class="stats-group">
         <div class="stat-item">
           <span data-toggle="tooltip" data-placement="top" title="No. of views">
-            <img src="assets/img/icon-views.svg">
+            <img src="/assets/img/icon-views.svg">
             <%= concept(Challenge::Cell::Statistic,challenge,type: 'view', current_participant: current_participant) %>
           </span>
         </div>
         <div class="stat-item">
           <span data-toggle="tooltip" data-placement="top" title="No. of users">
-            <img src="assets/img/icon-users.svg">
+            <img src="/assets/img/icon-users.svg">
             <%= concept(Challenge::Cell::Statistic,challenge,type: 'participant', current_participant: current_participant) %>
           </span>
         </div>
 
         <div class="stat-item">
           <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
-            <img src="assets/img/icon-submissions.svg">
+            <img src="/assets/img/icon-submissions.svg">
             <%= concept(Challenge::Cell::Statistic,challenge,type: 'submission', current_participant: current_participant) %>
           </span>
         </div>
@@ -57,6 +57,6 @@
           <span><%= challenge.organizer.organizer %></span>
         <% end %>
     </div>
-  
+
   </div>
 </div>
