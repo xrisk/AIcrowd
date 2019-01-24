@@ -3,6 +3,7 @@ CROWDAI_API_KEY: "8c69ef80a5eb4438ec326d200ce6ab39"
 
 development: &development
   DOMAIN_NAME: 'http://localhost:3000'
+  DISCOURSE_DOMAIN_NAME: 'https://discourse.aicrowd.com'
   AWS_S3_BUCKET: 'fake-bucket'
   AWS_S3_SHARED_BUCKET: 'fake-shared-bucket'
   AWS_ACCESS_KEY_ID: '...'
@@ -19,7 +20,7 @@ development: &development
   MAILCHIMP_LIST_ID: "REDACTED"
   DEVISE_SECRET_KEY: "bf2c609dce6a10cd29b36c7e639d0e34"
   SECRET_KEY_BASE: "b40bed63477347e21a257ced8760f305"
-
+  DISCOURSE_API_KEY: "YOUR_API_KEY"
 test:
   <<: *development
   MANDRILL_KEY: "G_rHM-BQ9DF6IG2wKa3-Pw"

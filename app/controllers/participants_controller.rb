@@ -45,6 +45,38 @@ class ParticipantsController < ApplicationController
     redirect_to participant_path(@participant),notice: 'API Key regenerated.'
   end
 
+  def sso_helper
+    decoded = Base64.decode64(params[:sso])
+    decoded_hash = Rack::Utils.parse_query(decoded)
+    nonce = decoded_hash['nonce']
+    return_sso_url = decoded_hash['return_sso_url']
+    sig = params[:sig]
+    signed = OpenSSL::HMAC.hexdigest("sha256", ENV['SSO_SECRET'], params[:sso])
+    if(sig != signed)
+      raise RuntimeError, "Incorrect SSO signature"
+    end
+
+    response_params = {
+      email: current_user.email,
+      admin: current_user.admin,
+      external_id: current_user.id,
+      name: current_user.name,
+      nonce: nonce
+    }
+    response_query = response_params.to_query
+    encoded_response_query = Base64.strict_encode64(response_query)
+    response_sig = OpenSSL::HMAC.hexdigest("sha256", ENV['SSO_SECRET'], encoded_response_query)
+
+    url = File.join(return_sso_url, "?sso=#{CGI::escape(encoded_response_query)}&sig=#{response_sig}")
+
+  end
+
+  def sso
+    authorize current_user
+    url = sso_helper
+    redirect_to url
+  end
+
   def sync_mailchimp
     @job = AddToMailChimpListJob.perform_later(params[:participant_id])
     render 'admin/participants/refresh_sync_mailchimp_job_status'

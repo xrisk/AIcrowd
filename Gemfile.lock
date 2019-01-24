@@ -213,6 +213,8 @@ GEM
       representable (>= 2.4.0, <= 3.1.0)
       uber (< 0.2.0)
     docile (1.3.1)
+    domain_name (0.5.20180417)
+      unf (>= 0.0.5, < 1.0.0)
     doorkeeper (5.0.2)
       railties (>= 4.2)
     dry-inflector (0.1.2)
@@ -419,6 +421,15 @@ GEM
       activesupport (>= 4.1)
     hashie (3.6.0)
     heapy (0.1.4)
+    http (4.0.0)
+      addressable (~> 2.3)
+      http-cookie (~> 1.0)
+      http-form_data (~> 2.0)
+      http_parser.rb (~> 0.6.0)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
+    http-form_data (2.1.1)
+    http_parser.rb (0.6.0)
     httparty (0.16.3)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
@@ -813,6 +824,9 @@ GEM
     uber (0.1.0)
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.5)
     unicode_utils (1.4.0)
     valid_email2 (2.3.1)
       activemodel (>= 3.2)
@@ -882,6 +896,7 @@ DEPENDENCIES
   friendly_id (~> 5.1.0)
   gibbon
   guard
+  http
   httparty
   include_media_rails
   informant-rails

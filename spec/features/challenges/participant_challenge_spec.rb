@@ -44,13 +44,6 @@ let!(:participant) { create(:participant) }
       expect(page).to have_content 'Leaderboard'
     end
 
-    scenario "can follow Discussion link" do
-      click_link "Discussion"
-      expect(page).to have_content 'Discussion'
-      click_link 'New Topic'
-      expect(page).to have_content 'Discussion'
-    end
-
     scenario "can follow Dataset link" do
       click_link "Dataset"
       expect(page).to have_content 'Dataset'
@@ -67,11 +60,6 @@ let!(:participant) { create(:participant) }
     scenario "follow Leaderboard link" do
       click_link "Leaderboard"
       expect(page).to have_content 'Leaderboard'
-    end
-
-    scenario "follow Discussion link" do
-      click_link "Discussion"
-      expect(page).to have_content 'Discussion'
     end
 
     scenario "follow Dataset link" do

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   use_doorkeeper
 
   get 'test_gauge', to: 'test#gauge'
+  get 'sso', to: 'participants#sso'
 
   admin = lambda do |request|
     request.env['warden'].authenticate? && request.env['warden'].user.admin?

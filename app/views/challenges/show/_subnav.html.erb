@@ -13,9 +13,8 @@
       </li>
       <% if challenge.discussions_visible.present? %>
         <li class=<%= tab_class('discussion') %> >
-          <%= link_to 'Discussion',
-              challenge_topics_path(challenge),
-              class: tab_class('discussion') %>
+          <%= link_to 'Discussion', URI.escape(File.join(ENV['DISCOURSE_DOMAIN_NAME'], 'c', @challenge.slug)),
+            class: tab_class('discussion') %>
         </li>
       <% end %>
       <% if challenge.clef_task.present? %>
