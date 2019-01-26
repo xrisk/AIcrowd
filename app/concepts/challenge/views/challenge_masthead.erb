@@ -26,7 +26,7 @@
     <div class="row">
       <div class="col-sm-12 col-md-8 col-lg-9">
         <h1><%= challenge.challenge %></h1>
-        <p><%= challenge.description.html_safe %></p>
+        <p><%= challenge.tagline %></p>
       </div>
 
       <div class="col-sm-12 col-md-4 col-lg-3">
@@ -58,7 +58,7 @@
               <%= concept(Challenge::Cell::Statistic,challenge,type: 'participant', current_participant: current_participant) %>
             </span>
           </div>
-<!-- 
+<!--
           <div class="stat-item">
             <span data-toggle="tooltip" data-placement="top" title="No. of teams">
               <img src="/assets/img/icon-teams.svg">
@@ -81,7 +81,7 @@
               <%= concept(Challenge::Cell::Statistic,challenge,type: 'vote', current_participant: current_participant) %>
           </button>
           <button type="button" class="btn btn-secondary btn-sm">Follow</button>
-<!-- 
+<!--
 TODO: Implement Liking and changing color of heart to red
 TODO: Implement Following and changeing of text to followed
  -->
@@ -92,4 +92,4 @@ TODO: Implement Following and changeing of text to followed
 
   </div>
 </div>
-<!-- /masthead - challenge -->  
+<!-- /masthead - challenge -->
