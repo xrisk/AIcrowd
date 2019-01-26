@@ -1,3 +1,4 @@
+
 if Rails.env == 'development' || Rails.env == 'staging'
 
   JobPosting.destroy_all
