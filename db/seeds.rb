@@ -1,4 +1,4 @@
-if Rails.env == 'development'
+if Rails.env == 'development' || Rails.env == 'staging'
 
   JobPosting.destroy_all
   Blog.destroy_all
@@ -10,6 +10,7 @@ if Rails.env == 'development'
   BaseLeaderboard.destroy_all
   ChallengeRound.destroy_all
   Challenge.destroy_all
+  Partner.destroy_all
   Organizer.destroy_all
 
   # Admin
@@ -38,8 +39,8 @@ if Rails.env == 'development'
 
   # Organizers
   Organizer.create!([
-    {id: 21, organizer: "Poznan University of Technology", address: "Laboratory of Intelligent Decision Support Systems", description: "", approved: true, slug: "poznan-university-of-technology", image_file: "Poznań_University_of_Technology.png", tagline: "Poznan University of Technology", challenge_proposal: "", api_key: "14b4a11368bb0e22134137aa55bf86af", clef_organizer: false},
-    {id: 17, organizer: "SBB CFF FFS", address: "Switzerland", description: "SBB Swiss Federal Railways", approved: true, slug: "sbb-cff-ffs", image_file: "images.jpeg", tagline: "SBB CFF FFS", challenge_proposal: "", api_key: "", clef_organizer: false}
+    {id: 21, organizer: "Poznan University of Technology", address: "Laboratory of Intelligent Decision Support Systems", description: "", approved: true, slug: "poznan-university-of-technology", tagline: "Poznan University of Technology", challenge_proposal: "", api_key: "14b4a11368bb0e22134137aa55bf86af", clef_organizer: false},
+    {id: 17, organizer: "SBB CFF FFS", address: "Switzerland", description: "SBB Swiss Federal Railways", approved: true, slug: "sbb-cff-ffs", tagline: "SBB CFF FFS", challenge_proposal: "", api_key: "", clef_organizer: false}
   ])
 
   member_poznac_ids = [1020, 1050, 1110]
@@ -68,11 +69,20 @@ if Rails.env == 'development'
       confirmed_at: Time.now)
   end
 
+  # Partners
+  Partner.create!([
+    {id: 19022, organizer_id: 21 , image_file: "logo-organizer-spotify.svg", name: "Spotify", visible: true},
+    {id: 10223, organizer_id: 17 , image_file: "logo-organizer-spotify.svg", name: "Uber", visible: true}
+  ])
+
   # Challenges
   Challenge.create!([
     {id: 37,
       organizer_id: 21,
       challenge: "Train Schedule Optimisation Challenge",
+      prize_cash: "$1 Million USD",
+      prize_academic: "8",
+      prize_misc: "Some other things",
       status_cd: "running",
       tagline: "Optimizing train schedules ",
       primary_sort_order_cd: "ascending",
@@ -91,7 +101,9 @@ if Rails.env == 'development'
       challenge_client_name: "sbb_train_schedule_optimisation_challenge_2018",
       online_grading: true,
       vote_count: 55,
-      description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.", license_markdown: "",
+      toc_acceptance_text: "Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?",
+      description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
+      license_markdown: "",
       license: "",
       dataset_description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
       dataset_description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.", image_file: "sbb_challenge.png",
@@ -116,6 +128,10 @@ if Rails.env == 'development'
     {id: 30,
       organizer_id: 17,
       challenge: "Visual Doom AI Competition 2018 - Singleplayer Track (1)",
+      prize_cash: "$2 Million USD",
+      prize_travel: "3",
+      prize_academic: "4",
+      prize_misc: "Swag",
       status_cd: "completed",
       tagline: "ViZDoom Reinforcement Learning ",
       primary_sort_order_cd: "ascending",
@@ -134,6 +150,7 @@ if Rails.env == 'development'
       challenge_client_name: "vizdoom2018_single_player",
       online_grading: true,
       vote_count: 42,
+      toc_acceptance_text: "Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?Who reads TOC?",
       description_markdown: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.", license_markdown: "Example ",
       license: "<p>Example</p>\n", dataset_description_markdown: "Example ", dataset_description: "<p>Example</p>\n",
       image_file: "Doom_cover_square.jpg",
@@ -451,6 +468,28 @@ if Rails.env == 'development'
       view_count: 200,
       seq: 2993,
       posted_at: Time.now)
+
+  Blog.create!(
+      id: 1,
+        participant_id: 1817,
+        title: "Blog number 4",
+        body: "This is a sample blog for testing, it belongs to participant p1817",
+        published: true,
+        vote_count: 2900,
+        view_count: 200000,
+        seq: 2222,
+        posted_at: Time.now)
+
+  Blog.create!(
+      id: 3,
+        participant_id: 1780,
+        title: "Blog number 3",
+        body: "This is a sample blog for testing, it belongs to participant p1780",
+        published: true,
+        vote_count: 291,
+        view_count: 200,
+        seq: 3000,
+        posted_at: Time.now)
 
   Blog.create!(
     id: 91,

@@ -109,7 +109,7 @@ Rails.application.routes.draw do
       collection { post :import }
     end
     resources :dataset_terms, only: [:update]
-    resources :participation_terms, only: [:show]
+    resources :participation_terms, only: [:show, :create, :index]
     resources :challenge_rules, only: [:show]
     resources :challenge_participants
   end

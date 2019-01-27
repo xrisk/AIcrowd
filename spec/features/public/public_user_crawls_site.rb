@@ -14,7 +14,7 @@ feature "site navigation for authenticated participant" do
     scenario do
       visit_landing_page
       expect(page).to have_content challenge_1.challenge
-      # expect(page).to have_link 'Knowledge Base'
+      expect(page).to have_link 'Knowledge Base'
       expect(page).to have_link 'Challenges'
       expect(page).to have_link 'Sign up'
       expect(page).to have_link 'Log in'
@@ -72,14 +72,14 @@ feature "site navigation for authenticated participant" do
     end
   end
 
-  # context 'knowledge base' do
-  #   scenario do
-  #     visit_knowledge_base
-  #     expect(page).to have_content article_1.article
-  #     expect(page).to have_content article_2.article
-  #     expect(page).to have_content article_3.article
-  #   end
-  # end
+  context 'knowledge base' do
+    scenario do
+      visit_knowledge_base
+      expect(page).to have_content article_1.article
+      expect(page).to have_content article_2.article
+      expect(page).to have_content article_3.article
+    end
+  end
 
   context 'article' do
     scenario do

@@ -1,12 +1,15 @@
-<div class='content'>
-  <%= render 'header' %>
-  <%= render 'form' %>
+<%= render 'header' %>
+<%= render 'form' %>
 
-	<div class="additional">
-		<div class="row">
-			<a data-remodal-target="modal">Delete my account</a>
-		</div>
-	</div>
+<!-- section -->
+<div class="section-p-md border-top">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <a data-remodal-target="modal">Delete your AICrowd account</a>
+      </div>
+    </div>
+  </div>
 </div>
-
+<!-- /section -->
 <%= render partial: 'shared/delete_modal' %>

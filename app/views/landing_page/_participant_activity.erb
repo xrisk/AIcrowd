@@ -1,0 +1,12 @@
+<!-- user -->
+<li class="list-group-item">
+  <%= link_to participant_path(participant) do %>
+     <%= concept(Image::Cell,participant, current_participant: current_participant, klass: "avatar") %>
+    <span class="text-link"><%= participant.name %></span>
+  <% end %>
+  <div class="submissions">
+    <img src="assets/img/icon-submissions.svg">
+    <span><%= participant.level %></span>
+  </div>
+</li>
+<!-- /user -->

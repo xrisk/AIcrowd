@@ -17,6 +17,8 @@ class BlogsController < ApplicationController
 
   def set_blog
     @blog = Blog.find(params[:id])
+    # Randomly select 3 blogs
+    @selected_blogs = Blog.where.not(id: @blog.id).order("RANDOM()").sample(3)
     authorize @blog
   end
 

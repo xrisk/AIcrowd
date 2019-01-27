@@ -334,7 +334,10 @@ ActiveRecord::Schema.define(version: 2019_02_18_175747) do
     t.integer "prize_travel"
     t.integer "prize_academic"
     t.string "prize_misc"
+<<<<<<< HEAD
     t.integer "discourse_category_id"
+=======
+>>>>>>> 6831324... aicrowd redesign
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["organizer_id"], name: "index_challenges_on_organizer_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true

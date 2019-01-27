@@ -55,6 +55,12 @@ class ChallengesController < ApplicationController
   end
 
   def show
+    if current_participant
+      @challenge_participant = @challenge
+        .challenge_participants
+        .find_by(participant_id: current_participant.id)
+    end
+
     if !params[:version]  # dont' record page views on history pages
       @challenge.record_page_view
     end

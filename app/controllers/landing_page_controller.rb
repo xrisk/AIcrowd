@@ -14,6 +14,9 @@ class LandingPageController < ApplicationController
       .where(published: true)
       .order(seq: :asc)
       .limit(4)
+    @participants = Participant
+      .order(level: :desc)
+      .limit(6)
   end
 
   def host

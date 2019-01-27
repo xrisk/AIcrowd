@@ -1,6 +1,17 @@
-<div>
-  <h5><%= link_to post.title, blog_path(post) %></h5>
-  <span class="light">
-    <%= post.posted_at.strftime("%-d %B %Y") %>
-  </span>
+<!-- blog post -->
+<div class="col-sm-12 col-md-4">
+	<div class="card card-blog-post">
+	  <div class="card-body">
+	    <h5 class="card-title"><%= link_to post.title, blog_path(post) %></h5>
+	    <p class="card-text"><%= local_time(post.posted_at, "%-d %B %Y") %></p>
+	  </div>
+
+	  <div class="card-footer">
+	    <a href="#">
+	      <img class="avatar" src="assets/img/user-avatar-default.svg"> 
+	      <span>By spMohanty</span>
+	    </a>
+	  </div>
+	</div>
 </div>
+<!-- /blog post -->

@@ -1,4 +1,5 @@
 class Challenge::Cell::ChallengeSubnav < Challenge::Cell
+### PLEASE PASS current_participant to this template if user is signed in
 
   def show
     render :challenge_subnav
@@ -28,6 +29,14 @@ class Challenge::Cell::ChallengeSubnav < Challenge::Cell
       'dynamic'
     when 'submissions'
       'submissions'
+    end
+  end
+
+  def challenge_participant
+    if current_participant
+      @challenge_participant = challenge
+        .challenge_participants
+        .find_by(participant_id: current_participant.id)
     end
   end
 

@@ -1,0 +1,32 @@
+<section class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+
+      <!-- sub-nav – vertical -->
+      <div class="col-lg-2 sub-nav-vertical-container">
+      </div>
+      <!-- /sub-nav – vertical -->
+
+      <!-- md content -->
+      <div class="col-md-8 col-lg-7">
+		<%= challenge.toc_acceptance_text %></br>
+		<%= challenge.toc_acceptance_text %></br>
+		<%= challenge.toc_acceptance_text %></br>
+		<%= challenge.toc_acceptance_text %></br>
+		</br></br></br></br>
+
+    <% if !challenge_participant or !challenge_participant.accepted_dataset_toc %>
+        <%= link_to "I Accept the Terms", challenge_participation_terms_path(challenge.id), { method: :post, :class=>"btn btn-primary btn-block" } %>
+    <% else %>
+        <%= link_to "You have already accepted the terms", challenge_path(challenge), { :class=>"btn btn-secondary btn-block" } %>
+    <% end %>
+      </div>
+      <!-- /md content -->
+
+      <!-- top contributors -->
+      <div class="top-contributors-container col-sm-12 col-md-4 col-lg-3">
+	  </div>
+	 </div>
+	 </div>        
+</section>
+<!-- /section -->
