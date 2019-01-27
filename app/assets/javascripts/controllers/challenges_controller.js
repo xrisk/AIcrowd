@@ -30,6 +30,7 @@ Paloma.controller('Challenges', {
       var heading_ids = $("#description-wrapper").children().map(function() { return this.id; }).get().filter( e=>e)
       console.info(heading_ids)
       update_table_of_contents(heading_ids)
+      $('body').scrollspy({target: "#table-of-contents", offset: 64})
     });
   }
 });
@@ -45,7 +46,7 @@ function update_table_of_contents(heading_ids){
     li.classList.add('nav-item')
     a.classList.add('nav-link')
     if(first){
-      a.classList.add('active')
+      // a.classList.add('active')
       first = false
     }
     $(a).attr('href', '#' + id)
