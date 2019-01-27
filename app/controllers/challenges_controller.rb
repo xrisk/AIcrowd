@@ -8,6 +8,7 @@ class ChallengesController < ApplicationController
 
   after_action :update_stats_job
   respond_to :html, :js
+  layout "application-old", only: [:edit]
 
   def index
     @challenge_filter = params[:challenge_filter] ||= 'all'
