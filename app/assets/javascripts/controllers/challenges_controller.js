@@ -2,12 +2,12 @@
     $( "#sortable" ).sortable({
       update: function(event, ui) {
                 var order = $("#sortable").sortable("toArray");
-                $('#order').val(order.join(","));
+                order[0] && $('#order').val(order.join(","));
             }
     });
     $( "#sortable" ).disableSelection();
     var order = $("#sortable").sortable("toArray");
-    $('#order').val(order.join(","));
+    order[0] && $('#order').val(order.join(","));
   } );
 
 
