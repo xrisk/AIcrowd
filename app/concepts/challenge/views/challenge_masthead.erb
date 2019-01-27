@@ -81,6 +81,10 @@
               <%= concept(Challenge::Cell::Statistic,challenge,type: 'vote', current_participant: current_participant) %>
           </button>
           <button type="button" class="btn btn-secondary btn-sm">Follow</button>
+          <div class="button-group">
+            <%= concept(Vote::Cell, challenge, current_participant: current_participant) %>
+            <%= concept(Follow::Cell, challenge, current_participant: current_participant) %>
+          </div>
 <!--
 TODO: Implement Liking and changing color of heart to red
 TODO: Implement Following and changeing of text to followed
