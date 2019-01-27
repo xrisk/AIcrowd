@@ -15,6 +15,7 @@
 //= require cookies_eu
 //= require rails.validations
 //= require local-time
+//= require lodash
 
 // --------------------- Vendor ------------------------ //
 //= require jQuery-File-Upload
