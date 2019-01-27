@@ -1,5 +1,4 @@
 if Rails.env.test? || Rails.env.development?
-  Fog.mock!
   Aws.config.update({
     region: ENV['AWS_REGION'],
     access_key_id: ENV['AWS_ACCESS_KEY_ID'],
@@ -11,7 +10,8 @@ if Rails.env.test? || Rails.env.development?
   storage = Fog::Storage.new({
     :aws_access_key_id      => ENV['AWS_ACCESS_KEY_ID'],
     :aws_secret_access_key  => ENV['AWS_SECRET_ACCESS_KEY'],
-    :provider               => 'AWS'
+    :provider               => 'Local',
+    :local_root => ENV['FOG_LOCAL_ROOT']
   })
 
   directory = storage.directories.create(
@@ -19,6 +19,16 @@ if Rails.env.test? || Rails.env.development?
   )
   Aws::S3::Client.new().create_bucket(bucket: ENV['AWS_S3_BUCKET'])
 
+  CarrierWave.configure do |config|
+    config.fog_credentials = {
+        :provider               => 'Local',
+        :aws_access_key_id      => ENV['AWS_ACCESS_KEY_ID'],
+        :aws_secret_access_key  => ENV['AWS_SECRET_ACCESS_KEY'],
+        :region                 => ENV['AWS_REGION'],
+        :local_root => ENV['FOG_LOCAL_ROOT']
+    }
+    config.fog_directory  = ENV['AWS_S3_BUCKET']
+  end
 else
   Aws.config.update({
     region: ENV['AWS_REGION'],
@@ -27,20 +37,18 @@ else
       ENV['AWS_SECRET_ACCESS_KEY']
     )
   })
+
+  CarrierWave.configure do |config|
+    config.fog_credentials = {
+        :provider               => 'aws',
+        :aws_access_key_id      => ENV['AWS_ACCESS_KEY_ID'],
+        :aws_secret_access_key  => ENV['AWS_SECRET_ACCESS_KEY'],
+        :region                 => ENV['AWS_REGION'],
+    }
+    config.fog_directory  = ENV['AWS_S3_BUCKET']
+  end
 end
-
-
 
 s3 = Aws::S3::Resource.new(region: ENV['AWS_REGION'])
 S3_BUCKET = s3.bucket(ENV['AWS_S3_BUCKET'])
 #S3_SHARED_BUCKET = s3.bucket(ENV['AWS_S3_SHARED_BUCKET'])
-
-CarrierWave.configure do |config|
-  config.fog_credentials = {
-      :provider               => 'AWS',
-      :aws_access_key_id      => ENV['AWS_ACCESS_KEY_ID'],
-      :aws_secret_access_key  => ENV['AWS_SECRET_ACCESS_KEY'],
-      :region                 => ENV['AWS_REGION']
-  }
-  config.fog_directory  = ENV['AWS_S3_BUCKET']
-end

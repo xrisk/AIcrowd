@@ -25,6 +25,7 @@ module Crowdai
     #config.active_record.schema_format = :sql
     config.ssl_options = { hsts: { subdomains: false } }
     config.assets.precompile += %w( application.scss )
+    Rails.env.development? && config.assets.paths << File.join(ENV['FOG_LOCAL_ROOT'], ENV['AWS_S3_BUCKET'])
 
     config.action_view.sanitized_allowed_tags =
       Set.new(%w(strong em b i p code pre tt samp kbd var sub

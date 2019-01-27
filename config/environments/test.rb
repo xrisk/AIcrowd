@@ -19,6 +19,8 @@ Rails.application.configure do
   config.active_support.deprecation = :stderr
   config.assets.raise_runtime_errors = true
   config.assets.debug = false
+  config.assets.check_precompiled_asset = false
+  config.assets.unknown_asset_fallback = true
   config.logger = Logger.new(nil)
   config.log_level = :fatal
   config.active_record.logger = nil

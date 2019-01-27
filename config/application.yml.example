@@ -21,6 +21,7 @@ development: &development
   DEVISE_SECRET_KEY: "bf2c609dce6a10cd29b36c7e639d0e34"
   SECRET_KEY_BASE: "b40bed63477347e21a257ced8760f305"
   DISCOURSE_API_KEY: "YOUR_API_KEY"
+  FOG_LOCAL_ROOT: '~/fog'
 test:
   <<: *development
   MANDRILL_KEY: "G_rHM-BQ9DF6IG2wKa3-Pw"
