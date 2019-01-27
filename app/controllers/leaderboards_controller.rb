@@ -65,7 +65,7 @@ class LeaderboardsController < ApplicationController
 
   def set_layout
     return 'bare' if action_name == 'show'
-    return 'application'
+    return 'application-old'
   end
 
 end

@@ -1,7 +1,7 @@
 <div class='content'>
   <%= concept(Challenge::Cell::ChallengeMasthead,
                 @challenge,
-                current_participant: current_participant) %>
+                current_participant: current_participant).(:show_old) %>
   <%= render partial: 'challenges/show/subnav',
         locals: { challenge: @challenge } %>
   <%= concept(Leaderboard::Cell::ChallengeRoundPills,

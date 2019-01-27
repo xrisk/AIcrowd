@@ -1,21 +1,21 @@
 <div class="sub-nav">
   <div class="row">
     <ul>
-      <li class=<%= tab_class('overview') %> >
+      <li class=<%= tab_class('overview') %>  >
         <%= link_to 'Overview',
               challenge_path(challenge),
-              class: tab_class('overview') %>
+              class: tab_class('overview'), "data-turbolinks": false %>
       </li>
       <li class=<%= tab_class('leaderboard') %> >
           <%= link_to 'Leaderboard',
                 challenge_leaderboards_path(challenge),
-                class: tab_class('leaderboard') %>
+                class: tab_class('leaderboard'), "data-turbolinks": false %>
       </li>
       <% if challenge.discussions_visible.present? %>
         <li class=<%= tab_class('discussion') %> >
           <%= link_to 'Discussion',
               challenge_topics_path(challenge),
-              class: tab_class('discussion') %>
+              class: tab_class('discussion'), "data-turbolinks": false %>
         </li>
       <% end %>
       <% if challenge.clef_task.present? %>
@@ -23,13 +23,13 @@
           <%= link_to 'Resources',
                 clef_task_task_dataset_files_path(
                   challenge.clef_task, challenge_id: challenge.id),
-                class: tab_class('clef_dataset') %>
+                class: tab_class('clef_dataset'), "data-turbolinks": false %>
         </li>
       <% else %>
         <li class=<%= tab_class('dataset') %> >
           <%= link_to 'Resources',
                 challenge_dataset_files_path(challenge),
-                class: tab_class('dataset') %>
+                class: tab_class('dataset'), "data-turbolinks": false %>
         </li>
       <% end %>
 
@@ -37,7 +37,7 @@
         <li>
           <%= link_to 'Submissions',
                 challenge_submissions_path(challenge),
-                class: tab_class('submissions') %>
+                class: tab_class('submissions'), "data-turbolinks": false %>
         </li>
       <% end %>
       <% if policy(challenge).edit? %>
@@ -45,13 +45,13 @@
           <li class=<%= tab_class('participants') %> >
             <%= link_to 'Participants',
                   challenge_clef_task_path(challenge),
-                  class: tab_class('participants') %>
+                  class: tab_class('participants'), "data-turbolinks": false %>
           </li>
         <% else %>
           <li class=<%= tab_class('participants') %> >
             <%= link_to 'Participants',
                   challenge_participant_challenges_path(challenge),
-                  class: tab_class('participants') %>
+                  class: tab_class('participants'), "data-turbolinks": false %>
           </li>
         <% end %>
       <% end %>
@@ -59,14 +59,14 @@
         <li class=<%= tab_class('winner') %> >
           <%= link_to 'Winners',
                 challenge_winners_path(challenge),
-                class: tab_class('winner') %>
+                class: tab_class('winner'), "data-turbolinks": false %>
         </li>
       <% end %>
       <% if challenge.dynamic_content_tab.present? %>
         <li class=<%= tab_class('dynamic') %> >
           <%= link_to challenge.dynamic_content_tab,
                 challenge_dynamic_contents_path(challenge),
-                class: tab_class('dynamic') %>
+                class: tab_class('dynamic'), "data-turbolinks": false %>
         </li>
       <% end %>
     </ul>

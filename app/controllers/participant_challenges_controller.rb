@@ -2,6 +2,7 @@ class ParticipantChallengesController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_challenge, only: [:index,:approve,:deny]
   respond_to :html, :js
+  layout 'application-old'
 
   def index
     @participant_challenges = @challenge

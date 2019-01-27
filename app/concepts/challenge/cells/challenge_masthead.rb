@@ -4,6 +4,10 @@ class Challenge::Cell::ChallengeMasthead < Challenge::Cell
     render :challenge_masthead
   end
 
+  def show_old
+    render :challenge_masthead_old
+  end
+
   def challenge
     model
   end

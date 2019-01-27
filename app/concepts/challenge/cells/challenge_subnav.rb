@@ -46,9 +46,9 @@ class Challenge::Cell::ChallengeSubnav < Challenge::Cell
 
   def tab_class(tab)
     if tab == current_tab
-      return 'active'
+      return 'nav-link active'
     else
-      return ''
+      return 'nav-link'
     end
   end
 
