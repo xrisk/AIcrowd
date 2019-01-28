@@ -6,14 +6,14 @@
 <div class="sub-nav-bar sticky-top sub-nav">
   <div class="container-fluid">
     <ul class="nav tabs">
-      <li data-tab='tab-challenges' class="nav-item active">
-        <a class="nav-link nav-link-02" href="#" onclick="return false;">Challenges</a>
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle='tab' href="#tab-challenges" onclick="return false;">Challenges</a>
       </li>
-      <li data-tab='tab-posts' class="nav-item">
-        <a class="nav-link nav-link-04" href="#" onclick="return false;">Posts</a>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle='tab' href="#tab-posts" onclick="return false;">Posts</a>
       </li>
-      <li data-tab='tab-bio' class="nav-item"> 
-        <a class="nav-link nav-link-05" href="#" onclick="return false;">Bio</a>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle='tab' href="#tab-bio" onclick="return false;">Bio</a>
       </li>
 
 
@@ -30,50 +30,51 @@
 </div>
 <!-- /sub-nav bar -->
 
-
-<div id='tab-challenges' class='tab-content active'>
-  <% if @challenges.any? %>
-    <section class="section-p-sm bg-light">
-      <div class="container-fluid">
-        <div class="row">
-          <%= concept(Challenge::Cell::ListDetail,
-                          collection: @challenges,
-                          current_participant: current_participant) %>
-        </div>
-      </div>
-    </section>
-  <% else %>
-    <%= "#{@participant.name} hasn't entered any challenges yet..." %>
-  <% end %>
-</div>
-
-<div id='tab-posts' class='tab-content'>
-  <% if @posts.any? %>
-      <%= concept(Discussion::Cell::ParticipantComment,
-                        collection: @posts,
-                        current_participant: current_participant) %>
-  <% else %>
-    <%= "#{@participant.name} hasn't made any posts yet..." %>
-  <% end %>
-</div>
-
-<div id='tab-bio' class='tab-content'>
-  <% if @participant.bio.present? %>
-    <!-- section -->
-      <section class="section-p-md">
+<div class="tab-content">
+  <div id='tab-challenges' class="tab-pane fade show active">
+    <% if @challenges.any? %>
+      <section class="section-p-sm bg-light">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-12">
-
-              <div class="md-content">
-                <%= @participant.bio %>
-              </div>           
-            </div>
+            <%= concept(Challenge::Cell::ListDetail,
+                            collection: @challenges,
+                            current_participant: current_participant) %>
           </div>
         </div>
       </section>
-      <!-- /section -->
-  <% else %>
-    <%= "Apparently #{@participant.name} prefers to keep an air of mystery about them..." %>
-  <% end %>
+    <% else %>
+      <%= "#{@participant.name} hasn't entered any challenges yet..." %>
+    <% end %>
+  </div>
+
+  <div id='tab-posts' class="tab-pane fade">
+    <% if @posts.any? %>
+        <%= concept(Discussion::Cell::ParticipantComment,
+                          collection: @posts,
+                          current_participant: current_participant) %>
+    <% else %>
+      <%= "#{@participant.name} hasn't made any posts yet..." %>
+    <% end %>
+  </div>
+
+  <div id='tab-bio' class="tab-pane fade">
+    <% if @participant.bio.present? %>
+      <!-- section -->
+        <section class="section-p-md">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-12">
+
+                <div class="md-content">
+                  <%= @participant.bio %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- /section -->
+    <% else %>
+      <%= "Apparently #{@participant.name} prefers to keep an air of mystery about them..." %>
+    <% end %>
+  </div>
 </div>
