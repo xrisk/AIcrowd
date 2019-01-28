@@ -95,3 +95,13 @@ document.addEventListener("turbolinks:load", function() {
   $('#page-content').show();
   $('#loader-container').hide();
 });
+
+$(document).on('turbolinks:load', function() {
+  loadMathJax();
+});
+
+$(document).on('turbolinks:load', function() {
+  window.setTimeout(function () {
+    $(".alert").alert('close')
+  }, 5000);
+});
