@@ -1,197 +1,76 @@
-<div class='content'>
-  <%= concept(Participant::Cell::ParticipantMasthead,
+<%= concept(Participant::Cell::ParticipantMasthead,
                 @participant,
                 current_participant: current_participant) %>
 
-  <div class="sub-nav">
-    <div class="row">
-      <ul class='tabs'>
-        <li data-tab='tab-challenges' class="active">
-          <a href="#" onclick="return false;">Challenges
-            <sup><%= @challenges.count unless @challenges.count == 0 %></sup>
-          </a>
-        </li>
-        <li data-tab='tab-articles'>
-          <a href="#" onclick="return false;">Tutorials
-            <sup><%= @articles.count unless @articles.count == 0%></sup>
-          </a>
-        </li>
-        <li data-tab='tab-posts'>
-          <a href="#" onclick="return false;">Posts
-            <sup><%= @posts.count unless @posts.count == 0 %></sup>
-          </a>
-        </li>
-        <li data-tab='tab-bio'>
-          <a href="#" onclick="return false;">Bio</a>
-        </li>
-        <% if policy(@participant).clef_access? %>
-          <li data-tab='tab-contact-info'>
-            <a href="#" onclick="return false;">Contact</a>
-          </li>
-        <% end %>
-        <% if current_participant && current_participant.admin? %>
-          <li data-tab='tab-badges'>
-            <a href="#" onclick="return false;">Badges</a>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  </div>
+<!-- sub-nav bar -->
+<div class="sub-nav-bar sticky-top">
+  <div class="container-fluid">
+    <ul class="nav">
+      <li class="nav-item" data-tab='tab-challenges'>
+        <a class="nav-link nav-link-02" href="#" onclick="return false;">Challenges</a>
+      </li>
+      <li class="nav-item" data-tab='tab-challees'>
+        <a class="nav-link nav-link-04" href="#" onclick="return false;">Posts</a>
+      </li>
+      <li class="nav-item" data-tab='tab-challeng'> 
+        <a class="nav-link nav-link-05 active" href="#" onclick="return false;">Bio</a>
+      </li>
 
-  <div id='tab-challenges' class='tab-content active'>
-    <div class="row">
-      <% if @challenges.any? %>
-      <ul class="list-challenges">
+
+      <!-- more dropdown xs -->
+      <li class="nav-item dropdown more-xs">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><svg width="16" height="4" xmlns="http://www.w3.org/2000/svg"><path d="M2 0C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM8 0C6.9 0 6 .9 6 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#5D5F60" fill-rule="nonzero"/></svg></a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a class="dropdown-item" href="#">Bio</a>
+        </div>
+      </li>
+      <!-- /more dropdown xs -->
+    </ul>
+  </div>
+</div>
+<!-- /sub-nav bar -->
+
+
+<% if @challenges.any? %>
+  <section class="section-p-sm bg-light">
+    <div class="container-fluid">
+      <div class="row">
         <%= concept(Challenge::Cell::ListDetail,
                         collection: @challenges,
                         current_participant: current_participant) %>
-      </ul>
-    <% else %>
-      <div class='article'>
-        <p class='light'>
-          <%= "#{@participant.name} hasn't entered any challenges yet..." %>
-        </p>
-      </div>
-      <% end %>
-    </div>
-  </div>
-
-  <div id='tab-articles' class='tab-content'>
-    <div class="row">
-      <% if @articles.any? %>
-        <ul class="list-tutorials">
-         <% @articles.each do |article| %>
-           <%= render partial: 'articles/article', locals: { article: article } %>
-         <% end %>
-        </ul>
-      <% else %>
-        <div class='article'>
-          <p class='light'>
-            <%= "#{@participant.name} hasn't authored any tutorials yet..." %>
-          </p>
-        </div>
-      <% end %>
-    </div>
-  </div>
-
-  <div id='tab-posts' class='tab-content'>
-    <div class="row">
-      <% if @posts.any? %>
-      <ul class="list-tutorials">
-        <%= concept(Discussion::Cell::ParticipantComment,
-                          collection: @posts,
-                          current_participant: current_participant) %>
-      </ul>
-    <% else %>
-      <div class='article'>
-        <p class='light'>
-          <%= "#{@participant.name} hasn't made any posts yet..." %>
-        </p>
-      </div>
-      <% end %>
-    </div>
-  </div>
-
-  <div id='tab-bio' class='tab-content'>
-    <div class="row">
-      <div class="article">
-        <% if @participant.bio.present? %>
-        <%= @participant.bio %>
-      <% else %>
-        <p class='light'>
-          <%= "Apparently #{@participant.name} prefers to keep an air of mystery about them..." %>
-        </p>
-        <% end %>
       </div>
     </div>
-  </div>
+  </section>
+<% else %>
+  <%= "#{@participant.name} hasn't entered any challenges yet..." %>
+<% end %>
 
-  <% if policy(@participant).clef_access? %>
-      <div id='tab-contact-info' class='tab-content'>
+
+<% if @posts.any? %>
+  <ul class="list-tutorials">
+    <%= concept(Discussion::Cell::ParticipantComment,
+                      collection: @posts,
+                      current_participant: current_participant) %>
+  </ul>
+<% else %>
+  <%= "#{@participant.name} hasn't made any posts yet..." %>
+<% end %>
+
+<% if @participant.bio.present? %>
+  <!-- section -->
+    <section class="section-p-md">
+      <div class="container-fluid">
         <div class="row">
-          <div class="article">
-            <table>
-              <tr>
-                <td>First name:</td>
-                <td>
-                <% if @participant.first_name.present? %>
-                  <%= @participant.first_name %>
-                <% else %>
-                  <span class="light">Not specified yet</span>
-                <% end %>
-                </td>
-              </tr>
-              <tr>
-                <td>Last name:</td>
-                <td>
-                <% if @participant.last_name.present? %>
-                  <%= @participant.last_name %>
-                <% else %>
-                  <span class="light">Not specified yet</span>
-                <% end %>
-                </td>
-              </tr>
-              <tr>
-                <td>Email:</td>
-                <td><%= @participant.email %></td>
-              </tr>
-              <tr>
-                <td>Address:</td>
-                <td>
-                  <% if @participant.address.present? %>
-                    <%= @participant.address %>
-                  <% else %>
-                    <span class="light">Not specified yet</span>
-                  <% end %>
-                </td>
-              </tr>
-              <tr>
-                <td>City:</td>
-                <td>
-                  <% if @participant.city.present? %>
-                    <%= @participant.city %>
-                  <% else %>
-                    <span class="light">Not specified yet</span>
-                  <% end %>
-                </td>
-              </tr>
-              <tr>
-                <td>Country:</td>
-                <td>
-                  <% if @participant.country_cd.present? %>
-                    <%= "#{ISO3166::Country.find_country_by_alpha2(@participant.country_cd)} (#{@participant.country_cd})" %>
-                  <% else %>
-                    <span class="light">Not specified yet</span>
-                  <% end %>
-                </td>
-              </tr>
-            </table>
+          <div class="col-12">
+
+            <div class="md-content">
+              <%= @participant.bio %>
+            </div>           
           </div>
         </div>
       </div>
-  <% end %>
-
-  <% if current_participant && current_participant.admin? %>
-    <div id='tab-badges' class='tab-content'>
-      <div class="row">
-        <div class="article">
-          <% if @participant.badges.present? %>
-            <ul>
-              <% @participant.badges.each do |badge| %>
-                <li class='badge badge-accent'>
-                  <%= badge.name %><br/>
-                  <%= badge.description %>
-                </li>
-              <% end %>
-            </ul>
-          <% else %>
-            <p class='light'>
-              No badges yet.
-            </p>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  <% end %>
-
-</div><!-- .content -->
+    </section>
+    <!-- /section -->
+<% else %>
+  <%= "Apparently #{@participant.name} prefers to keep an air of mystery about them..." %>
+<% end %>

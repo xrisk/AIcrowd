@@ -1,14 +1,35 @@
-<div class="discussion-comment" data-cell='Discussion::Cell::ParticipantComment'>
-  <div class="topic-content">
-    <%= link_to new_topic_comment_path(topic) do %>
-      <p class="details">
-        <%= challenge.challenge %> |&nbsp;
-        <%= topic.topic %> |&nbsp; <%= time_ago_in_words(comment.created_at) %> ago
-      </p>
-      <div class='comment' id='comment_<%= comment.id %>'
-        <p><%= comment.comment %></p>
+<!-- section -->
+<section class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+
+        <!-- challenge posts -->
+        <div class="sub-section-pb-sm">
+          <header class="section-header">
+            <div>
+              <h4><%= challenge.challenge %></h4>
+            </div>
+          </header>
+
+          <!-- topic – comment -->
+          <div class="topic-comment">
+            <%= link_to concept(Image::Cell, author, klass: "avatar"), participant_path(author) %>
+            <div class="discussion-topic-body">
+              <span class="discussion-details"><%= link_to topic.topic, new_topic_comment_path(topic) %> · <%= time_ago_in_words(comment.created_at) %> ago </span>
+
+              <p><%= comment.comment %></p>
+              <div class="btn-set" aria-hidden="true">
+                <%= link_to "View post", new_topic_comment_path(topic), class: "btn btn-secondary btn-sm", role:"button" %>
+                <%= concept(Vote::Cell, comment, current_participant: current_participant) %>
+              </div>
+            </div>
+          </div>
+          <!-- topic – comment --> 
+        </div>
+        <!-- /challenge posts -->
       </div>
-      <%= concept(Vote::Cell, comment, current_participant: current_participant) %>
-    <% end %>
+    </div>
   </div>
-</div>
+</section>
+<!-- /section -->

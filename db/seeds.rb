@@ -1,6 +1,7 @@
-
 if Rails.env == 'development' || Rails.env == 'staging'
 
+  Comment.destroy_all
+  Topic.destroy_all
   JobPosting.destroy_all
   Blog.destroy_all
   Submission.destroy_all
@@ -37,6 +38,28 @@ if Rails.env == 'development' || Rails.env == 'staging'
       name: "p#{id}",
       confirmed_at: Time.now)
   end
+
+  Participant.create!(
+    id: 112233,
+    email: 'test_user@example.com',
+    password: 'password',
+    password_confirmation: 'password',
+    name: 'test_user',
+    confirmed_at: Time.now,
+    bio: "I am a test user, all participant page testing will be done on me",
+    website: "https://www.testuser.com",
+    github: "https://www.github.com/testuser",
+    linkedin: "https://www.linkedin.com/testuser",
+    twitter: "https://www.twitter.com/testuser",
+    slug: "test_user",
+    remote_image_file_url: "https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png",
+    affiliation: "Test User Incorporated",
+    country_cd: "IN",
+    address: "TU Block, Pillar number 420",
+    city: "Mumbai",
+    first_name: "Test",
+    last_name: "User"
+    )
 
   # Organizers
   Organizer.create!([
@@ -226,8 +249,19 @@ if Rails.env == 'development' || Rails.env == 'staging'
       leaderboard_note: "\n"}
   ])
 
-  # Submissions
-  Submission.create!([
+
+### Run additional seeds
+if Rails.env == 'development' || Rails.env == 'staging'
+  Dir[File.join(Rails.root, 'db', 'seeds/*', '*.rb')].sort.each do |seed|
+    Dir.chdir(File.dirname(seed)) do
+      load seed
+    end
+  end
+end
+
+
+# Submissions
+Submission.create!([
 
     # Challenge 37
 
@@ -451,7 +485,11 @@ if Rails.env == 'development' || Rails.env == 'staging'
     {id: 12823, challenge_id: 37, participant_id: 1, score: nil, created_at: "2018-08-09 14:35:24", updated_at: "2018-08-09 14:36:38", score_secondary: nil, grading_status_cd: "failed", description_markdown: "Test", post_challenge: false, challenge_round_id: 52, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil},
     {id: 1163, challenge_id: 30, participant_id: 1817, score: 0.0, created_at: "2017-08-05 06:18:20", updated_at: "2018-02-20 15:20:57", score_secondary: nil, grading_status_cd: "graded", description_markdown: nil, post_challenge: false, challenge_round_id: 1, score_display: 0.0, score_secondary_display: nil, baseline: false, baseline_comment: nil},
     {id: 12336, challenge_id: 30, participant_id: 5366, score: 4.5, created_at: "2018-08-06 02:18:41", updated_at: "2018-08-06 03:05:52", score_secondary: 5.0, grading_status_cd: "graded", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: 4.5, score_secondary_display: 5.0, baseline: false, baseline_comment: nil},
-    {id: 12447, challenge_id: 30, participant_id: 5366, score: nil, created_at: "2018-08-06 13:56:35", updated_at: "2018-08-06 13:56:35", score_secondary: nil, grading_status_cd: "submitted", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil}
+    {id: 12447, challenge_id: 30, participant_id: 5366, score: nil, created_at: "2018-08-06 13:56:35", updated_at: "2018-08-06 13:56:35", score_secondary: nil, grading_status_cd: "submitted", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil},
+    {id: 12448, challenge_id: 30, participant_id: 112233, score: nil, created_at: "2018-08-06 13:56:35", updated_at: "2018-08-06 13:56:45", score_secondary: nil, grading_status_cd: "submitted", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil},
+
+    # Challenge 100 (Spotify)
+    {id: 19449, challenge_id: 100, participant_id: 112233, score: nil, created_at: "2018-08-06 13:56:35", updated_at: "2018-08-06 13:56:45", score_secondary: nil, grading_status_cd: "submitted", description_markdown: nil, post_challenge: false, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil}
   ])
 
   # Calculate Leaderboards
@@ -538,6 +576,27 @@ if Rails.env == 'development' || Rails.env == 'staging'
     created_at: Time.now,
     job_url: "www.dnaforu.com"
     )
+
+  Topic.create!(
+    id: 123130,
+    challenge_id: 100,
+    participant_id: 112233,
+    topic: "Test Topic",
+    views: 123,
+    posts_count: 12,
+    slug: "Test topic",
+    vote_count: 231)
+
+  Comment.create!(
+    id: 287832,
+    topic_id: 123130,
+    participant_id: 112233,
+    comment: "This is a test comment",
+    vote_count: 12,
+    slug: "Test comment",
+    comment_markdown: "Test comment"
+    )
+
 end
 
 ### Run additional seeds
