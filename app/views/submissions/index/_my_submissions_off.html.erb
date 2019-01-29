@@ -1,8 +1,11 @@
-<div class="row">
-  <form class="leaderboard">
-    <%= link_to challenge_submissions_path(challenge, my_submissions: 'on',current_round_id: current_round_id) do %>
-      <input type="checkbox" id="switch" name="switch" class="switch">
-      <label for="switch">My Submissions</label>
-    <% end %>
-  </form>
-</div>
+<form class="leaderboard">
+	<div class="can-toggle can-toggle--size-small">
+		<%= link_to challenge_submissions_path(challenge, my_submissions: 'on',current_round_id: current_round_id) do %>
+		<input id="switch" type="checkbox">
+		<label for="my-submissions">
+			<div class="can-toggle__switch" data-checked="On" data-unchecked="Off"></div>
+			<div class="can-toggle__label-text">My submission</div>
+		</label>
+		<% end %>
+	</div>
+</form>

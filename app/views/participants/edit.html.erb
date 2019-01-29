@@ -122,12 +122,10 @@
       <div class="col">
         <h4>Personal data</h4>
         <p id='gdpr-text'>Download your personal data that has been collected by AIcrowd.</p>
-        <%= link_to 'Download',
+        <%= link_to '<button class="btn btn-primary">Download</button>'.html_safe,
               gdpr_exports_path,
               method: :post, remote: true,
-              id: 'gdpr-button',
-              class: 'btn btn-primary',
-              type: 'button' %>
+              id: 'gdpr-button' %>
       </div>
     </div>
   </div>
