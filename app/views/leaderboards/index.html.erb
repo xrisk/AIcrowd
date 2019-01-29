@@ -1,51 +1,72 @@
-<div class='content'>
-  <%= concept(Challenge::Cell::ChallengeMasthead,
-                @challenge,
-                current_participant: current_participant).(:show_old) %>
-  <%= render partial: 'challenges/show/subnav',
-        locals: { challenge: @challenge } %>
-  <%= concept(Leaderboard::Cell::ChallengeRoundPills,
-                @challenge,
-                current_round: @current_round,
-                current_participant: current_participant) %>
+<%= concept(Challenge::Cell::ChallengeMasthead, @challenge, current_participant: current_participant) %>
+<%= concept(Challenge::Cell::ChallengeSubnav, @challenge, current_participant: current_participant) %>
 
-  <% if @current_round.leaderboard_note.present? %>
-    <div class='row'>
-      <div class="leaderboard-note">
-        <%= sanitize(@current_round.leaderboard_note) %>
+<section class="section-p-sm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+      <%= concept(Leaderboard::Cell::ChallengeRoundPills, @challenge, current_round: @current_round) %>
+      
+      <!-- challenge leaderboard -->
+        <% if @current_round.leaderboard_note.present? %>
+          <div class='row'>
+            <div class="leaderboard-note">
+              <%= sanitize(@current_round.leaderboard_note) %>
+            </div>
+          </div>
+        <% end %>
+
+        <% if policy(@challenge).show_leaderboard? %>
+          <% unless @challenge.show_leaderboard? %>
+            <div class="leaderboard-important-msg">
+              <p>Leaderboard is only visible to organizers</p>
+            </div>
+          <% end %>
+
+          <div class="table-responsive-md">
+            <table class="table table-leaderboard">
+              <%= concept(Leaderboard::Cell::TableHead,
+                    @leaderboards,
+                    challenge: @challenge,
+                    current_round: @current_round,
+                    current_participant: current_participant) %>
+              <tbody>
+                <%= concept(Leaderboard::Cell::TableRow,
+                      collection: @leaderboards,
+                      challenge: @challenge,
+                      current_round: @current_round,
+                      current_participant: current_participant) %>
+              </tbody>
+          </table>
+        <% else %>
+          <div class="leaderboard-msg">
+            <p>Leaderboard is not displayed yet.</p>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- toggle switch -->
+      <div class="toggle-switch-container">
+        <div class="can-toggle can-toggle--size-small">
+          <input id="post-challenge-submissions" type="checkbox">
+          <label for="post-challenge-submissions">
+            <div class="can-toggle__switch" data-checked="On" data-unchecked="Off"></div>
+            <div class="can-toggle__label-text">Show post-challenge submissions</div>
+          </label>
+        </div>
+      </div>
+      <!-- /toggle switch -->
+
+      <!-- load more -->
+      <div class="load-more">
+        <%= link_to_next_page @leaderboards, remote: true do %>
+          <button type="button" class="btn btn-secondary btn-block">Load more</button>
+        <%end%>
+      </div>
+      <!-- /load more -->
+
       </div>
     </div>
-  <% end %>
-
-  <div class="row">
-    <% if policy(@challenge).show_leaderboard? %>
-      <% unless @challenge.show_leaderboard? %>
-        <div class="leaderboard-important-msg">
-          <p>Leaderboard is only visible to organizers</p>
-        </div>
-      <% end %>
-      <table class="leaderboard">
-          <%= concept(Leaderboard::Cell::TableHead,
-                @leaderboards,
-                challenge: @challenge,
-                current_round: @current_round,
-                current_participant: current_participant) %>
-          <tbody>
-            <%= render partial: 'leaderboards' %>
-          </tbody>
-      </table>
-    <% else %>
-      <div class="leaderboard-msg">
-        <p>Leaderboard is not displayed yet.</p>
-      </div>
-    <% end %>
   </div>
-
-  <%= render partial: 'post_challenge',
-        locals: { challenge: @challenge, post_challenge: @post_challenge } %>
-
-  <span id='more-anchor'></span>
-  <%= render partial: 'shared/load_more',
-        locals: { collection: @leaderboards } %>
-  <div id='modal-anchor'></div>
-</div>
+</section>
+<!-- /section -->

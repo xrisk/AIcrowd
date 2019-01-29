@@ -3,7 +3,7 @@ class LeaderboardsController < ApplicationController
     except: :index
   before_action :set_challenge
   respond_to :js, :html
-  layout :set_layout
+  # layout :set_layout
 
   def index
     @current_round = current_round
