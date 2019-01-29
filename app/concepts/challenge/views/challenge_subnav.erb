@@ -1,29 +1,29 @@
-
 <!-- sub-nav bar -->
 <div class="sub-nav-bar sticky-top">
   <div class="container-fluid">
     <ul class="nav">
       <li class="nav-item">
-        <%= link_to 'Overview', challenge_path(challenge), class: tab_class('overview'), "data-turbolinks": false %>
+        <%= link_to 'Overview', challenge_path(challenge), class: tab_class('overview') + " nav-link-01", "data-turbolinks": false %>
       </li>
       <% unless challenge.challenge_rounds.none? || !challenge.show_leaderboard && !(current_participant.admin? || challenge.organizer_id == current_participant.organizer_id) %>
         <li class="nav-item">
-          <%= link_to 'Leaderboard', challenge_leaderboards_path(challenge), class: "nav-link nav-link-02", "data-turbolinks": false %>
+          <%= link_to 'Leaderboard', challenge_leaderboards_path(challenge), class: tab_class('leaderboard') + " nav-link-02", "data-turbolinks": false %>
         </li>
       <% end %>
       <li class="nav-item">
         <%= link_to 'Discussion', URI.escape(File.join(ENV['DISCOURSE_DOMAIN_NAME'], 'c', challenge.slug)),
-          class: "nav-link" %>
+          class: tab_class('discussion') + " nav-link-03" %>
       </li>
       <% if clef_task.present? %>
-        <li class="nav-item"><%= link_to 'Dataset', clef_task_task_dataset_files_path(clef_task, challenge_id: challenge.id), class: "nav-link nav-link-04", "data-turbolinks": false %></li>
+        <li class="nav-item"><%= link_to 'Dataset', clef_task_task_dataset_files_path(clef_task, challenge_id: challenge.id), class: tab_class('dataset') + " nav-link-04", "data-turbolinks": false %></li>
       <% else %>
-        <li class="nav-item"><%= link_to 'Dataset', challenge_dataset_files_path(challenge), class: "nav-link nav-link-05", "data-turbolinks": false %></li>
+        <li class="nav-item"><%= link_to 'Dataset', challenge_dataset_files_path(challenge), class: tab_class('dataset') + " nav-link-04", "data-turbolinks": false %></li>
       <% end %>
 
       <% if challenge.submissions_page.present? || current_participant.admin? || challenge.organizer_id == current_participant.organizer_id %>
-        <li class="nav-item"><%= link_to 'Submissions', challenge_submissions_path(challenge), class: "nav-link nav-link-06", "data-turbolinks": false %></li>
+        <li class="nav-item"><%= link_to 'Submissions', challenge_submissions_path(challenge), class: tab_class('dataset') + " nav-link-05", "data-turbolinks": false %></li>
       <% end %>
+
       <% if policy(challenge).edit? %>
         <% if challenge.clef_task #&& challenge.clef_task.eua_required? %>
           <li class="nav-item"><%= link_to 'Participants', challenge_clef_task_path(challenge), class: "nav-link nav-link-07", "data-turbolinks": false %></li>
