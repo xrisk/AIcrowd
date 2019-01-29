@@ -70,6 +70,7 @@ gem 'puma_worker_killer'
 gem 'pundit'
 gem 'prometheus-client'
 gem "rack", ">= 2.0.6"
+gem "rack-cors"
 gem 'remotipart'
 gem 'ransack'
 gem 'rouge'

@@ -46,5 +46,13 @@ module Crowdai
       Doorkeeper::AuthorizationsController.layout "application"
       Doorkeeper::AuthorizedApplicationsController.layout "application"
     end
+
+    # from https://stackoverflow.com/questions/49265645/rails-cloudfront-no-access-control-allow-origin-header-is-present
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins [ENV['DOMAIN_NAME']]
+        resource '/assets/*', headers: :any, methods: [:get, :post, :options]
+      end
+    end
   end
 end
