@@ -78,9 +78,6 @@
           <div class="form-group">
             <label for="basic-url">GitHub profile</label>
             <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="githubProfile">https://github.com/</span>
-              </div>
               <%= f.text_field :github, class: 'form-control' %>
             </div>
           </div>
@@ -88,9 +85,6 @@
           <div class="form-group">
             <label for="basic-url">LinkedIn profile</label>
             <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="linkedinProfile">https://www.linkedin.com/in/</span>
-              </div>
               <%= f.text_field :linkedin, class: 'form-control' %>
             </div>
           </div>
@@ -98,9 +92,6 @@
           <div class="form-group">
             <label for="basic-url">Twitter profile</label>
             <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="twitterProfile">https://www.twitter.com/</span>
-              </div>
               <%= f.text_field :twitter, class: 'form-control' %>
             </div>
           </div>
@@ -130,7 +121,7 @@
     <div class="row">
       <div class="col">
         <h4>Personal data</h4>
-        <p>Download your personal data that has been collected by AIcrowd.</p>
+        <p id='gdpr-text'>Download your personal data that has been collected by AIcrowd.</p>
         <%= link_to 'Download',
               gdpr_exports_path,
               method: :post, remote: true,

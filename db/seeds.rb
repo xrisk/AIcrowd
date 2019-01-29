@@ -1,5 +1,6 @@
 if Rails.env == 'development' || Rails.env == 'staging'
 
+  ChallengeCall.destroy_all
   Comment.destroy_all
   Topic.destroy_all
   JobPosting.destroy_all
@@ -36,8 +37,16 @@ if Rails.env == 'development' || Rails.env == 'staging'
       password: 'password',
       password_confirmation: 'password',
       name: "p#{id}",
-      confirmed_at: Time.now)
+      confirmed_at: Time.now,
+      )
   end
+
+
+  # Organizers
+  Organizer.create!([
+    {id: 21, organizer: "Poznan University of Technology", address: "Laboratory of Intelligent Decision Support Systems", description: "", approved: true, slug: "poznan-university-of-technology", tagline: "Poznan University of Technology", challenge_proposal: "", api_key: "14b4a11368bb0e22134137aa55bf86af", clef_organizer: false},
+    {id: 17, organizer: "SBB CFF FFS", address: "Switzerland", description: "SBB Swiss Federal Railways", approved: true, slug: "sbb-cff-ffs", tagline: "SBB CFF FFS", challenge_proposal: "", api_key: "", clef_organizer: false}
+  ])
 
   Participant.create!(
     id: 112233,
@@ -58,14 +67,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
     address: "TU Block, Pillar number 420",
     city: "Mumbai",
     first_name: "Test",
-    last_name: "User"
-    )
-
-  # Organizers
-  Organizer.create!([
-    {id: 21, organizer: "Poznan University of Technology", address: "Laboratory of Intelligent Decision Support Systems", description: "", approved: true, slug: "poznan-university-of-technology", tagline: "Poznan University of Technology", challenge_proposal: "", api_key: "14b4a11368bb0e22134137aa55bf86af", clef_organizer: false},
-    {id: 17, organizer: "SBB CFF FFS", address: "Switzerland", description: "SBB Swiss Federal Railways", approved: true, slug: "sbb-cff-ffs", tagline: "SBB CFF FFS", challenge_proposal: "", api_key: "", clef_organizer: false}
-  ])
+    last_name: "User",
+    organizer_id: 21)
 
   member_poznac_ids = [1020, 1050, 1110]
 
@@ -595,6 +598,17 @@ Submission.create!([
     vote_count: 12,
     slug: "Test comment",
     comment_markdown: "Test comment"
+    )
+
+  ChallengeCall.create!(
+    id: 1231232,
+    title: "test_challenge_call",
+    website: "https://www.challenge_call.example.com",
+    description: "This is a test challenge call",
+    organizer_id: 21,
+    crowdai: true,
+    headline: "Headline for challenge call",
+    closing_date: Time.parse("20-10-2020")
     )
 
 end

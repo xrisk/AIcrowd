@@ -1,20 +1,23 @@
-<div class='content'>
-  <div class="masthead">
-    <div class="row">
-      <div class="info">
-        <h2><%= @challenge_call.title %></h2>
-        <p>by <%= link_to @challenge_call.organizer.organizer, organizer_path(@challenge_call.organizer) %></p>
-        <% if @challenge_call.closing_date.present? %>
+<!-- masthead -->
+<div class="masthead masthead-open">
+    <div class="container-fluid">
+
+      <!-- title -->
+      <div class="row">
+        <div class="col-12">
+          <h4>Organize a challenge</h4>
+          <h1><%= @challenge_call.title %></h1>
+          <p>by <%= link_to @challenge_call.organizer.organizer, organizer_path(@challenge_call.organizer) %></p>
+          <% if @challenge_call.closing_date.present? %>
           <p class='light'>Closing date: <%= @challenge_call.closing_date.strftime("%d %b %Y, %H:%M UTC") %></p>
         <% end %>
       </div>
-    </div>
   </div>
-  <div class="row">
-    <% if @challenge_call.call_closed? %>
-      <%= render partial: 'call_closed' %>
-    <% else %>
-      <%= render partial: 'call_open' %>
-    <% end %>
-  </div>
+  <!-- /title -->
 </div>
+
+<% if @challenge_call.call_closed? %>
+  <%= render partial: 'call_closed' %>
+<% else %>
+  <%= render partial: 'call_open' %>
+<% end %>
