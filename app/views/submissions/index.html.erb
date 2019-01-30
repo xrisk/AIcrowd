@@ -32,16 +32,21 @@
                   <th scope="col"><%= sort_link(@search, :name,"Participant") %></th>
                   <th scope="col"><%= sort_link(@search, :grading_status_cd,"Status") %></th>
                   <th scope="col"><%= sort_link(@search, :score_display,@challenge.score_title) %></th>
-                  <th scope="col"><%= sort_link(@search, :score_secondary_display,@challenge.score_secondary_title) %></th>
-                  <th scope="col"><%= sort_link(@search, :grading_message, 'Message') %></th>
-                  <th scope="col"><%= sort_link(@search, :created_at,"Submission") %></th>
-                  <th scope="col" class="text-right"></th>
+                  <% if @challenge.score_secondary_title? %>
+                    <th scope="col"><%= sort_link(@search, :score_secondary_display,@challenge.score_secondary_title) %></th>
+                  <% end %>
+                  <th scope="col" class="status"><%= sort_link(@search, :grading_message, 'Message') %></th>
+                  <th scope="col" class="text-right"><%= sort_link(@search, :created_at,"Submission") %></th>
                   <th scope="col" class="text-right"></th>
                 </tr>
               </thead>
             <% end %>
-            <tbody data-target='filter-sidebar.submissions'>
-              <%= render @submissions %>
+            <tbody>
+              <%= concept(Submission::Cell::TableRow,
+                      collection: @submissions,
+                      challenge: @challenge,
+                      current_round: @current_round,
+                      current_participant: current_participant) %>
             </tbody>
           </table>
         </div>

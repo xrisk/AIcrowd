@@ -1,0 +1,12 @@
+<tr>
+  <td><strong><%= entry.id %></strong></td>
+  <td><%= link_to participant.name, participant_path(participant) %></td>
+  <td><span class="badge <%= grade_class %>"><%= entry.grading_status_cd %></span></td>
+  <td><%= formatted_value(entry.score_display) %></td>
+  <td><%= formatted_value(entry.score_secondary_display) %></td>
+  <td><%= formatted_value(entry.grading_message) %></td>
+  <td class="text-right"><%= local_time(entry.created_at, "%a, %e %b %Y") %> <br>
+      <%= local_time(entry.created_at, "%H:%M:%S") %></td>
+  <td class="text-right"><%= link_to "View", challenge_submission_path(challenge, entry.id), class: "btn btn-secondary btn-sm" %></td>
+</tr>
+
