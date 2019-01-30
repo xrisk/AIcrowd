@@ -1,5 +1,6 @@
 if Rails.env == 'development' || Rails.env == 'staging'
 
+  DatasetFile.destroy_all
   SubmissionComment.destroy_all
   ChallengeCallResponse.destroy_all
   ChallengeCall.destroy_all
@@ -611,6 +612,17 @@ Submission.create!([
     crowdai: true,
     headline: "Headline for challenge call",
     closing_date: Time.parse("20-10-2020")
+    )
+
+  DatasetFile.create!(
+    id: 123,
+    description: "This is a test dataset",
+    challenge_id: 100,
+    title: "test_dataset_file",
+    dataset_file_s3_key: "https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png",
+    hosting_location: "s3",
+    external_url: "https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png",
+    external_file_size: "1 GB"
     )
 
   SubmissionComment.create!(
