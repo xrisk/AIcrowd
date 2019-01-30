@@ -1,45 +1,30 @@
-<div class="detail detail-gray">
-  <%= link_to challenge_submissions_path(@submission.challenge_id) do %>
-    <i class="fa fa-times" aria-hidden="true"></i>
-  <% end %>
+<%= concept(Challenge::Cell::ChallengeMasthead, @presenter.challenge,current_participant: current_participant) %>
+<%= concept(Challenge::Cell::ChallengeSubnav, @presenter.challenge, current_participant: current_participant) %>
 
-  <div class="row">
-    <%= render partial: 'submissions/show/header',
-          locals: {
-            challenge: @presenter.challenge,
-            participant: @presenter.participant,
-            entry: @submission,
-            submission_id: @submission.id } %>
+<!-- section -->
+<section class="section-p-sm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 mb-4">
+        <%= link_to "&#8592; Back to challenge".html_safe ,challenge_submissions_path(@submission.challenge_id) %>
+      </div>
+
+      <%= concept(Submission::Cell::SubmissionDetail, @submission, current_participant: current_participant) %>
+
+      <!--Detail media start-->
+      <% if @challenge.media_on_leaderboard %>
+        <div class="detail-media">
+          <%= concept(Leaderboard::Cell::Media,
+                @submission,
+                size: :large,
+                submission_id: @submission.id,
+                current_participant: current_participant) %>
+        </div>
+      <% end %>
+    <!--Detail media end-->
+      <%= render partial: "submissions/show/comments", locals: {submission: @submission}%>
+    </div>
   </div>
-</div>
-<div class="detail">
-  <div class="row">
-    <%= render partial: 'submissions/show/header_media',
-          locals: {
-            challenge: @presenter.challenge,
-            participant: @presenter.participant,
-            entry: @submission,
-            submission_id: @submission.id } %>
-    <%= render partial: 'submissions/show/meta', locals: { submission: @submission } %>
+</section>
+<!-- /section -->
 
-
-    <%= render partial: 'submissions/show/share',
-          locals: { submission: @submission }%>
-
-    <%= render partial: 'submissions/show/description',
-          locals: { submission: @submission }  %>
-
-    <% if @presenter.grading_history? %>
-      <%= render partial: 'submissions/show/grading_history',
-            locals: { submission: @submission } %>
-    <% end %>
-
-    <% if @presenter.grader_logs.present? %>
-      <%= render partial: 'submissions/show/codemirror' %>
-    <% end %>
-
-    <%# removed by Yannis as a short Term fix %>
-    <%# render partial: 'submissions/show/comments',
-          locals: { submission: @submission } %>
-  </div>
-</div>

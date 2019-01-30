@@ -1,27 +1,18 @@
-<!--Detail add comment start-->
-<% if current_participant %>
-  <%= render partial: 'submission_comments/form',
-      locals: { submission: submission } %>
-<% end %>
+<div class="col-12 mt-5">
+  <h3 class="mb-4">Comments</h3>
+  <%= render partial: "submission_comments/form", locals: {submission: @submission} %>
 
-<% submission.submission_comments.each do |submission_comment| %>
-  <% if submission_comment.persisted? %>
-    <div class="discussion-comment">
-      <div class="pic">
-        <%= link_to participant_path(submission_comment.participant) do %>
-          <%= concept(Image::Cell,submission_comment.participant) %>
-        <% end %>
-      </div>
-      <div class="topic-content">
-        <p class="details">Posted by <%= link_to submission_comment.participant.name, participant_path(submission_comment.participant.id) %> <%= time_ago_in_words(submission.created_at) %> ago
-        <div class="comment">
-          <p><%= sanitize(submission_comment.comment) %></p>
-        </div>
-      </div>
-      <%= concept(Vote::Cell,
-              submission_comment,
-              current_participant: current_participant) %>
+  <% submission.submission_comments.each do |submission_comment| %>
+  <div class="topic-comment">
+    <%= link_to participant_path(submission_comment.participant) do %>
+      <%= concept(Image::Cell,submission_comment.participant, klass: "avatar") %>
+    <% end %>
+
+    <div class="discussion-topic-body">
+      <span class="discussion-details">By <%= link_to submission_comment.participant.name, participant_path(submission_comment.participant.id) %> <%= time_ago_in_words(submission.created_at) %> ago</span>
+
+      <p><%= sanitize(submission_comment.comment) %></p>
     </div>
+  </div>
   <% end %>
-<% end %>
-<!--Detail user comment end-->
+</div>

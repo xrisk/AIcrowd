@@ -1,5 +1,6 @@
 if Rails.env == 'development' || Rails.env == 'staging'
 
+  SubmissionComment.destroy_all
   ChallengeCallResponse.destroy_all
   ChallengeCall.destroy_all
   Comment.destroy_all
@@ -610,6 +611,14 @@ Submission.create!([
     crowdai: true,
     headline: "Headline for challenge call",
     closing_date: Time.parse("20-10-2020")
+    )
+
+  SubmissionComment.create!(
+    id:123242,
+    submission_id: 13615,
+    participant_id: 112233,
+    comment: "This is a test comment",
+    comment_markdown: "This is a test comment"
     )
 
 end
