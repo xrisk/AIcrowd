@@ -21,7 +21,7 @@
       <% end %>
 
       <% if challenge.submissions_page.present? || current_participant.admin? || challenge.organizer_id == current_participant.organizer_id %>
-        <li class="nav-item"><%= link_to 'Submissions', challenge_submissions_path(challenge), class: tab_class('dataset') + " nav-link-05", "data-turbolinks": false %></li>
+        <li class="nav-item"><%= link_to 'Submissions', challenge_submissions_path(challenge), class: tab_class('submissions') + " nav-link-05", "data-turbolinks": false %></li>
       <% end %>
 
       <% if policy(challenge).edit? %>
