@@ -74,7 +74,8 @@
         
         <!-- load more -->
         <div class="load-more">
-          <%= link_to_next_page @submissions, '<button type="button" class="btn btn-secondary btn-block">Load more</button>'.html_safe, remote: true %>      
+          <%= link_to_next_page @submissions, '<button type="button" class="btn btn-secondary btn-block">Load more</button>'.html_safe  do %>           
+          <% end %>      
         </div>
         <!-- /load more -->
       </div>

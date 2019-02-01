@@ -103,7 +103,7 @@
 
           <div class="btn-set" aria-hidden="true">
             <%= f.button "Update profile", class: 'btn btn-primary' %>
-            <%= link_to 'Cancel', participant_path(@participant), {class: "btn btn-secondary", type: "button"} %>
+            <%= button_to 'Cancel', participant_path(@participant), {class: "btn btn-secondary", type: "button"} %>
           </div>
 
          <% end %>
@@ -122,10 +122,11 @@
       <div class="col">
         <h4>Personal data</h4>
         <p id='gdpr-text'>Download your personal data that has been collected by AIcrowd.</p>
-        <%= link_to '<button class="btn btn-primary">Download</button>'.html_safe,
+        <%= button_to 'Download',
               gdpr_exports_path,
               method: :post, remote: true,
-              id: 'gdpr-button' %>
+              id: 'gdpr-button',
+              class: "btn btn-primary" %>
       </div>
     </div>
   </div>

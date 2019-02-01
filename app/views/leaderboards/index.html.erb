@@ -59,8 +59,7 @@
 
       <!-- load more -->
       <div class="load-more">
-        <%= link_to_next_page @leaderboards, remote: true do %>
-          <button type="button" class="btn btn-secondary btn-block">Load more</button>
+        <%= link_to_next_page @leaderboards, '<button type="button" class="btn btn-secondary btn-block">Load more</button>'.html_safe, remote: true do %>
         <%end%>
       </div>
       <!-- /load more -->
