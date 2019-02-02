@@ -8,6 +8,10 @@ class ParticipantPolicy < ApplicationPolicy
     true
   end
 
+  def sso?
+    true
+  end
+
   def edit?
     participant && participant.admin? || participant && @record.id == participant.id
   end
