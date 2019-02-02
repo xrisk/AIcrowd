@@ -1,3 +1,13 @@
+<!-- cookie consent pop-up -->
+  <div class="alert alert-cookie alert-dismissible fade show" role="alert">
+    Cookies help us deliver our services. By using our services, you agree to our use of cookies.
+    <div class="btn-set" aria-hidden="true">
+      <button type="button" class="btn btn-primary btn-sm" data-dismiss="alert" aria-label="Close">Accept</button>
+      <%= button_to "Learn more", cookies_path, class:"btn btn-secondary btn-sm", method: :get %>
+    </div>
+  </div>
+<!-- /cookie consent pop-up -->
+
 <div class="masthead masthead-home bg-white">
   <div class="container-fluid">
     <div class="row">
