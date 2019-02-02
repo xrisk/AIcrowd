@@ -101,8 +101,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
 
   # Partners
   Partner.create!([
-    {id: 19022, organizer_id: 21 , image_file: "logo-organizer-spotify.svg", name: "Spotify", visible: true},
-    {id: 10223, organizer_id: 17 , image_file: "logo-organizer-spotify.svg", name: "Uber", visible: true}
+    {id: 22, organizer_id: 21 , image_file: open('https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png'), name: "Spotify", visible: true},
+    {id: 1223, organizer_id: 17 , image_file: open('https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png'), name: "Uber", visible: true}
   ])
 
   # Challenges
