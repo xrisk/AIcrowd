@@ -368,22 +368,22 @@ template {
 
 @font-face {
   font-family: Inter-UI;
-  src: url(../../assets/fonts/Inter-UI-Regular.woff);
-  src: url(../../assets/fonts/Inter-UI-Regular.woff2);
+  src: font-url("/assets/fonts/Inter-UI-Regular.woff");
+  src: font-url("/assets/fonts/Inter-UI-Regular.woff2");
   font-weight: 400;
 }
 
 @font-face {
   font-family: Inter-UI;
-  src: url(../../assets/fonts/Inter-UI-SemiBold.woff);
-  src: url(../../assets/fonts/Inter-UI-SemiBold.woff2);
+  src: font-url("/assets/fonts/Inter-UI-SemiBold.woff");
+  src: font-url("/assets/fonts/Inter-UI-SemiBold.woff2");
   font-weight: 600;
 }
 
 @font-face {
   font-family: Inter-UI;
-  src: url(../../assets/fonts/Inter-UI-Bold.woff);
-  src: url(../../assets/fonts/Inter-UI-Bold.woff2);
+  src: font-url("/assets/fonts/Inter-UI-Bold.woff");
+  src: font-url("/assets/fonts/Inter-UI-Bold.woff2");
   font-weight: 700;
 }
 
