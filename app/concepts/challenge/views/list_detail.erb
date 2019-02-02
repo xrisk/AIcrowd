@@ -53,6 +53,7 @@
     <div class="card-footer">
       <span> By &nbsp;</span>
         <%= link_to organizer_path(challenge.organizer) do %>
+          <%= concept(Image::Cell,challenge.organizer, current_participant: current_participant) %>
           <span><%= challenge.organizer.organizer %></span>
         <% end %>
     </div>

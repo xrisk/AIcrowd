@@ -143,3 +143,30 @@
 
 </section>
 <!-- /section -->
+
+<!-- section -->
+<section class="section-p-md bg-light border-top">
+  <div class="logo-grid">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <header class="section-header-decorative">
+            <div>
+              <h4>Thank you</h4>
+            </div>
+          </header>
+        </div>
+        <div class="col-sm-12 col-md-6">
+          <% if @partners.present? %>
+              <% @partners.each_with_index do |partner,index| %>
+                <div class="logo">
+                  <%= image_tag partner.image_file.url, class: "img-fluid" %>
+                </div>
+              <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div> 
+  </div>
+</section>
+<!-- /section -->
