@@ -16,6 +16,12 @@
       <%= f.text_area :rules_markdown, class: "txt-med" %>
     <% end %>
 
+    <label>Prizes Breakdown</label>
+    Prize Money: <%= f.text_field :prize_cash %>
+    Travel Grants: <%= f.text_field :prize_travel %>
+    Academic Papers: <%= f.text_field :prize_academic %>
+    Misc Prizes: <%= f.text_field :prize_misc %>
+
     <label>Prizes</label>
     <%= markdown_editor do |m| %>
       <%= f.text_area :prizes_markdown, class: "txt-med" %>
