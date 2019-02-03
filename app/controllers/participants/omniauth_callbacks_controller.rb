@@ -4,6 +4,8 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
   end
 
   def oauth2_generic
+    puts "OAUTH:"
+    puts request.env["omniauth.auth"]
     @user = Participant.from_omniauth(request.env["omniauth.auth"])
     if @user.persisted?
       if(!@user.confirmed?)

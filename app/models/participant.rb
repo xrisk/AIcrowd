@@ -80,7 +80,7 @@ class Participant < ApplicationRecord
       with: /\A(?=.*[a-zA-Z])[a-zA-Z0-9.\-_{}\[\]]+\z/,
       message: 'User handle can contain numbers and these characters -_.{}[] and atleast one letter'
     },
-    length: { minimum: 2, maximum: 15 },
+    length: { minimum: 2 },
     uniqueness: { case_sensitive: false }
   validates :affiliation,
     length: { in: 2...100},
@@ -207,11 +207,23 @@ class Participant < ApplicationRecord
     Prometheus::ParticipantCounterService.new.call
   end
 
+  def self.sanitize_userhandle(userhandle)
+    userhandle.to_ascii()
+      .gsub("@", "a")
+      .gsub("&", "and")
+      .gsub('#', '')
+      .gsub('*', '')
+      .gsub(/[\,\.\'\;\-\=]/, "")
+      .gsub(/[\(\)]/, "_")
+      .gsub(/ /, "_")
+  end
+
   def self.from_omniauth(auth)
     raw_info = auth.raw_info || (auth.extra && auth.extra.raw_info.participant)
     email = auth.info.email || raw_info.email
     username = auth.info.name || raw_info.name
     username = username.gsub(/\s+/, '_').downcase
+    username = sanitize_userhandle(username)
     image_url = auth.info.image ||
                 raw_info.image ||
                 (raw_info.image_file && raw_info.image_file.url)
@@ -224,7 +236,10 @@ class Participant < ApplicationRecord
       user.password = Devise.friendly_token[0,20]
       user.name = username
       user.provider = provider
-      # user.remote_image_file_url = image_url
+      puts "EMAIL: #{email} name: #{username} provider: #{provider}"
+      if image_url
+        user.remote_image_file_url = image_url
+      end
       ### NATE: we want to skip the notification but leave the user unconfirmed
       ### which will allow us to force a password reset on first login
       user.skip_confirmation_notification!
