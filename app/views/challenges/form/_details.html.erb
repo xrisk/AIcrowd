@@ -140,6 +140,17 @@
       </div>
     </div>
 
+    <div class="twin-container">
+      <div class="twin-field">
+        <%= f.label :discourse_category_id, 'Discourse Category Id' %>
+        <%= f.text_field :discourse_category_id %>
+      </div>
+      <div class="twin-field">
+        <!-- empty but impacts css rendering -->
+      </div>
+
+    </div>
+
     <%= render partial: 'challenges/form/submit_buttons',
           locals: { f: f } %>
   <% end %>

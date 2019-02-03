@@ -90,6 +90,37 @@ class Challenge < ApplicationRecord
             END, challenges.participant_count DESC")
   }
 
+  after_create do
+    client = DiscourseApi::Client.new(ENV["DISCOURSE_DOMAIN_NAME"])
+    client.api_key = ENV["DISCOURSE_API_KEY"]
+    client.api_username = ENV["DISCOURSE_API_USERNAME"]
+    # NATE: discourse has a hard limit of 50 chars
+    # for category name length
+    res = client.create_category({
+      name: self.challenge.truncate(50),
+      slug: self.slug[0..49],
+      color: "49d9e9",
+      text_color: "f0fcfd"
+    })
+    self.discourse_category_id = res["id"]
+    self.save
+  end
+
+  after_update do
+    if(self.discourse_category_id)
+      client = DiscourseApi::Client.new(ENV["DISCOURSE_DOMAIN_NAME"])
+      client.api_key = ENV["DISCOURSE_API_KEY"]
+      client.api_username = ENV["DISCOURSE_API_USERNAME"]
+      client.update_category({
+        id: self.discourse_category_id,
+        name: self.challenge.truncate(50),
+        slug: self.slug[0..49],
+        color: "49d9e9",
+        text_color: "f0fcfd"
+      })
+    end
+  end
+
   after_initialize do
     if self.new_record?
       self.submission_license = "Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other crowdAI participants. All submitted content will be licensed under Creative Commons (CC)."

@@ -144,6 +144,7 @@ class ChallengesController < ApplicationController
       .require(:challenge)
       .permit(
         :id,
+        :discourse_category_id,
         :organizer_id,
         :challenge,
         :tagline,
