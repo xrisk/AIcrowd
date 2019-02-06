@@ -56,13 +56,25 @@ class ParticipantsController < ApplicationController
       raise RuntimeError, "Incorrect SSO signature"
     end
 
+    default_avatar_url = 'users/avatar-default.png'
+    if current_user.image_file
+      avatar_url = current_user.image_file.url
+      if avatar_url.nil?
+        avatar_url = default_avatar_url
+      end
+    else
+      avatar_url = default_avatar_url
+    end
+
     response_params = {
       email: current_user.email,
       admin: current_user.admin,
       external_id: current_user.id,
       name: current_user.name,
-      nonce: nonce
+      nonce: nonce,
+      avatar_utl: avatar_url
     }
+    
     response_query = response_params.to_query
     encoded_response_query = Base64.strict_encode64(response_query)
     response_sig = OpenSSL::HMAC.hexdigest("sha256", ENV['SSO_SECRET'], encoded_response_query)
