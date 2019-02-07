@@ -56,14 +56,9 @@ class ParticipantsController < ApplicationController
       raise RuntimeError, "Incorrect SSO signature"
     end
 
-    default_avatar_url = 'users/avatar-default.png'
-    if current_user.image_file
+    avatar_url = ENV['DOMAIN_NAME'] + '/assets/users/avatar-default.png'
+    if current_user.image_file and not current_user.image_file.url.nil?
       avatar_url = current_user.image_file.url
-      if avatar_url.nil?
-        avatar_url = default_avatar_url
-      end
-    else
-      avatar_url = default_avatar_url
     end
 
     response_params = {
@@ -72,7 +67,7 @@ class ParticipantsController < ApplicationController
       external_id: current_user.id,
       name: current_user.name,
       nonce: nonce,
-      avatar_utl: avatar_url
+      avatar_url: avatar_url
     }
     
     response_query = response_params.to_query
