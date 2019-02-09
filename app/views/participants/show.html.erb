@@ -43,7 +43,17 @@
         </div>
       </section>
     <% else %>
-      <%= "#{@participant.name} hasn't entered any challenges yet..." %>
+      <section class="section-p-md">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="md-content">
+                <%= "#{@participant.name} hasn't entered any challenges yet..." %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     <% end %>
   </div>
 
@@ -53,28 +63,40 @@
                           collection: @posts,
                           current_participant: current_participant) %>
     <% else %>
-      <%= "#{@participant.name} hasn't made any posts yet..." %>
+      
+      <section class="section-p-md">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="md-content">
+                <%= "#{@participant.name} hasn't made any posts yet..." %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     <% end %>
   </div>
 
   <div id='tab-bio' class="tab-pane fade">
-    <% if @participant.bio.present? %>
-      <!-- section -->
-        <section class="section-p-md">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-12">
+  <!-- section -->
+    <section class="section-p-md">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
 
-                <div class="md-content">
-                  <%= @participant.bio %>
-                </div>
-              </div>
+            <div class="md-content">
+              <% if @participant.bio.present? %>
+                <%= @participant.bio %>
+              <% else %>
+                <%= "Apparently #{@participant.name} prefers to keep an air of mystery about them..." %>
+              <% end %>
             </div>
+
           </div>
-        </section>
-        <!-- /section -->
-    <% else %>
-      <%= "Apparently #{@participant.name} prefers to keep an air of mystery about them..." %>
-    <% end %>
+        </div>
+      </div>
+    </section>
+    <!-- /section -->
   </div>
 </div>
