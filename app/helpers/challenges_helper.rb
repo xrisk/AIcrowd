@@ -3,7 +3,7 @@ module ChallengesHelper
   def participant_invitation(email:)
     participant = Participant.find_by(email: email)
     if participant.is_a?(NullParticipant)
-      return 'No crowdAI account'
+      return 'No AIcrowd account'
     else
       return link_to participant.name, participant_path(participant)
     end
