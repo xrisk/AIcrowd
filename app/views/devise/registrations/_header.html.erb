@@ -18,7 +18,7 @@
         <%= link_to "Email & password", edit_participant_registration_path, class: "nav-link nav-link-01 active" %>
       </li>
       <li class="nav-item">
-        <%= link_to "Notifications", edit_participant_email_preference_path(@participant,@participant.email_preferences.first), class: "nav-link nav-link-02" %>
+        <%= link_to "Notifications", participant_notifications_path(@participant, id: @participant.email_preferences.first.id), class: "nav-link nav-link-02" %>
       </li>
 
       <!-- more dropdown md -->
