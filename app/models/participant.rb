@@ -80,7 +80,7 @@ class Participant < ApplicationRecord
       with: /\A(?=.*[a-zA-Z])[a-zA-Z0-9.\-_{}\[\]]+\z/,
       message: 'User handle can contain numbers and these characters -_.{}[] and atleast one letter'
     },
-    length: { minimum: 2 },
+    length: { in: 2...255 },
     uniqueness: { case_sensitive: false }
   validates :affiliation,
     length: { in: 2...100},
