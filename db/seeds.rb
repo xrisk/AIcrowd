@@ -220,7 +220,7 @@ if Rails.env == 'development'
     {id: 12994, challenge_id: 37, participant_id: 1235, score: 30581.9166792, created_at: "2018-08-11 09:27:50", updated_at: "2018-08-11 09:28:50", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 30581.917, score_secondary_display: 0.0, baseline: false, baseline_comment: nil},
     {id: 13615, challenge_id: 37, participant_id: 1020, score: 60001.6000001, created_at: "2018-08-16 16:01:34", updated_at: "2018-08-16 16:01:53", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 60001.6, score_secondary_display: 0.0, baseline: false, baseline_comment: nil},
     {id: 12925, challenge_id: 37, participant_id: 7420, score: 344.5, created_at: "2018-08-10 15:34:15", updated_at: "2018-08-10 15:36:03", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "Trivial not completely working solution to test submission process", post_challenge: false, challenge_round_id: 52, score_display: 344.5, score_secondary_display: 0.0, baseline: false, baseline_comment: nil},
-    {id: 12991, challenge_id: 37, participant_id: 3272, score: 765.872345, created_at: "2018-08-12 08:48:59", updated_at: "2018-08-12 08:49:04", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 765.872345, score_secondary_display: nil, baseline: false, baseline_comment: nil},    
+    {id: 12991, challenge_id: 37, participant_id: 3272, score: 765.872345, created_at: "2018-08-12 08:48:59", updated_at: "2018-08-12 08:49:04", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 765.872345, score_secondary_display: nil, baseline: false, baseline_comment: nil},
     {id: 12995, challenge_id: 37, participant_id: 3272, score: 777.9166792, created_at: "2018-08-13 09:27:50", updated_at: "2018-08-13 09:28:50", score_secondary: 0.0, grading_status_cd: "graded", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: 777.9166792, score_secondary_display: 0.0, baseline: false, baseline_comment: nil},
     {id: 13616, challenge_id: 37, participant_id: 3272, score: nil, created_at: "2018-08-16 16:02:34", updated_at: "2018-08-16 16:03:53", score_secondary: nil, grading_status_cd: "failed", description_markdown: "", post_challenge: false, challenge_round_id: 52, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil},
 
@@ -495,4 +495,13 @@ if Rails.env == 'development'
     created_at: Time.now,
     job_url: "www.dnaforu.com"
     )
+end
+
+### Run additional seeds
+if Rails.env == 'development'
+  Dir[File.join(Rails.root, 'db', 'seeds/*', '*.rb')].sort.each do |seed|
+    Dir.chdir(File.dirname(seed)) do
+      load seed
+    end
+  end
 end
