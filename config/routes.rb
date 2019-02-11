@@ -78,6 +78,8 @@ Rails.application.routes.draw do
     resources :task_dataset_file_downloads
   end
 
+  resources :participation_terms, only: [:index]
+
   resources :challenges, only: [:index,:show] do
     collection do
       get :reorder
