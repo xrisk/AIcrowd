@@ -22,6 +22,7 @@ Paloma.controller('Challenges', {
     });
     $('#replace-rules-button').click(function(e) {
       $(this).hide()
+    })
   },
   show: function(){
     // NATE: Apparently challenges#show is not using turbolinks
