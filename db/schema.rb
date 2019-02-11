@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_11_110530) do
+ActiveRecord::Schema.define(version: 2019_02_10_132648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -209,6 +209,9 @@ ActiveRecord::Schema.define(version: 2019_01_11_110530) do
     t.string "clef_status_cd"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "challenge_rules_accepted_date"
+    t.integer "challenge_rules_accepted_version"
+    t.boolean "challenge_rules_additional_checkbox", default: false
     t.index ["challenge_id"], name: "index_challenge_participants_on_challenge_id"
     t.index ["participant_id"], name: "index_challenge_participants_on_participant_id"
   end
@@ -243,6 +246,21 @@ ActiveRecord::Schema.define(version: 2019_01_11_110530) do
     t.integer "failed_submissions", default: 0
     t.integer "parallel_submissions", default: 0, null: false
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
+  end
+
+  create_table "challenge_rules", force: :cascade do |t|
+    t.bigint "challenge_id"
+    t.text "terms"
+    t.text "terms_markdown"
+    t.text "instructions"
+    t.text "instructions_markdown"
+    t.boolean "has_additional_checkbox", default: false
+    t.string "additional_checkbox_text"
+    t.integer "version", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "additional_checkbox_text_markdown"
+    t.index ["challenge_id"], name: "index_challenge_rules_on_challenge_id"
   end
 
   create_table "challenges", id: :serial, force: :cascade do |t|
@@ -647,12 +665,26 @@ ActiveRecord::Schema.define(version: 2019_01_11_110530) do
     t.integer "level", default: 0
     t.string "provider"
     t.string "uid"
+    t.datetime "participation_terms_accepted_date"
+    t.integer "participation_terms_accepted_version"
+    t.boolean "agreed_to_terms_of_use_and_privacy", default: false
+    t.boolean "agreed_to_marketing", default: false
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["organizer_id"], name: "index_participants_on_organizer_id"
     t.index ["reset_password_token"], name: "index_participants_on_reset_password_token", unique: true
     t.index ["slug"], name: "index_participants_on_slug", unique: true
     t.index ["unlock_token"], name: "index_participants_on_unlock_token", unique: true
+  end
+
+  create_table "participation_terms", force: :cascade do |t|
+    t.text "terms"
+    t.text "terms_markdown"
+    t.text "instructions"
+    t.text "instructions_markdown"
+    t.integer "version", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "partners", force: :cascade do |t|
@@ -837,6 +869,7 @@ ActiveRecord::Schema.define(version: 2019_01_11_110530) do
   add_foreign_key "challenge_participants", "participants"
   add_foreign_key "challenge_partners", "challenges"
   add_foreign_key "challenge_rounds", "challenges"
+  add_foreign_key "challenge_rules", "challenges"
   add_foreign_key "challenges", "organizers"
   add_foreign_key "clef_tasks", "organizers"
   add_foreign_key "comments", "participants"

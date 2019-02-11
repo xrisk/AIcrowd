@@ -58,6 +58,7 @@ class ChallengesController < ApplicationController
     if !params[:version]  # dont' record page views on history pages
       @challenge.record_page_view
     end
+    @challenge_rules = @challenge.current_challenge_rules
   end
 
   def new
@@ -244,6 +245,11 @@ class ChallengesController < ApplicationController
           :image_file,
           :partner_url,
           :_destroy],
+        challenge_rules_attributes: [
+          :id,
+          :terms_markdown,
+          :has_additional_checkbox,
+          :additional_checkbox_text_markdown],
         invitations_attributes: [
           :id,
           :email,

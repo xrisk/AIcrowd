@@ -1,0 +1,27 @@
+<%= render 'challenge_rules', challenge_rules: @challenge_rules %>
+<div class="row">
+<%= form_for [@challenge, @challenge_participant], validate: true, html: { class: "sgl-col", multipart: true } do |f| %>
+
+  <%= f.hidden_field :challenge_rules_accepted_version, value: @challenge_rules.version %>
+  <fieldset class="checkbox">
+    <div>
+      <%=check_box("rules", "accepted", { class: 'requires-agreement-checkbox', 'data-target': 'accept-challenge-rules-button' }, "yes", "no")%>
+      <%= label :challenge_rules_checkbox, "I have read and agree to the challenge rules (required)" %>
+    </div>
+  </fieldset>
+  <% if @challenge_rules.has_additional_checkbox %>
+    <fieldset class="checkbox">
+      <div>
+        <%= f.check_box :challenge_rules_additional_checkbox, {}, "true", "false" %>
+        <%= f.label :challenge_rules_additional_checkbox do%>
+          <%= sanitize(@challenge_rules.additional_checkbox_text)%>
+        <% end %>
+
+      </div>
+    </fieldset>
+  <% end %>
+  <div class="button-group">
+    <%= f.button ("Save"), class: 'btn btn-primary requires-agreement', id: 'accept-challenge-rules-button', disabled: true %>
+  </div>
+<% end %>
+</div>

@@ -235,4 +235,23 @@ class Participant < ApplicationRecord
     end
   end
 
+  def current_participation_terms
+    ParticipationTerms.current_terms
+  end
+
+  def current_participation_terms_version
+    current_participation_terms && current_participation_terms.version
+  end
+
+  def has_accepted_participation_terms?
+
+    if (self.participation_terms_accepted_version != current_participation_terms_version)
+      return
+    end
+    if !self.participation_terms_accepted_date
+      return
+    end
+    return true
+  end
+
 end

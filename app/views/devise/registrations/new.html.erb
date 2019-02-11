@@ -9,11 +9,25 @@
           <%= f.text_field :email, placeholder: 'Email address' %>
           <%= f.password_field :password, placeholder: 'Choose a password' %>
           <%= f.password_field :password_confirmation, placeholder: 'Re-type password' %>
-					<p>By signing up, I agree to terms in the
-            <%= link_to 'Terms of Use', terms_path %>
-            and the <%= link_to 'Privacy Policy', privacy_path %>
-          </p>
-          <%= f.button 'Sign Up', type: 'submit', class: 'btn btn-primary' %>
+          <fieldset class="checkbox">
+            <div>
+              <%= f.check_box :agreed_to_terms_of_use_and_privacy, { class: 'requires-agreement-checkbox', "data-target": "sign-up-button", id: 'requires-agreement-checkbox'}, "true", "false" %>
+              <%= f.label :agreed_to_terms_of_use_and_privacy do %>
+                <p>By signing up, I agree to the terms in the
+                <%= link_to 'Terms of Use', terms_path %>
+                and the <%= link_to 'Privacy Policy', privacy_path %></p>
+              <% end %>
+            </div>
+          </fieldset>
+          <fieldset class="checkbox">
+            <div>
+              <%= f.check_box :agreed_to_marketing, {}, "true", "false" %>
+              <%= f.label :agreed_to_marketing do %>
+                <p>I agree to receive occasional updates about AIcrowd news, including new challenge launches and other activities (this can be turned off in your settings).</p>
+              <% end %>
+            </div>
+          </fieldset>
+          <%= f.button 'Sign Up', type: 'submit', class: 'btn btn-primary requires-agreement', id: "sign-up-button", disabled: true %>
 				</div>
 				<div class="panel-footer">
 					<p>Already registered? <%= link_to 'Log In', new_participant_session_path %></p>

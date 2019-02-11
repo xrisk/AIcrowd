@@ -1,0 +1,28 @@
+<div class="row">
+  <%= form_for [@organizer,@challenge], validate: true, html: { class: "sgl-col", multipart: true } do |f| %>
+
+    <fieldset>
+      <div id='rules'>
+        <h3>Current Rules:</h3>
+        <% if @challenge.current_challenge_rules %>
+        <%= render 'challenge_rules/challenge_rules', challenge_rules: @challenge.current_challenge_rules, challenge: @challenge, organizer: @organizer %>
+        <% else %>
+          <div>Please add challenge rules</div>
+        <% end %>
+        <hr/>
+        <div class='links'>
+          <%= link_to_add_association 'Replace Challenge Rules',
+                f,
+                :challenge_rules,
+                html_options = {
+                  partial: 'challenges/form/challenge_rules_fields',
+                  class: 'btn btn-small',
+                  id: 'replace-rules-button' } %>
+        </div>
+      </div>
+      <br/><br/>
+    </fieldset>
+
+    <%= render partial: 'challenges/form/submit_buttons', locals: { f: f } %>
+<% end %>
+</div>

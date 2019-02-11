@@ -37,6 +37,8 @@ class Api::ExternalGradersController < Api::BaseController
         challenge: challenge, params: params)
       raise ChallengeClientNameInvalid if challenge.nil?
       raise ChallengeRoundNotOpen unless challenge_round_open?(challenge)
+      raise ParticipantDidNotAcceptParticipationTerms unless participant.has_accepted_participation_terms?
+      raise ParticipantDidNotAcceptChallengeRules unless challenge.has_accepted_challenge_rules?(participant)
       raise ParticipantNotQualified unless participant_qualified?(challenge,participant)
       raise ParallelSubmissionLimitExceeded unless parallel_submissions_allowed?(challenge,participant)
 
@@ -396,7 +398,7 @@ class Api::ExternalGradersController < Api::BaseController
   end
 
   class ChallengeRoundNotOpen < StandardError
-    def initialize(msg='The challenge is not open for submissions at this time. Please check the challenge page at www.crowdai.org')
+    def initialize(msg='The challenge is not open for submissions at this time. Please check the challenge page at www.aicrowd.com')
       super
     end
   end
@@ -408,7 +410,7 @@ class Api::ExternalGradersController < Api::BaseController
   end
 
   class ParticipantNotQualified < StandardError
-    def initialize(msg='You have not qualified for this round. Please review the challenge rules at www.crowdai.org')
+    def initialize(msg='You have not qualified for this round. Please review the challenge rules at www.aicrowd.com')
       super
     end
   end
@@ -419,4 +421,15 @@ class Api::ExternalGradersController < Api::BaseController
     end
   end
 
+  class ParticipantDidNotAcceptParticipationTerms < StandardError
+    def initialize(msg='You have not accepted the current AIcrowd Participation Terms. Please go to the challenge page on www.aicrowd.com and click on the "participate" button.')
+      super
+    end
+  end
+
+  class ParticipantDidNotAcceptChallengeRules < StandardError
+    def initialize(msg='You have not accepted the current Challenge Rules. Please go to the challenge page on www.aicrowd.com and click on the "participate" button.')
+      super
+    end
+  end
 end

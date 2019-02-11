@@ -20,6 +20,18 @@ Capybara.register_driver :selenium do |app|
   Capybara::Selenium::Driver.new(app, browser: browser)
 end
 
+### Useful debugging from https://stackoverflow.com/questions/7555416/how-to-leave-browser-opened-even-after-selenium-ruby-script-finishes
+# Selenium::WebDriver::Driver.class_eval do
+#   def quit
+#     #STDOUT.puts "#{self.class}#quit: no-op"
+#   end
+# end
+
+# Capybara::Selenium::Driver.class_eval do
+#   def reset!
+#   end
+# end
+
 Capybara.server_port = 52508 + ENV['TEST_ENV_NUMBER'].to_i
 Capybara.asset_host = 'http://localhost:3000'
 Capybara::Screenshot.register_driver(browser) do |driver, path|

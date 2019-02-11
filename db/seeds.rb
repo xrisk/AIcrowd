@@ -3,6 +3,9 @@ if Rails.env == 'development'
   JobPosting.destroy_all
   Blog.destroy_all
   Submission.destroy_all
+  Partner.destroy_all
+  Topic.destroy_all
+  ChallengeParticipant.destroy_all
   Participant.destroy_all
   BaseLeaderboard.destroy_all
   ChallengeRound.destroy_all

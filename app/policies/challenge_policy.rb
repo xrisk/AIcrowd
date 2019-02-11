@@ -52,6 +52,17 @@ class ChallengePolicy < ApplicationPolicy
     update?
   end
 
+  def has_accepted_challenge_rules?
+    @record.has_accepted_challenge_rules?(participant)
+  end
+
+  def has_accepted_participation_terms?
+    if !participant
+      return
+    end
+    return participant.has_accepted_participation_terms?
+  end
+
   def show_leaderboard?
     @record.challenge_rounds.present? &&
       @record.show_leaderboard == true ||

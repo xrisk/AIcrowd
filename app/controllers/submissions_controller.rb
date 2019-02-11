@@ -3,6 +3,7 @@ class SubmissionsController < ApplicationController
   before_action :set_submission,
     only: [:show, :edit, :update ]
   before_action :set_challenge
+  before_action :check_participation_terms
   before_action :set_s3_direct_post,
     only: [:new, :edit, :create, :update]
   before_action :set_submissions_remaining, except: :show
@@ -127,6 +128,19 @@ class SubmissionsController < ApplicationController
 
     def set_challenge
       @challenge = Challenge.friendly.find(params[:challenge_id])
+    end
+
+
+    def check_participation_terms
+      if !policy(@challenge).has_accepted_participation_terms?
+        redirect_to [@challenge, ParticipationTerms.current_terms]
+        return
+      end
+
+      if !policy(@challenge).has_accepted_challenge_rules?
+        redirect_to [@challenge, @challenge.current_challenge_rules]
+        return
+      end
     end
 
     def grader_logs

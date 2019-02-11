@@ -46,6 +46,7 @@ Rails.application.routes.draw do
     get :sync_mailchimp
     get :regen_api_key
     get :remove_image
+    patch :accept_terms
     resources :email_preferences, only: [:edit, :update]
   end
   resources :job_postings, only: [:index, :show]
@@ -106,6 +107,9 @@ Rails.application.routes.draw do
       collection { post :import }
     end
     resources :dataset_terms, only: [:update]
+    resources :participation_terms, only: [:show]
+    resources :challenge_rules, only: [:show]
+    resources :challenge_participants
   end
   get '/load_more_challenges', to: 'challenges#load_more', as: :load_more_challenges
 

@@ -55,4 +55,15 @@ $(document).on('turbolinks:load', function() {
 		e.preventDefault();
 		$(".mde-img input").trigger('click');
  	});
+
+  // requires-agreement buttons and checkboxes
+  $('.requires-agreement-checkbox').click(function(){
+    let target_id = '#' + $(".requires-agreement-checkbox").data("target")
+    if($(this).is(':checked')){
+      $(target_id).attr('disabled', false)
+    }
+    else{
+      $(target_id).attr('disabled', true)
+    }
+  })
 });

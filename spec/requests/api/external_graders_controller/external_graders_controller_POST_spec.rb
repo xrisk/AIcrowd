@@ -9,7 +9,9 @@ RSpec.describe Api::ExternalGradersController, type: :request do
   after do
     Timecop.return
   end
-
+  let!(:participation_terms) {
+    create :participation_terms
+  }
   let!(:organizer) {
     create :organizer,
     api_key: '3d1efc2332200314c86d2921dd33434c' }
@@ -17,6 +19,10 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     create :challenge,
     :running,
     organizer: organizer }
+  let!(:challenge_rules) {
+    create :challenge_rules,
+    challenge: challenge
+  }
   let!(:challenge_round) {
     create :challenge_round,
     challenge_id: challenge.id,
@@ -25,6 +31,11 @@ RSpec.describe Api::ExternalGradersController, type: :request do
   let!(:participant) {
     create :participant,
     api_key: '5762b9423a01f72662264358f071908c' }
+  let!(:challenge_participant) {
+    create :challenge_participant,
+    challenge: challenge,
+    participant: participant
+  }
   let!(:submission1) {
     create :submission,
     challenge: challenge,
@@ -252,7 +263,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
           params: valid_attributes,
           headers: { 'Authorization': auth_header(organizer.api_key) }
       end
-      it { expect(response).to have_http_status(202) }
+      it {expect(response).to have_http_status(202) }
       it { expect(json(response.body)[:message]).to eq("Participant #{participant.name} scored") }
       it { expect(json(response.body)[:submission_id]).to be_a Integer }
       it { expect(json(response.body)[:submissions_remaining]).to eq(2) }

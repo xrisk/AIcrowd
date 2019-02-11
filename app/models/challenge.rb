@@ -23,6 +23,11 @@ class Challenge < ApplicationRecord
     reject_if: :all_blank,
     allow_destroy: true
 
+  has_many :challenge_rules, -> { order 'version desc' }, dependent: :destroy, class_name: "ChallengeRules"
+  accepts_nested_attributes_for :challenge_rules,
+    reject_if: :all_blank,
+    allow_destroy: true
+
   has_many :challenge_participants, dependent: :destroy
 
   has_many :submissions, dependent: :destroy
@@ -98,6 +103,10 @@ class Challenge < ApplicationRecord
     self.save
   end
 
+  def current_challenge_rules
+    return self.challenge_rules.first
+  end
+
   def status_formatted
     return 'Starting soon' if status == :starting_soon
     return status.capitalize
@@ -151,6 +160,31 @@ class Challenge < ApplicationRecord
 
   def post_challenge_submissions?
     self.post_challenge_submissions
+  end
+
+  def current_challenge_rules
+    ChallengeRules.where(challenge_id: self.id).order("version DESC").first
+  end
+
+  def current_challenge_rules_version
+    current_challenge_rules && current_challenge_rules.version
+  end
+
+  def has_accepted_challenge_rules?(participant)
+    if !participant
+      return
+    end
+    cp = ChallengeParticipant.where(challenge_id: self.id, participant_id: participant.id).first
+    if !cp
+      return
+    end
+    if (cp.challenge_rules_accepted_version != current_challenge_rules_version)
+      return
+    end
+    if !cp.challenge_rules_accepted_date
+      return
+    end
+    return true
   end
 
 end

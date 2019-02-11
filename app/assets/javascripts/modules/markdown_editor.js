@@ -11,7 +11,7 @@ function switchTab(self,tab_id,editor) {
 
 
 function renderPreview(self,editor) {
-  var markdown_text = editor.find('.txt-med')[0].value;
+  var markdown_text = editor.find('.txt-med, .txt-sml')[0].value;
 
   $.ajax({
     type: 'GET',
@@ -65,9 +65,7 @@ function uploadFile() {
   }
 }
 
-
 $(document).on('turbolinks:load', function() {
-
   var toolbarButtons = [
     { class: ".md-h1", before: "\n# ", after: "\n"},
     { class: ".md-h2", before: "\n## ", after: "\n"},
@@ -88,15 +86,15 @@ $(document).on('turbolinks:load', function() {
 
 
   toolbarButtons.forEach( function (button) {
-    $(button.class).on('click', function (event) {
+    $(document).on('click', button.class, function (event) {
       event.preventDefault();
-      var editor = $(event.target).closest('.md-editor').find('.txt-med');
+      var editor = $(event.target).closest('.md-editor').find(".txt-med, .txt-sml");
       insertText(button.before, button.after, editor);
     });
   });
 
 
-  $('.md-tab').click(function(event){
+  $(document).on('click', '.md-tab', function (event) {
     var self = this;
     var tab_id = $(self).attr('data-tab');
     var editor = $(self).closest('.md-editor');
@@ -107,10 +105,8 @@ $(document).on('turbolinks:load', function() {
     }
   });
 
-
-  $('.fileUploadLink').on('click', function(e){
+  $(document).on('click', '.fileUploadLink', function (e) {
     e.preventDefault();
     $(this).closest('.md-tab-content').find('.markdownFileInput').trigger('click');
   });
-
 }); // turbolinks

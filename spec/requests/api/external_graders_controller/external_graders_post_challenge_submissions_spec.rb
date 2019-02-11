@@ -12,8 +12,15 @@ RSpec.describe Api::ExternalGradersController, type: :request do
 
   let!(:organizer) { create :organizer,
     api_key: '3d1efc2332200314c86d2921dd33434c' }
+  let!(:participation_terms) {
+    create :participation_terms
+  }
   let!(:challenge) { create :challenge,
     :running, organizer: organizer, post_challenge_submissions: true }
+  let!(:challenge_rules) {
+    create :challenge_rules,
+    challenge: challenge
+  }
   let!(:challenge_round) { create :challenge_round,
     challenge_id: challenge.id,
     active: true,
@@ -21,6 +28,11 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     end_dttm: 4.weeks.ago }
   let!(:participant) { create :participant,
     api_key: '5762b9423a01f72662264358f071908c' }
+  let!(:challenge_participant) {
+    create :challenge_participant,
+    challenge: challenge,
+    participant: participant
+  }
 
 
   describe "POST /api/external_graders/ : create submission" do

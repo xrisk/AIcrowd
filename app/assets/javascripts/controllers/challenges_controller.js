@@ -20,5 +20,8 @@ Paloma.controller('Challenges', {
       });
       self.checked = true;
     });
+    $('#replace-rules-button').click(function(e) {
+      $(this).hide()
+    });
   }
 });

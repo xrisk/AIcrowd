@@ -20,7 +20,19 @@ RSpec.describe SubmissionsController, type: :controller do
     create :challenge,
     :running,
     submissions_page: true }
+  let!(:challenge_rules) {
+    create :challenge_rules,
+    challenge: challenge
+  }
+  let!(:participation_terms) {
+    create :participation_terms
+  }
   let(:participant) { create :participant }
+  let!(:challenge_participant) {
+    create :challenge_participant,
+    challenge: challenge,
+    participant: participant
+  }
 
   before do
     sign_in participant

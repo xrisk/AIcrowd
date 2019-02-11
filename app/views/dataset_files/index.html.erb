@@ -14,14 +14,10 @@
   <% end %>
 
   <div class="row">
-    <% if @challenge.require_toc_acceptance && !@challenge_participant.accepted_dataset_toc %>
-        <%= render partial: 'toc_form' %>
-    <% else %>
       <ul class="list-datasets">
           <%= concept(Dataset::Cell::ListDetail,
                       collection: @dataset_files,
                       current_participant: current_participant) %>
       </ul>
-    <% end %>
   </div>
 </div>

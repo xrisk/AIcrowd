@@ -109,7 +109,7 @@ describe Participant do
 
       it 'verify preference flags are correctly set' do
         pref = participant.email_preferences.first
-        expect(pref.newsletter).to be true
+        expect(pref.newsletter).to be false
         expect(pref.challenges_followed).to be true
         expect(pref.mentions).to be true
         expect(pref.email_frequency).to eq(:daily)

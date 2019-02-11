@@ -14,6 +14,7 @@
     <div class="row">
       <ul class='tabs'>
         <li data-tab='tab-details' class='active'>Details</li>
+        <li data-tab='tab-rules'>Rules</li>
         <li data-tab='tab-type'>Rounds</li>
         <li data-tab='tab-overview'>Overview</li>
         <li data-tab='tab-private'>Private Challenge</li>
@@ -29,6 +30,9 @@
 
     <div id='tab-details' class='tab-content active'>
       <%= render partial: 'challenges/form/details', locals: { challenge: challenge } %>
+    </div>
+    <div id='tab-rules' class='tab-content'>
+      <%= render partial: 'challenges/form/rules', locals: { challenge: challenge } %>
     </div>
     <div id='tab-type' class='tab-content'>
       <%= render partial: 'challenges/form/rounds', locals: { challenge: challenge } %>

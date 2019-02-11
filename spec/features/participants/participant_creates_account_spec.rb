@@ -6,6 +6,7 @@ def fill_out_account_creation_form
   fill_in "Email address", with: participant.email
   fill_in "Choose a password", with: participant.password
   fill_in "Re-type password", with: participant.password
+  check('requires-agreement-checkbox')
 end
 
 def confirm_account
@@ -26,14 +27,14 @@ feature "participant creates account" do
     expect(page).to have_content("One account per individual")
 
     fill_out_account_creation_form
-    click_button "Sign Up"
+    find(:css, '#sign-up-button', visible: false).click()
     expect(page).to have_content "A message with a confirmation link has been sent to your email address. Please follow the link to activate your account."
   end
 
   scenario "confirm account" do
     visit 'participants/sign_up'
     fill_out_account_creation_form
-    click_button "Sign Up"
+    find(:css, '#sign-up-button', visible: false).click()
 
     confirm_account
     expect(page).to have_content "Your email address has been successfully confirmed."

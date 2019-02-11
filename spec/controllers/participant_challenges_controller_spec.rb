@@ -5,6 +5,11 @@ RSpec.describe ParticipantChallengesController, type: :controller do
 
   let!(:challenge) { create :challenge, :running }
   let!(:participant) { create :participant }
+  let!(:challenge_participant) {
+    create :challenge_participant,
+    challenge: challenge,
+    participant: participant
+  }
   let!(:admin) { create :participant, :admin }
   let!(:submission) {
     create :submission,
