@@ -9,6 +9,17 @@ require 'capybara/rails'
 require 'capybara/rspec'
 require 'capybara-screenshot/rspec'
 
+class DiscourseApi::Client
+  def create_category(options={})
+    return {id: 1}
+  end
+
+  def update_category(options={})
+    return {id: 1}
+  end
+end
+
+
 Dir[File.dirname(__FILE__) + "/support/helpers/*.rb"]
   .each { |f| require f }
 Dir[File.dirname(__FILE__) + "/support/matchers/*.rb"]
