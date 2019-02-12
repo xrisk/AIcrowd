@@ -255,17 +255,6 @@ if Rails.env == 'development' || Rails.env == 'staging'
       leaderboard_note: "\n"}
   ])
 
-
-### Run additional seeds
-if Rails.env == 'development' || Rails.env == 'staging'
-  Dir[File.join(Rails.root, 'db', 'seeds/*', '*.rb')].sort.each do |seed|
-    Dir.chdir(File.dirname(seed)) do
-      load seed
-    end
-  end
-end
-
-
 # Submissions
 Submission.create!([
 
@@ -494,8 +483,6 @@ Submission.create!([
     {id: 12447, challenge_id: 30, participant_id: 5366, score: nil, created_at: "2018-08-06 13:56:35", updated_at: "2018-08-06 13:56:35", score_secondary: nil, grading_status_cd: "submitted", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil},
     {id: 12448, challenge_id: 30, participant_id: 112233, score: nil, created_at: "2018-08-06 13:56:35", updated_at: "2018-08-06 13:56:45", score_secondary: nil, grading_status_cd: "submitted", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil},
 
-    # Challenge 100 (Spotify)
-    {id: 19449, challenge_id: 100, participant_id: 112233, score: nil, created_at: "2018-08-06 13:56:35", updated_at: "2018-08-06 13:56:45", score_secondary: nil, grading_status_cd: "submitted", description_markdown: nil, post_challenge: false, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil}
   ])
 
   # Calculate Leaderboards
@@ -585,7 +572,7 @@ Submission.create!([
 
   Topic.create!(
     id: 123130,
-    challenge_id: 100,
+    challenge_id: 37,
     participant_id: 112233,
     topic: "Test Topic",
     views: 123,
@@ -617,7 +604,7 @@ Submission.create!([
   DatasetFile.create!(
     id: 123,
     description: "This is a test dataset",
-    challenge_id: 100,
+    challenge_id: 37,
     title: "test_dataset_file",
     dataset_file_s3_key: "https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png",
     hosting_location: "s3",
@@ -633,13 +620,11 @@ Submission.create!([
     comment_markdown: "This is a test comment"
     )
 
-end
-
-### Run additional seeds
-if Rails.env == 'development'
   Dir[File.join(Rails.root, 'db', 'seeds/*', '*.rb')].sort.each do |seed|
     Dir.chdir(File.dirname(seed)) do
       load seed
     end
   end
+
 end
+
