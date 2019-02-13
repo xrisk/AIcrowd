@@ -1,6 +1,6 @@
 <%= concept(Challenge::Cell::ChallengeMasthead,@challenge,current_participant: current_participant) %>
-<%= concept(Challenge::Cell::ChallengeSubnav, @challenge, current_participant: current_participant) %>
-
+<%= render partial: 'challenges/show/subnav',
+    locals: { challenge: @challenge } %>
 <!-- section -->
 <section class="section-p-sm">
   <div class="container-fluid">
@@ -71,11 +71,11 @@
                 locals: { challenge: @challenge, current_round_id: @current_round_id } %>
           <% end %>
         </div>
-        
+
         <!-- load more -->
         <div class="load-more">
-          <%= link_to_next_page @submissions, '<button type="button" class="btn btn-secondary btn-block">Load more</button>'.html_safe  do %>           
-          <% end %>      
+          <%= link_to_next_page @submissions, '<button type="button" class="btn btn-secondary btn-block">Load more</button>'.html_safe  do %>
+          <% end %>
         </div>
         <!-- /load more -->
       </div>

@@ -1,6 +1,6 @@
 <%= concept(Challenge::Cell::ChallengeMasthead, @presenter.challenge,current_participant: current_participant) %>
-<%= concept(Challenge::Cell::ChallengeSubnav, @presenter.challenge, current_participant: current_participant) %>
-
+<%= render partial: 'challenges/show/subnav',
+    locals: { challenge: @challenge } %>
 <!-- section -->
 <section class="section-p-sm">
   <div class="container-fluid">

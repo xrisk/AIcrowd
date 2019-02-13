@@ -1,7 +1,7 @@
 <div class='content'>
   <%= concept(Challenge::Cell::ChallengeMasthead, @challenge, current_participant: current_participant)%>
-  <%= concept(Challenge::Cell::ChallengeSubnav, @challenge, current_participant: current_participant) %>
-
+  <%= render partial: 'challenges/show/subnav',
+    locals: { challenge: @challenge } %>
   <% if @challenge.dataset_note.present?  %>
   <div class='update'>
     <p><%= sanitize(@challenge.dataset_note) %></p>

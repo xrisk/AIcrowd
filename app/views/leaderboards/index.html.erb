@@ -1,12 +1,13 @@
 <%= concept(Challenge::Cell::ChallengeMasthead, @challenge, current_participant: current_participant) %>
-<%= concept(Challenge::Cell::ChallengeSubnav, @challenge, current_participant: current_participant) %>
+<%= render partial: 'challenges/show/subnav',
+    locals: { challenge: @challenge } %>
 
 <section class="section-p-sm">
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
       <%= concept(Leaderboard::Cell::ChallengeRoundPills, @challenge, current_round: @current_round) %>
-      
+
       <!-- challenge leaderboard -->
         <% if @current_round.leaderboard_note.present? %>
           <div class='row'>
