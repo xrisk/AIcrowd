@@ -15,8 +15,8 @@ class LandingPageController < ApplicationController
       .order(seq: :asc)
       .limit(4)
     @participants = Participant
-      .order(level: :desc)
-      .limit(6)
+      .reorder(created_at: :desc)
+      .limit(5)
   end
 
   def host
