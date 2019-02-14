@@ -38,7 +38,7 @@
       </td>
     <% end %>
     <td class='description'>
-      <%= submission.grading_message %>
+      <%= enable_links_in_raw_text(submission.grading_message) %>
     </td>
     <td class='submission'><%= submission.created_at.strftime('%d %b %Y %H:%M:%S') %></td>
     <td class='action'>
