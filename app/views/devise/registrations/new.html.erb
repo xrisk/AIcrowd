@@ -18,7 +18,7 @@
 		<div class="row">
 			<div class="col-12">
 
-				<%= form_for resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-rg' } do |f| %>
+				<%= form_for resource, as: resource_name, url: registration_path(resource_name),  html: { class: 'form-rg' }, validate: true do |f| %>
 				<!-- social log in buttons -->
 				<div class="btn-set-social">
 					<%= link_to participant_oauth2_generic_omniauth_authorize_path, {class: "btn btn-secondary btn-block"} do%>

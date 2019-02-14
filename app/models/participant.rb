@@ -71,6 +71,9 @@ class Participant < ApplicationRecord
     presence: true,
     'valid_email_2/email': true,
     uniqueness: { case_sensitive: false }
+
+  validates :password, presence: true,
+    length: { minimum: 8 }
   validates :website, :url => { allow_blank: true }
   validates :github, :url => { allow_blank: true }
   validates :linkedin, :url => { allow_blank: true }
@@ -78,9 +81,9 @@ class Participant < ApplicationRecord
   validates :name,
     format: {
       with: /\A(?=.*[a-zA-Z])[a-zA-Z0-9.\-_{}\[\]]+\z/,
-      message: 'User handle can contain numbers and these characters -_.{}[] and atleast one letter'
+      message: 'username can contain numbers and these characters -_.{}[] and atleast one letter'
     },
-    length: { in: 2...255 },
+    length: { in: 2...256 },
     uniqueness: { case_sensitive: false }
   validates :affiliation,
     length: { in: 2...100},
