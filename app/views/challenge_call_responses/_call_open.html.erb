@@ -3,8 +3,6 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <h2><%= @challenge_call.headline %></h2>
-                <p><%= simple_format(@challenge_call.description) %></p>
                 <%= form_for [@challenge_call,@challenge_call_response], html: { class: "form-rg" } do |f| %>
 
                 <div class="form-group">
