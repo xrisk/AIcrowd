@@ -2195,6 +2195,12 @@ select.form-control-lg:not([size]):not([multiple]) {
   margin-bottom: .5rem;
 }
 
+
+.form-group label.message {
+  color: red;
+  font-weight: normal;
+}
+
 .form-group .w-sm {
   width: 80px;
 }
