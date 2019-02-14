@@ -39,11 +39,14 @@
     <div class="row">
       <div class="col-12 d-flex align-items-center flex-wrap">
         <div class="organizer-attribution">
-          <span> By &nbsp;</span>
           <%= link_to organizer_path(challenge.organizer) do %>
-          <%= concept(Image::Cell,challenge.organizer, current_participant: current_participant) %>
-            <span> <%= challenge.organizer.organizer %></span>
+            <%= concept(Image::Cell,challenge.organizer, current_participant: current_participant) %>
           <% end %>
+            <span>By&nbsp;
+              <%= link_to organizer_path(challenge.organizer) do %>
+                <%= challenge.organizer.organizer %>
+              <% end %>
+            </span>
         </div>
 
         <div class="stats-group">
