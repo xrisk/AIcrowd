@@ -10,23 +10,20 @@
 </div>
 <!-- /masthead -->
 
-
 <!-- challenge cards -->
 <div class="section-pt-sm-pb-md">
   <div class="container-fluid">
-    <div class="row">
+    <div class="row" id="challenges-div">
       <%= render partial: 'challenges' %>
-    </div>   
+    </div>
 
     <!-- load more -->
     <div class="load-more mt-0">
-      <%= render partial: 'shared/load_more',
-        locals: { collection: @challenges } %>
+      <%= render partial: 'shared/load_more', locals: { collection: @challenges
+      }, :id=>"load_more_link" %>
     </div>
-    <!-- /load more --> 
-
+    <!-- /load more -->
   </div>
 </div>
 <!-- /challenge cards -->
-
 </main>

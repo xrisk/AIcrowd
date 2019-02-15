@@ -1,8 +1,11 @@
-$(".load-more").remove();
-$("ul.list-challenges").append("<%= j render partial: 'challenges' %>");
-$(".row").last().after("<%= j render partial: 'shared/load_more', locals: { collection: @challenges } %>");
+var temp = $(document).height();
+
+$("#challenges-div").append("<%= j render partial: 'challenges' %>");
+$('#load_more_link').replaceWith("<%= j render partial: 'shared/load_more', locals: { collection: @challenges }, :id=>'load_more_link' %>");
+
 $('html, body').animate({
-   scrollTop: $(document).height()-$(window).height()},
+   scrollTop: 2*temp - $(document).height()},
    1400,
    "easeOutQuint"
 );
+
