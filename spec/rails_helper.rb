@@ -80,8 +80,13 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.before(:suite) do
-    FactoryBot.lint
-    DatabaseCleaner.clean_with(:truncation)
+    begin
+      FactoryBot.lint
+      DatabaseCleaner.clean_with(:truncation)
+      DatabaseCleaner.start
+    ensure
+      DatabaseCleaner.clean
+    end
   end
 
   config.before(:each) do

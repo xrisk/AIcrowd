@@ -27,6 +27,7 @@ class ParticipantsController < ApplicationController
       flash[:success] = "Profile updated"
       redirect_to @participant
     else
+      flash[:failure] = @participant.update_attributes!(participant_params)
       render :edit
     end
   end

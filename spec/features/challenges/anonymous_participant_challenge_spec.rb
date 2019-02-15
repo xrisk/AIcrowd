@@ -1,4 +1,4 @@
-  require 'rails_helper'
+require 'rails_helper'
 
 feature "challenge", js: true do
   let!(:challenge) { create(:challenge, :running) }

@@ -21,8 +21,6 @@
         <%= form_for @participant, validate: true, html: { class: "form-rg" } do |f| %>
           <div class="form-group">
             <label for="username">Username</label>
-            
-
             <%= f.text_field :name, class: "form-control" %>
             <small id="usernameHelp" class="form-text text-muted">Max. 255 characters. No spaces</small>
           </div>
