@@ -49,32 +49,30 @@
             </span>
         </div>
 
-        <div class="stats-group">
-          <div class="stat-item">
+        <div class="stats-group" style="margin-right: 0px">
+          <div class="stat-item" style="width: 72px">
+          <center>
             <span data-toggle="tooltip" data-placement="top" title="No. of views">
               <img src="/assets/img/icon-views.svg">
                 <%= concept(Challenge::Cell::Statistic,challenge,type: 'view', current_participant: current_participant) %>
             </span>
+          </center>
           </div>
-          <div class="stat-item">
+          <div class="stat-item" style="width: 72px">
+          <center>
             <span data-toggle="tooltip" data-placement="top" title="No. of users">
               <img src="/assets/img/icon-users.svg">
               <%= concept(Challenge::Cell::Statistic,challenge,type: 'participant', current_participant: current_participant) %>
             </span>
+          </center>
           </div>
-<!--
-          <div class="stat-item">
-            <span data-toggle="tooltip" data-placement="top" title="No. of teams">
-              <img src="/assets/img/icon-teams.svg">
-              <%= concept(Challenge::Cell::Statistic,challenge,type: 'participant', current_participant: current_participant) %>
-            </span>
-          </div>
- -->
-           <div class="stat-item">
+          <div class="stat-item" style="width: 72px">
+          <center>
             <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
               <img src="/assets/img/icon-submissions.svg">
               <%= concept(Challenge::Cell::Statistic,challenge,type: 'submission', current_participant: current_participant) %>
             </span>
+          </center>
           </div>
         </div>
         <div class="btn-set" aria-hidden="true">
