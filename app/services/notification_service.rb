@@ -17,7 +17,7 @@ class NotificationService
     if @notifiable.participant.image_file.file.present?
       thumbnail_url = @notifiable.participant.image_file.url
     else
-      thumbnail_url = 'users/avatar-default.png'
+      thumbnail_url = 'users/user-avatar-default.svg'
     end
     notification_url = new_topic_discussion_url(@notifiable.topic)
     Notification
@@ -37,7 +37,7 @@ class NotificationService
     if @notifiable.participant.image_file.file.present?
       thumbnail_url = @notifiable.participant.image_file.url
     else
-      thumbnail_url = 'users/avatar-default.png'
+      thumbnail_url = 'users/user-avatar-default.svg'
     end
     notification_url = new_topic_discussion_url(@notifiable.topic)
     Notification
@@ -57,7 +57,7 @@ class NotificationService
     if @notifiable.participant.image_file.file.present?
       thumbnail_url = @notifiable.participant.image_file.url
     else
-      thumbnail_url = 'users/avatar-default.png'
+      thumbnail_url = 'users/user-avatar-default.svg'
     end
     notification_url = new_topic_discussion_url(@notifiable.topic)
     Notification

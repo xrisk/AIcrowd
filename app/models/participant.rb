@@ -157,7 +157,7 @@ class Participant < ApplicationRecord
     if image_file.file.present?
       image_url = image_file.url
     else
-      image_url = 'users/avatar-default.png'
+      image_url = 'users/user-avatar-default.svg'
     end
   end
 

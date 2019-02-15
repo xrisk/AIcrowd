@@ -108,7 +108,7 @@ class Leaderboard::Cell::Media < Leaderboard::Cell
   end
 
   def default_image_url
-    image_path 'users/avatar-default.png'
+    image_path 'users/user-avatar-default.svg'
   end
 
 end

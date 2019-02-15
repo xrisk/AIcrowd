@@ -1,4 +1,4 @@
-//= link users/avatar-default.png
+//= link users/user-avatar-default.svg
 //= link application.css
 //= link application.js
 //= link_tree ../awards

@@ -70,7 +70,7 @@ class ParticipantsController < ApplicationController
       raise RuntimeError, "Incorrect SSO signature"
     end
 
-    avatar_url = ENV['DOMAIN_NAME'] + '/assets/users/avatar-default.png'
+    avatar_url = ENV['DOMAIN_NAME'] + '/1ts/users/user-avatar-default.svg'
     if current_user.image_file and not current_user.image_file.url.nil?
       avatar_url = current_user.image_file.url
     end

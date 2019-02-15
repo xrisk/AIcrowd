@@ -20,11 +20,11 @@ module ImagesHelper
   end
 
   def default_image_url
-    image_path 'users/avatar-default.png'
+    image_path 'users/user-avatar-default.svg'
   end
 
   def image_test(notifications)
-    image_path 'users/avatar-default.png'
+    image_path 'users/user-avatar-default.svg'
   end
 
 end
