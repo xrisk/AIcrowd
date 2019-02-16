@@ -818,5 +818,19 @@ Submission.create!([
     end
   end
 
+  ChallengeParticipant.create!(
+    challenge_id: 100,
+    participant_id: 112233,
+    email: "test_user@example.com",
+    name: "test_user",
+    registered: true,
+    accepted_dataset_toc: true)
+
+  ChallengeParticipant.create!(
+    challenge_id: 100,
+    participant_id: 7,
+    email: "p7@example.com",
+    name: "p7")
+
 end
 
