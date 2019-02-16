@@ -72,8 +72,6 @@ class Participant < ApplicationRecord
     'valid_email_2/email': true,
     uniqueness: { case_sensitive: false }
 
-  validates :password, presence: true,
-    length: { minimum: 8 }
   validates :website, :url => { allow_blank: true }
   validates :github, :url => { allow_blank: true }
   validates :linkedin, :url => { allow_blank: true }

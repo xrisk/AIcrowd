@@ -48,11 +48,6 @@ RSpec.describe ParticipantsController, type: :controller do
           put :update, params: { id: participant.id, participant: valid_attributes }
           expect(assigns(:participant)).to eq(participant)
         end
-
-        #it "redirects to the participant" do
-        #  put :update, params: { id: participant.id, participant: valid_attributes }
-        #  expect(response).to redirect_to(participant)
-        #end
       end
 
       context "with invalid params" do
