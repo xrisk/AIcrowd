@@ -11,7 +11,6 @@
 //= require social-share-button
 //= require codemirror
 //= require activestorage
-//= require cookies_eu
 //= require rails.validations
 //= require local-time
 //= require lodash
@@ -74,10 +73,6 @@ function loadMathJax() {
   });
 };
 
-$(document).on('turbolinks:load', function() {
-  loadMathJax();
-});
-
 // Remove default Turbolinks loader
 Turbolinks.ProgressBar.prototype.refresh = function() {}
 Turbolinks.ProgressBar.defaultCSS = ""
@@ -102,6 +97,6 @@ $(document).on('turbolinks:load', function() {
 
 $(document).on('turbolinks:load', function() {
   window.setTimeout(function () {
-    $(".alert").alert('close')
+    $(".alert:not(.alert-cookie)").alert('close')
   }, 5000);
 });
