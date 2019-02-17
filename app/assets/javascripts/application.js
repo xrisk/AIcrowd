@@ -89,6 +89,9 @@ document.addEventListener("turbolinks:load", function() {
   clearTimeout(loaderTimer);
   $('#page-content').show();
   $('#loader-container').hide();
+  $(".cookies-set-accept").click(function(){
+   document.cookie = "_cookie_eu_consented=true; expires=Fri, 31 Dec 9999 23:58:59 GMT; path=/";
+  })
 });
 
 $(document).on('turbolinks:load', function() {
