@@ -41,12 +41,8 @@
                 </tr>
               </thead>
             <% end %>
-            <tbody>
-              <%= concept(Submission::Cell::TableRow,
-                      collection: @submissions,
-                      challenge: @challenge,
-                      current_round: @current_round,
-                      current_participant: current_participant) %>
+            <tbody id="submissions-div">
+              <%= render partial: 'submissions' %>
             </tbody>
           </table>
         </div>
@@ -72,12 +68,10 @@
           <% end %>
         </div>
 
-        <!-- load more -->
-        <div class="load-more">
-          <%= link_to_next_page @submissions, '<button type="button" class="btn btn-secondary btn-block">Load more</button>'.html_safe  do %>
-          <% end %>
-        </div>
-        <!-- /load more -->
+          <!-- load more -->
+            <%= render partial: 'shared/load_more', locals: { collection: @submissions
+            }, :id=>"load_more_link" %>
+          <!-- /load more -->
       </div>
     </div>
   </div>
