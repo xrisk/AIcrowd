@@ -42,10 +42,9 @@
             </span>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="#">Challenges</a>
-            <a class="dropdown-item" href="#">Achievements</a>
+            <%= link_to 'Challenges', challenges_path, {:class=> "dropdown-item"} %>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Blog</a>
+            <%= link_to 'Blog', blogs_path, {:class=> "dropdown-item"} %>
             <%= link_to "Organize a challenge", landing_page_host_path, {class: "dropdown-item"} %>
             <%= link_to "FAQ", faq_path, {class: "dropdown-item"} %>
             <%= link_to "Contact", contact_path, {class: "dropdown-item"} %>
@@ -101,15 +100,14 @@
             </span>
           </button>
           <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="#">Challenges</a>
-            <a class="dropdown-item" href="#">Achievements</a>
+            <%= link_to 'Challenges', challenges_path, {:class=> "dropdown-item"} %>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Blog</a>
+            <%= link_to 'Blog', blogs_path, {:class=> "dropdown-item"} %>
             <%= link_to "Organize a challenge", landing_page_host_path, {class: "dropdown-item"} %>
             <%= link_to "FAQ", faq_path, {class: "dropdown-item"} %>
             <%= link_to "Contact", contact_path, {class: "dropdown-item"} %>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Log in</a>
+            <%= link_to "Log in", new_participant_session_path, {class: "dropdown-item"} %>
             <%= link_to "Sign Up", new_participant_registration_path, {class: "dropdown-item"} %>
           </div>
         </div>
