@@ -1,3 +1,5 @@
+<% if (challenge.prize_cash || challenge.prize_travel || challenge.prize_academic || challenge.prize_misc) %>
+
 <div class="prizes-breakdown">
 <% if challenge.prize_cash? %>
   <div class="prize-item prize-item-cash">
@@ -24,3 +26,5 @@
   </div>
 <% end %>
 </div>
+
+<% end %>

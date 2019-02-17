@@ -16,7 +16,9 @@
 
       <div class="card-intro">
         <h5 class="card-title"><%= link_to challenge.challenge, challenge_path(challenge) %></h5>
-        <p class="card-text"><%= challenge.tagline %></p>
+        <% if challenge.tagline %>
+          <p class="card-text"><%= challenge.tagline %></p>
+        <% end %>
       </div>
 
       <!-- prizes breakdown -->
