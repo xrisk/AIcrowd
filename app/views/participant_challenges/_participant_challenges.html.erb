@@ -1,11 +1,25 @@
-<% if @participant_challenges.blank? %>
-  <li>
-    <div class="details">
-      <h5>No participants yet...</h5>
-    </div>
-  </li>
-<% else %>
-  <%= concept(ParticipantChallenge::Cell::ListDetail,
-              collection: @participant_challenges,
-              current_participant: current_participant) %>
-<% end %>
+<!-- section -->
+<div class="section-p-md">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+
+				<% if @participant_challenges.blank? %>
+					<div class="md-content">
+                		<%= "No participants for this challenge yet" %>
+              		</div>
+				<% else %>
+					<ul class="list-group list-group-flush-px-0 list-group-organizers">
+						<%= concept(ParticipantChallenge::Cell::ListDetail,
+							collection: @participant_challenges,
+							current_participant: current_participant) %>
+					</ul>
+				<% end %>
+			</div>
+		</div> 
+	</div>
+</div>
+<!-- /section -->
+
+
+

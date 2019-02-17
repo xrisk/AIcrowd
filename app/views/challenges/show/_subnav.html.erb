@@ -34,9 +34,9 @@
       <% end %>
       <% if policy(challenge).edit? %>
         <% if challenge.clef_task #&& challenge.clef_task.eua_required? %>
-          <li class="nav-item"><%= link_to 'Participants', challenge_clef_task_path(challenge), class: "nav-link nav-link-07", "data-turbolinks": false %></li>
+          <li class="nav-item"><%= link_to 'Participants', challenge_clef_task_path(challenge), class: tab_class('participants') + " nav-link nav-link-07 ", "data-turbolinks": false %></li>
         <% else %>
-          <li class="nav-item"><%= link_to 'Participants', challenge_participant_challenges_path(challenge), class: "nav-link nav-link-07", "data-turbolinks": false %></li>
+          <li class="nav-item"><%= link_to 'Participants', challenge_participant_challenges_path(challenge), class: tab_class('participants') + " nav-link nav-link-07", "data-turbolinks": false %></li>
         <% end %>
       <% end %>
       <% if challenge.winners_tab_active.present? %>

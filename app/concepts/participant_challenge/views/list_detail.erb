@@ -1,27 +1,15 @@
-<li>
-  <div class="pic">
-    <% if participant.is_a? NullParticipant %>
+<!-- team member -->
+<li class="list-group-item">
+  <% if participant.is_a? NullParticipant %>
       <%= link_to '#' do %>
-        <%= concept(Image::Cell,participant) %>
+        <%= concept(Image::Cell,participant, klass: "avatar") %>
+        <span class="text-link"><%= participant_challenge.name %></span>
       <% end %>
     <% else %>
       <%= link_to participant_path(participant) do %>
-        <%= concept(Image::Cell,participant) %>
+        <%= concept(Image::Cell,participant, klass: "avatar") %>
+        <span class="text-link"><%= participant_challenge.name %></span>
       <% end %>
-    <% end %>
-  </div>
-  <div class="details">
-    <h5>
-      <%= link_to participant_challenge.name, participant_path(participant_challenge) %>
-    </h5>
-    <p class='user'></p>
-  </div>
-  <% if policy(challenge).edit? %>
-    <div class="stats">
-      <div class="stat-fl">
-        Email<br>
-        <span><%= participant_challenge.email %></span>
-      </div>
-    </div>
   <% end %>
 </li>
+<!-- /team member -->
