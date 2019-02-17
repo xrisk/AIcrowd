@@ -7,6 +7,8 @@ class DatasetFilesController < ApplicationController
   before_action :set_s3_direct_post,
     only: [:new, :create, :edit]
 
+  layout "application-old", only: [:new, :create, :edit]
+
   def index
     @dataset_files = policy_scope(DatasetFile)
       .where(challenge_id: @challenge.id)

@@ -1,3 +1,4 @@
+<!-- item -->
 <li class="list-group-item">
   <div>
     <%= link_to expiring_url,
@@ -9,29 +10,43 @@
       <%= file_description %>
     </span>
   </div>
-  <%= link_to "Download", expiring_url,
-            class: 'btn btn-sm btn-secondary',
-              data: { :'dataset-file-id' => dataset_file.id } %>
 
-  <% if Pundit.policy(current_participant,dataset_file).destroy? %>
-    <% if dataset_file.visible %>
-      <span>visible</span>
-    <% end %>
-    <% if dataset_file.evaluation %>
-      <span>evaluation</span>
-    <% end %>
-  <% end %>
+      <% if !Pundit.policy(current_participant,dataset_file).destroy? %>
+        <%= link_to "Download", expiring_url,
+              class: 'btn btn-sm btn-secondary',
+                data: { :'dataset-file-id' => dataset_file.id } %>
+        <% end %>
 
-  <% if Pundit.policy(current_participant,dataset_file).destroy? %>
-    <%= link_to 'Edit',
-          edit_challenge_dataset_file_path(challenge,dataset_file),
-          class: 'btn btn-secondary btn-sm' %>
-    <%= link_to 'Delete',
-          challenge_dataset_file_path(challenge,dataset_file),
-          method: :delete,
-          class: 'btn btn-secondary btn-sm',
-          data: { confirm: 'Are you sure?' } %>
+      <% if Pundit.policy(current_participant,dataset_file).destroy? %>
+
+      <div>
+          <% if dataset_file.visible %>
+            <span>Visible to all |</span>
+          <% end %>
+
+          <% if dataset_file.evaluation %>
+            <span>| Evaluation File</span>
+          <% end %>
+      </div>
+        <div style="display:flex">
+        <%= link_to "Download", expiring_url,
+              class: 'btn btn-sm btn-secondary',
+                data: { :'dataset-file-id' => dataset_file.id } %>
+
+        <%= link_to 'Edit',
+              edit_challenge_dataset_file_path(challenge,dataset_file),
+              class: 'btn btn-secondary' %>
+
+        <%= link_to 'Delete',
+              challenge_dataset_file_path(challenge,dataset_file),
+              method: :delete,
+              class: 'btn btn-secondary',
+              data: { confirm: 'Are you sure?' } %>
+      </div>
+      <% end %>
     </div>
-  <% end %>
+  </div>
 </li>
+<!-- /item -->
+
 
