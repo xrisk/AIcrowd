@@ -12,7 +12,7 @@ class ParticipantsController < ApplicationController
       .where(participant_id: @participant.id)
       .pluck(:challenge_id)
     @challenges = Challenge.where(id: challenge_ids)
-    @posts = @participant.comments.order(created_at: :desc)
+    @discourse_link = "#{ENV['DISCOURSE_DOMAIN_NAME']}/u/#{@participant.name}/activity"
   end
 
   def edit
