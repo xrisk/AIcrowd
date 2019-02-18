@@ -2,25 +2,16 @@
 <div class="masthead masthead-challenge">
   <div class="container-fluid">
 
-    <!-- badges -->
     <div class="row">
       <div class="col-12">
+      <% challenge_rounds.each do |challenge_round| %>
         <span class="badge badge-primary">
           <img src="/assets/img/icon-time.svg">
-          Round 1: time
+          <%= challenge_round.challenge_round %>: <%= final_time(challenge_round.end_dttm) %>
         </span>
-
-        <span class="badge badge-primary">
-          <img src="/assets/img/icon-time.svg">
-          Round 2: time
-        </span>
-
-<!--         <span class="badge badge-outline">
-          Challenge category
-        </span>
- -->      </div>
+      <% end %>
+      </div>
     </div>
-    <!-- /badges -->
 
     <!-- title/description/prizes -->
     <div class="row">
