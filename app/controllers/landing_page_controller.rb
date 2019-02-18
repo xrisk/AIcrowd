@@ -21,7 +21,7 @@ class LandingPageController < ApplicationController
 
   def host
     @page_title = "Organize"
-    @crowdai = ChallengeCall.where(crowdai: true).first
+    @challenge_call = ChallengeCall.first
   end
 
 end

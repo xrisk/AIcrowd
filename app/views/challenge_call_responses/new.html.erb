@@ -17,6 +17,5 @@
     </div>
   </div>
   <!-- /masthead -->
-  <% if @challenge_call.call_closed? %> <%= render partial: 'call_closed' %> <%
-  else %> <%= render partial: 'call_open' %> <% end %>
+  <%= render partial: 'call_open' %>
 </div>

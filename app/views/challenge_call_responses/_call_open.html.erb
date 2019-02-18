@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <%= form_for [@challenge_call,@challenge_call_response], html: { class: "form-rg" } do |f| %>
+                <%= form_for [@challenge_call,@challenge_call_response], validate: true, html: { class: "form-rg" } do |f| %>
 
                 <div class="form-group">
                     <label>Organization/company name</label>

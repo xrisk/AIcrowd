@@ -30,8 +30,8 @@
 
           <p>The AIcrowd approach has been used by the most innovative organizations in the world, both in industry and academia. Our tried-and-tested platform coordinates participants and manages submitted solutions, radically accelerating the time to solve AI problems.</p> 
 
-          <% if @crowdai.present? %>
-            <%= link_to 'Get Started', challenge_call_apply_path(@crowdai), class: 'btn btn-primary mt-3' %>
+          <% if @challenge_call.present? %>
+            <%= link_to 'Get Started', challenge_call_apply_path(@challenge_call), class: 'btn btn-primary mt-3' %>
           <% end %>
         </div>
       </div>

@@ -2,10 +2,6 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <h2><%= @challenge_call.title %></h2>
-        <p>by <%= link_to @challenge_call.organizer.organizer, organizer_path(@challenge_call.organizer) %></p>
-        <p>Closing date: <%= @challenge_call.closing_date.strftime("%d %b %H:%M UTC") %></p>
-        <%= simple_format(@challenge_call.description) %>
         <h2>Thank you</h2>
         <p>Your submisson has been received, and you will contacted by a member of our team.</p>
       </div>    

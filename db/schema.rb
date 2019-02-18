@@ -673,6 +673,7 @@ ActiveRecord::Schema.define(version: 2019_02_18_175747) do
     t.integer "participation_terms_accepted_version"
     t.boolean "agreed_to_terms_of_use_and_privacy", default: false
     t.boolean "agreed_to_marketing", default: false
+    t.boolean "newsletter"
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["organizer_id"], name: "index_participants_on_organizer_id"
