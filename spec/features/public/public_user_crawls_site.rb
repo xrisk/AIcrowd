@@ -39,7 +39,7 @@ feature "site navigation for authenticated participant" do
       expect(page).to have_link 'Overview'
       expect(page).to have_link 'Leaderboard'
       expect(page).to have_link 'Discussion'
-      expect(page).to have_link 'Dataset'
+      expect(page).to have_link 'Resources'
       expect(page).to have_link 'FOLLOW'
       # TODO - look for edit icon ... expect(page).not_to have_link 'Edit'
     end
@@ -57,7 +57,7 @@ feature "site navigation for authenticated participant" do
       click_link "Discussion"
       expect(page).to have_link 'Discussion',
         class: 'active'
-      click_link "Dataset"
+      click_link "Resources"
       expect(page).to have_text 'You need to sign in or sign up before continuing'
     end
   end

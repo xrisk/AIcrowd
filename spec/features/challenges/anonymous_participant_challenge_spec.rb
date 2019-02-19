@@ -44,8 +44,8 @@ feature "challenge", js: true do
       expect(page).to have_content 'Leaderboard'
     end
 
-    scenario "cannot follow Dataset link" do
-      click_link "Dataset"
+    scenario "cannot follow Resources link" do
+      click_link "Resources"
       expect(page).to have_content 'You need to sign in or sign up before continuing.'
     end
   end
@@ -56,8 +56,8 @@ feature "challenge", js: true do
       click_link challenge.challenge
     end
 
-    scenario "follow Dataset link" do
-      click_link "Dataset"
+    scenario "follow Resources link" do
+      click_link "Resources"
       expect(page).to have_content 'You need to sign in or sign up before continuing.'
     end
 
