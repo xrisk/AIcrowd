@@ -19,14 +19,14 @@
       <% end %>
       <% if challenge.clef_task.present? %>
         <li class=<%= tab_class('clef_dataset') %> >
-          <%= link_to 'Dataset',
+          <%= link_to 'Resources',
                 clef_task_task_dataset_files_path(
                   challenge.clef_task, challenge_id: challenge.id),
                 class: tab_class('clef_dataset') %>
         </li>
       <% else %>
         <li class=<%= tab_class('dataset') %> >
-          <%= link_to 'Dataset',
+          <%= link_to 'Resources',
                 challenge_dataset_files_path(challenge),
                 class: tab_class('dataset') %>
         </li>
