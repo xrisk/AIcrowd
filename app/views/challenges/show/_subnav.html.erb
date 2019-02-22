@@ -74,22 +74,22 @@
             new_challenge_dataset_file_path(challenge),
             class: "btn btn-secondary pull-right" %>
     <% end %>
-    <% if policy(challenge).submissions_allowed? && current_tab != 'dataset' %>
-      <% if !policy(challenge).has_accepted_participation_terms? %>
-        <%= link_to 'Participate',
-        [challenge, ParticipationTerms.current_terms],
-        class: "btn btn-secondary pull-right" %>
-      <% elsif !policy(challenge).has_accepted_challenge_rules? %>
-        <%= link_to 'Participate',
-        [challenge, challenge.current_challenge_rules],
-        class: "btn btn-secondary pull-right" %>
-      <% else %>
-        <%= link_to 'Create Submission',
-              new_challenge_submission_path(challenge),
-              class: "btn btn-secondary pull-right" %>
+    
+    <% if !policy(challenge).has_accepted_participation_terms? %>
+      <%= link_to 'Participate',
+      [challenge, ParticipationTerms.current_terms],
+      class: "btn btn-secondary pull-right" %>
+    <% elsif !policy(challenge).has_accepted_challenge_rules? %>
+      <%= link_to 'Participate',
+      [challenge, challenge.current_challenge_rules],
+      class: "btn btn-secondary pull-right" %>
+    <% else %>    
+      <% if policy(challenge).submissions_allowed? && current_tab != 'dataset' %>
+          <%= link_to 'Create Submission',
+                new_challenge_submission_path(challenge),
+                class: "btn btn-secondary pull-right" %>
       <% end %>
     <% end %>
-
 
   </div>
 </div>
