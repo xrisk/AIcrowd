@@ -3,6 +3,8 @@ class Api::ParticipantsController < Api::BaseController
   respond_to :json
 
   def show
+    Rails.logger.info "[api] Api::ParticipantsController"
+    Rails.logger.info "[api] params: #{params}"
     @participant = Participant
       .where("lower(name) = '#{params[:id].downcase}'").first
     if @participant.present?
