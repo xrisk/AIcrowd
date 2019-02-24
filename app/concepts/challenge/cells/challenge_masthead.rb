@@ -54,7 +54,7 @@ class Challenge::Cell::ChallengeMasthead < Challenge::Cell
   end
 
   def challenge_rounds
-    challenge.challenge_rounds
+    challenge.challenge_rounds.where("start_dttm < ?", Time.now)
   end
 
   def distance_of_time_in(unit, from, to)
