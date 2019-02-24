@@ -3,18 +3,16 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-12">
-
 				<% if @participant_challenges.blank? %>
 					<div class="md-content">
                 		<%= "No participants for this challenge yet" %>
               		</div>
 				<% else %>
-					<ul class="list-group list-group-flush-px-0 list-group-organizers">
-						<%= concept(ParticipantChallenge::Cell::ListDetail,
-							collection: @participant_challenges,
-							current_participant: current_participant) %>
+					<ul class="list-group list-group-flush-px-0 list-group-organizers" id="pc-ul">
+		              <%= render partial: 'participant_challenge_rows' %>
 					</ul>
 				<% end %>
+				<%= render partial: 'shared/load_more', locals: { collection: @participant_challenges }, :id=>"load_more_link" %>
 			</div>
 		</div> 
 	</div>

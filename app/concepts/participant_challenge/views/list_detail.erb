@@ -3,12 +3,12 @@
   <% if participant.is_a? NullParticipant %>
       <%= link_to '#' do %>
         <%= concept(Image::Cell,participant, klass: "avatar") %>
-        <span class="text-link"><%= participant_challenge.name %></span>
+        <span class="text-link"><%= @participant.name %></span>
       <% end %>
     <% else %>
       <%= link_to participant_path(participant) do %>
         <%= concept(Image::Cell,participant, klass: "avatar") %>
-        <span class="text-link"><%= participant_challenge.name %></span>
+        <span class="text-link"><%= @participant.name %></span>
       <% end %>
   <% end %>
 </li>

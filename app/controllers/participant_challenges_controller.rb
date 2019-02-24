@@ -5,27 +5,12 @@ class ParticipantChallengesController < ApplicationController
 
   def index
     @participant_challenges = @challenge
-      .participant_challenges
+      .challenge_participants
+      .where(challenge_rules_accepted_version: @challenge.current_challenge_rules_version)
       .order(name: :asc)
       .page(params[:page])
       .per(20)
     authorize @participant_challenges
-  end
-
-  def approve
-    challenge_registration = @challenge.challenge_registrations
-      .where(participant_id: current_participant.id)
-      .first
-    challenge_registration.update(status: :registered)
-    redirect_to challenge_participant_challenges_path(@challenge)
-  end
-
-  def deny
-    challenge_registration = @challenge.challenge_registrations
-      .where(participant_id: current_participant.id)
-      .first
-    challenge_registration.update(status: :rejected)
-    redirect_to challenge_participant_challenges_path(@challenge)
   end
 
   private

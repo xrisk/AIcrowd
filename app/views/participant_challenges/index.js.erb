@@ -1,8 +1,10 @@
-$(".load-more").remove();
-$("ul.list-host-members").append("<%= j render partial: 'participant_challenges' %>");
-$("#more-anchor").after("<%= j render partial: 'shared/load_more', locals: { collection: @participant_challenges } %>");
+var temp = $(document).height();
+
+$("#pc-ul").append("<%= j render partial: 'participant_challenge_rows' %>");
+$('#load_more_link').replaceWith("<%= j render partial: 'shared/load_more', locals: { collection: @participant_challenges }, :id=>'load_more_link' %>");
+
 $('html, body').animate({
-   scrollTop: $(document).height()-$(window).height()},
+   scrollTop: 2*temp - $(document).height()},
    1400,
    "easeOutQuint"
 );

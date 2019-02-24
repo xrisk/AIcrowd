@@ -23,9 +23,12 @@ class UpdateChallengeStatsJob < ApplicationJob
     sql = %Q[
       UPDATE challenges AS C
       SET participant_count =
-          (SELECT count(*)
-             FROM participant_challenges pc
-            WHERE pc.challenge_id = c.id AND pc.registered = true AND pc.accepted_dataset_toc = true AND challenge_rules_accepted_version != nil)
+          (SELECT count(*) FROM challenge_participants cp
+            WHERE cp.challenge_id = c.id
+              AND cp.challenge_rules_accepted_version=(
+                SELECT max(version) FROM challenge_rules cr
+                 WHERE cr.challenge_id=c.id
+              ))
       ]
     result = ActiveRecord::Base.connection.execute(sql)
     logger.info("challenge participants updated, rowcount: #{result.cmd_tuples()}")

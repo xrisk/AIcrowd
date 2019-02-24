@@ -134,10 +134,6 @@ class Challenge < ApplicationRecord
     self.save
   end
 
-  def current_challenge_rules
-    return self.challenge_rules.first
-  end
-
   def status_formatted
     return 'Starting soon' if status == :starting_soon
     return status.capitalize

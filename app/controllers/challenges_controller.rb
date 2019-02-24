@@ -59,7 +59,8 @@ class ChallengesController < ApplicationController
     if current_participant
       @challenge_participant = @challenge
         .challenge_participants
-        .where(participant_id: current_participant.id, registered: true, accepted_dataset_toc: true).where.not(challenge_rules_accepted_version: nil)
+        .where(participant_id: current_participant.id,
+               challenge_rules_accepted_version: @challenge.current_challenge_rules_version)
     end
 
     if !params[:version]  # dont' record page views on history pages
