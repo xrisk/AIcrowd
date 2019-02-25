@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     resources :challenges, only: [:index, :show] do
       resources :submissions, only: :index
     end
-    resources :participants, only: :show, format: false
+    resources :participants, only: :show, constraints: {id: /.+/}, format: false
     resources :submissions, only: :show
   end
 
@@ -42,7 +42,7 @@ Rails.application.routes.draw do
   end
 
   devise_for :participants, controllers: { omniauth_callbacks: 'participants/omniauth_callbacks' }
-  resources :participants, only: [:show, :edit, :update, :destroy, :index], format: false do
+  resources :participants, only: [:show, :edit, :update, :destroy, :index] do
     get :sync_mailchimp
     get :regen_api_key
     get :remove_image

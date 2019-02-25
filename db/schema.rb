@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_18_175747) do
+ActiveRecord::Schema.define(version: 2019_02_10_132648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -191,6 +191,7 @@ ActiveRecord::Schema.define(version: 2019_02_18_175747) do
     t.string "slug"
     t.bigint "organizer_id"
     t.string "headline"
+    t.boolean "crowdai", default: false
     t.text "description_markdown"
     t.index ["organizer_id"], name: "index_challenge_calls_on_organizer_id"
   end
@@ -330,11 +331,6 @@ ActiveRecord::Schema.define(version: 2019_02_18_175747) do
     t.text "toc_acceptance_instructions_markdown"
     t.boolean "toc_accordion", default: false
     t.string "dynamic_content_url"
-    t.string "prize_cash"
-    t.integer "prize_travel"
-    t.integer "prize_academic"
-    t.string "prize_misc"
-    t.integer "discourse_category_id"
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["organizer_id"], name: "index_challenges_on_organizer_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
@@ -673,7 +669,6 @@ ActiveRecord::Schema.define(version: 2019_02_18_175747) do
     t.integer "participation_terms_accepted_version"
     t.boolean "agreed_to_terms_of_use_and_privacy", default: false
     t.boolean "agreed_to_marketing", default: false
-    t.boolean "newsletter"
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["organizer_id"], name: "index_participants_on_organizer_id"
