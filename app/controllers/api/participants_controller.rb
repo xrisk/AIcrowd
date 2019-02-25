@@ -6,7 +6,7 @@ class Api::ParticipantsController < Api::BaseController
     Rails.logger.info "[api] Api::ParticipantsController"
     Rails.logger.info "[api] params: #{params}"
     @participant = Participant
-      .where("lower(name) = '#{params[:id].downcase}'").first
+      .where("lower(name) = ?", params[:id].downcase).first
     if @participant.present?
       payload = Api::ParticipantSerializer.new(@participant).as_json
       payload.merge({ message: 'Participant found.'})
