@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       resources :submissions, only: :index
     end
     resources :participants, only: :show, constraints: {id: /.+/}, format: false
-    resources :submissions, only: :show
+    resources :submissions, only: [:index, :show]
   end
 
   namespace :components do
