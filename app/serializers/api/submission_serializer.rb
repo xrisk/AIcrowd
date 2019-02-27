@@ -14,6 +14,7 @@ class Api::SubmissionSerializer < ActiveModel::Serializer
     :participant_lastname,
     :participant_affiliation,
     :grading_status_cd,
+    :grading_message,
     :score,
     :score_secondary,
     :meta,
