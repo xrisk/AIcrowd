@@ -15,17 +15,17 @@
           class: tab_class('discussion') + " nav-link nav-link nav-link-03" %>
       </li>
       <% if challenge.clef_task.present? %>
-        <li class=<%= tab_class('clef_dataset') %> >
+        <li class="nav-item">
           <%= link_to 'Resources',
                 clef_task_task_dataset_files_path(
                   challenge.clef_task, challenge_id: challenge.id),
-                class: tab_class('clef_dataset'), "data-turbolinks": false %>
+                class: tab_class('clef_dataset') + "nav-link nav-link-03", "data-turbolinks": false %>
         </li>
       <% else %>
-        <li class=<%= tab_class('dataset') %> >
+        <li class="nav-item">
           <%= link_to 'Resources',
                 challenge_dataset_files_path(challenge),
-                class: tab_class('dataset'), "data-turbolinks": false %>
+                class: tab_class('dataset') + "nav-link nav-link-03", "data-turbolinks": false %>
         </li>
       <% end %>
 
