@@ -29,44 +29,53 @@
   </div>
 </div>
 
-<div class='tab-content'>
-  <div id='tab-details' class="tab-pane fade show active">
-    <%= render partial: 'challenges/form/details', locals: { challenge: challenge } %>
-  </div>
+<div class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
 
-  <div id='tab-rules' class="tab-pane fade">
-    <%= render partial: 'challenges/form/rules', locals: { challenge: challenge } %>
-  </div>
+        <div class='tab-content'>
+          <div id='tab-details' class="tab-pane fade show active">
+            <%= render partial: 'challenges/form/details', locals: { challenge: challenge } %>
+          </div>
 
-  <div id='tab-type' class="tab-pane fade">
-    <%= render partial: 'challenges/form/rounds', locals: { challenge: challenge } %>
-  </div>
+          <div id='tab-rules' class="tab-pane fade">
+            <%= render partial: 'challenges/form/rules', locals: { challenge: challenge } %>
+          </div>
 
-  <div id='tab-overview' class="tab-pane fade">
-    <%= render partial: 'challenges/form/overview', locals: { challenge: challenge } %>
-  </div>
+          <div id='tab-type' class="tab-pane fade">
+            <%= render partial: 'challenges/form/rounds', locals: { challenge: challenge } %>
+          </div>
 
-  <div id='tab-private' class="tab-pane fade">
-    <%= render partial: 'challenges/form/private_challenge', locals: { challenge: challenge } %>
-  </div>
+          <div id='tab-overview' class="tab-pane fade">
+            <%= render partial: 'challenges/form/overview', locals: { challenge: challenge } %>
+          </div>
 
-  <div id='tab-dataset' class="tab-pane fade">
-    <%= render partial: 'challenges/form/dataset', locals: { challenge: challenge } %>
-  </div>
+          <div id='tab-private' class="tab-pane fade">
+            <%= render partial: 'challenges/form/private_challenge', locals: { challenge: challenge } %>
+          </div>
 
-  <div id='tab-submissions' class="tab-pane fade">
-    <%= render partial: 'challenges/form/submissions', locals: { challenge: challenge } %>
-  </div>
+          <div id='tab-dataset' class="tab-pane fade">
+            <%= render partial: 'challenges/form/dataset', locals: { challenge: challenge } %>
+          </div>
 
-  <div id='tab-winner' class="tab-pane fade">
-    <%= render partial: 'challenges/form/winner', locals: { challenge: challenge } %>
-  </div>
+          <div id='tab-submissions' class="tab-pane fade">
+            <%= render partial: 'challenges/form/submissions', locals: { challenge: challenge } %>
+          </div>
 
-  <% if current_participant.admin? %>
-  <div id='tab-dynamic' class="tab-pane fade">
-    <%= render partial: 'challenges/form/dynamic_content', locals: { challenge: challenge } %>
+          <div id='tab-winner' class="tab-pane fade">
+            <%= render partial: 'challenges/form/winner', locals: { challenge: challenge } %>
+          </div>
+
+          <% if current_participant.admin? %>
+          <div id='tab-dynamic' class="tab-pane fade">
+            <%= render partial: 'challenges/form/dynamic_content', locals: { challenge: challenge } %>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-  <% end %>
 </div>
 
 <% if policy(challenge).destroy? %>
