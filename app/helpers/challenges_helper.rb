@@ -15,7 +15,7 @@ module ChallengesHelper
     if challenge.challenge_rounds.none? || challenge.dataset_files.none?
       statuses = statuses.except(:running,:completed,:terminated)
     end
-    return builder.select :status, statuses.map {|k,v| [v.humanize,k]}, include_blank: false
+    return builder.select(:status, statuses.map {|k,v| [v.humanize,k]}, {}, {class: "form-control", required: true}) 
   end
 
   def needs_to_agree_to_terms_or_rules?(challenge)
