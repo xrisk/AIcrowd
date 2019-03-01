@@ -19,7 +19,7 @@
       <li class="nav-item"><a class="nav-link" data-toggle='tab' href="#tab-type" onclick="return false;">Rounds</a></li>
       <li class="nav-item"><a class="nav-link" data-toggle='tab' href="#tab-overview" onclick="return false;">Overview</a></li>
       <li class="nav-item"><a class="nav-link" data-toggle='tab' href="#tab-private" onclick="return false;">Private Challenge</a></li>
-      <li class="nav-item"><a class="nav-link" data-toggle='tab' href="#tab-dataset" onclick="return false;">Dataset</a></li>
+      <li class="nav-item"><a class="nav-link" data-toggle='tab' href="#tab-dataset" onclick="return false;">Resources</a></li>
       <li class="nav-item"><a class="nav-link" data-toggle='tab' href="#tab-submissions" onclick="return false;">Submissions</a></li>
       <li class="nav-item"><a class="nav-link" data-toggle='tab' href="#tab-winner" onclick="return false;">Winner</a></li>
       <% if current_participant.admin? %>
@@ -76,13 +76,4 @@
       </div>
     </div>
   </div>
-</div>
-
-<% if policy(challenge).destroy? %>
-<div class="additional">
-  <div class="row">
-    <a data-remodal-target="modal">Delete Challenge</a>
-  </div>
-</div>
-<% end %>
 </div>
