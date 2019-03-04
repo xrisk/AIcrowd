@@ -1,17 +1,26 @@
 <div class="section-container nested-fields">
-  <label>Rules (markdown)</label>
-  <%= markdown_editor do |m| %>
-    <%= f.text_area :terms_markdown, class: "txt-med" %>
-  <% end %>
+  <div class="form-group">
+    <label>Rules (markdown)</label>
+    <%= markdown_editor do |m| %>
+    <%= f.text_area :terms_markdown, class: "form-control txt-med" %>
+    <% end %>
+    <hr>
+  </div>
+
+  <div clas="form-group">
+    <fieldset class="checkbox">
+      <div>
+        <%= f.check_box :has_additional_checkbox, {}, "true", "false" %>
+        <%= f.label :has_additional_checkbox, 'Has Additional Checkbox?' %>
+      </div>
+    </fieldset>
+  </div>
   <hr>
-  <fieldset class="checkbox">
-    <div>
-      <%= f.check_box :has_additional_checkbox, {}, "true", "false" %>
-      <%= f.label :has_additional_checkbox, 'Has Additional Checkbox?' %>
-    </div>
-  </fieldset>
-  <label>Additional Checkbox Text</label>
+
+  <div class="form-group">
+    <label>Additional Checkbox Text</label>
+  </div>
   <%= markdown_editor do |m| %>
-    <%= f.text_area :additional_checkbox_text_markdown, class: "txt-sml" %>
+  <%= f.text_area :additional_checkbox_text_markdown, class: "form-control txt-sml" %>
   <% end %>
 </div>

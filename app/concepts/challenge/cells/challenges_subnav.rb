@@ -7,44 +7,28 @@ class Challenge::Cell::ChallengesSubnav < Challenge::Cell
   def challenges
     model
   end
-
-  def challenge_filter
-    options[:challenge_filter]
+  
+  def categories_choices
+    ['some', 'categories', 'feteched', 'from', 'controllers']
+  end
+  def status_choices
+    ['All','Active','Completed','Draft']
   end
 
-  def challenges_count(challenge_filter)
-    case challenge_filter
-    when 'all'
-      challenges_count = all_challenges_count
-    when 'active'
-      challenges_count = active_challenges_count
-    when 'completed'
-      challenges_count = completed_challenges_count
-    when 'draft'
-      challenges_count = draft_challenges_count
-    end
-    challenges_count = nil if challenges_count == 0
-    return challenges_count
+  def prizes_choices
+    ['Cash prizes','Travel grants','Academic papers','Misc prizes']
+  end
+    
+  def status_filter
+    return options[:status_filter] || 'Completed'
   end
 
-  def all_challenges_count
-    challenges.count
+  def category_filter
+    options[:category_filter]
   end
 
-  def active_challenges_count
-    statuses = [:running, :starting_soon]
-    challenges.select { |c| statuses.include?(c.status) }.count
-  end
-
-  def completed_challenges_count
-    statuses = [:completed, :perpetual]
-    challenges.select { |c| statuses.include?(c.status) }.count
-  end
-
-  def draft_challenges_count
-    return 0 unless current_participant &&  (current_participant.admin? || current_participant.organizer_id.present?)
-    statuses = [:draft]
-    challenges.select { |c| statuses.include?(c.status) }.count
+  def prizes_filter
+    options[:prizes_filter]
   end
 
 end

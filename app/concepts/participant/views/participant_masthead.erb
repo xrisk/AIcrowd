@@ -1,52 +1,76 @@
-<div class="masthead-detailed">
-  <div class="row">
-    <div class="pic pic-user">
-      <%= concept(Image::Cell,participant,size: :medium) %>
-    </div>
-    <div class="info info-user">
-      <div class="heading-w-icon">
-        <h2><%= participant.name %></h2>
-        <% if policy(participant).edit? %>
-          <%= link_to edit_participant_path(participant), title: "Edit participant" do %>
-            <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
-          <% end %>
-        <% end %>
-      </div>
-      <% if participant.affiliation.present? %>
-        <p class="location">
-          <%=  participant.affiliation %>
-        </p>
-      <% end %>
-      <div class="text-w-icon">
-        <% if policy(participant).edit? %>
-          <p><strong>API key:</strong> <%= participant.api_key %></p>
-            <%= link_to participant_regen_api_key_path(participant_id: participant.id) do %>
-              <i class="fa fa-refresh" aria-hidden="true"></i>
-            <% end %>
-        <% end %>
-      </div>
-      <ul class="social-links">
-        <% if participant.twitter.present? %>
-          <li><%= link_to '<i class="fa fa-twitter" aria-hidden="true"></i>', url_for(participant.twitter) %></li>
-        <% end %>
-        <% if participant.github.present? %>
-          <li><%= link_to '<i class="fa fa-github" aria-hidden="true"></i>', url_for(participant.github) %></li>
-        <% end %>
-        <% if participant.linkedin.present? %>
-          <li><%= link_to '<i class="fa fa-linkedin" aria-hidden="true"></i>', url_for(participant.linkedin) %></li>
-        <% end %>
-        <% if participant.website.present? %>
-          <li><%= link_to '<i class="fa fa-link" aria-hidden="true"></i>', url_for(participant.website) %></li>
-        <% end %>
-      </ul>
-      <% if current_participant && current_participant.admin? %>
-        <div class="text-w-icon">
-          <p class="location">
-            <%= participant.email %> &middot; <%= link_to 'Email Notifications', edit_participant_email_preference_path(participant,participant.email_preferences.first) %>
-          </p>
-        </div>
+<!-- masthead – user -->
+<div class="masthead masthead-user">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex">
+          <%= concept(Image::Cell, participant, klass: "avatar") %> 
+          <div class="masthead-content">
+            <div class="d-flex">
+              <%= concept(Image::Cell, participant, klass: "avatar-sm") %>
+              <h1><%= participant.name %>
+              </h1>
+            </div>
 
-      <% end %>
+            <div class="masthead-info">
+
+              <% if participant.affiliation? %>
+                  <div class="masthead-info-item">
+                    <header>
+                      <h4>Organization</h4>
+                    </header>   
+                    <span><%= participant.affiliation %></span>
+                  </div>
+              <% end %>
+
+              <% if participant.country_cd? & participant.city %>
+                <div class="masthead-info-item">
+                  <header>
+                    <h4>Location</h4>
+                  </header>   
+                  <span><%= participant.city %>, <%= participant.country_cd %></span>
+                </div>
+              <% end %>
+
+              <% if policy(participant).edit? %>
+                <div class="masthead-info-item api-key">
+                  <header>
+                    <h4>API key</h4>
+                    <%= link_to participant_regen_api_key_path(participant_id: participant.id) do %>
+                      <button type="button" class="btn btn-secondary btn-sm" data-toggle="tooltip" data-placement="top" title="Generate new API key">
+                        <img src="/assets/img/icon-refresh.svg">
+                      </button>
+                    <% end %>
+                  </header>   
+                  <span><%= participant.api_key %></span>
+                </div>
+              <% end %>
+
+              <% if participant.twitter.present? | participant.github.present? | participant.linkedin.present? | participant.website.present? %>
+                  <div class="masthead-info-item">
+                    <header>
+                      <h4>Connect</h4>
+                    </header>
+                    <% if participant.twitter.present? %>
+                      <%= link_to '<span>Twitter <img src="/assets/img/icon-external-link.svg"></span>', url_for(participant.twitter) %></li>
+                    <% end %>
+                    <% if participant.github.present? %>
+                      <%= link_to '<span>GitHub <img src="/assets/img/icon-external-link.svg"></span>', url_for(participant.github) %>
+                    <% end %>
+                    <% if participant.linkedin.present? %>
+                      <%= link_to '<span>LinkedIn <img src="/assets/img/icon-external-link.svg"></span>', url_for(participant.linkedin) %>
+                    <% end %>
+                    <% if participant.website.present? %>
+                      <%= link_to '<span>Portfolio <img src="/assets/img/icon-external-link.svg"></span>', url_for(participant.website) %>
+                    <% end %>                
+                  </div>
+              <% end %>
+            
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+<!-- /masthead – user -->

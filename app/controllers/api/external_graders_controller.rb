@@ -42,6 +42,14 @@ class Api::ExternalGradersController < Api::BaseController
       raise ParticipantNotQualified unless participant_qualified?(challenge,participant)
       raise ParallelSubmissionLimitExceeded unless parallel_submissions_allowed?(challenge,participant)
 
+      challenge_participant = challenge
+        .challenge_participants
+        .find_by(participant_id: participant.id)
+
+      if challenge_participant.blank? or !challenge_participant.accepted_dataset_toc
+        raise TermsNotAcceptedByParticipant
+      end
+
       submissions_remaining, reset_dttm = challenge.submissions_remaining(participant.id)
       raise NoSubmissionSlotsRemaining if submissions_remaining < 1
       if params[:meta].present?

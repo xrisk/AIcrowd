@@ -1,5 +1,22 @@
 module ApplicationHelper
 
+  def rewrite_type(key)
+    case key
+      when 'notice'
+        'success'
+      when 'success'
+        'success'
+      when 'info'
+        'info'
+      when 'alert'
+        'warning'
+      when 'error'
+        'warning'
+      when 'flash'
+        'flash'
+    end
+  end
+
   def body_id
     if (controller.controller_name == 'landing_page' &&
           controller.action_name == 'index') ||

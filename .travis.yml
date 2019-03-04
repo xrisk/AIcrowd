@@ -26,6 +26,7 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - docker run -d -p 4572:4572 localstack/localstack
+  - mkdir ~/fog
   - sleep 3 # give xvfb and localstack some time to start
 
 script:

@@ -1,8 +1,10 @@
-$(".load-more").remove();
-$("table.submissions").append("<%= j render @submissions %>");
-$("#more-anchor").after("<%= j render partial: 'shared/load_more', locals: { collection: @submissions } %>");
+var temp = $(document).height();
+
+$("#submissions-div").append("<%= j render partial: 'submissions' %>");
+$("#load_more_link").replaceWith("<%= j render partial: 'shared/load_more', locals: { collection: @submissions }, :id=>'load_more_link' %>");
+
 $('html, body').animate({
-   scrollTop: $(document).height()-$(window).height()},
+   scrollTop: 2*temp - $(document).height()},
    1400,
    "easeOutQuint"
 );

@@ -1,5 +1,4 @@
 // ---------------------- Gems ----------------------- //
-//= require jquery
 // require jquery_ujs
 //= require rails-ujs
 //= require jquery-ui
@@ -12,9 +11,9 @@
 //= require social-share-button
 //= require codemirror
 //= require activestorage
-//= require cookies_eu
 //= require rails.validations
 //= require local-time
+//= require lodash
 
 // --------------------- Vendor ------------------------ //
 //= require jQuery-File-Upload
@@ -74,10 +73,6 @@ function loadMathJax() {
   });
 };
 
-$(document).on('turbolinks:load', function() {
-  loadMathJax();
-});
-
 // Remove default Turbolinks loader
 Turbolinks.ProgressBar.prototype.refresh = function() {}
 Turbolinks.ProgressBar.defaultCSS = ""
@@ -94,4 +89,17 @@ document.addEventListener("turbolinks:load", function() {
   clearTimeout(loaderTimer);
   $('#page-content').show();
   $('#loader-container').hide();
+  $(".cookies-set-accept").click(function(){
+   document.cookie = "_cookie_eu_consented=true; expires=Fri, 31 Dec 9999 23:58:59 GMT; path=/";
+  })
+});
+
+$(document).on('turbolinks:load', function() {
+  loadMathJax();
+});
+
+$(document).on('turbolinks:load', function() {
+  window.setTimeout(function () {
+    $(".alert:not(.alert-cookie)").alert('close')
+  }, 5000);
 });

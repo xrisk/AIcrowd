@@ -1,14 +1,9 @@
-<div class="row">
-  <div class="border-bottom">
-    <ul class="sub-nav-pills">
-      <% challenge_rounds.each do |challenge_round| %>
-        <li class='sub-nav-item'>
-          <%= link_to challenge_round.challenge_round,
-                      challenge_leaderboards_path(
-                        challenge, challenge_round_id: challenge_round.id),
-                        class: tab_class(challenge_round) %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-</div>
+<!-- Challenge Round Pills  -->
+	<ul class="nav nav-pills">
+		<% challenge_rounds.each do |round| %>
+			<li class="nav-item">
+				<%= link_to round.challenge_round,  challenge_leaderboards_path(:challenge_round_id => round.id), :class => tab_class(round) %>
+			</li>
+		<%end%>
+	</ul>
+<!-- / Challenge Round Pills  -->

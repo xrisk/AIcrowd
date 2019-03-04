@@ -7,8 +7,5 @@ FactoryBot.define do
     description 'MyText'
     slug 'MyString'
 
-    trait :crowdai do
-      crowdai true
-    end
   end
 end

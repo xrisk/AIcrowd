@@ -34,10 +34,10 @@ class Follow::Cell < Template::Cell
   end
 
   def upfollow_link
-    link_to "FOLLOW".html_safe,
+    link_to "Follow".html_safe,
             eval(create_follow_path),
             id: follow_link_id,
-            class: 'btn btn-secondary btn-min-width',
+            class: 'btn btn-secondary btn-sm',
             method: :post,
             remote: true
   end
@@ -57,19 +57,19 @@ class Follow::Cell < Template::Cell
   end
 
   def unfollow_link(follow)
-    link_to "UNFOLLOW".html_safe,
+    link_to "Unfollow".html_safe,
             eval(destroy_follow_path(followable, follow.id)),
             id: follow_link_id,
-            class: 'btn btn-secondary btn-min-width',
+            class: 'btn btn-secondary btn-sm',
             method: :delete,
             remote: true
   end
 
   def sign_in_link
-    link_to "FOLLOW".html_safe,
+    link_to "Follow".html_safe,
             new_participant_session_path,
             id: follow_link_id,
-            class: 'btn btn-secondary btn-min-width'
+            class: 'btn btn-secondary btn-sm'
   end
 
 end

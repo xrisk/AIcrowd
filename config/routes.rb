@@ -47,7 +47,8 @@ Rails.application.routes.draw do
     get :regen_api_key
     get :remove_image
     patch :accept_terms
-    resources :email_preferences, only: [:edit, :update]
+    resources :email_preferences, only: [:update]
+    match '/notifications', to: 'email_preferences#edit', via: :get
   end
   resources :job_postings, only: [:index, :show]
   resources :gdpr_exports, only: [:create]
@@ -109,7 +110,7 @@ Rails.application.routes.draw do
       collection { post :import }
     end
     resources :dataset_terms, only: [:update]
-    resources :participation_terms, only: [:show]
+    resources :participation_terms, only: [:show, :create, :index]
     resources :challenge_rules, only: [:show]
     resources :challenge_participants
   end
@@ -164,6 +165,10 @@ Rails.application.routes.draw do
   get '/call-for-challenges/:challenge_call_id/apply' => 'challenge_call_responses#new', as: 'challenge_call_apply'
   get '/call-for-challenges/:challenge_call_id/applications/:id' => 'challenge_call_responses#show', as: 'challenge_call_show'
   get 'SDSC' => 'challenge_call_responses#new', challenge_call_id: 3
+
+  %w( 400 403 404 422 500 ).each do |code|
+    get code, controller: :errors, action: :show, code: code
+  end
 
   root 'landing_page#index'
 

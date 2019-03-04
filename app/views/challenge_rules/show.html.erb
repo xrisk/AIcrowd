@@ -1,3 +1,4 @@
+<div class="container-fluid">
 <%= render 'challenge_rules', challenge_rules: @challenge_rules %>
 <div class="row">
 <%= form_for [@challenge, @challenge_participant], validate: true, html: { class: "sgl-col", multipart: true } do |f| %>
@@ -24,4 +25,5 @@
     <%= f.button ("Save"), class: 'btn btn-primary requires-agreement', id: 'accept-challenge-rules-button', disabled: true %>
   </div>
 <% end %>
+</div>
 </div>

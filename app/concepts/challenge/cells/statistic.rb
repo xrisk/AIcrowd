@@ -20,19 +20,16 @@ class Challenge::Cell::Statistic < Challenge::Cell
       formatted_count(challenge.page_views)
     when 'participant'
       formatted_count(challenge.participant_count)
+    when 'vote'
+      formatted_count(challenge.vote_count)
     end
   end
 
   def formatted_count(counter)
     if counter > 10000
-      "#{sprintf('%.1f', counter/1000.0).chomp('.0')} k"
+      "#{sprintf('%.1f', counter/1000.0).chomp('.0')}k"
     else
       counter
     end
   end
-
-  def stat_text
-    "#{stat_type.titlecase}".pluralize(challenge.submission_count).html_safe
-  end
-
 end

@@ -16,6 +16,7 @@ module Crowdai
 
     config.assets.version = '2.0'
 
+    config.exceptions_app = self.routes
     config.active_job.queue_adapter = :sidekiq
     config.secret_key_base = ENV["SECRET_KEY_BASE"]
     config.autoload_paths << Rails.root.join('lib')
@@ -25,6 +26,7 @@ module Crowdai
     #config.active_record.schema_format = :sql
     config.ssl_options = { hsts: { subdomains: false } }
     config.assets.precompile += %w( application.scss )
+    config.assets.paths << Rails.root.join("app","assets","fonts")
     Rails.env.development? && config.assets.paths << File.join(ENV['FOG_LOCAL_ROOT'], ENV['AWS_S3_BUCKET'])
 
     config.action_view.sanitized_allowed_tags =

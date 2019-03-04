@@ -55,6 +55,13 @@ class ChallengesController < ApplicationController
   end
 
   def show
+    if current_participant
+      @challenge_participant = @challenge
+        .challenge_participants
+        .where(participant_id: current_participant.id,
+               challenge_rules_accepted_version: @challenge.current_challenge_rules_version)
+    end
+
     if !params[:version]  # dont' record page views on history pages
       @challenge.record_page_view
     end
@@ -137,6 +144,7 @@ class ChallengesController < ApplicationController
       .require(:challenge)
       .permit(
         :id,
+        :discourse_category_id,
         :organizer_id,
         :challenge,
         :tagline,
@@ -147,6 +155,10 @@ class ChallengesController < ApplicationController
         :evaluation_criteria,
         :rules,
         :prizes,
+        :prize_travel,
+        :prize_cash,
+        :prize_academic,
+        :prize_misc,
         :resources,
         :submission_instructions,
         :primary_sort_order,

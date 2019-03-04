@@ -4,7 +4,7 @@ class LandingPageController < ApplicationController
   def index
     @challenges = policy_scope(Challenge)
       .order(featured_sequence: :desc)
-      .limit(6)
+      .limit(3)
     @partners = Partner
       .where(visible: true)
       .where.not(image_file: nil)
@@ -14,10 +14,14 @@ class LandingPageController < ApplicationController
       .where(published: true)
       .order(seq: :asc)
       .limit(4)
+    @participants = Participant
+      .reorder(created_at: :desc)
+      .limit(5)
   end
 
   def host
-    @crowdai = ChallengeCall.where(crowdai: true).first
+    @page_title = "Organize"
+    @challenge_call = ChallengeCall.first
   end
 
 end

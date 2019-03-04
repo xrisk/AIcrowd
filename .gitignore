@@ -31,3 +31,4 @@ storage/*
 spec/examples.txt
 /coverage
 screenshot*
+dump.rdb

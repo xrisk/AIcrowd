@@ -412,6 +412,22 @@ ActiveRecord::Schema.define(version: 2019_02_18_175747) do
     t.index ["participant_id"], name: "index_email_preferences_tokens_on_participant_id"
   end
 
+  create_table "emails", id: :serial, force: :cascade do |t|
+    t.integer "model_id"
+    t.string "mailer_classname"
+    t.text "recipients"
+    t.text "options"
+    t.string "status_cd"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email_preferences_token"
+    t.datetime "token_expiration_dttm"
+    t.integer "participant_id"
+    t.jsonb "options_json"
+    t.integer "mailer_id"
+    t.index ["mailer_id"], name: "index_emails_on_mailer_id"
+  end
+
   create_table "follows", id: :serial, force: :cascade do |t|
     t.integer "followable_id", null: false
     t.string "followable_type", null: false
@@ -483,6 +499,13 @@ ActiveRecord::Schema.define(version: 2019_02_18_175747) do
     t.index ["identity"], name: "index_login_activities_on_identity"
     t.index ["ip"], name: "index_login_activities_on_ip"
     t.index ["user_type", "user_id"], name: "index_login_activities_on_user_type_and_user_id"
+  end
+
+  create_table "mailers", id: :serial, force: :cascade do |t|
+    t.string "mailer_classname"
+    t.boolean "paused", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "mandrill_messages", force: :cascade do |t|
@@ -881,6 +904,7 @@ ActiveRecord::Schema.define(version: 2019_02_18_175747) do
   add_foreign_key "dataset_file_downloads", "dataset_files"
   add_foreign_key "dataset_file_downloads", "participants"
   add_foreign_key "email_preferences", "participants"
+  add_foreign_key "emails", "mailers"
   add_foreign_key "follows", "participants"
   add_foreign_key "invitations", "challenges"
   add_foreign_key "invitations", "participants"

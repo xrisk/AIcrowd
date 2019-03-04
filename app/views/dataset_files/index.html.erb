@@ -1,23 +1,30 @@
 <div class='content'>
-  <%= concept(Challenge::Cell::ChallengeMasthead,
-                @challenge,
-                current_participant: current_participant) %>
+  <%= concept(Challenge::Cell::ChallengeMasthead, @challenge, current_participant: current_participant)%>
   <%= render partial: 'challenges/show/subnav',
-        locals: { challenge: @challenge } %>
+    locals: { challenge: @challenge } %>
 
-  <% if @challenge.dataset_note.present?  %>
-    <div class='row'>
-      <div class="leaderboard-note">
-        <%= sanitize(@challenge.dataset_note) %>
-      </div>
-    </div>
-  <% end %>
+<!-- section -->
+<section class="section-p-sm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <ul class="list-group list-group-flush-px-0 list-group-dataset">
+            <% if policy(@challenge).edit? %>
 
-  <div class="row">
-      <ul class="list-datasets">
+          <div>
+              <%= link_to "New File", new_challenge_dataset_file_path(@challenge),
+                class: 'btn btn-sm btn-secondary'%>
+            </div>
+            <% end %>
+            <hr/>
           <%= concept(Dataset::Cell::ListDetail,
                       collection: @dataset_files,
                       current_participant: current_participant) %>
-      </ul>
+
+
+
+        </ul>
+      </div>
+    </div>
   </div>
-</div>
+</section>

@@ -1,14 +1,16 @@
-<div class="discussion-comment">
-  <div class="pic">
-    <%= link_to participant_path(current_participant) do %>
-      <%= concept(Image::Cell,current_participant) %>
-    <% end %>
+<div class="topic-add-comment">
+  <%= link_to participant_path(current_participant) do%>
+  <%= concept(Image::Cell,current_participant, current_participant: current_participant, klass: "avatar") %>
+  <% end %>
+
+  <%= form_for [submission, submission.submission_comments.build], html: {id: "new_comment" } do |f| %>
+
+  <div class="form-group">
+    <%= f.text_area :comment_markdown, placeholder: "Add a comment...", class: "form-control" %>
+    <small id="addCommentHelp" class="form-text text-muted">
+      You can use <a href="https://kramdown.gettalong.org/">kramdown</a> and <em>@mentions</em> in this field.
+    </small>
   </div>
-  <%= form_for [submission, submission.submission_comments.build], html: { class: "add-comment", id: "new_comment" } do |f| %>
-    <%= f.text_area :comment_markdown, placeholder: "Add a comment..." %>
-    <%= f.submit 'Add comment', class: 'btn btn-primary pull-right' %>
-    <p class='markdown-instructions'>You can use
-      <a href="https://kramdown.gettalong.org/">kramdown</a> in this field.
-    </p>
+  <%= f.submit 'Add comment', class: 'btn btn-primary', type: "submit" %>
   <% end %>
 </div>

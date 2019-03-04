@@ -1,44 +1,34 @@
-<div class="row">
-  <%= form_for [@organizer,@challenge],
-        html: { class: "dbl-col" } do |f| %>
-          
-      <div class="twin-container" data-controller='challenge-submission'>
-        <div class="twin-field">
-          <fieldset class="checkbox">
-            <div>
-              <%= f.check_box :require_toc_acceptance %>
-              <%= f.label :require_toc_acceptance, 'Require TOC Acceptance?' %>
-            </div>
-          </fieldset>
-        </div>
-        <div class="twin-field">
-          <fieldset class="checkbox">
-            <div>
-              <%= f.check_box :toc_accordion %>
-              <%= f.label :toc_accordion, 'TOC Accordion?' %>
-            </div>
-          </fieldset>
-        </div>
-      </div>
+<%= form_for [@organizer,@challenge],
+html: { class: "dbl-col" } do |f| %>
 
-      <%= f.label :toc_acceptance_text, 'TOC Checkbox label' %>
-      <%= f.text_field :toc_acceptance_text %>
+<span class="label-text">Options</span>
 
-      <label>TOC Instructions</label>
-      <%= markdown_editor do |m| %>
-        <%= f.text_area :toc_acceptance_instructions_markdown, class: "txt-med" %>
-      <% end %>
-
-    <fieldset>
-      <label>Dataset Note</label>
-      <%= markdown_editor do |m| %>
-        <%= f.text_area :dataset_note_markdown, class: "txt-med" %>
-      <% end %>
-    </fieldset>
-
-    <fieldset>
-      <%= render partial: 'challenges/form/submit_buttons',
-            locals: { f: f } %>
-    </fieldset>
-  <% end %>
+<div class="form-group">
+  <%= f.check_box :require_toc_acceptance %>
+  <%= f.label :require_toc_acceptance, 'Require TOC Acceptance?' %>
 </div>
+
+<div class="form-group">
+  <%= f.check_box :toc_accordion %>
+  <%= f.label :toc_accordion, 'TOC Accordion?' %>
+</div>
+
+<div class="form-group">
+  <%= f.label :toc_acceptance_text, 'TOC Checkbox label' %>
+  <%= f.text_area :toc_acceptance_text, class: "form-control" %>
+</div>
+
+<label>TOC Instructions</label>
+<%= markdown_editor do |m| %>
+<%= f.text_area :toc_acceptance_instructions_markdown, class: "txt-med form-control" %>
+<% end %>
+
+
+<label>Dataset Note</label>
+<%= markdown_editor do |m| %>
+<%= f.text_area :dataset_note_markdown, class: "txt-med form-control" %>
+<% end %>
+
+<%= render partial: 'challenges/form/submit_buttons',
+locals: { f: f } %>
+<% end %>

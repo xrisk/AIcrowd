@@ -130,7 +130,6 @@ class SubmissionsController < ApplicationController
       @challenge = Challenge.friendly.find(params[:challenge_id])
     end
 
-
     def check_participation_terms
       if !policy(@challenge).has_accepted_participation_terms?
         redirect_to [@challenge, ParticipationTerms.current_terms]
@@ -231,7 +230,6 @@ class SubmissionsController < ApplicationController
     end
 
     def set_layout
-      return 'bare' if action_name == 'show'
       return 'application'
     end
 

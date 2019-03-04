@@ -6,12 +6,13 @@ class ParticipantsController < ApplicationController
   respond_to :html, :js
 
   def show
+    @page_title = @participant.name
     @articles = Article.where(participant_id: @participant.id)
     challenge_ids = policy_scope(ParticipantChallenge)
       .where(participant_id: @participant.id)
       .pluck(:challenge_id)
     @challenges = Challenge.where(id: challenge_ids)
-    @posts = @participant.comments.order(created_at: :desc)
+    @discourse_link = "#{ENV['DISCOURSE_DOMAIN_NAME']}/u/#{@participant.name}/activity"
   end
 
   def edit
@@ -69,7 +70,7 @@ class ParticipantsController < ApplicationController
       raise RuntimeError, "Incorrect SSO signature"
     end
 
-    avatar_url = ENV['DOMAIN_NAME'] + '/assets/users/avatar-default.png'
+    avatar_url = ENV['DOMAIN_NAME'] + '/1ts/users/user-avatar-default.svg'
     if current_user.image_file and not current_user.image_file.url.nil?
       avatar_url = current_user.image_file.url
     end

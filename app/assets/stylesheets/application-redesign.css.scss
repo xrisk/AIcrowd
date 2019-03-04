@@ -1,3 +1,21 @@
+$color-accent:      #f0524d;
+$color-accent-dark: #d23934;
+$color-green:       #23b761;
+$color-amber:       #fa9e33;
+$color-grey-03:     rgba(0,0,0,0.03);
+$color-grey-10:     rgba(0,0,0,0.1);
+$color-grey-20:     rgba(0,0,0,0.2);
+$color-grey-40:     rgba(0,0,0,0.4);
+$color-grey-54:     rgba(0,0,0,0.54);
+$color-grey-80:     rgba(0,0,0,0.8);
+$color-grey-87:     rgba(0,0,0,0.87);
+$color-black:       rgba(0,0,0,1);
+
+@import 'reset';
+@import 'layout-molecules';
+@import 'md-editor';
+@import 'markdown';
+
 :root {
   --blue: #2D7680;
   --indigo: #6610f2;
@@ -44,6 +62,7 @@
 }
 
 html {
+  scroll-behavior: smooth;
   font-family: sans-serif;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
@@ -368,22 +387,22 @@ template {
 
 @font-face {
   font-family: Inter-UI;
-  src: url(../../assets/fonts/Inter-UI-Regular.woff);
-  src: url(../../assets/fonts/Inter-UI-Regular.woff2);
+  src: font-url("/assets/fonts/Inter-UI-Regular.woff");
+  src: font-url("/assets/fonts/Inter-UI-Regular.woff2");
   font-weight: 400;
 }
 
 @font-face {
   font-family: Inter-UI;
-  src: url(../../assets/fonts/Inter-UI-SemiBold.woff);
-  src: url(../../assets/fonts/Inter-UI-SemiBold.woff2);
+  src: font-url("/assets/fonts/Inter-UI-SemiBold.woff");
+  src: font-url("/assets/fonts/Inter-UI-SemiBold.woff2");
   font-weight: 600;
 }
 
 @font-face {
   font-family: Inter-UI;
-  src: url(../../assets/fonts/Inter-UI-Bold.woff);
-  src: url(../../assets/fonts/Inter-UI-Bold.woff2);
+  src: font-url("/assets/fonts/Inter-UI-Bold.woff");
+  src: font-url("/assets/fonts/Inter-UI-Bold.woff2");
   font-weight: 700;
 }
 
@@ -2193,6 +2212,12 @@ select.form-control-lg:not([size]):not([multiple]) {
 .form-group label {
   color: #292C2D;
   margin-bottom: .5rem;
+}
+
+
+.form-group label.message {
+  color: red;
+  font-weight: normal;
 }
 
 .form-group .w-sm {
