@@ -32,6 +32,7 @@ before_install:
 
 script:
   - bundle exec rake parallel:setup
+  - bundle exec rake parallel:migrate
   - bundle exec rake parallel:spec
 
 branches:
