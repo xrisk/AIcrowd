@@ -788,7 +788,6 @@ Submission.create!([
     website: "https://www.challenge_call.example.com",
     description: "This is a test challenge call",
     organizer_id: 21,
-    crowdai: true,
     headline: "Headline for challenge call",
     closing_date: Time.parse("20-10-2020")
     )
@@ -833,4 +832,3 @@ Submission.create!([
     name: "p7")
 
 end
-
