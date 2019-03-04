@@ -21,10 +21,6 @@
 				<%= form_for resource, as: resource_name, url: registration_path(resource_name),  html: { class: 'form-rg' }, validate: true do |f| %>
 				<!-- social log in buttons -->
 				<div class="btn-set-social">
-					<%= link_to participant_oauth2_generic_omniauth_authorize_path, {class: "btn btn-secondary btn-block"} do%>
-					  <img src="/assets/img/icon-crowdai.svg">Sign Up with CrowdAI
-					<% end %>
-
 					<%= link_to participant_github_omniauth_authorize_path, {class: "btn btn-github btn-block"} do%>
 					  <img src="/assets/img/icon-github.svg">Sign Up with GitHub
 					<% end %>
