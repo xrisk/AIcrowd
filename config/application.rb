@@ -16,6 +16,7 @@ module Crowdai
 
     config.assets.version = '2.0'
 
+    config.exceptions_app = self.routes
     config.active_job.queue_adapter = :sidekiq
     config.secret_key_base = ENV["SECRET_KEY_BASE"]
     config.autoload_paths << Rails.root.join('lib')
