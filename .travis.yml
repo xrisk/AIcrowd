@@ -28,14 +28,11 @@ before_install:
   - docker pull localstack/localstack
   - docker run -d -p 4572:4572 localstack/localstack
   - mkdir ~/fog
-  - sleep 20 # give xvfb and localstack some time to start
+  - sleep 10 # give xvfb and localstack some time to start
 
 script:
-  - bundle exec rake parallel:create
-  - bundle exec rake parallel:prepare
-  - bundle exec rake parallel:migrate
-  - bundle exec rake parallel:seed
-  - bundle exec rake parallel:spec
+  - bundle exec rake db:migrate
+  - bundle exec rake spec
 
 branches:
   only:
