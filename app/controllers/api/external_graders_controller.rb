@@ -46,7 +46,7 @@ class Api::ExternalGradersController < Api::BaseController
         .challenge_participants
         .find_by(participant_id: participant.id)
 
-      if challenge_participant.blank? or !challenge_participant.accepted_dataset_toc
+      if challenge_participant.blank?
         raise TermsNotAcceptedByParticipant
       end
 
