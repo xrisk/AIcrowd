@@ -831,4 +831,8 @@ Submission.create!([
     email: "p7@example.com",
     name: "p7")
 
+  ParticipationTerms.create!(
+    terms_markdown: "Sample Participation Terms. Please update at '/admin/participation_terms'" 
+  )
+
 end
