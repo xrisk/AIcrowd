@@ -5,6 +5,13 @@ class Submission::Cell < Template::Cell
 		model
 	end
 
+	def enable_links_in_raw_text(text)
+		if text.nil?
+			return
+		end
+		sanitize(text.gsub(/(https?:\/\/[\S]+)/, "<a href='\\1'>\\1</a>"))
+	end
+
 	def formatted_value(value)
 		if value == nil
 			return "-"
