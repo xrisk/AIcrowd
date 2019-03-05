@@ -28,12 +28,11 @@ ActiveAdmin.register ChallengeCall do
     column :headline
     column :closing_date
     column :website
-    column :crowdai
     column :reponses do |res|
       res.challenge_call_responses.count
     end
     column 'link' do |res|
-      "https://www.crowdai.org/call-for-challenges/#{res.slug}/apply"
+      "https://www.aicrowd.com/call-for-challenges/#{res.slug}/apply"
     end
     actions
   end
@@ -46,7 +45,6 @@ ActiveAdmin.register ChallengeCall do
       f.input :description_markdown
       f.input :closing_date
       f.input :website
-      f.input :crowdai
       f.input :slug, :input_html => { :disabled => true }
     end
     f.actions
