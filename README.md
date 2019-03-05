@@ -10,12 +10,12 @@
 [![View performance data on Skylight](https://badges.skylight.io/status/oUp0YzF6iDnj.svg?token=Ua2ArP97LHD6wNgaYkCqktPVyIPZmSvc46A-YxM8B60)](https://www.skylight.io/app/applications/oUp0YzF6iDnj)
 
 ## Introduction
-AICrowd (www.aicrowd.com) is a not-for-profit platform for open data challenges.
+AICrowd (www.aicrowd.com) is an online platform for open data challenges.
 It has two goals:
 * to be the place for solving (big) data problems in open science through open challenges
 * to be the place for learning about the techniques used to solve these problems.
 
-Developed by scientists and engineers at [EPFL](https://en.wikipedia.org/wiki/%C3%89cole_Polytechnique_F%C3%A9d%C3%A9rale_de_Lausanne) in Switzerland, crowdAI is open to participants from anywhere in the world. The platform is also open to host challenges from anyone else, from big or small research groups in academia to well established company dealing with an interesting problem around open science and open data.   
+Developed in Switzerland, AIcrowd is open to participants from anywhere in the world. The platform is also open to host challenges from anyone else, from big or small research groups in academia to well established company dealing with an interesting problem around open science and open data.   
 
 Open data challenges on the web give everyone around the world a shot at tackling difficult data problems.   
 By providing their solutions openly, participants can rapidly learn the latest powerful techniques from each other.   
