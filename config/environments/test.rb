@@ -2,11 +2,9 @@ require 'sidekiq/testing'
 
 Rails.application.configure do
   #Sidekiq::Testing.inline!
-  if !ENV['TRAVIS']
-    figaro_file = File.join(Rails.root, 'config', 'application.yml')
-    YAML::load_file(figaro_file).symbolize_keys[:test].each do |key,value|
-      ENV[key.to_s] = value
-    end
+  figaro_file = File.join(Rails.root, 'config', 'application.yml')
+  YAML::load_file(figaro_file).symbolize_keys[:test].each do |key,value|
+    ENV[key.to_s] = value
   end
   config.cache_classes = false
   config.eager_load = false
