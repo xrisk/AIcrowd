@@ -1,3 +1,4 @@
 <div class="load-more mt-0">
-  <%= link_to_next_page collection, 'Load More', remote: true, :id=>"load_more_link", :class=>"btn btn-secondary btn-block" %>
+	<%= link_to_next_page collection, '<button type="button" class="btn btn-secondary btn-block">Load more</button>'.html_safe, remote: true do %>
+        <%end%>
 </div>
