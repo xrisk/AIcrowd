@@ -27,8 +27,8 @@ Paloma.controller('Challenges', {
   show: function(){
     // NATE: Apparently challenges#show is not using turbolinks
     $(document).ready(function() {
-      var heading_ids = $("#description-wrapper").children().map(function() { return this.id; }).get().filter( e=>e)
-      console.info(heading_ids)
+      var heading_ids = $("#description-wrapper").find("*").map(function() { return this.id; }).get().filter( e=>e)
+      //console.info(heading_ids)
       update_table_of_contents(heading_ids)
       $('body').scrollspy({target: "#table-of-contents", offset: 64})
     });
