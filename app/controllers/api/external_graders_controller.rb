@@ -440,4 +440,10 @@ class Api::ExternalGradersController < Api::BaseController
       super
     end
   end
+  
+  class TermsNotAcceptedByParticipant < StandardError
+    def initialize(msg='Invalid Submission. Have you registered for this challenge and agreed to the participantion terms?')
+      super
+    end
+  end
 end
