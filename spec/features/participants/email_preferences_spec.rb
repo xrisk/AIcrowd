@@ -32,7 +32,7 @@ feature 'Email Preferences' do
       log_in(participant)
       other_url = "/participants/#{participant2.name}/notifications?id=#{participant2.email_preferences.first.id}"
       visit other_url
-      expect(page).to have_content "The page you were looking for doesn't exist"
+      expect(page).to have_content "The page you are looking for doesn’t seem to exist"
     end
 
     # scenario "Admin can access email preferences link for other participant" do

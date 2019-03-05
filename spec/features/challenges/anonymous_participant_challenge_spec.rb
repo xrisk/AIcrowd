@@ -79,12 +79,12 @@ feature "challenge", js: true do
 
     scenario "edit challenge" do
       visit "/challenges/#{draft_challenge.id}/edit"
-      expect(page).to have_content("Oh dear. The page you were looking for doesn't exist.")
+      expect(page).to have_content("The page you are looking for doesn’t seem to exist")
     end
 
     scenario "new challenge" do
       visit "/challenges/new"
-      expect(page).to have_content("Oh dear. The page you were looking for doesn't exist.")
+      expect(page).to have_content("The page you are looking for doesn’t seem to exist")
     end
   end
 
