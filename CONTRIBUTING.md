@@ -237,7 +237,7 @@ rspec path/to/test/file -e 'matching string'
 ## Contact
 When contributing to an open source project you might hit some problems, have some of those Eureka moments, and you simply might want to have a quick chat with us.
 You can always reach out to us at [hello@aicrowd.com](mailto:hello@aicrowd.com)
-and you are always welcome to join the AICrowd Community banter on our Gitter channel at [https://gitter.im/CrowdAI/Lobby](https://gitter.im/CrowdAI/Lobby)
+and you are always welcome to join the AICrowd Community banter on our Gitter channel at [https://gitter.im/AIcrowd-HQ/community](https://gitter.im/AIcrowd-HQ/community)
 
 
 ## Attribution
