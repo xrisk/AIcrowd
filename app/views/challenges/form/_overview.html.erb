@@ -7,13 +7,24 @@
   <% end %>
 </div>
 
-
 <div class="form-group">
   <span class="label-text">Prizes Breakdown</span>
-  <div class="form-group">Prize Money: <%= f.text_field :prize_cash , class: "form-control" %></div>
-  <div class="form-group">Travel Grants: <%= f.text_field :prize_travel, class: "form-control" %></div>
-  <div class="form-group">Academic Papers: <%= f.text_field :prize_academic, class: "form-control" %></div>
-  <div class="form-group">Misc Prizes: <%= f.text_field :prize_misc, class: "form-control" %></div>
+</div>
+<div class="form-group">
+  <span class="label-text">Prize Money</span>
+  <%= f.text_field :prize_cash , class: "form-control" %>
+</div>
+<div class="form-group">
+  <span class="label-text">Travel Grants</span>
+  <%= f.text_field :prize_travel , class: "form-control" %>
+</div>
+<div class="form-group">
+  <span class="label-text">Academic Papers</span>
+  <%= f.text_field :prize_academic , class: "form-control" %>
+</div>
+<div class="form-group">
+  <span class="label-text">Misc Prizes</span>
+  <%= f.text_field :prize_misc , class: "form-control" %>
 </div>
 
 <fieldset>
