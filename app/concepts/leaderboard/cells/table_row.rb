@@ -13,7 +13,14 @@ class Leaderboard::Cell::TableRow < Leaderboard::Cell
   end
 
   def formatted_score
+    return "0.0" if entry.score.nil?
     sprintf("%.#{challenge_round.score_precision}f", entry.score)
+  end
+
+
+  def formatted_score_secondary
+    return "0.0" if entry.score_secondary.nil?
+    sprintf("%.#{challenge_round.score_precision}f", entry.score_secondary)
   end
 
   def challenge
