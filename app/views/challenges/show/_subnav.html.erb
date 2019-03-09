@@ -11,7 +11,7 @@
         </li>
       <% end %>
       <li class="nav-item">
-        <%= link_to 'Discussion', URI.escape(File.join(ENV['DISCOURSE_DOMAIN_NAME'], 'c', challenge.slug)),
+        <%= link_to 'Discussion', URI.escape(File.join(ENV['DISCOURSE_DOMAIN_NAME'], 'c', challenge.slug[0..49])),
           class: tab_class('discussion') + " nav-link nav-link nav-link-03" %>
       </li>
       <% if challenge.clef_task.present? %>
