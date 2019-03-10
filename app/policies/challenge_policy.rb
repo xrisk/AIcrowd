@@ -51,6 +51,10 @@ class ChallengePolicy < ApplicationPolicy
   def clef_task?
     update?
   end
+  
+  def starting_soon_mode?
+    return @record.status == :starting_soon
+  end
 
   def has_accepted_challenge_rules?
     @record.has_accepted_challenge_rules?(participant)
