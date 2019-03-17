@@ -8,6 +8,10 @@ class Image::Cell < Template::Cell
     options[:klass]
   end
 
+  def style
+    options[:style]
+  end
+
   def image_url
     if model.image_file
       image_url = model.image_file.url
@@ -22,7 +26,7 @@ class Image::Cell < Template::Cell
 
   def image
     url = image_url
-    image_tag(image_url, class: klass)
+    image_tag(image_url, class: klass, style: style)
   end
 
   def image_16x9

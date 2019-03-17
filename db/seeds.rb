@@ -1,5 +1,6 @@
 if Rails.env == 'development' || Rails.env == 'staging'
 
+  SuccessStory.destroy_all
   DatasetFile.destroy_all
   SubmissionComment.destroy_all
   ChallengeCallResponse.destroy_all

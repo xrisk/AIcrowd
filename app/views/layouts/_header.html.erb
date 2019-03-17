@@ -20,6 +20,9 @@
             <%= link_to 'Challenges', challenges_path, {:class=> "nav-link"} %>
           </li>
           <li class="nav-item">
+            <%= link_to 'Success Stories', success_stories_path, {:class=> "nav-link"} %>
+          </li>
+          <li class="nav-item">
             <%= link_to 'Blog', blogs_path, {:class=> "nav-link"} %>
           </li>
           <% if current_participant && current_participant.admin? %>
@@ -44,6 +47,7 @@
           <div class="dropdown-menu dropdown-menu-right">
             <%= link_to 'Challenges', challenges_path, {:class=> "dropdown-item"} %>
             <div class="dropdown-divider"></div>
+            <%= link_to 'Success Stories', success_stories_path, {:class=> "dropdown-item"} %>
             <%= link_to 'Blog', blogs_path, {:class=> "dropdown-item"} %>
             <%= link_to "Organize a challenge", landing_page_host_path, {class: "dropdown-item"} %>
             <%= link_to "FAQ", faq_path, {class: "dropdown-item"} %>
@@ -78,6 +82,9 @@
             <%= link_to 'Challenges', challenges_path, {:class=> "nav-link"} %>
           </li>
           <li class="nav-item">
+            <%= link_to 'Success Stories', success_stories_path, {:class=> "nav-link"} %>
+          </li>
+          <li class="nav-item">
             <%= link_to 'Blog', blogs_path, {:class=> "nav-link"} %>
           </li>
           <li class="nav-item dropdown">
@@ -102,6 +109,7 @@
           <div class="dropdown-menu dropdown-menu-right">
             <%= link_to 'Challenges', challenges_path, {:class=> "dropdown-item"} %>
             <div class="dropdown-divider"></div>
+            <%= link_to 'Success Stories', success_stories_path, {:class=> "dropdown-item"} %>
             <%= link_to 'Blog', blogs_path, {:class=> "dropdown-item"} %>
             <%= link_to "Organize a challenge", landing_page_host_path, {class: "dropdown-item"} %>
             <%= link_to "FAQ", faq_path, {class: "dropdown-item"} %>
