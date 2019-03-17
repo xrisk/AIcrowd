@@ -19,9 +19,11 @@
           <li class="nav-item">
             <%= link_to 'Challenges', challenges_path, {:class=> "nav-link"} %>
           </li>
+          <% if !SuccessStory.first.nil? %>
           <li class="nav-item">
             <%= link_to 'Success Stories', success_stories_path, {:class=> "nav-link"} %>
           </li>
+          <% end %>
           <li class="nav-item">
             <%= link_to 'Blog', blogs_path, {:class=> "nav-link"} %>
           </li>
