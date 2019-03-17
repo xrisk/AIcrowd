@@ -69,6 +69,8 @@ Rails.application.routes.draw do
     resources :votes, only: [:create, :destroy]
   end
 
+  resources :success_stories, only: [:index, :show]
+
   resources :clef_tasks do
     resources :task_dataset_files
   end

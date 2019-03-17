@@ -1,5 +1,6 @@
 if Rails.env == 'development' || Rails.env == 'staging'
 
+  SuccessStory.destroy_all
   DatasetFile.destroy_all
   SubmissionComment.destroy_all
   ChallengeCallResponse.destroy_all
@@ -834,5 +835,28 @@ Submission.create!([
   ParticipationTerms.create!(
     terms_markdown: "Sample Participation Terms. Please update at '/admin/participation_terms'" 
   )
+
+  SuccessStory.create!(
+    participant_id: 112233,
+    title: "Test story 1",
+    byline: "This is the brief description of story 1",
+    slug: "test_story_1",
+    published: true,
+    posted_at: Time.now)
+
+  SuccessStory.create!(
+    participant_id: 112233,
+    title: "Test story 2",
+    byline: "This is the brief description of story 2",
+    slug: "test_story_2",
+    published: true,
+    posted_at: Time.now)
+  SuccessStory.create!(
+    participant_id: 112233,
+    title: "Test story 3",
+    byline: "This is the brief description of story 3",
+    slug: "test_story_3",
+    published: true,
+    posted_at: Time.now)
 
 end
