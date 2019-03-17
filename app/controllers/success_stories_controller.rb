@@ -19,6 +19,6 @@ class SuccessStoriesController < ApplicationController
 
   private
   def success_story_params
-    params.require(:success_story).permit(:participant_id, :title, :byline, :published, :image_file)
+    params.require(:success_story).permit(:title, :byline, :published, :image_file)
   end
 end

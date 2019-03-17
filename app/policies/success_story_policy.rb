@@ -5,7 +5,7 @@ class SuccessStoryPolicy < ApplicationPolicy
   end
 
   def show?
-    @record.published || (participant && (participant.admin? || @record.participant_id == participant.id))
+    @record.published || (participant && participant.admin?)
   end
 
   def edit?

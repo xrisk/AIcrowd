@@ -805,7 +805,6 @@ ActiveRecord::Schema.define(version: 2019_03_17_103012) do
   end
 
   create_table "success_stories", force: :cascade do |t|
-    t.bigint "participant_id"
     t.string "title"
     t.text "byline"
     t.text "html_content"

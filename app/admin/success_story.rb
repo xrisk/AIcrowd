@@ -13,7 +13,6 @@ ActiveAdmin.register SuccessStory do
     selectable_column
     column :seq
     column :title
-    column :participant
     column :published
     column :posted_at
     actions
@@ -21,7 +20,6 @@ ActiveAdmin.register SuccessStory do
 
   form do |f|
     f.inputs do
-      f.input :participant
       f.input :title
       f.input :seq
       f.input :published
@@ -36,7 +34,6 @@ ActiveAdmin.register SuccessStory do
 
   show do |success_story|
     attributes_table do
-      row :participant
       row :title
       row :slug
       row :seq
