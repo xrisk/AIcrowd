@@ -17,7 +17,7 @@
   <div class="section-p-md">
     <div class="container-fluid">
       <div class="row">
-        <% @success_stories.each_with_index do |success_story,index| %>
+        <% @success_stories.where(:published => true).each_with_index do |success_story,index| %>
           <%= render partial: 'success_story_post', locals: { success_story: success_story } %>
         <% end %>
       </div> 
