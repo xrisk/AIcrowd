@@ -41,7 +41,7 @@ class SuccessStoryPolicy < ApplicationPolicy
         scope.all
       else
         if participant
-          scope.where("published IS TRUE OR (published IS FALSE and participant_id = ?)", participant.id)
+          scope.where("published IS TRUE", participant.id)
         else
           scope.where(published: true)
         end
