@@ -40,11 +40,7 @@ class SuccessStoryPolicy < ApplicationPolicy
       if participant && participant.admin?
         scope.all
       else
-        if participant
-          scope.where("published IS TRUE", participant.id)
-        else
           scope.where(published: true)
-        end
       end
     end
   end
