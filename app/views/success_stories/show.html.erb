@@ -12,7 +12,7 @@
         <div class="d-flex align-items-center">
           <div class="d-none d-sm-block">
             <% if @success_story.image_file? %>
-            <%= concept(Image::Cell,@success_story, style: "width:100px;") %>
+            <%= concept(Image::Cell,@success_story, klass: "partner-logo") %>
             <% end %>
           </div>
         </div>
