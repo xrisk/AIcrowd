@@ -692,7 +692,8 @@ Submission.create!([
       vote_count: 29,
       view_count: 200,
       seq: 2993,
-      posted_at: Time.now)
+      posted_at: Time.now,
+      slug: "b_1")
 
   Blog.create!(
       id: 1,
@@ -703,7 +704,8 @@ Submission.create!([
         vote_count: 2900,
         view_count: 200000,
         seq: 2222,
-        posted_at: Time.now)
+        posted_at: Time.now,
+        slug: "b_2")
 
   Blog.create!(
       id: 3,
@@ -714,7 +716,8 @@ Submission.create!([
         vote_count: 291,
         view_count: 200,
         seq: 3000,
-        posted_at: Time.now)
+        posted_at: Time.now,
+        slug: "b_3")
 
   Blog.create!(
     id: 91,
@@ -725,7 +728,8 @@ Submission.create!([
       vote_count: 14,
       view_count: 231,
       seq: 2231,
-      posted_at: Time.now)
+      posted_at: Time.now,
+      slug: "b_4")
 
   JobPosting.create!(
     id: 102,
