@@ -5,6 +5,8 @@ class BlogsController < ApplicationController
 
   def index
     @blogs = policy_scope(Blog)
+      .where(published: true)
+      .order(seq: :asc)
       .page(params[:page])
       .per(20)
   end
