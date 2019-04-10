@@ -57,7 +57,10 @@ class CalculateLeaderboardService
 
   def get_order_by
     challenge = @round.challenge
-    if (challenge.secondary_sort_order_cd.blank? || challenge.secondary_sort_order_cd == 'not_used')
+
+    if (challenge.primary_sort_order_cd == 'latest')
+      return "created_at desc"
+    elsif (challenge.secondary_sort_order_cd.blank? || challenge.secondary_sort_order_cd == 'not_used')
         return "score_display #{sort_map(challenge.primary_sort_order_cd)}"
     else
       return "score_display #{sort_map(challenge.primary_sort_order_cd)}, score_secondary_display #{sort_map(challenge.secondary_sort_order_cd)}"
@@ -67,7 +70,9 @@ class CalculateLeaderboardService
   # TODO refactor this out
   def get_base_order_by
     challenge = @round.challenge
-    if (challenge.secondary_sort_order_cd.blank? || challenge.secondary_sort_order_cd == 'not_used')
+    if (challenge.primary_sort_order_cd == 'latest')
+      return 'created_at desc'
+    elsif (challenge.secondary_sort_order_cd.blank? || challenge.secondary_sort_order_cd == 'not_used')
         return "score #{sort_map(challenge.primary_sort_order_cd)}"
     else
       return "score #{sort_map(challenge.primary_sort_order_cd)}, score_secondary #{sort_map(challenge.secondary_sort_order_cd)}"
@@ -145,7 +150,7 @@ class CalculateLeaderboardService
         ROW_NUMBER() OVER (
           PARTITION by l.challenge_id,
                        l.challenge_round_id
-          ORDER BY #{@order_by} ) AS ROW_NUM,
+          ORDER BY l.#{@order_by} ) AS ROW_NUM,
         0 as PREVIOUS_ROW_NUM,
         l.slug,
         l.name,
@@ -167,7 +172,7 @@ class CalculateLeaderboardService
                 PARTITION BY s.challenge_id,
                              s.challenge_round_id,
                              s.participant_id
-                ORDER BY #{@order_by}) AS submission_ranking,
+                ORDER BY s.#{@order_by}) AS submission_ranking,
               s.id,
               s.challenge_id,
               s.challenge_round_id,
