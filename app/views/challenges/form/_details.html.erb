@@ -18,74 +18,68 @@ html: { class: "form-rg" } do |f| %>
   <span class="label-text">Options</span>
 
   <div class="toggle-switch-container">
-    <div class="can-toggle can-toggle--size-small">
-      <%= f.check_box :require_registration %>
-      <label for="registrationRequired">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Registration required</div>
-      </label>
-    </div>
+    <%= f.check_box :require_registration %>
+    <label for="registrationRequired">
+      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+      <div class="can-toggle__label-text">Registration required</div>
+    </label>
   </div>
 
   <div class="toggle-switch-container">
-    <div class="can-toggle can-toggle--size-small">
-      <%= f.check_box :show_leaderboard %>
-      <label for="registrationRequired">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Show leaderboard</div>
-      </label>
-    </div>
+    <%= f.check_box :show_leaderboard %>
+    <label for="registrationRequired">
+      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+      <div class="can-toggle__label-text">Show leaderboard</div>
+    </label>
   </div>
 
   <div class="toggle-switch-container">
-    <div class="can-toggle can-toggle--size-small">
-      <%= f.check_box :media_on_leaderboard %>
-      <label for="registrationRequired">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Show media on leaderboard</div>
-      </label>
-    </div>
+    <%= f.check_box :media_on_leaderboard %>
+    <label for="registrationRequired">
+      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+      <div class="can-toggle__label-text">Show media on leaderboard</div>
+    </label>
   </div>
 
 
   <div class="toggle-switch-container">
-    <div class="can-toggle can-toggle--size-small">
-      <%= f.check_box :submissions_page %>
-      <label for="showSubmissionsDetails">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Show submissions details</div>
-      </label>
-    </div>
+    <%= f.check_box :submissions_page %>
+    <label for="showSubmissionsDetails">
+      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+      <div class="can-toggle__label-text">Show submissions details</div>
+    </label>
   </div>
 
   <div class="toggle-switch-container">
-    <div class="can-toggle can-toggle--size-small">
-      <%= f.check_box :grading_history %>
-      <label for="showGradingHistory">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Show grading history</div>
-      </label>
-    </div>
+    <%= f.check_box :grading_history %>
+    <label for="showGradingHistory">
+      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+      <div class="can-toggle__label-text">Show grading history</div>
+    </label>
   </div>
 
   <div class="toggle-switch-container">
-    <div class="can-toggle can-toggle--size-small">
-      <%= f.check_box :grader_logs %>
-      <label for="showGraderLogs">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Show grader logs</div>
-      </label>
-    </div>
+    <%= f.check_box :grader_logs %>
+    <label for="showGraderLogs">
+      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+      <div class="can-toggle__label-text">Show grader logs</div>
+    </label>
   </div>
 
   <div class="toggle-switch-container">
-    <div class="can-toggle can-toggle--size-small">
-      <%= f.check_box :discussions_visible %>
-      <label for="showDiscussions">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Show discussions</div>
-      </label>
-    </div>
+    <%= f.check_box :discussions_visible %>
+    <label for="showDiscussions">
+      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+      <div class="can-toggle__label-text">Show discussions</div>
+    </label>
+  </div>
+
+  <div class="toggle-switch-container">
+    <%= f.check_box :latest_submission %>
+    <label for="showDiscussions">
+      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+      <div class="can-toggle__label-text">Show latest submissions</div>
+    </label>
   </div>
 </div>
 
@@ -171,8 +165,6 @@ html: { class: "form-rg" } do |f| %>
   <span class="label-text">Discourse category ID</span>
   <%= f.text_field :discourse_category_id , class: "form-control"%>
 </div>
-
-
 
 <%= render partial: 'challenges/form/submit_buttons',
 locals: { f: f } %>

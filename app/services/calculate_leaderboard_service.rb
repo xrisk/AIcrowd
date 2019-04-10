@@ -4,6 +4,7 @@ class CalculateLeaderboardService
     @round = ChallengeRound.find(challenge_round_id)
     @order_by = get_order_by
     @base_order_by = get_base_order_by
+    @latest_submission = get_latest_submission
     @conn = ActiveRecord::Base.connection
   end
 
@@ -57,10 +58,7 @@ class CalculateLeaderboardService
 
   def get_order_by
     challenge = @round.challenge
-
-    if (challenge.primary_sort_order_cd == 'latest')
-      return "created_at desc"
-    elsif (challenge.secondary_sort_order_cd.blank? || challenge.secondary_sort_order_cd == 'not_used')
+    if (challenge.secondary_sort_order_cd.blank? || challenge.secondary_sort_order_cd == 'not_used')
         return "score_display #{sort_map(challenge.primary_sort_order_cd)}"
     else
       return "score_display #{sort_map(challenge.primary_sort_order_cd)}, score_secondary_display #{sort_map(challenge.secondary_sort_order_cd)}"
@@ -70,9 +68,7 @@ class CalculateLeaderboardService
   # TODO refactor this out
   def get_base_order_by
     challenge = @round.challenge
-    if (challenge.primary_sort_order_cd == 'latest')
-      return 'created_at desc'
-    elsif (challenge.secondary_sort_order_cd.blank? || challenge.secondary_sort_order_cd == 'not_used')
+    if (challenge.secondary_sort_order_cd.blank? || challenge.secondary_sort_order_cd == 'not_used')
         return "score #{sort_map(challenge.primary_sort_order_cd)}"
     else
       return "score #{sort_map(challenge.primary_sort_order_cd)}, score_secondary #{sort_map(challenge.secondary_sort_order_cd)}"
@@ -86,6 +82,15 @@ class CalculateLeaderboardService
       return 'desc'
     else
       return nil
+    end
+  end
+
+  def get_latest_submission
+    challenge = @round.challenge
+    if challenge.latest_submission == true
+      return 'updated_at desc'
+    else
+      return get_order_by
     end
   end
 
@@ -172,7 +177,7 @@ class CalculateLeaderboardService
                 PARTITION BY s.challenge_id,
                              s.challenge_round_id,
                              s.participant_id
-                ORDER BY s.#{@order_by}) AS submission_ranking,
+                ORDER BY s.#{@latest_submission}) AS submission_ranking,
               s.id,
               s.challenge_id,
               s.challenge_round_id,

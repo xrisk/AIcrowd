@@ -155,7 +155,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       grader_logs: true,
       require_registration: false,
       grading_history: true,
-      post_challenge_submissions: false},
+      post_challenge_submissions: false,
+      latest_submission: false},
     {id: 370,
       organizer_id: 17,
       challenge: "TEST: Train Schedule Optimisation Challenge",
@@ -203,7 +204,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       grader_logs: true,
       require_registration: false,
       grading_history: true,
-      post_challenge_submissions: false},
+      post_challenge_submissions: false,
+    latest_submission: false},
     {id: 371,
       organizer_id: 17,
       challenge: "TEST:2 Programmer Schedule Optimisation Challenge",
@@ -251,7 +253,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       grader_logs: true,
       require_registration: false,
       grading_history: true,
-      post_challenge_submissions: false},
+      post_challenge_submissions: false,
+    latest_submission: false},
     {id: 373,
       organizer_id: 17,
       challenge: "TEST:2 Programmer Schedule Optimisation Challenge",
@@ -299,7 +302,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       grader_logs: true,
       require_registration: false,
       grading_history: true,
-      post_challenge_submissions: false},
+      post_challenge_submissions: false,
+    latest_submission: false},
     {id: 372,
       organizer_id: 21,
       challenge: "TEST:2 Programmer Schedule Optimisation Challenge",
@@ -347,7 +351,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       grader_logs: true,
       require_registration: false,
       grading_history: true,
-      post_challenge_submissions: false},
+      post_challenge_submissions: false,
+    latest_submission: false},
     {id: 30,
       organizer_id: 17,
       challenge: "Visual Doom AI Competition 2018 - Singleplayer Track (1)",
@@ -394,7 +399,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       grader_logs: true,
       require_registration: false,
       grading_history: false,
-      post_challenge_submissions: false}
+      post_challenge_submissions: false,
+    latest_submission: false}
   ])
 
   ChallengeRound.create!([
@@ -675,7 +681,8 @@ Submission.create!([
     {id: 12336, challenge_id: 30, participant_id: 5366, score: 4.5, created_at: "2018-08-06 02:18:41", updated_at: "2018-08-06 03:05:52", score_secondary: 5.0, grading_status_cd: "graded", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: 4.5, score_secondary_display: 5.0, baseline: false, baseline_comment: nil},
     {id: 12447, challenge_id: 30, participant_id: 5366, score: nil, created_at: "2018-08-06 13:56:35", updated_at: "2018-08-06 13:56:35", score_secondary: nil, grading_status_cd: "submitted", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil},
     {id: 12448, challenge_id: 30, participant_id: 112233, score: nil, created_at: "2018-08-06 13:56:35", updated_at: "2018-08-06 13:56:45", score_secondary: nil, grading_status_cd: "submitted", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: nil, score_secondary_display: nil, baseline: false, baseline_comment: nil},
-
+    {id: 11816, challenge_id: 30, participant_id: 1, score: 4.0, created_at: "2018-12-30 14:24:29", updated_at: "2018-12-30 14:42:20", score_secondary: 4.0, grading_status_cd: "graded", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: 4.0, score_secondary_display: 4.0, baseline: false, baseline_comment: nil},
+    {id: 11817, challenge_id: 30, participant_id: 1, score: 3.0, created_at: "2018-12-30 15:24:29", updated_at: "2018-12-30 15:42:20", score_secondary: 3.0, grading_status_cd: "graded", description_markdown: nil, post_challenge: false, challenge_round_id: 32, score_display: 3.0, score_secondary_display: 3.0, baseline: false, baseline_comment: nil},
   ])
 
   # Calculate Leaderboards

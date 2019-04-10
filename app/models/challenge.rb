@@ -63,7 +63,7 @@ class Challenge < ApplicationRecord
     [:draft, :running, :completed, :starting_soon],
     map: :string
   as_enum :primary_sort_order,
-    [:ascending, :descending, :latest],
+    [:ascending, :descending],
     map: :string
   as_enum :secondary_sort_order,
     [:ascending, :descending, :not_used],
