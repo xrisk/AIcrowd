@@ -17,6 +17,8 @@ rvm:
 env:
   global:
     - DB=postgres
+    # Start only s3 on localstack
+    - SERVICES=s3
 
 before_script:
   - cp config/application.yml.example config/application.yml
@@ -26,9 +28,9 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
   - docker pull localstack/localstack
-  - docker run -d -p 4572:4572 localstack/localstack
+  - docker run -d -e SERVICES="s3" -e LOCALSTACK_HOSTNAME="localhost" -e LOCALSTACK_HOSTNAME="localhost" -p 8080:8080  -p 4572:4572 -v "/tmp/localstack:/tmp/localstack" -v "/var/run/docker.sock:/var/run/docker.sock" -e DOCKER_HOST="unix:///var/run/docker.sock" -e HOST_TMP_FOLDER="/tmp/localstack" "localstack/localstack" 
   - mkdir ~/fog
-  - sleep 10 # give xvfb and localstack some time to start
+  - sleep 2 # give xvfb and localstack some time to start
 
 script:
   - bundle exec rake db:migrate
