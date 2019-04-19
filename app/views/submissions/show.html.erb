@@ -21,7 +21,9 @@
                 current_participant: current_participant) %>
         </div>
       <% end %>
+
     <!--Detail media end-->
+      <%= render partial: "submissions/show/meta", locals: {submission: @submission}%>
       <%= render partial: "submissions/show/comments", locals: {submission: @submission}%>
     </div>
   </div>
