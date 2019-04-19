@@ -20,18 +20,18 @@ RSpec.describe Api::SubmissionsController, type: :request do
       }
   end
 
-  describe 'with valid API key' do
-    context "with organiser auth key" do
-      before do
-        get "/api/challenges/#{challenge.id}/submissions",
-          headers: {
-            'Accept': 'application/vnd.api+json',
-            'Content-Type': 'application/vnd.api+json',
-            'Authorization': auth_header(organizer.api_key) }
-      end
-      it { expect(response).to have_http_status(200) }
-    end
-  end
+  # describe 'with valid API key' do
+  #   context "with organiser auth key" do
+  #     before do
+  #       get "/api/challenges/#{challenge.id}/submissions",
+  #         headers: {
+  #           'Accept': 'application/vnd.api+json',
+  #           'Content-Type': 'application/vnd.api+json',
+  #           'Authorization': auth_header(organizer.api_key) }
+  #     end
+  #     it { expect(response).to have_http_status(200) }
+  #   end
+  # end
 
   describe 'GET #show' do
     context "with admin auth key" do
