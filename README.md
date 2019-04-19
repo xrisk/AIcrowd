@@ -33,4 +33,4 @@ We are in the process of migrating our [documentation](doc/documentation.md) fro
 
 ## Contact
 You can always reach out to us at [hello@aicrowd.com](mailto:hello@aicrowd.com)
-and you are always welcome to join the CrowdAI Community banter on our Gitter channel at [https://gitter.im/AIcrowd-HQ/community](https://gitter.im/AIcrowd-HQ/community)
+and you are always welcome to join the AIcrowd Community banter on our Gitter channel at [https://gitter.im/AIcrowd-HQ/community](https://gitter.im/AIcrowd-HQ/community)
