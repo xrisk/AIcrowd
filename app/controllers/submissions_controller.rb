@@ -36,7 +36,6 @@ class SubmissionsController < ApplicationController
             participant_id: current_participant.id)
           .search(search_params)
         @submissions_remaining = SubmissionsRemainingQuery.new(
-          challenge_round_id: @current_round_id,
             challenge: @challenge,
             participant_id: current_participant.id)
           .call
