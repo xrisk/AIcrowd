@@ -1,6 +1,6 @@
 class SubmissionsController < ApplicationController
   before_action :authenticate_participant!,
-    except: [:show, :index]
+    except: :index
   before_action :set_submission,
     only: [:show, :edit, :update ]
   before_action :set_challenge
@@ -26,7 +26,7 @@ class SubmissionsController < ApplicationController
       @baselines = 'on'
     else
       @baselines = 'off'
-      if params[:my_submissions] == 'on'
+      if params[:my_submissions] == 'on' && current_participant
         @my_submissions = 'on'
       else
         @my_submissions = 'off'
