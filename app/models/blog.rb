@@ -6,7 +6,7 @@ class Blog < ApplicationRecord
   use: [:slugged]
   belongs_to :participant
   has_many :votes, as: :votable
-  validates_presence_of :posted_at
+  validates_presence_of :posted_at, :participant
 
 
   def record_page_view
