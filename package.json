@@ -46,10 +46,10 @@
   "resolutions": {
     "prop-types": "15.6.2"
   },
-  "name": "crowdai",
+  "name": "aicrowd",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "git@github.com:crowdai/crowdai.git",
-  "author": "Sean Carroll <sfcarroll@gmail.com>",
+  "repository": "git@github.com:aicrowd/aicrowd.git",
+  "author": "AIcrowd Rails Authors <hello@aicrowd.com>",
   "license": "MIT"
 }
