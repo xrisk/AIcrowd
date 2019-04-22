@@ -5,7 +5,7 @@ feature "host a challenge" do
   scenario "user vists host a challenge" do
     visit '/'
     click_link 'Host a Challenge'
-    expect(page).to have_content("Use crowdAI to connect your open data with machine learning and data science specialists, who will unlock the knowledge in your data and deliver production-ready open source solutions.")
+    expect(page).to have_content("Use AIcrowd to connect your open data with machine learning and data science specialists, who will unlock the knowledge in your data and deliver production-ready open source solutions.")
   end
 
   scenario "user opens challenge registration modal", js: true do

@@ -67,7 +67,7 @@ class GraderService
       Submission.update(
         submission_id,
         grading_status: 'failed',
-        grading_message: 'Grading process system error, please contact crowdAI administrators.')
+        grading_message: 'Grading process system error, please contact AIcrowd administrators.')
     end
   end
 
@@ -89,13 +89,13 @@ class GraderService
         dry_run: 'false',
         parallel: 'false',
         enqueue_only: 'true',
-        grader_api_key: ENV['CROWDAI_API_KEY']
+        grader_api_key: ENV['AICROWD_API_KEY']
       }
     else
       Submission.update(
         @submission.id,
         grading_status: 'failed',
-        grading_message: 'Grading process system error, please contact crowdAI administrators.')
+        grading_message: 'Grading process system error, please contact AIcrowd administrators.')
       return false
     end
   end

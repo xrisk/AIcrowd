@@ -17,7 +17,7 @@ Challenge.create!([
     remote_image_file_url: "https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png",
     # image_file: "https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png",
     license_markdown: "this is the license",
-    grader_identifier: "crowdAI_GRADER_POOL",
+    grader_identifier: "AIcrowd_GRADER_POOL",
     grader_logs: true,
     grading_history: true,
     media_on_leaderboard: false,

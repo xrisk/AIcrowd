@@ -1,4 +1,4 @@
-A starter kit for participants to familiarize themselves with the dataset and challenge mechanics is provided at: [ Starter Kit ](https://github.com/crowdAI/skip-prediction-challenge-starter-kit){:target='_blank'}
+A starter kit for participants to familiarize themselves with the dataset and challenge mechanics is provided at: [ Starter Kit ](https://github.com/AIcrowd/skip-prediction-challenge-starter-kit){:target='_blank'}
 
 Information about the Spotify API is provided at: [ Spotify API ](https://developer.spotify.com/documentation/web-api/){:target='_blank'}
 
@@ -13,8 +13,8 @@ We are very grateful to Google, who have kindly offered to sponsor 100 USD coupo
 Use one of the public channels:
 
 
-* **Gitter Channel** : [ https://gitter.im/crowdAI/spotify-sequential-skip-prediction-challenge ](https://gitter.im/crowdAI/spotify-sequential-skip-prediction-challenge){:target='_blank'}
-* **Technical issues** : [ https://github.com/crowdAI/skip-prediction-challenge-starter-kit/issues ](https://github.com/crowdAI/skip-prediction-challenge-starter-kit/issues){:target='_blank'}
+* **Gitter Channel** : [ https://gitter.im/AIcrowd/spotify-sequential-skip-prediction-challenge ](https://gitter.im/AIcrowd/spotify-sequential-skip-prediction-challenge){:target='_blank'}
+* **Technical issues** : [ https://github.com/AIcrowd/skip-prediction-challenge-starter-kit/issues ](https://github.com/AIcrowd/skip-prediction-challenge-starter-kit/issues){:target='_blank'}
 * **Discussion Forum** : [ https://www.crowdai.org/challenges/spotify-sequential-skip-prediction-challenge/topics ](https://www.crowdai.org/challenges/spotify-sequential-skip-prediction-challenge/topics){:target='_blank'}
 
 We strongly encourage you to use the public channels mentioned above for communications between the participants and the organisers. In extreme cases, if there are any queries or comments that you would like to make using a private communication channel, then you can send us an email at:

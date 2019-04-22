@@ -81,7 +81,7 @@ feature 'update participant data', js: true do
     end
 
 
-    scenario 'clicking "crowdAI Newsletter" after opt out all turns off opt out all' do
+    scenario 'clicking "AIcrowd Newsletter" after opt out all turns off opt out all' do
       visit_own_profile(participant)
       click_link('Email preferences')
       find('#email_preference_opt_out_all').click

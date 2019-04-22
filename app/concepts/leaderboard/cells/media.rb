@@ -78,7 +78,7 @@ class Leaderboard::Cell::Media < Leaderboard::Cell
     end
     if size == :large && leaderboard_row.media_large.present?
       result = %Q[
-        <iframe title="crowdAI Video"
+        <iframe title="AIcrowd Video"
           allowfullscreen="allowfullscreen"
           mozallowfullscreen="mozallowfullscreen"
           msallowfullscreen="msallowfullscreen"

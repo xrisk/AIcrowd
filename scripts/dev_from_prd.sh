@@ -9,7 +9,7 @@ if [[ $UID != 0 ]]; then
 fi
 
 if [[ ${PWD##*/} != 'crowdai' ]]; then
-  echo "Please run this script from the crowdAI root directory"
+  echo "Please run this script from the AIcrowd root directory"
   exit 1
 fi
 

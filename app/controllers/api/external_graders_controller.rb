@@ -195,11 +195,11 @@ class Api::ExternalGradersController < Api::BaseController
         # If its a string which is not a valid JSON
         # Then this is from the corrupted data
         # because of this bug :
-        # https://github.com/crowdAI/crowdai/issues/737
+        # https://github.com/AIcrowd/AIcrowd/issues/580
         # So we return an empty Hash
         Rails.logger.warn "Found invalid meta key: #{params_meta}.
         Assuming the user meant an empty Hash, or it is corrupt data.
-        Reference : https://github.com/crowdAI/crowdai/issues/737 "
+        Reference : https://github.com/AIcrowd/AIcrowd/issues/580 "
         return {}
       end
     end
