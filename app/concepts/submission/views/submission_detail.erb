@@ -21,6 +21,21 @@
 		</div>
 	</div>
 
+	<% if entry.meta.present? %>
+		<h3> Meta Parameters </h3>
+		<table class="table">
+			<% entry.meta.each do |key, value| %>
+				<% if not key.start_with?('private') %>
+					<tr>
+						<td> <h4> <%= key %> </h4></td>
+						<td> <%= value %></td>
+					</tr>
+					<% end %>
+			<% end %>
+		</table>
+	<% end %>
+
+
 	<div class="section-header mt-4 pt-4 border-top">
 		<h4>Share</h4>
 
