@@ -48,9 +48,9 @@
 	<% if challenge.media_on_leaderboard %>
 	<div class="media">
 		<%= concept(Leaderboard::Cell::Media,
-			@submission,
+			entry,
 			size: :large,
-			submission_id: @submission.id,
+			submission_id: entry.id,
 			current_participant: current_participant) %>
 	</div>
 	<% end %>
