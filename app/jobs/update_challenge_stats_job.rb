@@ -23,10 +23,10 @@ class UpdateChallengeStatsJob < ApplicationJob
     sql = %Q[
       UPDATE challenges AS C
       SET participant_count =
-          (SELECT count(*) FROM challenge_participants cp
+          (SELECT count(DISTINCT participant_id) FROM challenge_participants cp
             WHERE cp.challenge_id = c.id
-              AND cp.challenge_rules_accepted_version=(
-                SELECT max(version) FROM challenge_rules cr
+              AND cp.challenge_rules_accepted_version in (
+                SELECT version FROM challenge_rules cr
                  WHERE cr.challenge_id=c.id
               ))
       ]

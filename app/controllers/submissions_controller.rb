@@ -1,12 +1,15 @@
 class SubmissionsController < ApplicationController
-  before_action :authenticate_participant!, except: :show
+  before_action :authenticate_participant!,
+    except: :index
   before_action :set_submission,
     only: [:show, :edit, :update ]
   before_action :set_challenge
-  before_action :check_participation_terms
+  before_action :check_participation_terms,
+      except: [:show, :index]
   before_action :set_s3_direct_post,
     only: [:new, :edit, :create, :update]
-  before_action :set_submissions_remaining, except: :show
+  before_action :set_submissions_remaining,
+    except: [:show, :index]
   layout :set_layout
   respond_to :html, :js
 
@@ -15,6 +18,7 @@ class SubmissionsController < ApplicationController
     if params[:baselines] == 'on'
       @search = policy_scope(Submission)
         .where(
+          challenge_round_id: @current_round_id,
           challenge_id: @challenge.id,
           baseline: true)
         .where.not(participant_id: nil)
@@ -22,7 +26,7 @@ class SubmissionsController < ApplicationController
       @baselines = 'on'
     else
       @baselines = 'off'
-      if params[:my_submissions] == 'on'
+      if params[:my_submissions] == 'on' && current_participant
         @my_submissions = 'on'
       else
         @my_submissions = 'off'
@@ -30,6 +34,7 @@ class SubmissionsController < ApplicationController
       if @my_submissions == 'on'
         @search = policy_scope(Submission)
           .where(
+            challenge_round_id: @current_round_id,
             challenge_id: @challenge.id,
             participant_id: current_participant.id)
           .search(search_params)
@@ -40,6 +45,7 @@ class SubmissionsController < ApplicationController
       else
         @search = policy_scope(Submission)
           .where(
+            challenge_round_id: @current_round_id,
             challenge_id: @challenge.id)
           .where.not(participant_id: nil)
           .search(search_params)

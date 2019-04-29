@@ -22,11 +22,7 @@
         <% end %>
 
         <td><strong><%= formatted_score %></strong></td>
-
-        <% if challenge.score_secondary_title %>
-              <td><strong><%= entry.score_secondary %></strong></td>
-        <% end %>
-
+        <td><strong><%= formatted_score_secondary %></strong></td>
         <td><%= entry.entries %></td>
 
         <td class="text-right"><%= local_time(entry.created_at, "%a, %e %b %Y %H:%M") %></td>

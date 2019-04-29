@@ -49,11 +49,10 @@
 //= require controllers/participants_controller
 // require controllers/email_preferences_controller
 
-
 // ------------------------ STARTUP -------------------------- //
 
 document.addEventListener("turbolinks:load", function() {
-  $('[data-remodal-id=modal]').remodal();
+  $("[data-remodal-id=modal]").remodal();
 });
 
 document.addEventListener("turbolinks:load", function() {
@@ -62,44 +61,61 @@ document.addEventListener("turbolinks:load", function() {
 
 function loadMathJax() {
   window.MathJax = null;
-  $.getScript("https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML", function() {
-    MathJax.Hub.Config({
-      tex2jax: {
-            inlineMath: [ ["$","$"],["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-            processEscapes: true
-      }
-    });
-  });
-};
+  $.getScript(
+    "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML",
+    function() {
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [["$", "$"], ["\\(", "\\)"]],
+          displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+          processEscapes: true
+        }
+      });
+    }
+  );
+}
 
 // Remove default Turbolinks loader
-Turbolinks.ProgressBar.prototype.refresh = function() {}
-Turbolinks.ProgressBar.defaultCSS = ""
+Turbolinks.ProgressBar.prototype.refresh = function() {};
+Turbolinks.ProgressBar.defaultCSS = "";
 var loaderTimer;
 
 document.addEventListener("turbolinks:click", function() {
-  loaderTimer = setTimeout(function(){
-    $('#page-content').hide();
-    $('#loader-container').show();
+  loaderTimer = setTimeout(function() {
+    $("#page-content").hide();
+    $("#loader-container").show();
   }, 250);
 });
 
 document.addEventListener("turbolinks:load", function() {
   clearTimeout(loaderTimer);
-  $('#page-content').show();
-  $('#loader-container').hide();
-  $(".cookies-set-accept").click(function(){
-   document.cookie = "_cookie_eu_consented=true; expires=Fri, 31 Dec 9999 23:58:59 GMT; path=/";
-  })
+  $("#page-content").show();
+  $("#loader-container").hide();
+  $(".cookies-set-accept").click(function() {
+    document.cookie =
+      "_cookie_eu_consented=true; expires=Fri, 31 Dec 9999 23:58:59 GMT; path=/";
+  });
 });
 
-$(document).on('turbolinks:load', function() {
+$(document).on("turbolinks:load", function() {
   loadMathJax();
 });
 
-$(document).on('turbolinks:load', function() {
-  window.setTimeout(function () {
-    $(".alert:not(.alert-cookie)").alert('close')
+$(document).on("turbolinks:load", function() {
+  window.setTimeout(function() {
+    $(".alert:not(.alert-cookie)").alert("close");
   }, 5000);
+});
+
+// Temporary Fix for Kramdown not supporting strikethrough  ~~
+$(document).ready(function() {
+  // Looks for strikethrough elements in .markdown-wrap class elements
+  // and wraps them in <del> tags
+  $(".markdown-wrap").each(function() {
+    $(this).html(
+      $(this)
+        .html()
+        .replace(/~~(.*?)~~/gim, "<del>$1</del>")
+    );
+  });
 });

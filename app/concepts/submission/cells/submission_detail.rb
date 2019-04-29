@@ -8,4 +8,8 @@ class Submission::Cell::SubmissionDetail < Submission::Cell
   	model
   end
 
+  def current_participant
+  	options[:current_participant]
+  end
+
 end

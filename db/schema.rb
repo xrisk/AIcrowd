@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_18_175747) do
+ActiveRecord::Schema.define(version: 2019_04_10_194421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -160,6 +160,7 @@ ActiveRecord::Schema.define(version: 2019_02_18_175747) do
     t.text "body_markdown"
     t.integer "seq"
     t.datetime "posted_at"
+    t.string "slug"
     t.index ["participant_id"], name: "index_blogs_on_participant_id"
   end
 
@@ -335,6 +336,7 @@ ActiveRecord::Schema.define(version: 2019_02_18_175747) do
     t.integer "prize_academic"
     t.string "prize_misc"
     t.integer "discourse_category_id"
+    t.boolean "latest_submission", default: false
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["organizer_id"], name: "index_challenges_on_organizer_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
@@ -802,6 +804,19 @@ ActiveRecord::Schema.define(version: 2019_02_18_175747) do
     t.index ["challenge_id"], name: "index_submissions_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_submissions_on_challenge_round_id"
     t.index ["participant_id"], name: "index_submissions_on_participant_id"
+  end
+
+  create_table "success_stories", force: :cascade do |t|
+    t.string "title"
+    t.text "byline"
+    t.text "html_content"
+    t.boolean "published"
+    t.datetime "posted_at"
+    t.integer "seq"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "slug"
+    t.string "image_file"
   end
 
   create_table "task_dataset_file_downloads", force: :cascade do |t|

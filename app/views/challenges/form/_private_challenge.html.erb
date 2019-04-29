@@ -5,20 +5,22 @@
   <%= f.label :private_challenge, 'Private challenge' %>
 </div>
 
-<% if @challenge.persisted? %>
-
-<%= form_tag import_challenge_invitations_path(@challenge), multipart: true do %>
-<%= file_field_tag :file %>
-<%= submit_tag "Import CSV", class: 'btn' %>
-<% end %>
-
 <%= render partial: 'challenges/form/invitations_table',
 locals: { challenge: @challenge, f: f } %>
 
 <%= render partial: 'challenges/form/submit_buttons',
 locals: { f: f } %>
 
-</fieldset>
+</field2set>
+
+<% if @challenge.persisted? %>
+
+  <%= form_tag import_challenge_invitations_path(@challenge), multipart: true do %>
+    <%= file_field_tag :file %>
+    <%= submit_tag "Import CSV", class: 'btn' %>
+  <% end %>
+
 <% end %>
+
 
 <% end %>

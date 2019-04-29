@@ -3,7 +3,11 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-
+        <% if !local_assigns[:hide_invite_link] && policy(@organizer).update? %>
+          <header class="section-header">
+            <%= link_to 'Invite member', new_organizer_member_path(@organizer), class: 'btn btn-secondary' %>
+          </header>
+        <% end %>
         <!-- list group – team members -->
         <ul class="list-group list-group-flush-px-0 list-group-organizers">
 

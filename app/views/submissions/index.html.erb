@@ -68,9 +68,11 @@
           <% end %>
         </div>
 
+
+        <span id="more-anchor"></span>
           <!-- load more -->
             <%= render partial: 'shared/load_more', locals: { collection: @submissions
-            }, :id=>"load_more_link" %>
+            } %>
           <!-- /load more -->
       </div>
     </div>

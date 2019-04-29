@@ -165,6 +165,7 @@ class ChallengesController < ApplicationController
         :secondary_sort_order,
         :score_title,
         :score_secondary_title,
+        :latest_submission,
         :description_markdown,
         :rules_markdown,
         :prizes_markdown,

@@ -21,8 +21,15 @@ class Submission::Cell < Template::Cell
 	end
 
 	def grade_class
+		# byebug
 		if entry.grading_status_cd == "graded"
 			return "badge-success"
+		elsif entry.grading_status_cd == "initiated"
+			return "badge-gold"			
+		elsif entry.grading_status_cd == "submitted"
+			return "badge-gold"
+		elsif entry.grading_status_cd == "ready"
+			return "badge-silver"
 		else
 			return "badge-warning"
 		end
