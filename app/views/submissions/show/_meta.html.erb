@@ -1,9 +1,9 @@
 <% if submission.meta.present? %>
-	<table>
+	<table class="table">
 		<% submission.meta.each do |key, value| %>
 			<% if not key.start_with?('private') %>
 				<tr>
-					<td> <%= key %></td>
+					<td> <strong> <%= key %> </strong></td>
 					<td> <%= value %></td>
 				</tr>
 				<% end %>
