@@ -63,7 +63,7 @@ class Leaderboard::Cell::Media < Leaderboard::Cell
       if size == :large
         return video_tag(public_url, size: dimensions, controls: true, autoplay: true, loop: true, class: "media")
       else
-        return video_tag(public_url, size: dimensions, class: "media")
+        return video_tag(public_url, size: dimensions, autoplay: true, loop: true, class: "media")
       end
     else
       return "-"
