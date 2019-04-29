@@ -10,8 +10,17 @@
             <span class="text-link"><%= participant.name %></span>
           <% end %>
         </td>
-        <!-- Insert Media -->
-        <td>&#8212</td>
+
+        <% if challenge.media_on_leaderboard %>
+          <td>
+            <%= concept(Leaderboard::Cell::Media,
+                entry,
+                size: :thumb,
+                submission_id: entry.submission_id,
+                current_participant: current_participant) %>
+          </td>
+        <% end %>
+
         <td><strong><%= formatted_score %></strong></td>
         <td><strong><%= formatted_score_secondary %></strong></td>
         <td><%= entry.entries %></td>
