@@ -50,7 +50,7 @@
 		<%= concept(Leaderboard::Cell::Media,
 			@submission,
 			size: :large,
-			submission_id: submission_id,
+			submission_id: @submission.id,
 			current_participant: current_participant) %>
 	</div>
 	<% end %>
