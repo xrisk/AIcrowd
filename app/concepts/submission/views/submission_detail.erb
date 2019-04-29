@@ -3,7 +3,6 @@
 	<div class="d-flex">
 		<h2 class="mr-2">Submission #<%= entry.id %></h2><span class="badge <%= grade_class %>"><%= entry.grading_status_cd %></span>
 	</div>
-
 	<% if current_participant.admin? || current_participant.id == participant.id || current_participant.organizer.id == challenge.organizer.id  %>
 		<div>
 			<p><%= entry.description %></p>
@@ -44,3 +43,16 @@
 
 </div>
 <!-- /submission details -->
+<div class="col-sm-12 col-md-6">
+	<!--Detail media start-->
+	<% if challenge.media_on_leaderboard %>
+	<div class="media">
+		<%= concept(Leaderboard::Cell::Media,
+			@submission,
+			size: :large,
+			submission_id: submission_id,
+			current_participant: current_participant) %>
+	</div>
+	<% end %>
+	<!--Detail media end-->
+</div>
