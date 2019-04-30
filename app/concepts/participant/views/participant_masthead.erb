@@ -8,11 +8,26 @@
           <div class="masthead-content">
             <div class="d-flex">
               <%= concept(Image::Cell, participant, klass: "avatar-sm") %>
-              <h1><%= participant.name %>
+              <h1>
+                <%= participant.name %>
               </h1>
             </div>
-
             <div class="masthead-info">
+
+            <% if participant.first_name? or participant.last_name? %>
+                  <div class="masthead-info-item">
+                    <header>
+                      <h4>Name</h4>
+                    </header>
+                    <span>
+                      <%= participant.first_name || "" %>
+                    <span>
+                    </span>
+                      <%= participant.last_name || "" %>
+                    </span>
+                  </div>
+            <% end %>
+
 
               <% if participant.affiliation? %>
                   <div class="masthead-info-item">
