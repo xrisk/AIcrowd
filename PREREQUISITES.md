@@ -12,7 +12,7 @@ Create a database named crowdai_development using postgresql
 
 * Log into psql server using: `sudo -u postgres psql`.
 * You will be prompted with `postgres=#`.
-* Create a new database using: `CREATE DATABASE crowdai_development`.
+* Create a new database using: `CREATE DATABASE crowdai_development;`.
 
 ### Ruby
 
