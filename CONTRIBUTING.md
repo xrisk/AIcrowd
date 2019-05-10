@@ -160,14 +160,15 @@ For installation, prerequisites include localstack, postgresql and rvm. [Click h
 1. Fork our repo from https://github.com/AICrowd/AICrowd.
 2. In the console, download a copy of your forked repo with `git clone https://github.com/your_username/AICrowd.git` where `your_username` is your GitHub username.
 3. Enter the new **AICrowd** directory with `cd AICrowd`.
-4. Install gems with `bundle install` from the rails root folder, to install the gems you'll need. You may need to first run `bundle update` if you have older gems in your environment from previous Rails work.
-5. Make a copy of `config/application.yml.example` and place it at `config/application.yml`.
-6. Run the redis server using `sudo systemctl start redis`.
-7. Run localstack using `localstack start` or `docker run -p 4572:4572 localstack/localstack`.
-8. Create a local directory for fog storage and modify application.yml `FOG_LOCAL_ROOT` to point to this directory.
-9. Run the webpack-dev-server using `./bin/webpack-dev-server`.
-10. Run `rake db:migrate` to migrate schema to our database then run `rake db:seed` to seed our database created using postgres.
-11. By default, start rails with `ENV=development rails server` from the Rails root and open http://localhost:3000 in a web browser.
+4. Install `libpq`, on Ubuntu: `apt install libpq-dev`, on Fedora/Red Hat/CentOS: `yum install postgresql-devel`.
+5. Install gems with `bundle install` from the rails root folder, to install the gems you'll need. You may need to first run `bundle update` if you have older gems in your environment from previous Rails work.
+6. Make a copy of `config/application.yml.example` and place it at `config/application.yml`.
+7. Run the redis server using `sudo systemctl start redis`.
+8. Run localstack using `localstack start` or `docker run -p 4572:4572 localstack/localstack`.
+9. Create a local directory for fog storage and modify application.yml `FOG_LOCAL_ROOT` to point to this directory.
+10. Run the webpack-dev-server using `./bin/webpack-dev-server`.
+11. Run `rake db:migrate` to migrate schema to our database then run `rake db:seed` to seed our database created using postgres.
+12. By default, start rails with `ENV=development rails server` from the Rails root and open http://localhost:3000 in a web browser.
 
 ### Bundle exec
 
