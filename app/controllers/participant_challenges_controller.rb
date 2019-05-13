@@ -9,7 +9,7 @@ class ParticipantChallengesController < ApplicationController
       .where(challenge_rules_accepted_version: @challenge.current_challenge_rules_version)
       .order(name: :asc)
       .page(params[:page])
-      .per(20)
+      .per(10)
     authorize @participant_challenges
   end
 
