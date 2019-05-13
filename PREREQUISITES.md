@@ -38,7 +38,9 @@ Ruby dependencies, or Gems, are managed with Bundler.
 
 ### Assets with npm
 
-Install npm using: `sudo apt-get install npm`
+Move into the `AIcrowd` folder using: `cd AIcrowd`.
+
+Install npm using: `sudo apt-get install npm`.
 
 Install npm packages using: `npm install .`.
 
