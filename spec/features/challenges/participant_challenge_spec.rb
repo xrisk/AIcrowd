@@ -8,7 +8,7 @@ let!(:participant) { create(:participant) }
   describe "participant can view challenges list" do
     before(:example) do
       log_in participant
-      visit '/'
+      visit '/challenges'
     end
     specify { expect(page).to have_link challenge.challenge }
     # specify { expect(page).to have_link 'Knowledge Base' }
@@ -19,7 +19,7 @@ let!(:participant) { create(:participant) }
   describe "participant can view challenge details" do
     before(:example) do
       log_in participant
-      visit '/'
+      visit '/challenges'
       click_link challenge.challenge
     end
 
@@ -30,7 +30,7 @@ let!(:participant) { create(:participant) }
   describe "participant" do
     before do
       log_in participant
-      visit '/'
+      visit '/challenges'
       click_link challenge.challenge
     end
 
@@ -53,7 +53,7 @@ let!(:participant) { create(:participant) }
   describe "access restricted parts of the challenge" do
     before(:example) do
       log_in participant
-      visit '/'
+      visit '/challenges'
       click_link challenge.challenge
     end
 
