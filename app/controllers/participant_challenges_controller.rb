@@ -6,8 +6,8 @@ class ParticipantChallengesController < ApplicationController
   def index
     @participant_challenges = @challenge
       .challenge_participants
+      .order(updated_at: :asc)
       .where(challenge_rules_accepted_version: @challenge.current_challenge_rules_version)
-      .order(name: :asc)
       .page(params[:page])
       .per(10)
     authorize @participant_challenges
