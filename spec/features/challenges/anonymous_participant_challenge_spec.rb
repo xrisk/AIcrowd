@@ -18,7 +18,7 @@ feature "challenge", js: true do
 
   describe "anonymous participant can view some challenges details" do
     before(:example) do
-      visit '/'
+      visit '/challenges'
       click_link challenge.challenge
     end
 
@@ -29,7 +29,7 @@ feature "challenge", js: true do
 
   describe "anonymous participant" do
     before(:example) do
-      visit '/'
+      visit '/challenges'
       click_link challenge.challenge
     end
 
@@ -51,7 +51,7 @@ feature "challenge", js: true do
 
   describe "participant is required to log in to access restricted parts of the challenge" do
     before(:example) do
-      visit '/'
+      visit '/challenges'
       click_link challenge.challenge
     end
 
