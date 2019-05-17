@@ -4967,6 +4967,11 @@ input[type="button"].btn-block {
   flex: 1;
 }
 
+video {
+  width: 100% !important;
+  height: auto !important;
+}
+
 .list-group {
   display: flex;
   flex-direction: column;
