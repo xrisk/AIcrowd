@@ -9,7 +9,7 @@
 		</div>
 	<% end %>
 
-	<div class="d-flex mt-4">
+	<div class="d-flex mt-5">
 		<div class="mr-4">
 			<h4><%= challenge.score_title %></h4>
 			<span><%= formatted_value(entry.score_display) %></span>
@@ -23,19 +23,19 @@
 
 	<% if entry.meta.present? %>
 	<br/>
-	<div>
-		<h3> Meta Parameters </h3>
-		<table class="table">
-			<% entry.meta.each do |key, value| %>
-				<% if not key.start_with?('private') %>
-					<tr>
-						<td> <h4> <%= key %> </h4></td>
-						<td> <%= value %></td>
-					</tr>
-					<% end %>
-			<% end %>
-		</table>
+	<div class="section-header mt-4 pt-5 border-top">
+			<h3>Meta parameters</h3>
 	</div>
+		<% entry.meta.each do |key, value| %>
+			<% if not key.start_with?('private') %>
+			 	<div class="d-flex mt-4">
+					<div class="mr-4">
+						<h4> <%= key %> </h4>
+						<span> <%= value %> </span>
+					</div>
+				</div>
+				<% end %>
+		<% end %>
 	<% end %>
 
 
