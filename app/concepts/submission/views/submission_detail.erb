@@ -22,7 +22,6 @@
 	</div>
 
 	<% if entry.meta.present? %>
-	<br/>
 	<div class="section-header mt-4 pt-5 border-top">
 			<h3>Meta parameters</h3>
 	</div>
@@ -31,7 +30,13 @@
 			 	<div class="d-flex mt-4">
 					<div class="mr-4">
 						<h4> <%= key %> </h4>
-						<span> <%= value %> </span>
+						<span>
+							<% if not key.contains?('URL') %>
+								<a><%= value %></a>
+								<%else %>
+								<%= value %>
+							<% end %>
+						</span>
 					</div>
 				</div>
 				<% end %>

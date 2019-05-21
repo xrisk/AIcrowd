@@ -6,7 +6,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 mb-4">
-        <%= link_to "&#8592; Back to challenge".html_safe ,challenge_submissions_path(@submission.challenge_id) %>
+        <%= link_to "&#8592; Back to challenge".html_safe, challenge_submissions_path(@submission.challenge_id) %>
       </div>
 
       <%= concept(Submission::Cell::SubmissionDetail, @submission, current_participant: current_participant) %>
