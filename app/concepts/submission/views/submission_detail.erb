@@ -3,13 +3,14 @@
 	<div class="d-flex">
 		<h2 class="mr-2">Submission #<%= entry.id %></h2><span class="badge <%= grade_class %>"><%= entry.grading_status_cd %></span>
 	</div>
-	<% if current_participant.admin? || current_participant.id == participant.id || current_participant.organizer.id == challenge.organizer.id  %>
-		<div>
+
+	<% if (current_participant.admin? || current_participant.id == participant.id || current_participant.organizer.id == challenge.organizer.id) && entry.description.present? %>
+		<div class="mb-5"">
 			<p><%= entry.description %></p>
 		</div>
 	<% end %>
 
-	<div class="d-flex mt-5">
+	<div class="d-flex">
 		<div class="mr-4">
 			<h4><%= challenge.score_title %></h4>
 			<span><%= formatted_value(entry.score_display) %></span>
