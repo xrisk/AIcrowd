@@ -1,11 +1,2 @@
-var temp = $(document).height();
-
-$("#challenges-div").append("<%= j render partial: 'challenges' %>");
-$('#load_more_link').replaceWith("<%= j render partial: 'shared/load_more', locals: { collection: @challenges }, :id=>'load_more_link' %>");
-
-$('html, body').animate({
-   scrollTop: 2*temp - $(document).height()},
-   1400,
-   "easeOutQuint"
-);
-
+// This needs to be rewritten as in on other load-mores
+// removing for now as we dont want pagination on the challenges index.

@@ -19,10 +19,12 @@
       <%= render partial: 'challenges' %>
     </div>
 
-    <!-- load more -->
-      <%= render partial: 'shared/load_more', locals: { collection: @challenges
-      }, :id=>"load_more_link" %>
+		<%# Uncomment this when we want pagination on this page.
+		<!-- load more -->
+		      <%= render partial: 'shared/load_more', locals: { collection: @challenges}, :id=>"load_more_link" %>
     <!-- /load more -->
+	  %>
+
   </div>
 </div>
 <!-- /challenge cards -->
