@@ -31,7 +31,7 @@
 					<div class="mr-4">
 						<h4> <%= key %> </h4>
 						<span>
-							<% if not key.contains?('URL') %>
+							<% if not key.include?('URL') %>
 								<a><%= value %></a>
 								<%else %>
 								<%= value %>
