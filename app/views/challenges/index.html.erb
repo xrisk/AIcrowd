@@ -18,14 +18,9 @@
     <div class="row" id="challenges-div">
       <%= render partial: 'challenges' %>
     </div>
-
-		<% if false %> 
-    This is multiline comment hack. 
-    Uncomment this when we want pagination on this page.
-		<!-- load more -->
-		      <%= render partial: 'shared/load_more', locals: { collection: @challenges}, :id=>"load_more_link" %>
-    <!-- /load more -->
-	  <% end %>
+	  
+    <%# Uncomment this when we want pagination on this page. #>
+    <%#= render partial: 'shared/load_more', locals: { collection: @challenges}, :id=>"load_more_link" %>
 
   </div>
 </div>
