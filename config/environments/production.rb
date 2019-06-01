@@ -9,7 +9,7 @@ Rails.application.configure do
   config.assets.css_compressor = :sass
   config.assets.compile = true
   config.force_ssl = true
-  config.log_level = :info
+  config.log_level = :warn
   config.log_tags = [ :request_id ]
   config.i18n.fallbacks = true
   config.log_formatter = ::Logger::Formatter.new
