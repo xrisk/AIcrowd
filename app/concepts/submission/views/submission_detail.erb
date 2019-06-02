@@ -5,7 +5,7 @@
 	</div>
 
 	<% if (current_participant.admin? || current_participant.id == participant.id || current_participant.organizer.id == challenge.organizer.id) && entry.description.present? %>
-		<div class="mb-5"">
+		<div class="mb-5">
 			<p><%= entry.description %></p>
 		</div>
 	<% end %>
