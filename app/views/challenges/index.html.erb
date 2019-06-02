@@ -10,24 +10,16 @@
 </div>
 <!-- /masthead -->
 
-<%= concept(Challenge::Cell::ChallengesSubnav, @challenges, current_participant: current_participant) %>
-
 <!-- challenge cards -->
 <div class="section-pt-sm-pb-md">
   <div class="container-fluid">
     <div class="row" id="challenges-div">
       <%= render partial: 'challenges' %>
     </div>
-
-		<% if false %> 
-    This is multiline comment hack. 
-    Uncomment this when we want pagination on this page.
-		<!-- load more -->
-		      <%= render partial: 'shared/load_more', locals: { collection: @challenges}, :id=>"load_more_link" %>
-    <!-- /load more -->
-	  <% end %>
+	  
+    <%# Uncomment this when we want pagination on this page. #>
+    <%#= render partial: 'shared/load_more', locals: { collection: @challenges}, :id=>"load_more_link" %>
 
   </div>
 </div>
 <!-- /challenge cards -->
-</main>
