@@ -106,6 +106,12 @@ class ChallengePolicy < ApplicationPolicy
     end
   end
 
+  def create_team?
+    submissions_allowed? &&
+      record.allows_team_changes? &&
+      !participant.teams.exists?(challenge_id: record.id)
+  end
+
 
   class Scope
     attr_reader :participant, :scope

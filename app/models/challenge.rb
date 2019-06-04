@@ -59,6 +59,8 @@ class Challenge < ApplicationRecord
     reject_if: :all_blank,
     allow_destroy: true
 
+  has_many :teams, inverse_of: :challenge
+
   as_enum :status,
     [:draft, :running, :completed, :starting_soon],
     map: :string
@@ -214,4 +216,7 @@ class Challenge < ApplicationRecord
     return true
   end
 
+  def allows_team_changes?
+    status != :completed && (end_dttm.nil? || end_dttm > 1.week.from_now)
+  end
 end

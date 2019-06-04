@@ -1,0 +1,24 @@
+<% teams = @participant.teams.includes(:challenge) %>
+<section class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <% if teams.length > 0 %>
+          <ul class="list-group list-group-flush-px-0 list-group-teams">
+            <% teams.each do |team| %>
+              <li class="list-group-item">
+                <div>
+                  <%= link_to(team.name, team, class: 'text-link') %>
+                  <span><%= team.challenge.challenge %></span>
+                </div>
+                <%= link_to('View', team, class: 'btn btn-secondary btn-sm') %>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <%= @participant.name %> has not joined any teams yet...
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

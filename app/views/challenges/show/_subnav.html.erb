@@ -106,16 +106,17 @@
       </ul>
     
     <% if !policy(challenge).starting_soon_mode? %>
-      <% if !policy(challenge).has_accepted_participation_terms? %>
+      <% if false && !policy(challenge).has_accepted_participation_terms? %>
         <%= link_to 'Participate',
         [challenge, ParticipationTerms.current_terms],
         class: "btn btn-secondary btn-sm pull-right" %>
-      <% elsif !policy(challenge).has_accepted_challenge_rules? %>
+      <% elsif false && !policy(challenge).has_accepted_challenge_rules? %>
         <%= link_to 'Participate',
         [challenge, challenge.current_challenge_rules],
         class: "btn btn-secondary btn-sm pull-right" %>
-      <% else %>    
-        <% if policy(challenge).submissions_allowed? && current_tab != 'dataset' %>
+      <% else %>
+        <% if true || policy(challenge).submissions_allowed? && current_tab != 'dataset' %>
+            <%= team_creation_button(current_participant, challenge) %>
             <%= link_to 'Create Submission',
                   new_challenge_submission_path(challenge),
                   class: "btn btn-secondary btn-sm pull-right" %>
@@ -133,3 +134,32 @@
   </div>
 </div>
 <!-- /sub-nav bar -->
+
+<!-- create team modal -->
+<div class="modal fade" id="create-team-modal" tabindex="-1" role="dialog" aria-labelledby="create-team-modal-label" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <%= form_for(Team.new, url: challenge_teams_path(challenge_id: challenge.friendly_id)) do |f| %>
+        <div class="modal-header">
+          <h4 class="modal-title" id="create-team-modal-label">Create a team for this challenge</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Team Name</label>
+            <div class="input-group mb-3">
+              <%= f.text_field(:name, class: 'form-control', placeholder: 'Team name') %>
+            </div>
+          </div>
+          <div class="btn-set">
+            <%= f.submit 'Create', class: 'btn btn-primary' %>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!-- /create team modal -->

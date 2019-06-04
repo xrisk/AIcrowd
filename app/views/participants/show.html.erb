@@ -3,17 +3,24 @@
                 current_participant: current_participant) %>
 
 <!-- sub-nav bar -->
+<%
+  active_tab = params[:tab]
+  active_tab = 'challenges' unless ['teams','bio'].include?(active_tab)
+%>
 <div class="sub-nav-bar sticky-top">
   <div class="container-fluid">
     <ul class="nav tabs">
       <li class="nav-item">
-        <a class="nav-link nav-link-01 active" data-toggle='tab' href="#tab-challenges" onclick="return false;">Challenges</a>
+        <a class="nav-link nav-link-01<%= ' active' if active_tab == 'challenges' %>" data-toggle='tab' href="#tab-challenges" onclick="return false;">Challenges</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link nav-link-02" href="<%= @discourse_link %>">Posts</a>
+        <a class="nav-link nav-link-02<%= ' active' if active_tab == 'teams' %>" data-toggle='tab' href="#tab-teams" onclick="return false;">Teams</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link nav-link-03" data-toggle='tab' href="#tab-bio" onclick="return false;">Bio</a>
+        <a class="nav-link nav-link-03" href="<%= @discourse_link %>">Posts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link nav-link-04<%= ' active' if active_tab == 'bio' %>" data-toggle='tab' href="#tab-bio" onclick="return false;">Bio</a>
       </li>
 
 
@@ -31,7 +38,7 @@
 <!-- /sub-nav bar -->
 
 <div class="tab-content">
-  <div id='tab-challenges' class="tab-pane fade show active">
+  <div id='tab-challenges' class="tab-pane fade<%= ' show active' if active_tab == 'challenges' %>">
     <% if @challenges.any? %>
       <section class="section-p-sm bg-light">
         <div class="container-fluid">
@@ -57,7 +64,11 @@
     <% end %>
   </div>
 
-  <div id='tab-bio' class="tab-pane fade">
+  <div id="tab-teams" class="tab-pane fade<%= ' show active' if active_tab == 'teams' %>">
+    <%= render partial: 'teams/list_from_participant' %>
+  </div>
+
+  <div id='tab-bio' class="tab-pane fade<%= ' show active' if active_tab == 'bio' %>">
   <!-- section -->
     <section class="section-p-md">
       <div class="container-fluid">
