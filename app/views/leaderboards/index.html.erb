@@ -43,15 +43,17 @@
       </div>
 
       <!-- toggle switch -->
-      <div class="toggle-switch-container">
-        <div class="can-toggle can-toggle--size-small">
-          <input id="post-challenge-submissions" type="checkbox">
-          <label for="post-challenge-submissions">
-            <div class="can-toggle__switch" data-checked="On" data-unchecked="Off"></div>
-            <div class="can-toggle__label-text">Show post-challenge submissions</div>
-          </label>
-        </div>
-      </div>
+	      <% if @challenge.status == :completed %>
+		      <div class="toggle-switch-container">
+			      <div class="can-toggle can-toggle--size-small">
+				      <input id="post-challenge-submissions" type="checkbox">
+				      <label for="post-challenge-submissions">
+					      <div class="can-toggle__switch" data-checked="On" data-unchecked="Off"></div>
+					      <div class="can-toggle__label-text">Show post-challenge submissions</div>
+				      </label>
+			      </div>
+		      </div>
+	      <% end %>
       <!-- /toggle switch -->
 
       <span id="more-anchor"></span>
