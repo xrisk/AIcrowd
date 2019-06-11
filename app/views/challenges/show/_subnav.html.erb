@@ -119,12 +119,14 @@
         <%= link_to 'Participate',
         [challenge, challenge.current_challenge_rules],
         class: "btn btn-primary btn-sm pull-right" %>
-      <% else %>    
-        <% if policy(challenge).submissions_allowed? && current_tab != 'dataset' %>
+      <% else %>
+		    <% if !policy(challenge).starting_soon_mode? %>
+				  <% if policy(challenge).submissions_allowed? && current_tab != 'dataset' %>
             <%= link_to 'Create Submission',
                   new_challenge_submission_path(challenge),
                   class: "btn btn-primary btn-sm pull-right" %>
-        <% end %>
+          <% end %>
+			  <% end %>
       <% end %>
     
     <% if policy(challenge).edit? %>
