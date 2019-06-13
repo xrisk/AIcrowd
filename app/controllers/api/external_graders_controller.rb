@@ -31,14 +31,15 @@ class Api::ExternalGradersController < Api::BaseController
     begin
       participant = Participant.where(api_key: params[:api_key]).first
       raise DeveloperAPIKeyInvalid if participant.nil?
-      challenge = Challenge.where(
-                    challenge_client_name: params[:challenge_client_name]).first
-      challenge_round_id = get_challenge_round_id(
-        challenge: challenge, params: params)
-      raise ChallengeClientNameInvalid if challenge.nil?
-      raise ChallengeRoundNotOpen unless challenge_round_open?(challenge)
       raise ParticipantDidNotAcceptParticipationTerms unless participant.has_accepted_participation_terms?
+
+      challenge = Challenge.where(challenge_client_name: params[:challenge_client_name]).first
+      raise ChallengeClientNameInvalid if challenge.nil?
       raise ParticipantDidNotAcceptChallengeRules unless challenge.has_accepted_challenge_rules?(participant)
+
+      challenge_round_id = get_challenge_round_id(challenge: challenge, params: params)
+
+      raise ChallengeRoundNotOpen unless challenge_round_open?(challenge)
       raise ParticipantNotQualified unless participant_qualified?(challenge,participant)
       raise ParallelSubmissionLimitExceeded unless parallel_submissions_allowed?(challenge,participant)
 
@@ -52,6 +53,7 @@ class Api::ExternalGradersController < Api::BaseController
 
       submissions_remaining, reset_dttm = challenge.submissions_remaining(participant.id)
       raise NoSubmissionSlotsRemaining, reset_dttm if submissions_remaining < 1
+
       if params[:meta].present?
         params[:meta] = clean_meta(params[:meta])
       end
