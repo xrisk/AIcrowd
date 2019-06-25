@@ -5,7 +5,8 @@ class Leaderboard::Cell::TableHead < Leaderboard::Cell
   end
 
   def other_scores_fieldnames_array
-	challenge.other_scores_fieldnames.split(",")
+    arr = challenge.other_scores_fieldnames
+    return arr.split(",") if arr
   end
 
 end
