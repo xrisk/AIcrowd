@@ -27,6 +27,13 @@ class Leaderboard::Cell::TableRow < Leaderboard::Cell
     @challenge ||= model.challenge
   end
 
+  def other_scores_array
+      return [] unless entry.meta['other_scores']
+      other_scores = entry.meta['other_scores'].split(",")
+      other_scores = other_scores.map{|x| x.nil? ? "0.0": x}.compact
+      return other_scores
+  end
+
   def participant
     @participant ||= entry.participant
   end
