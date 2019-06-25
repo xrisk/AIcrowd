@@ -10,6 +10,9 @@
     <% if challenge.score_secondary_title %>
         <th scope="col"><%= challenge.score_secondary_title %></th>
     <% end %>
+    <% other_scores_fieldnames_array.each do |fname| %>
+        <th scope="col"><%= fname %></th>
+    <% end %>
     <th scope="col">Entries</th>
     <th scope="col" class="text-right">Last Submission</th>
     <th scope="col" class="text-right"></th>

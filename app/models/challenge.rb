@@ -79,6 +79,8 @@ class Challenge < ApplicationRecord
     format: { with: /\A[a-zA-Z0-9]/ }
   validates_presence_of :challenge_client_name
 
+  validate :other_scores_fieldnames_max
+
   default_scope {
     order("challenges.featured_sequence DESC,
             CASE challenges.status_cd
@@ -212,6 +214,12 @@ class Challenge < ApplicationRecord
       return
     end
     return true
+  end
+
+  def other_scores_fieldnames_max
+    if self.other_scores_fieldnames and self.other_scores_fieldnames.count(",") > 4
+      errors.add(:other_scores_fieldnames, "A max of 5 other scores Fieldnames are allowed")
+    end
   end
 
 end

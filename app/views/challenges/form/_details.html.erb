@@ -159,6 +159,15 @@ html: { class: "form-rg" } do |f| %>
   </div>
 </div>
 
+
+<div class="form-row">
+  <div class="form-group col-12">
+    <label for="otherScoresFieldnames">Fieldnames for other scores <br/> (comma seperated, max 5 fields)</label>
+    <%= f.text_field :other_scores_fieldnames, class: "form-control" %>
+  </div>
+
+</div>
+
 <%= f.hidden_field :organizer_id %>
 
 <div class="form-group">
