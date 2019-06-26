@@ -28,9 +28,14 @@ class Leaderboard::Cell::TableRow < Leaderboard::Cell
   end
 
   def other_scores_array
-      return [] unless entry.meta['other_scores']
-      other_scores = entry.meta['other_scores'].split(",")
-      other_scores = other_scores.map{|x| x.nil? ? "0.0": x}.compact
+      other_scores = []
+      other_scores_fieldnames_array.each do |fname|
+        if entry.meta.key? fname
+           other_scores << (entry.meta[fname].nil? ? "0.0": entry.meta[fname])
+        else
+           other_scores << '-'
+        end
+      end
       return other_scores
   end
 
