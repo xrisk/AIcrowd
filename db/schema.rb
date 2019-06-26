@@ -338,7 +338,6 @@ ActiveRecord::Schema.define(version: 2019_06_25_214734) do
     t.string "prize_misc"
     t.integer "discourse_category_id"
     t.boolean "latest_submission", default: false
-    t.string "otherscores"
     t.string "other_scores_fieldnames"
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["organizer_id"], name: "index_challenges_on_organizer_id"
