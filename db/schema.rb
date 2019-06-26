@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_10_194421) do
+ActiveRecord::Schema.define(version: 2019_06_25_214734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -117,6 +117,7 @@ ActiveRecord::Schema.define(version: 2019_04_10_194421) do
     t.integer "seq"
     t.boolean "baseline"
     t.string "baseline_comment"
+    t.json "meta"
     t.index ["challenge_id"], name: "index_base_leaderboards_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_base_leaderboards_on_challenge_round_id"
     t.index ["leaderboard_type_cd"], name: "index_base_leaderboards_on_leaderboard_type_cd"
@@ -337,6 +338,8 @@ ActiveRecord::Schema.define(version: 2019_04_10_194421) do
     t.string "prize_misc"
     t.integer "discourse_category_id"
     t.boolean "latest_submission", default: false
+    t.string "otherscores"
+    t.string "other_scores_fieldnames"
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["organizer_id"], name: "index_challenges_on_organizer_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
@@ -1027,66 +1030,6 @@ ActiveRecord::Schema.define(version: 2019_04_10_194421) do
     ORDER BY (row_number() OVER ()), c.challenge;
   SQL
 
-  create_view "leaderboards",  sql_definition: <<-SQL
-      SELECT base_leaderboards.id,
-      base_leaderboards.challenge_id,
-      base_leaderboards.challenge_round_id,
-      base_leaderboards.participant_id,
-      base_leaderboards.row_num,
-      base_leaderboards.previous_row_num,
-      base_leaderboards.slug,
-      base_leaderboards.name,
-      base_leaderboards.entries,
-      base_leaderboards.score,
-      base_leaderboards.score_secondary,
-      base_leaderboards.media_large,
-      base_leaderboards.media_thumbnail,
-      base_leaderboards.media_content_type,
-      base_leaderboards.description,
-      base_leaderboards.description_markdown,
-      base_leaderboards.leaderboard_type_cd,
-      base_leaderboards.refreshed_at,
-      base_leaderboards.created_at,
-      base_leaderboards.updated_at,
-      base_leaderboards.submission_id,
-      base_leaderboards.post_challenge,
-      base_leaderboards.seq,
-      base_leaderboards.baseline,
-      base_leaderboards.baseline_comment
-     FROM base_leaderboards
-    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'leaderboard'::text);
-  SQL
-
-  create_view "ongoing_leaderboards",  sql_definition: <<-SQL
-      SELECT base_leaderboards.id,
-      base_leaderboards.challenge_id,
-      base_leaderboards.challenge_round_id,
-      base_leaderboards.participant_id,
-      base_leaderboards.row_num,
-      base_leaderboards.previous_row_num,
-      base_leaderboards.slug,
-      base_leaderboards.name,
-      base_leaderboards.entries,
-      base_leaderboards.score,
-      base_leaderboards.score_secondary,
-      base_leaderboards.media_large,
-      base_leaderboards.media_thumbnail,
-      base_leaderboards.media_content_type,
-      base_leaderboards.description,
-      base_leaderboards.description_markdown,
-      base_leaderboards.leaderboard_type_cd,
-      base_leaderboards.refreshed_at,
-      base_leaderboards.created_at,
-      base_leaderboards.updated_at,
-      base_leaderboards.submission_id,
-      base_leaderboards.post_challenge,
-      base_leaderboards.seq,
-      base_leaderboards.baseline,
-      base_leaderboards.baseline_comment
-     FROM base_leaderboards
-    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
-  SQL
-
   create_view "participant_challenge_counts",  sql_definition: <<-SQL
       SELECT row_number() OVER () AS row_number,
       y.challenge_id,
@@ -1309,6 +1252,68 @@ ActiveRecord::Schema.define(version: 2019_04_10_194421) do
       challenge_round_views acr,
       challenges c
     WHERE ((c.id = cr.challenge_id) AND (c.id = acr.challenge_id) AND (acr.active IS TRUE));
+  SQL
+
+  create_view "leaderboards",  sql_definition: <<-SQL
+      SELECT base_leaderboards.id,
+      base_leaderboards.challenge_id,
+      base_leaderboards.challenge_round_id,
+      base_leaderboards.participant_id,
+      base_leaderboards.row_num,
+      base_leaderboards.previous_row_num,
+      base_leaderboards.slug,
+      base_leaderboards.name,
+      base_leaderboards.entries,
+      base_leaderboards.score,
+      base_leaderboards.score_secondary,
+      base_leaderboards.meta,
+      base_leaderboards.media_large,
+      base_leaderboards.media_thumbnail,
+      base_leaderboards.media_content_type,
+      base_leaderboards.description,
+      base_leaderboards.description_markdown,
+      base_leaderboards.leaderboard_type_cd,
+      base_leaderboards.refreshed_at,
+      base_leaderboards.created_at,
+      base_leaderboards.updated_at,
+      base_leaderboards.submission_id,
+      base_leaderboards.post_challenge,
+      base_leaderboards.seq,
+      base_leaderboards.baseline,
+      base_leaderboards.baseline_comment
+     FROM base_leaderboards
+    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'leaderboard'::text);
+  SQL
+
+  create_view "ongoing_leaderboards",  sql_definition: <<-SQL
+      SELECT base_leaderboards.id,
+      base_leaderboards.challenge_id,
+      base_leaderboards.challenge_round_id,
+      base_leaderboards.participant_id,
+      base_leaderboards.row_num,
+      base_leaderboards.previous_row_num,
+      base_leaderboards.slug,
+      base_leaderboards.name,
+      base_leaderboards.entries,
+      base_leaderboards.score,
+      base_leaderboards.score_secondary,
+      base_leaderboards.meta,
+      base_leaderboards.media_large,
+      base_leaderboards.media_thumbnail,
+      base_leaderboards.media_content_type,
+      base_leaderboards.description,
+      base_leaderboards.description_markdown,
+      base_leaderboards.leaderboard_type_cd,
+      base_leaderboards.refreshed_at,
+      base_leaderboards.created_at,
+      base_leaderboards.updated_at,
+      base_leaderboards.submission_id,
+      base_leaderboards.post_challenge,
+      base_leaderboards.seq,
+      base_leaderboards.baseline,
+      base_leaderboards.baseline_comment
+     FROM base_leaderboards
+    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
   SQL
 
 end

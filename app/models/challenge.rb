@@ -79,6 +79,8 @@ class Challenge < ApplicationRecord
     format: { with: /\A[a-zA-Z0-9]/ }
   validates_presence_of :challenge_client_name
 
+  validate :other_scores_fieldnames_max
+
   default_scope {
     order("challenges.featured_sequence DESC,
             CASE challenges.status_cd
@@ -123,7 +125,7 @@ class Challenge < ApplicationRecord
 
   after_initialize do
     if self.new_record?
-      self.submission_license = "Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other crowdAI participants. All submitted content will be licensed under Creative Commons (CC)."
+      self.submission_license = "Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC)."
       self.challenge_client_name = "challenge_#{SecureRandom.hex}"
     end
   end
@@ -212,6 +214,12 @@ class Challenge < ApplicationRecord
       return
     end
     return true
+  end
+
+  def other_scores_fieldnames_max
+    if self.other_scores_fieldnames and self.other_scores_fieldnames.count(",") > 4
+      errors.add(:other_scores_fieldnames, "A max of 5 other scores Fieldnames are allowed")
+    end
   end
 
 end
