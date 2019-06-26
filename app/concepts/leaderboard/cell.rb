@@ -80,6 +80,7 @@ class Leaderboard::Cell < Template::Cell
   def other_scores_fieldnames_array
     arr = challenge.other_scores_fieldnames
     return arr.split(",").map(&:strip) if arr
+    return []
   end
 
 end
