@@ -1,5 +1,5 @@
 class ParticipantsController < ApplicationController
-  before_action :authenticate_participant!, except: [:show]
+  before_action :authenticate_participant!, except: [:show, :index]
   before_action :set_participant,
     only: [:show, :edit, :update, :destroy]
 
@@ -19,7 +19,7 @@ class ParticipantsController < ApplicationController
   end
 
   def index
-    @participants = Participant.all
+    redirect_to root_path
   end
 
   def update
