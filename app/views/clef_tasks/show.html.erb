@@ -1,3 +1,5 @@
+<!-- old crowdai code, not active -->
+<% if false%>
 <div class="content">
   <div class="masthead-detailed">
     <div class="row">
@@ -39,3 +41,65 @@
   </div>
 
 </div>
+<% end %>
+<!-- /old crowdai code, not active -->
+
+
+
+<!-- new code that replaces the one above -->
+
+
+<div class="masthead">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+
+        <h4><%= @clef_task.organizer.organizer %></h4>
+        <h1><%= @clef_task.task %></h1>
+
+        <% if policy(@clef_task).edit? %>
+    
+          <%= link_to 'Edit Task', edit_organizer_clef_task_path(@organizer,@clef_task), class: 'btn btn-secondary btn-sm' %>
+  
+        <% end %>
+
+        <hr/>
+        <% if @clef_task.eua_file.present? %>
+          <%= link_to @clef_task.eua_file.url do %>
+            <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
+          <% end %>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>
+<section class="section-p-sm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <% if policy(@clef_task).edit? %>
+          <%= link_to "Add Dataset File", new_clef_task_task_dataset_file_path(@clef_task),
+                  class: 'btn btn-sm btn-primary'%>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+  <section class="section-p-sm">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <ul class="list-datasets">
+              <%= concept(TaskDataset::Cell::ListDetail, collection: @clef_task.task_dataset_files, current_participant: current_participant) %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<!-- /new code -->

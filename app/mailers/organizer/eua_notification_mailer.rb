@@ -11,7 +11,7 @@ class Organizer::EuaNotificationMailer < ApplicationMailer
   def format_options(organizer_participant,participant,clef_task)
     options = {
       participant_id:   organizer_participant.id,
-      subject:          "[ImageCLEF CrowdAI] - New EUA uploaded for #{clef_task.task}",
+      subject:          "[ImageCLEF AICrowd] - New EUA uploaded for #{clef_task.task}",
       to:               organizer_participant.email,
       template:         "AIcrowd General Template",
       global_merge_vars: [

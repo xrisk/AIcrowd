@@ -9,6 +9,11 @@
           <%= link_to 'Members', organizer_members_path(organizer), class: "nav-link nav-link-02 " + tab_class('members') %>
         </li>
       <% end %>
+      <% if organizer.clef? %>
+        <li class="nav-item">
+          <%= link_to 'Tasks', organizer_clef_tasks_path(organizer), class: "nav-link nav-link-03 " +  tab_class('tasks') %>
+      </li>
+      <% end %>
     </ul>
     <% if policy(organizer).update? %>
       <%= link_to 'Create Challenge', new_organizer_challenge_path(organizer), class: 'btn btn-secondary btn-sm' %>

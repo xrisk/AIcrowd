@@ -1,3 +1,5 @@
+<!-- old crowdai code, not active-->
+<% if false %>
 <div class='content'>
   <%= concept(Challenge::Cell::ChallengeMasthead,
                 @challenge,
@@ -9,3 +11,41 @@
                 current_participant: current_participant,
                 challenge_id: @challenge.id) %>
 </div>
+<% end %>
+<!-- / old crowdai code, not active-->
+
+
+<!-- new  code active-->
+<%= concept(Challenge::Cell::ChallengeMasthead,@challenge, current_participant: current_participant) %>
+<%= render partial: 'challenges/show/subnav',
+    locals: { challenge: @challenge } %>
+
+<!-- section -->
+<section class="section-p-md">
+  <div class="container-fluid">
+  <!-- <div class="container-fluid" data-spy="scroll" data-target=".navbar" data-offset="50" style="overflow: scroll;"> -->
+  <!-- <div class="container-fluid" data-spy="scroll" data-target=".navbar" data-offset="50" style="height: 100vh;overflow: scroll;"> -->
+    <div class="row">
+
+
+
+      <!-- md content -->
+      <div class="col-md-8 col-lg-7" id="description-wrapper">
+        <div class="markdown-wrap">
+          <div class="md-content">
+              <%= concept(ParticipantClefTask::Cell,
+                @clef_task,
+                current_participant: current_participant,
+                challenge_id: @challenge.id) %>
+          </div>
+        </div>
+      </div>
+      <!-- /md content -->
+
+    </div>
+  </div>
+</section>
+<!-- /section -->
+
+</main>
+<!-- /new  code, active-->

@@ -1,3 +1,5 @@
+<!-- old crowdai code, not active -->
+<% if false %>
 <li data-cell='ParticipantClefTask::Cell::ListDetail'>
   <div class="pic">
     <% if participant.is_a? NullParticipant %>
@@ -10,7 +12,7 @@
       <% end %>
     <% end %>
   </div>
-  <div class="details">
+  <div>
     <h5>
       <%= link_to participant.name, participant_path(participant) %>
     </h5>
@@ -29,3 +31,48 @@
       </div>
     </div>
 </li>
+<% end %>
+<!-- /old crowdai code, not active -->
+
+
+
+
+<!-- new code, active -->
+<li data-cell='ParticipantClefTask::Cell::ListDetail'>
+  <div class="container">
+    <div class="row">
+      <div>
+        <% if participant.is_a? NullParticipant %>
+          <%= link_to '#' do %>
+            <%= concept(Image::Cell,participant) %>
+          <% end %>
+        <% else %>
+          <%= link_to participant_path(participant) do %>
+            <%= concept(Image::Cell,participant) %>
+          <% end %>
+        <% end %>
+      </div>
+      <div style="margin-left:5px">
+        <h5>
+          <%= link_to participant.name, participant_path(participant) %>
+        </h5>
+        <small>
+          <%= participant.email %>
+        </small>
+        <div>
+          <% if eua_required? %>
+            <%= link_to participant_clef_task.eua_file.url,
+              target: :_blank do %>
+            <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
+            <% end %>
+          <% end %>
+        </div>
+        <div>
+          <%= clef_status %>
+        </div>
+      <div>
+      </div>
+    </div>
+  </div>
+</li>
+<!-- /new code, active -->
