@@ -7,12 +7,15 @@ class Team < ApplicationRecord
   has_many :participants, through: :team_participants, inverse_of: :teams
 
   scope :allowing_invitations, -> { where(invitations_allowed: true) }
-  scope :with_at_least_n_participants, -> (n) { where(id:
-    Team.joins(:team_participants)
-      .group('teams.id')
-      .having('count(team_participant_id) > ?', n)
-      .select('teams.id')
-  ) }
+  scope :with_at_least_n_participants, -> (n) {
+    where(id:
+      Team.joins(:team_participants)
+        .group(Team.arel_table[:id])
+        .having(TeamParticipant.arel_table[:id].count.gteq(n))
+        .select(Team.arel_table[:id])
+    )
+  }
+  scope :concrete, -> { with_at_least_n_participants(2) }
 
   validates_uniqueness_of :name, scope: :challenge_id # case-insensitive because name is a citext
   validates_length_of :name, in: 2...256
@@ -25,5 +28,9 @@ class Team < ApplicationRecord
 
   def to_param
     name
+  end
+
+  def concrete?
+    team_participants.size >= 2
   end
 end

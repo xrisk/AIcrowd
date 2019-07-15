@@ -107,9 +107,9 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def create_team?
-    submissions_allowed? &&
-      record.allows_team_changes? &&
-      !participant.teams.exists?(challenge_id: record.id)
+    @record.running? &&
+      !@record.teams_frozen? &&
+      !participant.teams.exists?(challenge_id: @record.id)
   end
 
 

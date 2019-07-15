@@ -10,7 +10,7 @@
           <li class="nav-item">
             <%= link_to 'Leaderboard', challenge_leaderboards_path(challenge), class: tab_class('leaderboard') + " nav-link nav-link-02", "data-turbolinks": false %>
           </li>
-        <% end %>      
+        <% end %>
       <% end %>
       <li class="nav-item">
         <%= link_to 'Discussion', URI.escape(File.join(ENV['DISCOURSE_DOMAIN_NAME'], 'c', challenge.slug[0..49])),
@@ -104,19 +104,18 @@
         <!-- /more dropdown xs -->
       <% end %>
       </ul>
-    
     <% if !policy(challenge).starting_soon_mode? %>
-      <% if false && !policy(challenge).has_accepted_participation_terms? %>
+      <% if !policy(challenge).has_accepted_participation_terms? %>
         <%= link_to 'Participate',
         [challenge, ParticipationTerms.current_terms],
         class: "btn btn-secondary btn-sm pull-right" %>
-      <% elsif false && !policy(challenge).has_accepted_challenge_rules? %>
+      <% elsif !policy(challenge).has_accepted_challenge_rules? %>
         <%= link_to 'Participate',
         [challenge, challenge.current_challenge_rules],
         class: "btn btn-secondary btn-sm pull-right" %>
       <% else %>
-        <% if true || policy(challenge).submissions_allowed? && current_tab != 'dataset' %>
-            <%= team_creation_button(current_participant, challenge) %>
+        <%= team_creation_button(current_participant, challenge) %>
+        <% if policy(challenge).submissions_allowed? && current_tab != 'dataset' %>
             <%= link_to 'Create Submission',
                   new_challenge_submission_path(challenge),
                   class: "btn btn-secondary btn-sm pull-right" %>

@@ -21,7 +21,7 @@ class CreateTeams < ActiveRecord::Migration[5.2]
       t.references :team, foreign_key: true
       t.references :invitor, foreign_key: { to_table: :participants }
       t.references :invitee, foreign_key: { to_table: :participants }
-      t.string :status, default: :pending_send, null: false
+      t.string :status, default: :pending, null: false
       t.timestamps
       t.index [:invitee_id, :team_id], unique: true
     end

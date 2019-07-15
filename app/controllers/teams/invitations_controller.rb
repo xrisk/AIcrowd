@@ -5,14 +5,14 @@ class Teams::InvitationsController < ApplicationController
 
   def create
     authorize @team, :create_invitations?
-    @invitee = Participant.where('LOWER(email) = LOWER(?)', params[:email]).first
+    @invitee = Participant.where('LOWER(name) = LOWER(?)', params[:name]).first
     if @invitee.nil?
-      flash[:error] = 'Participant with that email could not be invited'
+      flash[:error] = 'Participant with that name could not be invited'
       redirect_to @team
       return
     end
-    if @invitee.concrete_team(@team.challenge).present?
-      flash[:error] = 'Participant with that email is already on a team'
+    if @invitee.concrete_teams.find_by(challenge_id: @team.challenge_id).present?
+      flash[:error] = 'Participant with that name is already on a team'
       redirect_to @team
       return
     end

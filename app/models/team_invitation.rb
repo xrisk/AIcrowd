@@ -1,5 +1,5 @@
 class TeamInvitation < ApplicationRecord
-  STATUSES = [:pending_send, :pending_response, :accepted, :rejected, :canceled].freeze
+  STATUSES = [:pending, :accepted, :rejected, :canceled].freeze
 
   belongs_to :team, inverse_of: :team_invitations
   belongs_to :invitor, class_name: 'Participant', inverse_of: :invitor_team_invitations

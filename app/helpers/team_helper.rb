@@ -1,14 +1,19 @@
 module TeamHelper
   def team_creation_button(participant, challenge)
-    if participant.teams.exists?(challenge_id: challenge.id)
-      disabled = true
-      title = "#{participant.name} is already on a team for this challenge"
-    elsif !challenge.allows_team_changes?
-      disabled = true
-      title = "This challenge is currently not accepting new teams"
-    else
+    if policy(challenge).create_team?
       disabled = false
       title = "Create a team for this challenge"
+    else
+      disabled = true
+      if participant.teams.exists?(challenge_id: challenge.id)
+        title = "#{participant.name} is already on a team for this challenge"
+      elsif challenge.teams_frozen?
+        title = 'This challenge has team-freeze in effect'
+      elsif !policy(challenge).submissions_allowed?
+        title = 'Teams cannot be created until submissions are allowed for this challenge'
+      else
+        title = 'Teams cannot currently be created for this challenge'
+      end
     end
 
     content_tag(
@@ -41,8 +46,8 @@ module TeamHelper
         title = 'You must be logged in to invite members to your team'
       elsif !team.organized_by?(current_participant)
         title = 'Only team organizers may invite members to the team'
-      elsif !team.challenge.allows_team_changes?
-        title = "The team's challenge is currently not allowing team modifications"
+      elsif team.challenge.teams_frozen?
+        title = "The team's challenge has team-freeze in effect"
       else
         title = 'You may not invite new members at this time'
       end
