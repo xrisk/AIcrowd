@@ -27,7 +27,7 @@
 
               <% if @challenge_rules.has_additional_checkbox %>
                 <div class="form-group form-check">
-                  <%= f.check_box :challenge_rules_additional_checkbox, {}, "true", "false" %>
+                  <%= f.check_box :challenge_rules_additional_checkbox, { class: 'form-check-input' }, "true", "false" %>
                   <%= f.label :challenge_rules_additional_checkbox do%>
                     <%= sanitize(@challenge_rules.additional_checkbox_text)%>
                   <% end %>
