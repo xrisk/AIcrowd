@@ -22,7 +22,9 @@
           
               <div class="form-group form-check">
                   <%= check_box("rules", "accepted", { class: 'form-check-input requires-agreement-checkbox', 'data-target': 'accept-challenge-rules-button' }, "yes", "no")%>
-                  <%= label :challenge_rules_checkbox, "I have read and agree to the challenge rules (required)" %>
+		  <%= f.label :challenge_rules_checkbox do %>
+			  <p> I have read and agree to the challenge rules (required) </p>
+		  <% end %>
               </div>
 
               <% if @challenge_rules.has_additional_checkbox %>
