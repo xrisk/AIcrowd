@@ -10184,6 +10184,10 @@ button.bg-bronze:focus {
   }
 }
 
+.width-100 {
+  max-width: 100% !important;
+}
+
 .text-monospace {
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
@@ -11393,13 +11397,6 @@ body {
   margin-bottom: 12px;
 }
 
-@media (max-width: 767.98px) {
-  .masthead-challenge .stats-group,
-  .masthead-blog-post .stats-group {
-    display: none;
-  }
-}
-
 .masthead-challenge .stat-item,
 .masthead-blog-post .stat-item {
   color: #292C2D;
@@ -11640,6 +11637,40 @@ body {
 .md-content .update p {
   font-size: 1rem;
   margin: 0;
+}
+
+.md-content .note {
+  background-color: rgba(255, 182, 0, 0.25);
+  padding: .875rem 1rem;
+  border-radius: 2px;
+  margin-bottom: 1.5em;
+  border-left: 4px solid rgba(255, 182, 0, 0.5);
+}
+
+.md-content .note p,
+.md-content .note ol,
+.md-content .note ul {
+  font-size: .938em !important;
+  max-width: 100% !important;
+  margin-bottom: .25em !important;
+}
+
+.md-content .note p:last-child,
+.md-content .note ol:last-child,
+.md-content .note ul:last-child {
+  margin-bottom: 0;
+}
+
+.md-content .note li {
+  margin-bottom: .25em !important;
+}
+
+.md-content .note li:last-child {
+  margin-bottom: 0;
+}
+
+.md-content .note ol > li:before {
+  width: 20px;
 }
 
 .md-content h1 {

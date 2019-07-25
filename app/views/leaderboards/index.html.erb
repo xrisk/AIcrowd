@@ -10,8 +10,8 @@
 
       <!-- challenge leaderboard -->
         <% if @current_round.leaderboard_note.present? %>
-		      <div class="markdown-wrap">
-			      <div class="md-content update">
+		      <div class="md-content width-100">
+			      <div class="note">
 				      <%= sanitize(@current_round.leaderboard_note) %>
 			      </div>
 		      </div>
