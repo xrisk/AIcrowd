@@ -14,7 +14,7 @@ class JobPostingsController < InheritedResources::Base
   end
 
   def set_job_posting
-    @job_posting = JobPosting.find(params[:id])
+    @job_posting = JobPosting.friendly.find(params[:id])
   end
 
 end
