@@ -32,9 +32,9 @@
           <h4>Invited</h4>
         </div>
       </header>
-      <% if @open_invitations.length > 0 %>
+      <% if @pending_invitations.length > 0 %>
         <ul class="list-group list-group-flush-px-0 list-group-teams">
-          <% @open_invitations.includes(:invitee).each do |inv| %>
+          <% @pending_invitations.includes(:invitee).each do |inv| %>
             <li class="list-group-item">
               <%= link_to inv.invitee do %>
                 <img class="avatar" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg">

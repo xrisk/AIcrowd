@@ -1,6 +1,7 @@
 class CreateTeams < ActiveRecord::Migration[5.2]
   def change
     enable_extension :citext
+    enable_extension :pgcrypto
 
     create_table :teams do |t|
       t.references :challenge, foreign_key: true
@@ -22,8 +23,9 @@ class CreateTeams < ActiveRecord::Migration[5.2]
       t.references :invitor, foreign_key: { to_table: :participants }
       t.references :invitee, foreign_key: { to_table: :participants }
       t.string :status, default: :pending, null: false
+      t.uuid :uuid, default: ->{'gen_random_uuid()'}, null: false
       t.timestamps
-      t.index [:invitee_id, :team_id], unique: true
+      t.index :uuid, unique: true
     end
 
     change_table :challenges do |t|

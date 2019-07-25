@@ -29,16 +29,16 @@ class EmailPreferencesTokenService
     end
   end
 
-  private
   def preferences_token_url
-    email_preferences = @participant.email_preferences.first
-    url = "#{ENV['DOMAIN_NAME']}/participants/#{@participant.id}/email_preferences/#{email_preferences.id}/edit?preferences_token=#{generate_token}"
+    @url ||= Rails.application.routes.url_helpers.participant_notifications_url(
+      participant_id: @participant.id,
+      preferences_token: generate_token,
+    )
   end
 
-  def generate_token
+  private def generate_token
     token = SecureRandom.urlsafe_base64(24)
     @participant.email_preferences_tokens.create!(email_preferences_token: token, token_expiration_dttm: DateTime.current + 30.days)
     return token
   end
-
 end

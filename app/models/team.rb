@@ -2,6 +2,8 @@ class Team < ApplicationRecord
   belongs_to :challenge, inverse_of: :teams
 
   has_many :team_participants, inverse_of: :team, dependent: :destroy
+  has_many :team_participant_organizers, ->{ role_organizers }, class_name: 'TeamParticipant'
+
   has_many :team_invitations, inverse_of: :team, dependent: :destroy
 
   has_many :participants, through: :team_participants, inverse_of: :teams
