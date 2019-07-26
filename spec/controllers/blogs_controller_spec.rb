@@ -48,4 +48,11 @@ RSpec.describe BlogsController, type: :controller do
     end
   end
 
+  describe "GET #show via slug" do
+    it "returns a success response" do
+      get :show, params: {id: blog_1.slug}
+      expect(response).to be_success
+    end
+  end
+
 end

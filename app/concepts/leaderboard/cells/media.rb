@@ -40,12 +40,11 @@ class Leaderboard::Cell::Media < Leaderboard::Cell
   def media_asset
     case content_type
     when nil
-      return nil if size == :large
-      return image_tag(default_image_url, size: dimensions)
-    when 'video'
-      return video
+      return '-'
     when 'image'
       return image
+    when 'video'
+      return video
     when 'youtube'
       return youtube
     end
@@ -53,32 +52,32 @@ class Leaderboard::Cell::Media < Leaderboard::Cell
 
   def image
     if public_url.present?
-      return image_tag(public_url, size: dimensions)
+      return image_tag(public_url, size: dimensions, class: "media")
     else
-      return image_tag(default_image_url, size: dimensions)
+      "-"
     end
   end
 
   def video
     if public_url.present?
       if size == :large
-        return video_tag(public_url, size: dimensions, controls: true, autoplay: true, loop: true)
+        return video_tag(public_url, size: dimensions, controls: true, muted:true, autoplay: true, loop: true, class: "media")
       else
-        return video_tag(public_url, size: dimensions)
+        return video_tag(public_url, size: dimensions, autoplay: true, muted: true, loop: true, class: "media")
       end
     else
-      return video_tag(default_image_url, size: dimensions)
+      return "-"
     end
   end
 
   def youtube
     if size == :thumb && leaderboard_row.media_thumbnail.present?
       url = "https://img.youtube.com/vi/#{leaderboard_row.media_thumbnail}/0.jpg"
-      return image_tag(url, size: "100x75")
+      return image_tag(url, size: "100x75", class: "media")
     end
     if size == :large && leaderboard_row.media_large.present?
       result = %Q[
-        <iframe title="crowdAI Video"
+        <iframe title="AIcrowd Video"
           allowfullscreen="allowfullscreen"
           mozallowfullscreen="mozallowfullscreen"
           msallowfullscreen="msallowfullscreen"
@@ -101,14 +100,6 @@ class Leaderboard::Cell::Media < Leaderboard::Cell
     else
       url = S3Service.new(leaderboard_row.media_thumbnail).public_url
     end
-  end
-
-  def audio
-    # TODO requirements to be defined
-  end
-
-  def default_image_url
-    image_path 'users/user-avatar-default.svg'
   end
 
 end

@@ -19,7 +19,7 @@ class Challenge::Cell::Statistic < Challenge::Cell
     when 'view'
       formatted_count(challenge.page_views)
     when 'participant'
-      formatted_count(challenge.participant_count)
+      formatted_count(challenge.challenge_participants.size)
     when 'vote'
       formatted_count(challenge.vote_count)
     end

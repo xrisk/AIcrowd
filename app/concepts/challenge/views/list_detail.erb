@@ -5,7 +5,7 @@
         <%= concept(Image::Cell,challenge, current_participant: current_participant, klass: "card-img").(:image_16x9) %>
         <% end %>
         <%= link_to challenge_path(challenge), class:"card-img-overlay" do %>
-          <span class="badge badge-primary">
+          <span class="badge <%= remaining_text == "Completed"? "badge-success" : "badge-primary" %>">
             <img src="/assets/img/icon-time.svg">
             <%= remaining_text %>
           </span>
@@ -61,10 +61,7 @@
     <div class="card-footer">
         <%= link_to organizer_path(challenge.organizer) do %>
           <%= concept(Image::Cell,challenge.organizer, current_participant: current_participant) %>
-        <% end %>
-          <span>By&nbsp;</span>
-        <%= link_to organizer_path(challenge.organizer) do %>
-          <span><%= challenge.organizer.organizer %></span>
+	  <span title="<%= challenge.organizer.organizer %>"><%= challenge.organizer.organizer %></span>
         <% end %>
     </div>
   </div>

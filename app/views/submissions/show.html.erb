@@ -6,23 +6,10 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 mb-4">
-        <%= link_to "&#8592; Back to challenge".html_safe ,challenge_submissions_path(@submission.challenge_id) %>
+        <%= link_to "&#8592; Back to challenge".html_safe, challenge_submissions_path(@submission.challenge_id) %>
       </div>
 
       <%= concept(Submission::Cell::SubmissionDetail, @submission, current_participant: current_participant) %>
-
-      <!--Detail media start-->
-      <% if @challenge.media_on_leaderboard %>
-        <div class="detail-media">
-          <%= concept(Leaderboard::Cell::Media,
-                @submission,
-                size: :large,
-                submission_id: @submission.id,
-                current_participant: current_participant) %>
-        </div>
-      <% end %>
-    <!--Detail media end-->
-      <%= render partial: "submissions/show/comments", locals: {submission: @submission}%>
     </div>
   </div>
 </section>

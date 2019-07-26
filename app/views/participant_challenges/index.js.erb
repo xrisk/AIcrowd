@@ -1,10 +1,8 @@
-var temp = $(document).height();
-
+$(".load-more").remove();
 $("#pc-ul").append("<%= j render partial: 'participant_challenge_rows' %>");
-$('#load_more_link').replaceWith("<%= j render partial: 'shared/load_more', locals: { collection: @participant_challenges }, :id=>'load_more_link' %>");
-
+$("#more-anchor").after("<%= j render partial: 'shared/load_more', locals: { collection: @participant_challenges } %>");
 $('html, body').animate({
-   scrollTop: 2*temp - $(document).height()},
+   scrollTop: $(document).height()-$(window).height()},
    1400,
    "easeOutQuint"
 );

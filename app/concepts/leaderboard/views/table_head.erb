@@ -3,9 +3,16 @@
     <th scope="col" class="leaderboard-change">Δ</th>
     <th scope="col">#</th>
     <th scope="col">Participant</th>
-    <th scope="col">Media</th>
+    <% if challenge.media_on_leaderboard %>
+        <th scope="col">Media</th>
+    <% end %>
     <th scope="col"><%= challenge.score_title %></th>
-    <th scope="col"><%= challenge.score_secondary_title %></th>
+    <% if challenge.score_secondary_title %>
+        <th scope="col"><%= challenge.score_secondary_title %></th>
+    <% end %>
+    <% other_scores_fieldnames_array.each do |fname| %>
+        <th scope="col"><%= fname %></th>
+    <% end %>
     <th scope="col">Entries</th>
     <th scope="col" class="text-right">Last Submission</th>
     <th scope="col" class="text-right"></th>

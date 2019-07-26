@@ -6,7 +6,7 @@ class CustomFailure < Devise::FailureApp
       participant = Participant.find_by(
         email: params[:participant][:email])
       if participant.present? && participant.confirmed_at.blank?
-        flash[:alert] = "Your account has not yet been confirmed. Please check your email and confirm your account or #{link_to 'request a new confirmation link.', new_participant_confirmation_path}".html_safe
+        flash[:alert] = "Your account has not yet been confirmed. Please check your email and confirm your account or #{link_to 'request a new confirmation link.', new_participant_confirmation_path}"
       end
     end
     new_participant_session_url(:subdomain => 'secure')

@@ -27,6 +27,18 @@ class Leaderboard::Cell::TableRow < Leaderboard::Cell
     @challenge ||= model.challenge
   end
 
+  def other_scores_array
+      other_scores = []
+      other_scores_fieldnames_array.each do |fname|
+        if entry.meta && (entry.meta.key? fname)
+           other_scores << (entry.meta[fname].nil? ? "-": entry.meta[fname])
+        else
+           other_scores << '-'
+        end
+      end
+      return other_scores
+  end
+
   def participant
     @participant ||= entry.participant
   end

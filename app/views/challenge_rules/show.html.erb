@@ -1,29 +1,52 @@
-<div class="container-fluid">
-<%= render 'challenge_rules', challenge_rules: @challenge_rules %>
-<div class="row">
-<%= form_for [@challenge, @challenge_participant], validate: true, html: { class: "sgl-col", multipart: true } do |f| %>
-
-  <%= f.hidden_field :challenge_rules_accepted_version, value: @challenge_rules.version %>
-  <fieldset class="checkbox">
-    <div>
-      <%=check_box("rules", "accepted", { class: 'requires-agreement-checkbox', 'data-target': 'accept-challenge-rules-button' }, "yes", "no")%>
-      <%= label :challenge_rules_checkbox, "I have read and agree to the challenge rules (required)" %>
-    </div>
-  </fieldset>
-  <% if @challenge_rules.has_additional_checkbox %>
-    <fieldset class="checkbox">
-      <div>
-        <%= f.check_box :challenge_rules_additional_checkbox, {}, "true", "false" %>
-        <%= f.label :challenge_rules_additional_checkbox do%>
-          <%= sanitize(@challenge_rules.additional_checkbox_text)%>
-        <% end %>
-
+<main>
+  <div class="masthead masthead-open">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h4><%= @challenge.challenge %></h4>
+          <h1>Challenge Rules</h1>
+        </div>
       </div>
-    </fieldset>
-  <% end %>
-  <div class="button-group">
-    <%= f.button ("Save"), class: 'btn btn-primary requires-agreement', id: 'accept-challenge-rules-button', disabled: true %>
+    </div>
   </div>
-<% end %>
-</div>
-</div>
+  
+  <!-- section -->
+  <div class="section-p-sm">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <%= render 'challenge_rules', challenge_rules: @challenge_rules %>
+          <%= form_for [@challenge, @challenge_participant], validate: true, html: { class: "form-rg mt-5", multipart: true } do |f| %>
+
+              <%= f.hidden_field :challenge_rules_accepted_version, value: @challenge_rules.version %>
+          
+              <div class="form-group form-check">
+                  <%= check_box("rules", "accepted", { class: 'form-check-input requires-agreement-checkbox', 'data-target': 'accept-challenge-rules-button' }, "yes", "no")%>
+		  <%= f.label :challenge_rules_checkbox do %>
+			  <p> I have read and agree to the challenge rules (required) </p>
+		  <% end %>
+              </div>
+
+              <% if @challenge_rules.has_additional_checkbox %>
+                <div class="form-group form-check">
+                  <%= f.check_box :challenge_rules_additional_checkbox, { class: 'form-check-input' }, "true", "false" %>
+                  <%= f.label :challenge_rules_additional_checkbox do%>
+                    <%= sanitize(@challenge_rules.additional_checkbox_text)%>
+                  <% end %>
+                </div>
+              <% end %>
+
+              <div class="btn-set" aria-hidden="true">
+                <%= f.button ("Save"), class: 'btn btn-primary requires-agreement', id: 'accept-challenge-rules-button', disabled: true %>
+              </div>
+
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /section -->
+
+</main>
+<!-- /main content -->

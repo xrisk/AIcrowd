@@ -1,5 +1,5 @@
 class ParticipantsController < ApplicationController
-  before_action :authenticate_participant!, except: [:show]
+  before_action :authenticate_participant!, except: [:show, :index]
   before_action :set_participant,
     only: [:show, :edit, :update, :destroy]
 
@@ -19,7 +19,7 @@ class ParticipantsController < ApplicationController
   end
 
   def index
-    @participants = Participant.all
+    redirect_to root_path
   end
 
   def update
@@ -114,7 +114,7 @@ class ParticipantsController < ApplicationController
 
   private
   def set_participant
-    @participant = Participant.friendly.find(params[:id])
+    @participant = Participant.friendly.find_by_friendly_id(params[:id])
     authorize @participant
   end
 

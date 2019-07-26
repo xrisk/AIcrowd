@@ -4,11 +4,13 @@
 		<h2 class="mr-2">Submission #<%= entry.id %></h2><span class="badge <%= grade_class %>"><%= entry.grading_status_cd %></span>
 	</div>
 
-	<div>
-		<p><%= entry.description %></p>
-	</div>
+	<% if view_description %>
+		<div class="mb-5">
+			<p><%= entry.description %></p>
+		</div>
+	<% end %>
 
-	<div class="d-flex mt-4">
+	<div class="d-flex">
 		<div class="mr-4">
 			<h4><%= challenge.score_title %></h4>
 			<span><%= formatted_value(entry.score_display) %></span>
@@ -20,11 +22,35 @@
 		</div>
 	</div>
 
+	<% if entry.meta.present? %>
+	<div class="section-header mt-4 pt-5 border-top">
+			<h3>Meta parameters</h3>
+	</div>
+		<% entry.meta.each do |key, value| %>
+			<% if not key.start_with?('private') %>
+			 	<div class="d-flex mt-4">
+					<div class="mr-4">
+						<h4> <%= key %> </h4>
+						<span>
+							<% if not key.include?('URL') %>
+								<a><%= value %></a>
+								<%else %>
+								<%= value %>
+							<% end %>
+						</span>
+					</div>
+				</div>
+				<% end %>
+		<% end %>
+	<% end %>
+
+
 	<div class="section-header mt-4 pt-4 border-top">
 		<h4>Share</h4>
 
 		<div class="d-flex">
-			<button onclick="copyLink()" class="btn btn-secondary btn-sm mr-2">Copy URL</button>
+			<input id="shortUrl" type="text" style="display:none; position: relative; left: -10000px;" value='<%= "#{request.base_url}/#{entry.short_url}" %>' >
+			<button id="copyurlbutton" onclick="copyLink()" class="btn btn-secondary btn-sm mr-2">Copy URL</button>
 
 			<span data-title="Check out this link on AIcrowd " data-desc="<%= entry.challenge.challenge %>" data-url="<%= "#{request.base_url}/#{entry.short_url}?utm_source=AICrowd&utm_medium=Facebook" %>">
 				<a data-url="<%= "#{request.base_url}/#{entry.short_url}?utm_source=AICrowd&utm_medium=Facebook" %>" class="btn btn-facebook btn-sm mr-2" rel="nofollow" data-site="facebook" onclick="return SocialShareButton.share(this)" title="Share to Facebook" href="#" data-toggle="tooltip" data-placement="top" title="Share to Facebook">
@@ -42,3 +68,16 @@
 
 </div>
 <!-- /submission details -->
+<div class="col-sm-12 col-md-6">
+	<!--Detail media start-->
+	<% if challenge.media_on_leaderboard %>
+	<div class="media">
+		<%= concept(Leaderboard::Cell::Media,
+			entry,
+			size: :large,
+			submission_id: entry.id,
+			current_participant: current_participant) %>
+	</div>
+	<% end %>
+	<!--Detail media end-->
+</div>

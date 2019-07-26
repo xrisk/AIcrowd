@@ -12,7 +12,7 @@
         <div class="d-flex align-items-center">
           <div class="d-none d-sm-block">
             <% if @success_story.image_file? %>
-            <%= concept(Image::Cell,@success_story, style: "width:100px;") %>
+            <%= concept(Image::Cell,@success_story, klass: "partner-logo") %>
             <% end %>
           </div>
         </div>
@@ -28,7 +28,7 @@
       <div class="row">
 
         <!-- md content -->
-        <div class="col-sm-12 col-md-6">
+        <div class="col">
           <div class="md-content">
             <% if @success_story.html_content? %>
             <%= @success_story.html_content.html_safe %>

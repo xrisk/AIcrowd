@@ -504,7 +504,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
           headers: { 'Authorization': auth_header(organizer.api_key) } }
       end
       it { expect(response).to have_http_status(400) }
-      it { expect(json(response.body)[:message]).to eq("The participant has no submission slots remaining for today.") }
+      it { expect(json(response.body)[:message]).to eq("The participant has no submission slots remaining for today. Please wait until 2017-10-30 06:02:02 UTC to make your next submission.") }
       it { expect(json(response.body)[:submission_id]).to be_nil }
       it { expect(json(response.body)[:submissions_remaining]).to eq(0) }
       if not ENV['TRAVIS']

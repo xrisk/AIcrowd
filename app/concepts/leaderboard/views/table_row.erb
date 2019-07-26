@@ -10,10 +10,23 @@
             <span class="text-link"><%= participant.name %></span>
           <% end %>
         </td>
-        <!-- Insert Media -->
-        <td>&#8212</td>
+
+        <% if challenge.media_on_leaderboard %>
+          <td>
+            <%= concept(Leaderboard::Cell::Media,
+                entry,
+                size: :thumb,
+                submission_id: entry.submission_id,
+                current_participant: current_participant) %>
+          </td>
+        <% end %>
+
+
         <td><strong><%= formatted_score %></strong></td>
         <td><strong><%= formatted_score_secondary %></strong></td>
+        <% other_scores_array.each do |other_score| %>
+          <td><strong><%= other_score %></strong></td>
+        <% end %>
         <td><%= entry.entries %></td>
 
         <td class="text-right"><%= local_time(entry.created_at, "%a, %e %b %Y %H:%M") %></td>

@@ -4,6 +4,7 @@ class CalculateLeaderboardService
     @round = ChallengeRound.find(challenge_round_id)
     @order_by = get_order_by
     @base_order_by = get_base_order_by
+    @latest_submission = get_latest_submission
     @conn = ActiveRecord::Base.connection
   end
 
@@ -84,6 +85,15 @@ class CalculateLeaderboardService
     end
   end
 
+  def get_latest_submission
+    challenge = @round.challenge
+    if challenge.latest_submission == true
+      return 'updated_at desc'
+    else
+      return get_order_by
+    end
+  end
+
   def purge_leaderboard
     ActiveRecord::Base.connection.execute "delete from base_leaderboards where challenge_round_id = #{@round.id};"
   end
@@ -124,6 +134,7 @@ class CalculateLeaderboardService
         entries,
         score,
         score_secondary,
+        meta,
         media_large,
         media_thumbnail,
         media_content_type,
@@ -145,13 +156,14 @@ class CalculateLeaderboardService
         ROW_NUMBER() OVER (
           PARTITION by l.challenge_id,
                        l.challenge_round_id
-          ORDER BY #{@order_by} ) AS ROW_NUM,
+          ORDER BY l.#{@order_by} ) AS ROW_NUM,
         0 as PREVIOUS_ROW_NUM,
         l.slug,
         l.name,
         l.entries,
         l.score_display,
         l.score_secondary_display,
+        l.meta,
         l.media_large,
         l.media_thumbnail,
         l.media_content_type,
@@ -167,7 +179,7 @@ class CalculateLeaderboardService
                 PARTITION BY s.challenge_id,
                              s.challenge_round_id,
                              s.participant_id
-                ORDER BY #{@order_by}) AS submission_ranking,
+                ORDER BY s.#{@latest_submission}) AS submission_ranking,
               s.id,
               s.challenge_id,
               s.challenge_round_id,
@@ -177,6 +189,7 @@ class CalculateLeaderboardService
               cnt.entries,
               s.score_display,
               s.score_secondary_display,
+              s.meta,
               s.media_large,
               s.media_thumbnail,
               s.media_content_type,
@@ -263,6 +276,7 @@ class CalculateLeaderboardService
         entries,
         score,
         score_secondary,
+        meta,
         media_large,
         media_thumbnail,
         media_content_type,
@@ -290,6 +304,7 @@ class CalculateLeaderboardService
         0 as entries,
         s.score,
         s.score_secondary,
+        s.meta,
         s.media_large,
         s.media_thumbnail,
         s.media_content_type,

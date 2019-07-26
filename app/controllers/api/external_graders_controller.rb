@@ -31,14 +31,15 @@ class Api::ExternalGradersController < Api::BaseController
     begin
       participant = Participant.where(api_key: params[:api_key]).first
       raise DeveloperAPIKeyInvalid if participant.nil?
-      challenge = Challenge.where(
-                    challenge_client_name: params[:challenge_client_name]).first
-      challenge_round_id = get_challenge_round_id(
-        challenge: challenge, params: params)
-      raise ChallengeClientNameInvalid if challenge.nil?
-      raise ChallengeRoundNotOpen unless challenge_round_open?(challenge)
       raise ParticipantDidNotAcceptParticipationTerms unless participant.has_accepted_participation_terms?
+
+      challenge = Challenge.where(challenge_client_name: params[:challenge_client_name]).first
+      raise ChallengeClientNameInvalid if challenge.nil?
       raise ParticipantDidNotAcceptChallengeRules unless challenge.has_accepted_challenge_rules?(participant)
+
+      challenge_round_id = get_challenge_round_id(challenge: challenge, params: params)
+
+      raise ChallengeRoundNotOpen unless challenge_round_open?(challenge)
       raise ParticipantNotQualified unless participant_qualified?(challenge,participant)
       raise ParallelSubmissionLimitExceeded unless parallel_submissions_allowed?(challenge,participant)
 
@@ -51,7 +52,8 @@ class Api::ExternalGradersController < Api::BaseController
       end
 
       submissions_remaining, reset_dttm = challenge.submissions_remaining(participant.id)
-      raise NoSubmissionSlotsRemaining if submissions_remaining < 1
+      raise NoSubmissionSlotsRemaining, reset_dttm if submissions_remaining < 1
+
       if params[:meta].present?
         params[:meta] = clean_meta(params[:meta])
       end
@@ -394,8 +396,17 @@ class Api::ExternalGradersController < Api::BaseController
   end
 
   class NoSubmissionSlotsRemaining < StandardError
-    def initialize(msg="The participant has no submission slots remaining for today.")
-      super
+    def initialize(reset_time=nil)
+      @reset_time = reset_time
+      super(message)
+    end
+
+    def message
+      if @reset_time
+        "The participant has no submission slots remaining for today. Please wait until #{@reset_time} to make your next submission."
+      else
+        "The participant has no submission slots remaining for today."
+      end
     end
   end
 
@@ -442,7 +453,7 @@ class Api::ExternalGradersController < Api::BaseController
   end
   
   class TermsNotAcceptedByParticipant < StandardError
-    def initialize(msg='Invalid Submission. Have you registered for this challenge and agreed to the participantion terms?')
+    def initialize(msg='Invalid Submission. Have you registered for this challenge and agreed to the participation terms?')
       super
     end
   end
