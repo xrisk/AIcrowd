@@ -1,75 +1,58 @@
 <div class="bg-graph">
-<!-- masthead -->
-<div class="masthead masthead-open">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12">
-        <h1>Member login</h1>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /masthead -->
+	<!-- masthead -->
+	<div class="masthead masthead-open">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<h1>Member login</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /masthead -->
 
-<!-- section -->
-<div class="section-p-sm">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12">
+	<!-- section -->
+	<div class="section-p-sm">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
 
-        <%= form_for resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-rg' }, validate: true do |f| %>
+					<%= form_for resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-rg' }, validate: true do |f| %>
 
-          <!-- social log in buttons -->
-          <div class="btn-set-social">
-            <%= link_to participant_github_omniauth_authorize_path, {class: "btn btn-github btn-block"} do%>
-              <img src="/assets/img/icon-github.svg">Log in with GitHub
-            <% end %>
+						<!-- social log in buttons -->
+						<div class="btn-set-social">
+							<%= link_to participant_github_omniauth_authorize_path, {class: "btn btn-github btn-block"} do%>
+								<img src="/assets/img/icon-github.svg">Log in with GitHub
+							<% end %>
+						</div>
+						<!-- /social log in buttons -->
 
-          </div>
-          <!-- /social log in buttons -->
+						<div class="form-group">
+							<label for="email">Email</label>
+							<%= f.text_field :email, placeholder: "Email address", class: "form-control"%>
+						</div>
+						<div class="form-group">
+							<label for="password">Password</label>
+							<%= f.password_field :password, placeholder: "Password", class: "form-control" %>
+						</div>
 
-          <div class="form-group">
-            <label for="email">Email</label>
-            <%= f.text_field :email, placeholder: "Email address", class: "form-control"%>
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <%= f.password_field :password, placeholder: "Password", class: "form-control" %>
-          </div>
+						<%= f.button 'Log In', type: 'submit', class: 'btn btn-primary btn-block' %>
+					<% end %>
 
-          <%= f.button 'Log In', type: 'submit', class: 'btn btn-primary btn-block' %>
-        <% end %>
+					<div class="sub-section-header">
+						<h4>Can't log in?</h4>
+					</div>
 
-        <div class="sub-section-header">
-          <h4>Can't log in?</h4>
-        </div>
+					<ul class="list-unstyled">
+						<li><%= link_to "Not registered – Sign up", new_participant_registration_path %></li>
+						<li><%= link_to "Forgot your password?", new_password_path(resource_name) %></li>
+						<li><%= link_to "Account locked?", new_unlock_path(resource_name) %></li>
+						<li><%= link_to "Resend account confirmation", new_confirmation_path(resource_name) %></li>
+					</ul>
 
-        <ul class="list-unstyled">
-        <%#= link_to "Sign in with Facebook", participant_facebook_omniauth_authorize_path %>
-
-          <li><%= link_to "Forgot your password?", new_password_path(resource_name) %></li>
-          <li><%= link_to "Account locked?", new_unlock_path(resource_name) %></li>
-          <li><%= link_to "Resend account confirmation", new_confirmation_path(resource_name) %></li>
-        </ul>
-
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /section -->
-
-<!-- section -->
-<div class="section-p-md border-top bg-white">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col">
-        <div class="section-header-mb-sm">
-          <h4>Not registered?</h4>
-        </div>
-        <%= link_to "Sign Up", new_participant_registration_path, {class: "btn btn-secondary", role:"button"} %>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /section -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /section -->
 </div>
