@@ -167,7 +167,7 @@
   },
   "name": "aicrowd-review",
   "scripts": {
-    "postdeploy": "scripts/review_app_post_deploy.sh"
+    "postdeploy": "bin/bootstrap_review_app"
   },
   "stack": "heroku-18"
 }
