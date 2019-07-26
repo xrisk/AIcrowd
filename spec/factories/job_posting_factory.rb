@@ -8,10 +8,11 @@ FactoryBot.define do
     posting_date 2.weeks.ago
     closing_date 2.weeks.since
     status_cd 'open'
-    description { FFaker::Lorem.unique.paragraph(6) }
+    description_markdown { FFaker::Lorem.unique.paragraph(6) }
     remote false
     location 'Geneva'
     country 'CH'
+    job_url 'https://www.aicrowd.com'
     page_views 33
   end
 end

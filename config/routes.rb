@@ -50,9 +50,8 @@ Rails.application.routes.draw do
     resources :email_preferences, only: [:update]
     match '/notifications', to: 'email_preferences#edit', via: :get
   end
-  resources :job_postings, only: [:index, :show]
+  resources :job_postings, :path => "jobs", only: [:index, :show]
   resources :gdpr_exports, only: [:create]
-
   resources :landing_page, only: [:index]
   match '/landing_page/host', to: 'landing_page#host', via: :get
 
