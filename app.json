@@ -18,6 +18,9 @@
     }
   ],
   "env": {
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
     "AWS_ACCESS_KEY_ID": {
       "required": true
     },
@@ -164,6 +167,7 @@
   },
   "name": "aicrowd-review",
   "scripts": {
+    "postdeploy": "scripts/review_app_post_deploy.sh"
   },
   "stack": "heroku-18"
 }
