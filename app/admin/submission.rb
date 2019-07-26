@@ -15,7 +15,6 @@ ActiveAdmin.register Submission do
   filter :media_content_type
   filter :score
   filter :score_secondary
-  filter :meta
   filter :post_challenge
   filter :grading_status_cd
   filter :grading_message
@@ -37,7 +36,6 @@ ActiveAdmin.register Submission do
     end
     column :score
     column :score_secondary
-    column :meta
     column :grading_status_cd
     column :grading_message
     column :post_challenge
@@ -72,7 +70,6 @@ ActiveAdmin.register Submission do
         collection: Participant.all.order(:name).map{|u| ["#{u.name} - #{u.id}", u.id]}
       f.input :score
       f.input :score_secondary
-      f.input :meta, as: :text
       f.input :description_markdown
       f.input :grading_status,
         as: :select,
