@@ -1,8 +1,8 @@
 module TeamHelper
   def team_creation_button(participant, challenge)
     if policy(challenge).create_team?
+      title = 'Create a team for this challenge'
       disabled = false
-      title = "Create a team for this challenge"
     else
       disabled = true
       if participant.teams.exists?(challenge_id: challenge.id)
@@ -32,6 +32,42 @@ module TeamHelper
         data: {
           toggle: 'modal',
           target: '#create-team-modal',
+        },
+      )
+    end
+  end
+
+  def team_invitation_cancel_button(invitation)
+    if policy(invitation.team).cancel_invitations?
+      title = 'Cancel this invitation'
+      disabled = false
+    else
+      title = 'Only team organizers may cancel invitations to the team'
+      disabled = true
+    end
+
+    if disabled
+      button_tag(
+        'Cancel',
+        title: title,
+        type: 'button',
+        disabled: true,
+        class: 'btn btn-sm btn-secondary',
+        data: {
+          toggle: 'tooltip',
+        },
+      )
+    else
+      link_to(
+        'Cancel',
+        team_invitation_cancellations_path(invitation),
+        title: title,
+        class: 'btn btn-sm btn-secondary',
+        data: {
+          method: :post,
+          toggle: 'tooltip',
+          confirm: 'Are you sure?',
+          disable: 'Cancel',
         },
       )
     end

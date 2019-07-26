@@ -2,36 +2,29 @@ class Team::InvitationAcceptedNotifierJob < ApplicationJob
   queue_as :default
 
   def perform(invitee_id, mails)
-    Team.where(id: mails[:accepted_invitations]).includes(:team_participant_organizers).each do |team|
-      team.team_participant_organizers.each do |tp|
-        Team::Organizer::InvitationAcceptedNotificationMailer.new.sendmail(
-          participant_id: tp.participant_id,
-          team_id: team.id,
-          invitee_id: invitee_id,
-        )
+    TeamInvitation\
+      .where(id: mails[:accepted_invitations])
+      .includes(team: { team_participants_organizer: :participant })
+      .each do |inv|
+        inv.team.team_participants_organizer.each do |tp|
+          Team::Organizer::InvitationAcceptedNotificationMailer.new.sendmail(tp.participant, inv)
+        end
+        Team::Invitee::InvitationAcceptedNotificationMailer.new.sendmail(inv)
       end
-      Team::Invitee::InvitationAcceptedNotificationMailer.new.sendmail(
-        participant_id: invitee_id,
-        team_id: team.id,
-      )
-    end
 
-    Team.where(id: mails[:declined_invitations]).includes(:team_participant_organizers).each do |team|
-      team.team_participant_organizers.each do |tp|
-        Team::Organizer::InvitationDeclinedNotificationMailer.new.sendmail(
-          participant_id: tp.participant_id,
-          team_id: team.id,
-          invitee_id: invitee_id,
-        )
+    TeamInvitation\
+      .where(id: mails[:declined_invitations])
+      .includes(team: { team_participants_organizer: :participant })
+      .each do |inv|
+        inv.team.team_participants_organizer.each do |tp|
+          Team::Organizer::InvitationDeclinedNotificationMailer.new.sendmail(tp.participant, inv)
+        end
       end
-    end
 
-    mails[:canceled_invitations].each do |rescission|
-      Team::Invitee::InvitationCanceledNotificationMailer.new.sendmail(
-        participant_id: rescission[:invitee_id],
-        team_name: rescission[:team_name],
-        rescinder_id: invitee_id,
-      )
+    canceled = Hash[mails[:canceled_invitations].map { |x| [x.delete(:invitee_id), x] }]
+    Participant.where(id: canceled.keys).each do |participant|
+      obj = canceled[participant.id]
+      Team::Invitee::InvitationCanceledNotificationMailer.new.sendmail(participant, obj[:team_name])
     end
   end
 end

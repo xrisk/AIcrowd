@@ -21,7 +21,6 @@ class Submission::Cell < Template::Cell
 	end
 
 	def grade_class
-		# byebug
 		if entry.grading_status_cd == "graded"
 			return "badge-success"
 		elsif entry.grading_status_cd == "initiated"

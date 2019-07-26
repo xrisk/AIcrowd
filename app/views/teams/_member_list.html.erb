@@ -40,16 +40,7 @@
                 <img class="avatar" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg">
                 <span class="text-link"><%= inv.invitee.name %></span>
               <% end %>
-              <%= link_to(
-                'Cancel',
-                team_invitation_path(team_name: @team, id: inv.id),
-                class: 'btn btn-secondary btn-sm',
-                data: {
-                  method: :delete,
-                  confirm: 'Are you sure?',
-                  disable_with: 'Cancel',
-                },
-              ) %>
+              <%= team_invitation_cancel_button(inv) %>
             </li>
           <% end %>
         </ul>

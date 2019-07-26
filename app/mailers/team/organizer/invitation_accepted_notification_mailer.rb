@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 class Team::Organizer::InvitationAcceptedNotificationMailer < Team::BaseMailer
-  def sendmail(participant_id:, team_id:, invitee_id:)
-    @participant = Participant.find(participant_id)
-    @team = Team.find(team_id)
-    @invitee = Participant.find(invitee_id)
+  def sendmail(participant, invitation)
+    @participant = participant
+    @team = invitation.team
+    @invitee = invitation.invitee
     mandrill_send(format_options)
   end
 

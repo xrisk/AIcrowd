@@ -29,9 +29,9 @@ class Team::Invitee::InvitationPendingNotificationMailer < Team::BaseMailer
           <li>You may only be a member of a single team per challenge</li>
         </ul>
         <p style="text-align: center;">
-          #{button_html('Join!', team_invitation_acceptances_url(team_invitation_uuid: @invitation.uuid), true)}
+          #{button_html('Join!', team_invitation_acceptances_url(@invitation), true)}
           <span style="margin-right: 20px"></span>
-          #{button_html('Decline', team_invitation_declinations_url(team_invitation_uuid: @invitation.uuid), false)}
+          #{button_html('Decline', team_invitation_declinations_url(@invitation), false)}
         </p>
         #{signoff_html}
       </div>

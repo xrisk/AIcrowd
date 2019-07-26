@@ -2,9 +2,10 @@ class Team < ApplicationRecord
   belongs_to :challenge, inverse_of: :teams
 
   has_many :team_participants, inverse_of: :team, dependent: :destroy
-  has_many :team_participant_organizers, ->{ role_organizers }, class_name: 'TeamParticipant'
+  has_many :team_participants_organizer, ->{ role_organizers }, class_name: 'TeamParticipant'
 
   has_many :team_invitations, inverse_of: :team, dependent: :destroy
+  has_many :team_invitations_pending, ->{ status_pendings }, class_name: 'TeamInvitation'
 
   has_many :participants, through: :team_participants, inverse_of: :teams
 
@@ -34,5 +35,9 @@ class Team < ApplicationRecord
 
   def concrete?
     team_participants.size >= 2
+  end
+
+  def organized_by?(participant)
+    participant && team_participants_organizer.exists?(participant_id: participant.id)
   end
 end

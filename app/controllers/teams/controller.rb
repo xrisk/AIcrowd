@@ -1,4 +1,4 @@
-class TeamsController < ApplicationController
+class Teams::Controller < ApplicationController
   before_action :authenticate_participant!, except: [:show]
   before_action :set_team, only: [:show, :edit, :update, :destroy]
 

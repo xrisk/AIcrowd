@@ -31,6 +31,7 @@ class CreateTeams < ActiveRecord::Migration[5.2]
     change_table :challenges do |t|
       t.boolean :teams_allowed, default: true, null: false
       t.integer :max_team_participants, default: 5
+      t.integer :team_freeze_seconds_before_end, default: 1.week.to_i
     end
   end
 end

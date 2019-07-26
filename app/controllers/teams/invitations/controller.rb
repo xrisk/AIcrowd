@@ -1,4 +1,4 @@
-class Teams::InvitationsController < ApplicationController
+class Teams::Invitations::Controller < ApplicationController
   before_action :authenticate_participant!
   before_action :set_team
   before_action :set_invitation, only: [:show, :edit, :update, :destroy]
@@ -16,17 +16,6 @@ class Teams::InvitationsController < ApplicationController
       redirect_to @team
     else
       flash[:error] = 'An error occurred. The invitation was not sent.'
-      redirect_to @team
-    end
-  end
-
-  def destroy
-    authorize @team, :create_invitations?
-    if @invitation.destroy
-      flash[:success] = 'Invitation cancelled'
-      redirect_to @team
-    else
-      flash[:error] = 'An error occurred. The invitation was not cancelled'
       redirect_to @team
     end
   end
