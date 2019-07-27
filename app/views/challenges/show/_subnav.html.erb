@@ -50,7 +50,14 @@
           <li class="nav-item" ><%= link_to challenge.dynamic_content_tab, challenge_dynamic_contents_path(challenge), class: "nav-link nav-link-08", "data-turbolinks": false%></li>
         <% end %>
 	    <% end %>
-        <!-- more dropdown md -->
+	    <% unless needs_to_agree_to_terms_or_rules?(challenge) %>
+		    <li class="nav-item">
+			    <%= link_to 'Rules',
+			                [challenge, challenge.current_challenge_rules],
+			                class: "nav-link " %>
+		    </li>
+	    <% end %>
+	    <!-- more dropdown md -->
 
         <% if needs_to_agree_to_terms_or_rules?(challenge) %>
           <div class="dropdown-divider"></div>
