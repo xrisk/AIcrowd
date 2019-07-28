@@ -2,7 +2,7 @@ class NewCalculateLeaderboardService
 
   def initialize(challenge_round_id:)
     @round = ChallengeRound.find(challenge_round_id)
-    @submissions = @round.submissions.where(:grading_status == :graded).where.not(participant_id: nil)
+    @submissions = @round.submissions.where(grading_status_cd: 'graded').where.not(participant_id: nil)
   end
 
   def call
@@ -71,6 +71,7 @@ class NewCalculateLeaderboardService
 
     DisentanglementLeaderboard.where(challenge_round_id: @round.id).order(:avg_rank).each_with_index do |x, i|
       x.row_num = i + 1
+      x.created_at = Submission.find(x.submission_id).created_at
       x.save
     end
   end
@@ -78,14 +79,14 @@ class NewCalculateLeaderboardService
   def calculate_avg_rank(entry)
     leaderboard = DisentanglementLeaderboard.where(challenge_round_id: @round.id)
     x = 0
-    x += leaderboard.where("score >= ?", entry.score).count
-    x += leaderboard.where("score_secondary >= ?", entry.score_secondary).count
-    x += leaderboard.where("extra_score1 >= ?", entry.extra_score1).count
-    x += leaderboard.where("extra_score2 >= ?", entry.extra_score2).count
-    x += leaderboard.where("extra_score3 >= ?", entry.extra_score3).count
-    x += leaderboard.where("extra_score4 >= ?", entry.extra_score4).count
-    x += leaderboard.where("extra_score5 >= ?", entry.extra_score5).count
-    return x / 7
+    x += leaderboard.where("score > ?", entry.score).count
+    x += leaderboard.where("score_secondary > ?", entry.score_secondary).count
+    x += leaderboard.where("extra_score1 > ?", entry.extra_score1).count
+    x += leaderboard.where("extra_score2 > ?", entry.extra_score2).count
+    x += leaderboard.where("extra_score3 > ?", entry.extra_score3).count
+    x += leaderboard.where("extra_score4 > ?", entry.extra_score4).count
+    x += leaderboard.where("extra_score5 > ?", entry.extra_score5).count
+    (x/7.0)
   end
 
 end
