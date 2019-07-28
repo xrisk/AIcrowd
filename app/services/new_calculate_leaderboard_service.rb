@@ -21,7 +21,7 @@ class NewCalculateLeaderboardService
 
     @submissions.each do |subm|
       participant_set << subm.participant_id
-      extra_scores = other_scores_array(subm)
+      extra_scores = subm.other_scores_array
 
       DisentanglementLeaderboard.create!(
           challenge_id: subm.challenge_id,
@@ -40,6 +40,7 @@ class NewCalculateLeaderboardService
           meta: subm.meta,
           previous_row_num: 0,
           row_num: 0,
+          entries: @round.submissions.where(participant_id: subm.participant_id).count,
           extra_score1: extra_scores[0],
           extra_score2: extra_scores[1],
           extra_score3: extra_scores[2],
@@ -66,6 +67,11 @@ class NewCalculateLeaderboardService
           participant_id: pid
       ).where.not(id: best_id).delete_all
 
+    end
+
+    DisentanglementLeaderboard.where(challenge_round_id: @round.id).order(:avg_rank).each_with_index do |x, i|
+      x.row_num = i + 1
+      x.save
     end
   end
 
