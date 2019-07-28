@@ -92,6 +92,16 @@ class Submission < ApplicationRecord
     self.grading_status == :initiated
   end
 
+  def other_scores_array
+    other_scores = []
+    self.challenge.other_scores_fieldnames_array.each do |fname|
+      if (self.meta&.is_a? Hash) && (self.meta&.key? fname)
+        other_scores << (self.meta[fname].nil? ? 0.0 : self.meta[fname])
+      end
+    end
+    other_scores + [0.0] * (5 - other_scores.size)
+  end
+
   CLEF_RETRIEVAL_TYPES = {
     'Visual' => :visual,
     'Textual' => :textual,

@@ -10,7 +10,7 @@
     <% if challenge.score_secondary_title %>
         <th scope="col"><%= challenge.score_secondary_title %></th>
     <% end %>
-    <% other_scores_fieldnames_array.each do |fname| %>
+    <% challenge.other_scores_fieldnames_array.each do |fname| %>
         <th scope="col"><%= fname %></th>
     <% end %>
     <th scope="col">Entries</th>

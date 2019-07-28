@@ -222,4 +222,10 @@ class Challenge < ApplicationRecord
     end
   end
 
+  def other_scores_fieldnames_array
+    arr = self.other_scores_fieldnames
+    return arr.split(",").map(&:strip) if arr
+    return []
+  end
+
 end
