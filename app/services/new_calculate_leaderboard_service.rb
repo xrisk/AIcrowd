@@ -2,7 +2,7 @@ class NewCalculateLeaderboardService
 
   def initialize(challenge_round_id:)
     @round = ChallengeRound.find(challenge_round_id)
-    @submissions = @round.submissions.where(:grading_status == :graded)
+    @submissions = @round.submissions.where(:grading_status == :graded).where.not(participant_id: nil)
   end
 
   def call
