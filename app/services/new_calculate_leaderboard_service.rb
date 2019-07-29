@@ -2,6 +2,7 @@ class NewCalculateLeaderboardService
 
   def initialize(challenge_round_id:)
     @round = ChallengeRound.find(challenge_round_id)
+    @challenge = @round.challenge
     @submissions = @round.submissions.where(grading_status_cd: 'graded').where.not(participant_id: nil)
   end
 
@@ -49,6 +50,8 @@ class NewCalculateLeaderboardService
       )
     end
 
+    participant_to_best_id_map = Hash.new
+
     participant_set.each do |pid|
       min_avg = 10000000000
       best_id = 0
@@ -61,12 +64,13 @@ class NewCalculateLeaderboardService
           best_id = dl.id
         end
       end
+      participant_to_best_id_map[pid] = best_id
+    end
 
-      DisentanglementLeaderboard.where(
-          challenge_round_id: @round.id,
-          participant_id: pid
-      ).where.not(id: best_id).delete_all
-
+    participant_set.each do |pid|
+      DisentanglementLeaderboard
+          .where(challenge_round_id: @round.id, participant_id: pid)
+          .where.not(id: participant_to_best_id_map[pid]).destroy_all
     end
 
     DisentanglementLeaderboard.where(challenge_round_id: @round.id).order(:avg_rank).each_with_index do |x, i|
@@ -77,16 +81,28 @@ class NewCalculateLeaderboardService
   end
 
   def calculate_avg_rank(entry)
+    @scores_to_avg = [ @challenge.score_title, @challenge.score_secondary_title ] + @challenge.other_scores_fieldnames_array
+    column_names = ['score', 'score_secondary'] + (1..@challenge.other_scores_fieldnames_array.length).map { |i| 'extra_score' + (i).to_s }
     leaderboard = DisentanglementLeaderboard.where(challenge_round_id: @round.id)
-    x = 0
-    x += leaderboard.where("score > ?", entry.score).count
-    x += leaderboard.where("score_secondary > ?", entry.score_secondary).count
-    x += leaderboard.where("extra_score1 > ?", entry.extra_score1).count
-    x += leaderboard.where("extra_score2 > ?", entry.extra_score2).count
-    x += leaderboard.where("extra_score3 > ?", entry.extra_score3).count
-    x += leaderboard.where("extra_score4 > ?", entry.extra_score4).count
-    x += leaderboard.where("extra_score5 > ?", entry.extra_score5).count
-    (x/7.0)
+    submission = Submission.find(entry.submission_id)
+    sum = 0.0
+
+    submission.meta.each do |k,v|
+      if k.ends_with?('_rank')
+        submission.meta.delete(k)
+      end
+    end
+
+    @scores_to_avg.each_with_index do |name, i|
+      col_name = column_names[i]
+      submission.meta[name+"_rank"] = leaderboard.where("#{col_name} > ?", entry.send(col_name)).count + 1
+      sum += submission.meta[name+"_rank"]
+    end
+
+    submission.meta['mean_rank'] = sum / @scores_to_avg.length
+    submission.meta['private_ignore-leaderboard-job-computation'] = true
+    submission.save
+    submission.meta['mean_rank']
   end
 
 end
