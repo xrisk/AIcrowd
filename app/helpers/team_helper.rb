@@ -1,19 +1,23 @@
 module TeamHelper
-  def team_creation_button(participant, challenge)
-    if policy(challenge).create_team?
-      title = 'Create a team for this challenge'
+  def team_creation_button(challenge)
+    create_team_failure_reason = {}
+    if policy(challenge).create_team?(create_team_failure_reason)
       disabled = false
+      title = 'Create a team for this challenge'
     else
       disabled = true
-      if participant.teams.exists?(challenge_id: challenge.id)
-        title = "#{participant.name} is already on a team for this challenge"
-      elsif challenge.teams_frozen?
-        title = 'This challenge has team-freeze in effect'
-      elsif !policy(challenge).submissions_allowed?
-        title = 'Teams cannot be created until submissions are allowed for this challenge'
-      else
-        title = 'Teams cannot currently be created for this challenge'
-      end
+      title = case create_team_failure_reason[:sym]
+              when :participant_not_logged_in
+                'You must be logged in to create a team'
+              when :challenge_not_running
+                'This challenge is not running'
+              when :challenge_teams_frozen
+                'This challenge has team-freeze in effect'
+              when :team_exists
+                'You are already on a team for this challenge'
+              else
+                'You may not create a team for this challenge at this time'
+              end
     end
 
     content_tag(

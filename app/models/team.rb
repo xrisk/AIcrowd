@@ -27,7 +27,7 @@ class Team < ApplicationRecord
     message: 'must have at least one letter'
   validates_format_of :name,
     with: /\A[a-zA-Z0-9.\-_{}\[\]]+\z/,
-    message: 'may only contain letters and numbers and these quoted characters: "-_.{}[]"'
+    message: 'may only contain basic letters, numbers, and any of -_.{}[]'
 
   def to_param
     name

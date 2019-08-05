@@ -12,7 +12,7 @@ class Challenges::TeamsController < ApplicationController
       redirect_to @team
     else
       flash[:error] = @team.errors.full_messages.to_sentence
-      redirect_to root_path
+      redirect_to @challenge
     end
   end
 

@@ -51,7 +51,7 @@ class ChallengePolicy < ApplicationPolicy
   def clef_task?
     update?
   end
-  
+
   def starting_soon_mode?
     return @record.status == :starting_soon
   end
@@ -106,12 +106,21 @@ class ChallengePolicy < ApplicationPolicy
     end
   end
 
-  def create_team?
-    @record.running? &&
-      !@record.teams_frozen? &&
-      !participant.teams.exists?(challenge_id: @record.id)
+  def create_team?(issues = {})
+    issue = if participant.nil?
+              :participant_not_logged_in
+            elsif !@record.running?
+              :challenge_not_running
+            elsif @record.teams_frozen?
+              :challenge_teams_frozen
+            elsif participant.teams.exists?(challenge_id: @record.id)
+              :team_exists
+            else
+              nil
+            end
+    issues[:sym] = issue if issue
+    !issue
   end
-
 
   class Scope
     attr_reader :participant, :scope
