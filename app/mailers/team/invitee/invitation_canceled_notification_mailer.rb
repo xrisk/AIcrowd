@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 class Team::Invitee::InvitationCanceledNotificationMailer < Team::BaseMailer
-  def sendmail(participant, team_name)
-    @participant = participant
-    @team_name = team_name
+  def sendmail(invitation)
+    @participant = invitation.invitee
+    @team_name = invitation.team.name
     mandrill_send(format_options)
   end
 

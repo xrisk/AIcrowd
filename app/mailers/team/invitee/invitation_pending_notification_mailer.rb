@@ -14,13 +14,13 @@ class Team::Invitee::InvitationPendingNotificationMailer < Team::BaseMailer
 
   def email_body_html
     team_member_count = @team.team_participants.count
-    x_members = "#{team_member_count} #{team_member_count == 1 ? 'member' : 'members'}"
+    n_members = "#{team_member_count} #{team_member_count == 1 ? 'member' : 'members'}"
     <<~HTML
       <div>
         <p>You’ve been invited to join Team #{linked_team_html}!</p>
         <p>
           Participant #{linked_invitor_html} has invited you to collaborate on Challenge
-          #{linked_challenge_html}. The team currently has #{x_members}.
+          #{linked_challenge_html}. The team currently has #{n_members}.
         </p>
         <p>Accepting this invitation will have the following effects <b>for this challenge only</b>:</p>
         <ul>

@@ -1,4 +1,4 @@
-class Team::InvitationAcceptedNotifierJob < ApplicationJob
+class Team::InvitationPendingNotifierJob < ApplicationJob
   queue_as :default
 
   def perform(invitation_id)
