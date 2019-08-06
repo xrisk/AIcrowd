@@ -9,6 +9,7 @@ class Team < ApplicationRecord
 
   has_many :participants, through: :team_participants, inverse_of: :teams
 
+  scope :for_challenge, -> (challenge) { where(challenge_id: challenge.id) }
   scope :allowing_invitations, -> { where(invitations_allowed: true) }
   scope :with_at_least_n_participants, -> (n) {
     where(id:

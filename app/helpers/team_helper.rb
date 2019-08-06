@@ -1,44 +1,35 @@
 module TeamHelper
-  def team_creation_button(challenge)
-    create_team_failure_reason = {}
-    if policy(challenge).create_team?(create_team_failure_reason)
-      disabled = false
-      title = 'Create a team for this challenge'
+  def my_team_view_or_create_button(challenge)
+    button_opts = {
+      small: true,
+      class: 'pull-right mr-1',
+    }
+    my_team = current_participant&.teams&.for_challenge(challenge)&.first
+
+    if my_team
+      button_opts[:title] = 'My Team'
+      button_opts[:tooltip] = "View my team for this challenge: #{my_team.name}"
+      button_opts[:link] = team_path(my_team)
     else
-      disabled = true
-      title = case create_team_failure_reason[:sym]
-              when :participant_not_logged_in
-                'You must be logged in to create a team'
-              when :challenge_not_running
-                'This challenge is not running'
-              when :challenge_teams_frozen
-                'This challenge has team-freeze in effect'
-              when :team_exists
-                'You are already on a team for this challenge'
-              else
-                'You may not create a team for this challenge at this time'
-              end
+      button_opts[:title] = 'Create Team'
+      create_team_failure_reason = {}
+      if policy(challenge).create_team?(create_team_failure_reason)
+        button_opts[:tooltip] = t(
+          :allowed,
+          scope: 'helpers.teams.create_button.tooltip',
+        )
+        button_opts[:modal] = '#create-team-modal'
+      else
+        button_opts[:disabled] = true
+        button_opts[:tooltip] = t(
+          create_team_failure_reason[:sym],
+          scope: 'helpers.teams.create_button.tooltip',
+          default: :unspecified,
+        )
+      end
     end
 
-    content_tag(
-      :span,
-      title: title,
-      class: 'pull-right mr-1',
-      data: {
-        toggle: 'tooltip',
-      },
-    ) do
-      button_tag(
-        'Create Team',
-        type: 'button',
-        disabled: disabled,
-        class: 'btn btn-secondary btn-sm',
-        data: {
-          toggle: 'modal',
-          target: '#create-team-modal',
-        },
-      )
-    end
+    themed_button(button_opts)
   end
 
   def team_invitation_cancel_button(invitation)

@@ -39,4 +39,43 @@ module ApplicationHelper
     end
   end
 
+  def themed_button(opts = {})
+    raise ArgumentError if opts.key?(:link) && opts.key?(:modal)
+    title = opts[:title].presence || '&nbsp;'.html_safe
+    link = opts[:link] unless opts[:disabled]
+    modal = opts[:modal] unless opts[:disabled]
+
+    outer = {}
+    outer[:class] = opts[:class] if opts[:class]
+    if link
+      outer_type = :a
+      outer[:href] = link
+    else
+      outer_type = :span
+    end
+    if opts[:tooltip]
+      outer.merge!({
+        title: opts[:tooltip],
+        data: {
+          toggle: 'tooltip',
+        },
+      })
+    end
+
+    inner = {
+      type: 'button',
+      disabled: opts[:disabled],
+      class: "btn btn-secondary#{ ' btn-sm' if opts[:small] }",
+    }
+    if modal
+      inner.merge!({
+        data: {
+          toggle: 'modal',
+          target: modal,
+        },
+      })
+    end
+
+    content_tag(outer_type, outer) { button_tag(title, inner) }
+  end
 end

@@ -35,7 +35,7 @@
         <% if (challenge.submissions_page.present? || policy(challenge).edit?) %>
           <li class="nav-item"><%= link_to 'Submissions', challenge_submissions_path(challenge), class: tab_class('submissions') + " nav-link nav-link-05", "data-turbolinks": false %></li>
         <% end %>
-        
+
         <% if policy(challenge).edit? %>
           <% if challenge.clef_task #&& challenge.clef_task.eua_required? %>
             <li class="nav-item"><%= link_to 'Participants', challenge_clef_task_path(challenge), class: tab_class('participants') + " nav-link nav-link-05 ", "data-turbolinks": false %></li>
@@ -119,7 +119,7 @@
       [challenge, challenge.current_challenge_rules],
       class: "btn btn-primary btn-sm pull-right" %>
     <% else %>
-      <%= team_creation_button(challenge) %>
+      <%= my_team_view_or_create_button(challenge) %>
       <% if !policy(challenge).starting_soon_mode? %>
         <% if policy(challenge).submissions_allowed? && current_tab != 'dataset' %>
           <%= link_to 'Create Submission',
