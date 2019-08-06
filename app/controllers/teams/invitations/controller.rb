@@ -32,7 +32,7 @@ class Teams::Invitations::Controller < ApplicationController
     authorize @team, :create_invitations?
     @invitee = Participant.where('LOWER(name) = LOWER(?)', params[:name]).first
     if @invitee.nil?
-      flash[:error] = 'Participant with that name could not be invited'
+      flash[:error] = 'Participant with that name could not be found'
       redirect_to @team
     elsif @invitee.concrete_teams.find_by(challenge_id: @team.challenge_id).present?
       flash[:error] = 'Participant with that name is already on a team'

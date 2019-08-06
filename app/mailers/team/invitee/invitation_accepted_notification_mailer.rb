@@ -19,7 +19,7 @@ class Team::Invitee::InvitationAcceptedNotificationMailer < Team::BaseMailer
         <p>
           You will now be collaborating with #{n_other_people} on #{linked_challenge_html}.
           A submission by any one of you will count the same for all of you on the
-          leaderboards. Good luck on the challenge!
+          leaderboard. Good luck on the challenge!
         </p>
         #{signoff_html}
       </div>
