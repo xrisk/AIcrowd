@@ -33,75 +33,45 @@ module TeamHelper
   end
 
   def team_invitation_cancel_button(invitation)
+    button_opts = {
+      title: 'Cancel',
+      link: {
+        url: team_invitation_cancellations_path(invitation),
+        method: :post,
+      },
+      confirm: 'Are you sure?',
+      small: true,
+    }
     if policy(invitation.team).cancel_invitations?
-      title = 'Cancel this invitation'
-      disabled = false
+      button_opts[:tooltip] = 'Cancel this invitation'
     else
-      title = 'Only team organizers may cancel invitations to the team'
-      disabled = true
+      button_opts[:tooltip] = 'Only team organizers may cancel invitations to the team'
+      button_opts[:disabled] = true
     end
 
-    if disabled
-      button_tag(
-        'Cancel',
-        title: title,
-        type: 'button',
-        disabled: true,
-        class: 'btn btn-sm btn-secondary',
-        data: {
-          toggle: 'tooltip',
-        },
-      )
-    else
-      link_to(
-        'Cancel',
-        team_invitation_cancellations_path(invitation),
-        title: title,
-        class: 'btn btn-sm btn-secondary',
-        data: {
-          method: :post,
-          toggle: 'tooltip',
-          confirm: 'Are you sure?',
-          disable: 'Cancel',
-        },
-      )
-    end
+    themed_button(button_opts)
   end
 
   def team_member_invite_button(team)
+    button_opts = {
+      title: 'Invite member',
+      modal: '#invite-team-member-modal',
+    }
     if policy(team).create_invitations?
-      disabled = false
-      title = 'Invite a new member to this team'
+      button_opts[:tooltip] = 'Invite a new member to this team'
     else
+      button_opts[:disabled] = true
       if current_participant.nil?
-        title = 'You must be logged in to invite members to your team'
+        button_opts[:tooltip] = 'You must be logged in to invite members to your team'
       elsif !team.organized_by?(current_participant)
-        title = 'Only team organizers may invite members to the team'
+        button_opts[:tooltip] = 'Only team organizers may invite members to the team'
       elsif team.challenge.teams_frozen?
-        title = "The team's challenge has team-freeze in effect"
+        button_opts[:tooltip] = "The team's challenge has team-freeze in effect"
       else
-        title = 'You may not invite new members at this time'
+        button_opts[:tooltip] = 'You may not invite new members at this time'
       end
-      disabled = true
     end
 
-    content_tag(
-      :span,
-      title: title,
-      data: {
-        toggle: 'tooltip',
-      },
-    ) do
-      button_tag(
-        'Invite member',
-        type: 'button',
-        disabled: disabled,
-        class: 'btn btn-secondary',
-        data: {
-          toggle: 'modal',
-          target: '#invite-team-member-modal',
-        },
-      )
-    end
+    themed_button(button_opts)
   end
 end

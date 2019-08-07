@@ -42,19 +42,21 @@ module ApplicationHelper
   def themed_button(opts = {})
     raise ArgumentError if opts.key?(:link) && opts.key?(:modal)
     title = opts[:title].presence || '&nbsp;'.html_safe
-    link = opts[:link] unless opts[:disabled]
-    modal = opts[:modal] unless opts[:disabled]
+    unless opts[:disabled]
+      confirm = opts[:confirm]
+      if opts[:modal]
+        modal = opts[:modal]
+      end
+      if opts[:link]
+        url = opts.dig(:link, :url) rescue nil || opts.dig(:link)
+        method = opts.dig(:link, :method) rescue nil || :get
+      end
+    end
 
     outer = {}
     outer[:class] = opts[:class] if opts[:class]
-    if link
-      outer_type = :a
-      outer[:href] = link
-    else
-      outer_type = :span
-    end
     if opts[:tooltip]
-      outer.merge!({
+      outer.deep_merge!({
         title: opts[:tooltip],
         data: {
           toggle: 'tooltip',
@@ -63,12 +65,24 @@ module ApplicationHelper
     end
 
     inner = {
-      type: 'button',
       disabled: opts[:disabled],
-      class: "btn btn-secondary#{ ' btn-sm' if opts[:small] }",
+      class: "btn btn-secondary",
     }
-    if modal
-      inner.merge!({
+    inner[:class] += ' disabled' if opts[:disabled]
+    inner[:class] += ' btn-sm' if opts[:small]
+    if url
+      inner_type = :a
+      inner.deep_merge!({
+        href: url,
+        data: {
+          method: method,
+          **(confirm ? { confirm: confirm } : {}),
+        },
+      })
+    elsif modal
+      inner_type = :button
+      inner.deep_merge!({
+        type: 'button',
         data: {
           toggle: 'modal',
           target: modal,
@@ -76,6 +90,6 @@ module ApplicationHelper
       })
     end
 
-    content_tag(outer_type, outer) { button_tag(title, inner) }
+    content_tag(:span, outer) { content_tag(inner_type, inner) { title } }
   end
 end
