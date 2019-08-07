@@ -64,6 +64,7 @@ module ApplicationHelper
       })
     end
 
+    inner_type = :button
     inner = {
       disabled: opts[:disabled],
       class: "btn btn-secondary",
@@ -80,7 +81,6 @@ module ApplicationHelper
         },
       })
     elsif modal
-      inner_type = :button
       inner.deep_merge!({
         type: 'button',
         data: {

@@ -65,5 +65,49 @@ $(document).on('turbolinks:load', function() {
     else{
       $(target_id).attr('disabled', true)
     }
-  })
+	})
+
+	// validated fields
+	$('form .validated-field').on('input paste', function() {
+		const $field = $(this);
+		const $form = $field.closest('form');
+		const $fieldErrorMessage = $form.find('#' + $field.data('error-description-selector'))
+		const $submit = $form.find('input[type=submit]');
+		const fieldValue = $field.val();
+		let valid = false;
+
+		// validate changed field
+		{
+			switch($field.data('validation-type')) {
+				case 'regex': {
+					const regex = new RegExp($field.data('validation-regex-pattern'));
+					valid = regex.test(fieldValue);
+					break;
+				}
+			}
+			$field.prop('validation-success', valid);
+		}
+
+		// show error message accordingly
+		{
+			if (valid) {
+				$fieldErrorMessage.hide();
+			} else {
+				$fieldErrorMessage.show();
+			}
+		}
+
+		// enable submit button accordingly
+		{
+			const allFieldsValid = $form.find('.validated-field').map(function() {
+				return $(this).prop('validation-success');
+			}).get().reduce((acc,x) => acc && x, true);
+
+			if (allFieldsValid) {
+				$submit.removeAttr('disabled')
+			} else {
+				$submit.attr('disabled', 'disabled')
+			}
+		}
+	});
 });

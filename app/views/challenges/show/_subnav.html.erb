@@ -153,11 +153,23 @@
           <div class="form-group">
             <label>Team Name</label>
             <div class="input-group mb-3">
-              <%= f.text_field(:name, class: 'form-control', placeholder: 'Team name', data: { auto_focus: true }) %>
+              <%= f.text_field(:name,
+                class: 'form-control validated-field',
+                placeholder: 'Team name',
+                data: {
+                  auto_focus: true,
+                  error_description_selector: 'team-name-error-message',
+                  validation_type: 'regex',
+                  validation_regex_pattern: '^[a-zA-Z0-9.\-_{}\[\]]+$'
+                },
+              ) %>
+              <div id="team-name-error-message" style="display: none; color: red">
+                <small><i>A team name may only contain basic letters, numbers, and any of <code>-_.{}[]</code></i></small>
+              </div>
             </div>
           </div>
           <div class="btn-set">
-            <%= f.submit 'Create', class: 'btn btn-primary' %>
+            <%= f.submit 'Create', class: 'btn btn-primary', disabled: true %>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </div>
