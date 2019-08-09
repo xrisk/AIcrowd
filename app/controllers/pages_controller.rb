@@ -16,7 +16,7 @@ class PagesController < ApplicationController
     @page_title = "FAQ"
   end
 
-  def cookies
+  def cookies_info
     @page_title = "Cookies"
   end
 
