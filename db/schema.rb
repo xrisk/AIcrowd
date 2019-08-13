@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_28_143457) do
+ActiveRecord::Schema.define(version: 2019_08_10_133044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
@@ -883,6 +883,19 @@ ActiveRecord::Schema.define(version: 2019_07_28_143457) do
     t.index ["clef_task_id"], name: "index_task_dataset_files_on_clef_task_id"
   end
 
+  create_table "team_members", force: :cascade do |t|
+    t.string "name"
+    t.string "title"
+    t.string "section"
+    t.string "description"
+    t.integer "seq"
+    t.bigint "participant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_team_members_on_name"
+    t.index ["participant_id"], name: "index_team_members_on_participant_id"
+  end
+
   create_table "topics", id: :serial, force: :cascade do |t|
     t.integer "challenge_id"
     t.integer "participant_id"
@@ -956,6 +969,7 @@ ActiveRecord::Schema.define(version: 2019_07_28_143457) do
   add_foreign_key "submissions", "challenges"
   add_foreign_key "submissions", "participants"
   add_foreign_key "task_dataset_files", "clef_tasks"
+  add_foreign_key "team_members", "participants"
   add_foreign_key "topics", "challenges"
   add_foreign_key "topics", "participants"
   add_foreign_key "votes", "participants"
