@@ -22,7 +22,7 @@ class ChallengesController < ApplicationController
     else
       @challenges = @all_challenges
     end
-    @challenges = @challenges.page(params[:page]).per(5)
+    @challenges = @challenges.page(params[:page]).per(20)
   end
 
   def reorder
