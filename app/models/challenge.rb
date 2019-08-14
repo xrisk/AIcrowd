@@ -60,14 +60,14 @@ class Challenge < ApplicationRecord
     allow_destroy: true
 
   as_enum :status,
-    [:draft, :running, :completed, :starting_soon],
-    map: :string
+          [:draft, :running, :completed, :starting_soon],
+          map: :string, prefix: true
   as_enum :primary_sort_order,
-    [:ascending, :descending],
-    map: :string
+          [:ascending, :descending],
+          map: :string, prefix: true
   as_enum :secondary_sort_order,
-    [:ascending, :descending, :not_used],
-    map: :string
+          [:ascending, :descending, :not_used],
+          map: :string, prefix: true
 
   validates_presence_of :status
   validates_presence_of :challenge
