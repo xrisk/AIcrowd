@@ -16,10 +16,10 @@ class Submission::Cell::SubmissionDetail < Submission::Cell
     if entry.description.blank?
         return false
     end
-    if current_participant.admin? || current_participant.id == participant.id
+    if current_participant&.admin? || current_participant&.id == participant.id
         return true
     end
-    if current_participant.organizer && current_participant.organizer.id == challenge.organizer.id
+    if current_participant&.organizer && current_participant&.organizer.id == challenge.organizer.id
         return true
     end
   end
