@@ -14,7 +14,7 @@
 
 				<hr/>
 				<% if @clef_task.eua_file.present? %>
-					<%= link_to @clef_task.eua_file.url do %>
+					<%= link_to asset_path(@clef_task.eua_file.url) do %>
 						<i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
 					<% end %>
 				<% end %>
@@ -35,7 +35,6 @@
 		</div>
 	</div>
 </section>
-
 
 
 <section class="section-p-sm">

@@ -16,10 +16,10 @@
 								<%= f.file_field :eua_file %>
 								<br/>
 								<br/>
-								<% if @clef_task.eua_file.file.present? %>
+								<% if @clef_task.eua_file.present? %>
 									<small id="euaFileUploadHelp1"> You have already uploaded an EUA. If you wish to replace it, you can
 										upload a new file</small>
-									<%= link_to 'Current EUA', @clef_task.eua_file.file.url %>
+									<%= link_to 'Current EUA', asset_path(@clef_task.eua_file.url) %>
 								<% else %>
 									<small id="euaFileUploadHelp1"> If this dataset requires an End User Agreement, you can upload it
 										here</small>
