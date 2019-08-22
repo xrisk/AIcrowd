@@ -18,6 +18,15 @@
               <%= concept(Image::Cell,member,klass: "avatar") %>
               <span class="text-link"><%= member.name %></span>
             <% end %>
+            <!--By Ivan, for CLEF: enable/disable e-mail notifications upon EUA upload by a participant-->
+              <% if @organizer.clef_tasks.any? &&  @organizer.clef_tasks.first.eua_required? %>
+                <% if member.clef_email %>
+                  <%= link_to 'Disable EUA upload e-mail notiftications', organizer_clef_email_path(@organizer, participant_id: member.id), class: 'btn btn-primary btn-small' %>
+                <% else %>
+                  <%= link_to 'Activate EUA upload e-mail notiftications', organizer_clef_email_path(@organizer, participant_id: member.id), class: 'btn btn-small' %>
+                <% end %>
+              <% end %>
+            <!--/CLEF e-mails -->
             <%= link_to 'Remove', organizer_member_path(@organizer,member), method: :delete, class: "btn btn-secondary btn-sm" %>
           </li>
           <!-- /team member -->

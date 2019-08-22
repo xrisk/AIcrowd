@@ -27,7 +27,7 @@
       <fieldset>
         <label>End User Agreement file</label>
         <% if eua_required? %>
-          <%= link_to clef_task.eua_file.url,
+          <%= link_to asset_path(clef_task.eua_file.url),
                 target: :_blank,
                 id: 'eua-file',
                 data: { :'clef-task-id' => clef_task.id } do %>

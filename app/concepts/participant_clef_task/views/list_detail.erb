@@ -61,7 +61,7 @@
         </small>
         <div>
           <% if eua_required? %>
-            <%= link_to participant_clef_task.eua_file.url,
+            <%= link_to asset_path(participant_clef_task.eua_file.url),
               target: :_blank do %>
             <i class="fa fa-file-pdf-o fa-2x" aria-hidden="true"></i>
             <% end %>

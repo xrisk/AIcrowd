@@ -16,20 +16,20 @@
         <%= link_to 'Discussion', URI.escape(File.join(ENV['DISCOURSE_DOMAIN_NAME'], 'c', challenge.slug[0..49])),
                     class: tab_class('discussion') + " nav-link nav-link nav-link-03" %>
       </li>
-      <% if challenge.clef_task.present? %>
-        <li class="nav-item">
-          <%= link_to 'Resources',
-                      clef_task_task_dataset_files_path(
-                          challenge.clef_task, challenge_id: challenge.id),
-                      class: tab_class('clef_dataset') + " nav-link nav-link-03", "data-turbolinks": false %>
-        </li>
-      <% else %>
-        <li class="nav-item">
-          <%= link_to 'Resources',
-                      challenge_dataset_files_path(challenge),
-                      class: tab_class('dataset') + " nav-link nav-link-03", "data-turbolinks": false %>
-        </li>
-      <% end %>
+        <% if challenge.clef_task.present? %>
+          <li class="nav-item">
+            <%= link_to 'Resources',
+                  clef_task_task_dataset_files_path(
+                    challenge.clef_task, challenge_id: challenge.id),
+                  class: tab_class('dataset') + " nav-link nav-link-03", "data-turbolinks": false %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to 'Resources',
+                  challenge_dataset_files_path(challenge),
+                  class: tab_class('dataset') + " nav-link nav-link-03", "data-turbolinks": false %>
+          </li>
+        <% end %>
 
       <% unless policy(challenge).starting_soon_mode? %>
         <% if challenge.submissions_page.present? || policy(challenge).edit? %>

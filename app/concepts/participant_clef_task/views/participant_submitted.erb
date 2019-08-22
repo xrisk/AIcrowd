@@ -1,9 +1,14 @@
 <div class='row' data-cell='ParticipantClefTask::Cell::ListDetail'>
   <div class='article'>
     <h2>EUA approval pending</h2>
-    <p>The approval of <%= link_to 'your completed End User Agreement (EUA)', participant_clef_task.eua_file.file.url %> document is pending. As soon as an ImageCLEF organizer approves the document, you will get access to the dataset.</p>
+    <p>The approval of <%= link_to 'your completed End User Agreement (EUA)', 
+          asset_path(participant_clef_task.eua_file.url),
+          target: :_blank
+          %> 
+        document is pending. As soon as an ImageCLEF organizer approves the document, you will get access to the dataset.</p>
     <p>You will also be automatically registered with CLEF, the main organizer of all CLEF labs.</p>
-    <p>You can redownload the task's EUA <%= link_to 'here' , clef_task.eua_file.url,
+    <p>You can redownload the task's EUA <%= link_to 'here' ,
+          asset_path(clef_task.eua_file.url),
           target: :_blank,
           id: 'eua-file',
           data: { :'clef-task-id' => clef_task.id } %>.
