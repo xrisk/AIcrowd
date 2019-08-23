@@ -43,6 +43,23 @@ class Leaderboard::Cell::TableRow < Leaderboard::Cell
     @participant ||= entry.participant
   end
 
+  def team
+    @participant ||= entry.team
+  end
+
+  def participants
+    @participants ||= begin
+      case entry.submitter_type
+      when 'Participant'
+        [entry.participant]
+      when 'Team'
+        entry.team.participants.to_a
+      else
+        []
+      end
+    end
+  end
+
   def top_rows
     @top_rows ||= challenge_round.ranking_highlight
   end

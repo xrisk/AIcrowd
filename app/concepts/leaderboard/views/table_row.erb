@@ -1,13 +1,25 @@
       <tr>
         <td class="leaderboard-change">
           <%= ranking_change(entry) %>
-            
         </td>
         <td><strong><%= "%02d" % (entry.row_num) %></strong></td>
         <td>
-          <%= link_to participant_path(participant) do %>
-            <%= concept(Image::Cell, participant, :klass=>"avatar") %>
-            <span class="text-link"><%= participant.name %></span>
+          <% if participants.length == 0 %>
+            Unknown Participant
+          <% elsif participants.length == 1 %>
+            <%= link_to participant_path(participants[0]), title: participants[0].name, data: { toggle: :tooltip } do %>
+              <%= concept(Image::Cell, participants[0], :klass=>"avatar") %>
+              <span class="text-link"><%= participants[0].name %></span>
+            <% end %>
+          <% else %>
+            <%= link_to team.name, team_path(team) %>
+            <div class="avatar-group">
+              <% participants.each do |p| %>
+                <%= link_to participant_path(p), title: p.name, data: { toggle: :tooltip } do %>
+                  <%= concept(Image::Cell, p, :klass=>"avatar") %>
+                <% end %>
+              <% end %>
+            </div>
           <% end %>
         </td>
 
