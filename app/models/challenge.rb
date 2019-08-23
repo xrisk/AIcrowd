@@ -62,14 +62,14 @@ class Challenge < ApplicationRecord
   has_many :teams, inverse_of: :challenge
 
   as_enum :status,
-    [:draft, :running, :completed, :starting_soon],
-    map: :string
+          [:draft, :running, :completed, :starting_soon],
+          map: :string
   as_enum :primary_sort_order,
-    [:ascending, :descending],
-    map: :string
+          [:ascending, :descending],
+          map: :string, prefix: true
   as_enum :secondary_sort_order,
-    [:ascending, :descending, :not_used],
-    map: :string
+          [:ascending, :descending, :not_used],
+          map: :string, prefix: true
 
   validates_presence_of :status
   validates_presence_of :challenge
@@ -228,4 +228,11 @@ class Challenge < ApplicationRecord
     return true if status == :completed
     end_dttm.present? && end_dttm < 1.week.from_now
   end
+
+  def other_scores_fieldnames_array
+    arr = self.other_scores_fieldnames
+    return arr.split(",").map(&:strip) if arr
+    return []
+  end
+
 end

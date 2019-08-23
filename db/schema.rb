@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_08_082847) do
+ActiveRecord::Schema.define(version: 2019_08_10_133044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -402,6 +402,44 @@ ActiveRecord::Schema.define(version: 2019_08_08_082847) do
     t.index ["challenge_id"], name: "index_dataset_files_on_challenge_id"
   end
 
+  create_table "disentanglement_leaderboards", force: :cascade do |t|
+    t.bigint "challenge_id"
+    t.bigint "challenge_round_id"
+    t.bigint "participant_id"
+    t.integer "row_num"
+    t.integer "previous_row_num"
+    t.string "slug"
+    t.string "name"
+    t.integer "entries"
+    t.float "score"
+    t.float "score_secondary"
+    t.string "media_large"
+    t.string "media_thumbnail"
+    t.string "media_content_type"
+    t.string "description"
+    t.string "description_markdown"
+    t.string "leaderboard_type_cd"
+    t.datetime "refreshed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "submission_id"
+    t.boolean "post_challenge", default: false
+    t.integer "seq"
+    t.boolean "baseline"
+    t.string "baseline_comment"
+    t.json "meta"
+    t.float "extra_score1"
+    t.float "extra_score2"
+    t.float "extra_score3"
+    t.float "extra_score4"
+    t.float "extra_score5"
+    t.float "avg_rank"
+    t.index ["challenge_id"], name: "index_disentanglement_leaderboards_on_challenge_id"
+    t.index ["challenge_round_id"], name: "index_disentanglement_leaderboards_on_challenge_round_id"
+    t.index ["leaderboard_type_cd"], name: "index_disentanglement_leaderboards_on_leaderboard_type_cd"
+    t.index ["participant_id"], name: "index_disentanglement_leaderboards_on_participant_id"
+  end
+
   create_table "email_preferences", id: :serial, force: :cascade do |t|
     t.integer "participant_id"
     t.boolean "newsletter", default: true
@@ -488,6 +526,8 @@ ActiveRecord::Schema.define(version: 2019_08_08_082847) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "job_url"
+    t.string "slug"
+    t.text "description_markdown"
   end
 
   create_table "login_activities", force: :cascade do |t|
@@ -886,6 +926,19 @@ ActiveRecord::Schema.define(version: 2019_08_08_082847) do
     t.index ["uuid"], name: "index_team_invitations_on_uuid", unique: true
   end
 
+  create_table "team_members", force: :cascade do |t|
+    t.string "name"
+    t.string "title"
+    t.string "section"
+    t.string "description"
+    t.integer "seq"
+    t.bigint "participant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_team_members_on_name"
+    t.index ["participant_id"], name: "index_team_members_on_participant_id"
+  end
+
   create_table "team_participants", force: :cascade do |t|
     t.bigint "team_id", null: false
     t.bigint "participant_id", null: false
@@ -982,6 +1035,7 @@ ActiveRecord::Schema.define(version: 2019_08_08_082847) do
   add_foreign_key "team_invitations", "participants", column: "invitee_id"
   add_foreign_key "team_invitations", "participants", column: "invitor_id"
   add_foreign_key "team_invitations", "teams"
+  add_foreign_key "team_members", "participants"
   add_foreign_key "team_participants", "participants"
   add_foreign_key "team_participants", "teams"
   add_foreign_key "teams", "challenges"

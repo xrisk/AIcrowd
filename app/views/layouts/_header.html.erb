@@ -1,132 +1,161 @@
+<% if !cookies[:hiring_banner_closed] %>
+	<!-- Fixed Alert -->
+	<div class="alert alert-flash alert-dismissible fade show alert-fixed" role="alert">
+		<div class="container-fluid">
+			<%= link_to "We are hiring!", job_postings_path %>
+			<button type="button" class="close cookies-set-jobs" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	</div>
+	<!-- /Flash Alert -->
+<% end %>
+
 <!-- app header -->
 <header class="app-header">
-  <div class="container-fluid">
+	<div class="container-fluid">
 
-    <div class="app-header-section">
-      <!-- app brand -->
-      <div class="app-brand">
-        <a class="logo-aicrowd" href="/" data-turbolinks="false">
-          <span>AIcrowd</span>
-        </a>
-      </div>
+		<div class="app-header-section">
+			<!-- app brand -->
+			<div class="app-brand">
+				<a class="logo-aicrowd" href="/" data-turbolinks="false">
+					<span>AIcrowd</span>
+				</a>
+			</div>
 
-    </div>
+		</div>
 
-    <% if current_participant %>
-      <div class="app-header-section">
+		<% if current_participant %>
+			<div class="app-header-section">
 
-        <ul class="nav">
-          <li class="nav-item">
-            <%= link_to 'Challenges', challenges_path, {:class=> "nav-link"} %>
-          </li>
-          <% if !SuccessStory.where(:published => true).first.nil? %>
-          <li class="nav-item">
-            <%= link_to 'Success Stories', success_stories_path, {:class=> "nav-link"} %>
-          </li>
-          <% end %>
-          <li class="nav-item">
-            <%= link_to 'Blog', blogs_path, {:class=> "nav-link"} %>
-          </li>
-          <% if current_participant && current_participant.admin? %>
-            <li data-turbolinks='false'><%= link_to "Admin", '/admin', {:class=> "nav-link"} %></li>
-          <% end %>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><svg width="16" height="4" xmlns="http://www.w3.org/2000/svg"><path d="M2 0C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM8 0C6.9 0 6 .9 6 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#909293" fill-rule="nonzero"/></svg></a>
-            <div class="dropdown-menu dropdown-menu-right">
-              <%= link_to "Organize a challenge", landing_page_host_path, {class: "dropdown-item"} %>
-              <%= link_to "FAQ", faq_path, {class: "dropdown-item"} %>
-              <%= link_to "Contact", contact_path, {class: "dropdown-item"} %>
-            </div>
-          </li>
-        </ul>
+				<ul class="nav">
+					<li class="nav-item">
+						<%= link_to 'Challenges', challenges_path, {:class => "nav-link"} %>
+					</li>
+					<% if !SuccessStory.where(:published => true).first.nil? %>
+						<li class="nav-item">
+							<%= link_to 'Success Stories', success_stories_path, {:class => "nav-link"} %>
+						</li>
+					<% end %>
+					<li class="nav-item">
+						<%= link_to 'Blog', blogs_path, {:class => "nav-link"} %>
+					</li>
+					<% if current_participant && current_participant.admin? %>
+						<li data-turbolinks='false'><%= link_to "Admin", '/admin', {:class => "nav-link"} %></li>
+					<% end %>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<svg width="16" height="4" xmlns="http://www.w3.org/2000/svg">
+								<path d="M2 0C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM8 0C6.9 0 6 .9 6 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#909293" fill-rule="nonzero"/>
+							</svg>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right">
+							<%= link_to "Organize a challenge", landing_page_host_path, {class: "dropdown-item"} %>
+							<%= link_to "FAQ", faq_path, {class: "dropdown-item"} %>
+							<%= link_to "Our Team", team_members_path, {class: "dropdown-item"} %>
+							<%= link_to "Jobs", job_postings_path, {class: "dropdown-item"} %>
+							<%= link_to "Contact", contact_path, {class: "dropdown-item"} %>
+						</div>
+					</li>
+				</ul>
 
-        <div class="dropdown">
-          <button class="app-header-toggler" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<div class="dropdown">
+					<button class="app-header-toggler" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="app-header-toggler-icon">
               <svg width="16" height="4" xmlns="http://www.w3.org/2000/svg"><path d="M2 0C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM8 0C6.9 0 6 .9 6 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#5D5F60" fill-rule="nonzero"/></svg>
             </span>
-          </button>
-          <div class="dropdown-menu dropdown-menu-right">
-            <%= link_to 'Challenges', challenges_path, {:class=> "dropdown-item"} %>
-            <div class="dropdown-divider"></div>
-            <%= link_to 'Success Stories', success_stories_path, {:class=> "dropdown-item"} %>
-            <%= link_to 'Blog', blogs_path, {:class=> "dropdown-item"} %>
-            <%= link_to "Organize a challenge", landing_page_host_path, {class: "dropdown-item"} %>
-            <%= link_to "FAQ", faq_path, {class: "dropdown-item"} %>
-            <%= link_to "Contact", contact_path, {class: "dropdown-item"} %>
-          </div>
-        </div>
+					</button>
+					<div class="dropdown-menu dropdown-menu-right">
+						<%= link_to 'Challenges', challenges_path, {:class => "dropdown-item"} %>
+						<div class="dropdown-divider"></div>
+						<%= link_to 'Success Stories', success_stories_path, {:class => "dropdown-item"} %>
+						<%= link_to 'Blog', blogs_path, {:class => "dropdown-item"} %>
+						<%= link_to "Organize a challenge", landing_page_host_path, {class: "dropdown-item"} %>
+						<%= link_to "FAQ", faq_path, {class: "dropdown-item"} %>
+						<%= link_to "Our Team", team_members_path, {class: "dropdown-item"} %>
+						<%= link_to "Jobs", job_postings_path, {class: "dropdown-item"} %>
+						<%= link_to "Contact", contact_path, {class: "dropdown-item"} %>
+					</div>
+				</div>
 
-        <div class="member-options">
-          <div class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= concept(Image::Cell, current_participant, klass: "avatar") %></a>
-            <div class="dropdown-menu dropdown-menu-right">
-              <%= link_to participant_path(current_participant), {class: "dropdown-item"} do %>
-              <strong><%= current_participant.name %></strong><br>
-              View profile
-              <% end %>
-              <%= link_to 'Edit Profile', edit_participant_path(current_participant) , {class: "dropdown-item"} %>
-              <%= link_to 'Account Settings', edit_participant_registration_path, {class: "dropdown-item"} %>
-              <div class="dropdown-divider"></div>
-              <%= link_to 'Log Out', destroy_participant_session_path, class: "dropdown-item", :method => :delete %>
-            </div>
-          </div>
-        </div>
+				<div class="member-options">
+					<div class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= concept(Image::Cell, current_participant, klass: "avatar") %></a>
+						<div class="dropdown-menu dropdown-menu-right">
+							<%= link_to participant_path(current_participant), {class: "dropdown-item"} do %>
+								<strong><%= current_participant.name %></strong><br>
+								View profile
+							<% end %>
+							<%= link_to 'Edit Profile', edit_participant_path(current_participant), {class: "dropdown-item"} %>
+							<%= link_to 'Account Settings', edit_participant_registration_path, {class: "dropdown-item"} %>
+							<div class="dropdown-divider"></div>
+							<%= link_to 'Log Out', destroy_participant_session_path, class: "dropdown-item", :method => :delete %>
+						</div>
+					</div>
+				</div>
 
-      </div>
+			</div>
 
-      <% else %>
+		<% else %>
 
-      <div class="app-header-section">
+			<div class="app-header-section">
 
-        <ul class="nav">
-          <li class="nav-item">
-            <%= link_to 'Challenges', challenges_path, {:class=> "nav-link"} %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'Success Stories', success_stories_path, {:class=> "nav-link"} %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'Blog', blogs_path, {:class=> "nav-link"} %>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><svg width="16" height="4" xmlns="http://www.w3.org/2000/svg"><path d="M2 0C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM8 0C6.9 0 6 .9 6 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#909293" fill-rule="nonzero"/></svg></a>
-            <div class="dropdown-menu dropdown-menu-right">
-              <%= link_to "Organize a challenge", landing_page_host_path, {class: "dropdown-item"} %>
-              <%= link_to "FAQ", faq_path, {class: "dropdown-item"} %>
-              <%= link_to "Contact", contact_path, {class: "dropdown-item"} %>
+				<ul class="nav">
+					<li class="nav-item">
+						<%= link_to 'Challenges', challenges_path, {:class => "nav-link"} %>
+					</li>
+					<li class="nav-item">
+						<%= link_to 'Success Stories', success_stories_path, {:class => "nav-link"} %>
+					</li>
+					<li class="nav-item">
+						<%= link_to 'Blog', blogs_path, {:class => "nav-link"} %>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+							<svg width="16" height="4" xmlns="http://www.w3.org/2000/svg">
+								<path d="M2 0C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM8 0C6.9 0 6 .9 6 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#909293" fill-rule="nonzero"/>
+							</svg>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right">
+							<%= link_to "Organize a challenge", landing_page_host_path, {class: "dropdown-item"} %>
+							<%= link_to "FAQ", faq_path, {class: "dropdown-item"} %>
+							<%= link_to "Contact", contact_path, {class: "dropdown-item"} %>
+							<%= link_to "Our Team", team_members_path, {class: "dropdown-item"} %>
+							<%= link_to "Jobs", job_postings_path, {class: "dropdown-item"} %>
 
-              <div class="dropdown-divider"></div>
-              <%= link_to "Sign Up", new_participant_registration_path, {class: "dropdown-item"} %>
-            </div>
-          </li>
-        </ul>
+							<div class="dropdown-divider"></div>
+							<%= link_to "Sign Up", new_participant_registration_path, {class: "dropdown-item"} %>
+						</div>
+					</li>
+				</ul>
 
-        <div class="dropdown">
-          <button class="app-header-toggler" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<div class="user-options">
+					<%= link_to '<button type="button" class="btn btn-secondary">Log in</button>'.html_safe, new_participant_session_path %>
+				</div>
+
+				<div class="dropdown">
+					<button class="app-header-toggler" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="app-header-toggler-icon">
               <svg width="16" height="4" xmlns="http://www.w3.org/2000/svg"><path d="M2 0C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM8 0C6.9 0 6 .9 6 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#5D5F60" fill-rule="nonzero"/></svg>
             </span>
-          </button>
-          <div class="dropdown-menu dropdown-menu-right">
-            <%= link_to 'Challenges', challenges_path, {:class=> "dropdown-item"} %>
-            <div class="dropdown-divider"></div>
-            <%= link_to 'Success Stories', success_stories_path, {:class=> "dropdown-item"} %>
-            <%= link_to 'Blog', blogs_path, {:class=> "dropdown-item"} %>
-            <%= link_to "Organize a challenge", landing_page_host_path, {class: "dropdown-item"} %>
-            <%= link_to "FAQ", faq_path, {class: "dropdown-item"} %>
-            <%= link_to "Contact", contact_path, {class: "dropdown-item"} %>
-            <div class="dropdown-divider"></div>
-            <%= link_to "Log in", new_participant_session_path, {class: "dropdown-item"} %>
-            <%= link_to "Sign Up", new_participant_registration_path, {class: "dropdown-item"} %>
-          </div>
-        </div>
+					</button>
+					<div class="dropdown-menu dropdown-menu-right">
+						<%= link_to 'Challenges', challenges_path, {:class => "dropdown-item"} %>
+						<div class="dropdown-divider"></div>
+						<%= link_to 'Success Stories', success_stories_path, {:class => "dropdown-item"} %>
+						<%= link_to 'Blog', blogs_path, {:class => "dropdown-item"} %>
+						<%= link_to "Organize a challenge", landing_page_host_path, {class: "dropdown-item"} %>
+						<%= link_to "FAQ", faq_path, {class: "dropdown-item"} %>
+						<%= link_to "Contact", contact_path, {class: "dropdown-item"} %>
+						<%= link_to "Our Team", team_members_path, {class: "dropdown-item"} %>
+						<%= link_to "Jobs", job_postings_path, {class: "dropdown-item"} %>
+						<div class="dropdown-divider"></div>
+						<%= link_to "Log in", new_participant_session_path, {class: "dropdown-item"} %>
+						<%= link_to "Sign Up", new_participant_registration_path, {class: "dropdown-item"} %>
+					</div>
+				</div>
 
-        <div class="user-options">
-          <%= link_to '<button type="button" class="btn btn-secondary">Log in</button>'.html_safe, new_participant_session_path %>
-        </div>
-
-      </div>
-      <% end %>
-    </div>
+			</div>
+		<% end %>
+	</div>
 </header>

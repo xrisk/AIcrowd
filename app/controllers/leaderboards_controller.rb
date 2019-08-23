@@ -3,7 +3,6 @@ class LeaderboardsController < ApplicationController
     except: :index
   before_action :set_challenge
   respond_to :js, :html
-  # layout :set_layout
 
   def index
     @current_round = current_round
@@ -32,13 +31,20 @@ class LeaderboardsController < ApplicationController
           .per(10)
           .order(:seq)
     end
+
+    if @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
+      @leaderboards = DisentanglementLeaderboard
+                          .where(challenge_round_id: @current_round)
+                          .page(params[:page])
+                          .per(10)
+                          .order(:avg_rank)
+    end
   end
 
   def submission_detail
     leaderboard = Leaderboard.find(params[:leaderboard_id])
     @leaderboard = @challenge.leaderboards
-    @submissions = Submission
-      .where(
+    @submissions = Submission.where(
         participant_id: params[:participant_id],
         challenge_id: params[:challenge_id],
         challenge_round_id: leaderboard.challenge_round_id)
@@ -61,11 +67,6 @@ class LeaderboardsController < ApplicationController
     else
       @challenge.challenge_rounds.where(active: true).first
     end
-  end
-
-  def set_layout
-    return 'bare' if action_name == 'show'
-    return 'application-old'
   end
 
 end

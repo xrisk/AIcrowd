@@ -10,8 +10,8 @@
 
       <!-- challenge leaderboard -->
         <% if @current_round.leaderboard_note.present? %>
-		      <div class="markdown-wrap">
-			      <div class="md-content update">
+		      <div class="md-content width-100">
+			      <div class="note">
 				      <%= sanitize(@current_round.leaderboard_note) %>
 			      </div>
 		      </div>
@@ -46,11 +46,36 @@
 	      <% if @challenge.status == :completed %>
 		      <div class="toggle-switch-container">
 			      <div class="can-toggle can-toggle--size-small">
-				      <input id="post-challenge-submissions" type="checkbox">
-				      <label for="post-challenge-submissions">
-					      <div class="can-toggle__switch" data-checked="On" data-unchecked="Off"></div>
-					      <div class="can-toggle__label-text">Show post-challenge submissions</div>
-				      </label>
+				      <% if @post_challenge == 'off' %>
+				          <input id="post-challenge-submissions" type="checkbox" >
+						      <label>
+							      <%= link_to(
+									          '',
+									          challenge_leaderboards_path(challenge_round_id: @current_round, post_challenge: 'on'),
+									          class: "can-toggle__switch", data: { checked: 'On', unchecked: 'Off'}
+							          )
+							      %>
+							      <%= link_to(
+									          'Show post-challenge submissions',
+									          challenge_leaderboards_path(challenge_round_id: @current_round, post_challenge: 'on'),
+									          class: "can-toggle__label-text"
+							          )
+							      %>
+						      </label>
+				      <% else %>
+						      <input id="post-challenge-submissions" type="checkbox" checked >
+						      <label>
+							      <%= link_to(
+									          '', challenge_leaderboards_path(challenge_round_id: @current_round, post_challenge: 'off'),
+									          class: "can-toggle__switch", data: { checked: 'On', unchecked: 'Off'} )%>
+							      <%= link_to(
+									          'Show post-challenge submissions',
+									          challenge_leaderboards_path(challenge_round_id: @current_round, post_challenge: 'off'),
+									          class: "can-toggle__label-text"
+							          )
+							      %>
+						      </label>
+				      <% end %>
 			      </div>
 		      </div>
 	      <% end %>

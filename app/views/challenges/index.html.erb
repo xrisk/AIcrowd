@@ -16,10 +16,11 @@
     <div class="row" id="challenges-div">
       <%= render partial: 'challenges' %>
     </div>
-	  
-    <%# Uncomment this when we want pagination on this page. #>
-    <%#= render partial: 'shared/load_more', locals: { collection: @challenges}, :id=>"load_more_link" %>
 
+	  <!-- load more -->
+	  <span id="more-anchor"></span>
+	  <%= render partial: 'shared/load_more', locals: { collection: @challenges} %>
+	  <!-- /load more -->
   </div>
 </div>
 <!-- /challenge cards -->

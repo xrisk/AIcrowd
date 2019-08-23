@@ -58,7 +58,8 @@ class Submission < ApplicationRecord
 
   after_save do
     Rails.logger.info "[Submission Model] after_save Triggered for Submission ##{self.id} At Round #{self.challenge_round_id}"
-    if self.grading_status_cd == 'graded'
+    # !self.meta&.dig('final_avg') is added to prevent infinite loops in New Leaderboard Calculation
+    if self.grading_status_cd == 'graded' && !self.meta&.dig('private_ignore-leaderboard-job-computation')
       Rails.logger.info "[Submission Model] Starting the Leaderboard Update Job! (onsave)"
       CalculateLeaderboardJob
         .perform_later(challenge_round_id: self.challenge_round_id)
@@ -92,6 +93,17 @@ class Submission < ApplicationRecord
     self.grading_status == :initiated
   end
 
+  def other_scores_array
+    other_scores = []
+    self.challenge.other_scores_fieldnames_array.each do |fname|
+      if (self.meta&.is_a? Hash) && (self.meta&.key? fname)
+        other_scores << (self.meta[fname].nil? ? 0.0 : self.meta[fname])
+      end
+    end
+    # Always return an array of size 5
+    other_scores + [0.0] * (5 - other_scores.size)
+  end
+
   CLEF_RETRIEVAL_TYPES = {
     'Visual' => :visual,
     'Textual' => :textual,
@@ -107,7 +119,7 @@ class Submission < ApplicationRecord
 
   def as_json(options={})
     super(
-      only: [:id, :participant_id, :score, :score_secondary, :grading_status_cd, :grading_message, :post_challenge, :media_content_type, :created_at, :updated_at],
+      only: [:id, :participant_id, :score, :score_secondary, :grading_status_cd, :grading_message, :post_challenge, :media_content_type, :created_at, :updated_at, :meta],
       include: { participant: { only: [:name] }}
     )
   end

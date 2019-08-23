@@ -50,9 +50,8 @@ Rails.application.routes.draw do
     resources :email_preferences, only: [:update]
     match '/notifications', to: 'email_preferences#edit', via: :get
   end
-  resources :job_postings, only: [:index, :show]
+  resources :job_postings, :path => "jobs", only: [:index, :show]
   resources :gdpr_exports, only: [:create]
-
   resources :landing_page, only: [:index]
   match '/landing_page/host', to: 'landing_page#host', via: :get
 
@@ -135,6 +134,8 @@ Rails.application.routes.draw do
     resources :submission_comments, only: [:create, :delete, :edit, :update]
   end
 
+  resources :team_members, :path => "our_team", only: [:index]
+
   resources :submission_comments, only: [] do
     resources :votes, only: [:create, :destroy]
   end
@@ -163,7 +164,7 @@ Rails.application.routes.draw do
   match '/privacy', to: 'pages#privacy', via: :get
   match '/terms',   to: 'pages#terms',   via: :get
   match '/faq',     to: 'pages#faq',     via: :get
-  match '/cookies', to: 'pages#cookies', via: :get
+  match '/cookies', to: 'pages#cookies_info', via: :get
 
 
   resources :markdown_editors, only: [:index, :create] do

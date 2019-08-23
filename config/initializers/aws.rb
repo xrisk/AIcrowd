@@ -8,8 +8,6 @@ if Rails.env.test? || Rails.env.development?
   })
 
   storage = Fog::Storage.new({
-    :aws_access_key_id      => ENV['AWS_ACCESS_KEY_ID'],
-    :aws_secret_access_key  => ENV['AWS_SECRET_ACCESS_KEY'],
     :provider               => 'Local',
     :local_root => ENV['FOG_LOCAL_ROOT']
   })
@@ -22,9 +20,6 @@ if Rails.env.test? || Rails.env.development?
   CarrierWave.configure do |config|
     config.fog_credentials = {
         :provider               => 'Local',
-        :aws_access_key_id      => ENV['AWS_ACCESS_KEY_ID'],
-        :aws_secret_access_key  => ENV['AWS_SECRET_ACCESS_KEY'],
-        :region                 => ENV['AWS_REGION'],
         :local_root => ENV['FOG_LOCAL_ROOT']
     }
     config.fog_directory  = ENV['AWS_S3_BUCKET']
