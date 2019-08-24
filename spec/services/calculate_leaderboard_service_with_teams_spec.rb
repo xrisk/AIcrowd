@@ -45,13 +45,21 @@ RSpec.describe CalculateLeaderboardService do
     score: 10,
     created_at: 50.hours.ago,
   ) }
+  let!(:p4s2) { create(:submission,
+    participant: p4_solo,
+    challenge: challenge,
+    challenge_round_id: challenge_round.id,
+    grading_status: :graded,
+    score: 5,
+    created_at: 10.hours.ago,
+  ) }
 
   # Leaderboard
   # Row | Submission | Submitter    | Score | Entries
   # ----|------------|--------------|-------|--------
   #  1  |  p2s1      |  team1       |  40   |  2
-  #  2  |  p3s1      |  p3_in_team2 |  20   |  1
-  #  3  |  p4s1      |  p4_solo     |  10   |  1
+  #  2  |  p3s1      |  team2       |  20   |  1
+  #  3  |  p4s1      |  p4_solo     |  10   |  2
 
 
   describe 'supports teams' do
@@ -61,14 +69,17 @@ RSpec.describe CalculateLeaderboardService do
 
     it { expect(Leaderboard.count).to eq(3) }
 
+    it { expect(Leaderboard.first.entries).to eq(2) }
     it { expect(Leaderboard.first.score).to eq(40) }
     it { expect(Leaderboard.first.participant).not_to be }
     it { expect(Leaderboard.first.submitter).to eq(team1) }
 
-    it { expect(Leaderboard.second.submitter).to eq(p3_in_t2) }
-    it { expect(Leaderboard.second.participant).to eq(p3_in_t2) }
+    it { expect(Leaderboard.second.participant).not_to be }
+    it { expect(Leaderboard.second.submitter).to eq(team2) }
+    it { expect(Leaderboard.second.score).to eq(20) }
 
     it { expect(Leaderboard.third.score).to eq(10) }
     it { expect(Leaderboard.third.submitter).to eq(p4_solo) }
+    it { expect(Leaderboard.third.entries).to eq(2) }
   end
 end
