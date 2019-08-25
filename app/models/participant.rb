@@ -31,12 +31,10 @@ class Participant < ApplicationRecord
   has_many :comments, dependent: :nullify
   has_many :articles, dependent: :nullify
   has_many :blogs, dependent: :nullify
-  has_many :challenge_participants,
-    dependent: :destroy
-  has_many :leaderboards,
-    class_name: 'Leaderboard'
-  has_many :ongoing_leaderboards,
-    class_name: 'OngoingLeaderboard'
+  has_many :challenge_participants, dependent: :destroy
+  has_many :leaderboards, class_name: 'Leaderboard', as: :submitter
+  has_many :ongoing_leaderboards, class_name: 'OngoingLeaderboard', as: :submitter
+  has_many :base_leaderboards, as: :submitter, dependent: :nullify
   has_many :participant_challenges,
     class_name: 'ParticipantChallenge'
   has_many :challenge_registrations,
@@ -45,7 +43,6 @@ class Participant < ApplicationRecord
     class_name: 'ParticipantChallengeCount'
   has_many :challenge_organizer_participants,
     class_name: 'ChallengeOrganizerParticipant'
-  has_many :base_leaderboards, dependent: :nullify
   has_many :challenges,
     through: :participant_challenges
   has_many :dataset_file_downloads,
