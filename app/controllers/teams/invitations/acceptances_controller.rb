@@ -70,7 +70,7 @@ class Teams::Invitations::AcceptancesController < ApplicationController
         .joins(:team_participants)
         .includes(:team_invitations_pending)
         .where(challenge_id: @team.challenge_id)
-        .where(team_participants: { participant_id: current_participant, role: :organizer })
+        .where(team_participants: { participant_id: current_participant.id, role: :organizer })
         .each do |personal_team|
           personal_team.team_invitations_pending.each do |inv|
             @mails[:canceled_invitations] << {
