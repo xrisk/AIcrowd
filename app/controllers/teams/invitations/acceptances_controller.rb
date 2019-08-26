@@ -11,6 +11,7 @@ class Teams::Invitations::AcceptancesController < ApplicationController
 
   def create
     accept_atomically!
+    recalculate_leaderboards
     notify_concerned_parties_later
     flash[:success] = 'You successfully joined the team!'
     redirect_to @team
@@ -95,6 +96,12 @@ class Teams::Invitations::AcceptancesController < ApplicationController
       end
       # become a member of the team
       @team.team_participants.create!(participant_id: current_participant.id)
+    end
+  end
+
+  private def recalculate_leaderboards
+    @team.challenge.challenge_rounds.pluck(:id).each do |round_id|
+      CalculateLeaderboardJob.perform_later(challenge_round_id: round_id)
     end
   end
 
