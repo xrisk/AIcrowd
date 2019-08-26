@@ -36,7 +36,7 @@ class Teams::Invitations::AcceptancesController < ApplicationController
       flash[:error] = 'This invitation is no longer valid'
       redirect_to @team
     elsif @team.challenge.teams_frozen?
-      flash[:error] = 'The challenge has team-freeze in effect'
+      flash[:error] = 'Teams for this challenge are frozen'
       redirect_to @team.challenge
     elsif current_participant.concrete_teams.where.not(id: @team.id).exists?(challenge_id: @team.challenge_id)
       flash[:error] = 'You are already a member of a different team for this challenge'
