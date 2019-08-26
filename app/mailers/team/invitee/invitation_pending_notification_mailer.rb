@@ -27,6 +27,7 @@ class Team::Invitee::InvitationPendingNotificationMailer < Team::BaseMailer
           <li>You will be a member of #{linked_team_html} for the duration of the challenge</li>
           <li>All team members will share equal leaderboard spots and prizes</li>
           <li>You may only be a member of a single team per challenge</li>
+          <li>If you accept this invitation, then all other invitations to you from other teams for this challenge will be cancelled</li>
         </ul>
         <p style="text-align: center;">
           #{button_html('Join!', team_invitation_acceptances_url(@invitation), true)}
