@@ -13,7 +13,7 @@ class Teams::Invitations::DeclinationsController < ApplicationController
     @invitation.update!(status: :declined)
     Team::InvitationDeclinedNotifierJob.perform_later(current_participant.id, @mails)
     flash[:error] = 'You successfully declined the invitation'
-    redirect_to root_path
+    redirect_to @team.challenge
   end
 
   private def set_invitation
