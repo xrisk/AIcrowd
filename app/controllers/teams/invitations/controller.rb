@@ -13,11 +13,10 @@ class Teams::Invitations::Controller < ApplicationController
     if @invitation.save
       Team::InvitationPendingNotifierJob.perform_later(@invitation.id)
       flash[:success] = 'The invitation was sent'
-      redirect_to @team
     else
       flash[:error] = 'An error occurred. The invitation was not sent.'
-      redirect_to @team
     end
+    redirect_to @team
   end
 
   private def set_team
