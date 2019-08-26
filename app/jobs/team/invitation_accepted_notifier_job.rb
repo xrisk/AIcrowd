@@ -21,10 +21,14 @@ class Team::InvitationAcceptedNotifierJob < ApplicationJob
         end
       end
 
-    canceled = Hash[mails[:canceled_invitations].map { |x| [x.delete(:invitee_id), x] }]
+    canceled = Hash[mails[:canceled_invitations].map { |x| [x[:invitation][:invitee_id], x] }
     Participant.where(id: canceled.keys).each do |participant|
-      obj = canceled[participant.id]
-      Team::Invitee::InvitationCanceledNotificationMailer.new.sendmail(participant, obj[:team_name])
+      # replace id with instance to avoid re-loading it in the mailer
+      data = canceled[participant.id].deep_merge({ invitation: { invitee_id: nil, invitee: participant }})
+      # mock instances because the invitation and team no longer exist
+      inv = TeamInvitation.new(data[:invitation])
+      inv.team = Team.new(data[:team])
+      Team::Invitee::InvitationCanceledNotificationMailer.new.sendmail(inv)
     end
   end
 end

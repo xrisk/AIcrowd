@@ -75,8 +75,13 @@ class Teams::Invitations::AcceptancesController < ApplicationController
         .each do |personal_team|
           personal_team.team_invitations_pending.each do |inv|
             @mails[:canceled_invitations] << {
-              invitee_id: inv.invitee_id,
-              team_name: personal_team.name,
+              invitation: {
+                invitor_id: inv.invitor_id,
+                invitee_id: inv.invitee_id,
+              },
+              team: {
+                name: personal_team.name,
+              },
             }
           end
           personal_team.destroy!
