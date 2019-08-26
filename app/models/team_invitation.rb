@@ -3,7 +3,7 @@ class TeamInvitation < ApplicationRecord
     :pending,  # invitation sending/sent, but no action taken yet
     :accepted, # invitee accepted and became a team member
     :declined, # invitee declined and did not become a team member
-    :canceled, # the invitee will not become a member but some other user rescinded the invitation
+    :canceled, # the invitee will not become a member because the organizer rescinded the invitation
   ].freeze
 
   after_initialize :init_uuid, if: :new_record?
