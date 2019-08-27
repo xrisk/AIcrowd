@@ -32,6 +32,7 @@
       <p>If all of that seems ok, then you can start collaborating right away!</p>
       <%= form_for team_invitation_acceptances_path(@invitation) do |f| %>
         <%= f.submit 'Join', class: 'btn btn-primary' %>
+        <%= link_to 'Return to Challenge', @challenge, class: 'btn btn-secondary' %>
       <% end %>
     </div>
   </div>

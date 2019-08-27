@@ -29,6 +29,7 @@
       <p>If you still don’t want to be a part of the the team, then you may decline your invitation below.</p>
       <%= form_for team_invitation_declinations_path(@invitation) do |f| %>
         <%= f.submit 'Decline', class: 'btn btn-primary', data: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Return to Challenge', @challenge, class: 'btn btn-secondary' %>
       <% end %>
     </div>
   </div>
