@@ -702,108 +702,6 @@ Submission.create!([
       posted_at: Time.now,
       slug: "b_1")
 
-  Blog.create!(
-      id: 1,
-        participant_id: 1817,
-        title: "Blog number 4",
-        body: "This is a sample blog for testing, it belongs to participant p1817.This tutorial focuses on Dark Skies - Classification of Nighttime Images, an interesting challenge on crowdAI.\nThe goal of this challenge is to use the manually labeled dataset to develop an image classification algorithm that can correctly identify whether an photo shows stars, cities, or other objects. These photos were taken at night. There are 101,554 images in the training set and 52,317 images in the test set.\nSpain in the night\nThe Iberian Peninsula at night, showing Spain and Portugal. Madrid is the bright spot just above the center. Credits: NASA\nThis tutorial is structured as a hand-on document. Details about machine learning, neural networks or convolution neural networks are not discussed.\nIf you are new to machine learning, I recommend you follow this excellent course by Andrew Ng from Cousera: https://www.coursera.org/learn/machine-learning. In case you are already familiar with machine learning, the CS231n course from Standford (http://cs231n.stanford.edu) will be a great resource when dealing with visual recognition problem.\nThis tutorial also uses Convolution Neural Network (CNN), which described extensively in CS231n course. The model is based on Google Inception v3 architecture on Tensorflow framework. Other scripts are written in Python.\n",
-        published: true,
-        vote_count: 2900,
-        view_count: 200000,
-        seq: 2222,
-        posted_at: Time.now,
-        slug: "b_2")
-
-  Blog.create!(
-      id: 3,
-        participant_id: 1780,
-        title: "Blog number 3",
-        body: "This is a sample blog for testing, it belongs to participant p1780NOTE: This tutorial uses a 'Transfer Learning' or 'Fine Tuning' approach to solvethe image classification problem. This tutorial should be used to assist in development of basic ideas when it comes to approaching this and similar problems.\nTransfer Learning is against the rules of the PlantVillage Classification Challenge, and this tutorial is not intended to generate a submission. All submissions made by using a Transfer Learning approach (as described in the tutorial, or otherwise) will be disqualified.\nCrowdAI’s educational vision is to become a great open access learning resource for data analysis and machine learning. To make this happen, we are launching the CrowdAI Knowledge Base, a place where everyone in the community comes together to build high quality resources to help data scientists at all levels of expertise,from beginners to experts.\nIn this tutorial we will focus on the PlantVillage Classification Challenge hosted on CrowdAI.\nThe goal of the challenge is to classify a set of images of plant leaves into 37 possible crop-disease pairs (see original paper here). Here are a few examples from across all the 38 crop-disease pairs represented in the PlantVillage dataset.\nPlantVillageDataset\nIn the following sections we will walk through the basic steps of how to get started on this problem, and similar Image Classification problems using Caffe, a very powerful and popular Deep Learning framework developed by Berkley Vision and Learning Center.\nThe PlantVillage Classification Challenge requires the participants to train a model by using labelled images provided in the Training Set to predict a probability distribution across all the 38 crop-disease pairs (classes) for all the images in the Test Set.",
-        published: true,
-        vote_count: 291,
-        view_count: 200,
-        seq: 3000,
-        posted_at: Time.now,
-        slug: "b_3")
-
-  Blog.create!(
-    id: 91,
-      participant_id: 1051,
-      title: "Blog number 2",
-      body: "This is a sample blog for testing, it belongs to participant p1051. This participant belongs to an orgnization.",
-      published: true,
-      vote_count: 14,
-      view_count: 231,
-      seq: 2231,
-      posted_at: Time.now,
-      slug: "b_4")
-
-  JobPosting.create!(
-    id: 102,
-    title: "Job posting 1",
-    organisation: "Cloud AI",
-    contact_name: "J.J. Thompson",
-    contact_email: "jjthompson@atom.com",
-    contact_phone: "666-999-666",
-    posting_date: "2018-08-06",
-    closing_date: "2019-11-06",
-    status_cd: "open",
-    description: "Guy needed to build new elements using generative networks",
-    location: "Bangalore",
-    country: "India",
-    page_views: 1234,
-    created_at: Time.now,
-    job_url: "www.atomsforu.com"
-    )
-
-  JobPosting.create!(
-    id: 105,
-    title: "Job posting 2",
-    organisation: "Cloud AI",
-    contact_name: "J.G. Thompson",
-    contact_email: "jgthompson@atom.com",
-    contact_phone: "666-999-666",
-    posting_date: "2018-08-06",
-    closing_date: "2018-11-06",
-    status_cd: "closed",
-    description: "Guy needed to build new DNA samples using generative networks",
-    location: "Bangalore",
-    country: "India",
-    page_views: 1234,
-    created_at: Time.now,
-    job_url: "www.dnaforu.com"
-    )
-
-  Topic.create!(
-    id: 123130,
-    challenge_id: 37,
-    participant_id: 112233,
-    topic: "Test Topic",
-    views: 123,
-    posts_count: 12,
-    slug: "Test topic",
-    vote_count: 231)
-
-  Comment.create!(
-    id: 287832,
-    topic_id: 123130,
-    participant_id: 112233,
-    comment: "This is a test comment",
-    vote_count: 12,
-    slug: "Test comment",
-    comment_markdown: "Test comment"
-    )
-
-  ChallengeCall.create!(
-    id: 1231232,
-    title: "test_challenge_call",
-    website: "https://www.challenge_call.example.com",
-    description: "This is a test challenge call",
-    organizer_id: 21,
-    headline: "Headline for challenge call",
-    closing_date: Time.parse("20-10-2020")
-    )
-
   DatasetFile.create!(
     id: 123,
     description: "This is a test dataset",
@@ -813,14 +711,6 @@ Submission.create!([
     hosting_location: "s3",
     external_url: "https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png",
     external_file_size: "1 GB"
-    )
-
-  SubmissionComment.create!(
-    id:123242,
-    submission_id: 13615,
-    participant_id: 112233,
-    comment: "This is a test comment",
-    comment_markdown: "This is a test comment"
     )
 
   Dir[File.join(Rails.root, 'db', 'seeds/*', '*.rb')].sort.each do |seed|
