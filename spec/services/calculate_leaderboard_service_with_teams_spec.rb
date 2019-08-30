@@ -10,8 +10,8 @@ RSpec.describe CalculateLeaderboardService do
   let!(:p3_in_t2) { create :participant }
   let!(:p4_solo) { create :participant }
   # teams
-  let!(:team1) { create :team, participants: [p1_in_t1, p2_in_t1] }
-  let!(:team2) { create :team, participants: [p3_in_t2] }
+  let!(:team1) { create :team, challenge: challenge, participants: [p1_in_t1, p2_in_t1] }
+  let!(:team2) { create :team, challenge: challenge, participants: [p3_in_t2] }
   # submissions
   let!(:p1s1) { create(:submission,
     participant: p1_in_t1,
