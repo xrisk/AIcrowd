@@ -162,11 +162,13 @@ class CalculateLeaderboardService
       FROM submissions s
       INNER JOIN participants p ON p.id = s.participant_id
       LEFT JOIN team_participants tp ON p.id = tp.participant_id
+      LEFT JOIN teams t ON tp.team_id = t.id
       WHERE
         s.challenge_round_id = #{@round.id}
         AND s.post_challenge IN #{post_challenge}
         AND s.created_at <= #{cuttoff_dttm}
         AND s.baseline IS FALSE
+        AND (t.challenge_id = #{@round.challenge.id} or t IS NULL)
       ORDER BY submission_id;
     SQL
 
