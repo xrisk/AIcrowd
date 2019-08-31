@@ -4,7 +4,9 @@ RSpec.describe CalculateLeaderboardService do
   # challenge
   let(:challenge1) { create :challenge, :running, primary_sort_order: :descending }
   let(:challenge2) { create :challenge, :running, primary_sort_order: :descending }
-  let(:challenge_round) { challenge1.challenge_rounds.first }
+
+  let(:challenge1_round) { challenge1.challenge_rounds.first }
+  let(:challenge2_round) { challenge2.challenge_rounds.first }
   # participants
   let!(:p1) { create :participant }
   let!(:p2) { create :participant }
@@ -15,10 +17,18 @@ RSpec.describe CalculateLeaderboardService do
   let!(:team2) { create :team, challenge: challenge2, participants: [p1, p2] }
   let!(:team3) { create :team, challenge: challenge1, participants: [p3] }
   # submissions
+  let!(:p1s2) { create(:submission,
+                       participant: p1,
+                       challenge: challenge2,
+                       challenge_round_id: challenge2_round.id,
+                       grading_status: :graded,
+                       score: 30,
+                       created_at: 50.hours.ago,
+  ) }
   let!(:p1s1) { create(:submission,
                        participant: p1,
                        challenge: challenge1,
-                       challenge_round_id: challenge_round.id,
+                       challenge_round_id: challenge1_round.id,
                        grading_status: :graded,
                        score: 30,
                        created_at: 50.hours.ago,
@@ -26,7 +36,7 @@ RSpec.describe CalculateLeaderboardService do
   let!(:p2s1) { create(:submission,
                        participant: p2,
                        challenge: challenge1,
-                       challenge_round_id: challenge_round.id,
+                       challenge_round_id: challenge1_round.id,
                        grading_status: :graded,
                        score: 40,
                        created_at: 50.hours.ago,
@@ -34,7 +44,7 @@ RSpec.describe CalculateLeaderboardService do
   let!(:p3s1) { create(:submission,
                        participant: p3,
                        challenge: challenge1,
-                       challenge_round_id: challenge_round.id,
+                       challenge_round_id: challenge1_round.id,
                        grading_status: :graded,
                        score: 20,
                        created_at: 50.hours.ago,
@@ -42,7 +52,7 @@ RSpec.describe CalculateLeaderboardService do
   let!(:p4s1) { create(:submission,
                        participant: p4,
                        challenge: challenge1,
-                       challenge_round_id: challenge_round.id,
+                       challenge_round_id: challenge1_round.id,
                        grading_status: :graded,
                        score: 10,
                        created_at: 50.hours.ago,
@@ -50,7 +60,7 @@ RSpec.describe CalculateLeaderboardService do
   let!(:p4s2) { create(:submission,
                        participant: p4,
                        challenge: challenge1,
-                       challenge_round_id: challenge_round.id,
+                       challenge_round_id: challenge1_round.id,
                        grading_status: :graded,
                        score: 5,
                        created_at: 10.hours.ago,
@@ -66,22 +76,29 @@ RSpec.describe CalculateLeaderboardService do
 
   describe 'supports teams' do
     before do
-      described_class.new(challenge_round_id: challenge_round.id).call
+      described_class.new(challenge_round_id: challenge1_round.id).call
+      described_class.new(challenge_round_id: challenge2_round.id).call
     end
 
-    it { expect(Leaderboard.count).to eq(3) }
+    it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).count).to eq(1) }
+    it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).first.entries).to eq(1) }
+    it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).first.score).to eq(30) }
+    it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).first.participant).not_to be }
+    it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).first.submitter).to eq(team2) }
 
-    it { expect(Leaderboard.first.entries).to eq(2) }
-    it { expect(Leaderboard.first.score).to eq(40) }
-    it { expect(Leaderboard.first.participant).not_to be }
-    it { expect(Leaderboard.first.submitter).to eq(team1) }
+    it { expect(Leaderboard.where(challenge_round_id: challenge1_round.id).count).to eq(3) }
 
-    it { expect(Leaderboard.second.participant).not_to be }
-    it { expect(Leaderboard.second.submitter).to eq(team3) }
-    it { expect(Leaderboard.second.score).to eq(20) }
+    it { expect(Leaderboard.where(challenge_round_id: challenge1_round.id).first.entries).to eq(2) }
+    it { expect(Leaderboard.where(challenge_round_id: challenge1_round.id).first.score).to eq(40) }
+    it { expect(Leaderboard.where(challenge_round_id: challenge1_round.id).first.participant).not_to be }
+    it { expect(Leaderboard.where(challenge_round_id: challenge1_round.id).first.submitter).to eq(team1) }
 
-    it { expect(Leaderboard.third.score).to eq(10) }
-    it { expect(Leaderboard.third.submitter).to eq(p4) }
-    it { expect(Leaderboard.third.entries).to eq(2) }
+    it { expect(Leaderboard.where(challenge_round_id: challenge1_round.id).second.participant).not_to be }
+    it { expect(Leaderboard.where(challenge_round_id: challenge1_round.id).second.submitter).to eq(team3) }
+    it { expect(Leaderboard.where(challenge_round_id: challenge1_round.id).second.score).to eq(20) }
+
+    it { expect(Leaderboard.where(challenge_round_id: challenge1_round.id).third.score).to eq(10) }
+    it { expect(Leaderboard.where(challenge_round_id: challenge1_round.id).third.submitter).to eq(p4) }
+    it { expect(Leaderboard.where(challenge_round_id: challenge1_round.id).third.entries).to eq(2) }
   end
 end
