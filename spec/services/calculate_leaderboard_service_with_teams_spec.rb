@@ -49,6 +49,14 @@ RSpec.describe CalculateLeaderboardService do
                        score: 20,
                        created_at: 50.hours.ago,
   ) }
+  let!(:p3s2) { create(:submission,
+                       participant: p3,
+                       challenge: challenge2,
+                       challenge_round_id: challenge2_round.id,
+                       grading_status: :graded,
+                       score: 20,
+                       created_at: 50.hours.ago,
+                       ) }
   let!(:p4s1) { create(:submission,
                        participant: p4,
                        challenge: challenge1,
@@ -80,11 +88,16 @@ RSpec.describe CalculateLeaderboardService do
       described_class.new(challenge_round_id: challenge2_round.id).call
     end
 
-    it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).count).to eq(1) }
+    it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).count).to eq(2) }
     it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).first.entries).to eq(1) }
     it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).first.score).to eq(30) }
     it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).first.participant).not_to be }
     it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).first.submitter).to eq(team2) }
+
+    it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).second.entries).to eq(1) }
+    it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).second.score).to eq(20) }
+    it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).second.submitter).to eq(p3) }
+
 
     it { expect(Leaderboard.where(challenge_round_id: challenge1_round.id).count).to eq(3) }
 

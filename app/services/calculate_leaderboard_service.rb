@@ -152,6 +152,11 @@ class CalculateLeaderboardService
       FROM temp_submission_stats;
     SQL
 
+    # Select only those Team Participants that are related to this challenge.
+    relevant_team_participants = <<~SQL
+      SELECT * FROM team_participants tp INNER JOIN teams t ON tp.team_id = t.id where t.challenge_id = #{@round.challenge.id}
+    SQL
+
     # associate relevant submissions with their submitter
     @conn.execute <<~SQL
       INSERT INTO temp_submission_stats
@@ -161,14 +166,12 @@ class CalculateLeaderboardService
         CASE WHEN tp.team_id IS NULL THEN p.id          ELSE tp.team_id END AS submitter_id
       FROM submissions s
       INNER JOIN participants p ON p.id = s.participant_id
-      LEFT JOIN team_participants tp ON p.id = tp.participant_id
-      LEFT JOIN teams t ON tp.team_id = t.id
+      LEFT JOIN (#{relevant_team_participants}) tp ON p.id = tp.participant_id
       WHERE
         s.challenge_round_id = #{@round.id}
         AND s.post_challenge IN #{post_challenge}
         AND s.created_at <= #{cuttoff_dttm}
         AND s.baseline IS FALSE
-        AND (t.challenge_id = #{@round.challenge.id} or t IS NULL)
       ORDER BY submission_id;
     SQL
 
