@@ -49,7 +49,7 @@ class Leaderboard::Cell::TableRow < Leaderboard::Cell
 
   def participants
     @participants ||= begin
-      case entry.submitter_type
+      case entry.try(:submitter_type) || 'Participant'
       when 'Participant'
         [entry.participant]
       when 'Team'
