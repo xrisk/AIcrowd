@@ -9,7 +9,8 @@ class ChallengeParticipantsController < ApplicationController
     authorize @challenge_participant
 
     if @challenge_participant.save
-      redirect_to @challenge
+      redirect_to(session[:forwarding_url] || @challenge)
+      session.delete(:forwarding_url)
     else
       render :new
     end
@@ -21,7 +22,8 @@ class ChallengeParticipantsController < ApplicationController
     @challenge_participant.challenge_rules_accepted_date = Time.now
     @challenge_participant.challenge_rules_accepted_version = @challenge_participant.challenge.current_challenge_rules_version
     if @challenge_participant.update(challenge_participant_params)
-      redirect_to @challenge_participant.challenge
+      redirect_to(session[:forwarding_url] || @challenge_participant.challenge)
+      session.delete(:forwarding_url)
     else
       render :edit
     end

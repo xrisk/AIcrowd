@@ -28,6 +28,7 @@ class Team::Invitee::InvitationPendingNotificationMailer < Team::BaseMailer
           <li>All team members will share equal leaderboard spots and prizes</li>
           <li>You may only be a member of a single team per challenge</li>
           <li>If you accept this invitation, then all other invitations to you from other teams for this challenge will be cancelled</li>
+          <li>If you have not already, you will need to agree to the AIcrowd Participation Terms and Challenge Rules before joining the challenge</li>
         </ul>
         <p style="text-align: center;">
           #{button_html('Join!', team_invitation_acceptances_url(@invitation), true)}

@@ -3,6 +3,7 @@ class Teams::Invitations::AcceptancesController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_invitation
   before_action :set_team
+  before_action :set_challenge
   before_action :redirect_on_disallowed
 
   def index
@@ -25,6 +26,22 @@ class Teams::Invitations::AcceptancesController < ApplicationController
     @team = @invitation.team
   end
 
+  private def set_challenge
+    @challenge = @invitation.team.challenge
+  end
+
+  private def check_terms_and_rules
+    unless current_participant.has_accepted_participation_terms?
+      @redirect = url_for([@challenge, ParticipationTerms.current_terms])
+      return true
+    end
+    unless @challenge.has_accepted_challenge_rules?(current_participant)
+      @redirect = url_for([@challenge, @challenge.current_challenge_rules])
+      return true
+    end
+    return false
+  end
+
   private def redirect_on_disallowed
     if @invitation.invitee != current_participant
       flash[:error] = 'You may not accept an invitation on someone else’s behalf'
@@ -44,6 +61,10 @@ class Teams::Invitations::AcceptancesController < ApplicationController
     elsif current_participant.concrete_teams.where.not(id: @team.id).exists?(challenge_id: @team.challenge_id)
       flash[:error] = 'You are already a member of a different team for this challenge'
       redirect_to @team.challenge
+    elsif check_terms_and_rules
+      flash[:error] = 'Please Accept Participation Terms and Challenge Rules before continuing'
+      session[:forwarding_url] = request.original_url if request.get?
+      redirect_to @redirect
     end
   end
 
