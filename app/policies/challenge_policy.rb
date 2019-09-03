@@ -5,7 +5,7 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def show?
-    ChallengePolicy::Scope.new(participant,Challenge).resolve.include?(@record)
+    ChallengePolicy::Scope.new(participant, Challenge).resolve.include?(@record)
   end
 
   def edit?
@@ -51,7 +51,7 @@ class ChallengePolicy < ApplicationPolicy
   def clef_task?
     update?
   end
-  
+
   def starting_soon_mode?
     return @record.status == :starting_soon
   end
@@ -69,9 +69,9 @@ class ChallengePolicy < ApplicationPolicy
 
   def show_leaderboard?
     @record.challenge_rounds.present? &&
-      @record.show_leaderboard == true ||
+        @record.show_leaderboard == true ||
         (participant &&
-          (participant.admin? || @record.organizer_id == participant.organizer_id))
+            (participant.admin? || @record.organizer_id == participant.organizer_id))
   end
 
   def submissions_allowed?
@@ -97,8 +97,8 @@ class ChallengePolicy < ApplicationPolicy
     return false unless participant.present?
     clef_task = challenge.clef_task
     participant_clef_task = ParticipantClefTask.where(
-      participant_id: participant,
-      clef_task_id: clef_task.id).first
+        participant_id: participant,
+        clef_task_id: clef_task.id).first
     if participant_clef_task
       return true if participant_clef_task.registered?
     else
@@ -106,6 +106,23 @@ class ChallengePolicy < ApplicationPolicy
     end
   end
 
+  def create_team?(issues = {})
+    issue = if !@record.teams_allowed?
+              :not_allowed
+            elsif participant.nil?
+              :participant_not_logged_in
+            elsif !@record.running?
+              :challenge_not_running
+            elsif @record.teams_frozen?
+              :challenge_teams_frozen
+            elsif participant.teams.exists?(challenge_id: @record.id)
+              :team_exists
+            else
+              nil
+            end
+    issues[:sym] = issue if issue
+    !issue
+  end
 
   class Scope
     attr_reader :participant, :scope

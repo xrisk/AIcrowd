@@ -59,6 +59,8 @@ class Challenge < ApplicationRecord
     reject_if: :all_blank,
     allow_destroy: true
 
+  has_many :teams, inverse_of: :challenge
+
   as_enum :status,
           [:draft, :running, :completed, :starting_soon],
           map: :string
@@ -220,6 +222,11 @@ class Challenge < ApplicationRecord
     if self.other_scores_fieldnames and self.other_scores_fieldnames.count(",") > 4
       errors.add(:other_scores_fieldnames, "A max of 5 other scores Fieldnames are allowed")
     end
+  end
+
+  def teams_frozen?
+    return true if status == :completed
+    end_dttm.present? && end_dttm < 1.week.from_now
   end
 
   def other_scores_fieldnames_array

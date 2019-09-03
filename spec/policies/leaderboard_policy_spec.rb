@@ -21,32 +21,32 @@ describe LeaderboardPolicy do
       let(:participant) { nil }
       it { is_expected.to permit_action(:index) }
       it { expect(Pundit.policy_scope(participant,Leaderboard)
-        .pluck(:participant_id))
-        .to eq(Leaderboard.all.pluck(:participant_id)) }
+        .pluck(:submitter_type, :submitter_id))
+        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id)) }
     end
 
     context 'for a participant' do
       let(:participant) { create(:participant) }
       it { is_expected.to permit_action(:index) }
       it { expect(Pundit.policy_scope(participant,Leaderboard)
-        .pluck(:participant_id))
-        .to eq(Leaderboard.all.pluck(:participant_id)) }
+        .pluck(:submitter_type, :submitter_id))
+        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id)) }
     end
 
     context 'for an admin' do
       let(:participant) { create(:participant, :admin) }
       it { is_expected.to permit_action(:index) }
       it { expect(Pundit.policy_scope(participant,Leaderboard)
-        .pluck(:participant_id))
-        .to eq(Leaderboard.all.pluck(:participant_id)) }
+        .pluck(:submitter_type, :submitter_id))
+        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id)) }
     end
 
     context 'for the organizer' do
       let(:participant) { create(:participant, organizer_id: challenge.organizer_id ) }
       it { is_expected.to permit_action(:index) }
       it { expect(Pundit.policy_scope(participant,Leaderboard)
-        .pluck(:participant_id))
-        .to eq(Leaderboard.all.pluck(:participant_id)) }
+        .pluck(:submitter_type, :submitter_id))
+        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id)) }
     end
 
     context 'for an organizer of a different challenge' do
@@ -55,8 +55,8 @@ describe LeaderboardPolicy do
         create :participant, organizer_id: other_organizer.id }
       it { is_expected.to permit_action(:index) }
       it { expect(Pundit.policy_scope(participant,Leaderboard)
-        .pluck(:participant_id))
-        .to eq(Leaderboard.all.pluck(:participant_id)) }
+        .pluck(:submitter_type, :submitter_id))
+        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id)) }
     end
   end
 
@@ -91,15 +91,15 @@ describe LeaderboardPolicy do
     context 'for an admin' do
       let(:participant) { create :participant, admin: true }
       it { expect(Pundit.policy_scope(participant,Leaderboard)
-        .pluck(:participant_id))
-        .to eq(Leaderboard.all.pluck(:participant_id)) }
+        .pluck(:submitter_type, :submitter_id))
+        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id)) }
     end
 
     context 'for the organizer' do
       let(:participant) { create :participant, organizer_id: challenge.organizer_id }
       it { expect(Pundit.policy_scope(participant,Leaderboard)
-        .pluck(:participant_id))
-        .to eq(Leaderboard.all.pluck(:participant_id)) }
+        .pluck(:submitter_type, :submitter_id))
+        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id)) }
     end
   end
 
@@ -142,22 +142,22 @@ describe LeaderboardPolicy do
           email: participant.email) }
       it { is_expected.to permit_action(:index) }
       it { expect(Pundit.policy_scope(participant,Leaderboard)
-        .pluck(:participant_id))
-        .to eq(Leaderboard.all.pluck(:participant_id)) }
+        .pluck(:submitter_type, :submitter_id))
+        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id)) }
     end
 
     context 'for an admin' do
       let(:participant) { create :participant, admin: true }
       it { expect(Pundit.policy_scope(participant,Leaderboard)
-        .pluck(:participant_id))
-        .to eq(Leaderboard.all.pluck(:participant_id)) }
+        .pluck(:submitter_type, :submitter_id))
+        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id)) }
     end
 
     context 'for the organizer' do
       let(:participant) { create :participant, organizer_id: challenge.organizer_id }
       it { expect(Pundit.policy_scope(participant,Leaderboard)
-        .pluck(:participant_id))
-        .to eq(Leaderboard.all.pluck(:participant_id)) }
+        .pluck(:submitter_type, :submitter_id))
+        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id)) }
     end
   end
 
@@ -204,15 +204,15 @@ describe LeaderboardPolicy do
     context 'for an admin' do
       let(:participant) { create :participant, admin: true }
       it { expect(Pundit.policy_scope(participant,Leaderboard)
-        .pluck(:participant_id))
-        .to eq(Leaderboard.all.pluck(:participant_id)) }
+        .pluck(:submitter_type, :submitter_id))
+        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id)) }
     end
 
     context 'for the organizer' do
       let(:participant) { create :participant, organizer_id: challenge.organizer_id }
       it { expect(Pundit.policy_scope(participant,Leaderboard)
-        .pluck(:participant_id))
-        .to eq(Leaderboard.all.pluck(:participant_id)) }
+        .pluck(:submitter_type, :submitter_id))
+        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id)) }
     end
   end
 

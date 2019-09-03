@@ -67,6 +67,14 @@ Rails.application.routes.draw do
   resources :blogs do
     resources :votes, only: [:create, :destroy]
   end
+  resources :teams, only: [:show], param: :name, controller: 'teams/' do
+    resources :invitations, only: [:create], controller: 'teams/invitations/'
+  end
+  resources :team_invitations, only: [], param: :uuid do
+    resources :acceptances, only: [:index, :create], controller: 'teams/invitations/acceptances'
+    resources :declinations, only: [:index, :create], controller: 'teams/invitations/declinations'
+    resources :cancellations, only: [:create], controller: 'teams/invitations/cancellations'
+  end
 
   resources :success_stories, only: [:index, :show]
 
@@ -87,6 +95,7 @@ Rails.application.routes.draw do
       get :reorder
       post :assign_order
     end
+    resources :teams, only: [:create], controller: 'challenges/teams'
     resources :dataset_files
     resources :participant_challenges, only: [:index] do
       get :approve, on: :collection

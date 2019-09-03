@@ -1,180 +1,194 @@
-<%= form_for [@organizer,@challenge],
-html: { class: "form-rg" } do |f| %>
-<% @challenge.errors.full_messages.each do |error| %>
-<p><%= error %></p>
-<% end %>
-
-<div class="form-group">
-  <span class="label-text">Challenge Title</span>
-  <%= f.text_field :challenge, class: "form-control" %>
-</div>
-
-<div class="form-group">
-  <span class="label-text">Tagline</span>
-  <%= f.text_field :tagline, class: "form-control" %>
-</div>
-
-<div class="form-group">
-  <span class="label-text">Options</span>
-
-  <div class="toggle-switch-container">
-    <%= f.check_box :require_registration %>
-    <label for="registrationRequired">
-      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-      <div class="can-toggle__label-text">Registration required</div>
-    </label>
-  </div>
-
-  <div class="toggle-switch-container">
-    <%= f.check_box :show_leaderboard %>
-    <label for="registrationRequired">
-      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-      <div class="can-toggle__label-text">Show leaderboard</div>
-    </label>
-  </div>
-
-  <div class="toggle-switch-container">
-    <%= f.check_box :media_on_leaderboard %>
-    <label for="registrationRequired">
-      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-      <div class="can-toggle__label-text">Show media on leaderboard</div>
-    </label>
-  </div>
-
-
-  <div class="toggle-switch-container">
-    <%= f.check_box :submissions_page %>
-    <label for="showSubmissionsDetails">
-      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-      <div class="can-toggle__label-text">Show submissions details</div>
-    </label>
-  </div>
-
-  <div class="toggle-switch-container">
-    <%= f.check_box :grading_history %>
-    <label for="showGradingHistory">
-      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-      <div class="can-toggle__label-text">Show grading history</div>
-    </label>
-  </div>
-
-  <div class="toggle-switch-container">
-    <%= f.check_box :grader_logs %>
-    <label for="showGraderLogs">
-      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-      <div class="can-toggle__label-text">Show grader logs</div>
-    </label>
-  </div>
-
-  <div class="toggle-switch-container">
-    <%= f.check_box :discussions_visible %>
-    <label for="showDiscussions">
-      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-      <div class="can-toggle__label-text">Show discussions</div>
-    </label>
-  </div>
-
-  <div class="toggle-switch-container">
-    <%= f.check_box :latest_submission %>
-    <label for="showDiscussions">
-      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-      <div class="can-toggle__label-text">Use latest submissions on Leaderboard</div>
-    </label>
-  </div>
-</div>
-
-
-<div class="form-group">
-  <span class="label-text">Challenge status</span>
-  <% if current_participant.admin? %>
-  <%= status_dropdown_helper(builder: f) %>
-  <% else %>
-  <%= f.text_field :status_cd, readonly: true, class: "form-control" %>
+<%= form_for [@organizer, @challenge],
+             html: {class: "form-rg"} do |f| %>
+  <% @challenge.errors.full_messages.each do |error| %>
+    <p><%= error %></p>
   <% end %>
-</div>
 
-<div class="form-group">
-  <span class="label-text">Featured sequence</span>
-  <% if current_participant.admin? %>
-  <%= f.text_field :featured_sequence, class: "form-control" %>
-  <% else %>
-  <%= f.text_field :featured_sequence, readonly: true, class: "form-control" %>
-  <% end %>
-</div>
-
-<div class="form-group">
-  <span class="label-text">Card image</span>
-  <%= concept(Image::Cell,challenge,klass: 'form-challenge-card-image') %>
-</div>
-
-<div class="form-group">
-  <%= f.file_field :image_file %>
-  <% if @challenge.image_file.present? %>
-  <%= link_to 'Delete', challenge_remove_image_path(@challenge), class: "form-text" %>
-  <% end %>
-  <small id="partnerLogoHelp" class="form-text text-muted">Your image will be cropped if necessary. 5 MB limit</small>
-</div>
-
-<div class="form-group">
-  <span class="label-text">Organizer</span>
-  <input class="form-control" type='text' value='<%= @challenge.organizer.organizer %>' readonly>
-</div>
-
-<div class='form-group'>
-  <span class="label-text">Challenge ID</span>
-  <%= f.text_field :id, disabled: true, class: "form-control" %>
-</div>
-
-<div class="form-group">
-  <span class="label-text">Challenge client name</span>
-  <%= f.text_field :challenge_client_name, class: "form-control" %>
-</div>
-
-<div class="form-group">
-  <span class="label-text">Grader identifier</span>
-  <%= f.text_field :grader_identifier, class: "form-control" %>
-</div>
-
-<div class="form-row">
-  <div class="form-group col-6">
-    <label for="primaryScoreTitle">Primary score title</label>
-    <%= f.text_field :score_title, class: "form-control" %>
+  <div class="form-group">
+    <span class="label-text">Challenge Title</span>
+    <%= f.text_field :challenge, class: "form-control" %>
   </div>
 
-  <div class="form-group col-6">
-    <label for="primaryScoreTitleSortOrder">Sort order</label>
-    <%= f.select :primary_sort_order, enum_option_pairs(Challenge, :primary_sort_order), {}, {class: "form-control", required: true} %>
-  </div>
-</div>
-
-<div class="form-row">
-  <div class="form-group col-6">
-    <label for="secondaryScoreTitle">Secondary score title</label>
-    <%= f.text_field :score_secondary_title, class: "form-control" %>
+  <div class="form-group">
+    <span class="label-text">Tagline</span>
+    <%= f.text_field :tagline, class: "form-control" %>
   </div>
 
-  <div class="form-group col-6">
-    <label for="secondaryScoreTitleSortOrder">Sort order</label>
-    <%= f.select :secondary_sort_order, enum_option_pairs(Challenge, :secondary_sort_order), {}, {class: "form-control", required: true} %>
+  <div class="form-group">
+    <span class="label-text">Options</span>
+
+    <div class="toggle-switch-container">
+      <%= f.check_box :require_registration %>
+      <label for="challenge_require_registration">
+        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+        <div class="can-toggle__label-text">Registration required</div>
+      </label>
+    </div>
+
+    <div class="toggle-switch-container">
+      <%= f.check_box :show_leaderboard %>
+      <label for="challenge_show_leaderboard">
+        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+        <div class="can-toggle__label-text">Show leaderboard</div>
+      </label>
+    </div>
+
+    <div class="toggle-switch-container">
+      <%= f.check_box :media_on_leaderboard %>
+      <label for="challenge_media_on_leaderboard">
+        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+        <div class="can-toggle__label-text">Show media on leaderboard</div>
+      </label>
+    </div>
+
+
+    <div class="toggle-switch-container">
+      <%= f.check_box :submissions_page %>
+      <label for="challenge_submissions_page">
+        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+        <div class="can-toggle__label-text">Show submissions details</div>
+      </label>
+    </div>
+
+    <div class="toggle-switch-container">
+      <%= f.check_box :grading_history %>
+      <label for="challenge_grading_history">
+        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+        <div class="can-toggle__label-text">Show grading history</div>
+      </label>
+    </div>
+
+    <div class="toggle-switch-container">
+      <%= f.check_box :grader_logs %>
+      <label for="challenge_grader_logs">
+        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+        <div class="can-toggle__label-text">Show grader logs</div>
+      </label>
+    </div>
+
+    <div class="toggle-switch-container">
+      <%= f.check_box :discussions_visible %>
+      <label for="challenge_discussions_visible">
+        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+        <div class="can-toggle__label-text">Show discussions</div>
+      </label>
+    </div>
+
+    <div class="toggle-switch-container">
+      <%= f.check_box :latest_submission %>
+      <label for="challenge_latest_submission">
+        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+        <div class="can-toggle__label-text">Use latest submissions on Leaderboard</div>
+      </label>
+    </div>
+
+    <div class="toggle-switch-container">
+      <%= f.check_box :teams_allowed %>
+      <label for="challenge_teams_allowed">
+        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+        <div class="can-toggle__label-text">Allow users to team up</div>
+      </label>
+    </div>
+
   </div>
-</div>
 
-
-<div class="form-row">
-  <div class="form-group col-12">
-    <label for="otherScoresFieldnames">Fieldnames for other scores <br/> (comma seperated, max 5 fields)</label>
-    <%= f.text_field :other_scores_fieldnames, class: "form-control" %>
+  <div class="form-group">
+    <span class="label-text">Max Number of Participants per Team</span>
+    <%= f.text_field :max_team_participants, class: "form-control" %>
   </div>
 
-</div>
 
-<%= f.hidden_field :organizer_id %>
+  <div class="form-group">
+    <span class="label-text">Challenge status</span>
+    <% if current_participant.admin? %>
+      <%= status_dropdown_helper(builder: f) %>
+    <% else %>
+      <%= f.text_field :status_cd, readonly: true, class: "form-control" %>
+    <% end %>
+  </div>
 
-<div class="form-group">
-  <span class="label-text">Discourse category ID</span>
-  <%= f.text_field :discourse_category_id , class: "form-control"%>
-</div>
+  <div class="form-group">
+    <span class="label-text">Featured sequence</span>
+    <% if current_participant.admin? %>
+      <%= f.text_field :featured_sequence, class: "form-control" %>
+    <% else %>
+      <%= f.text_field :featured_sequence, readonly: true, class: "form-control" %>
+    <% end %>
+  </div>
 
-<%= render partial: 'challenges/form/submit_buttons',
-locals: { f: f } %>
+  <div class="form-group">
+    <span class="label-text">Card image</span>
+    <%= concept(Image::Cell, challenge, klass: 'form-challenge-card-image') %>
+  </div>
+
+  <div class="form-group">
+    <%= f.file_field :image_file %>
+    <% if @challenge.image_file.present? %>
+      <%= link_to 'Delete', challenge_remove_image_path(@challenge), class: "form-text" %>
+    <% end %>
+    <small id="partnerLogoHelp" class="form-text text-muted">Your image will be cropped if necessary. 5 MB limit</small>
+  </div>
+
+  <div class="form-group">
+    <span class="label-text">Organizer</span>
+    <input class="form-control" type='text' value='<%= @challenge.organizer.organizer %>' readonly>
+  </div>
+
+  <div class='form-group'>
+    <span class="label-text">Challenge ID</span>
+    <%= f.text_field :id, disabled: true, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <span class="label-text">Challenge client name</span>
+    <%= f.text_field :challenge_client_name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <span class="label-text">Grader identifier</span>
+    <%= f.text_field :grader_identifier, class: "form-control" %>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-6">
+      <label for="primaryScoreTitle">Primary score title</label>
+      <%= f.text_field :score_title, class: "form-control" %>
+    </div>
+
+    <div class="form-group col-6">
+      <label for="primaryScoreTitleSortOrder">Sort order</label>
+      <%= f.select :primary_sort_order, enum_option_pairs(Challenge, :primary_sort_order), {}, {class: "form-control", required: true} %>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-6">
+      <label for="secondaryScoreTitle">Secondary score title</label>
+      <%= f.text_field :score_secondary_title, class: "form-control" %>
+    </div>
+
+    <div class="form-group col-6">
+      <label for="secondaryScoreTitleSortOrder">Sort order</label>
+      <%= f.select :secondary_sort_order, enum_option_pairs(Challenge, :secondary_sort_order), {}, {class: "form-control", required: true} %>
+    </div>
+  </div>
+
+
+  <div class="form-row">
+    <div class="form-group col-12">
+      <label for="otherScoresFieldnames">Fieldnames for other scores <br/> (comma seperated, max 5 fields)</label>
+      <%= f.text_field :other_scores_fieldnames, class: "form-control" %>
+    </div>
+
+  </div>
+
+  <%= f.hidden_field :organizer_id %>
+
+  <div class="form-group">
+    <span class="label-text">Discourse category ID</span>
+    <%= f.text_field :discourse_category_id, class: "form-control" %>
+  </div>
+
+  <%= render partial: 'challenges/form/submit_buttons',
+             locals: {f: f} %>
 <% end %>

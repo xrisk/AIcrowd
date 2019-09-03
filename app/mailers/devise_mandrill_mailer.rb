@@ -74,12 +74,27 @@ class DeviseMandrillMailer < Devise::Mailer
       ],
       global_merge_vars:  options[:global_merge_vars]
     }
-    MANDRILL.messages.send_template( options[:template], [], message) unless Rails.env.test?
+    unless Rails.env.test?
+      if delivery_method == :letter_opener
+        # TODO put this logic somewhere else so that it is not semi-duplicated in application_mailer
+        rendered = MANDRILL.templates.render(options[:template], [], options[:global_merge_vars])
+        tmp_mail = mail(
+          from: %Q{"#{message[:from_name].gsub('"', '&quot;')}" <#{message[:from_email]}>},
+          to: options[:email],
+          subject: options[:subject],
+        ) do |format|
+          format.html { render(html: rendered['html'].html_safe) }
+        end
+        tmp_mail.deliver
+      else
+        MANDRILL.messages.send_template( options[:template], [], message)
+      end
+    end
 
-    rescue Mandrill::Error => e
-      puts e.message
-      Rails.logger.debug("#{e.class}: #{e.message}")
-      raise
+  rescue Mandrill::Error => e
+    puts e.message
+    Rails.logger.debug("#{e.class}: #{e.message}")
+    raise
   end
 
 end

@@ -39,4 +39,57 @@ module ApplicationHelper
     end
   end
 
+  def themed_button(opts = {})
+    raise ArgumentError if opts.key?(:link) && opts.key?(:modal)
+    title = opts[:title].presence || '&nbsp;'.html_safe
+    unless opts[:disabled]
+      confirm = opts[:confirm]
+      if opts[:modal]
+        modal = opts[:modal]
+      end
+      if opts[:link]
+        url = opts.dig(:link, :url) rescue nil || opts.dig(:link)
+        method = opts.dig(:link, :method) rescue nil || :get
+      end
+    end
+
+    outer = {}
+    outer[:class] = opts[:class] if opts[:class]
+    if opts[:tooltip]
+      outer.deep_merge!({
+        title: opts[:tooltip],
+        data: {
+          toggle: 'tooltip',
+        },
+      })
+    end
+
+    inner_type = :button
+    inner = {
+      disabled: opts[:disabled],
+      class: "btn btn-secondary",
+    }
+    inner[:class] += ' disabled' if opts[:disabled]
+    inner[:class] += ' btn-sm' if opts[:small]
+    if url
+      inner_type = :a
+      inner.deep_merge!({
+        href: url,
+        data: {
+          method: method,
+          **(confirm ? { confirm: confirm } : {}),
+        },
+      })
+    elsif modal
+      inner.deep_merge!({
+        type: 'button',
+        data: {
+          toggle: 'modal',
+          target: modal,
+        },
+      })
+    end
+
+    content_tag(:span, outer) { content_tag(inner_type, inner) { title } }
+  end
 end

@@ -7,14 +7,17 @@ ActiveAdmin.register Leaderboard do
   actions :index, :show
 
   filter :id
-  filter :participant_id
+  filter :submitter_type
+  filter :submitter_id
   filter :name
   filter :media_content_type
   filter :submission_id
   filter :challenge_round_id
 
-  def scoped_collection
-    super.includes :participant, :challenge_round
+  controller do
+    def scoped_collection
+      super.includes :participant, :team, :challenge_round
+    end
   end
 
   index do
@@ -27,10 +30,11 @@ ActiveAdmin.register Leaderboard do
     column "Round" do |res|
       res.challenge_round.challenge_round
     end
-    column :participant_id
+    column :team
+    column :participant
     column :name
     column "Email" do |res|
-      res.participant.email
+      res.participant&.email
     end
     column :score
     column :score_secondary
@@ -51,10 +55,10 @@ ActiveAdmin.register Leaderboard do
     column "Round" do |res|
       res.challenge_round.challenge_round
     end
-    column :participant_id
+    column :participant
     column :name
     column "Email" do |res|
-      res.participant.email
+      res.participant&.email
     end
     column :score
     column :score_secondary

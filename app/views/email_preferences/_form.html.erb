@@ -34,15 +34,20 @@
           </div>
 
           <div class="form-check">
-            <%= f.check_box :mentions,
-            { data:
-              { target: 'email-preferences.mentions',
-              action: 'click->email-preferences#toggleFrequency' },
-              class: "form-check-input" 
-            }, "true", "false" %>
-            <label class="form-check-label" for="mentionEmails">        
+            <%= f.check_box :mentions, {
+              data: {
+                target: 'email-preferences.mentions',
+                action: 'click->email-preferences#toggleFrequency',
+              },
+              class: 'form-check-input',
+            }, 'true', 'false' %>
+            <label class="form-check-label" for="mentionEmails">
               Receive emails when someone mentions me in a comment or post
             </label>
+          </div>
+
+          <div class="mt-5 mb-5">
+            <i>Coming soon: settings for "team" notifications</i>
           </div>
 
           <div class="btn-set" aria-hidden="true">
@@ -55,7 +60,7 @@
       </div>
       <!-- /account settings -->
 
-    </div>    
+    </div>
   </div>
 </div>
 <!-- /section -->

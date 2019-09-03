@@ -13,7 +13,9 @@
 ActiveRecord::Schema.define(version: 2019_08_10_133044) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
   enable_extension "pg_stat_statements"
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "active_admin_comments", id: :serial, force: :cascade do |t|
@@ -95,7 +97,6 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
   create_table "base_leaderboards", force: :cascade do |t|
     t.bigint "challenge_id"
     t.bigint "challenge_round_id"
-    t.bigint "participant_id"
     t.integer "row_num"
     t.integer "previous_row_num"
     t.string "slug"
@@ -118,10 +119,12 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
     t.boolean "baseline"
     t.string "baseline_comment"
     t.json "meta"
+    t.string "submitter_type"
+    t.bigint "submitter_id"
     t.index ["challenge_id"], name: "index_base_leaderboards_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_base_leaderboards_on_challenge_round_id"
     t.index ["leaderboard_type_cd"], name: "index_base_leaderboards_on_leaderboard_type_cd"
-    t.index ["participant_id"], name: "index_base_leaderboards_on_participant_id"
+    t.index ["submitter_type", "submitter_id"], name: "index_base_leaderboards_on_submitter_type_and_submitter_id"
   end
 
   create_table "base_leaderboards_20180809", id: false, force: :cascade do |t|
@@ -339,6 +342,9 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
     t.integer "discourse_category_id"
     t.boolean "latest_submission", default: false
     t.string "other_scores_fieldnames"
+    t.boolean "teams_allowed", default: true, null: false
+    t.integer "max_team_participants", default: 5
+    t.integer "team_freeze_seconds_before_end", default: 604800
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["organizer_id"], name: "index_challenges_on_organizer_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
@@ -454,6 +460,22 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
     t.index ["participant_id"], name: "index_email_preferences_tokens_on_participant_id"
   end
 
+  create_table "emails", id: :serial, force: :cascade do |t|
+    t.integer "model_id"
+    t.string "mailer_classname"
+    t.text "recipients"
+    t.text "options"
+    t.string "status_cd"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email_preferences_token"
+    t.datetime "token_expiration_dttm"
+    t.integer "participant_id"
+    t.jsonb "options_json"
+    t.integer "mailer_id"
+    t.index ["mailer_id"], name: "index_emails_on_mailer_id"
+  end
+
   create_table "follows", id: :serial, force: :cascade do |t|
     t.integer "followable_id", null: false
     t.string "followable_type", null: false
@@ -527,6 +549,13 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
     t.index ["identity"], name: "index_login_activities_on_identity"
     t.index ["ip"], name: "index_login_activities_on_ip"
     t.index ["user_type", "user_id"], name: "index_login_activities_on_user_type_and_user_id"
+  end
+
+  create_table "mailers", id: :serial, force: :cascade do |t|
+    t.string "mailer_classname"
+    t.boolean "paused", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "mandrill_messages", force: :cascade do |t|
@@ -883,6 +912,20 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
     t.index ["clef_task_id"], name: "index_task_dataset_files_on_clef_task_id"
   end
 
+  create_table "team_invitations", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.bigint "invitor_id", null: false
+    t.bigint "invitee_id", null: false
+    t.string "status", default: "pending", null: false
+    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invitee_id"], name: "index_team_invitations_on_invitee_id"
+    t.index ["invitor_id"], name: "index_team_invitations_on_invitor_id"
+    t.index ["team_id"], name: "index_team_invitations_on_team_id"
+    t.index ["uuid"], name: "index_team_invitations_on_uuid", unique: true
+  end
+
   create_table "team_members", force: :cascade do |t|
     t.string "name"
     t.string "title"
@@ -894,6 +937,26 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_team_members_on_name"
     t.index ["participant_id"], name: "index_team_members_on_participant_id"
+  end
+
+  create_table "team_participants", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.bigint "participant_id", null: false
+    t.string "role", default: "member", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["participant_id", "team_id"], name: "index_team_participants_on_participant_id_and_team_id", unique: true
+    t.index ["participant_id"], name: "index_team_participants_on_participant_id"
+    t.index ["team_id"], name: "index_team_participants_on_team_id"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.bigint "challenge_id", null: false
+    t.citext "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_teams_on_challenge_id"
+    t.index ["name", "challenge_id"], name: "index_teams_on_name_and_challenge_id", unique: true
   end
 
   create_table "topics", id: :serial, force: :cascade do |t|
@@ -936,7 +999,6 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
   add_foreign_key "articles", "participants"
   add_foreign_key "base_leaderboards", "challenge_rounds"
   add_foreign_key "base_leaderboards", "challenges"
-  add_foreign_key "base_leaderboards", "participants"
   add_foreign_key "blogs", "participants"
   add_foreign_key "challenge_call_responses", "challenge_calls"
   add_foreign_key "challenge_participants", "challenges"
@@ -951,6 +1013,7 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
   add_foreign_key "dataset_file_downloads", "dataset_files"
   add_foreign_key "dataset_file_downloads", "participants"
   add_foreign_key "email_preferences", "participants"
+  add_foreign_key "emails", "mailers"
   add_foreign_key "follows", "participants"
   add_foreign_key "invitations", "challenges"
   add_foreign_key "invitations", "participants"
@@ -969,7 +1032,13 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
   add_foreign_key "submissions", "challenges"
   add_foreign_key "submissions", "participants"
   add_foreign_key "task_dataset_files", "clef_tasks"
+  add_foreign_key "team_invitations", "participants", column: "invitee_id"
+  add_foreign_key "team_invitations", "participants", column: "invitor_id"
+  add_foreign_key "team_invitations", "teams"
   add_foreign_key "team_members", "participants"
+  add_foreign_key "team_participants", "participants"
+  add_foreign_key "team_participants", "teams"
+  add_foreign_key "teams", "challenges"
   add_foreign_key "topics", "challenges"
   add_foreign_key "topics", "participants"
   add_foreign_key "votes", "participants"
@@ -1058,69 +1127,6 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
              FROM participant_clef_tasks pc,
               challenges c
             WHERE (c.clef_task_id = pc.clef_task_id)) x;
-  SQL
-
-  create_view "challenge_round_views",  sql_definition: <<-SQL
-      SELECT cr.id,
-      cr.challenge_round,
-      cr.row_num,
-      cr.active,
-      cr.challenge_id,
-      cr.start_dttm,
-      cr.end_dttm,
-      cr.submission_limit,
-      cr.submission_limit_period_cd,
-      cr.failed_submissions,
-      cr.minimum_score,
-      cr.minimum_score_secondary
-     FROM ( SELECT r1.id,
-              r1.challenge_id,
-              r1.challenge_round,
-              r1.active,
-              r1.created_at,
-              r1.updated_at,
-              r1.submission_limit,
-              r1.submission_limit_period_cd,
-              r1.start_dttm,
-              r1.end_dttm,
-              r1.minimum_score,
-              r1.minimum_score_secondary,
-              r1.ranking_window,
-              r1.ranking_highlight,
-              r1.score_precision,
-              r1.score_secondary_precision,
-              r1.leaderboard_note_markdown,
-              r1.leaderboard_note,
-              r1.failed_submissions,
-              row_number() OVER (PARTITION BY r1.challenge_id ORDER BY r1.challenge_id, r1.start_dttm) AS row_num
-             FROM challenge_rounds r1) cr;
-  SQL
-
-  create_view "challenge_round_summaries",  sql_definition: <<-SQL
-      SELECT cr.id,
-      cr.challenge_round,
-      cr.row_num,
-      acr.row_num AS active_row_num,
-          CASE
-              WHEN (cr.row_num < acr.row_num) THEN 'history'::text
-              WHEN (cr.row_num = acr.row_num) THEN 'current'::text
-              WHEN (cr.row_num > acr.row_num) THEN 'future'::text
-              ELSE NULL::text
-          END AS round_status_cd,
-      cr.active,
-      cr.challenge_id,
-      cr.start_dttm,
-      cr.end_dttm,
-      cr.submission_limit,
-      cr.submission_limit_period_cd,
-      cr.failed_submissions,
-      cr.minimum_score,
-      cr.minimum_score_secondary,
-      c.status_cd
-     FROM challenge_round_views cr,
-      challenge_round_views acr,
-      challenges c
-    WHERE ((c.id = cr.challenge_id) AND (c.id = acr.challenge_id) AND (acr.active IS TRUE));
   SQL
 
   create_view "challenge_stats",  sql_definition: <<-SQL
@@ -1247,71 +1253,75 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
     ORDER BY s.created_at DESC;
   SQL
 
-  create_view "previous_leaderboards",  sql_definition: <<-SQL
-      SELECT base_leaderboards.id,
-      base_leaderboards.challenge_id,
-      base_leaderboards.challenge_round_id,
-      base_leaderboards.participant_id,
-      base_leaderboards.row_num,
-      base_leaderboards.previous_row_num,
-      base_leaderboards.slug,
-      base_leaderboards.name,
-      base_leaderboards.entries,
-      base_leaderboards.score,
-      base_leaderboards.score_secondary,
-      base_leaderboards.media_large,
-      base_leaderboards.media_thumbnail,
-      base_leaderboards.media_content_type,
-      base_leaderboards.description,
-      base_leaderboards.description_markdown,
-      base_leaderboards.leaderboard_type_cd,
-      base_leaderboards.refreshed_at,
-      base_leaderboards.created_at,
-      base_leaderboards.updated_at,
-      base_leaderboards.submission_id,
-      base_leaderboards.post_challenge,
-      base_leaderboards.seq,
-      base_leaderboards.baseline,
-      base_leaderboards.baseline_comment
-     FROM base_leaderboards
-    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'previous'::text);
+  create_view "challenge_round_views",  sql_definition: <<-SQL
+      SELECT cr.id,
+      cr.challenge_round,
+      cr.row_num,
+      cr.active,
+      cr.challenge_id,
+      cr.start_dttm,
+      cr.end_dttm,
+      cr.submission_limit,
+      cr.submission_limit_period_cd,
+      cr.failed_submissions,
+      cr.minimum_score,
+      cr.minimum_score_secondary
+     FROM ( SELECT r1.id,
+              r1.challenge_id,
+              r1.challenge_round,
+              r1.active,
+              r1.created_at,
+              r1.updated_at,
+              r1.submission_limit,
+              r1.submission_limit_period_cd,
+              r1.start_dttm,
+              r1.end_dttm,
+              r1.minimum_score,
+              r1.minimum_score_secondary,
+              r1.ranking_window,
+              r1.ranking_highlight,
+              r1.score_precision,
+              r1.score_secondary_precision,
+              r1.leaderboard_note_markdown,
+              r1.leaderboard_note,
+              r1.failed_submissions,
+              row_number() OVER (PARTITION BY r1.challenge_id ORDER BY r1.challenge_id, r1.start_dttm) AS row_num
+             FROM challenge_rounds r1) cr;
   SQL
 
-  create_view "previous_ongoing_leaderboards",  sql_definition: <<-SQL
-      SELECT base_leaderboards.id,
-      base_leaderboards.challenge_id,
-      base_leaderboards.challenge_round_id,
-      base_leaderboards.participant_id,
-      base_leaderboards.row_num,
-      base_leaderboards.previous_row_num,
-      base_leaderboards.slug,
-      base_leaderboards.name,
-      base_leaderboards.entries,
-      base_leaderboards.score,
-      base_leaderboards.score_secondary,
-      base_leaderboards.media_large,
-      base_leaderboards.media_thumbnail,
-      base_leaderboards.media_content_type,
-      base_leaderboards.description,
-      base_leaderboards.description_markdown,
-      base_leaderboards.leaderboard_type_cd,
-      base_leaderboards.refreshed_at,
-      base_leaderboards.created_at,
-      base_leaderboards.updated_at,
-      base_leaderboards.submission_id,
-      base_leaderboards.post_challenge,
-      base_leaderboards.seq,
-      base_leaderboards.baseline,
-      base_leaderboards.baseline_comment
-     FROM base_leaderboards
-    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'previous_ongoing'::text);
+  create_view "challenge_round_summaries",  sql_definition: <<-SQL
+      SELECT cr.id,
+      cr.challenge_round,
+      cr.row_num,
+      acr.row_num AS active_row_num,
+          CASE
+              WHEN (cr.row_num < acr.row_num) THEN 'history'::text
+              WHEN (cr.row_num = acr.row_num) THEN 'current'::text
+              WHEN (cr.row_num > acr.row_num) THEN 'future'::text
+              ELSE NULL::text
+          END AS round_status_cd,
+      cr.active,
+      cr.challenge_id,
+      cr.start_dttm,
+      cr.end_dttm,
+      cr.submission_limit,
+      cr.submission_limit_period_cd,
+      cr.failed_submissions,
+      cr.minimum_score,
+      cr.minimum_score_secondary,
+      c.status_cd
+     FROM challenge_round_views cr,
+      challenge_round_views acr,
+      challenges c
+    WHERE ((c.id = cr.challenge_id) AND (c.id = acr.challenge_id) AND (acr.active IS TRUE));
   SQL
 
   create_view "leaderboards",  sql_definition: <<-SQL
       SELECT base_leaderboards.id,
       base_leaderboards.challenge_id,
       base_leaderboards.challenge_round_id,
-      base_leaderboards.participant_id,
+      base_leaderboards.submitter_type,
+      base_leaderboards.submitter_id,
       base_leaderboards.row_num,
       base_leaderboards.previous_row_num,
       base_leaderboards.slug,
@@ -1342,7 +1352,8 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
       SELECT base_leaderboards.id,
       base_leaderboards.challenge_id,
       base_leaderboards.challenge_round_id,
-      base_leaderboards.participant_id,
+      base_leaderboards.submitter_type,
+      base_leaderboards.submitter_id,
       base_leaderboards.row_num,
       base_leaderboards.previous_row_num,
       base_leaderboards.slug,
@@ -1367,6 +1378,68 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
       base_leaderboards.baseline_comment
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
+  SQL
+
+  create_view "previous_leaderboards",  sql_definition: <<-SQL
+      SELECT base_leaderboards.id,
+      base_leaderboards.challenge_id,
+      base_leaderboards.challenge_round_id,
+      base_leaderboards.submitter_type,
+      base_leaderboards.submitter_id,
+      base_leaderboards.row_num,
+      base_leaderboards.previous_row_num,
+      base_leaderboards.slug,
+      base_leaderboards.name,
+      base_leaderboards.entries,
+      base_leaderboards.score,
+      base_leaderboards.score_secondary,
+      base_leaderboards.media_large,
+      base_leaderboards.media_thumbnail,
+      base_leaderboards.media_content_type,
+      base_leaderboards.description,
+      base_leaderboards.description_markdown,
+      base_leaderboards.leaderboard_type_cd,
+      base_leaderboards.refreshed_at,
+      base_leaderboards.created_at,
+      base_leaderboards.updated_at,
+      base_leaderboards.submission_id,
+      base_leaderboards.post_challenge,
+      base_leaderboards.seq,
+      base_leaderboards.baseline,
+      base_leaderboards.baseline_comment
+     FROM base_leaderboards
+    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'previous'::text);
+  SQL
+
+  create_view "previous_ongoing_leaderboards",  sql_definition: <<-SQL
+      SELECT base_leaderboards.id,
+      base_leaderboards.challenge_id,
+      base_leaderboards.challenge_round_id,
+      base_leaderboards.submitter_type,
+      base_leaderboards.submitter_id,
+      base_leaderboards.row_num,
+      base_leaderboards.previous_row_num,
+      base_leaderboards.slug,
+      base_leaderboards.name,
+      base_leaderboards.entries,
+      base_leaderboards.score,
+      base_leaderboards.score_secondary,
+      base_leaderboards.media_large,
+      base_leaderboards.media_thumbnail,
+      base_leaderboards.media_content_type,
+      base_leaderboards.description,
+      base_leaderboards.description_markdown,
+      base_leaderboards.leaderboard_type_cd,
+      base_leaderboards.refreshed_at,
+      base_leaderboards.created_at,
+      base_leaderboards.updated_at,
+      base_leaderboards.submission_id,
+      base_leaderboards.post_challenge,
+      base_leaderboards.seq,
+      base_leaderboards.baseline,
+      base_leaderboards.baseline_comment
+     FROM base_leaderboards
+    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'previous_ongoing'::text);
   SQL
 
 end

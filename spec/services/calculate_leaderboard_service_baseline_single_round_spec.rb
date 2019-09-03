@@ -171,7 +171,6 @@ RSpec.describe CalculateLeaderboardService, api: true do
       p1s4.reload
       p2s1.reload
       p2s2.reload
-      #byebug
     end
 
     # leaderboard

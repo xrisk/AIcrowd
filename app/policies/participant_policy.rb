@@ -40,6 +40,10 @@ class ParticipantPolicy < ApplicationPolicy
     edit?
   end
 
+  def show_pending_invitations?
+    participant && record.id == participant.id
+  end
+
   def clef_access?
     participant && (participant.admin? || participant.id == @record.id || participant.organizer && participant.organizer.clef_organizer == true)
   end
