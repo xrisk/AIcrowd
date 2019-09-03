@@ -5,7 +5,7 @@ class TeamPolicy < ApplicationPolicy
 
   # only the team organizer can invite new members
   def create_invitations?
-    record.team_participants_organizer.exists?(participant_id: participant&.id)
+    record.team_participants_organizer.exists?(participant_id: participant&.id) && record.invitations_left > 0
   end
 
   # only the team organizer can cancel invitations to new members

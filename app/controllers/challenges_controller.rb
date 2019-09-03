@@ -157,6 +157,8 @@ class ChallengesController < ApplicationController
             :score_title,
             :score_secondary_title,
             :other_scores_fieldnames,
+            :teams_allowed,
+            :max_team_participants,
             :latest_submission,
             :description_markdown,
             :rules_markdown,

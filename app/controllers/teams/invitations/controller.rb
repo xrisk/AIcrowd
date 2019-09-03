@@ -5,16 +5,20 @@ class Teams::Invitations::Controller < ApplicationController
   before_action :redirect_on_create_disallowed, only: :create
 
   def create
-    @invitation = @team.team_invitations.new(
-      invitor: current_participant,
-      invitee: @invitee,
-    )
+    if @team.invitations_left > 0
+      @invitation = @team.team_invitations.new(
+          invitor: current_participant,
+          invitee: @invitee,
+      )
 
-    if @invitation.save
-      Team::InvitationPendingNotifierJob.perform_later(@invitation.id)
-      flash[:success] = 'The invitation was sent'
+      if @invitation.save
+        Team::InvitationPendingNotifierJob.perform_later(@invitation.id)
+        flash[:success] = 'The invitation was sent'
+      else
+        flash[:error] = 'An error occurred. The invitation was not sent.'
+      end
     else
-      flash[:error] = 'An error occurred. The invitation was not sent.'
+      flash[:error] = 'The invitation was not sent. No invitations left.'
     end
     redirect_to @team
   end

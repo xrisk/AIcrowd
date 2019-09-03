@@ -4,6 +4,7 @@ en:
       create_button:
         tooltip:
           allowed: Create a team for this challenge
+          not_allowed: Teams are not allowed for this challenge
           participant_not_logged_in: You must be logged in to create a team
           challenge_not_running: This challenge is not running
           challenge_teams_frozen: This challenge has team-freeze in effect

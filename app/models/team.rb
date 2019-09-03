@@ -34,6 +34,14 @@ class Team < ApplicationRecord
     name
   end
 
+  def invitations_left
+    challenge.max_team_participants - team_participants.size - team_invitations.status_pendings.count
+  end
+
+  def full?
+    team_participants.size == challenge.max_team_participants
+  end
+
   def concrete?
     team_participants.size >= 2
   end

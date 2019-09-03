@@ -9,7 +9,9 @@
     <header class="section-header">
       <div>
         <h4>Members</h4>
+        <h5> ( <%= members.count %> / <%= @team.challenge.max_team_participants %> ) </h5>
       </div>
+
       <%= team_member_invite_button(@team) %>
     </header>
     <ul class="list-group list-group-flush-px-0 list-group-teams">
@@ -30,6 +32,7 @@
       <header class="section-header mt-5">
         <div>
           <h4>Invited</h4>
+          <h5> ( <%= @team.invitations_left %> left ) </h5>
         </div>
       </header>
       <% if @pending_invitations.length > 0 %>
