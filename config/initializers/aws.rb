@@ -15,7 +15,7 @@ if Rails.env.test? || Rails.env.development?
   directory = storage.directories.create(
     :key => ENV['AWS_S3_BUCKET']
   )
-  Aws::S3::Client.new().create_bucket(bucket: ENV['AWS_S3_BUCKET'])
+#  Aws::S3::Client.new().create_bucket(bucket: ENV['AWS_S3_BUCKET'])
 
   CarrierWave.configure do |config|
     config.fog_credentials = {

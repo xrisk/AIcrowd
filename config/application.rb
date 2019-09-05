@@ -62,5 +62,10 @@ module Crowdai
         resource '/assets/*', headers: :any, methods: [:get, :post, :options]
       end
     end
+
+    console do
+      ARGV.push "-r", root.join("lib/console.rb")
+    end
+
   end
 end
