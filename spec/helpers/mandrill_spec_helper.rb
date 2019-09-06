@@ -4,8 +4,8 @@ res = [
         "status"=>"sent",
         "_id"=>"03153045634d41ef92b229c0bdeae317",
         "reject_reason"=>nil}],
-       {:subject=>"[AICrowd/Possimus qui consequatur et debitis.] Quia accusamus esse qui corrupti corporis quis et.",
-         :from_name=>"AICrowd",
+       {:subject=>"[AIcrowd/Possimus qui consequatur et debitis.] Quia accusamus esse qui corrupti corporis quis et.",
+         :from_name=>"AIcrowd",
          :from_email=>"no-reply@aicrowd.com",
          :to=>[{:email=>"lela@example.com", :type=>"to"},{:email=>"lela2@example.com", :type=>"to"}],
          :global_merge_vars=>[{:name=>"NAME", :content=>"Example_name_10"},
@@ -31,11 +31,11 @@ describe MandrillSpecHelper do
     end
 
     it '#subject' do
-      expect(man.subject).to eq("[AICrowd/Possimus qui consequatur et debitis.] Quia accusamus esse qui corrupti corporis quis et.")
+      expect(man.subject).to eq("[AIcrowd/Possimus qui consequatur et debitis.] Quia accusamus esse qui corrupti corporis quis et.")
     end
 
     it '#from_name' do
-      expect(man.from_name).to eq("AICrowd")
+      expect(man.from_name).to eq("AIcrowd")
     end
 
     it '#from_email' do

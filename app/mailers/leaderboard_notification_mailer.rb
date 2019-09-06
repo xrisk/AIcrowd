@@ -14,9 +14,9 @@ class LeaderboardNotificationMailer < ApplicationMailer
 
     options = {
       participant_id:   participant.id,
-      subject:          "[AICrowd/#{challenge.challenge}] Leaderboard changed",
+      subject:          "[AIcrowd/#{challenge.challenge}] Leaderboard changed",
       to:               participant.email,
-      template:         "AICrowd General Template",
+      template:         "AIcrowd General Template",
       global_merge_vars: [
         {
           name:           "NAME",

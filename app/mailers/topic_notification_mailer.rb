@@ -13,9 +13,9 @@ class TopicNotificationMailer < ApplicationMailer
 
     options = {
       participant_id:   participant.id,
-      subject:          "[AICrowd/#{challenge.challenge}] New discussion comment",
+      subject:          "[AIcrowd/#{challenge.challenge}] New discussion comment",
       to:               participant.email,
-      template:         "AICrowd General Template",
+      template:         "AIcrowd General Template",
       global_merge_vars: [
         {
           name:           "NAME",

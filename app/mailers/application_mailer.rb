@@ -8,7 +8,7 @@ class ApplicationMailer < ActionMailer::Base
   def mandrill_send(options)
     message = {
       subject:      options[:subject],
-      from_name:    'AICrowd',
+      from_name:    'AIcrowd',
       from_email:   'no-reply@aicrowd.com',
       to: [
         {
