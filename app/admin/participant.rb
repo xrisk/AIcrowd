@@ -38,6 +38,7 @@ ActiveAdmin.register Participant do
   filter :organizer, :as => :select, :collection => Organizer.all.collect {|organizer| [organizer.organizer, organizer.id] }
   filter :admin
   filter :current_sign_in_at
+  filter :agreed_to_marketing
   filter :sign_in_count
   filter :created_at
 
