@@ -6,11 +6,11 @@ FactoryBot.define do
       .gsub(/[^a-zA-Z0-9.\-_{}\[\]]+/, '')
     }
 
-    trait :participants do |participants|
-      after :create do |team|
-        participants.each do |participant|
-          team.team_participants.create(participant: participant)
-        end
+    after :create do |team, evaluator|
+      first_participant = evaluator.participants&.first
+      if first_participant
+        tp = team.team_participants.find_by!(participant_id: first_participant.id)
+        tp.update_column(:role, :organizer)
       end
     end
   end

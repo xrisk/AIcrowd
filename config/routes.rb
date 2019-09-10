@@ -67,8 +67,10 @@ Rails.application.routes.draw do
   resources :blogs do
     resources :votes, only: [:create, :destroy]
   end
-  resources :teams, only: [:show], param: :name, controller: 'teams/' do
-    resources :invitations, only: [:create], controller: 'teams/invitations/'
+  constraints format: false do
+    resources :teams, only: [:show], param: :name, constraints: { name: /[^?\/]+/ }, controller: 'teams/' do
+      resources :invitations, only: [:create], controller: 'teams/invitations/'
+    end
   end
   resources :team_invitations, only: [], param: :uuid do
     resources :acceptances, only: [:index, :create], controller: 'teams/invitations/acceptances'
