@@ -164,6 +164,7 @@ class ChallengesController < ApplicationController
             :teams_allowed,
             :hidden_challenge,
             :max_team_participants,
+            :team_freeze_time,
             :latest_submission,
             :description_markdown,
             :rules_markdown,
