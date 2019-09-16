@@ -13,7 +13,7 @@ class ParticipantPolicy < ApplicationPolicy
   end
 
   def edit?
-    participant && participant.admin? || participant && @record.id == participant.id
+    participant&.admin? || participant && @record.id == participant.id
   end
 
   def update?

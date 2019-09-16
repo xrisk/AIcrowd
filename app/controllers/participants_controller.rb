@@ -9,9 +9,14 @@ class ParticipantsController < ApplicationController
     @page_title = @participant.name
     @articles = Article.where(participant_id: @participant.id)
     challenge_ids = policy_scope(ParticipantChallenge)
-      .where(participant_id: @participant.id)
-      .pluck(:challenge_id)
-    @challenges = Challenge.where(id: challenge_ids)
+                    .where(participant_id: @participant.id)
+                    .pluck(:challenge_id)
+
+    @challenges = if policy(@participant).edit?
+                    Challenge.where(id: challenge_ids)
+                  else
+                    Challenge.where(id: challenge_ids).where(hidden_challenge: false).where(private_challenge: false)
+                  end
     @discourse_link = "#{ENV['DISCOURSE_DOMAIN_NAME']}/u/#{@participant.name}/activity"
   end
 

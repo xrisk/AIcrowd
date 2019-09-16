@@ -4,7 +4,11 @@ class OrganizersController < ApplicationController
   after_action :verify_authorized
 
   def show
-    @challenges = @organizer.challenges
+    @challenges = if policy(@organizer).update?
+                    @organizer.challenges
+                  else
+                    @organizer.challenges.where(hidden_challenge: false).where(private_challenge: false)
+                  end
   end
 
   def edit
@@ -56,7 +60,7 @@ class OrganizersController < ApplicationController
     @organizer = Organizer.friendly.find(params[:organizer_id])
     @organizer.remove_image_file!
     @organizer.save
-    redirect_to edit_organizer_path(@organizer),notice: 'Image removed.'
+    redirect_to edit_organizer_path(@organizer), notice: 'Image removed.'
   end
 
   def regen_api_key
@@ -64,31 +68,32 @@ class OrganizersController < ApplicationController
     authorize @organizer
     @organizer.api_key = @organizer.generate_api_key
     @organizer.save!
-    redirect_to edit_organizer_path(@organizer),notice: 'API Key regenerated.'
+    redirect_to edit_organizer_path(@organizer), notice: 'API Key regenerated.'
   end
 
   private
-    def set_organizer
-      @organizer = Organizer.friendly.find(params[:id])
-      authorize @organizer
-    end
 
-    def organizer_params
-      params
+  def set_organizer
+    @organizer = Organizer.friendly.find(params[:id])
+    authorize @organizer
+  end
+
+  def organizer_params
+    params
         .require(:organizer)
         .permit(
-          :organizer,
-          :address,
-          :description,
-          :approved,
-          :organizer_id,
-          :status,
-          :tagline,
-          :image_file,
-          :clef_organizer,
-          clef_tasks_attributes: [
-            :id,
-            :_delete,
-            :task])
-    end
+            :organizer,
+            :address,
+            :description,
+            :approved,
+            :organizer_id,
+            :status,
+            :tagline,
+            :image_file,
+            :clef_organizer,
+            clef_tasks_attributes: [
+                :id,
+                :_delete,
+                :task])
+  end
 end
