@@ -12,17 +12,21 @@ class ChallengesController < ApplicationController
   def index
     @challenge_filter = params[:challenge_filter] ||= 'all'
     @all_challenges = policy_scope(Challenge)
-    case @challenge_filter
-    when 'active'
-      @challenges = @all_challenges.where(status_cd: %w(running starting_soon))
-    when 'completed'
-      @challenges = @all_challenges.where(status_cd: 'completed')
-    when 'draft'
-      @challenges = @all_challenges.where(status_cd: 'draft')
-    else
-      @challenges = @all_challenges
-    end
-    @challenges = @challenges.page(params[:page]).per(20)
+    @challenges = case @challenge_filter
+                  when 'active'
+                    @all_challenges.where(status_cd: %w[running starting_soon])
+                  when 'completed'
+                    @all_challenges.where(status_cd: 'completed')
+                  when 'draft'
+                    @all_challenges.where(status_cd: 'draft')
+                  else
+                    @all_challenges
+                  end
+    @challenges = if current_participant&.admin?
+                    @challenges.page(params[:page]).per(20)
+                  else
+                    @challenges.where(hidden_challenge: false).page(params[:page]).per(20)
+                  end
   end
 
   def reorder
@@ -158,6 +162,7 @@ class ChallengesController < ApplicationController
             :score_secondary_title,
             :other_scores_fieldnames,
             :teams_allowed,
+            :hidden_challenge,
             :max_team_participants,
             :latest_submission,
             :description_markdown,

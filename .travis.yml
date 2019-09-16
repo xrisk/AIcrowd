@@ -1,7 +1,7 @@
 language: ruby
 cache: bundler
 sudo: required
-dist: trusty
+dist: xenial
 addons:
     postgresql: "9.6"
     chrome: stable
@@ -10,6 +10,7 @@ services:
     - postgresql
     - redis-server
     - docker
+    - xvfb
 
 rvm:
   - 2.5.5
@@ -25,8 +26,6 @@ before_script:
   - psql -c 'create database crowdai_test;' -U postgres
 
 before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
   - docker pull localstack/localstack
   - docker run -d -e SERVICES="s3" -e LOCALSTACK_HOSTNAME="localhost" -e LOCALSTACK_HOSTNAME="localhost" -p 8080:8080  -p 4572:4572 -v "/tmp/localstack:/tmp/localstack" -v "/var/run/docker.sock:/var/run/docker.sock" -e DOCKER_HOST="unix:///var/run/docker.sock" -e HOST_TMP_FOLDER="/tmp/localstack" "localstack/localstack" 
   - mkdir ~/fog

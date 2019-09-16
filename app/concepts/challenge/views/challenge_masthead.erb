@@ -4,12 +4,12 @@
 
     <div class="row">
       <div class="col-12">
-      <% challenge_rounds.each do |challenge_round| %>
-        <span class="badge <%= remaining_text(challenge_round) == "Completed"? "badge-success" : "badge-primary" %>">
+        <% challenge_rounds.each do |challenge_round| %>
+        <span class="badge <%= remaining_text(challenge_round) == "Completed" ? "badge-success" : "badge-primary" %>">
           <img src="/assets/img/icon-time.svg">
           <%= challenge_round.challenge_round %>: <%= remaining_text(challenge_round) %>
         </span>
-      <% end %>
+        <% end %>
       </div>
     </div>
 
@@ -22,11 +22,16 @@
             Private
           </span>
         <% end %>
+        <% if challenge.hidden_challenge %>
+          <span class="badge badge-secondary">
+            Hidden
+          </span>
+        <% end %>
         <p><%= challenge.tagline %></p>
       </div>
 
       <div class="col-sm-12 col-md-4 col-lg-3">
-        <%= concept(Challenge::Cell::PrizesBreakdown,challenge) %>
+        <%= concept(Challenge::Cell::PrizesBreakdown, challenge) %>
       </div>
     </div>
     <!-- /title/description/prizes -->
@@ -36,10 +41,10 @@
       <div class="col-12 d-flex align-items-center flex-wrap">
         <div class="organizer-attribution">
           <%= link_to organizer_path(challenge.organizer) do %>
-            <%= concept(Image::Cell,challenge.organizer, current_participant: current_participant) %>
+            <%= concept(Image::Cell, challenge.organizer, current_participant: current_participant) %>
           <% end %>
-            <span>By&nbsp;
-              <%= link_to organizer_path(challenge.organizer) do %>
+          <span>By&nbsp;
+            <%= link_to organizer_path(challenge.organizer) do %>
                 <%= challenge.organizer.organizer %>
               <% end %>
             </span>
@@ -47,34 +52,34 @@
 
         <div class="stats-group" style="margin-right: 0px">
           <div class="stat-item" style="width: 72px">
-          <center>
+            <center>
             <span data-toggle="tooltip" data-placement="top" title="No. of views">
               <img src="/assets/img/icon-views.svg">
-                <%= concept(Challenge::Cell::Statistic,challenge,type: 'view', current_participant: current_participant) %>
+              <%= concept(Challenge::Cell::Statistic, challenge, type: 'view', current_participant: current_participant) %>
             </span>
-          </center>
+            </center>
           </div>
           <div class="stat-item" style="width: 72px">
-          <center>
+            <center>
             <span data-toggle="tooltip" data-placement="top" title="No. of users">
               <img src="/assets/img/icon-users.svg">
-              <%= concept(Challenge::Cell::Statistic,challenge,type: 'participant', current_participant: current_participant) %>
+              <%= concept(Challenge::Cell::Statistic, challenge, type: 'participant', current_participant: current_participant) %>
             </span>
-          </center>
+            </center>
           </div>
           <div class="stat-item" style="width: 72px">
-          <center>
+            <center>
             <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
               <img src="/assets/img/icon-submissions.svg">
-              <%= concept(Challenge::Cell::Statistic,challenge,type: 'submission', current_participant: current_participant) %>
+              <%= concept(Challenge::Cell::Statistic, challenge, type: 'submission', current_participant: current_participant) %>
             </span>
-          </center>
+            </center>
           </div>
         </div>
         <div class="btn-set" aria-hidden="true">
           <%= concept(Vote::Cell, challenge, current_participant: current_participant) %>
           <%= concept(Follow::Cell, challenge, current_participant: current_participant) %>
-         </div>
+        </div>
       </div>
     </div>
     <!-- /organizer/stats/options -->

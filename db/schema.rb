@@ -343,6 +343,7 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
     t.boolean "latest_submission", default: false
     t.string "other_scores_fieldnames"
     t.boolean "teams_allowed", default: true, null: false
+    t.boolean "hidden_challenge", default: false, null: false
     t.integer "max_team_participants", default: 5
     t.integer "team_freeze_seconds_before_end", default: 604800
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"

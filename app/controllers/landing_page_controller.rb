@@ -3,20 +3,21 @@ class LandingPageController < ApplicationController
 
   def index
     @challenges = policy_scope(Challenge)
-      .order(featured_sequence: :desc)
-      .limit(6)
+                  .where(hidden_challenge: false)
+                  .order(featured_sequence: :desc)
+                  .limit(6)
     @partners = Partner
-      .where(visible: true)
-      .where.not(image_file: nil)
-      .order(seq: :asc)
-      .limit(8)
+                .where(visible: true)
+                .where.not(image_file: nil)
+                .order(seq: :asc)
+                .limit(8)
     @blog_posts = Blog
-      .where(published: true)
-      .order(seq: :asc)
-      .limit(4)
+                  .where(published: true)
+                  .order(seq: :asc)
+                  .limit(4)
     @participants = Participant
-      .reorder(created_at: :desc)
-      .limit(5)
+                    .reorder(created_at: :desc)
+                    .limit(5)
   end
 
   def host
