@@ -56,7 +56,7 @@ class GraderService
   end
 
   def evaluate_response(submission_id:,response:)
-    # {"response_type"=>"CrowdAI.Event.SUCCESS", "message"=>"Successfully enqueued 1 Job", "data"=>{}}
+    # {"response_type"=>"AIcrowd.Event.SUCCESS", "message"=>"Successfully enqueued 1 Job", "data"=>{}}
     if response.code == 200
       resp = JSON(response.body)
       Submission.update(
@@ -67,7 +67,7 @@ class GraderService
       Submission.update(
         submission_id,
         grading_status: 'failed',
-        grading_message: 'Grading process system error, please contact crowdAI administrators.')
+        grading_message: 'Grading process system error, please contact AIcrowd administrators.')
     end
   end
 
@@ -76,6 +76,7 @@ class GraderService
     challenge = @submission.challenge
     participant = @submission.participant
     submission_key = get_submission_key
+    team_id = participant.teams.where(challenge: challenge).first&.id || 'undefined'
 
     if preflight_checked?(challenge,participant,submission_key)
       return body = {
@@ -85,7 +86,7 @@ class GraderService
         grader_id: challenge.grader_identifier,  #CLEFChallenges
         challenge_client_name: challenge.challenge_client_name,
         function_name: "grade_submission",
-        data: [{"file_key": submission_key, submission_id: @submission.id, participant_id: @submission.participant_id, challenge_round_id: @submission.challenge_round_id}],
+        data: [{"file_key": submission_key, submission_id: @submission.id, participant_id: participant.id, challenge_round_id: @submission.challenge_round_id, team_id: team_id}],
         dry_run: 'false',
         parallel: 'false',
         enqueue_only: 'true',
@@ -95,7 +96,7 @@ class GraderService
       Submission.update(
         @submission.id,
         grading_status: 'failed',
-        grading_message: 'Grading process system error, please contact crowdAI administrators.')
+        grading_message: 'Grading process system error, please contact AIcrowd administrators.')
       return false
     end
   end
