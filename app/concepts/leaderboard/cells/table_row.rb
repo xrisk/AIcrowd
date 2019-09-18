@@ -29,7 +29,7 @@ class Leaderboard::Cell::TableRow < Leaderboard::Cell
       other_scores = []
       challenge.other_scores_fieldnames_array.each do |fname|
         if entry.meta && (entry.meta.key? fname)
-           other_scores << (entry.meta[fname].nil? ? "-": ( "%.#{3}f" % entry.meta[fname]))
+           other_scores << (entry.meta[fname].nil? ? "-": ( "%.#{3}f" % entry.meta[fname].to_f))
         else
            other_scores << '-'
         end
