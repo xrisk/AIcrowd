@@ -219,7 +219,6 @@ class Challenge < ApplicationRecord
   def other_scores_fieldnames_array
     arr = other_scores_fieldnames
     arr&.split(',')&.map(&:strip)
-    []
   end
 
 end
