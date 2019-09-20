@@ -71,7 +71,7 @@ class Participant < ApplicationRecord
   has_many :teams, through: :team_participants, inverse_of: :participants
   has_many :concrete_teams, -> { concrete }, through: :team_participants, source: :team, inverse_of: :participants
   has_many :invitor_team_invitations, class_name: 'TeamInvitation', foreign_key: :invitor_id, inverse_of: :invitor
-  has_many :invitee_team_invitations, class_name: 'TeamInvitation', foreign_key: :invitee_id, inverse_of: :invitee
+  has_many :invitee_team_invitations, class_name: 'TeamInvitation', foreign_key: :invitee_id, inverse_of: :invitee_participant, foreign_type: 'Participant'
 
   validates :email,
     presence: true,

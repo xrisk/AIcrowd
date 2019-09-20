@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_10_133044) do
+ActiveRecord::Schema.define(version: 2019_09_17_083157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -343,10 +343,10 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
     t.boolean "latest_submission", default: false
     t.string "other_scores_fieldnames"
     t.boolean "teams_allowed", default: true, null: false
-    t.boolean "hidden_challenge", default: false, null: false
-    t.datetime "team_freeze_time"
     t.integer "max_team_participants", default: 5
     t.integer "team_freeze_seconds_before_end", default: 604800
+    t.boolean "hidden_challenge", default: false, null: false
+    t.datetime "team_freeze_time"
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["organizer_id"], name: "index_challenges_on_organizer_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
@@ -440,6 +440,15 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
     t.index ["challenge_round_id"], name: "index_disentanglement_leaderboards_on_challenge_round_id"
     t.index ["leaderboard_type_cd"], name: "index_disentanglement_leaderboards_on_leaderboard_type_cd"
     t.index ["participant_id"], name: "index_disentanglement_leaderboards_on_participant_id"
+  end
+
+  create_table "email_invitations", force: :cascade do |t|
+    t.citext "email", null: false
+    t.citext "token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_email_invitations_on_email"
+    t.index ["token"], name: "index_email_invitations_on_token", unique: true
   end
 
   create_table "email_preferences", id: :serial, force: :cascade do |t|
@@ -917,12 +926,13 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
   create_table "team_invitations", force: :cascade do |t|
     t.bigint "team_id", null: false
     t.bigint "invitor_id", null: false
-    t.bigint "invitee_id", null: false
     t.string "status", default: "pending", null: false
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["invitee_id"], name: "index_team_invitations_on_invitee_id"
+    t.string "invitee_type", null: false
+    t.bigint "invitee_id", null: false
+    t.index ["invitee_type", "invitee_id"], name: "index_team_invitations_on_invitee_type_and_invitee_id", unique: true, where: "((invitee_type)::text = 'EmailInvitation'::text)"
     t.index ["invitor_id"], name: "index_team_invitations_on_invitor_id"
     t.index ["team_id"], name: "index_team_invitations_on_team_id"
     t.index ["uuid"], name: "index_team_invitations_on_uuid", unique: true
@@ -1034,7 +1044,6 @@ ActiveRecord::Schema.define(version: 2019_08_10_133044) do
   add_foreign_key "submissions", "challenges"
   add_foreign_key "submissions", "participants"
   add_foreign_key "task_dataset_files", "clef_tasks"
-  add_foreign_key "team_invitations", "participants", column: "invitee_id"
   add_foreign_key "team_invitations", "participants", column: "invitor_id"
   add_foreign_key "team_invitations", "teams"
   add_foreign_key "team_members", "participants"
