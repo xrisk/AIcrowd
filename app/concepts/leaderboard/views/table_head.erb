@@ -6,9 +6,9 @@
     <% if challenge.media_on_leaderboard %>
         <th scope="col">Media</th>
     <% end %>
-    <th scope="col"><%= challenge.score_title %></th>
-    <% if challenge.score_secondary_title %>
-        <th scope="col"><%= challenge.score_secondary_title %></th>
+    <th scope="col"><%= primary_score_title %></th>
+    <% unless secondary_score_title.empty? %>
+        <th scope="col"><%= secondary_score_title %></th>
     <% end %>
     <% challenge.other_scores_fieldnames_array.each do |fname| %>
         <th scope="col"><%= fname %></th>

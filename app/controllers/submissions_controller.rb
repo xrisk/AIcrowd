@@ -15,6 +15,11 @@ class SubmissionsController < ApplicationController
 
   def index
     @current_round_id = current_round_id
+    @current_round = ChallengeRound.find(@current_round_id)
+
+    @primary_score_title = @current_round.primary_score_title || @challenge.score_title
+    @secondary_score_title = @current_round.secondary_score_title
+
     if params[:baselines] == 'on'
       @search = policy_scope(Submission)
                     .where(

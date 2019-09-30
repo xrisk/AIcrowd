@@ -3,7 +3,7 @@
   <td><%= link_to participant.name, participant_path(participant) %></td>
   <td><span class="badge <%= grade_class %>"><%= entry.grading_status_cd %></span></td>
   <td><%= formatted_value(entry.score_display) %></td>
-  <% if entry.challenge.score_secondary_title? %>
+  <% unless secondary_score_title %>
 	  <td><%= formatted_value(entry.score_secondary_display) %></td>
   <% end %>
   <td><%= formatted_value(enable_links_in_raw_text(entry.grading_message)) %></td>

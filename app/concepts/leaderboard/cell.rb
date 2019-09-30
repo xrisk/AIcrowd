@@ -77,4 +77,12 @@ class Leaderboard::Cell < Template::Cell
     return true if challenge.organizer_id == participant.organizer_id
   end
 
+  def primary_score_title
+    return challenge_round.primary_score_title || challenge.score_title
+  end
+
+  def secondary_score_title
+    return challenge_round.secondary_score_title || challenge.score_secondary_title
+  end
+
 end

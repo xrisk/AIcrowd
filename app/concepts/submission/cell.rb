@@ -41,4 +41,13 @@ class Submission::Cell < Template::Cell
 	def participant
 		@participant ||= entry.participant
 	end
+
+	def primary_score_title
+		entry.challenge_round.primary_score_title || entry.challenge.score_title
+	end
+
+	def secondary_score_title
+		entry.challenge_round.secondary_score_title || entry.challenge.score_secondary_title
+	end
+
 end

@@ -31,9 +31,9 @@
                   <th scope="col"><%= sort_link(@search, :id,"ID") %></th>
                   <th scope="col"><%= sort_link(@search, :name,"Participant") %></th>
                   <th scope="col"><%= sort_link(@search, :grading_status_cd,"Status") %></th>
-                  <th scope="col"><%= sort_link(@search, :score_display,@challenge.score_title) %></th>
-                  <% if @challenge.score_secondary_title? %>
-                    <th scope="col"><%= sort_link(@search, :score_secondary_display,@challenge.score_secondary_title) %></th>
+                  <th scope="col"><%= sort_link(@search, :score_display,@primary_score_title) %></th>
+                  <% unless @secondary_score_title.nil? %>
+                    <th scope="col"><%= sort_link(@search, :score_secondary_display,@secondary_score_title) %></th>
                   <% end %>
                   <th scope="col" class="status"><%= sort_link(@search, :grading_message, 'Message') %></th>
                   <th scope="col" class="text-right"><%= sort_link(@search, :created_at,"Submission") %></th>

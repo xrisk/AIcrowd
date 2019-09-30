@@ -44,7 +44,7 @@ class NewCalculateLeaderboardService
       create_leaderboard_from_submission(subm)
     end
 
-    calculate_avg_ranks_for_all(final=true)
+    calculate_avg_ranks_for_all(final = true)
 
     DisentanglementLeaderboard.where(challenge_round_id: @round.id).order(:avg_rank).each_with_index do |x, i|
       x.row_num = i + 1
@@ -53,15 +53,15 @@ class NewCalculateLeaderboardService
     end
   end
 
-  def calculate_avg_ranks_for_all(final=false)
+  def calculate_avg_ranks_for_all(final = false)
     DisentanglementLeaderboard.where(challenge_round_id: @round.id).each do |dl|
       dl.avg_rank = calculate_avg_rank(dl, final)
       dl.save
     end
   end
 
-  def calculate_avg_rank(entry, final=false)
-    @scores_to_avg = [@challenge.score_title, @challenge.score_secondary_title] + @challenge.other_scores_fieldnames_array
+  def calculate_avg_rank(entry, final = false)
+    @scores_to_avg = [primary_score_title, secondary_score_title] + @challenge.other_scores_fieldnames_array
     column_names = ['score', 'score_secondary'] + (1..@challenge.other_scores_fieldnames_array.length).map { |i| 'extra_score' + (i).to_s }
     leaderboard = DisentanglementLeaderboard.where(challenge_round_id: @round.id)
     submission = Submission.find(entry.submission_id)
@@ -115,4 +115,13 @@ class NewCalculateLeaderboardService
         extra_score5: extra_scores[4]
     )
   end
+
+  def primary_score_title
+    return @round.primary_score_title || @challenge.score_title
+  end
+
+  def secondary_score_title
+    return @round.secondary_score_title || @challenge.secondary_score_title
+  end
+
 end
