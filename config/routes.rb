@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   end
 
   constraints admin do
+    mount Blazer::Engine => '/blazer'
     mount Sidekiq::Web => '/sidekiq'
     ActiveAdmin.routes(self) rescue ActiveAdmin::DatabaseHitDuringLoad
   end

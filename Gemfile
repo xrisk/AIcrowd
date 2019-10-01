@@ -9,6 +9,8 @@ gem 'rails-assets-jQuery-File-Upload'
 ruby '2.5.5'
 gem 'rails', '5.2.2.1'
 
+gem 'ahoy_matey'
+gem 'blazer', github: "aicrowd/blazer"
 gem 'active_model_serializers'
 gem 'activeadmin', '1.4.3'
 gem 'authtrail'
