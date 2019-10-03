@@ -15,6 +15,9 @@ class TeamInvitation < ApplicationRecord
   has_one :invitee_participant, through: :self_ref, source: :invitee, source_type: 'Participant', inverse_of: :invitee_team_invitation
   has_one :invitee_email_invitation, through: :self_ref, source: :invitee, source_type: 'EmailInvitation', inverse_of: :invitee_team_invitation
 
+  scope :participant_invitees, -> { Participant.where(id: where(invitee_type: 'Participant').select(:invitee_id)) }
+  scope :email_invitees, -> { EmailInvitation.where(id: where(invitee_type: 'EmailInvitation').select(:invitee_id)) }
+
   as_enum :status, STATUSES, map: :string, source: :status, prefix: true
 
   validates_inclusion_of :status, in: STATUSES
@@ -26,5 +29,9 @@ class TeamInvitation < ApplicationRecord
 
   def init_uuid
     self.uuid ||= SecureRandom.uuid
+  end
+
+  def self.invitees_a
+    participant_invitees.to_a + email_invitees.to_a
   end
 end
