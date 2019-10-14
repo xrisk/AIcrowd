@@ -1,6 +1,6 @@
 class Ahoy::Store < Ahoy::DatabaseStore
   def user
-    controller.current_user
+    controller.current_participant
   end
 
   def authenticate(data)
