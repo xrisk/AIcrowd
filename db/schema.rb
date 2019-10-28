@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_30_032348) do
+ActiveRecord::Schema.define(version: 2019_10_28_213451) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -377,7 +377,7 @@ ActiveRecord::Schema.define(version: 2019_09_30_032348) do
     t.string "answer_file_s3_key"
     t.integer "page_views", default: 0
     t.integer "participant_count", default: 0
-    t.integer "submission_count", default: 0
+    t.integer "submissions_count", default: 0
     t.string "score_title"
     t.string "score_secondary_title"
     t.string "slug"
@@ -845,6 +845,7 @@ ActiveRecord::Schema.define(version: 2019_09_30_032348) do
     t.integer "participation_terms_accepted_version"
     t.boolean "agreed_to_terms_of_use_and_privacy", default: false
     t.boolean "agreed_to_marketing", default: false
+    t.integer "submissions_count", default: 0
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["organizer_id"], name: "index_participants_on_organizer_id"
@@ -1308,7 +1309,7 @@ ActiveRecord::Schema.define(version: 2019_09_30_032348) do
       c.resources,
       c.tagline,
       c.image_file,
-      c.submission_count,
+      c.submissions_count AS submission_count,
       c.participant_count,
       c.page_views,
       p.name,

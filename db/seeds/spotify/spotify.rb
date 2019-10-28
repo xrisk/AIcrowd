@@ -42,7 +42,7 @@ Challenge.create!([
     slug: "train-schedule-optimisation-challenge",
     show_leaderboard: true,
     status_cd: "running",
-    submission_count: 4100,
+    submissions_count: 4100,
     submission_license: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
     submissions_page: true,
     tagline: "Predict if users will skip or listen to the music they're streamed",

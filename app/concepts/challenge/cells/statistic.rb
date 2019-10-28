@@ -15,7 +15,7 @@ class Challenge::Cell::Statistic < Challenge::Cell
   def stat_count
     case stat_type
     when 'submission'
-      formatted_count(challenge.submission_count)
+      formatted_count(challenge.submissions_count)
     when 'view'
       formatted_count(challenge.page_views)
     when 'participant'
