@@ -143,7 +143,7 @@ class SubmissionsController < ApplicationController
     end
 
     if !policy(@challenge).has_accepted_challenge_rules?
-      redirect_to [@challenge, @challenge.current_challenge_rules]
+      redirect_to url_for(challenge_challenge_rules_path(@challenge))
       return
     end
   end
