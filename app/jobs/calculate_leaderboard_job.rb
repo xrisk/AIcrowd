@@ -5,8 +5,7 @@ class CalculateLeaderboardJob < ApplicationJob
     if ChallengeRound.find(challenge_round_id).challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
       NewCalculateLeaderboardService.new(challenge_round_id: challenge_round_id).call
     else
-      CalculateLeaderboardService
-      .new(challenge_round_id: challenge_round_id).call
+      CalculateLeaderboardService.new(challenge_round_id: challenge_round_id).call
     end
   end
 

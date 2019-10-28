@@ -27,7 +27,7 @@ ActiveAdmin.register Challenge do
     column :status
     column :page_views
     column :participant_count
-    column :submission_count
+    column :submissions_count
     actions
   end
 

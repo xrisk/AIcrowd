@@ -2,7 +2,7 @@ class Submission < ApplicationRecord
   include Markdownable
   before_validation :generate_short_url
 
-  belongs_to :challenge
+  belongs_to :challenge, counter_cache: true
   belongs_to :participant, optional: true
   belongs_to :challenge_round, optional: true
   with_options dependent: :destroy do |assoc|
