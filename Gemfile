@@ -92,7 +92,7 @@ gem 'sidekiq', '~> 5.1.1'
 gem 'sidekiq-cron', '~> 0.6.3'
 gem 'sidekiq-history'
 gem 'sidekiq-failures'
-gem 'sidekiq-unique-jobs'
+gem 'sidekiq-unique-jobs', '~> 6.0.15'
 gem 'sinatra', '~> 2.0.2', :require => nil
 gem 'stringex'
 gem 'therubyracer', platforms: :ruby
