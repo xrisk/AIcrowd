@@ -9,7 +9,7 @@ class Ahoy::Store < Ahoy::DatabaseStore
 end
 
 # set to true for JavaScript tracking
-Ahoy.api = false
+Ahoy.api = true
 
 # Group ips for GDPR
 Ahoy.mask_ips = true
