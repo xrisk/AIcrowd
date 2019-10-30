@@ -37,7 +37,7 @@ class LeaderboardsController < ApplicationController
                           .where(challenge_round_id: @current_round)
                           .page(params[:page])
                           .per(10)
-                          .order(:avg_rank)
+                          .order(:row_num)
     end
   end
 
