@@ -1,41 +1,17 @@
-<!-- old crowdai code, not active -->
-<% if false %>
-<div class='content'>
-  <%= concept(Challenge::Cell::ChallengeMasthead, @challenge, current_participant: current_participant) %>
-  <%= render partial: 'challenges/show/subnav',
-        locals: { challenge: @challenge } %>
-
-  <div class="row">
-    <ul class="list-host-members">
-        <%= render partial: 'clef_participants' %>
-    </ul>
-    <%#= render partial: 'shared/load_more',
-               locals: { collection: @clef_task.participant_clef_tasks } %>
-  </div>
-<% end %>
-<!-- /old crowdai code, not active-->
-
-
-
-
-
-
-<!-- new code, active-->
-<%= concept(Challenge::Cell::ChallengeMasthead,@challenge, current_participant: current_participant) %>
+<%= concept(Challenge::Cell::ChallengeMasthead, @challenge, current_participant: current_participant) %>
 <%= render partial: 'challenges/show/subnav',
-    locals: { challenge: @challenge } %>
+           locals: {challenge: @challenge} %>
 
 <!-- section -->
 <div class="section-p-md">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-12">
-				  <ul class="list-host-members">
-            <%= render partial: 'clef_participants' %>
-          </ul>
-			</div>
-		</div> 
-	</div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <ul class="list-host-members">
+          <%= render partial: 'clef_participants' %>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- /section -->
-<!-- /new  code, active-->
