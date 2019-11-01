@@ -25,7 +25,15 @@
           <tbody id="sortable" class="list-challenges">
           <% @challenges.each do |challenge| %>
             <tr class='challenge-list-row p-3' id='<%= challenge.id %>'>
-              <td> <%= challenge.challenge %> </td>
+              <td>
+                <%= challenge.challenge %>
+                <% if challenge.hidden_challenge %>
+                  <span class="badge badge-secondary">Hidden</span>
+                <% end %>
+                <% if challenge.private_challenge %>
+                  <span class="badge badge-secondary">Private</span>
+                <% end %>
+              </td>
               <td class="text-center"> <%= challenge.featured_sequence %> </td>
               <td class="text-center new-seq"> <%= challenge.featured_sequence %> </td>
             </tr>

@@ -1,12 +1,18 @@
 Paloma.controller('Challenges', {
     reorder: function () {
         let calculateIndex = function(){
+            let landingPageIdx = 6;
             let l = $(".challenge-list-row .new-seq");
             for (let i = 0; i < l.length; i++) {
-                if (i < 6) {
-                    $(l[i].parentNode).addClass('table-success');
+                let current = $(l[i].parentNode)
+                if (i < landingPageIdx) {
+                    if ($(current).has('.badge').length){
+                        landingPageIdx++;
+                        continue;
+                    }
+                    $(current).addClass('table-success');
                 } else {
-                    $(l[i].parentNode).removeClass('table-success');
+                    $(current).removeClass('table-success');
                 }
                 l[i].innerText = i.toString()
             }
