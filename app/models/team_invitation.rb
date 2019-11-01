@@ -12,7 +12,7 @@ class TeamInvitation < ApplicationRecord
   belongs_to :invitor, class_name: 'Participant', inverse_of: :invitor_team_invitations
   belongs_to :invitee, polymorphic: true
   has_one :self_ref, class_name: "::#{name}", foreign_key: :id
-  has_one :invitee_participant, through: :self_ref, source: :invitee, source_type: 'Participant', inverse_of: :invitee_team_invitation
+  has_one :invitee_participant, through: :self_ref, source: :invitee, source_type: 'Participant', inverse_of: :invitee_team_invitations
   has_one :invitee_email_invitation, through: :self_ref, source: :invitee, source_type: 'EmailInvitation', inverse_of: :invitee_team_invitation
 
   scope :participant_invitees, -> { Participant.where(id: where(invitee_type: 'Participant').select(:invitee_id)) }

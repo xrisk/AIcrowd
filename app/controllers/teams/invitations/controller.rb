@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Teams::Invitations::Controller < ApplicationController
   before_action :authenticate_participant!
   before_action :set_team
@@ -13,9 +14,9 @@ class Teams::Invitations::Controller < ApplicationController
 
     if @invitation.save
       Team::InvitationPendingNotifierJob.perform_later(@invitation.id)
-      flash[:success] = 'The invitation was sent.'
+      flash[:success] = I18n.t(:success, scope: %i[helpers teams create_invitation_flash])
     else
-      flash[:error] = 'An error occurred. The invitation was not sent.'
+      flash[:error] = error_msg(:unspecified)
     end
     redirect_to @team
   end
@@ -41,17 +42,26 @@ class Teams::Invitations::Controller < ApplicationController
   end
 
   private def redirect_on_create_disallowed
-    authorize @team, :create_invitations?
-    if @team.invitations_left <= 0
-      err = 'No invitations left.'
+    issues = {}
+    if !policy(@team).create_invitations?(issues)
+      err = issues[:sym]
     elsif @invitee.nil?
-      err = 'Participant with that name could not be found.'
+      err = :invitee_nil
     elsif @invitee.is_a?(Participant) && @invitee.concrete_teams.find_by(challenge_id: @team.challenge_id).present?
-      err = 'Participant with that name is already on a team.'
+      err = :invitee_on_other_team
     end
     if err
-      flash[:error] = 'The invitation was not sent. ' + err
+      flash[:error] = error_msg(err)
       redirect_to @team
     end
+  end
+
+  private def error_msg(key)
+    i18n_scope = %i[helpers teams create_invitation_flash]
+    msg = String.new
+    msg << I18n.t(:error_preamble, scope: i18n_scope)
+    msg << ' '
+    msg << I18n.t(key, scope: i18n_scope, default: :unspecified)
+    msg.freeze
   end
 end

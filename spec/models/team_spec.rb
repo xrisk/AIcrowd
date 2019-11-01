@@ -10,7 +10,7 @@ describe Team do
       it { expect(team.concrete?).not_to be }
     end
 
-    describe 'false with 1 participants' do
+    describe 'false with 1 participant' do
       let!(:p1) { create :participant }
       before do
         team.team_participants.create(participant: p1, role: :organizer)
@@ -59,6 +59,22 @@ describe Team do
       end
       it { expect(team.team_participants.count).to eq(3) }
       it { expect(team.invitations_left).to eq(0) }
+      it { expect(team.full?).to be }
+    end
+
+    describe 'full with more participants than max' do
+      let!(:p1) { create :participant }
+      let!(:p2) { create :participant }
+      let!(:p3) { create :participant }
+      before do
+        team.team_participants.create(participant: p1, role: :organizer)
+        team.team_participants.create(participant: p2, role: :member)
+        team.team_participants.create(participant: p3, role: :member)
+        challenge.update!(max_team_participants: 2)
+      end
+      it { expect(team.team_participants.count).to eq(3) }
+      it { expect(team.invitations_left).to eq(-1) }
+      it { expect(team.invitations_left_clamped).to eq(0) }
       it { expect(team.full?).to be }
     end
 

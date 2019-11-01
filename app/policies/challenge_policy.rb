@@ -106,22 +106,19 @@ class ChallengePolicy < ApplicationPolicy
     end
   end
 
-  def create_team?(issues = {})
-    issue = if !@record.teams_allowed?
-              :not_allowed
-            elsif participant.nil?
-              :participant_not_logged_in
-            elsif !@record.running?
-              :challenge_not_running
-            elsif @record.teams_frozen?
-              :challenge_teams_frozen
-            elsif participant.teams.exists?(challenge_id: @record.id)
-              :team_exists
-            else
-              nil
-            end
-    issues[:sym] = issue if issue
-    !issue
+  def create_team?(out_issues_hash = nil)
+    cached_with_issues(out_issues_hash) do {
+      not_allowed:
+        !record.teams_allowed?,
+      participant_not_logged_in:
+        participant.nil?,
+      challenge_not_running:
+        !record.running?,
+      challenge_teams_frozen:
+        record.teams_frozen?,
+      team_exists:
+        participant.teams.exists?(challenge_id: record.id),
+    } end
   end
 
   class Scope
