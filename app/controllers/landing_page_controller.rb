@@ -5,7 +5,7 @@ class LandingPageController < ApplicationController
     @challenges = Challenge
                       .where(private_challenge: false)
                       .where(hidden_challenge: false)
-                      .order(featured_sequence: :desc)
+                      .where.not(status_cd: :draft)
                       .limit(6)
     @partners = Partner
                     .where(visible: true)

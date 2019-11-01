@@ -4,10 +4,13 @@ Paloma.controller('Challenges', {
             let landingPageIdx = 6;
             let l = $(".challenge-list-row .new-seq");
             for (let i = 0; i < l.length; i++) {
-                l[i].innerText = i.toString()
-                let current = $(l[i].parentNode)
+                l[i].innerText = i.toString();
+                let current = $(l[i].parentNode);
+                // Hidden and Private challenges have a badge!
+                let hasBadge = current.has('.badge').length > 0;
+                let draftChallenge = current.children()[1].textContent === "draft";
                 if (i < landingPageIdx) {
-                    if ($(current).has('.badge').length) {
+                    if (hasBadge || draftChallenge) {
                         landingPageIdx++;
                         continue;
                     }
