@@ -4,7 +4,7 @@ class Challenge < ApplicationRecord
 
   friendly_id :challenge,
               use: %i[slugged finders history]
-  before_save :reset_featured_seq
+
   belongs_to :organizer
   belongs_to :clef_task,
              optional: true
@@ -84,7 +84,7 @@ class Challenge < ApplicationRecord
   validate :other_scores_fieldnames_max
 
   default_scope {
-    order("challenges.featured_sequence DESC,
+    order("challenges.featured_sequence,
             CASE challenges.status_cd
               WHEN 'running' THEN 1
               WHEN 'starting_soon' THEN 2
@@ -127,6 +127,7 @@ class Challenge < ApplicationRecord
     if new_record?
       self.submission_license = 'Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC).'
       self.challenge_client_name = "challenge_#{SecureRandom.hex}"
+      self.featured_sequence = Challenge.count + 1
     end
   end
 
@@ -177,10 +178,6 @@ class Challenge < ApplicationRecord
 
   def should_generate_new_friendly_id?
     challenge_changed?
-  end
-
-  def reset_featured_seq
-    self.featured_sequence = 0 if status_changed? && (status == :completed || status == :terminated)
   end
 
   def post_challenge_submissions?

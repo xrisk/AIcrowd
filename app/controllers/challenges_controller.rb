@@ -35,24 +35,19 @@ class ChallengesController < ApplicationController
 
   def assign_order
     authorize Challenge
-    @final_order = params[:order].split(",")
-
-    len = @final_order.length
-
-    @final_order.each do |i|
-      Challenge.friendly.find(i).update(featured_sequence: len)
-      len = len - 1
+    @final_order = params[:order].split(',')
+    @final_order.each_with_index do |ch, idx|
+      Challenge.friendly.find(ch).update(featured_sequence: idx)
     end
 
-    redirect_to challenges_url
+    redirect_to reorder_challenges_path
   end
 
   def show
     if current_participant
-      @challenge_participant = @challenge
-                                   .challenge_participants
-                                   .where(participant_id: current_participant.id,
-                                          challenge_rules_accepted_version: @challenge.current_challenge_rules_version)
+      @challenge_participant = @challenge.challenge_participants.where(
+          participant_id: current_participant.id,
+          challenge_rules_accepted_version: @challenge.current_challenge_rules_version)
     end
 
     unless params[:version] # dont' record page views on history pages
