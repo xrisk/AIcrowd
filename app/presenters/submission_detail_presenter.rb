@@ -1,6 +1,6 @@
 class SubmissionDetailPresenter
 
-  def initialize(submission:,challenge:,view_context:)
+  def initialize(submission:, challenge:, view_context:)
     @view = view_context
     @submission = submission
     @challenge = challenge
