@@ -18,14 +18,12 @@ class DatasetFilesController < ApplicationController
   end
 
   def new
-    @dataset_file = @challenge
-      .dataset_files.new
+    @dataset_file = @challenge.dataset_files.new
     authorize @dataset_file
   end
 
   def create
-    @dataset_file = @challenge
-      .dataset_files.new(dataset_file_params)
+    @dataset_file = @challenge.dataset_files.new(dataset_file_params)
     if @dataset_file.save
       redirect_to challenge_dataset_files_path(@challenge),
         notice: 'Dataset file was successfully created.'
@@ -52,8 +50,7 @@ class DatasetFilesController < ApplicationController
       s3.delete_object(key: @dataset_file.dataset_file_s3_key, bucket: ENV['AWS_S3_BUCKET'])
     end
     @dataset_file.destroy
-    redirect_to challenge_dataset_files_path(@challenge),
-      notice: "Dataset file #{@dataset_file.title} was deleted."
+    redirect_to challenge_dataset_files_path(@challenge), notice: "Dataset file #{@dataset_file.title} was deleted."
   end
 
   private
@@ -67,15 +64,11 @@ class DatasetFilesController < ApplicationController
   end
 
   def check_participation_terms
-    if !policy(@challenge).has_accepted_participation_terms?
-      redirect_to [@challenge, ParticipationTerms.current_terms]
-      return
-    end
+    redirect_to [@challenge, ParticipationTerms.current_terms] unless policy(@challenge).has_accepted_participation_terms?
 
-    if !policy(@challenge).has_accepted_challenge_rules?
-      redirect_to [@challenge, @challenge.current_challenge_rules]
-      return
-    end
+    redirect_to url_for(challenge_challenge_rules_path(@challenge)) unless policy(@challenge).has_accepted_challenge_rules?
+
+    return false
   end
 
   def dataset_file_params
