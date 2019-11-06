@@ -65,10 +65,7 @@ class DatasetFilesController < ApplicationController
 
   def check_participation_terms
     redirect_to [@challenge, ParticipationTerms.current_terms] unless policy(@challenge).has_accepted_participation_terms?
-
     redirect_to url_for(challenge_challenge_rules_path(@challenge)) unless policy(@challenge).has_accepted_challenge_rules?
-
-    return false
   end
 
   def dataset_file_params

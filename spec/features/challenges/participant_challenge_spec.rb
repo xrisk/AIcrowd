@@ -2,6 +2,7 @@ require 'rails_helper'
 
 feature "participant accesses challenge", js: true do
 let!(:challenge) { create(:challenge, :running) }
+let!(:challenge_rules) { create :challenge_rules, challenge: challenge }
 let!(:draft_challenge) { create(:challenge, :draft) }
 let!(:participant) { create(:participant) }
 
