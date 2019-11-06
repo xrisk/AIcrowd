@@ -104,7 +104,14 @@
         <div class="card">
           <ul class="list-group list-group-flush list-group-latest-contributors">
             <% @participants.each do |participant| %>
-              <%= render partial: 'participant_activity', locals: {participant: participant} %>
+              <!-- user -->
+              <li class="list-group-item">
+                <%= link_to participant_path(participant) do %>
+                  <%= concept(Image::Cell,participant, current_participant: current_participant, klass: "avatar") %>
+                  <span class="text-link"><%= participant.name %></span>
+                <% end %>
+              </li>
+              <!-- /user -->
             <% end %>
           </ul>
         </div>
