@@ -33,3 +33,13 @@ spec/examples.txt
 screenshot*
 dump.rdb
 .idea
+.generators
+.rakeTasks
+
+# Migration Data
+db/crowdai_aicrowd_data_migration/challenge_participants.json
+db/crowdai_aicrowd_data_migration/challenge_rounds.json
+db/crowdai_aicrowd_data_migration/challenges.json
+db/crowdai_aicrowd_data_migration/organizers.json
+db/crowdai_aicrowd_data_migration/submissions.json
+

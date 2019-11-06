@@ -5,6 +5,7 @@ class Submission < ApplicationRecord
   belongs_to :challenge, counter_cache: true
   belongs_to :participant, optional: true
   belongs_to :challenge_round, optional: true
+
   with_options dependent: :destroy do |assoc|
     assoc.has_many :submission_files
     assoc.has_many :submission_grades
@@ -18,7 +19,6 @@ class Submission < ApplicationRecord
   as_enum :grading_status,
     [:ready, :submitted, :initiated, :graded, :failed], map: :string
 
-  validates :participant_id, presence: true
   validates :challenge_id, presence: true
   validates :grading_status, presence: true
   validate :clef_validations
