@@ -18,7 +18,6 @@
 #       invitation.save!
 #       log_in(participant_not_accepted)
 #       visit team_invitation_acceptances_path(invitation)
-#         redirect_to challenge_challenge_rules_path
 #       expect(current_path).to eq(polymorphic_path([challenge, challenge.current_challenge_rules]))
 #       check 'I have read and agree to the challenge rules (required)'
 #       click_on "Save"

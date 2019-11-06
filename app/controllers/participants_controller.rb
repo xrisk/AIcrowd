@@ -43,7 +43,7 @@ class ParticipantsController < ApplicationController
     @participant.participation_terms_accepted_date = Time.now
     if @participant.update_attributes(accept_terms_params)
       if !policy(@challenge).has_accepted_challenge_rules?
-        redirect_to url_for(challenge_challenge_rules_path(@challenge))
+        redirect_to [@challenge, @challenge.current_challenge_rules]
       else
         redirect_to @challenge
       end

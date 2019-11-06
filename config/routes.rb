@@ -124,8 +124,7 @@ Rails.application.routes.draw do
     end
     resources :dataset_terms, only: [:update]
     resources :participation_terms, only: [:show, :create, :index]
-    get 'challenge_rules', to: 'challenge_rules#show'
-    # resources :challenge_rules, only: [:show]
+    resources :challenge_rules, only: [:show]
     resources :challenge_participants
   end
   get '/load_more_challenges', to: 'challenges#load_more', as: :load_more_challenges

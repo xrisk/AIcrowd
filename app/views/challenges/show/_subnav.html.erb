@@ -46,7 +46,7 @@
         <% unless needs_to_agree_to_terms_or_rules?(challenge) %>
           <li class="nav-item">
             <%= link_to 'Rules',
-                        challenge_challenge_rules_path(challenge),
+                        [challenge, challenge.current_challenge_rules],
                         class: "nav-link nav-link-06" %>
           </li>
         <% end %>
@@ -70,7 +70,7 @@
           <% if needs_to_agree_to_terms_or_rules?(challenge) %>
             <%= link_to "Participate", required_terms_or_rules_path(challenge), {:class => "dropdown-item strong"} %>
           <% else %>
-            <%= link_to "Rules", challenge_challenge_rules_path(challenge), {:class => "dropdown-item strong"} %>
+            <%= link_to "Rules", [challenge, challenge.current_challenge_rules], {:class => "dropdown-item strong"} %>
           <% end %>
         </div>
       </li>
@@ -93,7 +93,7 @@
             <div class="dropdown-divider"></div>
             <%= link_to "Participate", required_terms_or_rules_path(challenge), {:class => "dropdown-item strong"} %>
           <% else %>
-            <%= link_to "Rules", challenge_challenge_rules_path(challenge), {:class => "dropdown-item strong"} %>
+            <%= link_to "Rules", [challenge, challenge.current_challenge_rules], {:class => "dropdown-item strong"} %>
           <% end %>
         </div>
       </li>
@@ -130,7 +130,7 @@
             <div class="dropdown-divider"></div>
             <%= link_to "Participate", required_terms_or_rules_path(challenge), {:class => "dropdown-item strong"} %>
           <% else %>
-            <%= link_to "Rules", challenge_challenge_rules_path(challenge), {:class => "dropdown-item strong"} %>
+            <%= link_to "Rules", [challenge, challenge.current_challenge_rules], {:class => "dropdown-item strong"} %>
           <% end %>
         </div>
       </li>
@@ -143,7 +143,7 @@
                   class: "btn btn-primary btn-sm pull-right" %>
     <% elsif !policy(challenge).has_accepted_challenge_rules? %>
       <%= link_to 'Participate',
-                  challenge_challenge_rules_path(challenge),
+                  [challenge, challenge.current_challenge_rules],
                   class: "btn btn-primary btn-sm pull-right" %>
     <% else %>
       <%= my_team_view_or_create_button(challenge) %>

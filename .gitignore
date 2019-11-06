@@ -33,5 +33,3 @@ spec/examples.txt
 screenshot*
 dump.rdb
 .idea
-.generators
-.rakeTasks

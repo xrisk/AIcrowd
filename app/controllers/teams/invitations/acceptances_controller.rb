@@ -36,7 +36,7 @@ class Teams::Invitations::AcceptancesController < ApplicationController
       return true
     end
     unless @challenge.has_accepted_challenge_rules?(current_participant)
-      @redirect = url_for(challenge_challenge_rules_path(@challenge))
+      @redirect = url_for([@challenge, @challenge.current_challenge_rules])
       return true
     end
     return false

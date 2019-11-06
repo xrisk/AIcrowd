@@ -31,7 +31,7 @@ module ChallengesHelper
     if !policy(challenge).has_accepted_participation_terms?
       return url_for([challenge, ParticipationTerms.current_terms])
     elsif !policy(challenge).has_accepted_challenge_rules?
-      return url_for(challenge_challenge_rules_url(challenge))
+      return url_for([challenge, challenge.current_challenge_rules])
     end
     return nil
   end
