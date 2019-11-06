@@ -42,6 +42,13 @@
             <%= f.text_area :address, placeholder: 'Optional...', class: 'form-control', rows: 3 %>
           </div>
 
+          <!-- CLEF organizer related -->
+          <div class="form-group">
+            <%= f.label :clef_organizer, 'CLEF organizer?' %>
+            <%= f.check_box :clef_organizer %>
+          </div>
+          <!--/CLEF organizer related-->
+
           <div class="form-group">
             <%= f.label :api_key, class: 'd-flex justify-content-between' do %>
               API key
