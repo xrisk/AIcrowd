@@ -10,10 +10,12 @@ class Api::SubmissionsController < Api::BaseController
       payload.merge(message: 'Submission found.')
       status = :ok
     else
-      payload = {message: 'No submission could be found for this id'}
+      payload = { message: 'No submission could be found for this id' }
       status = :not_found
     end
     render json: payload, status: status
+  rescue
+    render json: { message: 'Internal Server Error; Contact AIcrowd Admins' }, status: :internal_server_error
   end
 
   def index
@@ -28,7 +30,7 @@ class Api::SubmissionsController < Api::BaseController
     challenge = Challenge.where('challenge_client_name = ? ', params[:challenge_client_name]).first
     if challenge.nil?
       message = "challenge_client_name #{@challenge_client_name} not found"
-      render json: {message: message}, status: :not_found
+      render json: { message: message }, status: :not_found
     else
       challenge_id = challenge.id
       set_submissions(challenge_id, params[:grading_status], params[:after], params[:challenge_round_id])
@@ -36,7 +38,7 @@ class Api::SubmissionsController < Api::BaseController
       render json: @submission_ids, status: :ok
     end
   rescue
-    render json: {message: 'server error'}, status: :internal_server_error
+    render json: { message: 'server error' }, status: :internal_server_error
   end
 
 
@@ -46,8 +48,7 @@ class Api::SubmissionsController < Api::BaseController
     if grading_status.blank? && after.blank? && challenge_round_id.blank?
       @submissions = Submission.where(challenge_id: challenge_id)
     elsif grading_status.blank? && after.blank? && challenge_round_id.present?
-      @submissions = Submission.where('challenge_id = ? AND challenge_round_id = ?',
-                                      challenge_id, challenge_round_id)
+      @submissions = Submission.where('challenge_id = ? AND challenge_round_id = ?', challenge_id, challenge_round_id)
     elsif grading_status.blank? && after.present? && challenge_round_id.present?
       @submissions = Submission.where('challenge_id = ? AND created_at >= ? AND challenge_round_id = ?',
                                       challenge_id, after, challenge_round_id)

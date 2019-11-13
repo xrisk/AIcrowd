@@ -1,6 +1,5 @@
 class Api::SubmissionSerializer < ActiveModel::Serializer
-  has_many :submission_files,
-    serializer: Api::SubmissionFileSerializer
+  has_many :submission_files, serializer: Api::SubmissionFileSerializer
 
   attributes :id,
     :challenge_id,
@@ -31,28 +30,28 @@ class Api::SubmissionSerializer < ActiveModel::Serializer
   end
 
   def participant_email
-    @participant ||= object.participant
-    return @participant.email
+    @participant ||= object&.participant
+    return @participant&.email
   end
 
   def participant_name
-    @participant ||= object.participant
-    return @participant.name
+    @participant ||= object&.participant
+    return @participant&.name
   end
 
   def participant_firstname
-    @participant ||= object.participant
-    return @participant.first_name
+    @participant ||= object&.participant
+    return @participant&.first_name
   end
 
   def participant_lastname
-    @participant ||= object.participant
-    return @participant.last_name
+    @participant ||= object&.participant
+    return @participant&.last_name
   end
 
   def participant_affiliation
-    @participant ||= object.participant
-    return @participant.affiliation
+    @participant ||= object&.participant
+    return @participant&.affiliation
   end
 
 end
