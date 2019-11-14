@@ -6,7 +6,7 @@
   <% if entry.challenge.score_secondary_title? %>
     <td><%= formatted_value(entry.score_secondary_display) %></td>
   <% end %>
-  <td><%= formatted_value(enable_links_in_raw_text(entry.grading_message)) %></td>
+  <td><%= enable_links_in_raw_text(entry.grading_message) %></td>
   <td class="text-right"><%= local_time(entry.created_at, "%a, %e %b %Y") %> <br>
     <%= local_time(entry.created_at, "%H:%M:%S") %></td>
   <% if entry.challenge.submissions_page %>
