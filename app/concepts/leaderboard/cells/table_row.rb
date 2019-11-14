@@ -12,15 +12,6 @@ class Leaderboard::Cell::TableRow < Leaderboard::Cell
     model
   end
 
-  def formatted_score
-    sprintf("%.#{challenge_round.score_precision}f", entry.score || 0)
-  end
-
-
-  def formatted_score_secondary
-    sprintf("%.#{challenge_round.score_precision}f", entry.score_secondary || 0)
-  end
-
   def challenge
     @challenge ||= model.challenge
   end
