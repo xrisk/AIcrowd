@@ -12,15 +12,6 @@ class Leaderboard::Cell::TableRow < Leaderboard::Cell
     model
   end
 
-  def formatted_score
-    sprintf("%.#{challenge_round.score_precision}f", entry.score || 0)
-  end
-
-
-  def formatted_score_secondary
-    sprintf("%.#{challenge_round.score_precision}f", entry.score_secondary || 0)
-  end
-
   def challenge
     @challenge ||= model.challenge
   end
@@ -46,7 +37,7 @@ class Leaderboard::Cell::TableRow < Leaderboard::Cell
   end
 
   def participants
-    @participants ||= begin
+    temp_participants = begin
       if entry.try(:submitter_type) == 'Team'
         entry&.team&.participants&.to_a
       else
@@ -54,7 +45,8 @@ class Leaderboard::Cell::TableRow < Leaderboard::Cell
       end
     end
 
-    @participants = [] if @participants.nil? || @participants.include?(nil)
+    temp_participants = [] if temp_participants.nil? || temp_participants.include?(nil)
+    return temp_participants
   end
 
   def top_rows

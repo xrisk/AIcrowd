@@ -24,6 +24,7 @@ class Submission::Cell::SubmissionDetail < Submission::Cell
     []
   end
 
+
   def view_description
     return false if entry.description.blank?
     return true if current_participant&.admin? || current_participant&.id == participant.id

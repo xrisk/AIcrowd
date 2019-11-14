@@ -13,8 +13,8 @@ RSpec.describe CalculateLeaderboardService do
     end
     it { expect(described_class.new(
       challenge_round_id: challenge_round.id)
-      .get_order_by)
-      .to eq('score_display desc, score_secondary_display desc')}
+      .order_by(use_display: true))
+      .to eq('score_display desc NULLS LAST, score_secondary_display desc NULLS LAST')}
   end
 
   describe 'descending / not_used' do
@@ -25,8 +25,8 @@ RSpec.describe CalculateLeaderboardService do
     end
     it { expect(described_class.new(
       challenge_round_id: challenge_round.id)
-      .get_order_by)
-      .to eq('score_display desc')}
+      .order_by(use_display: true))
+      .to eq('score_display desc NULLS LAST')}
   end
 
   describe 'ascending / ascending' do
@@ -37,8 +37,8 @@ RSpec.describe CalculateLeaderboardService do
     end
     it { expect(described_class.new(
       challenge_round_id: challenge_round.id)
-      .get_order_by)
-      .to eq('score_display asc, score_secondary_display asc')}
+      .order_by(use_display: true))
+      .to eq('score_display asc NULLS LAST, score_secondary_display asc NULLS LAST')}
   end
 
   describe 'ascending / descending' do
@@ -49,8 +49,8 @@ RSpec.describe CalculateLeaderboardService do
     end
     it { expect(described_class.new(
       challenge_round_id: challenge_round.id)
-      .get_order_by)
-      .to eq('score_display asc, score_secondary_display desc')}
+      .order_by(use_display: true))
+      .to eq('score_display asc NULLS LAST, score_secondary_display desc NULLS LAST')}
   end
 
   describe 'ascending / not_used' do
@@ -61,8 +61,8 @@ RSpec.describe CalculateLeaderboardService do
     end
     it { expect(described_class.new(
       challenge_round_id: challenge_round.id)
-      .get_order_by)
-      .to eq('score_display asc')}
+      .order_by(use_display: true))
+      .to eq('score_display asc NULLS LAST')}
   end
 
   describe 'ascending / descending' do
@@ -73,8 +73,8 @@ RSpec.describe CalculateLeaderboardService do
     end
     it { expect(described_class.new(
       challenge_round_id: challenge_round.id)
-      .get_order_by)
-      .to eq('score_display desc, score_secondary_display desc')}
+      .order_by(use_display: true))
+      .to eq('score_display desc NULLS LAST, score_secondary_display desc NULLS LAST')}
   end
 
 end
