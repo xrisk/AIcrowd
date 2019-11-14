@@ -78,7 +78,7 @@ class Leaderboard::Cell < Template::Cell
   end
 
   def formatted_value(value)
-    format("%.#{entry.challenge_round.score_precision}f", value || 0)
+    format("%.#{challenge_round.score_precision}f", value || 0)
   end
 
 end
