@@ -24,7 +24,7 @@ class Team::BaseMailer < ApplicationMailer
 
   protected def linked_team_html
     @linked_team_html ||= if @team.persisted?
-                            link_to(@team.name, team_url(@team))
+                            link_to(@team.name, challenge_team_url(@team.challenge, @team))
                           else
                             "“#{@team.name}”"
                           end

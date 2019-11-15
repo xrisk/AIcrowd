@@ -65,7 +65,7 @@
 <div class="modal fade" id="invite-team-member-modal" tabindex="-1" role="dialog" aria-labelledby="invite-team-member-modal-label" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <%= form_for(TeamParticipant.new, url: team_invitations_path(team_name: @team.name)) do |f| %>
+      <%= form_for(TeamParticipant.new, url: challenge_team_invitations_path(@team.challenge, @team)) do |f| %>
         <div class="modal-header">
           <h4 class="modal-title" id="invite-team-member-modal-label">Invite a member</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">

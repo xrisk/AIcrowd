@@ -1,4 +1,4 @@
-class Teams::Invitations::Controller < ApplicationController
+class Challenges::TeamInvitationsController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_team
   before_action :set_invitation, only: [:show, :edit, :update, :destroy]
@@ -20,7 +20,7 @@ class Teams::Invitations::Controller < ApplicationController
     else
       flash[:error] = 'The invitation was not sent. No invitations left.'
     end
-    redirect_to @team
+    redirect_to challenge_team_path(@team.challenge, @team)
   end
 
   private def set_team
@@ -36,10 +36,10 @@ class Teams::Invitations::Controller < ApplicationController
     @invitee = Participant.where('LOWER(name) = LOWER(?)', params[:name]).first
     if @invitee.nil?
       flash[:error] = 'Participant with that name could not be found'
-      redirect_to @team
+      redirect_to challenge_team_path(@team.challenge, @team)
     elsif @invitee.concrete_teams.find_by(challenge_id: @team.challenge_id).present?
       flash[:error] = 'Participant with that name is already on a team'
-      redirect_to @team
+      redirect_to challenge_team_path(@team.challenge, @team)
     end
   end
 end

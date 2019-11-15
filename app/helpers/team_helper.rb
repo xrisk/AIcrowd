@@ -10,7 +10,7 @@ module TeamHelper
       if my_team
         button_opts[:title] = 'My Team'
         button_opts[:tooltip] = "View my team for this challenge: #{my_team.name}"
-        button_opts[:link] = team_path(my_team)
+        button_opts[:link] = challenge_team_path(challenge, my_team)
       else
         button_opts[:title] = 'Create Team'
         create_team_failure_reason = {}
