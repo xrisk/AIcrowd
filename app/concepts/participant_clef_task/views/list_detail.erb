@@ -1,27 +1,24 @@
-<li data-cell='ParticipantClefTask::Cell::ListDetail'>
-  <div class="container">
-    <div class="row">
-      <div>
-        <% if participant.is_a? NullParticipant %>
-          <%= link_to '#' do %><%= concept(Image::Cell, participant) %>
-          <% end %>
-        <% else %>
-          <%= link_to participant_path(participant) do %><%= concept(Image::Cell, participant) %>
-          <% end %>
-        <% end %>
-      </div>
-      <div style="margin-left:5px">
-        <h5><%= link_to participant.name, participant_path(participant) %></h5>
-        <small><%= participant.email %></small>
-        <div>
-          <% if eua_required? %>
-            <%= link_to asset_path(participant_clef_task.eua_file.url), target: :_blank do %>
-              <i aria-hidden="true" class="fa fa-file-pdf-o fa-2x"/>
-            <% end %>
-          <% end %>
-        </div>
-        <div><%= clef_status %></div>
-      </div>
-    </div>
+<li class="list-group-item">
+  <div>
+    <% if participant.is_a? NullParticipant %>
+      <%= link_to '#' do %>
+        <%= concept(Image::Cell,participant, klass: "avatar") %>
+        <span class="text-link"><%= @participant.name %></span>
+      <% end %>
+    <% else %>
+      <%= link_to participant_path(participant) do %>
+        <%= concept(Image::Cell,participant, klass: "avatar") %>
+        <span class="text-link"><%= @participant.name %></span>
+      <% end %>
+    <% end %>
+    <span class="description"><%= participant.email %></span>
+  </div>
+  <div class="row" style="width:20%">
+    <% if eua_required? %>
+      <%= link_to asset_path(participant_clef_task.eua_file.url), target: :_blank do %>
+        <i aria-hidden="true" class="fa fa-file-pdf-o fa-2x"></i>
+      <% end %>
+    <% end %>
+    <span style="margin-left:10px"><%= clef_status %></span>
   </div>
 </li>
