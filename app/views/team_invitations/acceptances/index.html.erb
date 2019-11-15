@@ -11,7 +11,7 @@
       <div class="row masthead-info">
         <div class="col-sm-12 col-md-6">
           <header>
-            <h4>You’re about to join “<%= link_to(@team.name, @team) %>”</h4>
+            <h4>You’re about to join “<%= link_to(@team.name, challenge_team_path(@team.challenge, @team)) %>”</h4>
           </header>
         </div>
       </div>
