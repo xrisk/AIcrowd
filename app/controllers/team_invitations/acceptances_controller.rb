@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class Teams::Invitations::AcceptancesController < ApplicationController
+class TeamInvitations::AcceptancesController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_invitation
   before_action :set_team
@@ -15,7 +15,7 @@ class Teams::Invitations::AcceptancesController < ApplicationController
     recalculate_leaderboards
     notify_concerned_parties_later
     flash[:success] = 'You successfully joined the team!'
-    redirect_to @team
+    redirect_to challenge_team_path(@team.challenge, @team)
   end
 
   private def set_invitation
@@ -48,13 +48,13 @@ class Teams::Invitations::AcceptancesController < ApplicationController
       redirect_to root_path
     elsif @team.full?
       flash[:error] = 'This team is already full'
-      redirect_to @team
+      redirect_to challenge_team_path(@team.challenge, @team)
     elsif @team.team_participants.exists?(participant_id: current_participant.id)
       flash[:error] = 'You are already a member of this team'
-      redirect_to @team
+      redirect_to challenge_team_path(@team.challenge, @team)
     elsif @invitation.status != :pending
       flash[:error] = 'This invitation is no longer valid'
-      redirect_to @team
+      redirect_to challenge_team_path(@team.challenge, @team)
     elsif @team.challenge.teams_frozen?
       flash[:error] = 'Teams for this challenge are frozen'
       redirect_to @team.challenge

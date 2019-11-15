@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Teams::Invitations::Controller, type: :controller do
+RSpec.describe Challenges::TeamInvitationsController, type: :controller do
   render_views
 
   let!(:challenge) { create :challenge }
@@ -15,9 +15,9 @@ RSpec.describe Teams::Invitations::Controller, type: :controller do
     end
 
     describe 'POST #create' do
-      before { post(:create, params: { team_name: team.name, name: invitee.name }) }
+      before { post(:create, params: { challenge_id: team.challenge.slug, team_name: team.name, name: invitee.name }) }
       it { expect(team.team_invitations.pluck(:invitee_id)).to eq([invitee.id]) }
-      it { expect(response).to redirect_to(team_url(name: team.name)) }
+      it { expect(response).to redirect_to(challenge_team_url(team.challenge, team)) }
     end
   end
 
@@ -33,12 +33,12 @@ RSpec.describe Teams::Invitations::Controller, type: :controller do
     describe 'POST #create' do
       before do
         # we parse an actual path instead of using shortcuts to ensure routes are working properly
-        path = team_invitations_path(team_name: team.name)
+        path = challenge_team_invitations_path(team.challenge, team)
         params = Rails.application.routes.recognize_path(path, method: :post)
         post(params[:action], params: params.except(:controller, :action).merge(name: invitee.name))
       end
       it { expect(team.team_invitations.pluck(:invitee_id)).to eq([invitee.id]) }
-      it { expect(response).to redirect_to(team_url(name: team.name)) }
+      it { expect(response).to redirect_to(challenge_team_url(team.challenge, team)) }
     end
   end
 end

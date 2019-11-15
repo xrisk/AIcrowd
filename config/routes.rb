@@ -72,15 +72,12 @@ Rails.application.routes.draw do
   resources :blogs do
     resources :votes, only: [:create, :destroy]
   end
-  constraints format: false do
-    resources :teams, only: [:show], param: :name, constraints: { name: /[^?\/]+/ }, controller: 'teams/' do
-      resources :invitations, only: [:create], controller: 'teams/invitations/'
-    end
-  end
+
+  resources :teams, only: [:show], param: :name, constraints: { name: /[^?\/]+/ }, format: false # legacy
   resources :team_invitations, only: [], param: :uuid do
-    resources :acceptances, only: [:index, :create], controller: 'teams/invitations/acceptances'
-    resources :declinations, only: [:index, :create], controller: 'teams/invitations/declinations'
-    resources :cancellations, only: [:create], controller: 'teams/invitations/cancellations'
+    resources :acceptances, only: [:index, :create], controller: 'team_invitations/acceptances'
+    resources :declinations, only: [:index, :create], controller: 'team_invitations/declinations'
+    resources :cancellations, only: [:create], controller: 'team_invitations/cancellations'
   end
 
   resources :success_stories, only: [:index, :show]
@@ -102,7 +99,9 @@ Rails.application.routes.draw do
       get :reorder
       post :assign_order
     end
-    resources :teams, only: [:create], controller: 'challenges/teams'
+    resources :teams, only: [:create, :show], param: :name, constraints: { name: /[^?\/]+/ }, format: false, controller: 'challenges/teams' do
+      resources :invitations, only: [:create], controller: 'challenges/team_invitations'
+    end
     resources :dataset_files
     resources :participant_challenges, only: [:index] do
       get :approve, on: :collection

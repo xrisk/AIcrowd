@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class Teams::Invitations::DeclinationsController < ApplicationController
+class TeamInvitations::DeclinationsController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_invitation
   before_action :set_team
@@ -30,10 +30,10 @@ class Teams::Invitations::DeclinationsController < ApplicationController
       redirect_to root_path
     elsif @team.team_participants.exists?(participant_id: current_participant.id)
       flash[:error] = 'You are already a member of this team'
-      redirect_to @team
+      redirect_to challenge_team_path(@team.challenge, @team)
     elsif @invitation.status != :pending
       flash[:error] = 'This invitation is no longer valid'
-      redirect_to @team
+      redirect_to challenge_team_path(@team.challenge, @team)
     elsif @team.challenge.teams_frozen?
       flash[:error] = 'The challenge has team-freeze in effect'
       redirect_to @team.challenge

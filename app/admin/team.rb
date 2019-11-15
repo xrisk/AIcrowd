@@ -1,4 +1,5 @@
 ActiveAdmin.register Team do
+  belongs_to :challenge, optional: true
   config.sort_order = 'name_asc'
   permit_params :name, :challenge_id
 
@@ -6,6 +7,18 @@ ActiveAdmin.register Team do
     defaults :finder => :find_by_name
     def scoped_collection
       super.includes :challenge
+    end
+
+    def create
+      create! do |format|
+        format.html { redirect_to admin_challenge_team_path(@team.challenge, @team) }
+      end
+    end
+
+    def destroy
+      destroy! do |format|
+        format.html { redirect_to params[:return_to].presence || admin_challenge_team_path(@team.challenge, @team) }
+      end
     end
   end
 
@@ -16,6 +29,10 @@ ActiveAdmin.register Team do
     end
   end
 
+  action_item only: :index, priority: 0 do
+    link_to('All Teams', admin_teams_path()) if params[:challenge_id].present?
+  end
+
   index do
     selectable_column
     column :name
@@ -24,7 +41,16 @@ ActiveAdmin.register Team do
     end
     column :created_at
     column :updated_at
-    actions
+    actions defaults: false do |team|
+      if params[:challenge_id].present?
+        delete_return_to = admin_challenge_teams_path(team.challenge)
+      else
+        delete_return_to = admin_teams_path()
+      end
+      item 'View', admin_challenge_team_path(team.challenge, team), class: 'member_link'
+      item 'Edit', edit_admin_challenge_team_path(team.challenge, team), class: 'member_link'
+      item 'Delete', admin_challenge_team_path(team.challenge, team, return_to: delete_return_to), method: :delete, class: 'member_link'
+    end
   end
 
   show do
@@ -42,8 +68,8 @@ ActiveAdmin.register Team do
   form do |f|
     f.semantic_errors
     f.inputs do
-      f.input :name, as: :string
       f.input :challenge, collection: Challenge.all.map { |x| [x.challenge, x.id] }
+      f.input :name, as: :string
     end
     f.actions
   end

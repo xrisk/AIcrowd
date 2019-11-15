@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class Teams::Invitations::CancellationsController < ApplicationController
+class TeamInvitations::CancellationsController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_invitation
   before_action :set_team
@@ -9,7 +9,7 @@ class Teams::Invitations::CancellationsController < ApplicationController
     @invitation.update!(status: :canceled)
     Team::InvitationCanceledNotifierJob.perform_later(@invitation.id)
     flash[:success] = "You successfully cancelled the invitation of #{@invitation.invitee.name} to #{@team.name}"
-    redirect_to @team
+    redirect_to challenge_team_path(@team.challenge, @team)
   end
 
   private def set_invitation
@@ -23,7 +23,7 @@ class Teams::Invitations::CancellationsController < ApplicationController
   private def redirect_on_disallowed
     if !@team.team_participants_organizer.exists?(participant_id: current_participant.id)
       flash[:error] = 'Only an organizer of the team may cancel an invitation'
-      redirect_to @team
+      redirect_to challenge_team_path(@team.challenge, @team)
     end
   end
 end

@@ -13,7 +13,7 @@
         <span class="text-link"><%= participants[0].name %></span>
       <% end %>
     <% else %>
-      <%= link_to team.name, team_path(team) %>
+      <%= link_to team.name, challenge_team_path(team.challenge, team) %>
       <div class="avatar-group">
         <% participants.each do |p| %>
           <%= link_to participant_path(p), title: p.name, data: {toggle: :tooltip} do %>
