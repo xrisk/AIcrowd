@@ -2,16 +2,20 @@
 <%= render partial: 'challenges/show/subnav',
            locals: {challenge: @challenge} %>
 
-<!-- section -->
 <div class="section-p-md">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12">
-        <ul class="list-host-members">
-          <%= render partial: 'clef_participants' %>
-        </ul>
-      </div>
-    </div>
-  </div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12">
+				<% if @clef_task.participant_clef_tasks.blank? %>
+					<div class="md-content">
+                		<%= "No participants for this challenge yet" %>
+              		</div>
+				<% else %>
+					<ul class="list-group list-group-flush-px-0 list-group-organizers" id="pc-ul">
+		              <%= render partial: 'clef_participants' %>
+					</ul>
+				<% end %>
+			</div>
+		</div> 
+	</div>
 </div>
-<!-- /section -->
