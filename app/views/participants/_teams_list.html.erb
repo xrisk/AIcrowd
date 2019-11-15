@@ -22,7 +22,7 @@
               <% pending_invitations.each do |inv| %>
                 <li class="list-group-item">
                   <div>
-                    <%= link_to(inv.team.name, inv.team, class: 'text-link') %>
+                    <%= link_to(inv.team.name, challenge_team_path(inv.team.challenge, inv.team), class: 'text-link') %>
                     <span><%= inv.team.challenge.challenge %></span>
                   </div>
                   <div>
@@ -41,10 +41,10 @@
               <% teams.each do |team| %>
                 <li class="list-group-item">
                   <div>
-                    <%= link_to(team.name, team, class: 'text-link') %>
+                    <%= link_to(team.name, challenge_team_path(team.challenge, team), class: 'text-link') %>
                     <span><%= team.challenge.challenge %></span>
                   </div>
-                  <%= link_to('View', team, class: 'btn btn-secondary btn-sm') %>
+                  <%= link_to('View', challenge_team_path(team.challenge, team), class: 'btn btn-secondary btn-sm') %>
                 </li>
               <% end %>
             </ul>
