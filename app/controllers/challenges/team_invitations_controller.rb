@@ -1,11 +1,12 @@
 class Challenges::TeamInvitationsController < ApplicationController
   before_action :authenticate_participant!
+  before_action :set_challenge
   before_action :set_team
   before_action :set_invitation, only: [:show, :edit, :update, :destroy]
   before_action :redirect_on_create_disallowed, only: :create
 
   def create
-    if @team.invitations_left > 0
+    if @team.invitations_left.positive?
       @invitation = @team.team_invitations.new(
           invitor: current_participant,
           invitee: @invitee,
@@ -23,8 +24,12 @@ class Challenges::TeamInvitationsController < ApplicationController
     redirect_to challenge_team_path(@team.challenge, @team)
   end
 
+  private def set_challenge
+    @challenge = Challenge.friendly.find(params[:challenge_id])
+  end
+
   private def set_team
-    @team = Team.find_by!(name: params[:team_name])
+    @team = @challenge.teams.find_by!(name: params[:team_name])
   end
 
   private def set_invitation
