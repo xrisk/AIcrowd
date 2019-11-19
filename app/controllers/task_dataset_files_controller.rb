@@ -1,8 +1,8 @@
 class TaskDatasetFilesController < ApplicationController
   before_action :authenticate_participant!
-  before_action :set_task_dataset_file, only: [:destroy]
+  before_action :set_task_dataset_file, only: [:destroy, :edit, :update]
   before_action :set_clef_task
-  before_action :set_s3_direct_post, only: [:new, :create]
+  before_action :set_s3_direct_post, only: [:new, :create, :edit]
 
   def index
     @challenge = Challenge.find(params[:challenge_id])
@@ -25,6 +25,18 @@ class TaskDatasetFilesController < ApplicationController
                   notice: 'Dataset file was successfully created.'
     else
       render :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @task_dataset_file.update(task_dataset_file_params)
+      redirect_to organizer_clef_tasks_path(@clef_task.organizer),
+        notice: 'Dataset file was successfully updated.'
+    else
+      render :edit
     end
   end
 

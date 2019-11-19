@@ -3,24 +3,19 @@
            locals: {challenge: @challenge} %>
 
 <!-- section -->
-<section class="section-p-md">
+<section class="section-p-sm">
   <div class="container-fluid">
     <div class="row">
-      <!-- md content -->
-      <div class="col-md-8 col-lg-7" id="description-wrapper">
-        <div class="markdown-wrap">
-          <div class="md-content">
+      <div class="col-12">
+        <ul class="list-group list-group-flush-px-0 list-group-dataset">
+            <h4><%= @clef_task.task %> dataset files</h4>
+            <hr/>
             <%= concept(ParticipantClefTask::Cell,
                         @clef_task,
                         current_participant: current_participant,
                         challenge_id: @challenge.id) %>
-          </div>
-        </div>
+        </ul>
       </div>
-      <!-- /md content -->
     </div>
   </div>
 </section>
-<!-- /section -->
-
-</main>
