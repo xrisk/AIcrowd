@@ -3,10 +3,11 @@
     <%= concept(TaskDataset::Cell::ListDetail,
                   collection: task_dataset_files,
                   current_participant: current_participant) %>
+    <br/><br/>
     <% if eua_required? %>
-      <p>Your signed End User Agreement (EUA) has been approved. You are now permitted to access this challenge's dataset.</p>
+      <p>Your signed End User Agreement (EUA) has been approved. You are therefore permitted to access this challenge's dataset.</p>
     <% else %>
-      <p>You have been registered for this task. You are now permitted to access the dataset.</p>
+      <p>You have been registered for this task. You are therefore permitted to access this challenge's dataset.</p>
     <% end %>
 </ul>
 </div>

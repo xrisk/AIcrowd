@@ -31,6 +31,22 @@ class TaskDataset::Cell::ListDetail < TaskDataset::Cell
     s3_key.split('/')[-1]
   end
 
+  def file_title
+    if task_dataset_file.title.present?
+      task_dataset_file.title
+    else
+      task_dataset_file.description
+    end
+  end
+
+  def file_description
+    if task_dataset_file.title.present?
+      task_dataset_file.description
+    else
+      nil
+    end
+  end
+
   def file_type
     s3_key = task_dataset_file.dataset_file_s3_key
     return nil if s3_key.nil?
