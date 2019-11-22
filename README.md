@@ -27,6 +27,9 @@ Did we you say you are Awesomeee ?
 
 Our Contribution guidelines are available at [CONTRIBUTING.md](CONTRIBUTING.md)
 
+## Source Disclosure
+This repository is a fork of the [crowdAI/crowdAI](https://github.com/crowdAI/crowdAI) which is no longer maintained.
+
 # Documentation
 
 We are in the process of migrating our [documentation](doc/documentation.md) from the Wiki into this repository as markdown files.
