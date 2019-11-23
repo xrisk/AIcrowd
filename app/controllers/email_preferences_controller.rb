@@ -7,12 +7,12 @@ class EmailPreferencesController < ApplicationController
 
   def update
     if @participant.update_attributes(participant_params)
+      flash[:notice] = 'Your email preferences were successfully updated.'
+      redirect_to session['participant_return_to'] if session['participant_return_to']
       if @token
-        redirect_to participant_notifications_path(@participant, preferences_token: @token),
-                    notice: 'Your email preferences were successfully updated.'
+        redirect_to participant_notifications_path(@participant, preferences_token: @token)
       else
-        redirect_to participant_notifications_path(@participant),
-                    notice: 'Your email preferences were successfully updated.'
+        redirect_to participant_notifications_path(@participant)
       end
     else
       render :edit
