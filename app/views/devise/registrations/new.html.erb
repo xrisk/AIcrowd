@@ -53,21 +53,14 @@
             </div>
 
             <div class="form-group form-check mb-3">
-              <%= f.check_box :agreed_to_terms_of_use_and_privacy, {class: 'form-check-input requires-agreement-checkbox', "data-target": 'sign-up-button', id: 'termsAgreement'}, "true", "false" %>
-              <%= f.label :agreed_to_terms_of_use_and_privacy, {class: "form-check-label", for: "termsAgreement"} do %>
-                By signing up, I agree to the terms in the
+                By signing up, you agree to the terms in the
                 <%= link_to 'Terms of Use', terms_path %>
                 and the <%= link_to 'Privacy Policy', privacy_path %>
-              <% end %>
             </div>
 
             <div class="form-group form-check mb-4">
-              <%= f.check_box :agreed_to_marketing, {class: 'form-check-input', id: 'updateAgreement'}, "true", "false" %>
-
-              <%= f.label :agreed_to_marketing, {class: 'form-check-label'} do %>
-                I agree to receive occasional updates about AIcrowd news, including new challenge launches and other
-                activities (this can be turned off in your settings).
-              <% end %>
+              You also agree to receive occasional updates about AIcrowd news, including new challenge launches and other
+              activities (this can be turned off in your settings).
             </div>
             <%= f.button 'Create account', type: 'submit', class: 'btn btn-primary btn-block requires-agreement', id: "sign-up-button", disabled: true %>
           <% end %>
