@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_28_213451) do
+ActiveRecord::Schema.define(version: 2019_11_23_091601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -559,6 +559,22 @@ ActiveRecord::Schema.define(version: 2019_10_28_213451) do
     t.index ["participant_id"], name: "index_email_preferences_tokens_on_participant_id"
   end
 
+  create_table "emails", id: :serial, force: :cascade do |t|
+    t.integer "model_id"
+    t.string "mailer_classname"
+    t.text "recipients"
+    t.text "options"
+    t.string "status_cd"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email_preferences_token"
+    t.datetime "token_expiration_dttm"
+    t.integer "participant_id"
+    t.jsonb "options_json"
+    t.integer "mailer_id"
+    t.index ["mailer_id"], name: "index_emails_on_mailer_id"
+  end
+
   create_table "follows", id: :serial, force: :cascade do |t|
     t.integer "followable_id", null: false
     t.string "followable_type", null: false
@@ -634,6 +650,13 @@ ActiveRecord::Schema.define(version: 2019_10_28_213451) do
     t.index ["user_type", "user_id"], name: "index_login_activities_on_user_type_and_user_id"
   end
 
+  create_table "mailers", id: :serial, force: :cascade do |t|
+    t.string "mailer_classname"
+    t.boolean "paused", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "mandrill_messages", force: :cascade do |t|
     t.jsonb "res"
     t.jsonb "message"
@@ -676,6 +699,14 @@ ActiveRecord::Schema.define(version: 2019_10_28_213451) do
     t.bigint "sash_id"
     t.string "category", default: "default"
     t.index ["sash_id"], name: "index_merit_scores_on_sash_id"
+  end
+
+  create_table "migration_mappings", force: :cascade do |t|
+    t.string "source_type"
+    t.integer "source_id"
+    t.integer "crowdai_participant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -820,8 +851,9 @@ ActiveRecord::Schema.define(version: 2019_10_28_213451) do
     t.string "uid"
     t.datetime "participation_terms_accepted_date"
     t.integer "participation_terms_accepted_version"
-    t.boolean "agreed_to_terms_of_use_and_privacy", default: false
-    t.boolean "agreed_to_marketing", default: false
+    t.boolean "agreed_to_terms_of_use_and_privacy", default: true
+    t.boolean "agreed_to_marketing", default: true
+    t.integer "submissions_count", default: 0
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["organizer_id"], name: "index_participants_on_organizer_id"
@@ -1089,6 +1121,7 @@ ActiveRecord::Schema.define(version: 2019_10_28_213451) do
   add_foreign_key "dataset_file_downloads", "dataset_files"
   add_foreign_key "dataset_file_downloads", "participants"
   add_foreign_key "email_preferences", "participants"
+  add_foreign_key "emails", "mailers"
   add_foreign_key "follows", "participants"
   add_foreign_key "invitations", "challenges"
   add_foreign_key "invitations", "participants"
