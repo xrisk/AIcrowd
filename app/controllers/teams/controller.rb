@@ -3,7 +3,9 @@ class Teams::Controller < ApplicationController
   before_action :set_team, only: [:show, :edit, :update, :destroy]
 
   def show
-    @pending_invitations = @team.team_invitations.status_pendings
+    @pending_invitations = @team.team_invitations
+      .status_pendings
+      .includes(:invitee)
   end
 
   private def set_team

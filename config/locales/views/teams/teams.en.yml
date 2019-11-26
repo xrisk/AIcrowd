@@ -1,4 +1,25 @@
 en:
+  teams:
+    invitations:
+      cancellations:
+        create:
+          success_flash: "You successfully cancelled the invitation of %{invitee} to %{team}"
+    member_list:
+      team_members_length_1_warning: ⚠️ As soon as someone else joins this team, your submissions will show up in the leaderboard under the team name.
+      members:
+        title: Members
+        limit: "( %{current} / %{max} )"
+        organizer_badge: Team Organizer
+      pending_invitations:
+        title: Invited
+        remaining: "( %{count} left )"
+        none: No pending invitations
+      form:
+        title: Invite a member
+        invitee:
+          label: Participant Name or Email
+          placeholder: Participant name or email
+        submit: Invite
   helpers:
     teams:
       create_invitation_flash:
@@ -10,7 +31,9 @@ en:
         challenge_teams_frozen: The team's challenge has team-freeze in effect.
         unspecified: You may not invite a member to this team at this time.
         invitee_nil: Participant with that name could not be found.
-        invitee_on_other_team: Participant with that name is already on a team.
+        invitee_on_this_team_confirmed: That participant is already on the team.
+        invitee_on_this_team_pending: That participant has already been invited to this team.
+        invitee_on_other_team: That participant is already on a team.
       my_team_button:
         title: My Team
         tooltip: "View my team for this challenge: %{team_name}"

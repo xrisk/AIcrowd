@@ -1,17 +1,16 @@
 <% members = @team.team_participants.includes(:participant) %>
 <% if members.length == 1 && members.first.participant_id == current_participant&.id %>
   <div class="mb-5">
-    ⚠️ As soon as someone else joins this team, your submissions will show up in the leaderboard under the team name.
+    <%= t('.team_members_length_1_warning') %>
   </div>
 <% end %>
 <div class="row">
   <div class="col-12">
     <header class="section-header">
       <div>
-        <h4>Members</h4>
-        <h5> ( <%= members.count %> / <%= @team.challenge.max_team_participants %> ) </h5>
+        <h4><%= t('.members.title') %></h4>
+        <h5><%= t('.members.limit', current: members.count, max: @team.challenge.max_team_participants) %></h5>
       </div>
-
       <%= team_member_invite_button(@team) %>
     </header>
     <ul class="list-group list-group-flush-px-0 list-group-teams">
@@ -21,7 +20,7 @@
             <%= concept(Image::Cell, tp.participant, klass: "avatar") %>
             <span class="text-link"><%= tp.participant.name %></span>
             <% if tp.role_organizer? %>
-              <span class="badge badge-success">Team Organizer</span>
+              <span class="badge badge-success"><%= t('.members.organizer_badge') %></span>
             <% end %>
           <% end %>
         </li>
@@ -31,26 +30,32 @@
     <% if policy(@team).show_invitations? %>
       <header class="section-header mt-5">
         <div>
-          <h4>Invited</h4>
+          <h4><%= t('.pending_invitations.title') %></h4>
           <% issues = {}; can_invite_now = policy(@team).create_invitations?(issues) %>
           <% if can_invite_now || !issues[:list].include?(:participant_not_organizer) %>
-            <h5> ( <%= @team.invitations_left_clamped %> left ) </h5>
+            <h5><%= t('.pending_invitations.remaining', count: @team.invitations_left_clamped) %></h5>
           <% end %>
         </div>
       </header>
       <% if @pending_invitations.length > 0 %>
         <ul class="list-group list-group-flush-px-0 list-group-teams">
-          <% @pending_invitations.includes(:invitee).each do |inv| %>
+          <% @pending_invitations.each do |inv| %>
             <li class="list-group-item">
               <div>
-                <%= link_to(inv.invitee,
-                  title: "Invited #{time_ago_in_words(inv.created_at)} ago",
-                  data: {
-                    toggle: :tooltip,
-                  },
-                ) do %>
-                  <%= concept(Image::Cell, inv.invitee, klass: "avatar") %>
-                  <span class="text-link"><%= inv.invitee.name %></span>
+                <% if inv.invitee.is_a?(Participant) %>
+                  <%= link_to(inv.invitee,
+                    title: "Invited #{time_ago_in_words(inv.created_at)} ago",
+                    data: {
+                      toggle: :tooltip,
+                    },
+                  ) do %>
+                    <%= concept(Image::Cell, inv.invitee, klass: "avatar") %>
+                    <span class="text-link"><%= inv.invitee.name %></span>
+                  <% end %>
+                <% elsif inv.invitee.is_a?(EmailInvitation) %>
+                  <%= inv.invitee.email %>
+                <% else %>
+                  ?
                 <% end %>
               </div>
               <%= team_invitation_cancel_button(inv) %>
@@ -58,7 +63,7 @@
           <% end %>
         </ul>
       <% else %>
-        <i>No pending invitations</i>
+        <i><%= t('.pending_invitations.none') %></i>
       <% end %>
     <% end %>
   </div>
@@ -70,20 +75,20 @@
     <div class="modal-content">
       <%= form_for(TeamParticipant.new, url: team_invitations_path(team_name: @team.name)) do |f| %>
         <div class="modal-header">
-          <h4 class="modal-title" id="invite-team-member-modal-label">Invite a member</h4>
+          <h4 class="modal-title" id="invite-team-member-modal-label"><%= t('.form.title') %></h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label>Participant Name</label>
+            <label><%= t('.form.invitee.label') %></label>
             <div class="input-group mb-3">
-              <%= text_field_tag(:name, '', class: 'form-control', placeholder: 'Participant name', data: { auto_focus: true }) %>
+              <%= text_field_tag(:invitee, '', class: 'form-control', placeholder: t('.form.invitee.placeholder'), data: { auto_focus: true }) %>
             </div>
           </div>
           <div class="btn-set">
-            <%= f.submit 'Invite', class: 'btn btn-primary' %>
+            <%= f.submit t('.form.submit'), class: 'btn btn-primary' %>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
           </div>
         </div>

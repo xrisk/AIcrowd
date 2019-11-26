@@ -23,7 +23,7 @@ RSpec.describe Teams::Invitations::Controller, '#create', type: :controller do
     # we parse an actual path instead of using shortcuts to ensure routes are working properly
     path = team_invitations_path(team_name: team_name)
     params = Rails.application.routes.recognize_path(path, method: :post)
-    post(params[:action], params: params.except(:controller, :action).merge(invitee_name_or_email: invitee_name_or_email))
+    post(params[:action], params: params.except(:controller, :action).merge(invitee: invitee_name_or_email))
   end
 
   def team_invitees_prev
@@ -145,6 +145,23 @@ RSpec.describe Teams::Invitations::Controller, '#create', type: :controller do
         end
         include_examples :success
       end
+      context 'where invitee is on the team already' do
+        context 'as a member' do
+          before do
+            team.team_participants.create!(participant: invitee)
+            perform_request(team.name, invitee.name)
+          end
+          include_examples :failure, :invitee_on_this_team_confirmed
+        end
+        context 'as a pending invitation' do
+          before do
+            team.team_invitations.create!(invitor: participant, invitee: invitee)
+            @team_invitees_prev = [invitee]
+            perform_request(team.name, invitee.name)
+          end
+          include_examples :failure, :invitee_on_this_team_pending
+        end
+      end
       context 'where invitee is on a different concrete team' do
         before { perform_request(team.name, member_2_of_other_concrete_team.name) }
         include_examples :failure, :invitee_on_other_team
@@ -189,6 +206,23 @@ RSpec.describe Teams::Invitations::Controller, '#create', type: :controller do
           @team_invitee_added = EmailInvitation.last
         end
         include_examples :success
+      end
+      context 'where invitee is on the team already' do
+        context 'as a member' do
+          before do
+            team.team_participants.create!(participant: invitee)
+            perform_request(team.name, invitee.email)
+          end
+          include_examples :failure, :invitee_on_this_team_confirmed
+        end
+        context 'as a pending invitation' do
+          before do
+            team.team_invitations.create!(invitor: participant, invitee: invitee)
+            @team_invitees_prev = [invitee]
+            perform_request(team.name, invitee.email)
+          end
+          include_examples :failure, :invitee_on_this_team_pending
+        end
       end
     end
   end

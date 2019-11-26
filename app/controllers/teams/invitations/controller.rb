@@ -26,7 +26,7 @@ class Teams::Invitations::Controller < ApplicationController
   end
 
   private def set_invitee
-    name_or_email = params[:invitee_name_or_email] || ''
+    name_or_email = params[:invitee] || ''
     @search_field = name_or_email =~ /\A[^@]+@[^@]+\z/ ? :email : :name
     case @search_field
     when :email
@@ -47,8 +47,20 @@ class Teams::Invitations::Controller < ApplicationController
       err = issues[:sym]
     elsif @invitee.nil?
       err = :invitee_nil
-    elsif @invitee.is_a?(Participant) && @invitee.concrete_teams.find_by(challenge_id: @team.challenge_id).present?
-      err = :invitee_on_other_team
+    elsif @invitee.is_a?(Participant)
+      if @team.team_participants.exists?(participant_id: @invitee.id)
+        err = :invitee_on_this_team_confirmed
+      elsif @team.team_invitations_pending.exists?(invitee: @invitee)
+        err = :invitee_on_this_team_pending
+      elsif @invitee.concrete_teams.exists?(challenge_id: @team.challenge_id)
+        err = :invitee_on_other_team
+      end
+    elsif @invitee.is_a?(EmailInvitation)
+      if @team.team_invitations_pending
+          .joins(:invitee_email_invitation)
+          .exists?(email_invitations: { email: @invitee.email })
+        err = :invitee_on_this_team_pending
+      end
     end
     if err
       flash[:error] = error_msg(err)

@@ -8,7 +8,7 @@ class Teams::Invitations::CancellationsController < ApplicationController
   def create
     @invitation.update!(status: :canceled)
     Team::InvitationCanceledNotifierJob.perform_later(@invitation.id)
-    flash[:success] = "You successfully cancelled the invitation of #{@invitation.invitee.name} to #{@team.name}"
+    flash[:success] = t('.success_flash', invitee: @invitation.invitee_name_or_email, team: @team.name)
     redirect_to @team
   end
 

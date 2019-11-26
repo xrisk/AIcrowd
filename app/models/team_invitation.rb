@@ -23,6 +23,17 @@ class TeamInvitation < ApplicationRecord
   validates_inclusion_of :status, in: STATUSES
   validates_uniqueness_of :uuid
 
+  def invitee_name_or_email
+    case invitee
+    when Participant
+      invitee.name
+    when EmailInvitation
+      invitee.email
+    else
+      nil
+    end
+  end
+
   def to_param
     uuid
   end

@@ -2,7 +2,7 @@
 class Team::Invitee::InvitationPendingNotificationMailer < Team::BaseMailer
   def sendmail(invitation)
     @invitation = invitation
-    @participant = @invitation.invitee
+    set_participant_from_invitee(@invitation.invitee)
     @team = @invitation.team
     @invitor = @invitation.invitor
     mandrill_send(format_options)
@@ -17,7 +17,7 @@ class Team::Invitee::InvitationPendingNotificationMailer < Team::BaseMailer
     n_members = "#{team_member_count} #{team_member_count == 1 ? 'member' : 'members'}"
     <<~HTML
       <div>
-        <p>You’ve been invited to join Team #{linked_team_html}!</p>
+        <p>You’ve been invited to join #{linked_team_html}!</p>
         <p>
           Participant #{linked_invitor_html} has invited you to collaborate on Challenge
           #{linked_challenge_html}. The team currently has #{n_members}.

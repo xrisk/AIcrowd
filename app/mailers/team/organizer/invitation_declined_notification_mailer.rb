@@ -14,7 +14,7 @@ class Team::Organizer::InvitationDeclinedNotificationMailer < Team::BaseMailer
   def email_body_html
     <<~HTML
       <div>
-        <p>Participant #{linked_invitee_html} just declined an invitation to join Team #{linked_team_html}.</p>
+        <p>#{linked_invitee_html} just declined an invitation to join #{linked_team_html}.</p>
         #{signoff_html}
       </div>
     HTML

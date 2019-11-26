@@ -12,7 +12,7 @@ module TeamHelper
 
   def team_invitation_cancel_button(invitation)
     button_opts = {}
-    setup_opts_for_invitation_cancel_button(opts, invitation)
+    setup_opts_for_invitation_cancel_button(button_opts, invitation)
     themed_button(button_opts)
   end
 
@@ -69,8 +69,8 @@ module TeamHelper
 
   private def setup_opts_for_invitation_cancel_button(opts, inv)
     opts[:small] = true
-    opts[:title] = t(:title, %i[helpers teams cancel_invitation_button])
-    if policy(invitation.team).cancel_invitations?
+    opts[:title] = t(:title, scope: %i[helpers teams cancel_invitation_button])
+    if policy(inv.team).cancel_invitations?
       opts[:link] = {
         url: team_invitation_cancellations_path(inv),
         method: :post,

@@ -3,11 +3,13 @@ class EmailInvitation < ApplicationRecord
 
   has_one :invitee_team_invitation, class_name: 'TeamInvitation', inverse_of: :invitee_email_invitation
 
-  def init_token
-    self.token ||= Base31.secure_random_str(9)
-  end
+  validates_presence_of :email
 
   def display_token
     Base31.display_token(token, 3, '-')
+  end
+
+  private def init_token
+    self.token ||= Base31.secure_random_str(9)
   end
 end
