@@ -2,8 +2,11 @@ class AllowTeamInvitationsToEmail < ActiveRecord::Migration[5.2]
   def change
     # create new table
     create_table :email_invitations do |t|
+      t.references :invitor, foreign_key: { to_table: :participants }, null: false
       t.citext :email, null: false
       t.citext :token, null: false
+      t.references :claimant, foreign_key: { to_table: :participants }
+      t.timestamp :claimed_at
       t.timestamps
 
       t.index :email

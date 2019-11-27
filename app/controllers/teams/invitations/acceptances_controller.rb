@@ -2,6 +2,7 @@
 class Teams::Invitations::AcceptancesController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_invitation
+  before_action :set_invitee
   before_action :set_team
   before_action :set_challenge
   before_action :redirect_on_disallowed
@@ -20,6 +21,10 @@ class Teams::Invitations::AcceptancesController < ApplicationController
 
   private def set_invitation
     @invitation = TeamInvitation.find_by!(uuid: params[:team_invitation_uuid])
+  end
+
+  private def set_invitee
+    @invitee = @invitation.invitee
   end
 
   private def set_team
@@ -43,7 +48,18 @@ class Teams::Invitations::AcceptancesController < ApplicationController
   end
 
   private def redirect_on_disallowed
-    if @invitation.invitee != current_participant
+    if @invitee.is_a?(EmailInvitation)
+      if @invitee.token_eq?(params[:email_token])
+        flash[:error] = 'Please claim the email the invitation was sent to'
+        redirect_to claim_emails_path(
+          email_token: params[:email_token],
+          email_confirmation: @invitee.email,
+        )
+      else
+        flash[:error] = 'Please use the link you were sent by email and try again'
+        redirect_to root_path
+      end
+    elsif @invitee != current_participant
       flash[:error] = 'You may not accept an invitation on someone else’s behalf'
       redirect_to root_path
     elsif @team.full?

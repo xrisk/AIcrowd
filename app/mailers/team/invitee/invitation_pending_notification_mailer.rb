@@ -49,14 +49,17 @@ class Team::Invitee::InvitationPendingNotificationMailer < Team::BaseMailer
   def email_invitee_info
     return '' unless @invitee.is_a?(EmailInvitation)
     token = @invitee.display_token
-    url = claim_emails_url(email_token: token, email_confirmation: @invitee.email)
+    signup = new_participant_registration_url
+    claim_email = claim_emails_url(email_token: token, email_confirmation: @invitee.email)
     <<~HTML
       <p>
-        Note: If you already have an account with us, you'll need to link it with this invitation by claiming this email. Your unique code to do so is:
+        Note: To join, you'll need an AIcrowd acccount. If you already have an account with us, you'll need to link it with this invitation by claiming this email. Your unique code to do so is:
         <br>
         <b style="margin-left: 20px;">#{token}</b>
         <br>
-        You can sign in and link your account #{link_to('here', url)}. Declining does not require the creation of an account.
+        You can sign up #{link_to('here', signup)}, and then link your account #{link_to('here', claim_email)}.
+        <br>
+        Declining does not require the creation of an account.
       </p>
     HTML
   end

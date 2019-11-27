@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_17_083157) do
+ActiveRecord::Schema.define(version: 2019_11_25_083157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -443,11 +443,16 @@ ActiveRecord::Schema.define(version: 2019_09_17_083157) do
   end
 
   create_table "email_invitations", force: :cascade do |t|
+    t.bigint "invitor_id", null: false
     t.citext "email", null: false
     t.citext "token", null: false
+    t.bigint "claimant_id"
+    t.datetime "claimed_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["claimant_id"], name: "index_email_invitations_on_claimant_id"
     t.index ["email"], name: "index_email_invitations_on_email"
+    t.index ["invitor_id"], name: "index_email_invitations_on_invitor_id"
     t.index ["token"], name: "index_email_invitations_on_token", unique: true
   end
 
@@ -1024,6 +1029,8 @@ ActiveRecord::Schema.define(version: 2019_09_17_083157) do
   add_foreign_key "comments", "topics"
   add_foreign_key "dataset_file_downloads", "dataset_files"
   add_foreign_key "dataset_file_downloads", "participants"
+  add_foreign_key "email_invitations", "participants", column: "claimant_id"
+  add_foreign_key "email_invitations", "participants", column: "invitor_id"
   add_foreign_key "email_preferences", "participants"
   add_foreign_key "emails", "mailers"
   add_foreign_key "follows", "participants"

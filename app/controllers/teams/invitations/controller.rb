@@ -30,8 +30,11 @@ class Teams::Invitations::Controller < ApplicationController
     @search_field = name_or_email =~ /\A[^@]+@[^@]+\z/ ? :email : :name
     case @search_field
     when :email
-      @invitee = Participant.where('LOWER(email) = LOWER(?)', name_or_email).first
-      @invitee ||= EmailInvitation.new(email: name_or_email)
+      @invitee = Participant.where('LOWER(email) = LOWER(?)', name_or_email).first ||
+        EmailInvitation.new(
+          invitor_id: current_participant.id,
+          email: name_or_email,
+        )
     when :name
       @invitee = Participant.where('LOWER(name) = LOWER(?)', name_or_email).first
     end
