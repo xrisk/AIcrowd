@@ -72,6 +72,7 @@ Rails.application.routes.draw do
       resources :invitations, only: [:create], controller: 'teams/invitations/'
     end
   end
+  resources :claim_emails, only: [:index, :create], controller: 'teams/invitations/claim_emails'
   resources :team_invitations, only: [], param: :uuid do
     resources :acceptances, only: [:index, :create], controller: 'teams/invitations/acceptances'
     resources :declinations, only: [:index, :create], controller: 'teams/invitations/declinations'

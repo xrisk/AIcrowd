@@ -9,6 +9,10 @@ class EmailInvitation < ApplicationRecord
     Base31.display_token(token, 3, '-')
   end
 
+  def token_eq?(other)
+    Base31.eq?(token, other)
+  end
+
   private def init_token
     self.token ||= Base31.secure_random_str(9)
   end

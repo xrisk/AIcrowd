@@ -2,7 +2,8 @@
 class Team::Invitee::InvitationPendingNotificationMailer < Team::BaseMailer
   def sendmail(invitation)
     @invitation = invitation
-    set_participant_from_invitee(@invitation.invitee)
+    @invitee = @invitation.invitee
+    set_participant_from_invitee(@invitee)
     @team = @invitation.team
     @invitor = @invitation.invitor
     mandrill_send(format_options)
@@ -15,6 +16,10 @@ class Team::Invitee::InvitationPendingNotificationMailer < Team::BaseMailer
   def email_body_html
     team_member_count = @team.team_participants.count
     n_members = "#{team_member_count} #{team_member_count == 1 ? 'member' : 'members'}"
+    url_params = [@invitation]
+    if @invitee.is_a?(EmailInvitation)
+      url_params << { email_token: @invitee.display_token }
+    end
     <<~HTML
       <div>
         <p>You’ve been invited to join #{linked_team_html}!</p>
@@ -31,12 +36,28 @@ class Team::Invitee::InvitationPendingNotificationMailer < Team::BaseMailer
           <li>If you have not already, you will need to agree to the AIcrowd Participation Terms and Challenge Rules before joining the challenge</li>
         </ul>
         <p style="text-align: center;">
-          #{button_html('Join!', team_invitation_acceptances_url(@invitation), true)}
+          #{button_html('Join!', team_invitation_acceptances_url(*url_params), true)}
           <span style="margin-right: 20px"></span>
-          #{button_html('Decline', team_invitation_declinations_url(@invitation), false)}
+          #{button_html('Decline', team_invitation_declinations_url(*url_params), false)}
         </p>
+        #{email_invitee_info}
         #{signoff_html}
       </div>
+    HTML
+  end
+
+  def email_invitee_info
+    return '' unless @invitee.is_a?(EmailInvitation)
+    token = @invitee.display_token
+    url = claim_emails_url(email_token: token, email_confirmation: @invitee.email)
+    <<~HTML
+      <p>
+        Note: If you already have an account with us, you'll need to link it with this invitation by claiming this email. Your unique code to do so is:
+        <br>
+        <b style="margin-left: 20px;">#{token}</b>
+        <br>
+        You can sign in and link your account #{link_to('here', url)}. Declining does not require the creation of an account.
+      </p>
     HTML
   end
 

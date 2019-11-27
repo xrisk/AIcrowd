@@ -5,7 +5,7 @@ module Base31
   module_function
   NORMAL_ALPHABET = '0123456789abcdefghijklmnopqrstu'
   BASE31_ALPHABET = '23456789abcdefghjkmnpqrstuvwxyz'
-  NORMALIZE_REGEX = /[^#{BASE31_ALPHABET}]*/i
+  NORMALIZE_REGEX = /[^#{BASE31_ALPHABET}]*/
 
   def secure_random_str(length)
     raise ArgmentError unless length.is_a?(Integer) && length >= 1
@@ -25,9 +25,16 @@ module Base31
     x.tr(NORMAL_ALPHABET, BASE31_ALPHABET)
   end
 
-  def normalize(base31)
+  def normalize_s(base31)
     raise ArgumentError unless base31.is_a?(String)
-    base31.gsub(NORMALIZE_REGEX, '').downcase
+    base31.downcase.gsub(NORMALIZE_REGEX, '')
+  end
+
+  # are two Base31 strings equivalent?
+  def eq?(s1, s2)
+    return false unless s1.is_a?(String)
+    return false unless s2.is_a?(String)
+    normalize_s(s1) == normalize_s(s2)
   end
 
   def display_token(base31, group_size = 0, separator = ' ')

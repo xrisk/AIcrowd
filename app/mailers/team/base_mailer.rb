@@ -58,7 +58,7 @@ class Team::BaseMailer < ApplicationMailer
       when EmailInvitation
         "Participant #{mail_to(@invitee.email, @invitee.email.sub(/@.+\z/, ''))}"
       else
-        '&lt;?&gt;'.html_safe
+        '&lt;?&gt;'
       end
     end
   end

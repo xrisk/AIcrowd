@@ -21,6 +21,9 @@
     <div class="container-fluid">
       <p>Things you should know before <b>declining an invitation</b> to a team:</p>
       <ul>
+        <% if @invitee.is_a?(EmailInvitation) %>
+          <li>This invitation was intended only for “<%= @invitee.email %>”</li>
+        <% end %>
         <li>A team is only valid for one challenge. In this case: “<%= link_to(@challenge.challenge, @challenge) %>”</li>
         <li>Joining will make you a member of the team for the duration of the challenge</li>
         <li>All team members will share equal leaderboard spots and prizes</li>
@@ -28,6 +31,9 @@
       </ul>
       <p>If you still don’t want to be a part of the the team, then you may decline your invitation below.</p>
       <%= form_for team_invitation_declinations_path(@invitation) do |f| %>
+        <% if @invitee.is_a?(EmailInvitation) %>
+          <%= hidden_field_tag :email_token, params[:email_token] %>
+        <% end %>
         <%= f.submit 'Decline', class: 'btn btn-primary', data: { confirm: 'Are you sure?' } %>
         <%= link_to 'Return to Challenge', @challenge, class: 'btn btn-secondary' %>
       <% end %>
