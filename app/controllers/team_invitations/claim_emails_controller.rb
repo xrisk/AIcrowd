@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-class Teams::Invitations::ClaimEmailsController < ApplicationController
+class TeamInvitations::ClaimEmailsController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_invitations, only: :create
   before_action :redirect_from_create_on_disallowed, only: :create

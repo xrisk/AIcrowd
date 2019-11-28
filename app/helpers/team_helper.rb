@@ -1,5 +1,6 @@
 module TeamHelper
   def my_team_view_or_create_button(challenge)
+    return nil unless challenge.teams_allowed
     button_opts = {}
     my_team = current_participant&.teams&.for_challenge(challenge)&.first
     if my_team

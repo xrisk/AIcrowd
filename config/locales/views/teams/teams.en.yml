@@ -1,25 +1,26 @@
 en:
-  teams:
-    invitations:
-      cancellations:
-        create:
-          success_flash: "You successfully cancelled the invitation of %{invitee} to %{team}"
-    member_list:
-      team_members_length_1_warning: ⚠️ As soon as someone else joins this team, your submissions will show up in the leaderboard under the team name.
-      members:
-        title: Members
-        limit: "( %{current} / %{max} )"
-        organizer_badge: Team Organizer
-      pending_invitations:
-        title: Invited
-        remaining: "( %{count} left )"
-        none: No pending invitations
-      form:
-        title: Invite a member
-        invitee:
-          label: Participant Name or Email
-          placeholder: Participant name or email
-        submit: Invite
+  team_invitations:
+    cancellations:
+      create:
+        success_flash: "You successfully cancelled the invitation of %{invitee} to %{team}"
+  challenges:
+    teams:
+      member_list:
+        team_members_length_1_warning: ⚠️ As soon as someone else joins this team, your submissions will show up in the leaderboard under the team name.
+        members:
+          title: Members
+          limit: "( %{current} / %{max} )"
+          organizer_badge: Team Organizer
+        pending_invitations:
+          title: Invited
+          remaining: "( %{count} left )"
+          none: No pending invitations
+        form:
+          title: Invite a member
+          invitee:
+            label: Participant Name or Email
+            placeholder: Participant name or email
+          submit: Invite
   helpers:
     teams:
       create_invitation_flash:

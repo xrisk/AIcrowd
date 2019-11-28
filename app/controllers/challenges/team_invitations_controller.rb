@@ -1,5 +1,4 @@
-# frozen_string_literal: true
-class Teams::Invitations::Controller < ApplicationController
+class Challenges::TeamInvitationsController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_team
   before_action :set_invitation, only: [:show, :edit, :update, :destroy]
@@ -18,7 +17,7 @@ class Teams::Invitations::Controller < ApplicationController
     else
       flash[:error] = error_msg(:unspecified)
     end
-    redirect_to @team
+    redirect_to challenge_team_path(@team.challenge, @team)
   end
 
   private def set_team
@@ -67,7 +66,7 @@ class Teams::Invitations::Controller < ApplicationController
     end
     if err
       flash[:error] = error_msg(err)
-      redirect_to @team
+      redirect_to challenge_team_path(@team.challenge, @team)
     end
   end
 

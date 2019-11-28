@@ -2,7 +2,7 @@
 require 'rails_helper'
 include Rails.application.routes.url_helpers
 
-RSpec.describe Teams::Invitations::Controller, '#create', type: :controller do
+RSpec.describe Challenges::TeamInvitationsController, '#create', type: :controller do
   render_views
 
   let!(:participant) { create :participant }
@@ -21,7 +21,7 @@ RSpec.describe Teams::Invitations::Controller, '#create', type: :controller do
 
   def perform_request(team_name, invitee_name_or_email)
     # we parse an actual path instead of using shortcuts to ensure routes are working properly
-    path = team_invitations_path(team_name: team_name)
+    path = challenge_team_invitations_path(challenge, team_name)
     params = Rails.application.routes.recognize_path(path, method: :post)
     post(params[:action], params: params.except(:controller, :action).merge(invitee: invitee_name_or_email))
   end
@@ -54,7 +54,7 @@ RSpec.describe Teams::Invitations::Controller, '#create', type: :controller do
       expect(flash[:error]).to_not be
     end
     it 'redirects to team page' do
-      expect(response).to redirect_to(team_url(name: team.name))
+      expect(response).to redirect_to(challenge_team_url(challenge, team))
     end
   end
 
@@ -77,7 +77,7 @@ RSpec.describe Teams::Invitations::Controller, '#create', type: :controller do
       end
     end
     it 'redirects to team page' do
-      expect(response).to redirect_to(team_url(name: team.name))
+      expect(response).to redirect_to(challenge_team_url(challenge, team))
     end
   end
 
