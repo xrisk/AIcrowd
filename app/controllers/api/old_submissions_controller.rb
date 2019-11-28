@@ -1,6 +1,8 @@
-class Api::SubmissionsController < Api::BaseController
-  before_action :auth_by_admin_api_key, only: [:index, :show]
+class Api::OldSubmissionsController < Api::BaseController
+  before_action :auth_by_api_key, only: :index
+  before_action :auth_by_admin_api_key, only: :show
   before_action :set_organizer, only: :index
+
   respond_to :json
 
   def show
@@ -14,29 +16,22 @@ class Api::SubmissionsController < Api::BaseController
       status = :not_found
     end
     render json: payload, status: status
-  rescue
-    render json: { message: 'Internal Server Error; Contact AIcrowd Admins' }, status: :internal_server_error
   end
 
   def index
-    # Returns the list of all submission ids based on
-    # challenge_client_name, grading_status, after (>= created_at),
-    # and challenge_round_id
-    #
-    # /api/submissions?challenge_client_name=<>&grading_status=graded
-    #
-    # Only `challenge_client_name` is a required parameter
-    @challenge_client_name = params[:challenge_client_name]
-    challenge = Challenge.where('challenge_client_name = ? ', params[:challenge_client_name]).first
-    if challenge.nil?
-      message = "challenge_client_name #{@challenge_client_name} not found"
-      render json: { message: message }, status: :not_found
-    else
-      challenge_id = challenge.id
-      set_submissions(challenge_id, params[:grading_status], params[:after], params[:challenge_round_id])
-      @submission_ids = @submissions.map(&:id)
-      render json: @submission_ids, status: :ok
-    end
+    challenge_id = params[:challenge_id]
+    # allow only own organizer to access this challenge's submissions
+    permitted_challenge_ids = @organizer.challenges.pluck(:id).map(&:to_s)
+    raise OrganizerNotAuthorized unless permitted_challenge_ids.include?(challenge_id)
+
+    set_submissions(challenge_id, params[:grading_status], params[:after], params[:challenge_round_id])
+    render json: @submissions, each_serializer: Api::SubmissionSerializer, status: :ok
+
+  rescue ActiveRecord::RecordNotFound
+    message = "challenge_id #{challenge_id} not found"
+    render json: { message: message }, status: :not_found
+  rescue OrganizerNotAuthorized => e
+    render json: { message: e }, status: :unauthorized
   rescue
     render json: { message: 'server error' }, status: :internal_server_error
   end
@@ -48,7 +43,8 @@ class Api::SubmissionsController < Api::BaseController
     if grading_status.blank? && after.blank? && challenge_round_id.blank?
       @submissions = Submission.where(challenge_id: challenge_id)
     elsif grading_status.blank? && after.blank? && challenge_round_id.present?
-      @submissions = Submission.where('challenge_id = ? AND challenge_round_id = ?', challenge_id, challenge_round_id)
+      @submissions = Submission.where('challenge_id = ? AND challenge_round_id = ?',
+                                      challenge_id, challenge_round_id)
     elsif grading_status.blank? && after.present? && challenge_round_id.present?
       @submissions = Submission.where('challenge_id = ? AND created_at >= ? AND challenge_round_id = ?',
                                       challenge_id, after, challenge_round_id)

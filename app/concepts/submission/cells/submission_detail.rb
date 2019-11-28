@@ -5,23 +5,30 @@ class Submission::Cell::SubmissionDetail < Submission::Cell
   end
 
   def entry
-  	model
+    model
   end
 
   def current_participant
-  	options[:current_participant]
+    options[:current_participant]
   end
 
+  def meta_hash
+    meta = entry&.meta.presence
+    # Return hash if already parsed
+    return meta if meta.is_a? Hash
+    # Try to parse if not an hash
+    return JSON.parse(meta) if meta.is_a? String
+
+    return []
+  rescue JSON::ParserError
+    []
+  end
+
+
   def view_description
-    if entry.description.blank?
-        return false
-    end
-    if current_participant&.admin? || current_participant&.id == participant.id
-        return true
-    end
-    if current_participant&.organizer && current_participant&.organizer.id == challenge.organizer.id
-        return true
-    end
+    return false if entry.description.blank?
+    return true if current_participant&.admin? || current_participant&.id == participant.id
+    return true if current_participant&.organizer&.id == challenge.organizer.id
   end
 
 end

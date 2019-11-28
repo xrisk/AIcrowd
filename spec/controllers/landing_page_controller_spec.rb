@@ -44,7 +44,13 @@ RSpec.describe LandingPageController, type: :controller do
   end
 
   context 'ordering of challenges' do
-    # TODO
+    describe 'GET #index challenge_running' do
+      before { get :index }
+
+      it { expect(assigns(:challenges)).to eq [challenge_running, challenge_completed, challenge_starting_soon] }
+      it { expect(response).to render_template :index }
+    end
+
   end
 
 

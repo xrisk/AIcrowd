@@ -12,29 +12,20 @@ class Leaderboard::Cell::TableRow < Leaderboard::Cell
     model
   end
 
-  def formatted_score
-    sprintf("%.#{challenge_round.score_precision}f", entry.score || 0)
-  end
-
-
-  def formatted_score_secondary
-    sprintf("%.#{challenge_round.score_precision}f", entry.score_secondary || 0)
-  end
-
   def challenge
     @challenge ||= model.challenge
   end
 
   def other_scores_array
-      other_scores = []
-      challenge.other_scores_fieldnames_array.each do |fname|
-        if entry.meta && (entry.meta.key? fname)
-           other_scores << (entry.meta[fname].nil? ? "-": entry.meta[fname])
-        else
-           other_scores << '-'
-        end
+    other_scores = []
+    challenge.other_scores_fieldnames_array.each do |fname|
+      if entry.meta && (entry.meta.key? fname)
+        other_scores << (entry.meta[fname].nil? ? "-" : ("%.#{3}f" % entry.meta[fname].to_f))
+      else
+        other_scores << '-'
       end
-      return other_scores
+    end
+    return other_scores
   end
 
   def participant
@@ -46,16 +37,16 @@ class Leaderboard::Cell::TableRow < Leaderboard::Cell
   end
 
   def participants
-    @participants ||= begin
-      case entry.try(:submitter_type) || 'Participant'
-      when 'Participant'
-        [entry.participant]
-      when 'Team'
-        entry.team.participants.to_a
+    temp_participants = begin
+      if entry.try(:submitter_type) == 'Team'
+        entry&.team&.participants&.to_a
       else
-        []
+        [entry&.participant]
       end
     end
+
+    temp_participants = [] if temp_participants.nil? || temp_participants.include?(nil)
+    return temp_participants
   end
 
   def top_rows
@@ -63,9 +54,7 @@ class Leaderboard::Cell::TableRow < Leaderboard::Cell
   end
 
   def leader_class
-    if model.row_num <= top_rows
-      return 'leader'
-    end
+    return 'leader' if model.row_num <= top_rows
   end
 
 end

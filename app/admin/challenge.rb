@@ -25,9 +25,10 @@ ActiveAdmin.register Challenge do
     column :id
     column :challenge
     column :status
+    column :featured_sequence
     column :page_views
     column :participant_count
-    column :submission_count
+    column :submissions_count
     actions
   end
 
@@ -53,7 +54,7 @@ ActiveAdmin.register Challenge do
   end
 
   action_item :reorder, only: :index do
-    link_to 'reorder', reorder_challenges_path
+    link_to 'Reorder Challenges Featured Sequence', reorder_challenges_path
   end
 
   batch_action "Recalculate the Leaderboard for ", priority: 1 do |ids|

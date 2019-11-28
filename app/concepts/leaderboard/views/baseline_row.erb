@@ -19,12 +19,12 @@
   <% end %>
 
   <td class="score">
-    <strong><%= formatted_score %></strong>
+    <strong><%= formatted_value(entry.score) %></strong>
   </td>
 
   <% if cols.include?(:score_secondary) %>
     <td class="score">
-      <strong><%= entry.score_secondary %></strong>
+      <strong><%= formatted_value(entry.score_secondary) %></strong>
     </td>
   <% end %>
   <td class="entries"></td>

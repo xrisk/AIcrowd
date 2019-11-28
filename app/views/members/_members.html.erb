@@ -12,20 +12,29 @@
         <ul class="list-group list-group-flush-px-0 list-group-organizers">
 
           <% @members.each do |member| %>
-          <!-- team member -->
-          <li class="list-group-item">
-            <%= link_to participant_path(member) do%>
-              <%= concept(Image::Cell,member,klass: "avatar") %>
-              <span class="text-link"><%= member.name %></span>
-            <% end %>
-            <%= link_to 'Remove', organizer_member_path(@organizer,member), method: :delete, class: "btn btn-secondary btn-sm" %>
-          </li>
-          <!-- /team member -->
+            <!-- team member -->
+            <li class="list-group-item">
+              <%= link_to participant_path(member) do %>
+                <%= concept(Image::Cell, member, klass: "avatar") %>
+                <span class="text-link"><%= member.name %></span>
+              <% end %>
+
+              <% if @organizer.clef_tasks.any? && @organizer.clef_tasks.first.eua_required? %>
+                <% if member.clef_email %>
+                  <%= link_to 'Disable EUA upload e-mail notifications', organizer_clef_email_path(@organizer, participant_id: member.id), class: 'btn btn-primary btn-sm text-white' %>
+                <% else %>
+                  <%= link_to 'Activate EUA upload e-mail notifications', organizer_clef_email_path(@organizer, participant_id: member.id), class: 'btn btn-secondary btn-sm' %>
+                <% end %>
+              <% end %>
+
+              <%= link_to 'Remove', organizer_member_path(@organizer, member), method: :delete, class: "btn btn-secondary btn-sm" %>
+            </li>
+            <!-- /team member -->
           <% end %>
         </ul>
         <!-- /list group – team members -->
       </div>
-    </div> 
+    </div>
   </div>
 </div>
 <!-- /section -->

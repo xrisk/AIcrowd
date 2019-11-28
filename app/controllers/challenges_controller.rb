@@ -6,7 +6,6 @@ class ChallengesController < ApplicationController
   before_action :set_s3_direct_post, only: [:edit, :update]
   before_action :set_organizer, only: [:new, :create, :edit, :update]
 
-  after_action :update_stats_job
   respond_to :html, :js
 
   def index
@@ -36,27 +35,22 @@ class ChallengesController < ApplicationController
 
   def assign_order
     authorize Challenge
-    @final_order = params[:order].split(",")
-
-    len = @final_order.length
-
-    @final_order.each do |i|
-      Challenge.friendly.find(i).update(featured_sequence: len)
-      len = len - 1
+    @final_order = params[:order].split(',')
+    @final_order.each_with_index do |ch, idx|
+      Challenge.friendly.find(ch).update(featured_sequence: idx)
     end
 
-    redirect_to challenges_url
+    redirect_to reorder_challenges_path
   end
 
   def show
     if current_participant
-      @challenge_participant = @challenge
-                                   .challenge_participants
-                                   .where(participant_id: current_participant.id,
-                                          challenge_rules_accepted_version: @challenge.current_challenge_rules_version)
+      @challenge_participant = @challenge.challenge_participants.where(
+          participant_id: current_participant.id,
+          challenge_rules_accepted_version: @challenge.current_challenge_rules_version)
     end
 
-    if !params[:version] # dont' record page views on history pages
+    unless params[:version] # dont' record page views on history pages
       @challenge.record_page_view
     end
     @challenge_rules = @challenge.current_challenge_rules
@@ -111,7 +105,7 @@ class ChallengesController < ApplicationController
     challenge.submissions.each do |s|
       #SubmissionGraderJob.perform_later(s.id)
     end
-    @submission_count = challenge.submissions.count
+    @submission_count = challenge.submissions_count
     render 'challenges/form/regrade_status'
   end
 
@@ -280,9 +274,4 @@ class ChallengesController < ApplicationController
                               success_action_status: '201',
                               acl: 'private')
   end
-
-  def update_stats_job
-    UpdateChallengeStatsJob.perform_later
-  end
-
 end

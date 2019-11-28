@@ -1,53 +1,53 @@
 <tr>
-	<td class="leaderboard-change">
-		<%= ranking_change(entry) %>
-	</td>
-	<td><strong><%= "%02d" % (entry.row_num) %></strong></td>
-	<td>
-		<% if participants.length == 0 %>
-			<%= concept(Image::Cell, nil, :klass => "avatar") %>
-			<span class="text-link">Unknown User</span>
-		<% elsif participants.length == 1 %>
-			<%= link_to participant_path(participants[0]), title: participants[0].name, data: { toggle: :tooltip } do %>
-				<%= concept(Image::Cell, participants[0], :klass=>"avatar") %>
-				<span class="text-link"><%= participants[0].name %></span>
-			<% end %>
-		<% else %>
-			<%= link_to team.name, team_path(team) %>
-			<div class="avatar-group">
-				<% participants.each do |p| %>
-					<%= link_to participant_path(p), title: p.name, data: { toggle: :tooltip } do %>
-						<%= concept(Image::Cell, p, :klass=>"avatar") %>
-					<% end %>
-				<% end %>
-			</div>
-		<% end %>
-	</td>
+  <td class="leaderboard-change">
+    <%= ranking_change(entry) %>
+  </td>
+  <td><strong><%= "%02d" % (entry.row_num) %></strong></td>
+  <td>
+    <% if participants.empty? %>
+      <%= concept(Image::Cell, nil, :klass => "avatar") %>
+      <span class="text-link">Unknown User</span>
+    <% elsif participants.length == 1 %>
+      <%= link_to participant_path(participants[0]), title: participants[0].name, data: {toggle: :tooltip} do %>
+        <%= concept(Image::Cell, participants[0], :klass => "avatar") %>
+        <span class="text-link"><%= participants[0].name %></span>
+      <% end %>
+    <% else %>
+      <%= link_to team.name, team_path(team) %>
+      <div class="avatar-group">
+        <% participants.each do |p| %>
+          <%= link_to participant_path(p), title: p.name, data: {toggle: :tooltip} do %>
+            <%= concept(Image::Cell, p, :klass => "avatar") %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </td>
 
-	<% if challenge.media_on_leaderboard %>
-		<td>
-			<%= concept(Leaderboard::Cell::Media,
-			            entry,
-			            size: :thumb,
-			            submission_id: entry.submission_id,
-			            current_participant: current_participant) %>
-		</td>
-	<% end %>
+  <% if challenge.media_on_leaderboard %>
+    <td>
+      <%= concept(Leaderboard::Cell::Media,
+                  entry,
+                  size: :thumb,
+                  submission_id: entry.submission_id,
+                  current_participant: current_participant) %>
+    </td>
+  <% end %>
 
 
-	<td><strong><%= formatted_score %></strong></td>
-	<td><strong><%= formatted_score_secondary %></strong></td>
-	<% other_scores_array.each do |other_score| %>
-		<td><strong><%= other_score %></strong></td>
-	<% end %>
-	<td><%= entry.entries %></td>
+  <td><strong><%= formatted_value(entry.score) %></strong></td>
+  <td><strong><%= formatted_value(entry.score_secondary) %></strong></td>
+  <% other_scores_array.each do |other_score| %>
+    <td><strong><%= other_score %></strong></td>
+  <% end %>
+  <td><%= entry.entries %></td>
 
-	<td class="text-right"><%= local_time(entry.created_at, "%a, %e %b %Y %H:%M") %></td>
-	<td class="text-right">
-		<% unless participant.nil? %>
-			<%= link_to challenge_submission_path(challenge, entry.submission_id), class: 'btn btn-secondary btn-sm' do %>
-				View
-			<% end %>
-		<% end %>
-	</td>
+  <td class="text-right"><%= local_time(entry.created_at, "%a, %e %b %Y %H:%M") %></td>
+  <td class="text-right">
+    <% unless participant.nil? %>
+      <%= link_to challenge_submission_path(challenge, entry.submission_id), class: 'btn btn-secondary btn-sm' do %>
+        View
+      <% end %>
+    <% end %>
+  </td>
 </tr>

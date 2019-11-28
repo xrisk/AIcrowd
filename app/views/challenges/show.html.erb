@@ -1,12 +1,10 @@
-<%= concept(Challenge::Cell::ChallengeMasthead,@challenge, current_participant: current_participant) %>
+<%= concept(Challenge::Cell::ChallengeMasthead, @challenge, current_participant: current_participant) %>
 <%= render partial: 'challenges/show/subnav',
-    locals: { challenge: @challenge } %>
+           locals: {challenge: @challenge} %>
 
 <!-- section -->
 <section class="section-p-md">
   <div class="container-fluid">
-  <!-- <div class="container-fluid" data-spy="scroll" data-target=".navbar" data-offset="50" style="overflow: scroll;"> -->
-  <!-- <div class="container-fluid" data-spy="scroll" data-target=".navbar" data-offset="50" style="height: 100vh;overflow: scroll;"> -->
     <div class="row">
 
       <!-- sub-nav – vertical -->
@@ -20,7 +18,7 @@
       <div class="col-md-8 col-lg-7" id="description-wrapper">
         <div class="markdown-wrap">
           <div class="md-content">
-          <%= @challenge.description.html_safe %>
+            <%= @challenge.description.html_safe %>
           </div>
         </div>
       </div>

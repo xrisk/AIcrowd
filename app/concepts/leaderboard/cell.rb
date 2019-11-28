@@ -77,4 +77,8 @@ class Leaderboard::Cell < Template::Cell
     return true if challenge.organizer_id == participant.organizer_id
   end
 
+  def formatted_value(value)
+    format("%.#{challenge_round.score_precision}f", value || 0)
+  end
+
 end

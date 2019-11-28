@@ -9,6 +9,8 @@ gem 'rails-assets-jQuery-File-Upload'
 ruby '2.5.5'
 gem 'rails', '5.2.2.1'
 
+gem 'ahoy_matey'
+gem 'blazer', github: "aicrowd/blazer"
 gem 'active_model_serializers'
 gem 'activeadmin', '1.4.3'
 gem 'authtrail'
@@ -90,7 +92,7 @@ gem 'sidekiq', '~> 5.1.1'
 gem 'sidekiq-cron', '~> 0.6.3'
 gem 'sidekiq-history'
 gem 'sidekiq-failures'
-gem 'sidekiq-unique-jobs'
+gem 'sidekiq-unique-jobs', '~> 6.0.15'
 gem 'sinatra', '~> 2.0.2', :require => nil
 gem 'stringex'
 gem 'therubyracer', platforms: :ruby

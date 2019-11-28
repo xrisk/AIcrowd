@@ -2,9 +2,6 @@ class CalculateLeaderboardService
 
   def initialize(challenge_round_id:)
     @round = ChallengeRound.find(challenge_round_id)
-    @order_by = get_order_by
-    @base_order_by = get_base_order_by
-    @latest_submission = get_latest_submission
     @conn = ActiveRecord::Base.connection
   end
 
@@ -23,11 +20,11 @@ class CalculateLeaderboardService
         create_leaderboard(leaderboard_type: 'previous_ongoing')
         destroy_temp_submission_stats
         update_leaderboard_rankings(
-          leaderboard: 'leaderboard',
-          prev: 'previous')
+            leaderboard: 'leaderboard',
+            prev: 'previous')
         update_leaderboard_rankings(
-          leaderboard: 'ongoing',
-          prev: 'previous_ongoing')
+            leaderboard: 'ongoing',
+            prev: 'previous_ongoing')
         insert_baseline_rows(leaderboard_type: 'leaderboard')
         insert_baseline_rows(leaderboard_type: 'ongoing')
         set_leaderboard_sequences(leaderboard_type: 'leaderboard')
@@ -51,50 +48,12 @@ class CalculateLeaderboardService
 
   def window_border_dttm
     most_recent = Submission
-      .where(challenge_round_id: @round.id)
-      .order(created_at: :desc)
-      .limit(1)
-      .first
+                      .where(challenge_round_id: @round.id)
+                      .order(created_at: :desc)
+                      .limit(1)
+                      .first
     window_border = most_recent.created_at - @round.ranking_window.hours
     return "'#{window_border.to_s(:db)}'"
-  end
-
-  def get_order_by
-    challenge = @round.challenge
-    if (challenge.secondary_sort_order_cd.blank? || challenge.secondary_sort_order_cd == 'not_used')
-        return "score_display #{sort_map(challenge.primary_sort_order_cd)}"
-    else
-      return "score_display #{sort_map(challenge.primary_sort_order_cd)}, score_secondary_display #{sort_map(challenge.secondary_sort_order_cd)}"
-    end
-  end
-
-  # TODO refactor this out
-  def get_base_order_by
-    challenge = @round.challenge
-    if (challenge.secondary_sort_order_cd.blank? || challenge.secondary_sort_order_cd == 'not_used')
-        return "score #{sort_map(challenge.primary_sort_order_cd)}"
-    else
-      return "score #{sort_map(challenge.primary_sort_order_cd)}, score_secondary #{sort_map(challenge.secondary_sort_order_cd)}"
-    end
-  end
-  def sort_map(sort_field)
-    case sort_field
-    when 'ascending'
-      return 'asc'
-    when 'descending'
-      return 'desc'
-    else
-      return nil
-    end
-  end
-
-  def get_latest_submission
-    challenge = @round.challenge
-    if challenge.latest_submission == true
-      return 'updated_at desc'
-    else
-      return get_order_by
-    end
   end
 
   def purge_leaderboard
@@ -120,7 +79,7 @@ class CalculateLeaderboardService
       post_challenge = '(TRUE,FALSE)'
       cuttoff_dttm = window_border_dttm
     end
-    return [post_challenge,cuttoff_dttm]
+    return [post_challenge, cuttoff_dttm]
   end
 
   def init_temp_submission_stats
@@ -203,7 +162,7 @@ class CalculateLeaderboardService
           PARTITION BY
             stats.submitter_type,
             stats.submitter_id
-          ORDER BY s.#{@latest_submission}
+          ORDER BY s.#{order_by(use_display: true)}
         ) AS rank
       FROM submissions s
       INNER JOIN temp_submission_stats stats ON s.id = stats.submission_id
@@ -257,7 +216,7 @@ class CalculateLeaderboardService
         stats.submitter_id,
         s.id,
         0 as SEQ,
-        ROW_NUMBER() OVER (ORDER BY s.#{@order_by}) AS ROW_NUM,
+        ROW_NUMBER() OVER (ORDER BY s.#{order_by(use_display: true)}) AS ROW_NUM,
         0 as PREVIOUS_ROW_NUM,
         stats.submitter_entries_cnt,
         s.score_display,
@@ -375,6 +334,7 @@ class CalculateLeaderboardService
 
   def set_leaderboard_sequences(leaderboard_type:)
     post_challenge, cuttoff_dttm = leaderboard_params(leaderboard_type: leaderboard_type)
+
     @conn.execute <<~SQL
         WITH lb AS (
         SELECT
@@ -385,7 +345,7 @@ class CalculateLeaderboardService
             PARTITION by l.challenge_id,
                          l.challenge_round_id,
                          l.leaderboard_type_cd
-            ORDER BY #{@base_order_by},l.row_num asc) AS SEQ
+            ORDER BY #{order_by}, l.row_num asc) AS SEQ
         FROM base_leaderboards l
         WHERE l.challenge_round_id = #{@round.id})
       UPDATE base_leaderboards
@@ -395,4 +355,33 @@ class CalculateLeaderboardService
     SQL
   end
 
+  def sort_map(sort_field)
+    case sort_field
+    when 'ascending'
+      return 'asc'
+    when 'descending'
+      return 'desc'
+    else
+      return nil
+    end
+  end
+
+  def order_by(use_display: false)
+    challenge = @round.challenge
+
+    if challenge.latest_submission == true
+      return 'updated_at desc'
+    end
+
+    score_sort_order ||= sort_map(challenge.primary_sort_order_cd)
+    score_sort_col = use_display ? 'score_display' : 'score'
+
+    if challenge.secondary_sort_order_cd.blank? || challenge.secondary_sort_order_cd == 'not_used'
+      return "#{score_sort_col} #{score_sort_order} NULLS LAST"
+    end
+
+    secondary_sort_order ||= sort_map(challenge.secondary_sort_order_cd)
+    secondary_sort_col = use_display ? 'score_secondary_display' : 'score_secondary'
+    "#{score_sort_col} #{score_sort_order} NULLS LAST, #{secondary_sort_col} #{secondary_sort_order} NULLS LAST"
+  end
 end
