@@ -6,7 +6,6 @@ def fill_out_account_creation_form
   fill_in "email", with: participant.email
   fill_in "password", with: participant.password
   fill_in "retypePassword", with: participant.password
-  check('updateAgreement')
 end
 
 def confirm_account

@@ -80,7 +80,7 @@ describe Participant do
           participant.disable_account('A reason')
           expect(participant.account_disabled).to eq(true)
           expect(participant.account_disabled_reason).to eq("A reason")
-          expect(participant.inactive_message).to eq("Your account has been disabled. Please contact us at info@crowdai.org.")
+          expect(participant.inactive_message).to eq("Your account has been disabled. Please contact us at help@aicrowd.com")
           expect(participant.active_for_authentication?).to be false
         end
       end
@@ -109,7 +109,7 @@ describe Participant do
 
       it 'verify preference flags are correctly set' do
         pref = participant.email_preferences.first
-        expect(pref.newsletter).to be false
+        expect(pref.newsletter).to be true
         expect(pref.challenges_followed).to be true
         expect(pref.mentions).to be true
         expect(pref.email_frequency).to eq(:daily)
