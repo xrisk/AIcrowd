@@ -5,49 +5,24 @@
 
       <!-- account settings -->
       <div class="col-12">
-      
-        <%= form_for [@participant,@email_preference],
-        html: {
-          class: 'form-rg',
-            data: { controller: 'email-preferences' }
-        } do |f| %>
-        <%= render "shared/error_messages", target: @email_preference %>
+
+        <%= form_for @participant,
+                     url: {action: :update, controller: :email_preferences},
+                     html: {
+                         class: 'form-rg',
+                         data: {controller: 'email-preferences'}
+                     } do |f| %>
+          <%= render "shared/error_messages", target: @participant %>
 
           <div class="form-check">
-            <%= f.check_box :newsletter, class: "form-check-input" %>
+            <%= f.check_box :agreed_to_marketing, class: "form-check-input" %>
             <label class="form-check-label" for="newsletterEmails">
               Receive the AIcrowd Newsletter
             </label>
           </div>
 
-          <div class="form-check">
-            <%= f.check_box :challenges_followed,
-            { data:
-              { target: 'email-preferences.challengesFollowed',
-              action: 'click->email-preferences#toggleFrequency' },
-              class: "form-check-input" 
-            }, "true", "false"%>
-
-            <label class="form-check-label" for="challengeEmails">
-              Receive email updates for challenges which I am following
-            </label>
-          </div>
-
-          <div class="form-check">
-            <%= f.check_box :mentions, {
-              data: {
-                target: 'email-preferences.mentions',
-                action: 'click->email-preferences#toggleFrequency',
-              },
-              class: 'form-check-input',
-            }, 'true', 'false' %>
-            <label class="form-check-label" for="mentionEmails">
-              Receive emails when someone mentions me in a comment or post
-            </label>
-          </div>
-
           <div class="mt-5 mb-5">
-            <i>Coming soon: settings for "team" notifications</i>
+            <i>More Notification Settings Coming Soon!</i>
           </div>
 
           <div class="btn-set" aria-hidden="true">

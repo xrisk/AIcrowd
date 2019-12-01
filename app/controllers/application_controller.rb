@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   def doorkeeper_unauthorized_render_options(error: nil)
-    { json: { error: "Not authorized" } }
+    {json: {error: 'Not authorized'}}
   end
 
   def append_info_to_payload(payload)
@@ -22,11 +22,12 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up) do |u|
       u.permit(:name, :email, :password, :password_confirmation, :remember_me,
-              :agreed_to_terms_of_use_and_privacy,
-              :agreed_to_marketing)
+               :agreed_to_terms_of_use_and_privacy,
+               :agreed_to_marketing)
     end
   end
 
@@ -39,8 +40,14 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
   def after_sign_in_path_for(resource)
-    session["participant_return_to"] || root_path
+    unless current_participant.agreed_to_terms_of_use_and_privacy?
+      flash[:notice] = 'We have changed the way we save email and notification preferences, please review them below'
+      current_participant.update_attributes(agreed_to_terms_of_use_and_privacy: true)
+      return participant_notifications_path(current_participant)
+    end
+    return session['participant_return_to'] || root_path
   end
 
   def participant_activity
@@ -83,7 +90,7 @@ class ApplicationController < ActionController::Base
   end
 
   def default_url_options
-    { host: ENV["DOMAIN_NAME"] || "localhost:3000" }
+    {host: ENV['DOMAIN_NAME'] || 'localhost:3000'}
   end
 
 end

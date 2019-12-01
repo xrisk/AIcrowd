@@ -107,12 +107,8 @@ class Participant < ApplicationRecord
     allow_blank: true
 
   def reserved_userhandle
-    if !self.name
-      return
-    end
-    if (self.provider != 'crowdai') && ReservedUserhandle.where(name: self.name.downcase).exists?
-      self.errors.add(:name, 'is reserved for CrowdAI users.  Please log in via CrowdAI to claim this user handle.')
-    end
+    return if !self.name
+    self.errors.add(:name, 'is reserved for CrowdAI users.  Please log in via CrowdAI to claim this user handle.') if (self.provider != 'crowdai') && ReservedUserhandle.where(name: self.name.downcase).exists?
   end
 
   def disable_account(reason)
@@ -134,9 +130,7 @@ class Participant < ApplicationRecord
   end
 
   def inactive_message
-    if account_disabled
-      "Your account has been disabled. Please contact us at info@crowdai.org."
-    end
+    'Your account has been disabled. Please contact us at help@aicrowd.com' if account_disabled
   end
 
   def admin?
@@ -175,9 +169,7 @@ class Participant < ApplicationRecord
 
   def format_url(url_field)
     if self.send(url_field).present?
-      unless self.send(url_field).include?("http://") || self.send(url_field).include?("https://")
-        self.send("#{url_field}=", "http://#{self.send(url_field)}")
-      end
+      self.send("#{url_field}=", "http://#{self.send(url_field)}") unless self.send(url_field).include?("http://") || self.send(url_field).include?("https://")
     end
   end
 
@@ -207,9 +199,7 @@ class Participant < ApplicationRecord
   end
 
   def refresh_materialized_view
-    if saved_change_to_attribute?(:organizer_id)
-      RefreshChallengeOrganizerParticipantViewJob.perform_later
-    end
+    RefreshChallengeOrganizerParticipantViewJob.perform_later if saved_change_to_attribute?(:organizer_id)
   end
 
   def publish_to_prometheus
@@ -228,27 +218,23 @@ class Participant < ApplicationRecord
   end
 
   def self.from_omniauth(auth)
-    raw_info = auth.raw_info || (auth.extra && auth.extra.raw_info.participant)
+    raw_info = auth.raw_info || (auth.extra&.raw_info&.participant)
     email = auth.info.email || raw_info.email
     username = auth.info.name || raw_info.name
     username = username.gsub(/\s+/, '_').downcase
     username = sanitize_userhandle(username)
     image_url = auth.info.image ||
                 raw_info.image ||
-                (raw_info.image_file && raw_info.image_file.url)
+                (raw_info.image_file&.url)
     provider = auth.provider
-    if provider == 'oauth2_generic'
-      provider = 'crowdai'
-    end
+    provider = 'crowdai' if provider == 'oauth2_generic'
     where(email: email).first_or_create do |user|
       user.email = email
       user.password = Devise.friendly_token[0,20]
       user.name = username
       user.provider = provider
       puts "EMAIL: #{email} name: #{username} provider: #{provider}"
-      if image_url
-        user.remote_image_file_url = image_url
-      end
+      user.remote_image_file_url = image_url if image_url
       ### NATE: we want to skip the notification but leave the user unconfirmed
       ### which will allow us to force a password reset on first login
       user.skip_confirmation_notification!
@@ -260,17 +246,13 @@ class Participant < ApplicationRecord
   end
 
   def current_participation_terms_version
-    current_participation_terms && current_participation_terms.version
+    current_participation_terms&.version
   end
 
   def has_accepted_participation_terms?
 
-    if (self.participation_terms_accepted_version != current_participation_terms_version)
-      return
-    end
-    if !self.participation_terms_accepted_date
-      return
-    end
+    return if (self.participation_terms_accepted_version != current_participation_terms_version)
+    return if !self.participation_terms_accepted_date
     return true
   end
 

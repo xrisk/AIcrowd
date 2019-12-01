@@ -61,9 +61,10 @@ Rails.application.routes.draw do
     get :regen_api_key
     get :remove_image
     patch :accept_terms
-    resources :email_preferences, only: [:update]
     match '/notifications', to: 'email_preferences#edit', via: :get
+    match '/notifications', to: 'email_preferences#update', via: :patch
   end
+
   resources :job_postings, :path => "jobs", only: [:index, :show]
   resources :gdpr_exports, only: [:create]
   resources :landing_page, only: [:index]
