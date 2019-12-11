@@ -70,6 +70,10 @@ if Rails.env == 'development' || Rails.env == 'staging'
             sub.delete("participant_id")
             sub["challenge_id"] = loop_challenge.id
             sub["challenge_round_id"] = loop_challenge_round.id
+
+            # Until Round Processing is done, we dont want to
+            # queue the leaderboard job, so we set below key = true
+
             if sub["meta"].is_a? Hash
               sub["meta"]["private_ignore-leaderboard-job-computation"] = true
             else
@@ -84,6 +88,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
                 crowdai_participant_id: old_participant_id
             )
           end
+          # Round Processing done, lets queue the leaderboard job
+          CalculateLeaderboardJob.perform_later(challenge_round_id: loop_challenge_round)
         end
       end
     end
