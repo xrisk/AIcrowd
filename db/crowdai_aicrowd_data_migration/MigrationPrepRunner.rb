@@ -1,4 +1,8 @@
 if Rails.env == 'development' || Rails.env == 'staging'
+  # Turn off logger
+  old_logger = ActiveRecord::Base.logger
+  ActiveRecord::Base.logger = nil
+
   # Fetch objects from the Saved Json Files
   organizers = JSON.parse(File.read('db/crowdai_aicrowd_data_migration/organizers.json'))['organizers']
   challenges = JSON.parse(File.read('db/crowdai_aicrowd_data_migration/challenges.json'))['challenges']
@@ -6,7 +10,15 @@ if Rails.env == 'development' || Rails.env == 'staging'
   submissions = JSON.parse(File.read('db/crowdai_aicrowd_data_migration/submissions.json'))['submissions']
   challenge_participants = JSON.parse(File.read('db/crowdai_aicrowd_data_migration/challenge_participants.json'))['challenge_participants']
 
+  models = [ Organizer, Challenge, ChallengeRound, Submission, ChallengeParticipant ]
+
+  models.each do |model|
+    ActiveRecord::Base.connection.reset_pk_sequence!(model.table_name)
+  end
+
+
   ActiveRecord::Base.transaction do
+
     # For each Organizer 'org'
     organizers.each do |org|
       # Remove ID from Hash so that we get a new ID
@@ -94,4 +106,7 @@ if Rails.env == 'development' || Rails.env == 'staging'
       end
     end
   end
+
+  # Turn on logger
+  ActiveRecord::Base.logger = old_logger
 end

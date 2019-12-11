@@ -57,7 +57,6 @@ class Submission < ApplicationRecord
 
 
   after_save do
-    Rails.logger.info "[Submission Model] after_save Triggered for Submission ##{self.id} At Round #{self.challenge_round_id}"
     # !self.meta&.dig('final_avg') is added to prevent infinite loops in New Leaderboard Calculation
     if self.grading_status_cd == 'graded' && !self.meta&.dig('private_ignore-leaderboard-job-computation')
       Rails.logger.info "[Submission Model] Starting the Leaderboard Update Job! (onsave)"
