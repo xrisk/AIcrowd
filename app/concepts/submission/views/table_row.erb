@@ -1,6 +1,6 @@
 <tr>
   <td><strong><%= entry.id %></strong></td>
-  <td><%= link_to participant.name, participant_path(participant) %></td>
+  <td><%= participant_link %></td>
   <td><span class="badge <%= grade_class %>"><%= entry.grading_status_cd %></span></td>
   <td><%= formatted_value(entry.score_display) %></td>
   <% if entry.challenge.score_secondary_title? %>

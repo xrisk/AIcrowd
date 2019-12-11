@@ -6,7 +6,7 @@ class ParticipantChallengesController < ApplicationController
   def index
     @participant_challenges = @challenge
       .challenge_participants
-      .order(updated_at: :asc)
+      .order('CASE WHEN participant_id IS NULL THEN 2 ELSE 1 END, updated_at asc')
       .page(params[:page])
       .per(10)
     authorize @participant_challenges
