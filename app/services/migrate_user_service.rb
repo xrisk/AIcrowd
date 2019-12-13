@@ -6,11 +6,11 @@ class MigrateUserService
   end
 
   def check_migrated
-    MigrationMapping.where(crowdai_participant_id: @old_id, source_type: 'Participant').count.positive? ? true : false
+    MigrationMapping.where(crowdai_participant_id: @old_id, source_type: 'Participant').count.positive?
   end
 
   def migrate_user
-    raise "User Already Migrated" if MigrationMapping.where(crowdai_participant_id: @old_id, source_type: 'Participant').count.positive?
+    raise "User Already Migrated" if check_migrated
 
     submission_migration_mappings = MigrationMapping.where(crowdai_participant_id: @old_id, source_type: 'Submission')
 

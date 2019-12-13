@@ -1,12 +1,30 @@
 class CrowdaiMigrationController < ApplicationController
   before_action :authenticate_participant!
-  before_action :ensure_valid_cid
 
+  def setup
+  end
 
-  def migrate_user
-    MigrateUserService(crowdai_id: @cid, aicrowd_id: current_participant.id).call
+  def save
+    @cid = crowdai_params[:id]
+
+    if @cid.nil?
+      redirect_to(root_path, flash: {error: 'Unknown crowdAI participant ID'}) and return
+    end
+
+    @migrate_service = MigrateUserService.new(crowdai_id: @cid, aicrowd_id: current_participant.id)
+
+    if @migrate_service.check_migrated
+      redirect_to(root_path, flash: {error: 'Participant Already Migrated'}) and return
+    end
+
+    unless MigrationMapping.exists?(crowdai_participant_id: @cid)
+      redirect_to(root_path, flash: {error: 'No Data exists for this user'}) and return
+    end
+
+    @migrate_service.migrate_user
     redirect_to(root_path, flash: {success: 'Migration in progress.'})
   end
+
 
   def crowdai_params
     @crowdai_params ||= begin
@@ -20,18 +38,6 @@ class CrowdaiMigrationController < ApplicationController
       JSON.parse(plaintext).symbolize_keys
     rescue
       {}
-    end
-  end
-
-  private def ensure_valid_cid
-    @cid = crowdai_params[:id]
-
-    if @cid.nil? || !MigrationMapping.exists?(crowdai_participant_id: @cid)
-      redirect_to(root_path, flash: {error: 'Unknown crowdAI participant ID'})
-    end
-
-    if MigrationMapping.exists?(crowdai_participant_id: @cid, source_type: 'Participant')
-      redirect_to(root_path, flash: {error: 'Participant Already Migrated'})
     end
   end
 end
