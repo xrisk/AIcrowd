@@ -17,6 +17,7 @@ class MigrateUserService
     submission_migration_mappings.each do |migration_mapping|
       submission = Submission.where(id: migration_mapping['source_id'])
       submission.update(participant_id: @new_id)
+      CalculateLeaderboardJob.perform_later(challenge_round_id: submission.challenge_round)
     end
 
     cp_migration_mappings = MigrationMapping.where(crowdai_participant_id: @old_id, source_type: 'ChallengeParticipant')
