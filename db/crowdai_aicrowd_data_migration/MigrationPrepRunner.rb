@@ -37,6 +37,7 @@ if Rails.env == 'development' || Rails.env == 'staging'
         chal.delete("featured_sequence")
         chal.delete("submission_count")
         chal["organizer_id"] = loop_organizer.id
+        chal["hidden_challenge"] = true
         chal["prize_cash"] = ""
         chal["prize_academic"] = ""
         chal["prize_misc"] = ""
