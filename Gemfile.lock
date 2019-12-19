@@ -669,7 +669,7 @@ GEM
       activesupport (>= 3.0.0)
     quantile (0.2.1)
     raabro (1.1.6)
-    rack (2.0.7)
+    rack (2.0.8)
     rack-contrib (2.1.0)
       rack (~> 2.0)
     rack-cors (1.0.5)
