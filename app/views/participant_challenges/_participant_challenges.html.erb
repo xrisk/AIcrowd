@@ -1,23 +1,32 @@
 <!-- section -->
 <div class="section-p-md">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-12">
-				<% if @participant_challenges.blank? %>
-					<div class="md-content">
-                		<%= "No participants for this challenge yet" %>
-              		</div>
-				<% else %>
-					<ul class="list-group list-group-flush-px-0 list-group-organizers" id="pc-ul">
-		              <%= render partial: 'participant_challenge_rows' %>
-					</ul>
-					<!-- load more -->
-						<span id="more-anchor"></span>
-						<%= render partial: 'shared/load_more', locals: { collection: @participant_challenges} %>
-					<!-- /load more -->
-				<% end %>
-			</div>
-		</div> 
-	</div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <% if @participant_challenges.blank? and @count_of_unknown.zero? %>
+          <div class="md-content">
+            <%= "No participants for this challenge yet" %>
+          </div>
+        <% else %>
+          <ul class="list-group list-group-flush-px-0 list-group-organizers" id="pc-ul">
+            <li class="list-group-item">
+              <% unless @count_of_unknown.zero? %>
+                <%= link_to '#' do %>
+                  <%= concept(Image::Cell, nil, klass: "avatar") %>
+                  <span class="text-link"> Unknown Participant </span>
+                  <span class="badge badge-primary">x<%= @count_of_unknown %></span>
+                <% end %>
+              <% end %>
+            </li>
+            <%= render partial: 'participant_challenge_rows' %>
+          </ul>
+          <!-- load more -->
+          <span id="more-anchor"></span>
+          <%= render partial: 'shared/load_more', locals: {collection: @participant_challenges} %>
+          <!-- /load more -->
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- /section -->

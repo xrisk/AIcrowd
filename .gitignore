@@ -43,3 +43,9 @@ db/crowdai_aicrowd_data_migration/challenges.json
 db/crowdai_aicrowd_data_migration/organizers.json
 db/crowdai_aicrowd_data_migration/submissions.json
 
+# Clef Migration Data
+db/crowdai_aicrowd_data_migration/clef_tasks.json
+db/crowdai_aicrowd_data_migration/participant_clef_tasks.json
+db/crowdai_aicrowd_data_migration/task_dataset_files.json
+
+
