@@ -94,20 +94,7 @@ class Challenge < ApplicationRecord
             END, challenges.participant_count DESC")
   }
 
-  after_create do
-    client = DiscourseApi::Client.new(ENV['DISCOURSE_DOMAIN_NAME'])
-    client.api_key = ENV['DISCOURSE_API_KEY']
-    client.api_username = ENV['DISCOURSE_API_USERNAME']
-    # NATE: discourse has a hard limit of 50 chars
-    # for category name length
-    res = client.create_category(name: challenge.truncate(50),
-                                 slug: slug[0..49],
-                                 color: '49d9e9',
-                                 text_color: 'f0fcfd'
-    )
-    self.discourse_category_id = res['id']
-    save
-  end
+  after_create :init_discourse
 
   after_update do
     if discourse_category_id
@@ -129,6 +116,21 @@ class Challenge < ApplicationRecord
       self.challenge_client_name = "challenge_#{SecureRandom.hex}"
       self.featured_sequence = Challenge.count + 1
     end
+  end
+
+  def init_discourse
+    client = DiscourseApi::Client.new(ENV['DISCOURSE_DOMAIN_NAME'])
+    client.api_key = ENV['DISCOURSE_API_KEY']
+    client.api_username = ENV['DISCOURSE_API_USERNAME']
+    # NATE: discourse has a hard limit of 50 chars
+    # for category name length
+    res = client.create_category(name: challenge.truncate(50),
+                                 slug: slug[0..49],
+                                 color: '49d9e9',
+                                 text_color: 'f0fcfd'
+    )
+    self.discourse_category_id = res['id']
+    save
   end
 
   def record_page_view

@@ -91,9 +91,9 @@ if Rails.env == 'development' || Rails.env == 'staging'
         end
 
         # create a new challenge
-        Challenge.skip_callback(:create, :after)
+        Challenge.skip_callback(:create, :after, :init_discourse)
         loop_challenge = Challenge.create!(chal)
-        Challenge.set_callback(:create, :after)
+        Challenge.set_callback(:create, :after, :init_discourse)
 
         MigrationMapping.create!(
             source_type: 'Challenge',
