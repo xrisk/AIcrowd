@@ -26,6 +26,13 @@ class MigrateUserService
       cp.update(participant_id: @new_id)
     end
 
+    pct_migration_mappings = MigrationMapping.where(crowdai_participant_id: @old_id, source_type: 'ParticipantClefTask')
+
+    pct_migration_mappings do |migration_mapping|
+      pct = ParticipantClefTask.where(id: migration_mapping['source_id'])
+      pct.update(participant_id: @new_id)
+    end
+
     MigrationMapping.create!(crowdai_participant_id: @old_id, source_id: @new_id, source_type: 'Participant')
   end
 
@@ -45,6 +52,12 @@ class MigrateUserService
     cp_migration_mappings.each do |migration_mapping|
       cp = ChallengeParticipant.where(id: migration_mapping['source_id'])
       cp.update(participant_id: nil)
+    end
+
+    pct_migration_mappings = MigrationMapping.where(crowdai_participant_id: @old_id, source_type: 'ParticipantClefTask')
+    pct_migration_mappings do |migration_mapping|
+      pct = ParticipantClefTask.where(id: migration_mapping['source_id'])
+      pct.update(participant_id: nil)
     end
 
     user_migration.destroy
