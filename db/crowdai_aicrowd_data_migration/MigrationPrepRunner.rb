@@ -30,6 +30,12 @@ if Rails.env == 'development' || Rails.env == 'staging'
       org['tagline'] ||= org['organizer']
       # Create a new organizer from Hash
       loop_organizer = Organizer.create!(org)
+      require 'open-uri'
+      if org["image_file"].present?
+        loop_organizer.image_file = open("https://dnczkxd1gcfu5.cloudfront.net/images/organizers/image_file/#{org_old_id}/#{org['image_file']}")
+        loop_organizer.save!
+      end
+
       # Select all the challenges for org
       selected_chals = challenges.select { |c| c['organizer_id'] == org_old_id }
       selected_clef_tasks = clef_tasks.select { |clt| clt['organizer_id'] == org_old_id }
@@ -39,6 +45,12 @@ if Rails.env == 'development' || Rails.env == 'staging'
         clef_task.delete("id")
         clef_task["organizer_id"] = loop_organizer.id
         loop_clef_task = ClefTask.create!(clef_task)
+
+        if clef_task["eua_file"].present?
+          loop_clef_task.eua_file = open("https://dnczkxd1gcfu5.cloudfront.net/EUAs/clef_task/eua_file/#{clef_task_old_id}/#{clef_task['eua_file']}")
+          loop_clef_task.save!
+        end
+
 
         MigrationMapping.create!(
             source_type: 'ClefTask',
@@ -52,6 +64,10 @@ if Rails.env == 'development' || Rails.env == 'staging'
           pct.delete("participant_id")
           pct["clef_task_id"] = loop_clef_task.id
           loop_pct = ParticipantClefTask.create!(pct)
+          if pct["eua_file"].present?
+            loop_pct.eua_file = open("https://dnczkxd1gcfu5.cloudfront.net/participant_euas/participant_clef_task/eua_file/#{pct_old_id}/#{pct['eua_file']}")
+            loop_pct.save!
+          end
 
           MigrationMapping.create!(
               source_type: 'ParticipantClefTask',
@@ -93,6 +109,11 @@ if Rails.env == 'development' || Rails.env == 'staging'
         # create a new challenge
         Challenge.skip_callback(:create, :after, :init_discourse)
         loop_challenge = Challenge.create!(chal)
+
+        if chal["image_file"].present?
+          loop_challenge.image_file = open("https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/#{chal_old_id}/#{chal['image_file']}")
+          loop_challenge.save!
+        end
         Challenge.set_callback(:create, :after, :init_discourse)
 
         MigrationMapping.create!(
