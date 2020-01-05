@@ -97,16 +97,18 @@ class Challenge < ApplicationRecord
   after_create :init_discourse
 
   after_update do
-    if discourse_category_id
-      client = DiscourseApi::Client.new(ENV['DISCOURSE_DOMAIN_NAME'])
-      client.api_key = ENV['DISCOURSE_API_KEY']
-      client.api_username = ENV['DISCOURSE_API_USERNAME']
-      client.update_category(id: discourse_category_id,
-                             name: challenge.truncate(50),
-                             slug: slug[0..49],
-                             color: '49d9e9',
-                             text_color: 'f0fcfd'
-      )
+    if ENV['DISCOURSE_DOMAIN_NAME']
+      if discourse_category_id
+        client = DiscourseApi::Client.new(ENV['DISCOURSE_DOMAIN_NAME'])
+        client.api_key = ENV['DISCOURSE_API_KEY']
+        client.api_username = ENV['DISCOURSE_API_USERNAME']
+        client.update_category(id: discourse_category_id,
+                               name: challenge.truncate(50),
+                               slug: slug[0..49],
+                               color: '49d9e9',
+                               text_color: 'f0fcfd'
+        )
+      end
     end
   end
 
@@ -119,18 +121,20 @@ class Challenge < ApplicationRecord
   end
 
   def init_discourse
-    client = DiscourseApi::Client.new(ENV['DISCOURSE_DOMAIN_NAME'])
-    client.api_key = ENV['DISCOURSE_API_KEY']
-    client.api_username = ENV['DISCOURSE_API_USERNAME']
-    # NATE: discourse has a hard limit of 50 chars
-    # for category name length
-    res = client.create_category(name: challenge.truncate(50),
-                                 slug: slug[0..49],
-                                 color: '49d9e9',
-                                 text_color: 'f0fcfd'
-    )
-    self.discourse_category_id = res['id']
-    save
+    if ENV['DISCOURSE_DOMAIN_NAME']
+      client = DiscourseApi::Client.new(ENV['DISCOURSE_DOMAIN_NAME'])
+      client.api_key = ENV['DISCOURSE_API_KEY']
+      client.api_username = ENV['DISCOURSE_API_USERNAME']
+      # NATE: discourse has a hard limit of 50 chars
+      # for category name length
+      res = client.create_category(name: challenge.truncate(50),
+                                   slug: slug[0..49],
+                                   color: '49d9e9',
+                                   text_color: 'f0fcfd'
+      )
+      self.discourse_category_id = res['id']
+      save
+    end
   end
 
   def record_page_view
@@ -146,18 +150,18 @@ class Challenge < ApplicationRecord
 
   def start_dttm
     @start_dttm ||= begin
-      return nil if current_round.nil? || current_round.start_dttm.nil?
+                      return nil if current_round.nil? || current_round.start_dttm.nil?
 
-      current_round.start_dttm
-    end
+                      current_round.start_dttm
+                    end
   end
 
   def end_dttm
     @end_dttm ||= begin
-      return nil if current_round.nil? || current_round.end_dttm.nil?
+                    return nil if current_round.nil? || current_round.end_dttm.nil?
 
-      current_round.end_dttm
-    end
+                    current_round.end_dttm
+                  end
   end
 
   def submissions_remaining(participant_id)
