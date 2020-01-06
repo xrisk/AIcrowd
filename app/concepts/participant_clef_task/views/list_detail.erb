@@ -1,21 +1,23 @@
 <li class="list-group-item">
-  <div>
-    <% if participant.is_a? NullParticipant %>
+  <% if participant.nil? || participant.is_a?(NullParticipant) %>
+    <div>
       <%= link_to '#' do %>
-        <%= concept(Image::Cell,participant, klass: "avatar") %>
-        <span class="text-link"><%= @participant.name %></span>
+        <%= concept(Image::Cell, nil, klass: "avatar") %>
+        <span class="text-link">Unknown User</span>
       <% end %>
-    <% else %>
+    </div>
+  <% else %>
+    <div>
       <%= link_to participant_path(participant) do %>
-        <%= concept(Image::Cell,participant, klass: "avatar") %>
-        <span class="text-link"><%= @participant.name %></span>
+        <%= concept(Image::Cell, participant, klass: "avatar") %>
+        <span class="text-link"><%= participant.name %></span>
       <% end %>
-    <% end %>
-    <span class="description"><%= participant.email %></span>
-  </div>
+      <span class="description"><%= participant.email %></span>
+    </div>
+  <% end %>
   <div class="row" style="width:20%">
-    <% if eua_required? %>
-      <%= link_to asset_path(participant_clef_task.eua_file.url), target: :_blank do %>
+    <% if eua_file.present? %>
+      <%= link_to asset_path(eua_file.url), target: :_blank do %>
         <i aria-hidden="true" class="fa fa-file-pdf-o fa-2x"></i>
       <% end %>
     <% end %>

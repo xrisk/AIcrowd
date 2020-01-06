@@ -12,8 +12,8 @@ class ParticipantClefTask::Cell::ListDetail < ParticipantClefTask::Cell
     @clef_task ||= participant_clef_task.clef_task
   end
 
-  def eua_required?
-    @eua_required ||= clef_task.eua_file.present?
+  def eua_file
+    @eua_file ||= participant_clef_task.eua_file
   end
 
   def challenge_id
@@ -25,15 +25,16 @@ class ParticipantClefTask::Cell::ListDetail < ParticipantClefTask::Cell
   end
 
   def clef_status
-    return if !eua_required? #Do not show any additional button/link if eua is not required
     case participant_clef_task.status_cd
-      when 'requested'
-        "<button class='btn btn-small btn-default'>EUA downloaded</button>"
-      when 'submitted'
-        "#{ link_to 'Approve', participant_clef_task_path(clef_task,participant_id: participant.id,challenge_id: challenge_id), method: :patch, remote: true, class: 'btn btn-small btn-primary' }"
-      when 'registered'
-        "<button class='btn btn-small btn-default'>Approved</button>"
-      end
+    when 'requested'
+      return "<button class='btn btn-small btn-default'>EUA downloaded</button>"
+    when 'submitted'
+      return "<button class='btn btn-small btn-default'>Submitted [Cant approve for unknown user]</button>" if participant.nil?
+      return "<button class='btn btn-small btn-default'>Missing</button>" if eua_file.blank?
+      return "#{ link_to 'Approve', participant_clef_task_path(clef_task, participant_id: participant.id, challenge_id: challenge_id), method: :patch, remote: true, class: 'btn btn-small btn-primary' }"
+    when 'registered'
+      return "<button class='btn btn-small btn-default'>Approved</button>"
+    end
   end
 
 end

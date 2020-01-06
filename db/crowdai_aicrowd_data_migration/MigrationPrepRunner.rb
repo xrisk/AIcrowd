@@ -55,6 +55,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
 
     ActiveRecord::Base.transaction do
       # Remove ID from Hash so that we get a new ID
+
+      next if org['id'].nil?
       org_old_id = org['id']
       org.delete("id")
       # Add Tagline as it is needed
@@ -67,11 +69,10 @@ if Rails.env == 'development' || Rails.env == 'staging'
         loop_organizer.save!
       end
 
-
       MigrationMapping.create!(
           source_type: 'Organizer',
           source_id: loop_organizer.id,
-          crowdai_participant_id: old_ord_id
+          crowdai_participant_id: org_old_id
       )
 
       # Select all the challenges for org
@@ -79,6 +80,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       selected_clef_tasks = clef_tasks.select { |clt| clt['organizer_id'] == org_old_id }
 
       selected_clef_tasks.each do |clef_task|
+
+        next if clef_task['id'].nil?
         clef_task_old_id = clef_task["id"]
         clef_task.delete("id")
         clef_task["organizer_id"] = loop_organizer.id
@@ -89,19 +92,22 @@ if Rails.env == 'development' || Rails.env == 'staging'
           loop_clef_task.save!
         end
 
-
         MigrationMapping.create!(
             source_type: 'ClefTask',
             source_id: loop_clef_task.id,
             crowdai_participant_id: clef_task_old_id
         )
+
         selected_pcts = participant_clef_tasks.select { |pct| pct['clef_task_id'] == clef_task_old_id }
         selected_pcts.each do |pct|
+          next if pct['id'].nil?
           pct_old_id = pct["id"]
           pct.delete("id")
           pct.delete("participant_id")
           pct["clef_task_id"] = loop_clef_task.id
+
           loop_pct = ParticipantClefTask.create!(pct)
+
           if pct["eua_file"].present?
             loop_pct.eua_file = custom_openfile("https://dnczkxd1gcfu5.cloudfront.net/participant_euas/participant_clef_task/eua_file/#{pct_old_id}/#{pct['eua_file']}")
             loop_pct.save!
@@ -116,6 +122,7 @@ if Rails.env == 'development' || Rails.env == 'staging'
 
         selected_tdfs = task_dataset_files.select { |tdf| tdf['clef_task_id'] == clef_task_old_id }
         selected_tdfs.each do |tdf|
+          next if tdf["id"].nil?
           tdf_old_id = tdf["id"]
           tdf.delete("id")
           tdf["clef_task_id"] = loop_clef_task.id
@@ -130,6 +137,7 @@ if Rails.env == 'development' || Rails.env == 'staging'
       end
 
       selected_chals.each do |chal|
+        next if chal["id"].nil?
         chal_old_id = chal["id"]
         chal.delete("id")
         chal.delete("featured_sequence")
@@ -140,13 +148,26 @@ if Rails.env == 'development' || Rails.env == 'staging'
         chal["prize_cash"] = ""
         chal["prize_academic"] = ""
         chal["prize_misc"] = ""
+        chal["description_markdown"] = "#{chal["description_markdown"]}\n\n###Evaluation criteria\n#{chal["evaluation_markdown"]}\n\n###Resources\n\n#{chal["resources_markdown"]}\n\n###Prizes\n\n#{chal["prizes_markdown"]}\n\n###Datasets License\n\n#{chal["license_markdown"]}"
+
         if chal["secondary_sort_order_cd"].blank?
           chal["secondary_sort_order_cd"] = "ascending"
+        end
+
+        if !chal["clef_task_id"].nil? and chal["clef_challenge"] == true
+          old_ct_id = chal["clef_task_id"]
+          chal["teams_allowed"] = false
+          chal["clef_task_id"] = MigrationMapping.where(
+              source_type: 'ClefTask',
+              crowdai_participant_id: old_ct_id
+          ).first&.source_id
         end
 
         # create a new challenge
         Challenge.skip_callback(:create, :after, :init_discourse)
         loop_challenge = Challenge.create!(chal)
+
+        ChallengeRules.create!({challenge_id: loop_challenge.id, terms_markdown: chal['rules_markdown']})
 
         if chal["image_file"].present?
           loop_challenge.image_file = custom_openfile("https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/#{chal_old_id}/#{chal['image_file']}")
@@ -164,6 +185,7 @@ if Rails.env == 'development' || Rails.env == 'staging'
         selected_chal_rounds = challenge_rounds.select { |cr| cr['challenge_id'] == chal_old_id }
 
         selected_chal_rounds.each do |chal_round|
+          next if chal_round["id"].nil?
           old_chal_round_id = chal_round["id"]
           chal_round.delete("id")
           chal_round["challenge_id"] = loop_challenge.id
@@ -181,6 +203,7 @@ if Rails.env == 'development' || Rails.env == 'staging'
           )
 
           selected_chal_participants.each do |chal_participant|
+            next if chal_participant["participant_id"].nil?
             old_participant_id = chal_participant["participant_id"]
             chal_participant.delete("id")
             chal_participant.delete("participant_id")
@@ -199,6 +222,7 @@ if Rails.env == 'development' || Rails.env == 'staging'
           selected_submissions = submissions.select { |s| s['challenge_round_id'] == old_chal_round_id }
 
           selected_submissions.each do |sub|
+            next if sub["participant_id"].nil?
             old_participant_id = sub["participant_id"]
             sub.delete("id")
             sub.delete("participant_id")
