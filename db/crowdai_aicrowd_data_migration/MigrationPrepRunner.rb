@@ -1,14 +1,25 @@
 require 'open-uri'
 
+$list_of_failed_files = []
+
 def custom_openfile(url_to_file)
   # https://twin.github.io/improving-open-uri/
-  uri = URI.parse(url_to_file)
-  io = uri.open
+  uri = URI.parse(URI.escape(url_to_file))
+  puts uri
+  begin
+    io = uri.open
+  rescue OpenURI::HTTPError => e
+    $list_of_failed_files << url_to_file
+    puts e
+    return nil
+  end
+
   downloaded = Tempfile.new([File.basename(uri.path), File.extname(uri.path)])
 
   if io.is_a?(Tempfile)
     FileUtils.mv io.path, downloaded.path
   else # StringIO
+    Encoding.default_internal = io.string.encoding
     File.write(downloaded.path, io.string)
   end
 
@@ -38,9 +49,11 @@ if Rails.env == 'development' || Rails.env == 'staging'
   end
 
 
-  ActiveRecord::Base.transaction do
-    # For each Organizer 'org'
-    organizers.each do |org|
+  # For each Organizer 'org'
+  organizers.each do |org|
+    next if MigrationMapping.where(crowdai_participant_id: org['id'], source_type: 'Organizer').count.positive?
+
+    ActiveRecord::Base.transaction do
       # Remove ID from Hash so that we get a new ID
       org_old_id = org['id']
       org.delete("id")
@@ -53,6 +66,13 @@ if Rails.env == 'development' || Rails.env == 'staging'
         loop_organizer.image_file = custom_openfile("https://dnczkxd1gcfu5.cloudfront.net/images/organizers/image_file/#{org_old_id}/#{org['image_file']}")
         loop_organizer.save!
       end
+
+
+      MigrationMapping.create!(
+          source_type: 'Organizer',
+          source_id: loop_organizer.id,
+          crowdai_participant_id: old_ord_id
+      )
 
       # Select all the challenges for org
       selected_chals = challenges.select { |c| c['organizer_id'] == org_old_id }
@@ -205,12 +225,13 @@ if Rails.env == 'development' || Rails.env == 'staging'
             )
           end
           # Round Processing done, lets queue the leaderboard job
-          CalculateLeaderboardJob.perform_later(challenge_round_id: loop_challenge_round)
+          # CalculateLeaderboardJob.perform_later(challenge_round_id: loop_challenge_round.id)
         end
       end
     end
   end
 
+  puts $list_of_failed_files
   # Turn on logger
   #ActiveRecord::Base.logger = old_logger
 end
