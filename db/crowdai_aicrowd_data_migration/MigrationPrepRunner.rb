@@ -165,7 +165,12 @@ if Rails.env == 'development' || Rails.env == 'staging'
 
         # create a new challenge
         Challenge.skip_callback(:create, :after, :init_discourse)
-        loop_challenge = Challenge.create!(chal)
+        begin
+          loop_challenge = Challenge.create!(chal)
+        rescue ActiveRecord::RecordInvalid
+          chal["challenge_client_name"] = "challenge_#{SecureRandom.hex}"
+          loop_challenge = Challenge.create!(chal)
+        end
 
         ChallengeRules.create!({challenge_id: loop_challenge.id, terms_markdown: chal['rules_markdown']})
 

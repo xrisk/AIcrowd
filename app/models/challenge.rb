@@ -114,8 +114,8 @@ class Challenge < ApplicationRecord
 
   after_initialize do
     if new_record?
-      self.submission_license = 'Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC).'
-      self.challenge_client_name = "challenge_#{SecureRandom.hex}"
+      self.submission_license ||= 'Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC).'
+      self.challenge_client_name ||= "challenge_#{SecureRandom.hex}"
       self.featured_sequence = Challenge.count + 1
     end
   end
