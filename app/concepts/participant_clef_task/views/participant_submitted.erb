@@ -1,15 +1,20 @@
-<div class='row' data-cell='ParticipantClefTask::Cell::ListDetail'>
-  <div class='article'>
-    <h2>EUA approval pending</h2>
+<!-- md content -->
+<div class="col-md-8 col-lg-7" id="description-wrapper">
+  <div class="markdown-wrap">
+    <div class="md-content">
+
+    <h3>EUA approval pending</h3>
     <p>The approval of <%= link_to 'your completed End User Agreement (EUA)', 
           asset_path(participant_clef_task.eua_file.url),
-          target: :_blank
+          target: :_blank,
+          style: 'display:inline;'
           %> 
         document is pending. As soon as an ImageCLEF organizer approves the document, you will get access to the dataset.</p>
     <p>You will also be automatically registered with CLEF, the main organizer of all CLEF labs.</p>
     <p>You can redownload the task's EUA <%= link_to 'here' ,
           asset_path(clef_task.eua_file.url),
           target: :_blank,
+          style: 'display:inline;',
           id: 'eua-file',
           data: { :'clef-task-id' => clef_task.id } %>.
     <p>In case you wish to replace your EUA, you can upload a new file:</p>
@@ -24,9 +29,13 @@
       <div class="upload">
         <%= f.file_field :eua_file, class: 'file-upload' %>
         <span>PDF only, 10MB limit</span>
+      </div>
+      <div>
         <%= f.submit 'Resubmit', class: 'btn btn-primary' %>
       </div>
     <% end %>
 
+    </div>
   </div>
 </div>
+<!-- /md content -->
