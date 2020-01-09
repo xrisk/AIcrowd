@@ -25,4 +25,3 @@ Rails.application.configure do
   config.active_storage.service = :test
 end
 Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']
-Rails.application.routes.default_url_options[:port] = ENV['PORT']

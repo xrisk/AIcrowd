@@ -107,7 +107,7 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def create_team?(out_issues_hash = nil)
-    cached_with_issues(out_issues_hash) do {
+    cached_with_issues(:create_team?, out_issues_hash) do {
       not_allowed:
         !record.teams_allowed?,
       participant_not_logged_in:

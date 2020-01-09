@@ -27,7 +27,7 @@ describe Team do
         team.team_participants.create(participant: p2, role: :member)
       end
       it { expect(team.team_participants.count).to eq(2) }
-      it { expect(team.concrete?).to be }
+      it { expect(team.concrete?).to be true }
     end
   end
 
@@ -45,7 +45,7 @@ describe Team do
       end
       it { expect(team.team_participants.count).to eq(1) }
       it { expect(team.invitations_left).to eq(2) }
-      it { expect(team.full?).not_to be }
+      it { expect(team.full?).to be false }
     end
 
     describe 'full with 3 participants' do
@@ -59,7 +59,7 @@ describe Team do
       end
       it { expect(team.team_participants.count).to eq(3) }
       it { expect(team.invitations_left).to eq(0) }
-      it { expect(team.full?).to be }
+      it { expect(team.full?).to be true }
     end
 
     describe 'full with more participants than max' do
@@ -75,7 +75,7 @@ describe Team do
       it { expect(team.team_participants.count).to eq(3) }
       it { expect(team.invitations_left).to eq(-1) }
       it { expect(team.invitations_left_clamped).to eq(0) }
-      it { expect(team.full?).to be }
+      it { expect(team.full?).to be true }
     end
 
     describe '2 members, 1 invitation' do
@@ -93,7 +93,7 @@ describe Team do
       it { expect(team.team_participants.count).to eq(2) }
       it { expect(team.team_invitations.status_pendings.count).to eq(1) }
       it { expect(team.invitations_left).to eq(0) }
-      it { expect(team.full?).not_to be }
+      it { expect(team.full?).to be true }
     end
 
     describe 'decline/cancel regains invitations' do
@@ -118,7 +118,7 @@ describe Team do
       it { expect(team.team_participants.count).to eq(1) }
       it { expect(team.team_invitations.status_pendings.count).to eq(0) }
       it { expect(team.invitations_left).to eq(2) }
-      it { expect(team.full?).not_to be }
+      it { expect(team.full?).to be false }
     end
   end
 end
