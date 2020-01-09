@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 require 'rails_helper'
-include Rails.application.routes.url_helpers
 
 RSpec.describe Challenges::TeamInvitationsController, '#create', type: :controller do
   render_views
