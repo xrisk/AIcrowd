@@ -8,7 +8,7 @@ class CrowdaiMigrationController < ApplicationController
     @cid = crowdai_params[:id]
 
     if @cid.nil?
-      redirect_to(root_path, flash: {error: 'Unknown crowdAI participant ID'}) and return
+      redirect_to(root_path, flash: {error: 'Error while processing, contact help@aicrowd.com'}) and return
     end
 
     @migrate_service = MigrateUserService.new(crowdai_id: @cid, aicrowd_id: current_participant.id)
@@ -21,23 +21,25 @@ class CrowdaiMigrationController < ApplicationController
       redirect_to(root_path, flash: {error: 'No Data exists for this user'}) and return
     end
 
-    @migrate_service.migrate_user
+    MigrateUserJob.perform_later(crowdai_id: @cid, aicrowd_id: current_participant.id)
+
     redirect_to(root_path, flash: {success: 'Migration in progress.'})
   end
 
 
   def crowdai_params
     @crowdai_params ||= begin
-      rsa_key = OpenSSL::PKey::RSA.new(ENV['CROWDAI_PARTICIPANT_MIGRATION_PUBKEY'])
-      cipherkey, iv, ciphertext = params[:data].split('~').map { |x| Base64.urlsafe_decode64(x) }
-      cipher = OpenSSL::Cipher.new('AES-256-CBC')
-      cipher.decrypt
-      cipher.key = rsa_key.public_decrypt(cipherkey)
-      cipher.iv = iv
-      plaintext = cipher.update(ciphertext) + cipher.final
-      JSON.parse(plaintext).symbolize_keys
-    rescue
-      {}
-    end
+                          rsa_key = OpenSSL::PKey::RSA.new(ENV['CROWDAI_PARTICIPANT_MIGRATION_PUBKEY'])
+                          cipherkey, iv, ciphertext = params[:data].split('~').map { |x| Base64.urlsafe_decode64(x) }
+                          cipher = OpenSSL::Cipher.new('AES-256-CBC')
+                          cipher.decrypt
+                          cipher.key = rsa_key.public_decrypt(cipherkey)
+                          cipher.iv = iv
+                          plaintext = cipher.update(ciphertext) + cipher.final
+                          JSON.parse(plaintext).symbolize_keys
+                        rescue => error
+                          puts error.backtrace
+                          {}
+                        end
   end
 end
