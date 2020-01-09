@@ -149,6 +149,7 @@ if Rails.env == 'development' || Rails.env == 'staging'
         chal["prize_academic"] = ""
         chal["prize_misc"] = ""
         chal["description_markdown"] = "#{chal["description_markdown"]}\n\n###Evaluation criteria\n#{chal["evaluation_markdown"]}\n\n###Resources\n\n#{chal["resources_markdown"]}\n\n###Prizes\n\n#{chal["prizes_markdown"]}\n\n###Datasets License\n\n#{chal["license_markdown"]}"
+        chal["teams_allowed"] = false
 
         if chal["secondary_sort_order_cd"].blank?
           chal["secondary_sort_order_cd"] = "ascending"
@@ -156,7 +157,6 @@ if Rails.env == 'development' || Rails.env == 'staging'
 
         if !chal["clef_task_id"].nil? and chal["clef_challenge"] == true
           old_ct_id = chal["clef_task_id"]
-          chal["teams_allowed"] = false
           chal["clef_task_id"] = MigrationMapping.where(
               source_type: 'ClefTask',
               crowdai_participant_id: old_ct_id
@@ -231,9 +231,10 @@ if Rails.env == 'development' || Rails.env == 'staging'
             old_participant_id = sub["participant_id"]
             sub.delete("id")
             sub.delete("participant_id")
+            sub.delete("grading_message")
             sub["challenge_id"] = loop_challenge.id
             sub["challenge_round_id"] = loop_challenge_round.id
-            sub["grading_message"] = sub["grading_message"].nil? ? nil : "\nGrading " + sub["grading_message"].capitalize
+
 
             # Until Round Processing is done, we dont want to
             # queue the leaderboard job, so we set below key = true
@@ -254,7 +255,7 @@ if Rails.env == 'development' || Rails.env == 'staging'
             )
           end
           # Round Processing done, lets queue the leaderboard job
-          # CalculateLeaderboardJob.perform_later(challenge_round_id: loop_challenge_round.id)
+           CalculateLeaderboardJob.perform_later(challenge_round_id: loop_challenge_round.id)
         end
       end
     end
