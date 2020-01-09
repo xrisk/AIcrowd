@@ -32,7 +32,7 @@
         <div>
           <h4><%= t('.pending_invitations.title') %></h4>
           <% issues = {}; can_invite_now = policy(@team).create_invitations?(issues) %>
-          <% if can_invite_now || !issues[:list].include?(:participant_not_organizer) %>
+          <% if can_invite_now || issues[:list].exclude?(:participant_not_organizer) %>
             <h5><%= t('.pending_invitations.remaining', count: @team.invitations_left_clamped) %></h5>
           <% end %>
         </div>

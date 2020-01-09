@@ -31,7 +31,8 @@ class Challenges::TeamInvitationsController < ApplicationController
 
   private def set_invitee
     name_or_email = params[:invitee] || ''
-    @search_field = name_or_email =~ /\A[^@]+@[^@]+\z/ ? :email : :name
+    @search_field = name_or_email =~ Devise.email_regexp ? :email : :name
+
     case @search_field
     when :email
       @invitee = Participant.where('LOWER(email) = LOWER(?)', name_or_email).first ||
