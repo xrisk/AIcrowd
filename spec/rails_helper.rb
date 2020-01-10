@@ -5,7 +5,9 @@ require 'spec_helper'
 require 'rspec/rails'
 
 require 'support/config/capybara'
+require 'support/config/factory_bot'
 require 'support/config/database_cleaner'
+
 
 require 'pundit/matchers'
 require 'devise'
@@ -18,7 +20,6 @@ Dir[File.dirname(__FILE__) + "/support/matchers/*.rb"]
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
-  config.include FactoryBot::Syntax::Methods
   config.infer_spec_type_from_file_location!
 
   config.include Devise::Test::ControllerHelpers, type: :controller
