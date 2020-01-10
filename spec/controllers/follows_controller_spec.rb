@@ -16,12 +16,12 @@ RSpec.describe FollowsController, type: :controller do
         post :create, params: { challenge_id: challenge.id }
         challenge.reload
       end
-      it { expect { follow }.to change { Follow.count }.by(1) }
+      it { expect { follow }.to change(Follow, :count).by(1) }
       it { expect { follow }.to change { challenge.follows.count }.by(1) }
       it { expect { follow }.to change { participant.follows.count }.by(1) }
     end
 
-    #describe "Unfollow a Challenge" do
+    # describe "Unfollow a Challenge" do
     #  def unfollow
     #    delete :destroy, params: { challenge_id: challenge.id }
     #    challenge.reload
@@ -29,7 +29,6 @@ RSpec.describe FollowsController, type: :controller do
     #  it { expect { unfollow }.to change { Follow.count }.by(-1) }
     #  it { expect { unfollow }.to change { challenge.follows.count }.by(1) }
     #  it { expect { unfollow }.to change { participant.follows.count }.by(1) }
-    #end
+    # end
   end
-
 end

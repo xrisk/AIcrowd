@@ -12,7 +12,6 @@ module VotesHelper
     end
   end
 
-
   def guest_link(votable)
     link_to "#{awesome_icon_tag('star-o fa-2x')} #{votable.vote_count}".html_safe, new_participant_session_path, id: "vote-link-#{votable.id}"
   end
@@ -28,6 +27,7 @@ module VotesHelper
   def participant_vote_id(votable)
     vote = votable.votes.where(participant_id: current_participant.id).first
     return nil if vote.nil?
+
     vote.id
   end
 

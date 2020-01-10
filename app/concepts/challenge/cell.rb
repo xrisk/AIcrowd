@@ -1,5 +1,4 @@
 class Challenge::Cell < Template::Cell
-
   def show
     render
   end
@@ -10,25 +9,27 @@ class Challenge::Cell < Template::Cell
 
   def ending_dttm(challenge_round)
     return nil if challenge_round.nil?
+
     challenge_round.end_dttm.strftime("%d %b %H:%M UTC")
   end
 
   def ending_time(challenge_round)
     return nil if challenge_round.nil?
+
     challenge_round.end_dttm.strftime("%H:%M UTC")
   end
 
   def duration_in_seconds(challenge_round)
     return nil if challenge_round.nil?
+
     challenge_round.end_dttm - challenge_round.start_dttm
   end
 
   def remaining_time_in_seconds(challenge_round)
     return 0 if challenge_round.nil? || challenge_round.end_dttm.nil?
+
     seconds = challenge_round.end_dttm - Time.now
-    if seconds.nil? || seconds < 0
-      seconds = 0
-    end
+    seconds = 0 if seconds.nil? || seconds < 0
     return seconds
   end
 
@@ -58,7 +59,7 @@ class Challenge::Cell < Template::Cell
       elsif remaining_time_in_seconds(challenge_round) > 0
         "Less than 1 hour left &middot; Ending #{ending_dttm(challenge_round)}"
       else
-        "Completed"   # display for perpetual challenges
+        "Completed" # display for perpetual challenges
       end
     when :draft
       "Draft"
@@ -68,5 +69,4 @@ class Challenge::Cell < Template::Cell
       "Starting soon"
     end
   end
-
 end

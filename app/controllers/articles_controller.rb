@@ -1,8 +1,8 @@
 class ArticlesController < ApplicationController
   before_action :authenticate_participant!,
-    except: [:show,:index]
+                except: [:show, :index]
   before_action :set_article,
-    only: [:show, :edit, :update, :destroy]
+                only: [:show, :edit, :update, :destroy]
   after_action :verify_authorized
 
   def index
@@ -11,7 +11,6 @@ class ArticlesController < ApplicationController
       .per(10)
     authorize @articles
   end
-
 
   def show
     @article.record_page_view
@@ -27,14 +26,12 @@ class ArticlesController < ApplicationController
     end
   end
 
-
   def new
     @article = Article.new
     authorize @article
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @article = current_participant.articles.new(
@@ -42,15 +39,12 @@ class ArticlesController < ApplicationController
     authorize @article
 
     if @article.save
-      unless @article.notebook_url.present?
-        @article.article_sections.create!(section: 'Intro')
-      end
+      @article.article_sections.create!(section: 'Intro') unless @article.notebook_url.present?
       redirect_to @article
     else
       render :new
     end
   end
-
 
   def update
     if @article.update(article_params)
@@ -59,7 +53,6 @@ class ArticlesController < ApplicationController
       render :edit
     end
   end
-
 
   def destroy
     @article.destroy
@@ -75,31 +68,34 @@ class ArticlesController < ApplicationController
   end
 
   private
-    def set_article
-      @article = Article.friendly.find(params[:id])
-      authorize @article
-    end
 
-    def article_params
-      params
-        .require(:article)
-        .permit(
-          :article,
-          :published,
-          :category,
-          :summary,
-          :image_file,
-          :notebook_url,
-          article_sections_attributes: [
-            :id,
-            :article_id,
-            :seq,
-            :icon,
-            :section,
-            :description_markdown ],
-          image_attributes: [
-            :id,
-            :image,
-            :_destroy ])
-    end
+  def set_article
+    @article = Article.friendly.find(params[:id])
+    authorize @article
+  end
+
+  def article_params
+    params
+      .require(:article)
+      .permit(
+        :article,
+        :published,
+        :category,
+        :summary,
+        :image_file,
+        :notebook_url,
+        article_sections_attributes: [
+          :id,
+          :article_id,
+          :seq,
+          :icon,
+          :section,
+          :description_markdown
+        ],
+        image_attributes:            [
+          :id,
+          :image,
+          :_destroy
+        ])
+  end
 end

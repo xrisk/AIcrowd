@@ -2,7 +2,7 @@ class ParticipantClefTasksController < ApplicationController
   respond_to :js, :html
 
   def create
-    clef_task = ClefTask.find(params[:participant_clef_task][:clef_task_id])
+    clef_task             = ClefTask.find(params[:participant_clef_task][:clef_task_id])
     participant_clef_task = ParticipantClefTask
       .where(
         clef_task_id: strong_params[:clef_task_id], participant_id: current_participant.id)
@@ -12,16 +12,18 @@ class ParticipantClefTasksController < ApplicationController
     else
       participant_clef_task.update(strong_params)
     end
-    set_status(clef_task,participant_clef_task)
+    set_status(clef_task, participant_clef_task)
     respond_to do |format|
-      format.html { redirect_to clef_task_task_dataset_files_path(
-        clef_task,
-        challenge_id: params[:participant_clef_task][:challenge_id]) }
+      format.html do
+        redirect_to clef_task_task_dataset_files_path(
+          clef_task,
+          challenge_id: params[:participant_clef_task][:challenge_id])
+      end
     end
   end
 
   def update
-    clef_task_id = params[:id]
+    clef_task_id          = params[:id]
     participant_clef_task = ParticipantClefTask.where(clef_task_id: clef_task_id, participant_id: params[:participant_id]).first
     participant_clef_task.update(status_cd: 'registered')
     respond_to do |format|
@@ -36,17 +38,14 @@ class ParticipantClefTasksController < ApplicationController
           .merge(participant_id: current_participant.id)
   end
 
-  def set_status(clef_task,participant_clef_task)
+  def set_status(clef_task, participant_clef_task)
     if clef_task.eua_required?
       if participant_clef_task.eua_file.present?
         participant_clef_task.update(status_cd: 'submitted')
-        Organizer::EuaNotificationJob.perform_later(clef_task.id,current_participant.id)
+        Organizer::EuaNotificationJob.perform_later(clef_task.id, current_participant.id)
       end
     else
-      unless participant_clef_task.registered?
-        participant_clef_task.update(status_cd: 'registered')
-      end
+      participant_clef_task.update(status_cd: 'registered') unless participant_clef_task.registered?
     end
   end
-
 end

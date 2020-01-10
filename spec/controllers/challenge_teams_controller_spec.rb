@@ -11,8 +11,9 @@ RSpec.describe Challenges::TeamsController, type: :controller do
 
     describe 'GET #show' do
       before { get :show, params: { challenge_id: team.challenge.slug, name: team.name } }
+
       it { expect(response).to render_template(:show) }
-      it { expect(response).to have_http_status(200) }
+      it { expect(response).to have_http_status(:ok) }
     end
   end
 
@@ -23,12 +24,13 @@ RSpec.describe Challenges::TeamsController, type: :controller do
     describe 'GET #show' do
       before do
         # we parse an actual path instead of using shortcuts to ensure routes are working properly
-        path = challenge_team_path(team.challenge, team)
+        path   = challenge_team_path(team.challenge, team)
         params = Rails.application.routes.recognize_path(path)
         get(params[:action], params: params.except(:controller, :action))
       end
+
       it { expect(response).to render_template(:show) }
-      it { expect(response).to have_http_status(200) }
+      it { expect(response).to have_http_status(:ok) }
     end
   end
 end

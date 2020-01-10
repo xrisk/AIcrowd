@@ -1,5 +1,4 @@
 class Discussion::Cell::TopicAdmin < Discussion::Cell
-
   def show
     admin_actions
   end
@@ -9,9 +8,6 @@ class Discussion::Cell::TopicAdmin < Discussion::Cell
   end
 
   def admin_actions
-    if current_participant && current_participant.admin?
-      " | #{link_to 'Edit', edit_challenge_topic_path(challenge,topic)} | #{link_to 'Delete', challenge_topic_path(challenge,topic), method: :delete}"
-    end
+    " | #{link_to 'Edit', edit_challenge_topic_path(challenge, topic)} | #{link_to 'Delete', challenge_topic_path(challenge, topic), method: :delete}" if current_participant&.admin?
   end
-
 end

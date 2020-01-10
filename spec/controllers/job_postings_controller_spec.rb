@@ -16,14 +16,14 @@ RSpec.describe JobPostingsController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
-      get :show, params: {id: job_posting_1.id }
+      get :show, params: { id: job_posting_1.id }
       expect(response).to render_template(:show)
     end
   end
 
   describe "GET #show" do
     it "returns a success response with slug" do
-      get :show, params: {id: job_posting_1.slug }
+      get :show, params: { id: job_posting_1.slug }
       expect(response).to render_template(:show)
     end
   end

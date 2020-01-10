@@ -1,5 +1,4 @@
 class SubmissionCommentPolicy < ApplicationPolicy
-
   def new?
     true
   end
@@ -7,5 +6,4 @@ class SubmissionCommentPolicy < ApplicationPolicy
   def create?
     participant
   end
-
 end

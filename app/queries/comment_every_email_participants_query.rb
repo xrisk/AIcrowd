@@ -1,5 +1,4 @@
 class CommentEveryEmailParticipantsQuery
-
   def initialize(comment_id)
     @comment_id = comment_id
   end
@@ -12,7 +11,7 @@ class CommentEveryEmailParticipantsQuery
   # (participant made a comment on one of the comments in the thread OR
   #  participant follows the challenge which has the comment)
   def sql
-    %Q[
+    %[
       SELECT p.participant_id AS id
         FROM comments c,
              email_preferences p,
@@ -39,5 +38,4 @@ class CommentEveryEmailParticipantsQuery
          AND p.email_frequency_cd = 'every'
     ]
   end
-
 end

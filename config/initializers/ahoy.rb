@@ -4,7 +4,7 @@ class Ahoy::Store < Ahoy::DatabaseStore
   end
 
   def authenticate(data)
-      # disables automatic linking of visits and users
+    # disables automatic linking of visits and users
   end
 end
 

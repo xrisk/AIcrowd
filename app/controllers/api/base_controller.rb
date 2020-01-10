@@ -27,5 +27,4 @@ class Api::BaseController < ApplicationController
     organizer = Organizer.where(api_key: api_key).first
     challenge.present? && organizer.present? && challenge.organizer_id == organizer.id
   end
-
 end

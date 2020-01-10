@@ -1,5 +1,4 @@
 ActiveAdmin.register Article do
-
   sidebar "Sections", only: [:show, :edit] do
     ul do
       li link_to "Sections", admin_article_article_sections_path(article)
@@ -20,5 +19,4 @@ ActiveAdmin.register Article do
     column :vote_count
     actions
   end
-
 end

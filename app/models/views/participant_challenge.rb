@@ -7,10 +7,9 @@ class ParticipantChallenge < SqlView
 
   mount_uploader :image_file, ImageUploader
   as_enum :status,
-    [:draft, :running, :completed, :terminated, :starting_soon],
-    map: :string
+          [:draft, :running, :completed, :terminated, :starting_soon],
+          map: :string
 end
-
 
 # This view calculates which challenges a participant is connected with, based on:
 # - submissions made

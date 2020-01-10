@@ -30,7 +30,7 @@ ActiveAdmin.register Team do
   end
 
   action_item only: :index, priority: 0 do
-    link_to('All Teams', admin_teams_path()) if params[:challenge_id].present?
+    link_to('All Teams', admin_teams_path) if params[:challenge_id].present?
   end
 
   index do
@@ -42,11 +42,11 @@ ActiveAdmin.register Team do
     column :created_at
     column :updated_at
     actions defaults: false do |team|
-      if params[:challenge_id].present?
-        delete_return_to = admin_challenge_teams_path(team.challenge)
-      else
-        delete_return_to = admin_teams_path()
-      end
+      delete_return_to = if params[:challenge_id].present?
+                           admin_challenge_teams_path(team.challenge)
+                         else
+                           admin_teams_path
+                         end
       item 'View', admin_challenge_team_path(team.challenge, team), class: 'member_link'
       item 'Edit', edit_admin_challenge_team_path(team.challenge, team), class: 'member_link'
       item 'Delete', admin_challenge_team_path(team.challenge, team, return_to: delete_return_to), method: :delete, class: 'member_link'

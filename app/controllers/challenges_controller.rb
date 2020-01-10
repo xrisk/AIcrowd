@@ -10,16 +10,16 @@ class ChallengesController < ApplicationController
 
   def index
     @challenge_filter = params[:challenge_filter] ||= 'all'
-    @all_challenges = policy_scope(Challenge)
-    @challenges = case @challenge_filter
-                  when 'active'
-                    @all_challenges.where(status_cd: %w[running starting_soon])
-                  when 'completed'
-                    @all_challenges.where(status_cd: 'completed')
-                  when 'draft'
-                    @all_challenges.where(status_cd: 'draft')
-                  else
-                    @all_challenges
+    @all_challenges   = policy_scope(Challenge)
+    @challenges       = case @challenge_filter
+                        when 'active'
+                          @all_challenges.where(status_cd: ['running', 'starting_soon'])
+                        when 'completed'
+                          @all_challenges.where(status_cd: 'completed')
+                        when 'draft'
+                          @all_challenges.where(status_cd: 'draft')
+                        else
+                          @all_challenges
                   end
     @challenges = if current_participant&.admin?
                     @challenges.page(params[:page]).per(20)
@@ -46,13 +46,11 @@ class ChallengesController < ApplicationController
   def show
     if current_participant
       @challenge_participant = @challenge.challenge_participants.where(
-          participant_id: current_participant.id,
-          challenge_rules_accepted_version: @challenge.current_challenge_rules_version)
+        participant_id:                   current_participant.id,
+        challenge_rules_accepted_version: @challenge.current_challenge_rules_version)
     end
 
-    unless params[:version] # dont' record page views on history pages
-      @challenge.record_page_view
-    end
+    @challenge.record_page_view unless params[:version] # dont' record page views on history pages
     @challenge_rules = @challenge.current_challenge_rules
   end
 
@@ -61,14 +59,11 @@ class ChallengesController < ApplicationController
     authorize @challenge
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
-    @challenge = @organizer.challenges.new(challenge_params)
-    if @organizer.clef_organizer
-      @challenge.clef_challenge = true
-    end
+    @challenge                = @organizer.challenges.new(challenge_params)
+    @challenge.clef_challenge = true if @organizer.clef_organizer
     authorize @challenge
 
     if @challenge.save
@@ -103,7 +98,7 @@ class ChallengesController < ApplicationController
     challenge = Challenge.friendly.find(params[:challenge_id])
     authorize challenge
     challenge.submissions.each do |s|
-      #SubmissionGraderJob.perform_later(s.id)
+      # SubmissionGraderJob.perform_later(s.id)
     end
     @submission_count = challenge.submissions_count
     render 'challenges/form/regrade_status'
@@ -132,135 +127,143 @@ class ChallengesController < ApplicationController
     params
         .require(:challenge)
         .permit(
+          :id,
+          :discourse_category_id,
+          :organizer_id,
+          :challenge,
+          :tagline,
+          :status,
+          :description,
+          :featured_sequence,
+          :evaluation_markdown,
+          :evaluation_criteria,
+          :rules,
+          :prizes,
+          :prize_travel,
+          :prize_cash,
+          :prize_academic,
+          :prize_misc,
+          :resources,
+          :submission_instructions,
+          :primary_sort_order,
+          :secondary_sort_order,
+          :score_title,
+          :score_secondary_title,
+          :other_scores_fieldnames,
+          :teams_allowed,
+          :hidden_challenge,
+          :max_team_participants,
+          :team_freeze_time,
+          :latest_submission,
+          :description_markdown,
+          :rules_markdown,
+          :prizes_markdown,
+          :resources_markdown,
+          :dataset_description_markdown,
+          :submission_instructions_markdown,
+          :license,
+          :license_markdown,
+          :winner_description_markdown,
+          :winners_tab_active,
+          :perpetual_challenge,
+          :automatic_grading,
+          :answer_file_s3_key,
+          :submission_license,
+          :api_required,
+          :daily_submissions,
+          :threshold,
+          :online_grading,
+          :start_dttm,
+          :end_dttm,
+          :media_on_leaderboard,
+          :challenge_client_name,
+          :image_file,
+          :dynamic_content_url,
+          :dynamic_content_flag,
+          :dynamic_content_tab,
+          :dynamic_content,
+          :clef_task_id,
+          :submissions_page,
+          :private_challenge,
+          :show_leaderboard,
+          :ranking_window,
+          :ranking_highlight,
+          :grader_identifier,
+          :online_submissions,
+          :grader_logs,
+          :grading_history,
+          :post_challenge_submissions,
+          :submissions_downloadable,
+          :dataset_note_markdown,
+          :discussions_visible,
+          :require_toc_acceptance,
+          :toc_acceptance_text,
+          :toc_acceptance_instructions_markdown,
+          :toc_accordion,
+          dataset_attributes:                     [
             :id,
-            :discourse_category_id,
-            :organizer_id,
-            :challenge,
-            :tagline,
-            :status,
+            :challenge_id,
             :description,
-            :featured_sequence,
-            :evaluation_markdown,
-            :evaluation_criteria,
-            :rules,
-            :prizes,
-            :prize_travel,
-            :prize_cash,
-            :prize_academic,
-            :prize_misc,
-            :resources,
-            :submission_instructions,
-            :primary_sort_order,
-            :secondary_sort_order,
-            :score_title,
-            :score_secondary_title,
-            :other_scores_fieldnames,
-            :teams_allowed,
-            :hidden_challenge,
-            :max_team_participants,
-            :team_freeze_time,
-            :latest_submission,
-            :description_markdown,
-            :rules_markdown,
-            :prizes_markdown,
-            :resources_markdown,
-            :dataset_description_markdown,
-            :submission_instructions_markdown,
-            :license,
-            :license_markdown,
-            :winner_description_markdown,
-            :winners_tab_active,
-            :perpetual_challenge,
-            :automatic_grading,
-            :answer_file_s3_key,
-            :submission_license,
-            :api_required,
-            :daily_submissions,
-            :threshold,
-            :online_grading,
+            :_destroy
+          ],
+          submissions_attributes:                 [
+            :id,
+            :challenge_id,
+            :participant_id,
+            :_destroy
+          ],
+          image_attributes:                       [
+            :id,
+            :image,
+            :_destroy
+          ],
+          submission_file_definitions_attributes: [
+            :id,
+            :challenge_id,
+            :seq,
+            :submission_file_description,
+            :filetype,
+            :file_required,
+            :submission_file_help_text,
+            :_destroy
+          ],
+          challenge_rounds_attributes:            [
+            :id,
+            :challenge_round,
+            :seq,
             :start_dttm,
             :end_dttm,
-            :media_on_leaderboard,
-            :challenge_client_name,
-            :image_file,
-            :dynamic_content_url,
-            :dynamic_content_flag,
-            :dynamic_content_tab,
-            :dynamic_content,
-            :clef_task_id,
-            :submissions_page,
-            :private_challenge,
-            :show_leaderboard,
+            :active,
+            :minimum_score,
+            :minimum_score_secondary,
+            :submission_limit,
+            :submission_limit_period,
+            :failed_submissions,
             :ranking_window,
             :ranking_highlight,
-            :grader_identifier,
-            :online_submissions,
-            :grader_logs,
-            :grading_history,
-            :post_challenge_submissions,
-            :submissions_downloadable,
-            :dataset_note_markdown,
-            :discussions_visible,
-            :require_toc_acceptance,
-            :toc_acceptance_text,
-            :toc_acceptance_instructions_markdown,
-            :toc_accordion,
-            dataset_attributes: [
-                :id,
-                :challenge_id,
-                :description,
-                :_destroy],
-            submissions_attributes: [
-                :id,
-                :challenge_id,
-                :participant_id,
-                :_destroy],
-            image_attributes: [
-                :id,
-                :image,
-                :_destroy],
-            submission_file_definitions_attributes: [
-                :id,
-                :challenge_id,
-                :seq,
-                :submission_file_description,
-                :filetype,
-                :file_required,
-                :submission_file_help_text,
-                :_destroy],
-            challenge_rounds_attributes: [
-                :id,
-                :challenge_round,
-                :seq,
-                :start_dttm,
-                :end_dttm,
-                :active,
-                :minimum_score,
-                :minimum_score_secondary,
-                :submission_limit,
-                :submission_limit_period,
-                :failed_submissions,
-                :ranking_window,
-                :ranking_highlight,
-                :score_significant_digits,
-                :score_secondary_significant_digits,
-                :leaderboard_note_markdown,
-                :parallel_submissions,
-                :_destroy],
-            challenge_partners_attributes: [
-                :id,
-                :image_file,
-                :partner_url,
-                :_destroy],
-            challenge_rules_attributes: [
-                :id,
-                :terms_markdown,
-                :has_additional_checkbox,
-                :additional_checkbox_text_markdown],
-            invitations_attributes: [
-                :id,
-                :email,
-                :_destroy])
+            :score_significant_digits,
+            :score_secondary_significant_digits,
+            :leaderboard_note_markdown,
+            :parallel_submissions,
+            :_destroy
+          ],
+          challenge_partners_attributes:          [
+            :id,
+            :image_file,
+            :partner_url,
+            :_destroy
+          ],
+          challenge_rules_attributes:             [
+            :id,
+            :terms_markdown,
+            :has_additional_checkbox,
+            :additional_checkbox_text_markdown
+          ],
+          invitations_attributes:                 [
+            :id,
+            :email,
+            :_destroy
+          ])
   end
 
   def set_organizer
@@ -270,8 +273,8 @@ class ChallengesController < ApplicationController
   def set_s3_direct_post
     @s3_direct_post = S3_BUCKET
                           .presigned_post(
-                              key: "answer_files/#{@challenge.slug}_#{SecureRandom.uuid}/${filename}",
-                              success_action_status: '201',
-                              acl: 'private')
+                            key:                   "answer_files/#{@challenge.slug}_#{SecureRandom.uuid}/${filename}",
+                            success_action_status: '201',
+                            acl:                   'private')
   end
 end

@@ -1,11 +1,11 @@
 class DatasetFilesController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_dataset_file,
-    only: [:destroy, :edit, :update]
+                only: [:destroy, :edit, :update]
   before_action :set_challenge
   before_action :check_participation_terms
   before_action :set_s3_direct_post,
-    only: [:new, :create, :edit]
+                only: [:new, :create, :edit]
 
   layout "application-old", only: [:new, :create, :edit]
 
@@ -14,8 +14,7 @@ class DatasetFilesController < ApplicationController
       .where(challenge_id: @challenge.id)
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @dataset_file = @challenge
@@ -28,19 +27,18 @@ class DatasetFilesController < ApplicationController
       .dataset_files.new(dataset_file_params)
     if @dataset_file.save
       redirect_to challenge_dataset_files_path(@challenge),
-        notice: 'Dataset file was successfully created.'
+                  notice: 'Dataset file was successfully created.'
     else
       render :new
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @dataset_file.update(dataset_file_params)
       redirect_to challenge_dataset_files_path(@challenge),
-        notice: 'Dataset file was successfully updated.'
+                  notice: 'Dataset file was successfully updated.'
     else
       render :edit
     end
@@ -53,10 +51,11 @@ class DatasetFilesController < ApplicationController
     end
     @dataset_file.destroy
     redirect_to challenge_dataset_files_path(@challenge),
-      notice: "Dataset file #{@dataset_file.title} was deleted."
+                notice: "Dataset file #{@dataset_file.title} was deleted."
   end
 
   private
+
   def set_dataset_file
     @dataset_file = DatasetFile.find(params[:id])
     authorize @dataset_file
@@ -67,12 +66,12 @@ class DatasetFilesController < ApplicationController
   end
 
   def check_participation_terms
-    if !policy(@challenge).has_accepted_participation_terms?
+    unless policy(@challenge).has_accepted_participation_terms?
       redirect_to [@challenge, ParticipationTerms.current_terms]
       return
     end
 
-    if !policy(@challenge).has_accepted_challenge_rules?
+    unless policy(@challenge).has_accepted_challenge_rules?
       redirect_to [@challenge, @challenge.current_challenge_rules]
       return
     end
@@ -97,9 +96,8 @@ class DatasetFilesController < ApplicationController
   def set_s3_direct_post
     @s3_direct_post = S3_BUCKET
       .presigned_post(
-        key: "dataset_files/challenge_#{@challenge.id}/#{SecureRandom.uuid}_${filename}",
+        key:                   "dataset_files/challenge_#{@challenge.id}/#{SecureRandom.uuid}_${filename}",
         success_action_status: '201',
-        acl: 'private')
+        acl:                   'private')
   end
-
 end

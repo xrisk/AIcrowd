@@ -1,5 +1,4 @@
 class Discussion::Cell::Comment < Discussion::Cell
-
   def show
     render :comment
   end
@@ -17,9 +16,6 @@ class Discussion::Cell::Comment < Discussion::Cell
   end
 
   def admin_actions
-    if current_participant && current_participant.admin?
-      " | #{link_to 'Edit', edit_topic_comment_path(topic,comment), remote: true} | #{link_to 'Delete', topic_comment_path(topic,comment), method: :delete}"
-    end
+    " | #{link_to 'Edit', edit_topic_comment_path(topic, comment), remote: true} | #{link_to 'Delete', topic_comment_path(topic, comment), method: :delete}" if current_participant&.admin?
   end
-
 end

@@ -1,5 +1,4 @@
 class ParticipationTerms::Cell::Terms < ParticipationTerms::Cell
-
   def show
     render :show
   end
@@ -15,5 +14,4 @@ class ParticipationTerms::Cell::Terms < ParticipationTerms::Cell
         .find_by(participant_id: current_participant.id)
     end
   end
-
 end

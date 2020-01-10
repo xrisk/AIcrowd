@@ -1,5 +1,4 @@
 module SubmissionsHelper
-
   def score(submission)
     challenge = submission.challenge
     if submission.graded?
@@ -16,5 +15,4 @@ module SubmissionsHelper
       end
     end
   end
-
 end

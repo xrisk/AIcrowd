@@ -9,12 +9,12 @@ module FeatureSpecHelpers
   end
 
   def expect_sign_in
-    expect(current_path).to eq new_participant_session_path
+    expect(page).to have_current_path new_participant_session_path, ignore_query: true
     expect(page).to have_text 'You need to sign in or sign up before continuing'
   end
 
   def expect_unauthorized
-    expect(current_path).to eq '/'
+    expect(page).to have_current_path '/'
     expect(page).to have_text 'You are not authorised to access this page.'
   end
 

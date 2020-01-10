@@ -1,10 +1,10 @@
 module MetaTagsHelper
   def meta_title
     if content_for?(:meta_title)
-     content_for(:meta_title)
+      content_for(:meta_title)
     elsif !@page_title.blank?
       "AIcrowd | " + @page_title
-    elsif title_from_controller_name != nil
+    elsif !title_from_controller_name.nil?
       "AIcrowd | " + title_from_controller_name
     else
       DEFAULT_META["meta_title"]

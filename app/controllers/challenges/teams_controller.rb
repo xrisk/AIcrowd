@@ -10,9 +10,9 @@ class Challenges::TeamsController < ApplicationController
 
     if @team.save
       BaseLeaderboard.morph_submitter!(
-        from: current_participant,
-        to: @team,
-        challenge_id: @challenge.id,
+        from:         current_participant,
+        to:           @team,
+        challenge_id: @challenge.id
       )
       flash[:success] = 'Team created successfully'
       redirect_to challenge_team_path(@team.challenge, @team)
@@ -28,7 +28,6 @@ class Challenges::TeamsController < ApplicationController
       .includes(:invitee)
   end
 
-
   private def set_challenge
     @challenge = Challenge.friendly.find(params[:challenge_id])
   end
@@ -37,7 +36,6 @@ class Challenges::TeamsController < ApplicationController
     @team = @challenge.teams.find_by!(name: params[:name])
     authorize @team
   end
-
 
   private def create_team_attributes
     params

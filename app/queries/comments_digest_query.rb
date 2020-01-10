@@ -1,11 +1,10 @@
 class CommentsDigestQuery
-
-  def initialize(participant,start_dttm)
-    if participant.is_a?(NullParticipant)
-      @participant_id = 0
-    else
-      @participant_id = participant.id
-    end
+  def initialize(participant, start_dttm)
+    @participant_id = if participant.is_a?(NullParticipant)
+                        0
+                      else
+                        participant.id
+                      end
     @start_dttm = start_dttm.to_s
   end
 
@@ -17,7 +16,7 @@ class CommentsDigestQuery
   # (participant has mentions AND has participated in the thread) OR
   # there is a comment on a challenge followed by the participant
   def sql
-    %Q[
+    %[
       SELECT c.id AS id
         FROM comments c,
              email_preferences p
@@ -44,5 +43,4 @@ class CommentsDigestQuery
          AND p.challenges_followed IS TRUE
     ]
   end
-
 end

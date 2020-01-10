@@ -1,11 +1,10 @@
 class SuccessStoryPolicy < ApplicationPolicy
-
   def index?
     true
   end
 
   def show?
-    @record.published || (participant && participant.admin?)
+    @record.published || (participant&.admin?)
   end
 
   def edit?
@@ -33,16 +32,15 @@ class SuccessStoryPolicy < ApplicationPolicy
 
     def initialize(participant, scope)
       @participant = participant
-      @scope = scope
+      @scope       = scope
     end
 
     def resolve
-      if participant && participant.admin?
+      if participant&.admin?
         scope.all
       else
-          scope.where(published: true)
+        scope.where(published: true)
       end
     end
   end
-
 end

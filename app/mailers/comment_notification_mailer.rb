@@ -1,33 +1,32 @@
 class CommentNotificationMailer < ApplicationMailer
-
-  def sendmail(participant_id,comment_id)
+  def sendmail(participant_id, comment_id)
     participant = Participant.find(participant_id)
-    comment = Comment.find(comment_id)
-    options = format_options(participant,comment)
-    @model_id = comment_id
+    comment     = Comment.find(comment_id)
+    options     = format_options(participant, comment)
+    @model_id   = comment_id
     mandrill_send(options)
   end
 
-  def format_options(participant,comment)
-    topic = comment.topic
+  def format_options(participant, comment)
+    topic     = comment.topic
     challenge = comment.topic.challenge
 
     options = {
-      participant_id:   participant.id,
-      subject:          "[AIcrowd/#{challenge.challenge}] New discussion comment",
-      to:               participant.email,
-      template:         "AIcrowd General Template",
+      participant_id:    participant.id,
+      subject:           "[AIcrowd/#{challenge.challenge}] New discussion comment",
+      to:                participant.email,
+      template:          "AIcrowd General Template",
       global_merge_vars: [
         {
-          name:           "NAME",
-          content:        "#{participant.name}"
+          name:    "NAME",
+          content: participant.name.to_s
         },
         {
-          name:           "BODY",
-          content:        email_body(challenge,topic,comment)
+          name:    "BODY",
+          content: email_body(challenge, topic, comment)
         },
-        { name:           'EMAIL_PREFERENCES_LINK',
-          content:        EmailPreferencesTokenService
+        { name:    'EMAIL_PREFERENCES_LINK',
+          content: EmailPreferencesTokenService
                             .new(participant)
                             .email_preferences_link }
       ]
@@ -42,15 +41,14 @@ class CommentNotificationMailer < ApplicationMailer
     link_to 'here', new_topic_comment_url(topic)
   end
 
-  def email_body(challenge,topic,comment)
+  def email_body(challenge, topic, comment)
     "<div>" +
       "<p>A new comment has been made to the " +
       "#{challenge_link(challenge)} challenge.</p>" +
       "<br/>" +
-      "#{comment.comment}" +
+      comment.comment.to_s +
       "<br/>" +
       "<p>Click #{comment_link(topic)} to see the comment.</p>" +
-    "</div>"
+      "</div>"
   end
-
 end

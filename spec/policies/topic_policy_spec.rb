@@ -10,6 +10,7 @@ describe TopicPolicy do
 
   context 'for a public participant' do
     let(:participant) { nil }
+
     it { is_expected.to permit_action(:show) }
     it { is_expected.to permit_action(:index) }
     it { is_expected.to forbid_action(:create) }
@@ -21,6 +22,7 @@ describe TopicPolicy do
 
   context 'for a participant' do
     let(:participant) { build(:participant) }
+
     it { is_expected.to permit_action(:show) }
     it { is_expected.to permit_action(:index) }
     it { is_expected.to permit_action(:create) }
@@ -32,6 +34,7 @@ describe TopicPolicy do
 
   context 'for the author' do
     let(:participant) { author }
+
     it { is_expected.to permit_action(:show) }
     it { is_expected.to permit_action(:index) }
     it { is_expected.to permit_action(:create) }
@@ -43,6 +46,7 @@ describe TopicPolicy do
 
   context 'for an admin' do
     let(:participant) { admin }
+
     it { is_expected.to permit_action(:show) }
     it { is_expected.to permit_action(:index) }
     it { is_expected.to permit_action(:create) }
@@ -51,5 +55,4 @@ describe TopicPolicy do
     it { is_expected.to permit_action(:edit) }
     it { is_expected.to permit_action(:destroy) }
   end
-
 end

@@ -4,11 +4,11 @@ class JobPosting < ApplicationRecord
 
   default_scope { order('created_at DESC') }
 
-  validates_presence_of :title
-  validates_presence_of :organisation
-  validates_presence_of :description_markdown
-  validates_presence_of :country
-  validates_presence_of :posting_date
+  validates :title, presence: true
+  validates :organisation, presence: true
+  validates :description_markdown, presence: true
+  validates :country, presence: true
+  validates :posting_date, presence: true
 
   friendly_id :title, use: [:slugged]
   as_enum :status, [:draft, :open, :closed], map: :string
@@ -20,8 +20,7 @@ class JobPosting < ApplicationRecord
 
   def record_page_view
     self.page_views ||= 0
-    self.page_views += 1
-    self.save
+    self.page_views  += 1
+    save
   end
-
 end

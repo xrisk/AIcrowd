@@ -6,5 +6,5 @@ class TeamParticipant < ApplicationRecord
 
   as_enum :role, ROLES, map: :string, source: :role, prefix: true
 
-  validates_inclusion_of :role, in: ROLES
+  validates :role, inclusion: { in: ROLES }
 end

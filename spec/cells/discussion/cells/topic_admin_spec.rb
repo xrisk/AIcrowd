@@ -9,23 +9,26 @@ describe Discussion::Cell::TopicAdmin, type: :cell do
   let(:topic) { create :topic, participant: author }
 
   context 'public user' do
-    subject { cell(described_class, topic, current_participant: nil ).show() }
+    subject { cell(described_class, topic, current_participant: nil).show }
+
     it { expect(subject).to be_nil }
   end
 
   context 'author' do
-    subject { cell(described_class, topic, current_participant: author ).show() }
+    subject { cell(described_class, topic, current_participant: author).show }
+
     it { expect(subject).to be_nil }
   end
 
   context 'participant' do
-    subject { cell(described_class, topic, current_participant: participant ).show() }
+    subject { cell(described_class, topic, current_participant: participant).show }
+
     it { expect(subject).to be_nil }
   end
 
   context 'admin' do
-    subject { cell(described_class, topic, current_participant: admin ).show() }
+    subject { cell(described_class, topic, current_participant: admin).show }
+
     it { expect(subject).not_to be_nil }
   end
-
 end

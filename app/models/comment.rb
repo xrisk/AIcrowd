@@ -13,5 +13,4 @@ class Comment < ApplicationRecord
   def participant
     super || NullParticipant.new
   end
-
 end

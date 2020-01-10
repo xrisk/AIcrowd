@@ -3,13 +3,13 @@ require 'rails_helper'
 RSpec.describe ParticipantsController, type: :controller do
   render_views
 
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     FactoryBot.attributes_for(:participant)
-  }
+  end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     FactoryBot.attributes_for(:participant, :invalid)
-  }
+  end
 
   context 'as a participant' do
     let(:participant) { create :participant }
@@ -34,12 +34,12 @@ RSpec.describe ParticipantsController, type: :controller do
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) {
+        let(:new_attributes) do
           { name: 'Sean' }
-        }
+        end
 
         it "updates the requested participant" do
-          put :update, params: { id: participant.slug, participant: new_attributes}
+          put :update, params: { id: participant.slug, participant: new_attributes }
           participant.reload
           expect(participant.name).to eq(new_attributes[:name])
         end
@@ -65,9 +65,9 @@ RSpec.describe ParticipantsController, type: :controller do
 
     describe "DELETE #destroy" do
       it "destroys the requested participant" do
-        expect {
+        expect do
           delete :destroy, params: { id: participant.slug }
-        }.to change(Participant, :count).by(-1)
+        end.to change(Participant, :count).by(-1)
       end
 
       it "redirects to the root" do
@@ -76,5 +76,4 @@ RSpec.describe ParticipantsController, type: :controller do
       end
     end
   end
-
 end

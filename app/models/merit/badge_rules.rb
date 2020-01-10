@@ -27,26 +27,25 @@ module Merit
 
       # Authored a tutorial
       # bronze
-      grant_on ['articles#create','articles#update'], badge_id: 13, to: :participant do |article|
+      grant_on ['articles#create', 'articles#update'], badge_id: 13, to: :participant do |article|
         article.published?
       end
 
       # silver
-      grant_on ['articles#create','articles#update'], badge_id: 14, to: :participant do |article|
+      grant_on ['articles#create', 'articles#update'], badge_id: 14, to: :participant do |article|
         published_articles = Article.where(
           participant: article.participant,
-          published: true)
+          published:   true)
         published_articles.count >= 3
       end
 
       # gold
-      grant_on ['articles#create','articles#update'], badge_id: 15, to: :participant do |article|
+      grant_on ['articles#create', 'articles#update'], badge_id: 15, to: :participant do |article|
         published_articles = Article.where(
           participant: article.participant,
-          published: true)
+          published:   true)
         published_articles.count >= 30
       end
-
 
       # grant_on 'users#create', badge_id: 7, badge: 'just-registered', to: :itself
 

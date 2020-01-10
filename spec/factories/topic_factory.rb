@@ -1,10 +1,10 @@
 FactoryBot.define do
-  factory :topic, class: Topic do
+  factory :topic, class: 'Topic' do
     challenge
     participant
-    topic FFaker::Lorem.sentence(3)
-    sticky false
-    views 1
+    topic { FFaker::Lorem.sentence(3) }
+    sticky { false }
+    views { 1 }
     after(:create) do |topic|
       topic.comments << FactoryBot.create(:comment, topic: topic)
     end
@@ -17,7 +17,7 @@ FactoryBot.define do
     end
 
     trait :invalid do
-      topic nil
+      topic { nil }
     end
   end
 end

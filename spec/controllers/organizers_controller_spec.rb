@@ -1,15 +1,15 @@
-  require 'rails_helper'
+require 'rails_helper'
 
 RSpec.describe OrganizersController, type: :controller do
   render_views
 
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     FactoryBot.attributes_for(:organizer)
-  }
+  end
 
-  let(:invalid_attributes) {
-    FactoryBot.attributes_for(:organizer,:invalid)
-  }
+  let(:invalid_attributes) do
+    FactoryBot.attributes_for(:organizer, :invalid)
+  end
 
   context 'as an admin' do
     let(:participant) { create :participant, :admin }
@@ -21,7 +21,7 @@ RSpec.describe OrganizersController, type: :controller do
 
     describe "GET #show" do
       it "assigns the requested organizer as @organizer" do
-        get :show, params: {id: organizer.id }
+        get :show, params: { id: organizer.id }
         expect(assigns(:organizer)).to eq(organizer)
       end
     end
@@ -36,9 +36,9 @@ RSpec.describe OrganizersController, type: :controller do
     describe "POST #create" do
       context "with valid params" do
         it "creates a new Organizer" do
-          expect {
+          expect do
             post :create, params: { organizer: valid_attributes }
-          }.to change(Organizer, :count).by(1)
+          end.to change(Organizer, :count).by(1)
         end
 
         it "assigns a newly created organizer as @organizer" do
@@ -68,9 +68,9 @@ RSpec.describe OrganizersController, type: :controller do
 
     describe "PUT #update" do
       context "with valid params" do
-        let(:new_attributes) {
+        let(:new_attributes) do
           { organizer: 'new name', description: 'some new description' }
-        }
+        end
 
         it "updates the requested organizer" do
           put :update, params: { id: organizer.id, organizer: new_attributes }
@@ -86,13 +86,13 @@ RSpec.describe OrganizersController, type: :controller do
 
         it "redirects to the organizer" do
           put :update, params: { id: organizer.to_param, organizer: valid_attributes }
-          #expect(response).to redirect_to(organizer)
+          # expect(response).to redirect_to(organizer)
         end
       end
 
       context "with invalid params" do
         it "assigns the organizer as @organizer" do
-          put :update, params: { id: organizer.id, organizer: invalid_attributes}
+          put :update, params: { id: organizer.id, organizer: invalid_attributes }
           expect(assigns(:organizer)).to eq(organizer)
         end
 
@@ -103,7 +103,7 @@ RSpec.describe OrganizersController, type: :controller do
       end
     end
 
-    #describe "DELETE #destroy" do
+    # describe "DELETE #destroy" do
     #  it "destroys the requested organizer" do
     #    expect {
     #      delete :destroy, params: { id: organizer.id }
@@ -114,7 +114,6 @@ RSpec.describe OrganizersController, type: :controller do
     #    delete :destroy, params: { id: organizer.id }
     #    expect(response).to redirect_to('/')
     #  end
-    #end
+    # end
   end
-
 end

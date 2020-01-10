@@ -1,5 +1,4 @@
 class Challenge::Cell::PrizesBreakdown < Challenge::Cell
-
   def show
     render :prizes_breakdown
   end
@@ -7,5 +6,4 @@ class Challenge::Cell::PrizesBreakdown < Challenge::Cell
   def challenge
     model
   end
-
 end

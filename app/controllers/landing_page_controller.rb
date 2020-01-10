@@ -22,8 +22,7 @@ class LandingPageController < ApplicationController
   end
 
   def host
-    @page_title = "Organize"
+    @page_title     = "Organize"
     @challenge_call = ChallengeCall.first
   end
-
 end

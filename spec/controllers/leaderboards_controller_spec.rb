@@ -4,11 +4,12 @@ RSpec.describe LeaderboardsController, type: :controller do
 
   context 'current round' do
     3.times do |i|
-      let!("submission_#{i + 1}") {
+      let!("submission_#{i + 1}") do
         create :submission,
-          challenge: challenge,
-          participant: participant,
-          grading_status_cd: 'graded' }
+               challenge:         challenge,
+               participant:       participant,
+               grading_status_cd: 'graded'
+      end
     end
     let(:challenge) { create :challenge, :running }
     let(:participant) { create :participant }
@@ -19,27 +20,22 @@ RSpec.describe LeaderboardsController, type: :controller do
     end
 
     describe 'GET #index' do
-      before {
+      before do
         get :index, params: { challenge_id: submission_1.challenge_id }
-      }
-      #it { expect(assigns(:leaderboards).count).to eq(3) }
+      end
+      # it { expect(assigns(:leaderboards).count).to eq(3) }
+
       it { expect(response).to render_template :index }
     end
 
-=begin
-    describe 'GET #show' do
-      before { get :show, params: { challenge_id: submission_1.challenge_id, id: submission_1.id } }
-      it { expect(assigns(:submission)).to eq submission_1 }
-      it { expect(assigns(:entry).id).to eq submission_1.id }
-      it { expect(response).to render_template :show }
-    end
-=end
+    #     describe 'GET #show' do
+    #       before { get :show, params: { challenge_id: submission_1.challenge_id, id: submission_1.id } }
+    #       it { expect(assigns(:submission)).to eq submission_1 }
+    #       it { expect(assigns(:entry).id).to eq submission_1.id }
+    #       it { expect(response).to render_template :show }
+    #     end
   end
-
 
   context 'post challenge on' do
-
   end
-
-
 end

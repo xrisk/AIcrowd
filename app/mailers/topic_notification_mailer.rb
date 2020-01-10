@@ -1,32 +1,31 @@
 class TopicNotificationMailer < ApplicationMailer
-
-  def sendmail(participant_id,topic_id)
+  def sendmail(participant_id, topic_id)
     participant = Participant.find(participant_id)
-    topic = Topic.find(topic_id)
-    options = format_options(participant,topic)
-    @model_id = topic_id
+    topic       = Topic.find(topic_id)
+    options     = format_options(participant, topic)
+    @model_id   = topic_id
     mandrill_send(options)
   end
 
-  def format_options(participant,topic)
+  def format_options(participant, topic)
     challenge = topic.challenge
 
     options = {
-      participant_id:   participant.id,
-      subject:          "[AIcrowd/#{challenge.challenge}] New discussion comment",
-      to:               participant.email,
-      template:         "AIcrowd General Template",
+      participant_id:    participant.id,
+      subject:           "[AIcrowd/#{challenge.challenge}] New discussion comment",
+      to:                participant.email,
+      template:          "AIcrowd General Template",
       global_merge_vars: [
         {
-          name:           "NAME",
-          content:        "#{participant.name}"
+          name:    "NAME",
+          content: participant.name.to_s
         },
         {
-          name:           "BODY",
-          content:        email_body(challenge,topic)
+          name:    "BODY",
+          content: email_body(challenge, topic)
         },
-        { name:           'EMAIL_PREFERENCES_LINK',
-          content:        EmailPreferencesTokenService
+        { name:    'EMAIL_PREFERENCES_LINK',
+          content: EmailPreferencesTokenService
                             .new(participant)
                             .email_preferences_link }
       ]
@@ -41,15 +40,14 @@ class TopicNotificationMailer < ApplicationMailer
     link_to 'here', new_topic_comment_url(topic)
   end
 
-  def email_body(challenge,topic)
+  def email_body(challenge, topic)
     "<div>" +
       "<p>A new topic has been made in the " +
       "#{challenge_link(challenge)} challenge.</p>" +
       "<br/>" +
-      "#{topic.topic}" +
+      topic.topic.to_s +
       "<br/>" +
       "<p>Click #{topic_link(topic)} to see the comment.</p>" +
-    "</div>"
+      "</div>"
   end
-
 end

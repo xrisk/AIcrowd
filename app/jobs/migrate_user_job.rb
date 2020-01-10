@@ -5,4 +5,3 @@ class MigrateUserJob < ApplicationJob
     MigrateUserService.new(crowdai_id: crowdai_id, aicrowd_id: aicrowd_id).migrate_user
   end
 end
-

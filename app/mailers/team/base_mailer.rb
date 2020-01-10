@@ -2,23 +2,22 @@
 class Team::BaseMailer < ApplicationMailer
   protected def format_options
     options = {
-      participant_id:   @participant.id,
-      subject:          "[AIcrowd] #{email_subject}",
-      to:               @participant.email,
-      template:         'AIcrowd General Template',
+      participant_id:    @participant.id,
+      subject:           "[AIcrowd] #{email_subject}",
+      to:                @participant.email,
+      template:          'AIcrowd General Template',
       global_merge_vars: [
         {
-          name:     'NAME',
-          content:  @participant.name.to_s,
+          name:    'NAME',
+          content: @participant.name.to_s
         },
         {
-          name:     'BODY',
-          content:  email_body_html,
+          name:    'BODY',
+          content: email_body_html
         },
-        { name:     'EMAIL_PREFERENCES_LINK',
-          content:  email_prefs_html,
-        },
-      ],
+        { name:    'EMAIL_PREFERENCES_LINK',
+          content: email_prefs_html }
+      ]
     }
   end
 
@@ -28,11 +27,11 @@ class Team::BaseMailer < ApplicationMailer
       @participant = invitee
     when EmailInvitation
       @participant = Participant.new(
-        name: invitee.email.sub(/@.*\z/, ''),
-        email: invitee.email,
+        name:  invitee.email.sub(/@.*\z/, ''),
+        email: invitee.email
       )
     else
-      raise RuntimeError.new("Unexpected invitee type: #{@invitee.class}")
+      raise "Unexpected invitee type: #{@invitee.class}"
     end
   end
 
@@ -80,9 +79,10 @@ class Team::BaseMailer < ApplicationMailer
 
   private def email_prefs_html
     return '' unless @participant.persisted?
-    preamble = 'You are receiving this email for the following reason:'
-    url = EmailPreferencesTokenService.new(@participant).preferences_token_url
-    prefs_link = %Q{<a href="#{url}">Email Preferences</a>}
+
+    preamble   = 'You are receiving this email for the following reason:'
+    url        = EmailPreferencesTokenService.new(@participant).preferences_token_url
+    prefs_link = %(<a href="#{url}">Email Preferences</a>)
     <<~HTML
       <div>
         <p><small>

@@ -12,13 +12,13 @@ class ApplicationController < ActionController::Base
   end
 
   def doorkeeper_unauthorized_render_options(error: nil)
-    {json: {error: 'Not authorized'}}
+    { json: { error: 'Not authorized' } }
   end
 
   def append_info_to_payload(payload)
     super
     payload[:request_id] = request.uuid
-    payload[:user_id] = current_user.id if current_user
+    payload[:user_id]    = current_user.id if current_user
   end
 
   private
@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    current_participant #|| NullParticipant.new
+    current_participant # || NullParticipant.new
   end
 
   private
@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     unless current_participant.agreed_to_terms_of_use_and_privacy?
       flash[:notice] = 'We have changed the way we save email and notification preferences, please review them below'
-      current_participant.update_attributes(agreed_to_terms_of_use_and_privacy: true)
+      current_participant.update(agreed_to_terms_of_use_and_privacy: true)
       return participant_notifications_path(current_participant)
     end
     return session['participant_return_to'] || root_path

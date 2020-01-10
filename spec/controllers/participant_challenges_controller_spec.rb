@@ -5,17 +5,18 @@ RSpec.describe ParticipantChallengesController, type: :controller do
 
   let!(:challenge) { create :challenge, :running }
   let!(:participant) { create :participant }
-  let!(:challenge_participant) {
+  let!(:challenge_participant) do
     create :challenge_participant,
-    challenge: challenge,
-    participant: participant
-  }
+           challenge:   challenge,
+           participant: participant
+  end
   let!(:admin) { create :participant, :admin }
-  let!(:submission) {
+  let!(:submission) do
     create :submission,
-    participant: participant,
-    challenge: challenge,
-    challenge_round_id: challenge.challenge_rounds.first.id }
+           participant:        participant,
+           challenge:          challenge,
+           challenge_round_id: challenge.challenge_rounds.first.id
+  end
 
   before do
     sign_in(admin)
@@ -23,7 +24,8 @@ RSpec.describe ParticipantChallengesController, type: :controller do
 
   describe 'GET #index challenge_running' do
     before { get :index, params: { challenge_id: challenge.id } }
-      #it { expect(assigns(:challenges).sort).to eq [challenge_running, challenge_completed, challenge_starting_soon].sort }
+    # it { expect(assigns(:challenges).sort).to eq [challenge_running, challenge_completed, challenge_starting_soon].sort }
+
     it { expect(response).to render_template :index }
   end
 end

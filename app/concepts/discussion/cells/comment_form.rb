@@ -1,5 +1,4 @@
 class Discussion::Cell::CommentForm < Discussion::Cell
-
   def show
     render :comment_form
   end
@@ -11,5 +10,4 @@ class Discussion::Cell::CommentForm < Discussion::Cell
   def comment
     topic.comments.new(participant: current_participant)
   end
-
 end

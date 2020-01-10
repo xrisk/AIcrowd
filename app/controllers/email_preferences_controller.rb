@@ -2,13 +2,12 @@ class EmailPreferencesController < ApplicationController
   before_action :set_participant
   before_action :email_preferences_token_or_authenticate
 
-  def edit
-  end
+  def edit; end
 
   def update
-    if @participant.update_attributes(participant_params)
+    if @participant.update(participant_params)
       flash[:notice] = 'Your email preferences were successfully updated.'
-      redirect_to session['participant_return_to'] and return if session['participant_return_to']
+      redirect_to(session['participant_return_to']) && return if session['participant_return_to']
       if @token
         redirect_to participant_notifications_path(@participant, preferences_token: @token)
       else
@@ -52,5 +51,4 @@ class EmailPreferencesController < ApplicationController
       authenticate_participant!
     end
   end
-
 end

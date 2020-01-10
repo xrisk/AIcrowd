@@ -2,33 +2,33 @@ class Team < ApplicationRecord
   belongs_to :challenge, inverse_of: :teams
 
   has_many :team_participants, inverse_of: :team, dependent: :destroy
-  has_many :team_participants_organizer, ->{ role_organizers }, class_name: 'TeamParticipant'
+  has_many :team_participants_organizer, -> { role_organizers }, class_name: 'TeamParticipant'
 
   has_many :team_invitations, inverse_of: :team, dependent: :destroy
-  has_many :team_invitations_pending, ->{ status_pendings }, class_name: 'TeamInvitation'
+  has_many :team_invitations_pending, -> { status_pendings }, class_name: 'TeamInvitation'
 
   has_many :participants, through: :team_participants, inverse_of: :teams
 
-  scope :for_challenge, -> (challenge) { where(challenge_id: challenge.id) }
+  scope :for_challenge, ->(challenge) { where(challenge_id: challenge.id) }
   scope :allowing_invitations, -> { where(invitations_allowed: true) }
-  scope :with_at_least_n_participants, -> (n) {
+  scope :with_at_least_n_participants, lambda { |n|
     where(id:
-      Team.joins(:team_participants)
+              Team.joins(:team_participants)
         .group(Team.arel_table[:id])
         .having(TeamParticipant.arel_table[:id].count.gteq(n))
         .select(Team.arel_table[:id])
-    )
+         )
   }
   scope :concrete, -> { with_at_least_n_participants(2) }
 
-  validates_uniqueness_of :name, scope: :challenge_id # case-insensitive because name is a citext
-  validates_length_of :name, in: 2...256
-  validates_format_of :name,
-    with: /(?=.*[a-zA-Z])/,
-    message: 'must have at least one letter'
-  validates_format_of :name,
-    with: /\A[a-zA-Z0-9.\-_{}\[\]]+\z/,
-    message: 'may only contain basic letters, numbers, and any of -_.{}[]'
+  validates :name, uniqueness: { scope: :challenge_id } # case-insensitive because name is a citext
+  validates :name, length: { in: 2...256 }
+  validates :name,
+            format: { with:    /(?=.*[a-zA-Z])/,
+                      message: 'must have at least one letter' }
+  validates :name,
+            format: { with:    /\A[a-zA-Z0-9.\-_{}\[\]]+\z/,
+                      message: 'may only contain basic letters, numbers, and any of -_.{}[]' }
 
   def to_param
     name

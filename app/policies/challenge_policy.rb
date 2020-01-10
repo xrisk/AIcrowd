@@ -1,5 +1,4 @@
 class ChallengePolicy < ApplicationPolicy
-
   def index?
     true
   end
@@ -13,11 +12,11 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def reorder?
-    participant && participant.admin?
+    participant&.admin?
   end
 
   def assign_order?
-    participant && participant.admin?
+    participant&.admin?
   end
 
   def update?
@@ -61,33 +60,31 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def has_accepted_participation_terms?
-    if !participant
-      return
-    end
+    return unless participant
+
     return participant.has_accepted_participation_terms?
   end
 
   def show_leaderboard?
     @record.challenge_rounds.present? &&
-        @record.show_leaderboard == true ||
-        (participant &&
-            (participant.admin? || @record.organizer_id == participant.organizer_id))
+      @record.show_leaderboard == true ||
+      (participant &&
+          (participant.admin? || @record.organizer_id == participant.organizer_id))
   end
 
   def submissions_allowed?
     return false unless @record.online_submissions
-    if participant && (participant.admin? || @record.organizer_id == participant.organizer_id)
-      return true
-    end
+    return true if participant && (participant.admin? || @record.organizer_id == participant.organizer_id)
+
     if @record.running? || (@record.completed? && @record.post_challenge_submissions?)
       if @record.clef_challenge.present?
         if clef_participant_registered?(@record)
-          return true #return true if running and clef challenge and registered
+          return true # return true if running and clef challenge and registered
         else
-          return false #return false if running and clef_challenge and NOT REGISTERED
+          return false # return false if running and clef_challenge and NOT REGISTERED
         end
       else
-        return true #return true if running and no clef challenge
+        return true # return true if running and no clef challenge
       end
     end
     return false # no positive condition met
@@ -95,10 +92,11 @@ class ChallengePolicy < ApplicationPolicy
 
   def clef_participant_registered?(challenge)
     return false unless participant.present?
-    clef_task = challenge.clef_task
+
+    clef_task             = challenge.clef_task
     participant_clef_task = ParticipantClefTask.where(
-        participant_id: participant,
-        clef_task_id: clef_task.id).first
+      participant_id: participant,
+      clef_task_id:   clef_task.id).first
     if participant_clef_task
       return true if participant_clef_task.registered?
     else
@@ -107,18 +105,20 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def create_team?(out_issues_hash = nil)
-    cached_with_issues(:create_team?, out_issues_hash) do {
-      not_allowed:
-        !record.teams_allowed?,
-      participant_not_logged_in:
-        participant.nil?,
-      challenge_not_running:
-        !record.running?,
-      challenge_teams_frozen:
-        record.teams_frozen?,
-      team_exists:
-        participant.teams.exists?(challenge_id: record.id),
-    } end
+    cached_with_issues(:create_team?, out_issues_hash) do
+      {
+        not_allowed:
+                                   !record.teams_allowed?,
+        participant_not_logged_in:
+                                   participant.nil?,
+        challenge_not_running:
+                                   !record.running?,
+        challenge_teams_frozen:
+                                   record.teams_frozen?,
+        team_exists:
+                                   participant.teams.exists?(challenge_id: record.id)
+      }
+    end
   end
 
   class Scope
@@ -126,11 +126,11 @@ class ChallengePolicy < ApplicationPolicy
 
     def initialize(participant, scope)
       @participant = participant
-      @scope = scope
+      @scope       = scope
     end
 
     def participant_sql(email:)
-      %Q[
+      %[
         challenges.status_cd IN ('running','completed','starting_soon')
         AND challenges.private_challenge IS FALSE
         OR (challenges.private_challenge IS TRUE
@@ -142,10 +142,10 @@ class ChallengePolicy < ApplicationPolicy
     end
 
     def resolve
-      if participant && participant.admin?
+      if participant&.admin?
         scope.all
       else
-        if participant && participant.organizer_id
+        if participant&.organizer_id
           scope.where("status_cd IN ('running','completed','starting_soon') OR organizer_id = ?", participant.organizer_id)
         elsif participant
           scope.where(participant_sql(email: participant.email))
@@ -155,5 +155,4 @@ class ChallengePolicy < ApplicationPolicy
       end
     end
   end
-
 end

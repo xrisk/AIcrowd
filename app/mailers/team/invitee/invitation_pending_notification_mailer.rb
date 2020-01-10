@@ -2,9 +2,9 @@
 class Team::Invitee::InvitationPendingNotificationMailer < Team::BaseMailer
   def sendmail(invitation)
     @invitation = invitation
-    @invitee = @invitation.invitee
+    @invitee    = @invitation.invitee
     set_participant_from_invitee(@invitee)
-    @team = @invitation.team
+    @team    = @invitation.team
     @invitor = @invitation.invitor
     mandrill_send(format_options)
   end
@@ -15,11 +15,9 @@ class Team::Invitee::InvitationPendingNotificationMailer < Team::BaseMailer
 
   def email_body_html
     team_member_count = @team.team_participants.count
-    n_members = "#{team_member_count} #{team_member_count == 1 ? 'member' : 'members'}"
-    url_params = [@invitation]
-    if @invitee.is_a?(EmailInvitation)
-      url_params << { email_token: @invitee.display_token }
-    end
+    n_members         = "#{team_member_count} #{team_member_count == 1 ? 'member' : 'members'}"
+    url_params        = [@invitation]
+    url_params << { email_token: @invitee.display_token } if @invitee.is_a?(EmailInvitation)
     <<~HTML
       <div>
         <p>You’ve been invited to join #{linked_team_html}!</p>
@@ -48,8 +46,9 @@ class Team::Invitee::InvitationPendingNotificationMailer < Team::BaseMailer
 
   def email_invitee_info
     return '' unless @invitee.is_a?(EmailInvitation)
-    token = @invitee.display_token
-    signup = new_participant_registration_url
+
+    token       = @invitee.display_token
+    signup      = new_participant_registration_url
     claim_email = claim_emails_url(email_token: token, email_confirmation: @invitee.email)
     <<~HTML
       <p>
@@ -69,9 +68,9 @@ class Team::Invitee::InvitationPendingNotificationMailer < Team::BaseMailer
   end
 
   private def button_html(text, url, primary)
-    border =  primary ? '0'       : '1px solid #aaacad'
-    bg =      primary ? '#f0524d' : '#ffffff'
-    color =   primary ? '#ffffff' : '#292c2d'
+    border  = primary ? '0' : '1px solid #aaacad'
+    bg      = primary ? '#f0524d' : '#ffffff'
+    color   = primary ? '#ffffff' : '#292c2d'
     a_style = <<~STYLE
       text-decoration: none;
     STYLE

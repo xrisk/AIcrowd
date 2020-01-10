@@ -12,7 +12,7 @@ class Team::Invitee::InvitationAcceptedNotificationMailer < Team::BaseMailer
 
   def email_body_html
     other_team_member_count = @team.team_participants.count - 1
-    n_other_people = "#{other_team_member_count} other #{other_team_member_count == 1 ? 'person' : 'people'}"
+    n_other_people          = "#{other_team_member_count} other #{other_team_member_count == 1 ? 'person' : 'people'}"
     <<~HTML
       <div>
         <p>You’ve just joined #{linked_team_html}!</p>

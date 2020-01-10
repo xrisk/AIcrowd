@@ -18,66 +18,65 @@ class SubmissionsController < ApplicationController
     if params[:baselines] == 'on'
       @search = policy_scope(Submission)
                     .where(
-                        challenge_round_id: @current_round_id,
-                        challenge_id: @challenge.id,
-                        baseline: true)
+                      challenge_round_id: @current_round_id,
+                      challenge_id:       @challenge.id,
+                      baseline:           true)
                     .where.not(participant_id: nil)
                     .search(search_params)
       @baselines = 'on'
     else
-      @baselines = 'off'
-      if params[:my_submissions] == 'on' && current_participant
-        @my_submissions = 'on'
-      else
-        @my_submissions = 'off'
-      end
+      @baselines      = 'off'
+      @my_submissions = if params[:my_submissions] == 'on' && current_participant
+                          'on'
+                        else
+                          'off'
+                        end
       if @my_submissions == 'on'
         @search = policy_scope(Submission)
                       .where(
-                          challenge_round_id: @current_round_id,
-                          challenge_id: @challenge.id,
-                          participant_id: current_participant.id)
+                        challenge_round_id: @current_round_id,
+                        challenge_id:       @challenge.id,
+                        participant_id:     current_participant.id)
                       .search(search_params)
         @submissions_remaining = SubmissionsRemainingQuery.new(
-            challenge: @challenge,
-            participant_id: current_participant.id).call
+          challenge:      @challenge,
+          participant_id: current_participant.id).call
       else
         @search = policy_scope(Submission)
                       .where(
-                          challenge_round_id: @current_round_id,
-                          challenge_id: @challenge.id)
+                        challenge_round_id: @current_round_id,
+                        challenge_id:       @challenge.id)
                       .search(search_params)
       end
     end
     @search.sorts = 'created_at desc' if @search.sorts.empty?
-    @submissions = @search.result.includes(:participant).page(params[:page]).per(10)
+    @submissions  = @search.result.includes(:participant).page(params[:page]).per(10)
   end
 
   def filter
     Rails.logger.debug('PARAMS Q')
     Rails.logger.debug(params[:q])
-    @search = policy_scope(Submission).ransack(params[:q])
+    @search      = policy_scope(Submission).ransack(params[:q])
     @submissions = @search.result
-                       .where(
-                           challenge_id: @challenge.id)
+                       .where(challenge_id: @challenge.id)
                        .page(1).per(10)
     render @submissions
   end
 
   def show
     @presenter = SubmissionDetailPresenter.new(
-        submission: @submission,
-        challenge: @challenge,
-        view_context: view_context
+      submission:   @submission,
+      challenge:    @challenge,
+      view_context: view_context
     )
     render :show
   end
 
   def new
-    @clef_primary_run_disabled = clef_primary_run_disabled?
+    @clef_primary_run_disabled          = clef_primary_run_disabled?
     @submissions_remaining, @reset_dttm = SubmissionsRemainingQuery.new(
-        challenge: @challenge,
-        participant_id: current_participant.id
+      challenge:      @challenge,
+      participant_id: current_participant.id
     ).call
     @submission = @challenge.submissions.new
     @submission.submission_files.build
@@ -86,14 +85,14 @@ class SubmissionsController < ApplicationController
 
   def create
     @submission = @challenge.submissions.new(
-        submission_params
-            .merge(
-                participant_id: current_participant.id,
-                online_submission: true))
+      submission_params
+          .merge(
+            participant_id:    current_participant.id,
+            online_submission: true))
     authorize @submission
     if @submission.save
       SubmissionGraderJob.perform_later(@submission.id)
-      #notify_admins
+      # notify_admins
       redirect_to challenge_submissions_path(@challenge),
                   notice: 'Submission accepted.'
     else
@@ -135,12 +134,12 @@ class SubmissionsController < ApplicationController
   end
 
   def check_participation_terms
-    if !policy(@challenge).has_accepted_participation_terms?
+    unless policy(@challenge).has_accepted_participation_terms?
       redirect_to [@challenge, ParticipationTerms.current_terms]
       return
     end
 
-    if !policy(@challenge).has_accepted_challenge_rules?
+    unless policy(@challenge).has_accepted_challenge_rules?
       redirect_to [@challenge, @challenge.current_challenge_rules]
       return
     end
@@ -148,8 +147,8 @@ class SubmissionsController < ApplicationController
 
   def grader_logs
     if @challenge.grader_logs
-      s3_key = "grader_logs/#{@challenge.slug}/grader_logs_submission_#{@submission.id}.txt"
-      s3 = S3Service.new(s3_key)
+      s3_key       = "grader_logs/#{@challenge.slug}/grader_logs_submission_#{@submission.id}.txt"
+      s3           = S3Service.new(s3_key)
       @grader_logs = s3.filestream
     end
     return @grader_logs
@@ -159,41 +158,42 @@ class SubmissionsController < ApplicationController
     params
         .require(:submission)
         .permit(
-            :challenge_id,
-            :participant_id,
-            :description_markdown,
-            :score,
-            :score_secondary,
-            :grading_status,
-            :grading_message,
-            :api,
-            :grading_status_cd,
-            :media_content_type,
-            :media_thumbnail,
-            :media_large,
-            :docker_configuration_id,
-            :clef_method_description,
-            :clef_retrieval_type,
-            :clef_run_type,
-            :clef_primary_run,
-            :clef_other_info,
-            :clef_additional,
-            :online_submission,
-            :baseline,
-            :baseline_comment,
-            submission_files_attributes: [
-                :id,
-                :seq,
-                :submission_file_s3_key,
-                :_delete])
+          :challenge_id,
+          :participant_id,
+          :description_markdown,
+          :score,
+          :score_secondary,
+          :grading_status,
+          :grading_message,
+          :api,
+          :grading_status_cd,
+          :media_content_type,
+          :media_thumbnail,
+          :media_large,
+          :docker_configuration_id,
+          :clef_method_description,
+          :clef_retrieval_type,
+          :clef_run_type,
+          :clef_primary_run,
+          :clef_other_info,
+          :clef_additional,
+          :online_submission,
+          :baseline,
+          :baseline_comment,
+          submission_files_attributes: [
+            :id,
+            :seq,
+            :submission_file_s3_key,
+            :_delete
+          ])
   end
 
   def set_s3_direct_post
     @s3_direct_post = S3_BUCKET
                           .presigned_post(
-                              key: "submission_files/challenge_#{@challenge.id}/#{SecureRandom.uuid}_${filename}",
-                              success_action_status: '201',
-                              acl: 'private')
+                            key:                   "submission_files/challenge_#{@challenge.id}/#{SecureRandom.uuid}_${filename}",
+                            success_action_status: '201',
+                            acl:                   'private')
   end
 
   def set_submissions_remaining
@@ -207,7 +207,7 @@ class SubmissionsController < ApplicationController
   def clef_primary_run_disabled?
     return true unless @challenge.organizer.clef?
 
-    sql = %Q[
+    sql = %[
         SELECT 'X'
         FROM submissions s
         WHERE s.challenge_id = #{@challenge.id}
@@ -221,11 +221,11 @@ class SubmissionsController < ApplicationController
   end
 
   def current_round_id
-    if params[:challenge_round_id].present?
-      round = ChallengeRound.find(params[:challenge_round_id].to_i)
-    else
-      round = @challenge.challenge_rounds.where(active: true).first
-    end
+    round = if params[:challenge_round_id].present?
+              ChallengeRound.find(params[:challenge_round_id].to_i)
+            else
+              @challenge.challenge_rounds.where(active: true).first
+            end
     if round.present?
       return round.id
     else
@@ -236,5 +236,4 @@ class SubmissionsController < ApplicationController
   def set_layout
     return 'application'
   end
-
 end

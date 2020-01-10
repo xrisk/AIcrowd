@@ -1,11 +1,6 @@
 class Submission::Cell::ChallengeRoundPills < Submission::Cell
-
   def show
-    if challenge_rounds.count > 1
-      render :challenge_round_pills
-    else
-      nil
-    end
+    render :challenge_round_pills if challenge_rounds.count > 1
   end
 
   def challenge
@@ -31,5 +26,4 @@ class Submission::Cell::ChallengeRoundPills < Submission::Cell
       return 'nav-link'
     end
   end
-
 end

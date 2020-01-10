@@ -3,7 +3,7 @@ ActiveAdmin.register TeamMember do
 
   controller do
     def permitted_params
-    params.permit!
+      params.permit!
     end
   end
 
@@ -22,9 +22,9 @@ ActiveAdmin.register TeamMember do
   end
 
   form do |f|
-    f.object.section ||= "Main"
+    f.object.section     ||= "Main"
     f.object.description ||= "This field is unused right now!"
-    f.object.seq ||= (TeamMember.maximum(:seq) || 0) + 1
+    f.object.seq         ||= (TeamMember.maximum(:seq) || 0) + 1
     f.inputs do
       f.input :name
       f.input :title
@@ -35,5 +35,4 @@ ActiveAdmin.register TeamMember do
     end
     f.actions
   end
-
 end

@@ -17,62 +17,76 @@ RSpec.describe CalculateLeaderboardService do
   let!(:team2) { create :team, challenge: challenge2, participants: [p1, p2] }
   let!(:team3) { create :team, challenge: challenge1, participants: [p3] }
   # submissions
-  let!(:p1s2) { create(:submission,
-                       participant: p1,
-                       challenge: challenge2,
-                       challenge_round_id: challenge2_round.id,
-                       grading_status: :graded,
-                       score: 30,
-                       created_at: 50.hours.ago,
-  ) }
-  let!(:p1s1) { create(:submission,
-                       participant: p1,
-                       challenge: challenge1,
-                       challenge_round_id: challenge1_round.id,
-                       grading_status: :graded,
-                       score: 30,
-                       created_at: 50.hours.ago,
-  ) }
-  let!(:p2s1) { create(:submission,
-                       participant: p2,
-                       challenge: challenge1,
-                       challenge_round_id: challenge1_round.id,
-                       grading_status: :graded,
-                       score: 40,
-                       created_at: 50.hours.ago,
-  ) }
-  let!(:p3s1) { create(:submission,
-                       participant: p3,
-                       challenge: challenge1,
-                       challenge_round_id: challenge1_round.id,
-                       grading_status: :graded,
-                       score: 20,
-                       created_at: 50.hours.ago,
-  ) }
-  let!(:p3s2) { create(:submission,
-                       participant: p3,
-                       challenge: challenge2,
-                       challenge_round_id: challenge2_round.id,
-                       grading_status: :graded,
-                       score: 20,
-                       created_at: 50.hours.ago,
-                       ) }
-  let!(:p4s1) { create(:submission,
-                       participant: p4,
-                       challenge: challenge1,
-                       challenge_round_id: challenge1_round.id,
-                       grading_status: :graded,
-                       score: 10,
-                       created_at: 50.hours.ago,
-  ) }
-  let!(:p4s2) { create(:submission,
-                       participant: p4,
-                       challenge: challenge1,
-                       challenge_round_id: challenge1_round.id,
-                       grading_status: :graded,
-                       score: 5,
-                       created_at: 10.hours.ago,
-  ) }
+  let!(:p1s2) do
+    create(:submission,
+           participant:        p1,
+           challenge:          challenge2,
+           challenge_round_id: challenge2_round.id,
+           grading_status:     :graded,
+           score:              30,
+           created_at:         50.hours.ago
+          )
+  end
+  let!(:p1s1) do
+    create(:submission,
+           participant:        p1,
+           challenge:          challenge1,
+           challenge_round_id: challenge1_round.id,
+           grading_status:     :graded,
+           score:              30,
+           created_at:         50.hours.ago
+          )
+  end
+  let!(:p2s1) do
+    create(:submission,
+           participant:        p2,
+           challenge:          challenge1,
+           challenge_round_id: challenge1_round.id,
+           grading_status:     :graded,
+           score:              40,
+           created_at:         50.hours.ago
+          )
+  end
+  let!(:p3s1) do
+    create(:submission,
+           participant:        p3,
+           challenge:          challenge1,
+           challenge_round_id: challenge1_round.id,
+           grading_status:     :graded,
+           score:              20,
+           created_at:         50.hours.ago
+          )
+  end
+  let!(:p3s2) do
+    create(:submission,
+           participant:        p3,
+           challenge:          challenge2,
+           challenge_round_id: challenge2_round.id,
+           grading_status:     :graded,
+           score:              20,
+           created_at:         50.hours.ago
+          )
+  end
+  let!(:p4s1) do
+    create(:submission,
+           participant:        p4,
+           challenge:          challenge1,
+           challenge_round_id: challenge1_round.id,
+           grading_status:     :graded,
+           score:              10,
+           created_at:         50.hours.ago
+          )
+  end
+  let!(:p4s2) do
+    create(:submission,
+           participant:        p4,
+           challenge:          challenge1,
+           challenge_round_id: challenge1_round.id,
+           grading_status:     :graded,
+           score:              5,
+           created_at:         10.hours.ago
+          )
+  end
 
   # Leaderboard
   # Row | Submission | Submitter    | Score | Entries
@@ -80,7 +94,6 @@ RSpec.describe CalculateLeaderboardService do
   #  1  |  p2s1      |  team1       |  40   |  2
   #  2  |  p3s1      |  team3       |  20   |  1
   #  3  |  p4s1      |  p4_solo     |  10   |  2
-
 
   describe 'supports teams' do
     before do
@@ -97,7 +110,6 @@ RSpec.describe CalculateLeaderboardService do
     it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).second.entries).to eq(1) }
     it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).second.score).to eq(20) }
     it { expect(Leaderboard.where(challenge_round_id: challenge2_round.id).second.submitter).to eq(p3) }
-
 
     it { expect(Leaderboard.where(challenge_round_id: challenge1_round.id).count).to eq(3) }
 

@@ -29,5 +29,4 @@ describe CommentPolicy do
     it { is_expected.to permit_action(:edit) }
     it { is_expected.to forbid_action(:destroy) }
   end
-
 end

@@ -12,9 +12,11 @@ describe Team do
 
     describe 'false with 1 participant' do
       let!(:p1) { create :participant }
+
       before do
         team.team_participants.create(participant: p1, role: :organizer)
       end
+
       it { expect(team.team_participants.count).to eq(1) }
       it { expect(team.concrete?).not_to be }
     end
@@ -22,10 +24,12 @@ describe Team do
     describe 'true with 2 participants' do
       let!(:p1) { create :participant }
       let!(:p2) { create :participant }
+
       before do
         team.team_participants.create(participant: p1, role: :organizer)
         team.team_participants.create(participant: p2, role: :member)
       end
+
       it { expect(team.team_participants.count).to eq(2) }
       it { expect(team.concrete?).to be true }
     end
@@ -40,9 +44,11 @@ describe Team do
 
     describe 'not full with 1 participants' do
       let!(:p1) { create :participant }
+
       before do
         team.team_participants.create(participant: p1, role: :organizer)
       end
+
       it { expect(team.team_participants.count).to eq(1) }
       it { expect(team.invitations_left).to eq(2) }
       it { expect(team.full?).to be false }
@@ -52,11 +58,13 @@ describe Team do
       let!(:p1) { create :participant }
       let!(:p2) { create :participant }
       let!(:p3) { create :participant }
+
       before do
         team.team_participants.create(participant: p1, role: :organizer)
         team.team_participants.create(participant: p2, role: :member)
         team.team_participants.create(participant: p3, role: :member)
       end
+
       it { expect(team.team_participants.count).to eq(3) }
       it { expect(team.invitations_left).to eq(0) }
       it { expect(team.full?).to be true }
@@ -66,12 +74,14 @@ describe Team do
       let!(:p1) { create :participant }
       let!(:p2) { create :participant }
       let!(:p3) { create :participant }
+
       before do
         team.team_participants.create(participant: p1, role: :organizer)
         team.team_participants.create(participant: p2, role: :member)
         team.team_participants.create(participant: p3, role: :member)
         challenge.update!(max_team_participants: 2)
       end
+
       it { expect(team.team_participants.count).to eq(3) }
       it { expect(team.invitations_left).to eq(-1) }
       it { expect(team.invitations_left_clamped).to eq(0) }
@@ -82,14 +92,16 @@ describe Team do
       let!(:p1) { create :participant }
       let!(:p2) { create :participant }
       let!(:p3) { create :participant }
+
       before do
         team.team_participants.create(participant: p1, role: :organizer)
         team.team_participants.create(participant: p2, role: :member)
         team.team_invitations.new(
-            invitor: p1,
-            invitee: p3,
-            ).save!
+          invitor: p1,
+          invitee: p3
+        ).save!
       end
+
       it { expect(team.team_participants.count).to eq(2) }
       it { expect(team.team_invitations.status_pendings.count).to eq(1) }
       it { expect(team.invitations_left).to eq(0) }
@@ -100,21 +112,23 @@ describe Team do
       let!(:p1) { create :participant }
       let!(:p2) { create :participant }
       let!(:p3) { create :participant }
+
       before do
         team.team_participants.create(participant: p1, role: :organizer)
         inv = team.team_invitations.new(
-            invitor: p1,
-            invitee: p2,
-            )
+          invitor: p1,
+          invitee: p2
+        )
         inv.save!
         inv.update!(status: :declined)
         inv = team.team_invitations.new(
-            invitor: p1,
-            invitee: p3,
-            )
+          invitor: p1,
+          invitee: p3
+        )
         inv.save!
         inv.update!(status: :canceled)
       end
+
       it { expect(team.team_participants.count).to eq(1) }
       it { expect(team.team_invitations.status_pendings.count).to eq(0) }
       it { expect(team.invitations_left).to eq(2) }

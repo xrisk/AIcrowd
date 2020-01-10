@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Article do
-
   context 'methods' do
     describe '#record_page_view' do
       it 'returns 1 for the first view' do
@@ -17,7 +16,7 @@ describe Article do
       end
 
       it '#should_generate_new_friendly_id?' do
-        s = create(:article)
+        s    = create(:article)
         slug = s.slug
         s.update(article: 'new title')
         expect(slug).not_to eq(s.slug)

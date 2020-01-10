@@ -2,8 +2,9 @@ require "rails_helper"
 
 RSpec.describe EmailDigestMailer, type: :mailer do
   let(:challenge) { create :challenge, :running }
-  let(:other_participant) {
-    create :participant, :every_email }
+  let(:other_participant) do
+    create :participant, :every_email
+  end
   let(:comment) { create :comment, participant: other_participant }
   let(:submission) { create :submission, challenge: challenge }
 
@@ -21,6 +22,7 @@ RSpec.describe EmailDigestMailer, type: :mailer do
         start_dttm = described_class.new.set_start_dttm('daily')
         expect(start_dttm).to eq(Time.now - 24.hours)
       end
+
       it 'weekly' do
         start_dttm = described_class.new.set_start_dttm('weekly')
         expect(start_dttm).to eq(Time.now - 7.days)
@@ -41,11 +43,13 @@ RSpec.describe EmailDigestMailer, type: :mailer do
 
     describe '#build_body' do
       let!(:participant) { create :participant, :daily }
+
       before do
         @submissions = Submission.all
-        @comments = Comment.all
-        @topics = Topic.all
+        @comments    = Comment.all
+        @topics      = Topic.all
       end
+
       it 'daily' do
         body = described_class.new.build_body(
           participant,
@@ -55,6 +59,7 @@ RSpec.describe EmailDigestMailer, type: :mailer do
           @topics)
         expect(body).to be_a_valid_html_fragment
       end
+
       it 'weekly' do
         body = described_class.new.build_body(
           participant,
@@ -71,6 +76,7 @@ RSpec.describe EmailDigestMailer, type: :mailer do
         header = described_class.new.body_header('daily')
         expect(header).to eq("<div>Here's a daily summary of activity in AIcrowd.</div>")
       end
+
       it 'weekly' do
         header = described_class.new.body_header('weekly')
         expect(header).to eq("<div>Here's a weekly summary of activity in AIcrowd.</div>")
@@ -89,6 +95,4 @@ RSpec.describe EmailDigestMailer, type: :mailer do
     describe '#render_submissions' do
     end
   end
-
-
 end

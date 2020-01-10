@@ -3,13 +3,13 @@ require 'rails_helper'
 RSpec.describe TopicsController, type: :controller do
   render_views
 
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     FactoryBot.attributes_for(:topic)
-  }
+  end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     FactoryBot.attributes_for(:topic, :invalid)
-  }
+  end
 
   let!(:admin) { create :participant, :admin }
   let!(:challenge) { create :challenge }
@@ -43,25 +43,25 @@ RSpec.describe TopicsController, type: :controller do
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Topic" do
-        expect {
+        expect do
           post :create, params: { challenge_id: challenge.id, topic: valid_attributes }
-        }.to change(Topic, :count).by(1)
+        end.to change(Topic, :count).by(1)
       end
 
       it "redirects to the created topics_controller" do
-        post :create, params: { challenge_id: challenge.id, topic: valid_attributes}
+        post :create, params: { challenge_id: challenge.id, topic: valid_attributes }
         expect(response).to redirect_to "/challenges/#{challenge.slug}/topics"
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved topic as @topic" do
-        post :create, params: { challenge_id: challenge.id, topic: invalid_attributes}
+        post :create, params: { challenge_id: challenge.id, topic: invalid_attributes }
         expect(assigns(:topic)).to be_a_new(Topic)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: { challenge_id: challenge.id, topic: invalid_attributes}
+        post :create, params: { challenge_id: challenge.id, topic: invalid_attributes }
         expect(response).to render_template("new")
       end
     end
@@ -69,9 +69,9 @@ RSpec.describe TopicsController, type: :controller do
 
   describe "DELETE #destroy" do
     it "destroys the requested topic" do
-      expect {
+      expect do
         delete :destroy, params: { challenge_id: challenge.id, id: topic.id }
-      }.to change(Topic, :count).by(-1)
+      end.to change(Topic, :count).by(-1)
     end
 
     it "redirects to the topics list" do
@@ -79,5 +79,4 @@ RSpec.describe TopicsController, type: :controller do
       expect(response).to redirect_to "/challenges/#{challenge.slug}/topics"
     end
   end
-
 end

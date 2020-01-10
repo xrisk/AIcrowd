@@ -18,8 +18,8 @@ RSpec.describe VotesController, type: :controller do
         post :create, params: { challenge_id: challenge.id }
         challenge.reload
       end
-      it { expect { register_vote }.to change { Vote.count }.by(1) }
-      it { expect { register_vote }.to change { challenge.vote_count }.by(1) }
+      it { expect { register_vote }.to change(Vote, :count).by(1) }
+      it { expect { register_vote }.to change(challenge, :vote_count).by(1) }
     end
 
     describe "POST #create for Article" do
@@ -27,8 +27,8 @@ RSpec.describe VotesController, type: :controller do
         post :create, params: { article_id: article.id }
         article.reload
       end
-      it { expect { register_vote }.to change { Vote.count }.by(1) }
-      it { expect { register_vote }.to change { article.vote_count }.by(1) }
+      it { expect { register_vote }.to change(Vote, :count).by(1) }
+      it { expect { register_vote }.to change(article, :vote_count).by(1) }
     end
 
     describe "POST #create for Topic" do
@@ -36,10 +36,8 @@ RSpec.describe VotesController, type: :controller do
         post :create, params: { topic_id: topic.id }
         topic.reload
       end
-      it { expect { register_vote }.to change { Vote.count }.by(1) }
-      it { expect { register_vote }.to change { topic.vote_count }.by(1) }
+      it { expect { register_vote }.to change(Vote, :count).by(1) }
+      it { expect { register_vote }.to change(topic, :vote_count).by(1) }
     end
-
   end
-
 end

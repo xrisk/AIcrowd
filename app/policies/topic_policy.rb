@@ -1,5 +1,4 @@
 class TopicPolicy < ApplicationPolicy
-
   def index?
     true
   end
@@ -17,7 +16,7 @@ class TopicPolicy < ApplicationPolicy
   end
 
   def destroy?
-    participant && participant.admin
+    participant&.admin
   end
 
   def edit?
@@ -27,5 +26,4 @@ class TopicPolicy < ApplicationPolicy
   def update?
     destroy?
   end
-
 end

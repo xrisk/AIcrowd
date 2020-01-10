@@ -1,5 +1,4 @@
 class Vote::Cell < Template::Cell
-
   def show
     render
   end
@@ -23,19 +22,22 @@ class Vote::Cell < Template::Cell
   end
 
   def refresh
-    #{}%{ console.log("#{j(show)}")}
+    # {}%{ console.log("#{j(show)}")}
     %{ $('##{vote_link_id}').replaceWith("#{j(show)}"); }
   end
 
   def participant_voted?
     return false if current_participant.nil?
+
     vote = votable.votes.where(participant_id: current_participant.id).first
     return true if vote.present?
+
     return false
   end
 
   def display_vote_count
     return nil if votable.vote_count == 0
+
     " #{votable.vote_count}".html_safe
   end
 
@@ -45,7 +47,7 @@ class Vote::Cell < Template::Cell
             #{display_vote_count}
             </button>".html_safe,
             eval(create_vote_path),
-            id: vote_link_id,
+            id:     vote_link_id,
             method: :post,
             remote: true
   end
@@ -77,7 +79,7 @@ class Vote::Cell < Template::Cell
             #{display_vote_count}
             </button>".html_safe,
             eval(destroy_vote_path(votable, vote.id)),
-            id: vote_link_id,
+            id:     vote_link_id,
             method: :delete,
             remote: true
   end
@@ -90,5 +92,4 @@ class Vote::Cell < Template::Cell
             new_participant_session_path,
             id: vote_link_id
   end
-
 end

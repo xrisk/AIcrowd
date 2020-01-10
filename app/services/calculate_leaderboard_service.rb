@@ -1,8 +1,7 @@
 class CalculateLeaderboardService
-
   def initialize(challenge_round_id:)
     @round = ChallengeRound.find(challenge_round_id)
-    @conn = ActiveRecord::Base.connection
+    @conn  = ActiveRecord::Base.connection
   end
 
   def call
@@ -20,11 +19,11 @@ class CalculateLeaderboardService
         create_leaderboard(leaderboard_type: 'previous_ongoing')
         destroy_temp_submission_stats
         update_leaderboard_rankings(
-            leaderboard: 'leaderboard',
-            prev: 'previous')
+          leaderboard: 'leaderboard',
+          prev:        'previous')
         update_leaderboard_rankings(
-            leaderboard: 'ongoing',
-            prev: 'previous_ongoing')
+          leaderboard: 'ongoing',
+          prev:        'previous_ongoing')
         insert_baseline_rows(leaderboard_type: 'leaderboard')
         insert_baseline_rows(leaderboard_type: 'ongoing')
         set_leaderboard_sequences(leaderboard_type: 'leaderboard')
@@ -32,7 +31,7 @@ class CalculateLeaderboardService
       end
     end
     now = Time.zone.now
-    Rails.logger.info "Calculated leaderboard for round #{@round.id} in #{'%0.3f' % (now - start_time).to_f}s."
+    Rails.logger.info "Calculated leaderboard for round #{@round.id} in #{format('%0.3f', (now - start_time).to_f)}s."
     true
   end
 
@@ -68,16 +67,16 @@ class CalculateLeaderboardService
     case leaderboard_type
     when 'leaderboard'
       post_challenge = '(FALSE)'
-      cuttoff_dttm = 'current_timestamp'
+      cuttoff_dttm   = 'current_timestamp'
     when 'ongoing'
       post_challenge = '(TRUE,FALSE)'
-      cuttoff_dttm = 'current_timestamp'
+      cuttoff_dttm   = 'current_timestamp'
     when 'previous'
       post_challenge = '(FALSE)'
-      cuttoff_dttm = window_border_dttm
+      cuttoff_dttm   = window_border_dttm
     when 'previous_ongoing'
       post_challenge = '(TRUE,FALSE)'
-      cuttoff_dttm = window_border_dttm
+      cuttoff_dttm   = window_border_dttm
     end
     return [post_challenge, cuttoff_dttm]
   end
@@ -388,19 +387,15 @@ class CalculateLeaderboardService
   def order_by(use_display: false)
     challenge = @round.challenge
 
-    if challenge.latest_submission == true
-      return 'updated_at desc'
-    end
+    return 'updated_at desc' if challenge.latest_submission == true
 
     score_sort_order ||= sort_map(challenge.primary_sort_order_cd)
-    score_sort_col = use_display ? 'score_display' : 'score'
+    score_sort_col     = use_display ? 'score_display' : 'score'
 
-    if challenge.secondary_sort_order_cd.blank? || challenge.secondary_sort_order_cd == 'not_used'
-      return "#{score_sort_col} #{score_sort_order} NULLS LAST"
-    end
+    return "#{score_sort_col} #{score_sort_order} NULLS LAST" if challenge.secondary_sort_order_cd.blank? || challenge.secondary_sort_order_cd == 'not_used'
 
     secondary_sort_order ||= sort_map(challenge.secondary_sort_order_cd)
-    secondary_sort_col = use_display ? 'score_secondary_display' : 'score_secondary'
+    secondary_sort_col     = use_display ? 'score_secondary_display' : 'score_secondary'
     "#{score_sort_col} #{score_sort_order} NULLS LAST, #{secondary_sort_col} #{secondary_sort_order} NULLS LAST"
   end
 end

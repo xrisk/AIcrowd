@@ -5,9 +5,9 @@ module Prometheus
     SUBMISSION_COUNTER = Prometheus::Client::Counter.new(:submission, 'A AIcrowd submission has been made.')
 
     PARTICIPANT_COUNTER =
-    Prometheus::Client::Counter.new(:participant, 'A new participant has signed up to AIcrowd.')
+      Prometheus::Client::Counter.new(:participant, 'A new participant has signed up to AIcrowd.')
 
-    #prometheus.register(SUBMISSION_COUNTER)
-    #prometheus.register(PARTICIPANT_COUNTER)
+    # prometheus.register(SUBMISSION_COUNTER)
+    # prometheus.register(PARTICIPANT_COUNTER)
   end
 end

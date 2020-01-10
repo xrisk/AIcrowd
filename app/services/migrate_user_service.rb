@@ -1,5 +1,4 @@
 class MigrateUserService
-
   def initialize(crowdai_id:, aicrowd_id:)
     @old_id = crowdai_id
     @new_id = aicrowd_id
@@ -11,6 +10,7 @@ class MigrateUserService
 
   def migrate_user
     raise "User Already Migrated" if check_migrated
+
     ActiveRecord::Base.transaction do
       submission_migration_mappings = MigrationMapping.where(crowdai_participant_id: @old_id, source_type: 'Submission')
 
@@ -38,7 +38,6 @@ class MigrateUserService
       MigrationMapping.create!(crowdai_participant_id: @old_id, source_id: @new_id, source_type: 'Participant')
     end
   end
-
 
   def undo_migration
     user_migration = MigrationMapping.where(crowdai_participant_id: @old_id, source_id: @new_id, source_type: 'Participant').first

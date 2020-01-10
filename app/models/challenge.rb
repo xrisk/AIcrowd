@@ -13,19 +13,19 @@ class Challenge < ApplicationRecord
   mount_uploader :image_file, ImageUploader
 
   has_many :submission_file_definitions,
-           dependent: :destroy,
+           dependent:  :destroy,
            inverse_of: :challenge
   accepts_nested_attributes_for :submission_file_definitions,
-                                reject_if: :all_blank,
+                                reject_if:     :all_blank,
                                 allow_destroy: true
   has_many :challenge_partners, dependent: :destroy
   accepts_nested_attributes_for :challenge_partners,
-                                reject_if: :all_blank,
+                                reject_if:     :all_blank,
                                 allow_destroy: true
 
   has_many :challenge_rules, -> { order 'version desc' }, dependent: :destroy, class_name: 'ChallengeRules'
   accepts_nested_attributes_for :challenge_rules,
-                                reject_if: :all_blank,
+                                reject_if:     :all_blank,
                                 allow_destroy: true
 
   has_many :challenge_participants, dependent: :destroy
@@ -48,15 +48,15 @@ class Challenge < ApplicationRecord
   has_many :votes, as: :votable
   has_many :follows, as: :followable
   has_many :challenge_rounds,
-           dependent: :destroy,
+           dependent:  :destroy,
            inverse_of: :challenge
   accepts_nested_attributes_for :challenge_rounds,
-                                reject_if: :all_blank,
+                                reject_if:     :all_blank,
                                 allow_destroy: true
   has_many :challenge_round_summaries
   has_many :invitations, dependent: :destroy
   accepts_nested_attributes_for :invitations,
-                                reject_if: :all_blank,
+                                reject_if:     :all_blank,
                                 allow_destroy: true
 
   has_many :teams, inverse_of: :challenge
@@ -71,19 +71,19 @@ class Challenge < ApplicationRecord
           %i[ascending descending not_used],
           map: :string, prefix: true
 
-  validates_presence_of :status
-  validates_presence_of :challenge
-  validates_presence_of :organizer_id
-  validates_presence_of :primary_sort_order
-  validates_presence_of :secondary_sort_order
-  validates_uniqueness_of :challenge_client_name
+  validates :status, presence: true
+  validates :challenge, presence: true
+  validates :organizer_id, presence: true
+  validates :primary_sort_order, presence: true
+  validates :secondary_sort_order, presence: true
+  validates :challenge_client_name, uniqueness: true
   validates :challenge_client_name,
-            format: {with: /\A[a-zA-Z0-9]/}
-  validates_presence_of :challenge_client_name
+            format: { with: /\A[a-zA-Z0-9]/ }
+  validates :challenge_client_name, presence: true
 
   validate :other_scores_fieldnames_max
 
-  default_scope {
+  default_scope do
     order("challenges.featured_sequence,
             CASE challenges.status_cd
               WHEN 'running' THEN 1
@@ -92,46 +92,46 @@ class Challenge < ApplicationRecord
               WHEN 'draft' THEN 4
               ELSE 5
             END, challenges.participant_count DESC")
-  }
+  end
 
   after_create :init_discourse
 
   after_update do
     if ENV['DISCOURSE_DOMAIN_NAME']
       if discourse_category_id
-        client = DiscourseApi::Client.new(ENV['DISCOURSE_DOMAIN_NAME'])
-        client.api_key = ENV['DISCOURSE_API_KEY']
+        client              = DiscourseApi::Client.new(ENV['DISCOURSE_DOMAIN_NAME'])
+        client.api_key      = ENV['DISCOURSE_API_KEY']
         client.api_username = ENV['DISCOURSE_API_USERNAME']
-        client.update_category(id: discourse_category_id,
-                               name: challenge.truncate(50),
-                               slug: slug[0..49],
-                               color: '49d9e9',
+        client.update_category(id:         discourse_category_id,
+                               name:       challenge.truncate(50),
+                               slug:       slug[0..49],
+                               color:      '49d9e9',
                                text_color: 'f0fcfd'
-        )
+                              )
       end
     end
   end
 
   after_initialize do
     if new_record?
-      self.submission_license ||= 'Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC).'
+      self.submission_license    ||= 'Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC).'
       self.challenge_client_name ||= "challenge_#{SecureRandom.hex}"
-      self.featured_sequence = Challenge.count + 1
+      self.featured_sequence       = Challenge.count + 1
     end
   end
 
   def init_discourse
     if ENV['DISCOURSE_DOMAIN_NAME']
-      client = DiscourseApi::Client.new(ENV['DISCOURSE_DOMAIN_NAME'])
-      client.api_key = ENV['DISCOURSE_API_KEY']
+      client              = DiscourseApi::Client.new(ENV['DISCOURSE_DOMAIN_NAME'])
+      client.api_key      = ENV['DISCOURSE_API_KEY']
       client.api_username = ENV['DISCOURSE_API_USERNAME']
       # NATE: discourse has a hard limit of 50 chars
       # for category name length
-      res = client.create_category(name: challenge.truncate(50),
-                                   slug: slug[0..49],
-                                   color: '49d9e9',
+      res = client.create_category(name:       challenge.truncate(50),
+                                   slug:       slug[0..49],
+                                   color:      '49d9e9',
                                    text_color: 'f0fcfd'
-      )
+                                  )
       self.discourse_category_id = res['id']
       save
     end
@@ -139,7 +139,7 @@ class Challenge < ApplicationRecord
 
   def record_page_view
     self.page_views ||= 0
-    self.page_views += 1
+    self.page_views  += 1
     save
   end
 
@@ -210,7 +210,7 @@ class Challenge < ApplicationRecord
   end
 
   def other_scores_fieldnames_max
-    errors.add(:other_scores_fieldnames, 'A max of 5 other scores Fieldnames are allowed') if other_scores_fieldnames and other_scores_fieldnames.count(',') > 4
+    errors.add(:other_scores_fieldnames, 'A max of 5 other scores Fieldnames are allowed') if other_scores_fieldnames && (other_scores_fieldnames.count(',') > 4)
   end
 
   def teams_frozen?
@@ -232,5 +232,4 @@ class Challenge < ApplicationRecord
     arr = other_scores_fieldnames
     arr&.split(',')&.map(&:strip) || []
   end
-
 end
