@@ -141,7 +141,6 @@ group :test do
   gem 'capybara'
   gem 'capybara-email'
   gem 'capybara-screenshot'
-  gem 'database_cleaner'
   gem 'launchy'
   gem 'nokogiri' #, '~> 1.8'
   gem 'pundit-matchers', git: 'https://github.com/crowdAI/pundit-matchers'

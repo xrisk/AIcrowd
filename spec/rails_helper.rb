@@ -6,11 +6,9 @@ require 'rspec/rails'
 
 require 'support/config/capybara'
 require 'support/config/factory_bot'
-require 'support/config/database_cleaner'
 require 'support/config/warden'
 
 require 'pundit/matchers'
-require 'devise'
 
 Dir[File.dirname(__FILE__) + "/support/helpers/*.rb"].each { |f| require f }
 Dir[File.dirname(__FILE__) + "/support/matchers/*.rb"].each { |f| require f }
@@ -23,6 +21,6 @@ RSpec.configure do |config|
   config.include HeaderHelpers
   config.include FeatureSpecHelpers, type: :feature
 
-  config.use_transactional_fixtures           = false
+  config.use_transactional_fixtures           = true
   config.example_status_persistence_file_path = 'spec/examples.txt'
 end

@@ -3,3 +3,4 @@
 --require rails_helper
 --format documentation
 --format ParallelTests::RSpec::FailuresLogger --out tmp/failing_specs.log
+--tag ~api
