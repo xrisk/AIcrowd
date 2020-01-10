@@ -7,6 +7,7 @@ require 'rspec/rails'
 require 'support/config/capybara'
 require 'support/config/factory_bot'
 require 'support/config/warden'
+require 'support/config/vcr'
 
 require 'pundit/matchers'
 

@@ -148,4 +148,6 @@ group :test do
   gem 'simplecov', :require => false
   gem 'selenium-webdriver'
   gem 'timecop'
+  gem 'vcr', '~> 5.0'
+  gem 'webmock', '~> 3.7', '>= 3.7.6'
 end
