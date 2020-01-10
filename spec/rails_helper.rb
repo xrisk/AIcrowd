@@ -5,6 +5,8 @@ require 'spec_helper'
 require 'rspec/rails'
 
 require 'support/config/capybara'
+require 'support/config/database_cleaner'
+
 require 'pundit/matchers'
 require 'devise'
 
@@ -50,35 +52,11 @@ RSpec.configure do |config|
 
   config.use_transactional_fixtures = false
 
-  config.before(:suite) do
-    begin
-      FactoryBot.lint
-      DatabaseCleaner.clean_with(:truncation)
-      DatabaseCleaner.start
-    ensure
-      DatabaseCleaner.clean
-    end
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-  end
-
-  config.before(:each, :js => true) do
-    DatabaseCleaner.strategy = :truncation
-  end
-
   ### TODO: NATE: understand why this config block is necessary locally
   ### but not on build server.  Am I missing an environment variable?
   ### See discussion here: https://stackoverflow.com/questions/598933/how-do-i-change-the-default-www-example-com-domain-for-testing-in-rails
   config.before(:each) do
     @request && @request.host = 'localhost'
-  end
-
-  config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-    end
   end
 
   # Fixes Timecop’s issue (https://goo.gl/1tujRj)
