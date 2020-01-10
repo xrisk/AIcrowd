@@ -146,7 +146,6 @@ group :test do
   gem 'nokogiri' #, '~> 1.8'
   gem 'pundit-matchers', git: 'https://github.com/crowdAI/pundit-matchers'
   gem 'rails-controller-testing'
-  gem 'rspec-retry'
   gem 'simplecov', :require => false
   gem 'selenium-webdriver'
   gem 'timecop'
