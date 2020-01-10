@@ -139,7 +139,6 @@ group :test do
   gem 'factory_bot_rails'
   gem 'chromedriver-helper'
   gem 'capybara'
-  gem 'capybara-email'
   gem 'capybara-screenshot'
   gem 'launchy'
   gem 'nokogiri' #, '~> 1.8'
