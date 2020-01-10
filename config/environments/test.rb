@@ -1,7 +1,6 @@
 require 'sidekiq/testing'
 
 Rails.application.configure do
-  #Sidekiq::Testing.inline!
   figaro_file = File.join(Rails.root, 'config', 'application.yml')
   YAML::load_file(figaro_file).symbolize_keys[:test].each do |key,value|
     ENV[key.to_s] = value
@@ -24,4 +23,5 @@ Rails.application.configure do
   config.active_record.logger = nil
   config.active_storage.service = :test
 end
+
 Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']

@@ -8,7 +8,6 @@ require 'support/config/capybara'
 require 'support/config/factory_bot'
 require 'support/config/database_cleaner'
 
-
 require 'pundit/matchers'
 require 'devise'
 
@@ -51,21 +50,6 @@ RSpec.configure do |config|
   end
   ## RSPEC RETRY END
 
-  config.use_transactional_fixtures = false
-
-  ### TODO: NATE: understand why this config block is necessary locally
-  ### but not on build server.  Am I missing an environment variable?
-  ### See discussion here: https://stackoverflow.com/questions/598933/how-do-i-change-the-default-www-example-com-domain-for-testing-in-rails
-  config.before(:each) do
-    @request && @request.host = 'localhost'
-  end
-
-  # Fixes Timecop’s issue (https://goo.gl/1tujRj)
-  #config.around(:each, freeze_time: true) do |example|
-  #  Timecop.freeze(Time.zone.now.change(nsec: 0))
-  #  example.run
-  #  Timecop.return
-  #end
-
+  config.use_transactional_fixtures           = false
   config.example_status_persistence_file_path = 'spec/examples.txt'
 end

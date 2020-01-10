@@ -89,8 +89,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # TODO: Investigate if we can get rid of this weird override of default settings
   def default_url_options
-    {host: ENV['DOMAIN_NAME'] || 'localhost:3000'}
+    if Rails.env.test?
+      super
+    else
+      { host: ENV['DOMAIN_NAME'] || 'localhost:3000' }
+    end
   end
-
 end
