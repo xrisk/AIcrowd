@@ -23,7 +23,9 @@ class Challenges::TeamsController < ApplicationController
   end
 
   def show
-    @pending_invitations = @team.team_invitations.status_pendings
+    @pending_invitations = @team.team_invitations
+      .status_pendings
+      .includes(:invitee)
   end
 
 

@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 class TeamInvitations::DeclinationsController < ApplicationController
-  before_action :authenticate_participant!
   before_action :set_invitation
   before_action :set_team
+  before_action :set_invitee
+  before_action :authenticate_participant!, unless: -> { @invitee.is_a?(EmailInvitation) }
   before_action :redirect_on_disallowed
 
   def index
@@ -11,8 +12,8 @@ class TeamInvitations::DeclinationsController < ApplicationController
 
   def create
     @invitation.update!(status: :declined)
-    Team::InvitationDeclinedNotifierJob.perform_later(current_participant.id, @mails)
-    flash[:error] = 'You successfully declined the invitation'
+    Team::InvitationDeclinedNotifierJob.perform_later(@invitation.id)
+    flash[:success] = 'You successfully declined the invitation'
     redirect_to @team.challenge
   end
 
@@ -24,11 +25,18 @@ class TeamInvitations::DeclinationsController < ApplicationController
     @team = @invitation.team
   end
 
+  private def set_invitee
+    @invitee = @invitation.invitee
+  end
+
   private def redirect_on_disallowed
-    if @invitation.invitee != current_participant
+    if @invitee.is_a?(EmailInvitation) && !@invitee.token_eq?(params[:email_token])
+      flash[:error] = 'Please use the link you were sent by email and try again'
+      redirect_to root_path
+    elsif @invitee.is_a?(Participant) && @invitee != current_participant
       flash[:error] = 'You may not decline an invitation on someone else’s behalf'
       redirect_to root_path
-    elsif @team.team_participants.exists?(participant_id: current_participant.id)
+    elsif current_participant && @team.team_participants.exists?(participant_id: current_participant.id)
       flash[:error] = 'You are already a member of this team'
       redirect_to challenge_team_path(@team.challenge, @team)
     elsif @invitation.status != :pending

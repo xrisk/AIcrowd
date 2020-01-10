@@ -1,10 +1,10 @@
 ActiveAdmin.register Team do
-  belongs_to :challenge, optional: true
   config.sort_order = 'name_asc'
+  belongs_to :challenge, optional: true
   permit_params :name, :challenge_id
 
   controller do
-    defaults :finder => :find_by_name
+    defaults finder: :find_by_name
     def scoped_collection
       super.includes :challenge
     end
@@ -24,8 +24,8 @@ ActiveAdmin.register Team do
 
   sidebar 'Associations', only: [:show, :edit] do
     ul do
-      li link_to "Members (#{team.team_participants.count})", admin_team_team_participants_path(team)
-      li link_to "Invitations (#{team.team_invitations.count})", admin_team_team_invitations_path(team)
+      li link_to "Team Participants (#{team.team_participants.count})", admin_challenge_team_team_participants_path(team.challenge, team)
+      li link_to "Team Invitations (#{team.team_invitations.count})", admin_challenge_team_team_invitations_path(team.challenge, team)
     end
   end
 

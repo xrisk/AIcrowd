@@ -214,9 +214,18 @@ class Challenge < ApplicationRecord
   end
 
   def teams_frozen?
-    return true if status == :completed
-
-    DateTime.now > (self.team_freeze_time || end_dttm)
+    if status == :completed
+      # status set
+      true
+    else
+      ended_at = team_freeze_time || end_dttm
+      if ended_at && Time.zone.now > ended_at
+        # there is an end date and we are past it
+        true
+      else
+        false
+      end
+    end
   end
 
   def other_scores_fieldnames_array

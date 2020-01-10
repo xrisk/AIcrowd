@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_23_091601) do
+ActiveRecord::Schema.define(version: 2019_11_25_083157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -539,6 +539,20 @@ ActiveRecord::Schema.define(version: 2019_11_23_091601) do
     t.index ["participant_id"], name: "index_disentanglement_leaderboards_on_participant_id"
   end
 
+  create_table "email_invitations", force: :cascade do |t|
+    t.bigint "invitor_id", null: false
+    t.citext "email", null: false
+    t.citext "token", null: false
+    t.bigint "claimant_id"
+    t.datetime "claimed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["claimant_id"], name: "index_email_invitations_on_claimant_id"
+    t.index ["email"], name: "index_email_invitations_on_email"
+    t.index ["invitor_id"], name: "index_email_invitations_on_invitor_id"
+    t.index ["token"], name: "index_email_invitations_on_token", unique: true
+  end
+
   create_table "email_preferences", id: :serial, force: :cascade do |t|
     t.integer "participant_id"
     t.boolean "newsletter", default: true
@@ -991,12 +1005,13 @@ ActiveRecord::Schema.define(version: 2019_11_23_091601) do
   create_table "team_invitations", force: :cascade do |t|
     t.bigint "team_id", null: false
     t.bigint "invitor_id", null: false
-    t.bigint "invitee_id", null: false
     t.string "status", default: "pending", null: false
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["invitee_id"], name: "index_team_invitations_on_invitee_id"
+    t.string "invitee_type", null: false
+    t.bigint "invitee_id", null: false
+    t.index ["invitee_type", "invitee_id"], name: "index_team_invitations_on_invitee_type_and_invitee_id", unique: true, where: "((invitee_type)::text = 'EmailInvitation'::text)"
     t.index ["invitor_id"], name: "index_team_invitations_on_invitor_id"
     t.index ["team_id"], name: "index_team_invitations_on_team_id"
     t.index ["uuid"], name: "index_team_invitations_on_uuid", unique: true
@@ -1088,6 +1103,8 @@ ActiveRecord::Schema.define(version: 2019_11_23_091601) do
   add_foreign_key "comments", "topics"
   add_foreign_key "dataset_file_downloads", "dataset_files"
   add_foreign_key "dataset_file_downloads", "participants"
+  add_foreign_key "email_invitations", "participants", column: "claimant_id"
+  add_foreign_key "email_invitations", "participants", column: "invitor_id"
   add_foreign_key "email_preferences", "participants"
   add_foreign_key "follows", "participants"
   add_foreign_key "invitations", "challenges"
@@ -1107,7 +1124,6 @@ ActiveRecord::Schema.define(version: 2019_11_23_091601) do
   add_foreign_key "submissions", "challenges"
   add_foreign_key "submissions", "participants"
   add_foreign_key "task_dataset_files", "clef_tasks"
-  add_foreign_key "team_invitations", "participants", column: "invitee_id"
   add_foreign_key "team_invitations", "participants", column: "invitor_id"
   add_foreign_key "team_invitations", "teams"
   add_foreign_key "team_members", "participants"

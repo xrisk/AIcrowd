@@ -16,6 +16,15 @@ Rails.application.routes.draw do
     mount Blazer::Engine => '/blazer'
     mount Sidekiq::Web => '/sidekiq'
     ActiveAdmin.routes(self) rescue ActiveAdmin::DatabaseHitDuringLoad
+    namespace :admin do
+      resources :team_participants, only: []
+      resources :challenges, only: [] do
+        resources :teams, only: [], param: :name do
+          resources :team_participants
+          resources :team_invitations
+        end
+      end
+    end
   end
 
   namespace :api do
@@ -75,6 +84,7 @@ Rails.application.routes.draw do
   end
 
   resources :teams, only: [:show], param: :name, constraints: { name: /[^?\/]+/ }, format: false # legacy
+  resources :claim_emails, only: [:index, :create], controller: 'team_invitations/claim_emails'
   resources :team_invitations, only: [], param: :uuid do
     resources :acceptances, only: [:index, :create], controller: 'team_invitations/acceptances'
     resources :declinations, only: [:index, :create], controller: 'team_invitations/declinations'

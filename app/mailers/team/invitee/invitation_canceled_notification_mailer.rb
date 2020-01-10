@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 class Team::Invitee::InvitationCanceledNotificationMailer < Team::BaseMailer
   def sendmail(invitation)
-    @participant = invitation.invitee
+    set_participant_from_invitee(invitation.invitee)
     @team = invitation.team
     mandrill_send(format_options)
   end
@@ -13,7 +13,7 @@ class Team::Invitee::InvitationCanceledNotificationMailer < Team::BaseMailer
   def email_body_html
     <<~HTML
       <div>
-        <p>Previously, you had been invited to join Team #{linked_team_html}. Unfortunately, your invitation has been canceled at this time.</p>
+        <p>Previously, you had been invited to join #{linked_team_html}. Unfortunately, your invitation has been canceled at this time.</p>
         #{signoff_html}
       </div>
     HTML

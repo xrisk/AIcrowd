@@ -1,15 +1,24 @@
 ActiveAdmin.register TeamParticipant do
   menu false
-  belongs_to :team, finder: :find_by_name
 
   controller do
     def scoped_collection
-      super.includes :team, :participant
+      super.includes :participant, team: :challenge
     end
   end
 
   index do
     selectable_column
+    if params[:challenge_id].blank?
+      column :challenge do |tp|
+        link_to tp.team.challenge.challenge, admin_challenge_path(tp.team.challenge)
+      end
+    end
+    if params[:team_name].blank?
+      column :team do |tp|
+        link_to tp.team.name, admin_challenge_team_path(tp.team.challenge, tp.team)
+      end
+    end
     column :participant
     column :role
     column :created_at

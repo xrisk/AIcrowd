@@ -32,6 +32,10 @@ FactoryBot.define do
       name nil
     end
 
+    trait :dotted_name do # normal name with '.a' at the end
+      name { FFaker::Name.unique.first_name + '.a' }
+    end
+
     trait :every_email do
       after :create do |participant|
         participant.email_preferences.first.update(    email_frequency: :every)

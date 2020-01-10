@@ -22,12 +22,28 @@ class Team::BaseMailer < ApplicationMailer
     }
   end
 
+  protected def set_participant_from_invitee(invitee)
+    case invitee
+    when Participant
+      @participant = invitee
+    when EmailInvitation
+      @participant = Participant.new(
+        name: invitee.email.sub(/@.*\z/, ''),
+        email: invitee.email,
+      )
+    else
+      raise RuntimeError.new("Unexpected invitee type: #{@invitee.class}")
+    end
+  end
+
   protected def linked_team_html
-    @linked_team_html ||= if @team.persisted?
-                            link_to(@team.name, challenge_team_url(@team.challenge, @team))
-                          else
-                            "“#{@team.name}”"
-                          end
+    @linked_team_html ||= begin
+      if @team.persisted?
+        "Team #{link_to(@team.name, challenge_team_url(@team.challenge, @team))}"
+      else
+        "Team “#{@team.name}”"
+      end
+    end
   end
 
   protected def linked_challenge_html
@@ -35,7 +51,16 @@ class Team::BaseMailer < ApplicationMailer
   end
 
   protected def linked_invitee_html
-    @linked_invitee_html ||= link_to(@invitee.name, participant_url(@invitee))
+    @linked_invitee_html ||= begin
+      case @invitee
+      when Participant
+        "Participant #{link_to(@invitee.name, participant_url(@invitee))}"
+      when EmailInvitation
+        "Participant #{mail_to(@invitee.email, @invitee.email.sub(/@.+\z/, ''))}"
+      else
+        '&lt;?&gt;'
+      end
+    end
   end
 
   protected def linked_invitor_html
@@ -54,6 +79,7 @@ class Team::BaseMailer < ApplicationMailer
   end
 
   private def email_prefs_html
+    return '' unless @participant.persisted?
     preamble = 'You are receiving this email for the following reason:'
     url = EmailPreferencesTokenService.new(@participant).preferences_token_url
     prefs_link = %Q{<a href="#{url}">Email Preferences</a>}

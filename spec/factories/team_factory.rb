@@ -14,4 +14,12 @@ FactoryBot.define do
       end
     end
   end
+
+  trait :dotted_name do # normal name with '.a' at the end
+    name { FFaker::Company.unique.name\
+      .gsub(/ /, '_')
+      .gsub(/[^a-zA-Z0-9.\-_{}\[\]]+/, '')
+      + '.a'
+    }
+  end
 end

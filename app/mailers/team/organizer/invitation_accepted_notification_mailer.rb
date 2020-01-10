@@ -14,8 +14,8 @@ class Team::Organizer::InvitationAcceptedNotificationMailer < Team::BaseMailer
   def email_body_html
     <<~HTML
       <div>
-        <p>Team #{linked_team_html} has a new team member!</p>
-        <p>Participant #{linked_invitee_html} just accepted the invitation and is the newest member of the team.</p>
+        <p>#{linked_team_html} has a new team member!</p>
+        <p>#{linked_invitee_html} just accepted the invitation and is the newest member of the team.</p>
         #{signoff_html}
       </div>
     HTML

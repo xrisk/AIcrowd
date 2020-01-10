@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+# This is to make sure that the legacy `TeamsController` redirects as expected to
+# the proper `Challenges::TeamsController` actions where possible
 RSpec.describe TeamsController, type: :controller do
   render_views
 

@@ -71,6 +71,10 @@ class Submission < ApplicationRecord
       .perform_later(challenge_round_id: self.challenge_round_id)
   end
 
+  def team
+    participant&.teams&.for_challenge(challenge)&.first
+  end
+
   def ready?
     self.grading_status == :ready
   end
