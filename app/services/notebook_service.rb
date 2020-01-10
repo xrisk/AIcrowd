@@ -16,5 +16,4 @@ class NotebookService
       return json
     end
   end
-
 end
