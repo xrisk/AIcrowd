@@ -7,6 +7,7 @@ require 'rspec/rails'
 require 'support/config/capybara'
 require 'support/config/factory_bot'
 require 'support/config/database_cleaner'
+require 'support/config/warden'
 
 require 'pundit/matchers'
 require 'devise'
@@ -19,11 +20,6 @@ ActiveRecord::Migration.maintain_test_schema!
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
-  config.include Devise::Test::ControllerHelpers, type: :controller
-  config.include Devise::Test::ControllerHelpers, type: :view
-  config.include Devise::Test::ControllerHelpers, type: :helper
-  config.include Devise::Test::IntegrationHelpers, type: :request
-  config.include Warden::Test::Helpers, type: :feature
   config.include HeaderHelpers
   config.include FeatureSpecHelpers, type: :feature
 
