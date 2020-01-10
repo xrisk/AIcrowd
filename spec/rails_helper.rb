@@ -2,12 +2,11 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 
 require 'spec_helper'
-require 'pundit/matchers'
 require 'rspec/rails'
+
+require 'support/config/capybara'
+require 'pundit/matchers'
 require 'devise'
-require 'capybara/rails'
-require 'capybara/rspec'
-require 'capybara-screenshot/rspec'
 
 Dir[File.dirname(__FILE__) + "/support/helpers/*.rb"]
   .each { |f| require f }
@@ -15,34 +14,8 @@ Dir[File.dirname(__FILE__) + "/support/matchers/*.rb"]
   .each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
-browser = ENV['CAPYBARA_BROWSER_NAME'] && ENV['CAPYBARA_BROWSER_NAME'].to_sym || :chrome
-Capybara.register_driver :selenium do |app|
-  Capybara::Selenium::Driver.new(app, browser: browser)
-end
-
-### Useful debugging from https://stackoverflow.com/questions/7555416/how-to-leave-browser-opened-even-after-selenium-ruby-script-finishes
-# Selenium::WebDriver::Driver.class_eval do
-#   def quit
-#     #STDOUT.puts "#{self.class}#quit: no-op"
-#   end
-# end
-
-# Capybara::Selenium::Driver.class_eval do
-#   def reset!
-#   end
-# end
-
-Capybara.server_port = 52508 + ENV['TEST_ENV_NUMBER'].to_i
-Capybara.asset_host = 'http://localhost:3000'
-Capybara::Screenshot.register_driver(browser) do |driver, path|
-  filename = File.basename(path)
-  driver.browser.save_screenshot("#{Rails.root}/tmp/capybara/#{filename}")
-end
 
 RSpec.configure do |config|
-  Capybara.reset_sessions!
-
-  #config.filter_run :focus => true
   config.include FactoryBot::Syntax::Methods
   config.infer_spec_type_from_file_location!
 
@@ -74,8 +47,6 @@ RSpec.configure do |config|
     end
   end
   ## RSPEC RETRY END
-
-  Capybara.ignore_hidden_elements = true
 
   config.use_transactional_fixtures = false
 
