@@ -1,24 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe CommentsController, type: :controller do
+describe CommentsController, type: :controller do
   render_views
 
-  let!(:topic) { create :topic }
-  let!(:participant) { create :participant }
+  let!(:topic)       { create(:topic) }
+  let!(:participant) { create(:participant) }
 
-  def valid_attributes
-    {
-      comment_markdown: "### This is a comment"
-    }
-  end
+  let(:valid_attributes) { { comment_markdown: "### This is a comment" } }
 
   context 'participant' do
-    before do
-      sign_in participant
-    end
+    before { sign_in participant }
 
     describe "POST #create" do
-      ActiveJob::Base.queue_adapter = :test
       context "with valid params" do
         it "creates a new Comment" do
           expect do
@@ -37,7 +30,6 @@ RSpec.describe CommentsController, type: :controller do
     end
 
     describe 'POST #create: mentions creates notifications' do
-      ActiveJob::Base.queue_adapter = :test
       let(:mentionable) { create :participant, name: 'Sean' }
       let(:valid_attributes) do
         {

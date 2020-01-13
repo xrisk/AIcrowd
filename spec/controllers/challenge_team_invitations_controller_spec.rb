@@ -1,22 +1,20 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe Challenges::TeamInvitationsController, '#create', type: :controller do
+describe Challenges::TeamInvitationsController, '#create', type: :controller do
   render_views
 
-  let!(:participant) { create :participant }
-  let!(:invitee) { create :participant }
-  let!(:member_of_other_abstract_team) { create :participant }
-  let!(:member_1_of_other_concrete_team) { create :participant }
-  let!(:member_2_of_other_concrete_team) { create :participant }
-
-  let!(:challenge) { create :challenge }
-  let!(:team) { create :team, challenge: challenge, participants: [participant] }
-
-  let!(:other_abstract_team) { create :team, challenge: challenge, participants: [member_of_other_abstract_team] }
-  let!(:other_concrete_team) { create :team, challenge: challenge, participants: [member_1_of_other_concrete_team, member_2_of_other_concrete_team] }
-
-  let!(:unknown_email) { FFaker::Internet.unique.email }
+  let!(:participant)                     { create(:participant) }
+  let!(:invitee)                         { create(:participant) }
+  let!(:member_of_other_abstract_team)   { create(:participant) }
+  let!(:member_1_of_other_concrete_team) { create(:participant) }
+  let!(:member_2_of_other_concrete_team) { create(:participant) }
+  let!(:challenge)                       { create(:challenge) }
+  let!(:team)                            { create(:team, challenge: challenge, participants: [participant]) }
+  let!(:other_abstract_team)             { create(:team, challenge: challenge, participants: [member_of_other_abstract_team]) }
+  let!(:other_concrete_team)             { create(:team, challenge: challenge, participants: [member_1_of_other_concrete_team, member_2_of_other_concrete_team]) }
+  let!(:unknown_email)                   { FFaker::Internet.unique.email }
 
   def perform_request(team_name, invitee_name_or_email)
     # we parse an actual path instead of using shortcuts to ensure routes are working properly
