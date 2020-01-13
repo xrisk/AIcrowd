@@ -3,10 +3,10 @@ require 'rails_helper'
 describe Discussion::Cell::TopicAdmin, type: :cell do
   controller ApplicationController
 
-  let(:participant) { create :participant }
-  let(:author) { create :participant }
-  let(:admin) { create :participant, :admin }
-  let(:topic) { create :topic, participant: author }
+  let(:participant) { create(:participant) }
+  let(:author)      { create(:participant) }
+  let(:admin)       { create(:participant, :admin) }
+  let(:topic)       { create(:topic, participant: author) }
 
   context 'public user' do
     subject { cell(described_class, topic, current_participant: nil).show }
