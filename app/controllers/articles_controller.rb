@@ -14,16 +14,11 @@ class ArticlesController < ApplicationController
 
   def show
     @article.record_page_view
-    if params[:article_section_id]
-      @article_section = ArticleSection
-        .find(params[:article_section_id])
-    else
-      @article_section = @article.article_sections.first
-      if @article.notebook_url.present?
-        @notebook_data = NotebookService.new(
-          notebook_url: @article.notebook_url).call
-      end
-    end
+    @article_section = if params[:article_section_id]
+                         ArticleSection.find(params[:article_section_id])
+                       else
+                         @article.article_sections.first
+                       end
   end
 
   def new
