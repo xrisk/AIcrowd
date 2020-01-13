@@ -26,7 +26,6 @@ development: &development
 test:
   <<: *development
   MANDRILL_KEY: "G_rHM-BQ9DF6IG2wKa3-Pw"
-#  CAPYBARA_BROWSER_NAME: 'firefox'
 
 staging:
   DOMAIN_NAME:  "REDACTED"

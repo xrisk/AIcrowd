@@ -139,15 +139,14 @@ group :test do
   gem 'factory_bot_rails'
   gem 'chromedriver-helper'
   gem 'capybara'
-  gem 'capybara-email'
   gem 'capybara-screenshot'
-  gem 'database_cleaner'
   gem 'launchy'
   gem 'nokogiri' #, '~> 1.8'
   gem 'pundit-matchers', git: 'https://github.com/crowdAI/pundit-matchers'
   gem 'rails-controller-testing'
-  gem 'rspec-retry'
   gem 'simplecov', :require => false
   gem 'selenium-webdriver'
   gem 'timecop'
+  gem 'vcr', '~> 5.0'
+  gem 'webmock', '~> 3.7', '>= 3.7.6'
 end

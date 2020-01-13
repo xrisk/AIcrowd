@@ -1,5 +1,6 @@
-class MandrillSpecHelper
+# frozen_string_literal: true
 
+class MandrillSpecHelper
   def initialize(result)
     @res = result[0][0]
     @msg = result[1]
@@ -46,5 +47,4 @@ class MandrillSpecHelper
   def unsubscribe_url
     merge_var('UNSUBSCRIBE_URL')
   end
-
 end

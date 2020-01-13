@@ -122,9 +122,6 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.2)
       xpath (~> 3.2)
-    capybara-email (3.0.1)
-      capybara (>= 2.4, < 4.0)
-      mail
     capybara-screenshot (1.0.22)
       capybara (>= 1.0, < 4)
       launchy
@@ -203,12 +200,13 @@ GEM
     country_select (3.1.1)
       countries (~> 2.0)
       sort_alphabetical (~> 1.0)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
     crass (1.0.5)
     crowdai_admin (1.0.2)
       activeadmin (>= 1.1.0, < 2.0)
       font-awesome-rails (~> 4.7.0.4)
       jquery-rails
-    database_cleaner (1.7.0)
     debugging (1.1.1)
       binding.repl (~> 3.0)
       paint (>= 0.9, < 3.0)
@@ -457,6 +455,7 @@ GEM
     has_scope (0.7.2)
       actionpack (>= 4.1)
       activesupport (>= 4.1)
+    hashdiff (1.0.0)
     hashie (3.6.0)
     heapy (0.1.4)
     hirb (0.7.3)
@@ -782,8 +781,6 @@ GEM
       rspec-expectations (~> 3.8.0)
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
-    rspec-retry (0.6.1)
-      rspec-core (> 3.3)
     rspec-support (3.8.0)
     ruby-graphviz (1.2.4)
     ruby_dep (1.5.0)
@@ -793,6 +790,7 @@ GEM
     rubyzip (1.2.2)
     rufus-scheduler (3.5.2)
       fugit (~> 1.1, >= 1.1.5)
+    safe_yaml (1.0.5)
     safely_block (0.2.2)
       errbase (>= 0.1.1)
     sanitize (4.6.6)
@@ -914,6 +912,7 @@ GEM
     validate_url (1.0.2)
       activemodel (>= 3.0.0)
       addressable
+    vcr (5.0.0)
     warden (1.2.8)
       rack (>= 2.0.6)
     web-console (3.7.0)
@@ -921,6 +920,10 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
+    webmock (3.7.6)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
     webpacker (2.0)
       activesupport (>= 4.2)
       multi_json (~> 1.2)
@@ -949,7 +952,6 @@ DEPENDENCIES
   browser
   byebug
   capybara
-  capybara-email
   capybara-screenshot
   carrierwave (~> 1.0)
   cells
@@ -964,7 +966,6 @@ DEPENDENCIES
   cookies_eu
   country_select
   crowdai_admin
-  database_cleaner
   derailed_benchmarks
   devise (~> 4.6.1)
   discourse_api
@@ -1040,7 +1041,6 @@ DEPENDENCIES
   rspec-cells
   rspec-kickstarter
   rspec-rails (~> 3.6)
-  rspec-retry
   rubyzip (~> 1.2.2)
   sanitize (~> 4.6.3)
   sass-rails
@@ -1072,11 +1072,13 @@ DEPENDENCIES
   uglifier (~> 4.1.10)
   valid_email2
   validate_url
+  vcr (~> 5.0)
   web-console
+  webmock (~> 3.7, >= 3.7.6)
   webpacker (~> 2.0)
 
 RUBY VERSION
    ruby 2.5.5p157
 
 BUNDLED WITH
-   2.0.2
+   2.1.4
