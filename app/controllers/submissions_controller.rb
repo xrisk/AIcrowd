@@ -92,7 +92,6 @@ class SubmissionsController < ApplicationController
     authorize @submission
     if @submission.save
       SubmissionGraderJob.perform_later(@submission.id)
-      # notify_admins
       redirect_to challenge_submissions_path(@challenge),
                   notice: 'Submission accepted.'
     else

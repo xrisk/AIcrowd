@@ -33,17 +33,6 @@ class ChallengeRound < ApplicationRecord
   validates :submission_limit, presence: true
   validates :submission_limit_period, presence: true
 
-  # validate :validate_period_and_duration
-
-  # def validate_period_and_duration
-  #  unless (submission_limit.blank? &&
-  #          submission_limit_period.blank?) ||
-  #          (submission_limit.present? &&
-  #          submission_limit_period.present?)
-  #    errors.add(:submission_limit,"Complete both submission Limit and period or neither.")
-  #  end
-  # end
-
   as_enum :submission_limit_period,
           [:day, :week, :round], map: :string
 

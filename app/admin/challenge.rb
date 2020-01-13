@@ -1,6 +1,4 @@
 ActiveAdmin.register Challenge do
-  # config.filters = false
-
   sidebar "Challenge Configuration", only: [:show, :edit] do
     ul do
       li link_to "Dataset Files", admin_challenge_dataset_files_path(challenge)

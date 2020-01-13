@@ -7,7 +7,6 @@ class SubmissionCommentsController < ApplicationController
   def create
     @submission_comment = @submission.submission_comments.new(submission_comment_params)
     if @submission_comment.save
-      # EveryCommentNotificationJob.set(wait: 5.minutes).perform_later(@comment.id)
       redirect_to challenge_leaderboard_path(@submission.challenge_id, @submission.id), notice: 'Comment was successfully created.'
     else
       render :new

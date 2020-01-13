@@ -16,13 +16,11 @@ class Vote::Cell < Template::Cell
         upvote_link
       else
         unvote_link(vote)
-        # disabled_vote_link
       end
     end
   end
 
   def refresh
-    # {}%{ console.log("#{j(show)}")}
     %{ $('##{vote_link_id}').replaceWith("#{j(show)}"); }
   end
 

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :not_authorized_or_login
@@ -36,7 +37,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    current_participant # || NullParticipant.new
+    current_participant
   end
 
   private
