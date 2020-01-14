@@ -15,7 +15,7 @@ class S3Service
   end
 
   def expiring_url
-    if s3_file_obj&.key && !s3_file_obj.key.blank?
+    if s3_file_obj&.key.present?
       return s3_file_obj.presigned_url(:get, expires_in: 7.days.to_i)
     else
       return nil
@@ -23,7 +23,7 @@ class S3Service
   end
 
   def public_url
-    if s3_file_obj&.key && !s3_file_obj.key.blank?
+    if s3_file_obj&.key.present?
       return s3_file_obj.public_url
     else
       return nil

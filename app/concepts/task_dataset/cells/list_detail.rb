@@ -53,7 +53,7 @@ class TaskDataset::Cell::ListDetail < TaskDataset::Cell
     return nil if s3_key.nil?
 
     s3_file_obj = Aws::S3::Object.new(bucket_name: ENV['AWS_S3_BUCKET'], key: s3_key)
-    if s3_file_obj&.key && !s3_file_obj.key.blank?
+    if s3_file_obj&.key.present?
       return s3_file_obj
     else
       return nil
