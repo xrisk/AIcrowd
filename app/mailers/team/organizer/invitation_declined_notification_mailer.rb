@@ -2,8 +2,8 @@
 class Team::Organizer::InvitationDeclinedNotificationMailer < Team::BaseMailer
   def sendmail(participant, invitation)
     @participant = participant
-    @team = invitation.team
-    @invitee = invitation.invitee
+    @team        = invitation.team
+    @invitee     = invitation.invitee
     mandrill_send(format_options)
   end
 

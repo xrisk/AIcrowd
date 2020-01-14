@@ -1,7 +1,7 @@
 class TeamMember < ApplicationRecord
-  validates_presence_of :name
-  validates_presence_of :title
-  validates_presence_of :section
+  validates :name, presence: true
+  validates :title, presence: true
+  validates :section, presence: true
   validates :seq, presence: true, uniqueness: true
 
   belongs_to :participant

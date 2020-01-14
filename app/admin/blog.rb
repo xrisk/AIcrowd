@@ -1,9 +1,9 @@
 ActiveAdmin.register Blog do
-
- controller do
+  controller do
     def find_resource
       scoped_collection.friendly.find(params[:id])
     end
+
     def permitted_params
       params.permit!
     end
@@ -50,5 +50,4 @@ ActiveAdmin.register Blog do
       row :updated_at
     end
   end
-
 end

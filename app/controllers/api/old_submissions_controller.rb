@@ -13,7 +13,7 @@ class Api::OldSubmissionsController < Api::BaseController
       status = :ok
     else
       payload = { message: 'No submission could be found for this id' }
-      status = :not_found
+      status  = :not_found
     end
     render json: payload, status: status
   end
@@ -32,10 +32,9 @@ class Api::OldSubmissionsController < Api::BaseController
     render json: { message: message }, status: :not_found
   rescue OrganizerNotAuthorized => e
     render json: { message: e }, status: :unauthorized
-  rescue
+  rescue StandardError
     render json: { message: 'server error' }, status: :internal_server_error
   end
-
 
   private
 
@@ -66,12 +65,11 @@ class Api::OldSubmissionsController < Api::BaseController
     end
   end
 
-
   private
 
   def set_organizer
     token, _options = ActionController::HttpAuthentication::Token.token_and_options(request)
-    @organizer = Organizer.find_by_api_key(token)
+    @organizer      = Organizer.find_by_api_key(token)
   end
 
   class OrganizerNotAuthorized < StandardError
@@ -79,5 +77,4 @@ class Api::OldSubmissionsController < Api::BaseController
       super
     end
   end
-
 end

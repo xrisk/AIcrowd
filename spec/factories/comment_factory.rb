@@ -1,11 +1,11 @@
 FactoryBot.define do
-  factory :comment, class: Comment do
-    comment_markdown "### Some markdown"
+  factory :comment, class: 'Comment' do
+    comment_markdown { "### Some markdown" }
     comment { FFaker::Lorem.words(4) }
-    flagged false
+    flagged { false }
     topic
-    vote_count 1
-    notify false
+    vote_count { 1 }
+    notify { false }
     participant
   end
 end

@@ -9,13 +9,12 @@ class TopicsController < ApplicationController
   end
 
   def new
-    @topic = @challenge.topics.new
+    @topic   = @challenge.topics.new
     @comment = @topic.comments.new
     authorize @topic
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @topic = @challenge.topics.new(topic_params)
@@ -50,37 +49,38 @@ class TopicsController < ApplicationController
   end
 
   private
-    def set_topic
-      @topic = Topic.friendly.find(params[:id])
-      authorize @topic
-    end
 
-    def set_challenge
-      @challenge = Challenge.friendly.find(params[:challenge_id])
-    end
+  def set_topic
+    @topic = Topic.friendly.find(params[:id])
+    authorize @topic
+  end
 
-    def topic_params
-      params
-        .require(:topic)
-        .permit(:challenge_id,
-                :participant_id,
-                :topic,
-                :sticky,
-                :views,
-                :posts_count,
-                comments_attributes: [:id, :comment_markdown, :participant_id])
-    end
+  def set_challenge
+    @challenge = Challenge.friendly.find(params[:challenge_id])
+  end
 
-    def headline_sql
-      sql = %Q[
-        select p.id, substring(p.post from 0 for 40) as post, p.topic_id, u.name, t.topic as "topic_text"
-        from posts p, topics t, participants u
-        where p.flagged = false
-        and p.topic_id = t.id
-        and p.participant_id = u.id
-        and t.challenge_id = #{@challenge.id}
-        order by p.created_at desc
-        limit 1
-      ]
-    end
+  def topic_params
+    params
+      .require(:topic)
+      .permit(:challenge_id,
+              :participant_id,
+              :topic,
+              :sticky,
+              :views,
+              :posts_count,
+              comments_attributes: [:id, :comment_markdown, :participant_id])
+  end
+
+  def headline_sql
+    sql = %[
+      select p.id, substring(p.post from 0 for 40) as post, p.topic_id, u.name, t.topic as "topic_text"
+      from posts p, topics t, participants u
+      where p.flagged = false
+      and p.topic_id = t.id
+      and p.participant_id = u.id
+      and t.challenge_id = #{@challenge.id}
+      order by p.created_at desc
+      limit 1
+    ]
+  end
 end

@@ -7,9 +7,9 @@ class EmailInvitation < ApplicationRecord
 
   before_validation :normalize_token!
 
-  validates_presence_of :invitor
-  validates_presence_of :email
-  validates_presence_of :token
+  validates :invitor, presence: true
+  validates :email, presence: true
+  validates :token, presence: true
 
   def display_token
     Base31.display_token(token, 3, '-')

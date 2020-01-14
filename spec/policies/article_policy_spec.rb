@@ -6,10 +6,11 @@ describe ArticlePolicy do
 
     let(:article) { build(:article, participant: author) }
     let(:author) { build(:participant) }
-    let(:admin) { build(:participant, :admin )}
+    let(:admin) { build(:participant, :admin) }
 
     context 'for a public participant' do
       let(:participant) { nil }
+
       it { is_expected.to permit_action(:show) }
       it { is_expected.to permit_action(:index) }
       it { is_expected.to forbid_action(:create) }
@@ -21,6 +22,7 @@ describe ArticlePolicy do
 
     context 'for the author' do
       let(:participant) { author }
+
       it { is_expected.to permit_action(:show) }
       it { is_expected.to permit_action(:index) }
       it { is_expected.to permit_action(:create) }
@@ -32,6 +34,7 @@ describe ArticlePolicy do
 
     context 'for an admin' do
       let(:participant) { admin }
+
       it { is_expected.to permit_action(:show) }
       it { is_expected.to permit_action(:index) }
       it { is_expected.to permit_action(:create) }

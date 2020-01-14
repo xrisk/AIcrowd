@@ -8,5 +8,4 @@ class CalculateLeaderboardJob < ApplicationJob
       CalculateLeaderboardService.new(challenge_round_id: challenge_round_id).call
     end
   end
-
 end

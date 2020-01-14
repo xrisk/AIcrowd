@@ -1,11 +1,6 @@
 class Leaderboard::Cell::ChallengeRoundPills < Leaderboard::Cell
-
   def show
-    if challenge_rounds.count > 1
-      render :challenge_round_pills
-    else
-      nil
-    end
+    render :challenge_round_pills if challenge_rounds.count > 1
   end
 
   def challenge
@@ -17,7 +12,7 @@ class Leaderboard::Cell::ChallengeRoundPills < Leaderboard::Cell
   end
 
   def challenge_rounds
-    challenge.challenge_round_summaries.where(round_status_cd: ['history','current'])
+    challenge.challenge_round_summaries.where(round_status_cd: ['history', 'current'])
   end
 
   def tab_class(challenge_round)
@@ -27,5 +22,4 @@ class Leaderboard::Cell::ChallengeRoundPills < Leaderboard::Cell
       return 'nav-link'
     end
   end
-
 end

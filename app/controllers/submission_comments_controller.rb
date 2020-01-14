@@ -7,8 +7,8 @@ class SubmissionCommentsController < ApplicationController
   def create
     @submission_comment = @submission.submission_comments.new(submission_comment_params)
     if @submission_comment.save
-      #EveryCommentNotificationJob.set(wait: 5.minutes).perform_later(@comment.id)
-      redirect_to challenge_leaderboard_path(@submission.challenge_id,@submission.id), notice: 'Comment was successfully created.'
+      # EveryCommentNotificationJob.set(wait: 5.minutes).perform_later(@comment.id)
+      redirect_to challenge_leaderboard_path(@submission.challenge_id, @submission.id), notice: 'Comment was successfully created.'
     else
       render :new
     end
@@ -33,19 +33,19 @@ class SubmissionCommentsController < ApplicationController
   end
 
   private
-    def set_submission_comment
-      @comment = Comment.find(params[:id])
-    end
 
-    def set_submission
-      @submission = Submission.find(params[:submission_id])
-    end
+  def set_submission_comment
+    @comment = Comment.find(params[:id])
+  end
 
-    def submission_comment_params
-      params.require(:submission_comment)
-            .permit(:submission_id,
-                    :comment_markdown)
-            .merge(participant_id: current_participant.id)
-    end
+  def set_submission
+    @submission = Submission.find(params[:submission_id])
+  end
 
+  def submission_comment_params
+    params.require(:submission_comment)
+          .permit(:submission_id,
+                  :comment_markdown)
+          .merge(participant_id: current_participant.id)
+  end
 end

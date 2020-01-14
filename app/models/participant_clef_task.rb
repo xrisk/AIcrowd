@@ -6,7 +6,6 @@ class ParticipantClefTask < ApplicationRecord
   validates :eua_file, file_size: { less_than: 10.megabytes }
 
   def registered?
-    self.status_cd === 'registered'
+    status_cd === 'registered'
   end
-
 end

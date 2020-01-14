@@ -1,44 +1,47 @@
 require 'rails_helper'
 
-feature "download dataset links" do
+describe "download dataset links" do
   let!(:challenge) { create :challenge, :running }
-  let!(:challenge_rules) {
+  let!(:challenge_rules) do
     create :challenge_rules,
-    challenge: challenge
-  }
-  let!(:participation_terms) {
+           challenge: challenge
+  end
+  let!(:participation_terms) do
     create :participation_terms
-  }
+  end
   let!(:participant) { create :participant }
-  let!(:challenge_participant) {
+  let!(:challenge_participant) do
     create :challenge_participant,
-    challenge: challenge,
-    participant: participant
-  }
+           challenge:   challenge,
+           participant: participant
+  end
   let!(:admin) { create :participant, :admin }
-  let!(:challenge_admin_participant) {
+  let!(:challenge_admin_participant) do
     create :challenge_participant,
-    challenge: challenge,
-    participant: admin
-  }
+           challenge:   challenge,
+           participant: admin
+  end
   let!(:organizer) { create :participant, organizer: challenge.organizer }
-  let!(:challenge_organizer_participant) {
+  let!(:challenge_organizer_participant) do
     create :challenge_participant,
-    challenge: challenge,
-    participant: organizer
-  }
+           challenge:   challenge,
+           participant: organizer
+  end
+
   context 'download link' do
-    scenario 'participant' do
+    it 'participant' do
       log_in(participant)
       visit challenge_dataset_files_path(challenge, wait: 1)
       expect(page).not_to have_link 'Delete'
     end
-    scenario 'admin' do
+
+    it 'admin' do
       log_in(admin)
       visit challenge_dataset_files_path(challenge, wait: 1)
       expect(page).to have_link 'Delete'
     end
-    scenario 'organizer' do
+
+    it 'organizer' do
       log_in(organizer)
       visit challenge_dataset_files_path(challenge, wait: 1)
       expect(page).to have_link 'Delete'
@@ -51,5 +54,4 @@ feature "download dataset links" do
     #   expect(DatasetFileDownload.count).to eq(1)
     # end
   end
-
 end

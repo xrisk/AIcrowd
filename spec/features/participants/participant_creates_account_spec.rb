@@ -20,20 +20,20 @@ def sign_up_and_confirm_account
   confirm_account
 end
 
-feature "participant creates account" do
-  scenario "enter sign up information" do
+describe "participant creates account" do
+  it "enter sign up information" do
     visit 'participants/sign_up'
     expect(page).to have_content("One account per individual")
 
     fill_out_account_creation_form
-    find(:css, '#sign-up-button', visible: false).click()
+    find(:css, '#sign-up-button', visible: false).click
     expect(page).to have_content "A message with a confirmation link has been sent to your email address. Please follow the link to activate your account."
   end
 
-  scenario "confirm account" do
+  it "confirm account" do
     visit 'participants/sign_up'
     fill_out_account_creation_form
-    find(:css, '#sign-up-button', visible: false).click()
+    find(:css, '#sign-up-button', visible: false).click
 
     confirm_account
     expect(page).to have_content "Your email address has been successfully confirmed."

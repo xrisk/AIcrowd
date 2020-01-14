@@ -5,13 +5,12 @@ class TaskDatasetFilesController < ApplicationController
   before_action :set_s3_direct_post, only: [:new, :create, :edit]
 
   def index
-    @challenge = Challenge.find(params[:challenge_id])
+    @challenge          = Challenge.find(params[:challenge_id])
     @task_dataset_files = @clef_task.task_dataset_files
     js challenge_id: @challenge.id
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @task_dataset_file = @clef_task.task_dataset_files.new
@@ -28,13 +27,12 @@ class TaskDatasetFilesController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @task_dataset_file.update(task_dataset_file_params)
       redirect_to organizer_clef_tasks_path(@clef_task.organizer),
-        notice: 'Dataset file was successfully updated.'
+                  notice: 'Dataset file was successfully updated.'
     else
       render :edit
     end
@@ -42,16 +40,15 @@ class TaskDatasetFilesController < ApplicationController
 
   def destroy
     s3 = Aws::S3::Client.new
-    unless @task_dataset_file.dataset_file_s3_key.nil?
-      s3.delete_object(key: @task_dataset_file.dataset_file_s3_key, bucket: ENV['AWS_S3_BUCKET'])
-    end
+    s3.delete_object(key: @task_dataset_file.dataset_file_s3_key, bucket: ENV['AWS_S3_BUCKET']) unless @task_dataset_file.dataset_file_s3_key.nil?
     @task_dataset_file.destroy
 
     redirect_to organizer_clef_tasks_path(@clef_task.organizer),
-        notice: "Dataset file #{@task_dataset_file.title} was deleted."
+                notice: "Dataset file #{@task_dataset_file.title} was deleted."
   end
 
   private
+
   def set_task_dataset_file
     @task_dataset_file = TaskDatasetFile.find(params[:id])
   end
@@ -70,9 +67,8 @@ class TaskDatasetFilesController < ApplicationController
   end
 
   def set_s3_direct_post
-    @s3_direct_post = S3_BUCKET.presigned_post(key: "task_dataset_files/clef_task_#{@clef_task.id}/#{SecureRandom.uuid}_${filename}",
+    @s3_direct_post = S3_BUCKET.presigned_post(key:                   "task_dataset_files/clef_task_#{@clef_task.id}/#{SecureRandom.uuid}_${filename}",
                                                success_action_status: '201',
-                                               acl: 'private')
+                                               acl:                   'private')
   end
-
 end

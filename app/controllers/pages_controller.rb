@@ -1,5 +1,4 @@
 class PagesController < ApplicationController
-
   def contact
     @page_title = "Contact"
   end
@@ -19,5 +18,4 @@ class PagesController < ApplicationController
   def cookies_info
     @page_title = "Cookies"
   end
-
 end

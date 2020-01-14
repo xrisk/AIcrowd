@@ -1,5 +1,4 @@
 class LeaderboardPolicy < ApplicationPolicy
-
   def index?
     true
   end
@@ -10,13 +9,13 @@ class LeaderboardPolicy < ApplicationPolicy
 
   def submission_detail?
     participant &&
-        (participant.admin? ||
-            @record.participant_id == participant.id ||
-            ChallengeOrganizerParticipant.where(
-                participant_id: participant.id,
-                id: @record.challenge_id
-            ).present?
-        )
+      (participant.admin? ||
+          @record.participant_id == participant.id ||
+          ChallengeOrganizerParticipant.where(
+            participant_id: participant.id,
+            id:             @record.challenge_id
+          ).present?
+      )
   end
 
   class Scope
@@ -24,22 +23,22 @@ class LeaderboardPolicy < ApplicationPolicy
 
     def initialize(participant, scope)
       @participant = participant
-      @scope = scope
+      @scope       = scope
     end
 
     def participant_sql(participant)
       if participant.present?
-        participant_id = participant.id
-        email = participant.email
+        participant_id       = participant.id
+        email                = participant.email
         participant_team_ids = participant.teams.pluck(:id).join(',')
-        team_check = if participant_team_ids.present?
-                       "OR (submitter_type = 'Team' AND submitter_id IN (#{participant_team_ids}))"
-                     else
-                       ''
+        team_check           = if participant_team_ids.present?
+                                 "OR (submitter_type = 'Team' AND submitter_id IN (#{participant_team_ids}))"
+                               else
+                                 ''
                      end
       else
         participant_id = 0
-        email = nil
+        email          = nil
       end
       <<~SQL
         (submitter_type = 'Participant' AND submitter_id = #{participant_id})
@@ -68,7 +67,7 @@ class LeaderboardPolicy < ApplicationPolicy
         scope.all
       else
         if participant&.organizer_id
-          sql = %Q[
+          sql = %[
           #{participant_sql(participant)}
             OR challenge_id IN
               (SELECT c.id
@@ -82,5 +81,4 @@ class LeaderboardPolicy < ApplicationPolicy
       end
     end
   end
-
 end

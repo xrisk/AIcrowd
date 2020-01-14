@@ -1,5 +1,4 @@
 class ParticipantClefTask::Cell::ListDetail < ParticipantClefTask::Cell
-
   def show
     render :list_detail
   end
@@ -31,10 +30,10 @@ class ParticipantClefTask::Cell::ListDetail < ParticipantClefTask::Cell
     when 'submitted'
       return "<button class='btn btn-small btn-default'>Submitted [Cant approve for unknown user]</button>" if participant.nil?
       return "<button class='btn btn-small btn-default'>Missing</button>" if eua_file.blank?
-      return "#{ link_to 'Approve', participant_clef_task_path(clef_task, participant_id: participant.id, challenge_id: challenge_id), method: :patch, remote: true, class: 'btn btn-small btn-primary' }"
+
+      return (link_to 'Approve', participant_clef_task_path(clef_task, participant_id: participant.id, challenge_id: challenge_id), method: :patch, remote: true, class: 'btn btn-small btn-primary').to_s
     when 'registered'
       return "<button class='btn btn-small btn-default'>Approved</button>"
     end
   end
-
 end

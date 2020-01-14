@@ -15,7 +15,11 @@ Rails.application.routes.draw do
   constraints admin do
     mount Blazer::Engine => '/blazer'
     mount Sidekiq::Web => '/sidekiq'
-    ActiveAdmin.routes(self) rescue ActiveAdmin::DatabaseHitDuringLoad
+    begin
+      ActiveAdmin.routes(self)
+    rescue StandardError
+      ActiveAdmin::DatabaseHitDuringLoad
+    end
     namespace :admin do
       resources :team_participants, only: []
       resources :challenges, only: [] do
@@ -29,9 +33,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :external_graders, only: [:create, :show, :update] do
-        get :challenge_config, on: :collection
-        get :presign, on: :member
-        get :submission_info, on: :member
+      get :challenge_config, on: :collection
+      get :presign, on: :member
+      get :submission_info, on: :member
     end
 
     resources :challenges, only: [:index, :show] do
@@ -39,16 +43,15 @@ Rails.application.routes.draw do
     end
 
     resources :clef_tasks, only: [:show]
-    resources :participants, only: :show, constraints: {id: /.+/}, format: false
+    resources :participants, only: :show, constraints: { id: /.+/ }, format: false
     resources :submissions, only: [:index, :show]
 
     get 'old_submissions/:id' => 'old_submissions#show'
     get 'old_submissions' => 'old_submissions#index'
 
     get 'user', to: 'oauth_credentials#show'
-    get 'mailchimps/webhook' => 'mailchimps#verify', as: :verify_webhook
-    post 'mailchimps/webhook' => 'mailchimps#webhook', as: :update_webhook
-
+    get 'mailchimps/webhook' => 'mailchimps#verify', :as => :verify_webhook
+    post 'mailchimps/webhook' => 'mailchimps#webhook', :as => :update_webhook
   end
 
   namespace :components do
@@ -65,7 +68,7 @@ Rails.application.routes.draw do
     match '/notifications', to: 'email_preferences#update', via: :patch
   end
 
-  resources :job_postings, :path => "jobs", only: [:index, :show]
+  resources :job_postings, path: "jobs", only: [:index, :show]
   resources :gdpr_exports, only: [:create]
   resources :landing_page, only: [:index]
   match '/landing_page/host', to: 'landing_page#host', via: :get
@@ -83,7 +86,7 @@ Rails.application.routes.draw do
     resources :votes, only: [:create, :destroy]
   end
 
-  resources :teams, only: [:show], param: :name, constraints: { name: /[^?\/]+/ }, format: false # legacy
+  resources :teams, only: [:show], param: :name, constraints: { name: %r{[^?/]+} }, format: false # legacy
   resources :claim_emails, only: [:index, :create], controller: 'team_invitations/claim_emails'
   resources :team_invitations, only: [], param: :uuid do
     resources :acceptances, only: [:index, :create], controller: 'team_invitations/acceptances'
@@ -105,12 +108,12 @@ Rails.application.routes.draw do
 
   resources :participation_terms, only: [:index]
 
-  resources :challenges, only: [:index,:show] do
+  resources :challenges, only: [:index, :show] do
     collection do
       get :reorder
       post :assign_order
     end
-    resources :teams, only: [:create, :show], param: :name, constraints: { name: /[^?\/]+/ }, format: false, controller: 'challenges/teams' do
+    resources :teams, only: [:create, :show], param: :name, constraints: { name: %r{[^?/]+} }, format: false, controller: 'challenges/teams' do
       resources :invitations, only: [:create], controller: 'challenges/team_invitations'
     end
     resources :dataset_files
@@ -151,7 +154,7 @@ Rails.application.routes.draw do
     resources :submission_comments, only: [:create, :delete, :edit, :update]
   end
 
-  resources :team_members, :path => "our_team", only: [:index]
+  resources :team_members, path: "our_team", only: [:index]
 
   resources :submission_comments, only: [] do
     resources :votes, only: [:create, :destroy]
@@ -164,7 +167,6 @@ Rails.application.routes.draw do
     resources :votes, only: [:create, :destroy]
   end
   match '/topics/:topic_id/discussion', to: 'comments#new', via: :get, as: :new_topic_discussion
-
 
   resources :comments, only: [] do
     resources :votes, only: [:create, :destroy]
@@ -192,11 +194,11 @@ Rails.application.routes.draw do
   resources :challenge_calls, only: [] do
     resources :challenge_call_responses, only: [:create]
   end
-  get '/call-for-challenges/:challenge_call_id/apply' => 'challenge_call_responses#new', as: 'challenge_call_apply'
-  get '/call-for-challenges/:challenge_call_id/applications/:id' => 'challenge_call_responses#show', as: 'challenge_call_show'
-  get 'SDSC' => 'challenge_call_responses#new', challenge_call_id: 3
+  get '/call-for-challenges/:challenge_call_id/apply' => 'challenge_call_responses#new', :as => 'challenge_call_apply'
+  get '/call-for-challenges/:challenge_call_id/applications/:id' => 'challenge_call_responses#show', :as => 'challenge_call_show'
+  get 'SDSC' => 'challenge_call_responses#new', :challenge_call_id => 3
 
-  %w( 400 403 404 422 500 ).each do |code|
+  ['400', '403', '404', '422', '500'].each do |code|
     get code, controller: :errors, action: :show, code: code
   end
 

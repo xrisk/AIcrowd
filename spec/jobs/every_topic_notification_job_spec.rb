@@ -3,18 +3,26 @@ require 'rails_helper'
 RSpec.describe EveryTopicNotificationJob, type: :job do
   include ActiveJob::TestHelper
 
+  after do
+    clear_enqueued_jobs
+    clear_performed_jobs
+  end
+
   describe 'receive_every_email' do
     let!(:author) { create :participant }
     let!(:follower) { create :participant }
-    let!(:email_preference) {
+    let!(:email_preference) do
       create :email_preference,
-      email_frequency: :every,
-      participant: follower }
+             email_frequency: :every,
+             participant:     follower
+    end
     let!(:follow) { create :follow, participant: follower }
-    let!(:topic) {
+    let!(:topic) do
       create :topic,
-      challenge_id: follow.followable_id,
-      participant: author }
+             challenge_id: follow.followable_id,
+             participant:  author
+    end
+
     subject(:job) { described_class.perform_later(topic.id) }
 
     it 'queues the job' do
@@ -30,9 +38,9 @@ RSpec.describe EveryTopicNotificationJob, type: :job do
     end
 
     it 'writes to the email log' do
-      expect {
+      expect do
         perform_enqueued_jobs { job }
-      }.to change(MandrillMessage, :count).by(1)
+      end.to change(MandrillMessage, :count).by(1)
     end
 
     it 'is sent by Mandrill' do
@@ -52,11 +60,13 @@ RSpec.describe EveryTopicNotificationJob, type: :job do
   describe 'daily_digest' do
     let!(:author) { create :participant }
     let!(:follower) { create :participant }
-    let!(:email_preference) {
+    let!(:email_preference) do
       create :email_preference,
-      email_frequency: :daily,
-      participant: follower }
+             email_frequency: :daily,
+             participant:     follower
+    end
     let!(:topic) { create :topic, participant: author }
+
     subject(:job) { described_class.perform_later(topic.id) }
 
     it 'queues the job' do
@@ -80,11 +90,13 @@ RSpec.describe EveryTopicNotificationJob, type: :job do
   describe 'weekly digest' do
     let!(:author) { create :participant }
     let!(:follower) { create :participant }
-    let!(:email_preference) {
+    let!(:email_preference) do
       create :email_preference,
-      email_frequency: :weekly,
-      participant: follower }
+             email_frequency: :weekly,
+             participant:     follower
+    end
     let!(:topic) { create :topic, participant: author }
+
     subject(:job) { described_class.perform_later(topic.id) }
 
     it 'queues the job' do
@@ -104,10 +116,4 @@ RSpec.describe EveryTopicNotificationJob, type: :job do
       expect(MandrillMessage.count).to eq(0)
     end
   end
-
-  after do
-    clear_enqueued_jobs
-    clear_performed_jobs
-  end
-
 end

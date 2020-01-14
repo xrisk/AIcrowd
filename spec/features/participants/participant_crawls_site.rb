@@ -1,17 +1,18 @@
 require 'rails_helper'
 
-feature "site navigation for authenticated participant" do
+describe "site navigation for authenticated participant" do
   let!(:participant) { create(:participant) }
   3.times do |i|
     let!("challenge_#{i + 1}") { create :challenge, :running }
   end
   let(:draft) { create :challenge, :draft }
+
   3.times do |i|
     let!("article_#{i + 1}") { create :article, :with_sections }
   end
 
-  context 'log in flow', js: true do
-    scenario do
+  context 'log in flow', :js do
+    it do
       log_in(participant)
       expect(page).to have_text 'Signed in successfully.'
 
@@ -22,7 +23,7 @@ feature "site navigation for authenticated participant" do
   end
 
   context 'log out' do
-    scenario do
+    it do
       log_in(participant)
       log_out(participant)
       expect(page).to have_text 'Signed out successfully.'
@@ -31,10 +32,8 @@ feature "site navigation for authenticated participant" do
     end
   end
 
-
-
   context "landing page" do
-    scenario do
+    it do
       log_in(participant)
       visit_landing_page
       expect(page).to have_content challenge_1.challenge
@@ -45,7 +44,7 @@ feature "site navigation for authenticated participant" do
   end
 
   context "challenges" do
-    scenario do
+    it do
       log_in(participant)
       visit_landing_page
       visit_challenges
@@ -57,7 +56,7 @@ feature "site navigation for authenticated participant" do
   end
 
   context 'challenge page' do
-    scenario do
+    it do
       log_in(participant)
       visit_challenge(challenge_1)
       expect(page).to have_link 'Overview'
@@ -69,8 +68,8 @@ feature "site navigation for authenticated participant" do
     end
   end
 
-  context "challenge tabs", js: true do
-    scenario do
+  context "challenge tabs", :js do
+    it do
       log_in(participant)
       visit_challenge(challenge_1)
       click_link "Overview"
@@ -85,7 +84,7 @@ feature "site navigation for authenticated participant" do
   end
 
   context 'organizer' do
-    scenario do
+    it do
       log_in(participant)
       visit_challenge(challenge_1)
       click_link challenge_1.organizer.organizer
@@ -94,7 +93,7 @@ feature "site navigation for authenticated participant" do
   end
 
   context 'knowledge base' do
-    scenario do
+    it do
       log_in(participant)
       visit_knowledge_base
       expect(page).to have_content article_1.article
@@ -104,7 +103,7 @@ feature "site navigation for authenticated participant" do
   end
 
   context 'article' do
-    scenario do
+    it do
       log_in(participant)
       visit_article(article_1)
       expect(page).to have_content article_1.article
@@ -112,7 +111,7 @@ feature "site navigation for authenticated participant" do
   end
 
   context 'participant profile' do
-    scenario 'access profile via article', js: true do
+    it 'access profile via article', :js do
       log_in(participant)
       visit_article(article_1)
       click_link article_1.participant.name
@@ -122,5 +121,4 @@ feature "site navigation for authenticated participant" do
       end
     end
   end
-
 end

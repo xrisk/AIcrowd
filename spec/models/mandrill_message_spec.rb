@@ -3,6 +3,7 @@ require 'rails_helper'
 describe MandrillMessage do
   context 'methods' do
     let!(:man) { create :mandrill_message }
+
     it { expect(man.status).to eq('sent') }
     it { expect(man.reject_reason).to be_nil }
     it { expect(man.subject).to eq("New discussion comment") }

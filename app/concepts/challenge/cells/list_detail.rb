@@ -1,5 +1,4 @@
 class Challenge::Cell::ListDetail < Challenge::Cell
-
   def show
     render :list_detail
   end
@@ -7,5 +6,4 @@ class Challenge::Cell::ListDetail < Challenge::Cell
   def challenge
     model
   end
-
 end

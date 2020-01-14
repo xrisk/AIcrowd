@@ -21,7 +21,7 @@ class TeamInvitations::CancellationsController < ApplicationController
   end
 
   private def redirect_on_disallowed
-    if !@team.team_participants_organizer.exists?(participant_id: current_participant.id)
+    unless @team.team_participants_organizer.exists?(participant_id: current_participant.id)
       flash[:error] = 'Only an organizer of the team may cancel an invitation'
       redirect_to challenge_team_path(@team.challenge, @team)
     end

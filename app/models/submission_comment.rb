@@ -12,5 +12,4 @@ class SubmissionComment < ApplicationRecord
   def participant
     super || NullParticipant.new
   end
-
 end

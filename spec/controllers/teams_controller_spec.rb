@@ -13,7 +13,8 @@ RSpec.describe TeamsController, type: :controller do
 
     describe 'GET #show' do
       before { get :show, params: { name: team.name } }
-      it { expect(response).to have_http_status(301) }
+
+      it { expect(response).to have_http_status(:moved_permanently) }
       it { expect(response).to redirect_to(challenge_team_url(team.challenge, team)) }
     end
 
@@ -24,7 +25,8 @@ RSpec.describe TeamsController, type: :controller do
 
       describe 'GET #show' do
         before { get :show, params: { name: team2.name } }
-        it { expect(response).to have_http_status(301) }
+
+        it { expect(response).to have_http_status(:moved_permanently) }
         it { expect(response).to redirect_to(challenge_team_url(team.challenge, team)) }
       end
     end
@@ -37,20 +39,23 @@ RSpec.describe TeamsController, type: :controller do
     describe 'GET #show' do
       before do
         # we parse an actual path instead of using shortcuts to ensure routes are working properly
-        path = team_path(team)
+        path   = team_path(team)
         params = Rails.application.routes.recognize_path(path)
         get(params[:action], params: params.except(:controller, :action))
       end
-      it { expect(response).to have_http_status(301) }
+
+      it { expect(response).to have_http_status(:moved_permanently) }
       it { expect(response).to redirect_to(challenge_team_url(team.challenge, team)) }
     end
   end
 
   context 'with unknown name' do
     describe 'GET #show' do
-      it { expect {
-        get :show, params: { name: FFaker::Name.unique.first_name }
-      }.to raise_error(ActiveRecord::RecordNotFound) }
+      it {
+        expect do
+          get :show, params: { name: FFaker::Name.unique.first_name }
+        end.to raise_error(ActiveRecord::RecordNotFound)
+      }
     end
   end
 end

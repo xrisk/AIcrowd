@@ -1,6 +1,6 @@
 class BlogsController < ApplicationController
   before_action :authenticate_participant!,
-    except: [:show,:index]
+                except: [:show, :index]
   before_action :set_blog, only: :show
 
   def index
@@ -11,9 +11,7 @@ class BlogsController < ApplicationController
   end
 
   def show
-    if !params[:version]  # don't record page views on history pages
-      @blog.record_page_view
-    end
+    @blog.record_page_view unless params[:version] # don't record page views on history pages
   end
 
   def set_blog
@@ -24,8 +22,8 @@ class BlogsController < ApplicationController
   end
 
   private
+
   def blog_params
     params.require(:blog).permit(:participant_id, :title, :body, :published, :vote_count, :view_count)
   end
-
 end

@@ -4,7 +4,7 @@ class ParticipantChallengesController < ApplicationController
   respond_to :html, :js
 
   def index
-    @count_of_unknown = @challenge.challenge_participants.where(participant_id: nil).count
+    @count_of_unknown       = @challenge.challenge_participants.where(participant_id: nil).count
     @participant_challenges = @challenge
                                   .challenge_participants
                                   .where.not(participant_id: nil)
@@ -19,5 +19,4 @@ class ParticipantChallengesController < ApplicationController
   def set_challenge
     @challenge = Challenge.find(params[:challenge_id])
   end
-
 end

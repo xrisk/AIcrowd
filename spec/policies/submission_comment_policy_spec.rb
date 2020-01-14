@@ -29,5 +29,4 @@ describe SubmissionCommentPolicy do
     it { is_expected.to forbid_action(:edit) }
     it { is_expected.to forbid_action(:destroy) }
   end
-
 end

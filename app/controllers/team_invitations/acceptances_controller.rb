@@ -52,8 +52,8 @@ class TeamInvitations::AcceptancesController < ApplicationController
       if @invitee.token_eq?(params[:email_token])
         flash[:error] = 'Please claim the email the invitation was sent to'
         redirect_to claim_emails_path(
-          email_token: params[:email_token],
-          email_confirmation: @invitee.email,
+          email_token:        params[:email_token],
+          email_confirmation: @invitee.email
         )
       else
         flash[:error] = 'Please use the link you were sent by email and try again'
@@ -78,7 +78,7 @@ class TeamInvitations::AcceptancesController < ApplicationController
       flash[:error] = 'You are already a member of a different team for this challenge'
       redirect_to @team.challenge
     elsif check_terms_and_rules
-      flash[:error] = 'Please Accept Participation Terms and Challenge Rules before continuing'
+      flash[:error]            = 'Please Accept Participation Terms and Challenge Rules before continuing'
       session[:forwarding_url] = request.original_url if request.get?
       redirect_to @redirect
     end
@@ -86,9 +86,9 @@ class TeamInvitations::AcceptancesController < ApplicationController
 
   private def accept_atomically!
     @mails = {
-        accepted_invitations: [],
-        declined_invitations: [],
-        canceled_invitations: [],
+      accepted_invitations: [],
+      declined_invitations: [],
+      canceled_invitations: []
     }
     ActiveRecord::Base.transaction do
       # accept/reject pending invitations where participant is invited for this challenge
@@ -96,7 +96,7 @@ class TeamInvitations::AcceptancesController < ApplicationController
         .joins(:team)
           .where(status: :pending)
           .where(invitee_id: current_participant.id)
-          .where(teams: {challenge_id: @team.challenge_id})
+          .where(teams: { challenge_id: @team.challenge_id })
           .each do |inv|
         if inv.id == @invitation.id
           inv.update!(status: :accepted)
@@ -111,17 +111,17 @@ class TeamInvitations::AcceptancesController < ApplicationController
         .joins(:team_participants)
           .includes(:team_invitations_pending)
           .where(challenge_id: @team.challenge_id)
-          .where(team_participants: {participant_id: current_participant.id, role: :organizer})
+          .where(team_participants: { participant_id: current_participant.id, role: :organizer })
           .each do |personal_team|
         personal_team.team_invitations_pending.each do |inv|
           @mails[:canceled_invitations] << {
-              invitation: {
-                  invitor_id: inv.invitor_id,
-                  invitee_id: inv.invitee_id,
-              },
-              team: {
-                  name: personal_team.name,
-              },
+            invitation: {
+              invitor_id: inv.invitor_id,
+              invitee_id: inv.invitee_id
+            },
+            team:       {
+              name: personal_team.name
+            }
           }
         end
         personal_team.destroy!
@@ -133,7 +133,7 @@ class TeamInvitations::AcceptancesController < ApplicationController
           .joins(:team)
             .where(status: :pending)
             .where(invitee_id: creator.id)
-            .where(teams: {challenge_id: @team.challenge_id})
+            .where(teams: { challenge_id: @team.challenge_id })
             .each do |inv|
           inv.update!(status: :declined)
           @mails[:declined_invitations] << inv.id

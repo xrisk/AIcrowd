@@ -1,2 +1,2 @@
-class ClefTaskPolicy <  ChallengePolicy
+class ClefTaskPolicy < ChallengePolicy
 end

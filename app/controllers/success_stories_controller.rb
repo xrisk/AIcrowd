@@ -1,6 +1,6 @@
 class SuccessStoriesController < ApplicationController
   before_action :authenticate_participant!,
-  except: [:show,:index]
+                except: [:show, :index]
   before_action :set_success_story, only: :show
 
   def index
@@ -9,8 +9,7 @@ class SuccessStoriesController < ApplicationController
     .per(20)
   end
 
-  def show
-  end
+  def show; end
 
   def set_success_story
     @success_story = SuccessStory.friendly.find(params[:id])
@@ -18,6 +17,7 @@ class SuccessStoriesController < ApplicationController
   end
 
   private
+
   def success_story_params
     params.require(:success_story).permit(:title, :byline, :published, :image_file)
   end

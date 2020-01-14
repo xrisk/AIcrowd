@@ -21,9 +21,7 @@ class MandrillSpecHelper
   def merge_var(var)
     ret = nil
     merge_vars.each do |pair|
-      if pair[:name] == var
-        ret = pair[:content]
-      end
+      ret = pair[:content] if pair[:name] == var
     end
     return ret
   end
@@ -41,7 +39,7 @@ class MandrillSpecHelper
   end
 
   def email_array
-    @msg[:to].map {|e| e[:email] }
+    @msg[:to].map { |e| e[:email] }
   end
 
   def unsubscribe_url

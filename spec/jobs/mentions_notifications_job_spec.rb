@@ -6,8 +6,12 @@ RSpec.describe MentionsNotificationsJob, type: :job do
   let!(:participant) { create :participant }
   let!(:comment) { create :comment }
 
-  describe 'queues the job' do
+  after do
+    clear_enqueued_jobs
+    clear_performed_jobs
+  end
 
+  describe 'queues the job' do
     subject(:job) { described_class.perform_later(mentioned_participant_ids: [participant.id], comment_id: comment.id) }
 
     it 'queues the job' do
@@ -21,10 +25,5 @@ RSpec.describe MentionsNotificationsJob, type: :job do
     it 'executes with no errors' do
       perform_enqueued_jobs { job }
     end
-  end
-
-  after do
-    clear_enqueued_jobs
-    clear_performed_jobs
   end
 end

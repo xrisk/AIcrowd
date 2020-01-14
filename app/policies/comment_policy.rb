@@ -1,5 +1,4 @@
 class CommentPolicy < ApplicationPolicy
-
   def new?
     true
   end
@@ -17,7 +16,6 @@ class CommentPolicy < ApplicationPolicy
   end
 
   def destroy?
-    participant && participant.admin?
+    participant&.admin?
   end
-
 end

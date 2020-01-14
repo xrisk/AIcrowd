@@ -8,12 +8,12 @@ class Article < ApplicationRecord
   has_many :comments, as: :commentable
   has_many :article_sections, dependent: :destroy
   accepts_nested_attributes_for :article_sections,
-    reject_if: :all_blank,
-    allow_destroy: true
+                                reject_if:     :all_blank,
+                                allow_destroy: true
 
   friendly_id :article, use: [:slugged, :finders, :history]
 
-  scope :published, -> () { where published: true }
+  scope :published, -> { where published: true }
 
   validates :participant_id,    presence: true
   validates :article,           presence: true
@@ -25,8 +25,8 @@ class Article < ApplicationRecord
   validates :image_file, file_size: { less_than: 5.megabytes }
 
   as_enum :article_type,
-    [:markdown, :notebook],
-    map: :string
+          [:markdown, :notebook],
+          map: :string
 
   def participant
     super || NullParticipant.new
@@ -34,8 +34,8 @@ class Article < ApplicationRecord
 
   def record_page_view
     self.view_count ||= 0
-    self.view_count += 1
-    self.save
+    self.view_count  += 1
+    save
   end
 
   def should_generate_new_friendly_id?
@@ -43,7 +43,6 @@ class Article < ApplicationRecord
   end
 
   def published?
-    self.published
+    published
   end
-
 end

@@ -1,5 +1,4 @@
 class ArticlePolicy < ApplicationPolicy
-
   def index?
     true
   end
@@ -33,7 +32,7 @@ class ArticlePolicy < ApplicationPolicy
   end
 
   def activate?
-    participant && participant.admin?
+    participant&.admin?
   end
 
   class Scope
@@ -41,11 +40,11 @@ class ArticlePolicy < ApplicationPolicy
 
     def initialize(participant, scope)
       @participant = participant
-      @scope = scope
+      @scope       = scope
     end
 
     def resolve
-      if participant && participant.admin?
+      if participant&.admin?
         scope.all
       else
         if participant
@@ -56,5 +55,4 @@ class ArticlePolicy < ApplicationPolicy
       end
     end
   end
-
 end

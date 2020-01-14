@@ -9,7 +9,7 @@ class Challenges::TeamInvitationsController < ApplicationController
   def create
     @invitation = @team.team_invitations.new(
       invitor: current_participant,
-      invitee: @invitee,
+      invitee: @invitee
     )
 
     if @invitation.save
@@ -31,14 +31,14 @@ class Challenges::TeamInvitationsController < ApplicationController
 
   private def set_invitee
     name_or_email = params[:invitee] || ''
-    @search_field = name_or_email =~ Devise.email_regexp ? :email : :name
+    @search_field = name_or_email&.match?(Devise.email_regexp) ? :email : :name
 
     case @search_field
     when :email
       @invitee = Participant.where('LOWER(email) = LOWER(?)', name_or_email).first ||
         EmailInvitation.new(
           invitor_id: current_participant.id,
-          email: name_or_email,
+          email:      name_or_email
         )
     when :name
       @invitee = Participant.where('LOWER(name) = LOWER(?)', name_or_email).first
@@ -78,7 +78,7 @@ class Challenges::TeamInvitationsController < ApplicationController
 
   private def error_msg(key)
     i18n_scope = %i[helpers teams create_invitation_flash]
-    msg = String.new
+    msg        = ''
     msg << I18n.t(:error_preamble, scope: i18n_scope)
     msg << ' '
     msg << I18n.t(key, scope: i18n_scope, default: :unspecified)

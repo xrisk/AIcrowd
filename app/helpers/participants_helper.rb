@@ -1,5 +1,4 @@
 module ParticipantsHelper
-
   def avatar_url(participant, size)
     if participant.avatar
       if size == 'profile'

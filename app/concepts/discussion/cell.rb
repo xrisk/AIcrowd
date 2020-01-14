@@ -1,5 +1,4 @@
 class Discussion::Cell < Template::Cell
-
   def show
     render
   end
@@ -15,5 +14,4 @@ class Discussion::Cell < Template::Cell
   def author
     topic.participant || NullParticipant.new
   end
-
 end

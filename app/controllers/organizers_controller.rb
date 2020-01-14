@@ -11,8 +11,7 @@ class OrganizersController < ApplicationController
                   end
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @organizer = Organizer.new(organizer_params)
@@ -82,18 +81,19 @@ class OrganizersController < ApplicationController
     params
         .require(:organizer)
         .permit(
-            :organizer,
-            :address,
-            :description,
-            :approved,
-            :organizer_id,
-            :status,
-            :tagline,
-            :image_file,
-            :clef_organizer,
-            clef_tasks_attributes: [
-                :id,
-                :_delete,
-                :task])
+          :organizer,
+          :address,
+          :description,
+          :approved,
+          :organizer_id,
+          :status,
+          :tagline,
+          :image_file,
+          :clef_organizer,
+          clef_tasks_attributes: [
+            :id,
+            :_delete,
+            :task
+          ])
   end
 end

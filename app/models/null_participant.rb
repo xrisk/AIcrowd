@@ -1,5 +1,4 @@
 class NullParticipant
-
   def method_missing(*args, &block)
     self
   end
@@ -15,5 +14,4 @@ class NullParticipant
   def image_file
     nil
   end
-
 end

@@ -11,10 +11,10 @@ class Api::SubmissionsController < Api::BaseController
       status = :ok
     else
       payload = { message: 'No submission could be found for this id' }
-      status = :not_found
+      status  = :not_found
     end
     render json: payload, status: status
-  rescue
+  rescue StandardError
     render json: { message: 'Internal Server Error; Contact AIcrowd Admins' }, status: :internal_server_error
   end
 
@@ -27,7 +27,7 @@ class Api::SubmissionsController < Api::BaseController
     #
     # Only `challenge_client_name` is a required parameter
     @challenge_client_name = params[:challenge_client_name]
-    challenge = Challenge.where('challenge_client_name = ? ', params[:challenge_client_name]).first
+    challenge              = Challenge.where('challenge_client_name = ? ', params[:challenge_client_name]).first
     if challenge.nil?
       message = "challenge_client_name #{@challenge_client_name} not found"
       render json: { message: message }, status: :not_found
@@ -37,10 +37,9 @@ class Api::SubmissionsController < Api::BaseController
       @submission_ids = @submissions.map(&:id)
       render json: @submission_ids, status: :ok
     end
-  rescue
+  rescue StandardError
     render json: { message: 'server error' }, status: :internal_server_error
   end
-
 
   private
 
@@ -70,12 +69,11 @@ class Api::SubmissionsController < Api::BaseController
     end
   end
 
-
   private
 
   def set_organizer
     token, _options = ActionController::HttpAuthentication::Token.token_and_options(request)
-    @organizer = Organizer.find_by_api_key(token)
+    @organizer      = Organizer.find_by_api_key(token)
   end
 
   class OrganizerNotAuthorized < StandardError
@@ -83,5 +81,4 @@ class Api::SubmissionsController < Api::BaseController
       super
     end
   end
-
 end

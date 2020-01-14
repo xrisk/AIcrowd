@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
-#source 'https://rails-assets.org'
+# source 'https://rails-assets.org'
 source 'http://insecure.rails-assets.org' # something wrong with Rails assets
 
 # Rails assets gems
@@ -93,7 +95,7 @@ gem 'sidekiq-cron', '~> 0.6.3'
 gem 'sidekiq-history'
 gem 'sidekiq-failures'
 gem 'sidekiq-unique-jobs', '~> 6.0.15'
-gem 'sinatra', '~> 2.0.2', :require => nil
+gem 'sinatra', '~> 2.0.2', require: nil
 gem 'stringex'
 gem 'therubyracer', platforms: :ruby
 gem 'turbolinks', '~> 5.1'
@@ -108,7 +110,7 @@ gem 'irbtools', require: 'irbtools/binding'
 
 group :development do
   gem "letter_opener"
-  gem 'brakeman', :require => false
+  gem 'brakeman', require: false
   gem 'derailed_benchmarks'
   gem 'guard'
   gem 'lol_dba'
@@ -120,6 +122,7 @@ group :development do
   gem 'sdoc', '~> 0.4.0'
   gem 'scss_lint', require: false
   gem 'web-console'
+  gem 'gitlab-styles', '~> 2.8'
 end
 
 group :development, :test do
@@ -141,10 +144,10 @@ group :test do
   gem 'capybara'
   gem 'capybara-screenshot'
   gem 'launchy'
-  gem 'nokogiri' #, '~> 1.8'
+  gem 'nokogiri' # , '~> 1.8'
   gem 'pundit-matchers', git: 'https://github.com/crowdAI/pundit-matchers'
   gem 'rails-controller-testing'
-  gem 'simplecov', :require => false
+  gem 'simplecov', require: false
   gem 'selenium-webdriver'
   gem 'timecop'
   gem 'vcr', '~> 5.0'
