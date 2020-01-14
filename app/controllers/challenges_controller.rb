@@ -97,9 +97,6 @@ class ChallengesController < ApplicationController
   def regrade
     challenge = Challenge.friendly.find(params[:challenge_id])
     authorize challenge
-    challenge.submissions.each do |s|
-      # SubmissionGraderJob.perform_later(s.id)
-    end
     @submission_count = challenge.submissions_count
     render 'challenges/form/regrade_status'
   end

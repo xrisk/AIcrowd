@@ -9,7 +9,6 @@ function switchTab(self,tab_id,editor) {
 
 }
 
-
 function renderPreview(self,editor) {
   var markdown_text = editor.find('.txt-med, .txt-sml')[0].value;
 
@@ -29,18 +28,13 @@ function renderPreview(self,editor) {
   }); // ajax
 }
 
-
 function insertText(beforeText, afterText, editor) {
     editor.focus();
-    //if(typeof editor.data('lastSelection') === "undefined") {
-    //  editor.data("lastSelection", editor.getSelection());
-    //}
     editor.data("lastSelection", editor.getSelection());
     var selection = editor.data("lastSelection");
     editor.setSelection(selection.start, selection.end);
     editor.surroundSelectedText(beforeText, afterText);
 }
-
 
 function uploadFile() {
 
@@ -84,7 +78,6 @@ $(document).on('turbolinks:load', function() {
     { class: ".md-blockquote", before: "\n> ", after: "\n"},
   ];
 
-
   toolbarButtons.forEach( function (button) {
     $(document).on('click', button.class, function (event) {
       event.preventDefault();
@@ -92,7 +85,6 @@ $(document).on('turbolinks:load', function() {
       insertText(button.before, button.after, editor);
     });
   });
-
 
   $(document).on('click', '.md-tab', function (event) {
     var self = this;

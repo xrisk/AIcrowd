@@ -36,7 +36,6 @@
 //= require modules/direct_s3_upload
 //= require modules/mentions
 //= require modules/modals
-//= require modules/tooltips
 
 // ---------------------- Pages ---------------------- //
 // require pages/participants_edit

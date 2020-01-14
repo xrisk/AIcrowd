@@ -21,7 +21,6 @@ class Follow::Cell < Template::Cell
   end
 
   def refresh
-    # {}%{ console.log("#{j(show)}")}
     %{ $('##{follow_link_id}').replaceWith("#{j(show)}"); }
   end
 

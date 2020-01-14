@@ -1,7 +1,6 @@
 class SubmissionGrade < ApplicationRecord
   belongs_to :submission
   after_save :update_submission
-  # after_save :schedule_leaderboard_email
   default_scope { order('created_at DESC') }
 
   as_enum :grading_status, [:ready, :submitted, :graded, :failed, :initiated], map: :string, accessor: :whiny
@@ -16,12 +15,5 @@ class SubmissionGrade < ApplicationRecord
       grading_message: grading_message,
       score:           score,
       score_secondary: score_secondary)
-  end
-
-  def schedule_leaderboard_email
-    if grading_status == :graded
-      LeaderboardNotificationJob.perform_later(
-        submission)
-    end
   end
 end

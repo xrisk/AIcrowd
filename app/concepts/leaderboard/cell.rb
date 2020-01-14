@@ -33,7 +33,6 @@ class Leaderboard::Cell < Template::Cell
     submission     = submissions.first
     participant_id = submission.participant_id
     challenge_id   = submission.challenge_id
-    # %{ console.log("#{j(submission_rows)}"); }
     %{
       $("#{j(submission_rows)}").insertAfter("#participant-#{participant_id}");
       $("#participant-link-#{participant_id}").replaceWith("#{j(hide_submissions_link(participant_id, challenge_id))}");

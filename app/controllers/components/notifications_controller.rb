@@ -1,4 +1,4 @@
-class Components::NotificationsController < Components::BaseController
+class Components::NotificationsController < ApplicationController
   before_action :authenticate_participant!
 
   def index

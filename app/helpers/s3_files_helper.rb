@@ -25,11 +25,6 @@ module S3FilesHelper
 
   def datasets_url(s3_key)
     logger.debug("s3_key: #{s3_key}")
-    # s3 = Aws::S3::Client.new
-    # resp = s3.get_object(bucket: ENV['AWS_S3_BUCKET'], key: s3_key)
-    # file_size = resp.content_length
-    # expiring_url = resp.presigned_url(:get, expires_in: 3600)
-    # out = capture { link_to s3_file_info(s3_file_obj), expiring_url }
     s3 = Aws::S3::Object.new(bucket_name: ENV['AWS_S3_BUCKET'], key: s3_key)
   end
 
