@@ -1,57 +1,61 @@
 require 'rails_helper'
 
-describe "download dataset links" do
-  let!(:challenge) { create :challenge, :running }
-  let!(:challenge_rules) do
-    create :challenge_rules,
-           challenge: challenge
-  end
-  let!(:participation_terms) do
-    create :participation_terms
-  end
-  let!(:participant) { create :participant }
-  let!(:challenge_participant) do
-    create :challenge_participant,
-           challenge:   challenge,
-           participant: participant
-  end
-  let!(:admin) { create :participant, :admin }
-  let!(:challenge_admin_participant) do
-    create :challenge_participant,
-           challenge:   challenge,
-           participant: admin
-  end
-  let!(:organizer) { create :participant, organizer: challenge.organizer }
-  let!(:challenge_organizer_participant) do
-    create :challenge_participant,
-           challenge:   challenge,
-           participant: organizer
-  end
+describe 'download dataset links' do
+  let!(:challenge)                       { create(:challenge, :running) }
+  let!(:challenge_rules)                 { create(:challenge_rules, challenge: challenge) }
+  let!(:participation_terms)             { create(:participation_terms) }
 
-  context 'download link' do
-    it 'participant' do
+  context 'logged in as participant' do
+    let!(:participant)           { create(:participant) }
+    let!(:challenge_participant) { create(:challenge_participant, challenge: challenge, participant: participant) }
+
+    before do
       log_in(participant)
-      visit challenge_dataset_files_path(challenge, wait: 1)
+      visit challenge_dataset_files_path(challenge)
+    end
+
+    it 'renders only Download links' do
+      expect(page.status_code).to eq 200
+      expect(page).to have_current_path(challenge_dataset_files_path(challenge))
       expect(page).not_to have_link 'Delete'
+      expect(page).to have_link 'first_file'
+      expect(page).to have_link 'Download'
     end
+  end
 
-    it 'admin' do
-      log_in(admin)
-      visit challenge_dataset_files_path(challenge, wait: 1)
-      expect(page).to have_link 'Delete'
-    end
+  context 'logged in as organizer' do
+    let!(:organizer)                       { create(:participant, organizer: challenge.organizer) }
+    let!(:challenge_organizer_participant) { create(:challenge_participant, challenge: challenge, participant: organizer)   }
 
-    it 'organizer' do
+    before do
       log_in(organizer)
-      visit challenge_dataset_files_path(challenge, wait: 1)
-      expect(page).to have_link 'Delete'
+      visit challenge_dataset_files_path(challenge)
     end
-    # TODO after participant terms is fixed
-    # scenario 'download file', js: true do
-    #   log_in(admin)
-    #   visit challenge_dataset_files_path(challenge, wait: 1)
-    #   click_link 'first_file'
-    #   expect(DatasetFileDownload.count).to eq(1)
-    # end
+
+    it 'renders both Delete and Download links' do
+      expect(page.status_code).to eq 200
+      expect(page).to have_current_path(challenge_dataset_files_path(challenge))
+      expect(page).to have_link 'Delete'
+      expect(page).to have_link 'first_file'
+      expect(page).to have_link 'Download'
+    end
+  end
+
+  context 'logged in as admin' do
+    let!(:admin)                       { create(:participant, :admin) }
+    let!(:challenge_admin_participant) { create(:challenge_participant, challenge: challenge, participant: admin) }
+
+    before do
+      log_in(admin)
+      visit challenge_dataset_files_path(challenge)
+    end
+
+    it 'renders both Delete and Download links' do
+      expect(page.status_code).to eq 200
+      expect(page).to have_current_path(challenge_dataset_files_path(challenge))
+      expect(page).to have_link 'Delete'
+      expect(page).to have_link 'first_file'
+      expect(page).to have_link 'Download'
+    end
   end
 end
