@@ -1,10 +1,12 @@
-RSpec.describe Follow::Cell, type: :cell do
+require 'rails_helper'
+
+describe Follow::Cell, type: :cell do
+  subject { cell(described_class, challenge, current_participant: participant) }
+
+  let(:challenge)   { create(:challenge) }
+  let(:participant) { create(:participant) }
+
   describe 'cell can be instantiated' do
-    let!(:challenge) { create :challenge }
-    let!(:participant) { create :participant }
-
-    subject { cell(described_class, challenge, current_participant: participant) }
-
     it { expect(subject).to be_a described_class }
   end
 end
