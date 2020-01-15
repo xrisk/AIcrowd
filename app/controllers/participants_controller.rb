@@ -7,7 +7,6 @@ class ParticipantsController < ApplicationController
 
   def show
     @page_title   = @participant.name
-    @articles     = Article.where(participant_id: @participant.id)
     challenge_ids = policy_scope(ParticipantChallenge)
                     .where(participant_id: @participant.id)
                     .pluck(:challenge_id)

@@ -21,7 +21,6 @@
     <nav class="primary">
       <ul>
         <li><%= link_to 'Challenges', challenges_path %></li>
-        <!-- <li><%= link_to 'Knowledge Base', articles_path %></li> -->
         <!-- <li><%= link_to 'Job Board', job_postings_path %></li> -->
         <% if current_participant && current_participant.admin? %>
           <li data-turbolinks='false'><%= link_to "Admin", '/admin' %></li>
@@ -49,7 +48,6 @@
     </div>
     <ul>
       <li><h3><%= link_to 'Challenges', challenges_path %></h3></li>
-      <li><h3><%= link_to 'Knowledge Base', articles_path %></h3></li>
       <li><h3><%= link_to 'Job Board', job_postings_path %></h3></li>
     </ul>
     <% if current_participant %>

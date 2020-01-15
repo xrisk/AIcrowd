@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_15_123518) do
+ActiveRecord::Schema.define(version: 2020_01_15_135723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -93,37 +93,6 @@ ActiveRecord::Schema.define(version: 2020_01_15_123518) do
     t.datetime "started_at"
     t.index ["user_id"], name: "index_ahoy_visits_on_user_id"
     t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
-  end
-
-  create_table "article_sections", id: :serial, force: :cascade do |t|
-    t.integer "article_id"
-    t.integer "seq", default: 1
-    t.text "description_markdown"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "section"
-    t.string "slug"
-    t.index ["article_id"], name: "index_article_sections_on_article_id"
-    t.index ["slug"], name: "index_article_sections_on_slug", unique: true
-  end
-
-  create_table "articles", id: :serial, force: :cascade do |t|
-    t.string "article"
-    t.integer "participant_id"
-    t.boolean "published", default: false
-    t.integer "vote_count", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "category"
-    t.integer "view_count", default: 0
-    t.string "summary"
-    t.string "slug"
-    t.string "image_file"
-    t.string "article_type_cd"
-    t.string "notebook_url"
-    t.index ["participant_id"], name: "index_articles_on_participant_id"
-    t.index ["slug"], name: "index_articles_on_slug", unique: true
   end
 
   create_table "base_leaderboards", force: :cascade do |t|
@@ -1042,8 +1011,6 @@ ActiveRecord::Schema.define(version: 2020_01_15_123518) do
     t.index ["votable_id", "votable_type"], name: "index_votes_on_votable_id_and_votable_type"
   end
 
-  add_foreign_key "article_sections", "articles"
-  add_foreign_key "articles", "participants"
   add_foreign_key "base_leaderboards", "challenge_rounds"
   add_foreign_key "base_leaderboards", "challenges"
   add_foreign_key "blogs", "participants"

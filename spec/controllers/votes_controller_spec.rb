@@ -4,7 +4,6 @@ describe VotesController, type: :controller do
   render_views
 
   let!(:challenge)   { create(:challenge) }
-  let!(:article)     { create(:article) }
   let!(:topic)       { create(:topic) }
   let!(:participant) { create(:participant) }
 
@@ -19,16 +18,6 @@ describe VotesController, type: :controller do
 
       it { expect { register_vote }.to change(Vote, :count).by(1) }
       it { expect { register_vote }.to change(challenge, :vote_count).by(1) }
-    end
-
-    describe "POST #create for Article" do
-      def register_vote
-        post :create, params: { article_id: article.id }
-        article.reload
-      end
-
-      it { expect { register_vote }.to change(Vote, :count).by(1) }
-      it { expect { register_vote }.to change(article, :vote_count).by(1) }
     end
 
     describe "POST #create for Topic" do

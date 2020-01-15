@@ -172,13 +172,6 @@ Rails.application.routes.draw do
     resources :votes, only: [:create, :destroy]
   end
 
-  resources :articles do
-    resources :article_sections
-    resources :votes, only: [:create, :destroy]
-    get :remove_image
-  end
-  get '/load_more_articles', to: 'articles#load_more', as: :load_more_articles
-
   match '/contact', to: 'pages#contact', via: :get
   match '/privacy', to: 'pages#privacy', via: :get
   match '/terms',   to: 'pages#terms',   via: :get

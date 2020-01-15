@@ -52,20 +52,6 @@ describe Challenge do
       end
     end
 
-    describe '#record_page_view' do
-      it 'returns 1 for the first view' do
-        article = build(:article)
-        article.record_page_view
-        expect(article.view_count).to eq(1)
-      end
-
-      it 'returns 3 for the third view' do
-        article = build(:article)
-        3.times { article.record_page_view }
-        expect(article.view_count).to eq(3)
-      end
-    end
-
     describe "friendly_id" do
       it 'updates the slug when the challenge title changes' do
         challenge           = create(:challenge, :running)

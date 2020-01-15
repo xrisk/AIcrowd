@@ -89,10 +89,4 @@ class NotificationService
     thumb   = image_url(@notifiable.challenge)
     link    = challenge_url(@notifiable.challenge)
   end
-
-  def article
-    message = 'A new article has been drafted'
-    thumb   = image_url(@notifiable.challenge)
-    link    = challenge_url(@notifiable.challenge)
-  end
 end
