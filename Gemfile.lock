@@ -86,7 +86,6 @@ GEM
       device_detector
       geocoder (>= 1.4.5)
       safely_block (>= 0.2.1)
-    ambry (1.0.0)
     arbre (1.1.1)
       activesupport (>= 3.0.0)
     archive-zip (0.11.0)
@@ -581,8 +580,6 @@ GEM
       mimemagic (~> 0.3.2)
     maxminddb (0.1.22)
     memory_profiler (0.9.12)
-    merit (3.0.2)
-      ambry (~> 1.0.0)
     meta_request (0.6.0)
       callsite (~> 0.0, >= 0.0.11)
       rack-contrib (>= 1.1, < 3)
@@ -1027,7 +1024,6 @@ DEPENDENCIES
   loofah (>= 2.2.3)
   mandrill-api
   maxminddb
-  merit
   meta_request
   mini_magick
   model_2_factory-rails
