@@ -1,9 +1,8 @@
 class Participant < ApplicationRecord
-  has_merit
-
   include FriendlyId
   include ApiKey
   include Countries
+
   friendly_id :name, use: [:slugged, :finders, :history]
   before_save :set_api_key
   before_save { self.email = email.downcase }
