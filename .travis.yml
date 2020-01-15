@@ -17,6 +17,7 @@ rvm:
 
 env:
   global:
+    - CC_TEST_REPORTER_ID=b39c125055f57f4e85437969cec5c46ee3372f8a35a45d729fd31614aaa31e47
     - DB=postgres
     # Start only s3 on localstack
     - SERVICES=s3
@@ -24,6 +25,9 @@ env:
 before_script:
   - cp config/application.yml.example config/application.yml
   - psql -c 'create database crowdai_test;' -U postgres
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
 
 before_install:
   - docker pull localstack/localstack
@@ -34,6 +38,9 @@ before_install:
 script:
   - bundle exec rake db:migrate
   - bundle exec rake spec
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 branches:
   only:
