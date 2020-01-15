@@ -1,19 +1,19 @@
 FactoryBot.define do
-  factory :participant, class: 'Participant' do
-    name { FFaker::Name.unique.first_name }
-    email { FFaker::Internet.unique.email }
-    password { 'password12' }
-    password_confirmation { 'password12' }
-    confirmed_at { Time.now }
-    api_key { SecureRandom.hex }
-    affiliation { FFaker::Company.name }
-    address { FFaker::Address.street_address }
-    city { FFaker::Address.city }
-    country_cd { FFaker::Address.country_code }
-    organizer { nil }
-    timezone { 'GMT' }
-    agreed_to_terms_of_use_and_privacy { true }
-    participation_terms_accepted_date { Time.now }
+  factory :participant, class: Participant do
+    name                                 { FFaker::Name.unique.first_name }
+    email                                { FFaker::Internet.unique.email }
+    password                             { 'password12' }
+    password_confirmation                { 'password12' }
+    confirmed_at                         { Time.current }
+    api_key                              { SecureRandom.hex }
+    affiliation                          { FFaker::Company.name }
+    address                              { FFaker::Address.street_address }
+    city                                 { FFaker::Address.city }
+    country_cd                           { FFaker::Address.country_code }
+    organizer                            { nil }
+    timezone                             { 'GMT' }
+    agreed_to_terms_of_use_and_privacy   { true }
+    participation_terms_accepted_date    { Time.current }
     participation_terms_accepted_version { 1 }
 
     trait :admin do
@@ -30,10 +30,6 @@ FactoryBot.define do
 
     trait :invalid do
       name { nil }
-    end
-
-    trait :dotted_name do # normal name with '.a' at the end
-      name { FFaker::Name.unique.first_name + '.a' }
     end
 
     trait :every_email do
@@ -67,16 +63,22 @@ FactoryBot.define do
     end
 
     trait :clef_incomplete do
-      address { nil }
+      address nil
     end
 
     trait :clef_complete do
-      address { 'test test test' }
-      affiliation { 'test' }
-      first_name { 'sean' }
-      last_name { 'carroll' }
-      country_cd { 'AU' }
-      city { 'melbourne' }
+      address     { FFaker::Address.street_address }
+      affiliation { FFaker::Company.name }
+      first_name  { FFaker::Name.first_name }
+      last_name   { FFaker::Name.last_name }
+      country_cd  { FFaker::Address.country_code }
+      city        { FFaker::Address.country }
+    end
+
+    trait :with_email_preferences_token do
+      after :create do |participant|
+        create(:email_preferences_token, participant: participant)
+      end
     end
   end
 end

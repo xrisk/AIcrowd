@@ -103,7 +103,7 @@ Rails.application.routes.draw do
   resources :participant_clef_tasks
 
   resources :task_dataset_files do
-    resources :task_dataset_file_downloads
+    resources :task_dataset_file_downloads, only: :create
   end
 
   resources :participation_terms, only: [:index]

@@ -1,18 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe ChallengeCallResponsesController, type: :controller do
+describe ChallengeCallResponsesController, type: :controller do
   render_views
 
-  let(:challenge_call) { create :challenge_call }
-  let(:challenge_call_response) do
-    create :challenge_call_response
-  end
-  let(:valid_attributes) do
-    FactoryBot.attributes_for(:challenge_call_response)
-  end
-  let(:invalid_attributes) do
-    FactoryBot.attributes_for(:challenge_call_response, :invalid)
-  end
+  let(:challenge_call)          { create(:challenge_call) }
+  let(:challenge_call_response) { create(:challenge_call_response) }
+  let(:valid_attributes)        { FactoryBot.attributes_for(:challenge_call_response) }
+  let(:invalid_attributes)      { FactoryBot.attributes_for(:challenge_call_response, :invalid) }
 
   describe 'GET #show' do
     before do
@@ -38,8 +32,6 @@ RSpec.describe ChallengeCallResponsesController, type: :controller do
   end
 
   describe "POST #create" do
-    ActiveJob::Base.queue_adapter = :test
-
     context "with valid params" do
       it "creates a new ChallengeCallResponse" do
         expect do
