@@ -647,44 +647,6 @@ ActiveRecord::Schema.define(version: 2020_01_15_123518) do
     t.integer "participant_id"
   end
 
-  create_table "migration_mappings", force: :cascade do |t|
-    t.string "source_type"
-    t.integer "source_id"
-    t.integer "crowdai_participant_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "merit_activity_logs", force: :cascade do |t|
-    t.integer "action_id"
-    t.string "related_change_type"
-    t.integer "related_change_id"
-    t.string "description"
-    t.datetime "created_at"
-  end
-
-  create_table "merit_score_points", force: :cascade do |t|
-    t.bigint "score_id"
-    t.integer "num_points", default: 0
-    t.string "log"
-    t.datetime "created_at"
-    t.index ["score_id"], name: "index_merit_score_points_on_score_id"
-  end
-
-  create_table "merit_scores", force: :cascade do |t|
-    t.bigint "sash_id"
-    t.string "category", default: "default"
-    t.index ["sash_id"], name: "index_merit_scores_on_sash_id"
-  end
-
-  create_table "migration_mappings", force: :cascade do |t|
-    t.string "source_type"
-    t.integer "source_id"
-    t.integer "crowdai_participant_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "notifications", force: :cascade do |t|
     t.bigint "participant_id"
     t.string "notification_type"
