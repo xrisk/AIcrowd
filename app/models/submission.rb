@@ -9,7 +9,6 @@ class Submission < ApplicationRecord
   with_options dependent: :destroy do
     has_many :submission_files
     has_many :submission_grades
-    has_many :submission_comments
   end
   accepts_nested_attributes_for :submission_files,
                                 reject_if:     ->(f) { f[:submission_file_s3_key].blank? },
