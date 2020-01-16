@@ -178,7 +178,7 @@ Rails.application.routes.draw do
   match '/faq',     to: 'pages#faq',     via: :get
   match '/cookies', to: 'pages#cookies_info', via: :get
   match '/crowdai_migration', to: 'crowdai_migration#setup', via: :get
-  match '/crowdai_migration', to: 'crowdai_migration#save', via: :patch
+  match '/crowdai_migration/save', to: 'crowdai_migration#save', via: :get
 
   resources :markdown_editors, only: [:index, :create] do
     put :presign, on: :collection
