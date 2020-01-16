@@ -33,9 +33,13 @@
       <div class="col-12">
         <ul class="list-group list-group-flush-px-0 list-group-dataset">
             <hr/>
-			<%= concept(TaskDataset::Cell::ListDetail, 
-				collection: @clef_task.task_dataset_files, 
-				current_participant: current_participant) %>
+			<% if policy(@clef_task).edit? %>
+				<%= concept(TaskDataset::Cell::ListDetail, 
+					collection: @clef_task.task_dataset_files, 
+					current_participant: current_participant) %>
+			<% else %>
+			 <p>Please go to the resources tab of a challenge linked to the task in order to see the dataset files</p>
+			<% end %>
         </ul>
       </div>
     </div>

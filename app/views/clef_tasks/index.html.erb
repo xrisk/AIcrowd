@@ -16,7 +16,11 @@
             <% @clef_tasks.each do |task| %>
               <!-- task -->
               <li class="list-group-item">
-                <%= link_to task.task, organizer_clef_task_path(@organizer, task) %>
+                <% if policy(task).edit? %>
+                  <%= link_to task.task, organizer_clef_task_path(@organizer, task) %>
+                <% else %>
+                  <p><%= task.task %></p>
+                <% end %>
                 <span><%= task.task_dataset_files.count %><span> Dataset Files</span></span>
                 <% if policy(task).destroy? %>
                   <%= link_to 'Delete',
