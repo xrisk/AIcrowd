@@ -72,6 +72,9 @@ Style/RedundantReturn:
   Enabled: false
 
 # == Disabled Cops == #
+RSpec/ContextWording:
+  Enabled: false
+
 Rails/SkipsModelValidations:
   Enabled: false
 
