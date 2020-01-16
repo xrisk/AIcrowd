@@ -647,6 +647,14 @@ ActiveRecord::Schema.define(version: 2020_01_15_123518) do
     t.integer "participant_id"
   end
 
+  create_table "migration_mappings", force: :cascade do |t|
+    t.string "source_type"
+    t.integer "source_id"
+    t.integer "crowdai_participant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.bigint "participant_id"
     t.string "notification_type"
