@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Notification, type: :model do
+describe Notification, type: :model do
   describe "scopes" do
     let!(:new_notification1) { create(:notification, created_at: 2.days.ago) }
     let!(:new_notification2) { create(:notification, created_at: 3.hours.ago) }
@@ -24,18 +24,6 @@ RSpec.describe Notification, type: :model do
         expect(described_class.unread).not_to include(read_notification)
         expect(described_class.unread.count).to eq(3)
       end
-    end
-
-    context 'notifiable: Comment' do
-      let!(:participant) { create :participant }
-      let!(:comment) { create :comment }
-      let!(:notification) { create :notification, notifiable: comment, participant: participant }
-      #  describe '#link' do
-      #    it { expect(notification.link).to eq("/topics/#{comment.topic.slug}/discussion") }
-      #  end
-      #  describe '#thumb' do
-      #    it { expect(notification.thumb).to eq(comment.participant.image_file.url) }
-      #  end
     end
   end
 end

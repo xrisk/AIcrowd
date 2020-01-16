@@ -5,16 +5,6 @@ FactoryBot.define do
     topic { FFaker::Lorem.sentence(3) }
     sticky { false }
     views { 1 }
-    after(:create) do |topic|
-      topic.comments << FactoryBot.create(:comment, topic: topic)
-    end
-
-    trait :with_comments do
-      after(:create) do |topic|
-        topic.comments << FactoryBot.create_list(:comment, 3, topic: topic)
-        topic.participant = topic.comments.first.participant
-      end
-    end
 
     trait :invalid do
       topic { nil }

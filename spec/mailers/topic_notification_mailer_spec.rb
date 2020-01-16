@@ -15,7 +15,7 @@ RSpec.describe TopicNotificationMailer, type: :mailer do
       res = described_class.new.sendmail(participant.id, topic.id)
       man = MandrillSpecHelper.new(res)
 
-      ### NATE: current workaround for mandrill tests
+    ### NATE: current workaround for mandrill tests
       ### are to check that the reason the message
       ### wasn't sent was due to it being unsigned.  The
       ### mandrill test api key is on a separate account
@@ -39,12 +39,6 @@ RSpec.describe TopicNotificationMailer, type: :mailer do
 
     it 'produces a valid challenge link' do
       link = described_class.new.challenge_link(challenge)
-      expect(link).to be_a_valid_html_fragment
-      expect(link).to include(ENV['DOMAIN_NAME'])
-    end
-
-    it 'produces a valid comment link' do
-      link = described_class.new.topic_link(challenge)
       expect(link).to be_a_valid_html_fragment
       expect(link).to include(ENV['DOMAIN_NAME'])
     end

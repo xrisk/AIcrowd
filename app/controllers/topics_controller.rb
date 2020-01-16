@@ -10,7 +10,6 @@ class TopicsController < ApplicationController
 
   def new
     @topic   = @challenge.topics.new
-    @comment = @topic.comments.new
     authorize @topic
   end
 
@@ -32,11 +31,6 @@ class TopicsController < ApplicationController
   def update
     # https://github.com/norman/friendly_id/issues/185
     if @topic.update(topic_params)
-      nested = params['topic']['comment']
-      if nested.present?
-        comment = Comment.find(nested['id'])
-        comment.update(comment_markdown: nested['comment_markdown'])
-      end
       redirect_to challenge_topics_path(@challenge), notice: 'Topic was successfully updated.'
     else
       render :edit
@@ -67,8 +61,7 @@ class TopicsController < ApplicationController
               :topic,
               :sticky,
               :views,
-              :posts_count,
-              comments_attributes: [:id, :comment_markdown, :participant_id])
+              :posts_count)
   end
 
   def headline_sql

@@ -9,7 +9,6 @@ class Notification < ApplicationRecord
   validates :notification_type, presence: true
 
   NOTIFICATION_TYPE = {
-    'Comment'        => :comment,
     'Mention'        => :mention,
     'Graded'         => :graded,
     'Grading Failed' => :grading_failed,

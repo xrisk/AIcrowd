@@ -30,14 +30,5 @@ GDPR_FIELDS = [
       :created_at,
       :topic
     ]
-  },
-  {
-    table:    'Comment',
-    id_field: 'participant_id',
-    fields:   [
-      :id,
-      :created_at,
-      :comment_markdown
-    ]
   }
 ].freeze

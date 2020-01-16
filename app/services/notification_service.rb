@@ -12,26 +12,6 @@ class NotificationService
     eval(@notification_type)
   end
 
-  def comment
-    message       = "#{@notifiable.participant.name} commented on a discussion thread you are participating in."
-    thumbnail_url = if @notifiable.participant.image_file.file.present?
-                      @notifiable.participant.image_file.url
-                    else
-                      'users/user-avatar-default.svg'
-                    end
-    notification_url = new_topic_discussion_url(@notifiable.topic)
-    Notification
-      .create!(
-        participant:       @participant,
-        notifiable:        @notifiable,
-        notification_type: @notification_type,
-        message:           message,
-        thumbnail_url:     thumbnail_url,
-        notification_url:  notification_url,
-        is_new:            true)
-    return true
-  end
-
   def topic
     message       = "#{@notifiable.participant.name} posted a topic in a challenge you are following."
     thumbnail_url = if @notifiable.participant.image_file.file.present?
@@ -39,7 +19,7 @@ class NotificationService
                     else
                       'users/user-avatar-default.svg'
                     end
-    notification_url = new_topic_discussion_url(@notifiable.topic)
+    notification_url = topic_url(@notifiable.topic)
     Notification
       .create!(
         participant:       @participant,
@@ -59,7 +39,7 @@ class NotificationService
                     else
                       'users/user-avatar-default.svg'
                     end
-    notification_url = new_topic_discussion_url(@notifiable.topic)
+    notification_url = topic_url(@notifiable.topic)
     Notification
       .create!(
         participant:       @participant,

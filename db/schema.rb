@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_15_135723) do
+ActiveRecord::Schema.define(version: 2020_01_16_102609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -415,23 +415,6 @@ ActiveRecord::Schema.define(version: 2020_01_15_135723) do
     t.datetime "updated_at", null: false
     t.string "eua_file"
     t.index ["organizer_id"], name: "index_clef_tasks_on_organizer_id"
-  end
-
-  create_table "comments", id: :serial, force: :cascade do |t|
-    t.integer "topic_id"
-    t.integer "participant_id"
-    t.text "comment"
-    t.boolean "flagged", default: false
-    t.boolean "notify", default: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "vote_count", default: 0
-    t.string "slug"
-    t.text "comment_markdown"
-    t.string "mentions_cache"
-    t.index ["participant_id"], name: "index_posts_on_participant_id"
-    t.index ["slug"], name: "index_posts_on_slug", unique: true
-    t.index ["topic_id"], name: "index_posts_on_topic_id"
   end
 
   create_table "dataset_file_downloads", id: :serial, force: :cascade do |t|
@@ -1022,8 +1005,6 @@ ActiveRecord::Schema.define(version: 2020_01_15_135723) do
   add_foreign_key "challenge_rules", "challenges"
   add_foreign_key "challenges", "organizers"
   add_foreign_key "clef_tasks", "organizers"
-  add_foreign_key "comments", "participants"
-  add_foreign_key "comments", "topics"
   add_foreign_key "dataset_file_downloads", "dataset_files"
   add_foreign_key "dataset_file_downloads", "participants"
   add_foreign_key "email_invitations", "participants", column: "claimant_id"
@@ -1090,59 +1071,6 @@ ActiveRecord::Schema.define(version: 2020_01_15_135723) do
                     WHERE ((c1.clef_challenge IS TRUE) AND (o1.id = c1.organizer_id) AND (o1.id = p1.organizer_id) AND (p1.id = p.id)))))) cop;
   SQL
 
-  create_view "challenge_registrations",  sql_definition: <<-SQL
-      SELECT row_number() OVER () AS id,
-      x.challenge_id,
-      x.participant_id,
-      x.registration_type,
-      x.clef_task_id
-     FROM ( SELECT s.challenge_id,
-              s.participant_id,
-              'submission'::text AS registration_type,
-              NULL::integer AS clef_task_id
-             FROM submissions s
-          UNION
-           SELECT s.votable_id,
-              s.participant_id,
-              'heart'::text AS registration_type,
-              NULL::integer AS clef_task_id
-             FROM votes s
-            WHERE ((s.votable_type)::text = 'Challenge'::text)
-          UNION
-           SELECT df.challenge_id,
-              dfd.participant_id,
-              'dataset_download'::text AS text,
-              NULL::integer AS clef_task_id
-             FROM dataset_file_downloads dfd,
-              dataset_files df
-            WHERE (dfd.dataset_file_id = df.id)
-          UNION
-           SELECT c_1.id AS challenge_id,
-              p_1.id AS participant_id,
-              'forum'::text AS registration_type,
-              NULL::integer AS clef_task_id
-             FROM challenges c_1,
-              participants p_1,
-              topics t
-            WHERE ((t.challenge_id = c_1.id) AND (t.participant_id = p_1.id))
-          UNION
-           SELECT t.challenge_id,
-              ps.participant_id,
-              'forum'::text AS registration_type,
-              NULL::integer AS clef_task_id
-             FROM comments ps,
-              topics t
-            WHERE (t.id = ps.topic_id)
-          UNION
-           SELECT c.id,
-              pc.participant_id,
-              'clef_task'::text AS registration_type,
-              pc.clef_task_id
-             FROM participant_clef_tasks pc,
-              challenges c
-            WHERE (c.clef_task_id = pc.clef_task_id)) x;
-  SQL
-
   create_view "challenge_stats",  sql_definition: <<-SQL
       SELECT row_number() OVER () AS id,
       c.id AS challenge_id,
@@ -1164,78 +1092,6 @@ ActiveRecord::Schema.define(version: 2020_01_15_135723) do
       challenge_rounds r
     WHERE (r.challenge_id = c.id)
     ORDER BY (row_number() OVER ()), c.challenge;
-  SQL
-
-  create_view "participant_challenge_counts",  sql_definition: <<-SQL
-      SELECT row_number() OVER () AS row_number,
-      y.challenge_id,
-      y.participant_id,
-      y.registration_type
-     FROM ( SELECT DISTINCT x.challenge_id,
-              x.participant_id,
-              x.registration_type
-             FROM ( SELECT s.challenge_id,
-                      s.participant_id,
-                      'submission'::text AS registration_type
-                     FROM submissions s
-                  UNION
-                   SELECT s.votable_id,
-                      s.participant_id,
-                      'heart'::text AS registration_type
-                     FROM votes s
-                    WHERE ((s.votable_type)::text = 'Challenge'::text)
-                  UNION
-                   SELECT df.challenge_id,
-                      dfd.participant_id,
-                      'dataset_download'::text AS text
-                     FROM dataset_file_downloads dfd,
-                      dataset_files df
-                    WHERE (dfd.dataset_file_id = df.id)
-                  UNION
-                   SELECT c_1.id AS challenge_id,
-                      p_1.id AS participant_id,
-                      'forum'::text AS registration_type
-                     FROM challenges c_1,
-                      participants p_1,
-                      topics t
-                    WHERE ((t.challenge_id = c_1.id) AND (t.participant_id = p_1.id))
-                  UNION
-                   SELECT t.challenge_id,
-                      ps.participant_id,
-                      'forum'::text AS registration_type
-                     FROM comments ps,
-                      topics t
-                    WHERE (t.id = ps.topic_id)) x
-            ORDER BY x.challenge_id, x.participant_id) y;
-  SQL
-
-  create_view "participant_challenges",  sql_definition: <<-SQL
-      SELECT DISTINCT p.id,
-      cr.challenge_id,
-      cr.participant_id,
-      c.organizer_id,
-      c.status_cd,
-      c.challenge,
-      c.private_challenge,
-      c.description,
-      c.rules,
-      c.prizes,
-      c.resources,
-      c.tagline,
-      c.image_file,
-      c.submissions_count AS submission_count,
-      c.participant_count,
-      c.page_views,
-      p.name,
-      p.email,
-      p.bio,
-      p.github,
-      p.linkedin,
-      p.twitter
-     FROM participants p,
-      challenges c,
-      challenge_registrations cr
-    WHERE ((cr.participant_id = p.id) AND (cr.challenge_id = c.id));
   SQL
 
   create_view "participant_sign_ups",  sql_definition: <<-SQL
@@ -1454,6 +1310,116 @@ ActiveRecord::Schema.define(version: 2020_01_15_135723) do
       base_leaderboards.baseline_comment
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'previous_ongoing'::text);
+  SQL
+
+  create_view "challenge_registrations",  sql_definition: <<-SQL
+      SELECT row_number() OVER () AS id,
+      x.challenge_id,
+      x.participant_id,
+      x.registration_type,
+      x.clef_task_id
+     FROM ( SELECT s.challenge_id,
+              s.participant_id,
+              'submission'::text AS registration_type,
+              NULL::integer AS clef_task_id
+             FROM submissions s
+          UNION
+           SELECT s.votable_id,
+              s.participant_id,
+              'heart'::text AS registration_type,
+              NULL::integer AS clef_task_id
+             FROM votes s
+            WHERE ((s.votable_type)::text = 'Challenge'::text)
+          UNION
+           SELECT df.challenge_id,
+              dfd.participant_id,
+              'dataset_download'::text,
+              NULL::integer AS clef_task_id
+             FROM dataset_file_downloads dfd,
+              dataset_files df
+            WHERE (dfd.dataset_file_id = df.id)
+          UNION
+           SELECT c_1.id AS challenge_id,
+              p_1.id AS participant_id,
+              'forum'::text AS registration_type,
+              NULL::integer AS clef_task_id
+             FROM challenges c_1,
+              participants p_1,
+              topics t
+            WHERE ((t.challenge_id = c_1.id) AND (t.participant_id = p_1.id))
+          UNION
+           SELECT c.id,
+              pc.participant_id,
+              'clef_task'::text AS registration_type,
+              pc.clef_task_id
+             FROM participant_clef_tasks pc,
+              challenges c
+            WHERE (c.clef_task_id = pc.clef_task_id)) x;
+  SQL
+
+  create_view "participant_challenges",  sql_definition: <<-SQL
+      SELECT DISTINCT p.id,
+      cr.challenge_id,
+      cr.participant_id,
+      c.organizer_id,
+      c.status_cd,
+      c.challenge,
+      c.private_challenge,
+      c.description,
+      c.rules,
+      c.prizes,
+      c.resources,
+      c.tagline,
+      c.image_file,
+      c.submissions_count,
+      c.participant_count,
+      c.page_views,
+      p.name,
+      p.email,
+      p.bio,
+      p.github,
+      p.linkedin,
+      p.twitter
+     FROM participants p,
+      challenges c,
+      challenge_registrations cr
+    WHERE ((cr.participant_id = p.id) AND (cr.challenge_id = c.id));
+  SQL
+
+  create_view "participant_challenge_counts",  sql_definition: <<-SQL
+      SELECT row_number() OVER () AS row_number,
+      y.challenge_id,
+      y.participant_id,
+      y.registration_type
+     FROM ( SELECT DISTINCT x.challenge_id,
+              x.participant_id,
+              x.registration_type
+             FROM ( SELECT s.challenge_id,
+                      s.participant_id,
+                      'submission'::text AS registration_type
+                     FROM submissions s
+                  UNION
+                   SELECT s.votable_id,
+                      s.participant_id,
+                      'heart'::text AS registration_type
+                     FROM votes s
+                    WHERE ((s.votable_type)::text = 'Challenge'::text)
+                  UNION
+                   SELECT df.challenge_id,
+                      dfd.participant_id,
+                      'dataset_download'::text
+                     FROM dataset_file_downloads dfd,
+                      dataset_files df
+                    WHERE (dfd.dataset_file_id = df.id)
+                  UNION
+                   SELECT c_1.id AS challenge_id,
+                      p_1.id AS participant_id,
+                      'forum'::text AS registration_type
+                     FROM challenges c_1,
+                      participants p_1,
+                      topics t
+                    WHERE ((t.challenge_id = c_1.id) AND (t.participant_id = p_1.id))) x
+            ORDER BY x.challenge_id, x.participant_id) y;
   SQL
 
 end

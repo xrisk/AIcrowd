@@ -1,24 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe NotificationService do
-  let!(:participant) { create :participant }
+describe NotificationService do
+  let!(:participant) { create(:participant) }
 
-  context 'comment' do
-    let!(:comment) { create :comment }
-
-    it 'creates a notification' do
-      expect do
-        described_class.new(participant.id, comment, 'comment').call
-      end.to change(Notification, :count).by(1)
-    end
-  end
-
-  context 'mention' do
-    let!(:comment) { create :comment }
+  context 'topic' do
+    let!(:topic) { create(:topic) }
 
     it 'creates a notification' do
       expect do
-        described_class.new(participant.id, comment, 'mention').call
+        described_class.new(participant.id, topic, 'topic').call
       end.to change(Notification, :count).by(1)
     end
   end

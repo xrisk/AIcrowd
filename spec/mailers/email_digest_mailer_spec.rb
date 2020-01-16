@@ -5,7 +5,6 @@ RSpec.describe EmailDigestMailer, type: :mailer do
   let(:other_participant) do
     create :participant, :every_email
   end
-  let(:comment) { create :comment, participant: other_participant }
   let(:submission) { create :submission, challenge: challenge }
 
   context 'methods' do
@@ -46,7 +45,6 @@ RSpec.describe EmailDigestMailer, type: :mailer do
 
       before do
         @submissions = Submission.all
-        @comments    = Comment.all
         @topics      = Topic.all
       end
 
@@ -54,7 +52,6 @@ RSpec.describe EmailDigestMailer, type: :mailer do
         body = described_class.new.build_body(
           participant,
           'daily',
-          @comments,
           @submissions,
           @topics)
         expect(body).to be_a_valid_html_fragment
@@ -64,7 +61,6 @@ RSpec.describe EmailDigestMailer, type: :mailer do
         body = described_class.new.build_body(
           participant,
           'weekly',
-          @comments,
           @submissions,
           @topics)
         expect(body).to be_a_valid_html_fragment
@@ -83,13 +79,7 @@ RSpec.describe EmailDigestMailer, type: :mailer do
       end
     end
 
-    describe '#comments' do
-    end
-
     describe '#submissions' do
-    end
-
-    describe '#render_comments' do
     end
 
     describe '#render_submissions' do

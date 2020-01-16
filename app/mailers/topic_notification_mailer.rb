@@ -36,10 +36,6 @@ class TopicNotificationMailer < ApplicationMailer
     link_to challenge.challenge, challenge_url(challenge)
   end
 
-  def topic_link(topic)
-    link_to 'here', new_topic_comment_url(topic)
-  end
-
   def email_body(challenge, topic)
     "<div>" +
       "<p>A new topic has been made in the " +
@@ -47,7 +43,6 @@ class TopicNotificationMailer < ApplicationMailer
       "<br/>" +
       topic.topic.to_s +
       "<br/>" +
-      "<p>Click #{topic_link(topic)} to see the comment.</p>" +
       "</div>"
   end
 end

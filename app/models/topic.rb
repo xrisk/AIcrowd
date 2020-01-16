@@ -4,8 +4,6 @@ class Topic < ApplicationRecord
   include ActionView::Helpers::DateHelper
   belongs_to :challenge
   belongs_to :participant, optional: true
-  has_many :comments, dependent: :destroy
-  accepts_nested_attributes_for :comments, reject_if: :all_blank
   has_many :votes, as: :votable
 
   default_scope { order('created_at desc') }

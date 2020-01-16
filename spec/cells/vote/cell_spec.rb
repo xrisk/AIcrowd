@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe Vote::Cell, type: :cell do
-  subject { cell(described_class, comment, current_participant: participant) }
+  subject { cell(described_class, blog, current_participant: participant) }
 
-  let(:comment)     { create(:comment) }
+  let(:blog)        { create(:blog) }
   let(:participant) { create(:participant) }
 
   describe 'cell can be instantiated' do
