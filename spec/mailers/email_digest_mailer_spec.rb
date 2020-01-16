@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe EmailDigestMailer, type: :mailer do
+describe EmailDigestMailer, type: :mailer do
   let(:challenge) { create :challenge, :running }
   let(:other_participant) do
     create :participant, :every_email
@@ -41,28 +41,16 @@ RSpec.describe EmailDigestMailer, type: :mailer do
     end
 
     describe '#build_body' do
+      let(:submissions)  { Submission.all }
       let!(:participant) { create :participant, :daily }
 
-      before do
-        @submissions = Submission.all
-        @topics      = Topic.all
-      end
-
       it 'daily' do
-        body = described_class.new.build_body(
-          participant,
-          'daily',
-          @submissions,
-          @topics)
+        body = described_class.new.build_body(participant, 'daily', submissions)
         expect(body).to be_a_valid_html_fragment
       end
 
       it 'weekly' do
-        body = described_class.new.build_body(
-          participant,
-          'weekly',
-          @submissions,
-          @topics)
+        body = described_class.new.build_body(participant, 'weekly', submissions)
         expect(body).to be_a_valid_html_fragment
       end
     end

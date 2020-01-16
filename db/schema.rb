@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_31_141335) do
+ActiveRecord::Schema.define(version: 2020_02_03_133009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -929,22 +929,6 @@ ActiveRecord::Schema.define(version: 2020_01_31_141335) do
     t.index ["name", "challenge_id"], name: "index_teams_on_name_and_challenge_id", unique: true
   end
 
-  create_table "topics", id: :serial, force: :cascade do |t|
-    t.integer "challenge_id"
-    t.integer "participant_id"
-    t.string "topic"
-    t.boolean "sticky", default: false
-    t.integer "views", default: 0
-    t.integer "posts_count", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "slug"
-    t.integer "vote_count", default: 0
-    t.index ["challenge_id"], name: "index_topics_on_challenge_id"
-    t.index ["participant_id"], name: "index_topics_on_participant_id"
-    t.index ["slug"], name: "index_topics_on_slug", unique: true
-  end
-
   create_table "versions", id: :serial, force: :cascade do |t|
     t.string "item_type", null: false
     t.integer "item_id", null: false
@@ -1003,8 +987,6 @@ ActiveRecord::Schema.define(version: 2020_01_31_141335) do
   add_foreign_key "team_participants", "participants"
   add_foreign_key "team_participants", "teams"
   add_foreign_key "teams", "challenges"
-  add_foreign_key "topics", "challenges"
-  add_foreign_key "topics", "participants"
   add_foreign_key "votes", "participants"
 
   create_view "challenge_organizer_participants", materialized: true,  sql_definition: <<-SQL
@@ -1308,15 +1290,6 @@ ActiveRecord::Schema.define(version: 2020_01_31_141335) do
               dataset_files df
             WHERE (dfd.dataset_file_id = df.id)
           UNION
-           SELECT c_1.id AS challenge_id,
-              p_1.id AS participant_id,
-              'forum'::text AS registration_type,
-              NULL::integer AS clef_task_id
-             FROM challenges c_1,
-              participants p_1,
-              topics t
-            WHERE ((t.challenge_id = c_1.id) AND (t.participant_id = p_1.id))
-          UNION
            SELECT c.id,
               pc.participant_id,
               'clef_task'::text AS registration_type,
@@ -1379,15 +1352,7 @@ ActiveRecord::Schema.define(version: 2020_01_31_141335) do
                       'dataset_download'::text
                      FROM dataset_file_downloads dfd,
                       dataset_files df
-                    WHERE (dfd.dataset_file_id = df.id)
-                  UNION
-                   SELECT c_1.id AS challenge_id,
-                      p_1.id AS participant_id,
-                      'forum'::text AS registration_type
-                     FROM challenges c_1,
-                      participants p_1,
-                      topics t
-                    WHERE ((t.challenge_id = c_1.id) AND (t.participant_id = p_1.id))) x
+                    WHERE (dfd.dataset_file_id = df.id)) x
             ORDER BY x.challenge_id, x.participant_id) y;
   SQL
 

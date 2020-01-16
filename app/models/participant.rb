@@ -26,7 +26,6 @@ class Participant < ApplicationRecord
   belongs_to :organizer, optional: true
   has_many :submissions, dependent: :nullify
   has_many :votes, dependent: :destroy
-  has_many :topics, dependent: :nullify
   has_many :blogs, dependent: :nullify
   has_many :challenge_participants, dependent: :destroy
   has_many :leaderboards, class_name: 'Leaderboard', as: :submitter
