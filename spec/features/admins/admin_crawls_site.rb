@@ -7,10 +7,6 @@ describe "site navigation for admin" do
   end
   let(:draft) { create :challenge, :draft }
 
-  3.times do |i|
-    let!("article_#{i + 1}") { create :article, :with_sections }
-  end
-
   context "landing page" do
     it do
       log_in(participant)
@@ -68,36 +64,6 @@ describe "site navigation for admin" do
       visit_challenge(challenge_1)
       click_link challenge_1.organizer.organizer
       expect(page).to have_text 'Members'
-    end
-  end
-
-  context 'knowledge base' do
-    it do
-      log_in(participant)
-      visit_knowledge_base
-      expect(page).to have_content article_1.article
-      expect(page).to have_content article_2.article
-      expect(page).to have_content article_3.article
-    end
-  end
-
-  context 'article' do
-    it do
-      log_in(participant)
-      visit_article(article_1)
-      expect(page).to have_content article_1.article
-    end
-  end
-
-  context 'participant profile' do
-    it 'access profile via article', :js do
-      log_in(participant)
-      visit_article(article_1)
-      click_link article_1.participant.name
-      expect(page).to have_css('h2', text: article_1.participant.name)
-      within 'div.sub-nav' do
-        expect(page).to have_link 'Challenges'
-      end
     end
   end
 end

@@ -41,11 +41,6 @@ module FeatureSpecHelpers
     end
   end
 
-  def visit_article(article)
-    visit_knowledge_base
-    click_link article.article
-  end
-
   def open_menu
     visit '/'
     find("#toggle-user").click
