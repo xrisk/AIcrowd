@@ -1063,6 +1063,7 @@ DEPENDENCIES
   rspec-kickstarter
   rspec-rails (~> 3.6)
   rubyzip (~> 1.2.2)
+  safely_block (~> 0.2.2)
   sanitize (~> 4.6.3)
   sass-rails
   scenic (~> 1.3)

@@ -152,3 +152,5 @@ group :test do
   gem 'vcr', '~> 5.0'
   gem 'webmock', '~> 3.7', '>= 3.7.6'
 end
+
+gem "safely_block", "~> 0.2.2"

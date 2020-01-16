@@ -1,37 +1,42 @@
 class CrowdaiMigrationController < ApplicationController
-  before_action :authenticate_participant!
+  before_action :set_crowdai_params, only: [:create]
+  after_action :track_action
 
-  def setup; end
+  def new
+    @data = params[:data]
+    redirect_to(root_path, flash: { error: 'Invalid link, contact help@aicrowd.com' }) if @data.nil?
+  end
 
-  def save
-    @cid = crowdai_params[:id]
-
-    redirect_to(root_path, flash: { error: 'Error while processing, contact help@aicrowd.com' }) && return if @cid.nil?
+  def create
+    return redirect_to(root_path, flash: { error: 'Error while processing, contact help@aicrowd.com' }) if @cid.nil?
 
     @migrate_service = MigrateUserService.new(crowdai_id: @cid, aicrowd_id: current_participant.id)
 
-    redirect_to(root_path, flash: { error: 'Participant Already Migrated' }) && return if @migrate_service.check_migrated
+    return redirect_to(root_path, flash: { error: 'CrowdAI account associated with this link is already migrated' }) if @migrate_service.check_migrated
 
-    redirect_to(root_path, flash: { error: 'No Data exists for this user' }) && return unless MigrationMapping.exists?(crowdai_participant_id: @cid)
+    return redirect_to(root_path, flash: { error: 'No data found for your CrowdAI account, please contact help@aicrowd.com' }) unless MigrationMapping.exists?(crowdai_participant_id: @cid)
 
     MigrateUserJob.perform_later(crowdai_id: @cid, aicrowd_id: current_participant.id)
 
-    redirect_to(root_path, flash: { success: 'Migration in progress.' })
+    redirect_to(root_path, flash: { success: 'We have received and processing your migration request. Welcome to AIcrowd!' })
   end
 
-  def crowdai_params
-    @crowdai_params ||= begin
+  private
+
+  def set_crowdai_params
+    safely do
+      data = params[:data]
+      return unless data
+
       rsa_key                   = OpenSSL::PKey::RSA.new(ENV['CROWDAI_PARTICIPANT_MIGRATION_PUBKEY'])
-      cipherkey, iv, ciphertext = params[:data].split('~').map { |x| Base64.urlsafe_decode64(x) }
+      cipherkey, iv, ciphertext = data.split('~').map { |x| Base64.urlsafe_decode64(x) }
       cipher                    = OpenSSL::Cipher.new('AES-256-CBC')
       cipher.decrypt
       cipher.key = rsa_key.public_decrypt(cipherkey)
       cipher.iv  = iv
       plaintext  = cipher.update(ciphertext) + cipher.final
-      JSON.parse(plaintext).symbolize_keys
-    rescue StandardError => e
-      puts e.backtrace
-      {}
+      data_hash  = JSON.parse(plaintext).symbolize_keys
+      @cid       = data_hash[:id]
     end
   end
 end

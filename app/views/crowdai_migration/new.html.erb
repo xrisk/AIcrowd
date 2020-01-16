@@ -1,0 +1,84 @@
+<!-- masthead -->
+<div class="masthead masthead-open">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h4>Welcome to AIcrowd</h4>
+        <h1>CrowdAI User Migration</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /masthead -->
+
+
+<% unless @current_participant %>
+  <div class="section-p-md">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <p>You need to be log in to the AIcrowd account you want to link your data to. </p>
+          <p>If you dont have an account you can sign up below.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- section -->
+  <div class="section-p-md border-top bg-white">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <div class="section-header-mb-sm">
+            <h4>Not registered?</h4>
+          </div>
+          <%= link_to 'Sign up'.html_safe, new_participant_registration_path, {class: "btn btn-secondary", role: "button"} %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /section -->
+<% else %>
+  <!-- section -->
+  <div class="section-p-xs">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <p>Text</p>
+          <p>Text</p>
+          <p>We will link the following data your AIcrowd account: </p>
+          <ul>
+            <li>
+              List of data that we are migrating
+            </li>
+            <li>
+              List of data that we are migrating
+            </li>
+            <li>
+              List of data that we are migrating
+            </li>
+            <li>
+              List of data that we are migrating
+            </li>
+            <li>
+              List of data that we are migrating
+            </li>
+            <li>
+              List of data that we are migrating
+            </li>
+            <li>
+              List of data that we are migrating
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2">
+          <%= form_tag crowdai_migration_save_path, validate: true, html: {class: "form-rg mt-5", multipart: true} %>
+          <%= hidden_field_tag :data, value: @data %>
+          <%= button_tag ("Confirm Migration"), class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /section -->
+<% end %>
