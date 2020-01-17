@@ -1,10 +1,10 @@
 module ChallengesHelper
   def participant_invitation(email:)
     participant = Participant.find_by(email: email)
-    if participant.is_a?(NullParticipant)
-      return 'No AIcrowd account'
-    else
+    if participant.present?
       return link_to participant.name, participant_path(participant)
+    else
+      return 'No AIcrowd account'
     end
   end
 

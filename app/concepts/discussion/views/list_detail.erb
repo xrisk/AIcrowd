@@ -1,13 +1,13 @@
 <li data-cell='Discussion::Cell::ListDetail'>
   <%= concept(Discussion::Cell::TopicLikesListDetail,topic) %>
   <div class="pic">
-    <% if topic.participant.is_a? NullParticipant %>
-      <%= link_to '#' do %>
-        <%= concept(Image::Cell,author) %>
+    <% if topic.participant.present? %>
+      <%= link_to participant_path(author) do %>
+        <%= concept(Image::Cell ,author) %>
       <% end %>
     <% else %>
-      <%= link_to participant_path(author) do %>
-        <%= concept(Image::Cell,author) %>
+      <%= link_to '#' do %>
+        <%= concept(Image::Cell, author) %>
       <% end %>
     <% end %>
   </div>

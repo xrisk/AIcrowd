@@ -184,14 +184,11 @@ class Participant < ApplicationRecord
     name_changed?
   end
 
-  def self.find_by(args)
-    super || NullParticipant.new
-  end
-
+  # TODO: Investigate how to get rid of this hack without causing issues
   def self.find(args)
     super
   rescue StandardError
-    NullParticipant.new
+    nil
   end
 
   def refresh_materialized_view

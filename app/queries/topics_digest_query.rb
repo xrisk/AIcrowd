@@ -1,9 +1,9 @@
 class TopicsDigestQuery
   def initialize(participant, start_dttm)
-    @participant_id = if participant.is_a?(NullParticipant)
-                        0
-                      else
+    @participant_id = if participant.present?
                         participant.id
+                      else
+                        0
                       end
     @start_dttm = start_dttm.to_s
   end

@@ -8,6 +8,6 @@ class Discussion::Cell < Template::Cell
   end
 
   def author
-    topic.participant || NullParticipant.new
+    topic.participant
   end
 end
