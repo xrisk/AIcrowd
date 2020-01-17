@@ -23,6 +23,12 @@ FactoryBot.define do
     teams_allowed { true }
     max_team_participants { 5 }
 
+    trait :with_rules do
+      after(:create) do |challenge|
+        create(:challenge_rules, challenge: challenge) if challenge.current_challenge_rules.nil?
+      end
+    end
+
     trait :running do
       status { :running }
       dataset_files { [build(:dataset_file)] }

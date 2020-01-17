@@ -16,6 +16,10 @@ FactoryBot.define do
     participation_terms_accepted_date    { Time.current }
     participation_terms_accepted_version { 1 }
 
+    after :create do
+      create(:participation_terms) if ParticipationTerms.current_terms.nil?
+    end
+
     trait :admin do
       admin { true }
     end

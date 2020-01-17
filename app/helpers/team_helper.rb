@@ -48,7 +48,7 @@ module TeamHelper
     opts[:class]   = 'pull-right mr-1'
     i18n_params    = { scope: %i[helpers teams my_team_button] }
     opts[:title]   = t(:title, **i18n_params)
-    opts[:tooltip] = t(:tooltip, team_name: my_team.name.to_s, **i18n_params)
+    opts[:tooltip] = t(:tooltip, team_name: team.name.to_s, **i18n_params)
     opts[:link]    = team_path(team)
   end
 
