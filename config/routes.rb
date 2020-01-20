@@ -150,15 +150,7 @@ Rails.application.routes.draw do
     resources :dataset_file_downloads, only: [:create]
   end
 
-  resources :submissions, only: [] do
-    resources :submission_comments, only: [:create, :delete, :edit, :update]
-  end
-
   resources :team_members, path: "our_team", only: [:index]
-
-  resources :submission_comments, only: [] do
-    resources :votes, only: [:create, :destroy]
-  end
 
   resources :topics do
     resources :votes, only: [:create, :destroy]

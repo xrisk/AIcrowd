@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_16_102609) do
+ActiveRecord::Schema.define(version: 2020_01_16_215236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -791,18 +791,6 @@ ActiveRecord::Schema.define(version: 2020_01_16_102609) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "submission_comments", force: :cascade do |t|
-    t.bigint "submission_id"
-    t.bigint "participant_id"
-    t.text "comment_markdown"
-    t.text "comment"
-    t.integer "vote_count", default: 0
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["participant_id"], name: "index_submission_comments_on_participant_id"
-    t.index ["submission_id"], name: "index_submission_comments_on_submission_id"
-  end
-
   create_table "submission_file_definitions", id: :serial, force: :cascade do |t|
     t.integer "challenge_id"
     t.integer "seq"
@@ -1020,8 +1008,6 @@ ActiveRecord::Schema.define(version: 2020_01_16_102609) do
   add_foreign_key "participant_clef_tasks", "participants"
   add_foreign_key "participants", "organizers"
   add_foreign_key "partners", "organizers"
-  add_foreign_key "submission_comments", "participants"
-  add_foreign_key "submission_comments", "submissions"
   add_foreign_key "submission_file_definitions", "challenges"
   add_foreign_key "submission_files", "submissions"
   add_foreign_key "submission_grades", "submissions"
