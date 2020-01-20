@@ -24,9 +24,8 @@ module Crowdai
     config.autoload_paths                     += Dir["#{Rails.root}/app/models/**/"]
     config.autoload_paths                     += Dir["#{Rails.root}/app/queries/**/"]
     config.active_record.time_zone_aware_types = [:datetime]
-    # config.active_record.schema_format = :sql
-    config.ssl_options        = { hsts: { subdomains: false } }
-    config.assets.precompile += ['application.scss']
+    config.ssl_options                         = { hsts: { subdomains: false } }
+    config.assets.precompile                  += ['application.scss']
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
     Rails.env.development? && config.assets.paths << File.join(ENV['FOG_LOCAL_ROOT'], ENV['AWS_S3_BUCKET'])
 
