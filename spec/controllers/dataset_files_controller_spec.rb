@@ -5,7 +5,6 @@ describe DatasetFilesController, type: :controller do
 
   let!(:challenge)             { create(:challenge, :running) }
   let!(:challenge_rules)       { create(:challenge_rules, challenge: challenge) }
-  let!(:participation_terms)   { create(:participation_terms) }
   let!(:file1)                 { create(:dataset_file, challenge: challenge, title: 'file1') }
   let!(:file2)                 { create(:dataset_file, challenge: challenge, title: 'file2') }
   let!(:participant)           { create(:participant) }
