@@ -5,7 +5,6 @@ if Rails.env == 'development' || Rails.env == 'staging'
   SubmissionComment.destroy_all
   ChallengeCallResponse.destroy_all
   ChallengeCall.destroy_all
-  Comment.destroy_all
   Topic.destroy_all
   JobPosting.destroy_all
   Blog.destroy_all
@@ -734,7 +733,7 @@ Submission.create!([
     name: "p7")
 
   ParticipationTerms.create!(
-    terms_markdown: "Sample Participation Terms. Please update at '/admin/participation_terms'" 
+    terms_markdown: "Sample Participation Terms. Please update at '/admin/participation_terms'"
   )
 
 end

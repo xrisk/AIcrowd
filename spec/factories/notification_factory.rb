@@ -1,8 +1,9 @@
 FactoryBot.define do
   factory :notification do
     participant
-    notification_type { "comment" }
-    association :notifiable, factory: :comment
+    notification_type { "leaderboard" }
+    association :notifiable, factory: :base_leaderboard
+
     read_at { nil }
     is_new { true }
 

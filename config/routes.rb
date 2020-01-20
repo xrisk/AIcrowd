@@ -161,14 +161,6 @@ Rails.application.routes.draw do
   end
 
   resources :topics do
-    resources :comments, only: [:new, :create, :edit, :destroy, :update] do
-      get :quote
-    end
-    resources :votes, only: [:create, :destroy]
-  end
-  match '/topics/:topic_id/discussion', to: 'comments#new', via: :get, as: :new_topic_discussion
-
-  resources :comments, only: [] do
     resources :votes, only: [:create, :destroy]
   end
 

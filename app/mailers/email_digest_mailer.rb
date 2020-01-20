@@ -3,18 +3,16 @@ class EmailDigestMailer < ApplicationMailer
     participant = Participant.find(participant_id)
 
     start_dttm  = set_start_dttm(digest_type)
-    comments    = comments(participant, start_dttm)
     submissions = submissions(participant, start_dttm)
     topics      = topics(participant, start_dttm)
     unless participant.admin?
-      return if comments.blank? && submissions.blank? && topics.blank?
+      return if submissions.blank? && topics.blank?
     end
 
     subject = build_subject(digest_type)
     body    = build_body(
       participant,
       digest_type,
-      comments,
       submissions,
       topics)
     options = format_options(participant, subject, body)
@@ -33,10 +31,9 @@ class EmailDigestMailer < ApplicationMailer
     "[AIcrowd] #{digest_type.capitalize} digest"
   end
 
-  def build_body(participant, digest_type, comments, submissions, topics)
+  def build_body(participant, digest_type, submissions, topics)
     body = body_header(digest_type) << '<br/>'
     body << render_sign_ups if participant.admin?
-    body << render_comments(comments) << '<br/>'
     body << render_submissions(submissions) << '<br/>'
     body << render_topics(topics) << '<br/>'
     return "<div>#{body}</div>"
@@ -49,11 +46,6 @@ class EmailDigestMailer < ApplicationMailer
   def topics(participant, start_dttm)
     topic_ids = TopicsDigestQuery.new(participant, start_dttm).call
     topics    = Topic.where(id: topic_ids).order('created_at DESC')
-  end
-
-  def comments(participant, start_dttm)
-    comment_ids = CommentsDigestQuery.new(participant, start_dttm).call
-    comments    = Comment.where(id: comment_ids).order('created_at DESC')
   end
 
   def submissions(participant, start_dttm)
@@ -70,16 +62,7 @@ class EmailDigestMailer < ApplicationMailer
 
   def render_topics(topics)
     body = if topics.any?
-             render(partial: "mailers/topics_digest", locals: { comments: comments })
-           else
-             "<span></span>"
-           end
-    return body
-  end
-
-  def render_comments(comments)
-    body = if comments.any?
-             render(partial: "mailers/comments_digest", locals: { comments: comments })
+             render(partial: "mailers/topics_digest")
            else
              "<span></span>"
            end

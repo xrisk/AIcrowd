@@ -15,24 +15,6 @@ class Discussion::Cell::ListDetail < Discussion::Cell
     @author ||= topic.participant
   end
 
-  def comments
-    @comments ||= topic.comments
-  end
-
-  def last_comment
-    @last_comment ||= comments.last
-  end
-
-  def comment_count
-    @comment_count ||= comments.count -1
-  end
-
-  def last_comment_author
-    return nil if last_comment.nil?
-
-    last_comment.participant
-  end
-
   def participant_link
     link = if topic.participant.is_a? NullParticipant
              "Posted by #{link_to author.name, '#'} "
