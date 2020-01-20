@@ -54,4 +54,46 @@ describe ChallengesController, feature: true do
       end
     end
   end
+
+  describe '#edit' do
+    let(:challenge) { create(:challenge) }
+
+    context 'when user is logged in as participant' do
+      let(:participant) { create(:participant) }
+
+      before { log_in participant }
+
+      it 'render challenge edit page' do
+        visit edit_challenge_path(challenge)
+
+        expect(page).to have_http_status 200
+        expect(page).to have_current_path root_path
+        expect(page).to have_content 'You are not authorised to access this page'
+      end
+    end
+
+    context 'when user is logged in as admin' do
+      let(:admin) { create(:participant, :admin) }
+
+      before { log_in admin }
+
+      it 'render challenge edit page' do
+        visit edit_challenge_path(challenge)
+
+        expect(page).to have_http_status 200
+        expect(page).to have_current_path edit_challenge_path(challenge)
+      end
+
+      it 'allows to update challenge', js: true do
+        visit edit_challenge_path(challenge)
+
+        fill_in 'challenge_tagline', with: 'Updated challenge tagline'
+        click_on 'Update challenge'
+
+        expect(page).to have_current_path edit_challenge_path(challenge)
+        expect(page).to have_field('challenge_tagline', with: 'Updated challenge tagline')
+        expect(page).to have_content('Challenge updated.')
+      end
+    end
+  end
 end

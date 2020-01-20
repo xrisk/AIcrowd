@@ -6,9 +6,6 @@
           <%= concept(Image::Cell,f.object,klass: 'img-logo') %>
         </div>
         <%= f.file_field :image_file, class: 'file-upload' %>
-        <% if f.object.image_file.present? %>
-          <%#= link_to 'Delete', challenge_remove_image_path(@challenge) %>
-        <% end %>
         <br/>
         <span>Your image will be cropped if necessary. 5MB limit</span>
       </div>
@@ -17,7 +14,7 @@
       <span class="label-text">Partner Url</span>
       <%= f.text_field :partner_url , class: "form-control" %>
     </div>
-    
+
   </div>
   <%= link_to_remove_association "remove", f, class: 'pull-right btn btn-primary' %>
 </div>

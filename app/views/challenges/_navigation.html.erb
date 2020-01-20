@@ -1,0 +1,18 @@
+<div class="sub-nav-bar sticky-top">
+  <div class="container-fluid">
+    <ul class='nav'>
+      <li class="nav-item"><a class="nav-link active" data-toggle='tab' href="#tab-details" onclick="return false;">Details</a></li>
+      <% if challenge.persisted? %>
+        <li class="nav-item"><a class="nav-link" data-toggle='tab' href="#tab-overview" onclick="return false;">Overview</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle='tab' href="#tab-type" onclick="return false;">Rounds</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle='tab' href="#tab-private" onclick="return false;">Private Challenge</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle='tab' href="#tab-submissions" onclick="return false;">Submissions</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle='tab' href="#tab-winner" onclick="return false;">Winner</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle='tab' href="#tab-rules" onclick="return false;">Rules</a></li>
+        <% if current_participant.admin? %>
+          <li class="nav-item"><a class="nav-link" data-toggle='tab' href="#tab-dynamic" onclick="return false;">Admin</a></li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>

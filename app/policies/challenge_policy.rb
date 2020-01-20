@@ -24,7 +24,7 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def new?
-    edit?
+    participant && (participant.admin? || @participant.organizer_id.present?)
   end
 
   def create?

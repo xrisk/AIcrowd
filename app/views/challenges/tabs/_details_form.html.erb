@@ -1,9 +1,4 @@
-<%= form_for [@organizer, @challenge],
-             html: {class: "form-rg"} do |f| %>
-  <% @challenge.errors.full_messages.each do |error| %>
-    <p><%= error %></p>
-  <% end %>
-
+<div class="challenges-form__thin-tab">
   <div class="form-group">
     <span class="label-text">Challenge Title</span>
     <%= f.text_field :challenge, class: "form-control" %>
@@ -139,14 +134,14 @@
   <div class="form-group">
     <%= f.file_field :image_file %>
     <% if @challenge.image_file.present? %>
-      <%= link_to 'Delete', challenge_remove_image_path(@challenge), class: "form-text" %>
+      <%= link_to 'Delete', remove_image_challenge_path(@challenge), class: "form-text" %>
     <% end %>
     <small id="partnerLogoHelp" class="form-text text-muted">Your image will be cropped if necessary. 5 MB limit</small>
   </div>
 
   <div class="form-group">
     <span class="label-text">Organizer</span>
-    <input class="form-control" type='text' value='<%= @challenge.organizer.organizer %>' readonly>
+    <input class="form-control" type='text' value='<%= @challenge.organizer&.organizer %>' readonly>
   </div>
 
   <div class='form-group'>
@@ -188,13 +183,11 @@
     </div>
   </div>
 
-
   <div class="form-row">
     <div class="form-group col-12">
       <label for="otherScoresFieldnames">Fieldnames for other scores <br/> (comma seperated, max 5 fields)</label>
       <%= f.text_field :other_scores_fieldnames, class: "form-control" %>
     </div>
-
   </div>
 
   <%= f.hidden_field :organizer_id %>
@@ -204,6 +197,5 @@
     <%= f.text_field :discourse_category_id, class: "form-control" %>
   </div>
 
-  <%= render partial: 'challenges/form/submit_buttons',
-             locals: {f: f} %>
-<% end %>
+  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f } %>
+</div>

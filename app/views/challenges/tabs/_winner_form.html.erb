@@ -1,0 +1,16 @@
+<div>
+  <span class="label-text">Options</span>
+
+  <div class="form-group">
+    <%= f.check_box :winners_tab_active, {}, "true", "false" %>
+    <%= f.label :winners_tab_active, "Winner's Tab Active?" %>
+  </div>
+
+  <span class="label-text">Winner's Tab (Markdown)</span>
+
+  <%= markdown_editor do |m| %>
+    <%= f.text_area :winner_description_markdown, class: "txt-med form-control" %>
+  <% end %>
+
+  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f } %>
+</div>

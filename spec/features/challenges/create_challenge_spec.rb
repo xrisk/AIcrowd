@@ -5,13 +5,13 @@ describe "unauthorized" do
   let(:participant) { create :participant }
 
   it 'not logged in' do
-    visit new_organizer_challenge_path(organizer)
+    visit new_challenge_path
     expect_sign_in
   end
 
   it 'user logged in' do
     log_in participant
-    visit new_organizer_challenge_path(organizer)
+    visit new_challenge_path
     expect_unauthorized
   end
 end

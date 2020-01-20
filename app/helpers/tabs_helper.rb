@@ -16,7 +16,7 @@ module TabsHelper
     when 'winners'
       'winner'
     when 'dynamic_contents'
-      'dynamic'
+      'admin'
     when 'submissions'
       'submissions'
     when 'clef_tasks'

@@ -1,10 +1,6 @@
 <div class="form-group">
-  <%= f.check_box :active,
-  { class: 'switch active-switch' },
-  "true", "false"  %>
-  <%= f.label :active,
-  'Current Round',
-  data: { on: 'true', off: 'false' } %>
+  <%= f.check_box :active, { class: 'switch active-switch' }, "true", "false" %>
+  <%= f.label :active, 'Current Round', data: { on: 'true', off: 'false' } %>
 </div>
 
 <div class="form-group">
@@ -19,8 +15,8 @@
 
 <div class="form-group">
   <% unless @challenge.secondary_sort_order == :not_used %>
-  <label>Prior Round Min Sec Score</label>
-  <%= f.text_field :minimum_score_secondary, class: "form-control", placeholder: 'No limitations' %>
+    <label>Prior Round Min Sec Score</label>
+    <%= f.text_field :minimum_score_secondary, class: "form-control", placeholder: 'No limitations' %>
   <% end %>
 </div>
 
@@ -66,29 +62,28 @@
 
 <div class="form-group">
   <%= f.label :start_dttm, 'Round Start (UTC)' %>
-  <%= f.text_field :start_dttm, class: "form-control",
-  data: { controller: 'flatpickr' } %>
+  <%= f.text_field :start_dttm, class: "form-control", data: { controller: 'flatpickr' } %>
 </div>
 
 <div class="form-group">
   <%= f.label :end_dttm, 'Round End (UTC)' %>
-  <%= f.text_field :end_dttm, class: "form-control",
-  data: { controller: 'flatpickr' } %>
+  <%= f.text_field :end_dttm, class: "form-control", data: { controller: 'flatpickr' } %>
 </div>
 
 <label>Leaderboard Message</label>
+
 <%= markdown_editor do |m| %>
-<%= f.text_area :leaderboard_note_markdown, class: "form-control" %>
+  <%= f.text_area :leaderboard_note_markdown, class: "form-control" %>
 <% end %>
 
-<% if current_participant.admin? && f.object.persisted?%>
-round_id: <%= f.object.id %>
+<% if current_participant.admin? && f.object.persisted? %>
+  <span>round_id: <%= f.object.id %></span>
 <% end %>
 
 <% if f.object.persisted? && @challenge.submissions.where(challenge_round_id: f.object.id).present? %>
-<span class='pull-right'>
-  <%= pluralize(@challenge.submissions.count,'submission') %>
-</span>
+  <span class='pull-right'>
+    <%= pluralize(@challenge.submissions.count,'submission') %>
+  </span>
 <% else %>
-<%= link_to_remove_association "remove", f, class: 'pull-right' %>
+  <%= link_to_remove_association "remove", f, class: 'pull-right' %>
 <% end %>
