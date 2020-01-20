@@ -1,18 +1,18 @@
 <li class="list-group-item">
-  <% if participant.nil? || participant.is_a?(NullParticipant) %>
-    <div>
-      <%= link_to '#' do %>
-        <%= concept(Image::Cell, nil, klass: "avatar") %>
-        <span class="text-link">Unknown User</span>
-      <% end %>
-    </div>
-  <% else %>
+  <% if participant.present? %>
     <div>
       <%= link_to participant_path(participant) do %>
         <%= concept(Image::Cell, participant, klass: "avatar") %>
         <span class="text-link"><%= participant.name %></span>
       <% end %>
       <span class="description"><%= participant.email %></span>
+    </div>
+  <% else %>
+    <div>
+      <%= link_to '#' do %>
+        <%= concept(Image::Cell, nil, klass: "avatar") %>
+        <span class="text-link">Unknown User</span>
+      <% end %>
     </div>
   <% end %>
   <div class="row" style="width:20%">

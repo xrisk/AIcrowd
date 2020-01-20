@@ -12,7 +12,7 @@ class Image::Cell < Template::Cell
   end
 
   def image_url
-    if model&.image_file
+    if model.try(:image_file)
       image_url = model.image_file.url
       image_url = default_image_url if image_url.nil?
     else

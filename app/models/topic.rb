@@ -29,8 +29,4 @@ class Topic < ApplicationRecord
     end
     return time_ago_in_words(updated)
   end
-
-  def participant
-    super || NullParticipant.new
-  end
 end

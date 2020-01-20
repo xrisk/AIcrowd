@@ -16,10 +16,10 @@ class Discussion::Cell::ListDetail < Discussion::Cell
   end
 
   def participant_link
-    link = if topic.participant.is_a? NullParticipant
-             "Posted by #{link_to author.name, '#'} "
+    link = if topic.participant.present?
+            "Posted by #{link_to author.name, participant_path(author)} "
            else
-             "Posted by #{link_to author.name, participant_path(author)} "
+            "Posted by #{link_to '<< redacted >>', '#'} "
            end
     return link
   end

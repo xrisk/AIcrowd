@@ -14,6 +14,6 @@ module ParticipantsHelper
   #         <%= image_tag avatar_url(user,'thumbnail') %>
 
   def participant_link(participant)
-    participant.is_a?(NullParticipant) ? '#' : participant_path(participant)
+    participant.present? ? participant_path(participant) : '#'
   end
 end
