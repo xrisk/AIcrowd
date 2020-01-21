@@ -12,29 +12,7 @@ class MigrateUserService
     raise "User Already Migrated" if check_migrated
 
     ActiveRecord::Base.transaction do
-      submission_migration_mappings = MigrationMapping.where(crowdai_participant_id: @old_id, source_type: 'Submission')
-
-      submission_migration_mappings.each do |migration_mapping|
-        submission = Submission.where(id: migration_mapping['source_id']).first
-        submission&.update(participant_id: @new_id)
-      end
-
-      cp_migration_mappings = MigrationMapping.where(crowdai_participant_id: @old_id, source_type: 'ChallengeParticipant')
-      cp_migration_mappings.each do |migration_mapping|
-        cp = ChallengeParticipant.where(id: migration_mapping['source_id']).first
-        cp&.update(participant_id: @new_id)
-        cp.challenge.challenge_rounds.each do |challenge_round|
-          CalculateLeaderboardJob.perform_later(challenge_round_id: challenge_round.id)
-        end
-      end
-
-      pct_migration_mappings = MigrationMapping.where(crowdai_participant_id: @old_id, source_type: 'ParticipantClefTask')
-
-      pct_migration_mappings.each do |migration_mapping|
-        pct = ParticipantClefTask.where(id: migration_mapping['source_id']).first
-        pct&.update(participant_id: @new_id)
-      end
-
+      update_migration_mappings(@new_id)
       MigrationMapping.create!(crowdai_participant_id: @old_id, source_id: @new_id, source_type: 'Participant')
     end
   end
@@ -44,26 +22,32 @@ class MigrateUserService
     raise "User Not Migrated" if user_migration.nil?
 
     ActiveRecord::Base.transaction do
-      submission_migration_mappings = MigrationMapping.where(crowdai_participant_id: @old_id, source_type: 'Submission')
-
-      submission_migration_mappings.each do |migration_mapping|
-        submission = Submission.where(id: migration_mapping['source_id']).first
-        submission.update(participant_id: nil)
-      end
-
-      cp_migration_mappings = MigrationMapping.where(crowdai_participant_id: @old_id, source_type: 'ChallengeParticipant')
-      cp_migration_mappings.each do |migration_mapping|
-        cp = ChallengeParticipant.where(id: migration_mapping['source_id']).first
-        cp.update(participant_id: nil)
-      end
-
-      pct_migration_mappings = MigrationMapping.where(crowdai_participant_id: @old_id, source_type: 'ParticipantClefTask')
-      pct_migration_mappings.each do |migration_mapping|
-        pct = ParticipantClefTask.where(id: migration_mapping['source_id']).first
-        pct.update(participant_id: nil)
-      end
-
+      update_migration_mappings(nil)
       user_migration.destroy
+    end
+  end
+
+  private
+
+  def get_migration_mappings
+    models             = ['Submission', 'ChallengeParticipant', 'ParticipantClefTask', 'Vote', 'Follow']
+    migration_mappings = []
+    models.each do |model|
+      migration_mappings << MigrationMapping.where(crowdai_participant_id: @old_id, source_type: model)
+    end
+    migration_mappings
+  end
+
+  def update_migration_mappings(aicrowd_id)
+    get_migration_mappings.each do |migration_mapping|
+      model  = migration_mapping['source_type'].constantize
+      object = model.where(id: migration_mapping['source_id']).first
+      object&.update(participant_id: aicrowd_id)
+      next unless model == ChallengeParticipant
+
+      object.challenge.challenge_rounds.each do |challenge_round|
+        CalculateLeaderboardJob.perform_later(challenge_round_id: challenge_round.id)
+      end
     end
   end
 end
