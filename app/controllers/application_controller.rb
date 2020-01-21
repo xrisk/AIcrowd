@@ -9,7 +9,9 @@ class ApplicationController < ActionController::Base
   after_action :track_action
 
   def track_action
-    ahoy.track "Processed #{controller_name}##{action_name}", request.filtered_parameters
+    properties         = { request: request.filtered_parameters }
+    properties[:flash] = flash.to_json unless flash.empty?
+    ahoy.track "Processed #{controller_name}##{action_name}", properties
   end
 
   def doorkeeper_unauthorized_render_options(error: nil)
