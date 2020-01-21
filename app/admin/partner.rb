@@ -22,7 +22,7 @@ ActiveAdmin.register Partner do
   index do
     selectable_column
     column "Image" do |partner|
-      image_tag(partner.image_file.url, width: '50')
+      image_tag(partner.image_file.url, width: 50) if partner.image_file.present?
     end
     column :name
     column :organizer
@@ -35,7 +35,7 @@ ActiveAdmin.register Partner do
     attributes_table do
       row :name
       row :image_file do
-        image_tag(partner.image_file.url, width: 150)
+        image_tag(partner.image_file.url, width: 150) if partner.image_file.present?
       end
       row :organizer
       row :visible
