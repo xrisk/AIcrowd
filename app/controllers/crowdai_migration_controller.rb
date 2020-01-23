@@ -4,6 +4,7 @@ class CrowdaiMigrationController < ApplicationController
 
   def new
     @data = params[:data]
+    session['participant_return_to'] = request.original_fullpath unless @current_participant
     redirect_to(root_path, flash: { error: 'Invalid link, contact help@aicrowd.com' }) if @data.nil?
   end
 
