@@ -7,13 +7,8 @@
     <hr>
   </div>
 
-  <div clas="form-group">
-    <fieldset class="checkbox">
-      <div>
-        <%= f.check_box :has_additional_checkbox, {}, "true", "false" %>
-        <%= f.label :has_additional_checkbox, 'Has Additional Checkbox?' %>
-      </div>
-    </fieldset>
+  <div class="form-group">
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :has_additional_checkbox, text: "Has Additional Checkbox?" } %>
   </div>
   <hr>
 

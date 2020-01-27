@@ -1,7 +1,6 @@
 <div>
   <div class="form-group">
-    <%= f.check_box :private_challenge, {}, "true", "false" %>
-    <%= f.label :private_challenge, 'Private challenge' %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :private_challenge, text: "Private Challenge" } %>
   </div>
 
   <%= render partial: 'challenges/fields/invitations_table_fields', locals: { challenge: @challenge, f: f } %>

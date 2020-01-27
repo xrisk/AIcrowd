@@ -1,6 +1,6 @@
+
 <div class="form-group">
-  <%= f.check_box :active, { class: 'switch active-switch' }, "true", "false" %>
-  <%= f.label :active, 'Current Round', data: { on: 'true', off: 'false' } %>
+  <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :active, text: "Current Round", p: { class: 'switch active-switch' } } %>
 </div>
 
 <div class="form-group">

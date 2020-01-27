@@ -11,89 +11,16 @@
 
   <div class="form-group">
     <span class="label-text">Options</span>
-
-    <div class="toggle-switch-container">
-      <%= f.check_box :require_registration %>
-      <label for="challenge_require_registration">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Registration required</div>
-      </label>
-    </div>
-
-    <div class="toggle-switch-container">
-      <%= f.check_box :show_leaderboard %>
-      <label for="challenge_show_leaderboard">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Show leaderboard</div>
-      </label>
-    </div>
-
-    <div class="toggle-switch-container">
-      <%= f.check_box :media_on_leaderboard %>
-      <label for="challenge_media_on_leaderboard">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Show media on leaderboard</div>
-      </label>
-    </div>
-
-
-    <div class="toggle-switch-container">
-      <%= f.check_box :submissions_page %>
-      <label for="challenge_submissions_page">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Show submissions details</div>
-      </label>
-    </div>
-
-    <div class="toggle-switch-container">
-      <%= f.check_box :grading_history %>
-      <label for="challenge_grading_history">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Show grading history</div>
-      </label>
-    </div>
-
-    <div class="toggle-switch-container">
-      <%= f.check_box :grader_logs %>
-      <label for="challenge_grader_logs">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Show grader logs</div>
-      </label>
-    </div>
-
-    <div class="toggle-switch-container">
-      <%= f.check_box :discussions_visible %>
-      <label for="challenge_discussions_visible">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Show discussions</div>
-      </label>
-    </div>
-
-    <div class="toggle-switch-container">
-      <%= f.check_box :latest_submission %>
-      <label for="challenge_latest_submission">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Use latest submissions on Leaderboard</div>
-      </label>
-    </div>
-
-    <div class="toggle-switch-container">
-      <%= f.check_box :teams_allowed %>
-      <label for="challenge_teams_allowed">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">Allow users to team up</div>
-      </label>
-    </div>
-
-    <div class="toggle-switch-container">
-      <%= f.check_box :hidden_challenge %>
-      <label for="challenge_hidden_challenge">
-        <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-        <div class="can-toggle__label-text">
-          Hide Challenge (url needed to access and register)
-        </div>
-      </label>
-    </div>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :require_registration, text: "Registration required" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :show_leaderboard, text: "Show leaderboard" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :media_on_leaderboard, text: "Show media on leaderboard" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :submissions_page, text: "Show submissions details" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :grading_history, text: "Show grading history" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :grader_logs, text: "Show grader logs" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :discussions_visible, text: "Show discussions" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :latest_submission, text: "Use latest submissions on Leaderboard" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :teams_allowed, text: "Allow users to team up" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :hidden_challenge, text: "Hide Challenge (url needed to access and register)" } %>
   </div>
 
   <div class="form-group">

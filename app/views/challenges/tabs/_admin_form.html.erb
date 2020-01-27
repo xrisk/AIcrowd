@@ -1,18 +1,15 @@
 <div class="challenges-form__thin-tab">
-  <div class="form-group">
-    <%= f.check_box :submissions_downloadable, {}, "true", "false" %>
-    <label for="">Organizer submission file access?</label>
-  </div>
 
   <div class="form-group">
-    <%= f.check_box :dynamic_content_flag, {}, "true", "false" %>
-    <label for="">Dynamic content?</label>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :submissions_downloadable, text: "Organizer submission file access?" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :dynamic_content_flag, text: "Dynamic content?" } %>
   </div>
 
   <div class="form-group">
     <span class="label-text">Tab description</span>
     <%= f.text_field :dynamic_content_tab, class: "form-control" %>
   </div>
+
   <div class="form-group">
     <%= f.text_area :dynamic_content, cols: 80, rows: 80, placeholder: 'Enter ERB content here...', class: "form-control" %>
   </div>

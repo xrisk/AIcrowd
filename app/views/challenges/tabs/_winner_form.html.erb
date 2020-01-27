@@ -2,8 +2,7 @@
   <span class="label-text">Options</span>
 
   <div class="form-group">
-    <%= f.check_box :winners_tab_active, {}, "true", "false" %>
-    <%= f.label :winners_tab_active, "Winner's Tab Active?" %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :winners_tab_active, text: "Winners' Tab Active?" } %>
   </div>
 
   <span class="label-text">Winner's Tab (Markdown)</span>
