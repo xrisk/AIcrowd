@@ -7,7 +7,7 @@
     <div class="row">
       <div class="col-12">
 
-        <% if @my_submissions == 'on' %>
+        <% if @my_submissions %>
             <p>You have <%= @submissions_remaining[0] %> submissions available.
               <% if @submissions_remaining[1].present? %>
                 Reset DTTM: <%= @submissions_remaining[1] %>
@@ -48,32 +48,31 @@
         </div>
         <!-- /challenge submissions -->
 
-        <div class="toggle-switch-container">
-          <% if @my_submissions == 'off' %>
-          <%= render partial: 'submissions/index/my_submissions_off',
-                locals: { challenge: @challenge, current_round_id: @current_round_id } %>
-          <% end %>
-          <% if @my_submissions == 'on' %>
-          <%= render partial: 'submissions/index/my_submissions_on',
-                locals: { challenge: @challenge, current_round_id: @current_round_id } %>
-          <% end %>
-
-          <% if @baselines == 'off' %>
-          <%= render partial: 'submissions/index/baselines_off',
-                locals: { challenge: @challenge, current_round_id: @current_round_id } %>
-          <% end %>
-          <% if @baselines == 'on' %>
-          <%= render partial: 'submissions/index/baselines_on',
-                locals: { challenge: @challenge, current_round_id: @current_round_id } %>
-          <% end %>
-        </div>
-
 
         <span id="more-anchor"></span>
-          <!-- load more -->
-            <%= render partial: 'shared/load_more', locals: { collection: @submissions
-            } %>
-          <!-- /load more -->
+        <%= render partial: 'shared/load_more', locals: { collection: @submissions } %>
+
+        <div class="toggle-switch-container">
+            <div class="can-toggle can-toggle--size-small">
+              <%= link_to challenge_submissions_path(@challenge, my_submissions: @my_submissions.blank?, current_round_id: @current_round_id) do %>
+                <input id="my-submissions-switch" type="checkbox" <%= "checked" if @my_submissions %> >
+                <label for="my-submissions">
+                  <div class="can-toggle__switch" data-checked="On" data-unchecked="Off"></div>
+                  <div class="can-toggle__label-text">My Submissions</div>
+                </label>
+              <% end %>
+            </div>
+            <div class="can-toggle can-toggle--size-small">
+              <%= link_to challenge_submissions_path(@challenge, baselines: @baselines.blank?, current_round_id: @current_round_id) do %>
+                <input id="baselines-switch" type="checkbox" <%= "checked" if @baselines %> >
+                <label for="baselines">
+                  <div class="can-toggle__switch" data-checked="On" data-unchecked="Off"></div>
+                  <div class="can-toggle__label-text">Baselines</div>
+                </label>
+              <% end %>
+            </div>
+        </div>
+
       </div>
     </div>
   </div>

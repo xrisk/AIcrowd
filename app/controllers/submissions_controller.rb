@@ -15,7 +15,7 @@ class SubmissionsController < ApplicationController
 
   def index
     @current_round_id = current_round_id
-    if params[:baselines] == 'on'
+    if params[:baselines] == 'true'
       @search = policy_scope(Submission)
                     .where(
                       challenge_round_id: @current_round_id,
@@ -23,15 +23,11 @@ class SubmissionsController < ApplicationController
                       baseline:           true)
                     .where.not(participant_id: nil)
                     .search(search_params)
-      @baselines = 'on'
+      @baselines = true
     else
-      @baselines      = 'off'
-      @my_submissions = if params[:my_submissions] == 'on' && current_participant
-                          'on'
-                        else
-                          'off'
-                        end
-      if @my_submissions == 'on'
+      @baselines      = false
+      @my_submissions = true if params[:my_submissions] == 'true' && current_participant
+      if @my_submissions
         @search = policy_scope(Submission)
                       .where(
                         challenge_round_id: @current_round_id,

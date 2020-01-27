@@ -6,13 +6,8 @@ class LeaderboardsController < ApplicationController
 
   def index
     @current_round = current_round
-    if @challenge.completed?
-      @post_challenge = if params[:post_challenge] == 'on'
-                          'on'
-                        else
-                          'off'
-                        end
-    end
+    @post_challenge = true if @challenge.completed? && params[:post_challenge] == "true"
+
     current_round_id = if @current_round.blank?
                          0
                        else
