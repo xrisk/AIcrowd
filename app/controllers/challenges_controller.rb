@@ -61,7 +61,7 @@ class ChallengesController < ApplicationController
 
   def update
     if @challenge.update(challenge_params)
-      redirect_to edit_challenge_path(@challenge, step: params[:step]), notice: 'Challenge updated.'
+      redirect_to edit_challenge_path(@challenge, step: params[:next_step]), notice: 'Challenge updated.'
     else
       render :edit
     end

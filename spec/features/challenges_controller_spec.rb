@@ -160,7 +160,7 @@ describe ChallengesController, feature: true do
         fill_in 'challenge_tagline', with: 'Updated challenge tagline'
         click_on 'Update challenge'
 
-        expect(page).to have_current_path edit_challenge_path(challenge)
+        expect(page).to have_current_path edit_challenge_path(challenge, step: :overview)
         expect(page).to have_field('challenge_tagline', with: 'Updated challenge tagline')
         expect(page).to have_content('Challenge updated.')
       end
