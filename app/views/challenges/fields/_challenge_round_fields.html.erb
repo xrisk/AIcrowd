@@ -1,89 +1,124 @@
+<div class="nested-fields card text-left mb-1">
 
-<div class="form-group">
-  <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :active, text: "Current Round", p: { class: 'switch active-switch' } } %>
+  <div class="card-header">
+    <div class="row">
+      <div class="form-group col-6">
+        <%= f.label :challenge_round, "Round Name:" %>
+        <%= f.text_field :challenge_round, class: "form-control" %>
+      </div>
+      <div class="form-group col-4 mt-3">
+        <div class="toggle-switch-container">
+          <div class="can-toggle can-toggle--size-small">
+            <%= f.check_box :active, { class: 'switch active-switch' } %>
+            <%= f.label :active do %>
+              <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
+              <div class="can-toggle__label-text">Active Round </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-2 mt-3 pt-2">
+        <a data-toggle="collapse" href="#collapse-_<%= f.index %>_" id="toggle-expand" class="d-block btn btn-primary">
+          Expand
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="collapse-_<%= f.index %>_" class="collapse" data-parent="#rounds">
+    <div class="card-body border-top">
+      <div class="row">
+        <div class="form-group col-6">
+          <%= f.label :minimum_score, "Prior Round Min Score" %>
+          <%= f.text_field :minimum_score, class: "form-control", placeholder: 'No limitations' %>
+        </div>
+
+        <% unless @challenge.secondary_sort_order == :not_used %>
+          <div class="form-group col-6">
+            <%= f.label :minimum_score_secondary, "Prior Round Min Secondary Score" %>
+            <%= f.text_field :minimum_score_secondary, class: "form-control", placeholder: 'No limitations' %>
+          </div>
+        <% end %>
+
+        <div class="form-group col-6">
+          <%= f.label :submission_limit, "Submission Limit" %>
+          <%= f.text_field :submission_limit, class: "form-control", placeholder: 'Enter maximum submissions' %>
+        </div>
+
+        <div class="form-group col-6">
+          <%= f.label :submission_limit_period, "Submission Limit Period" %>
+          <%= f.select :submission_limit_period,
+                       enum_option_pairs(ChallengeRound, :submission_limit_period),
+                       {},
+                       {class: "form-control"} %>
+        </div>
+
+        <div class="form-group col-6">
+          <%= f.label :failed_submissions, "Failed submissions allowed" %>
+          <%= f.text_field :failed_submissions, class: "form-control" %>
+        </div>
+
+        <div class="form-group col-6">
+          <%= f.label :parallel_submissions, "Parallel Submissions" %>
+          <%= f.text_field :parallel_submissions, class: "form-control" %>
+        </div>
+
+        <div class="form-group col-6">
+          <%= f.label :ranking_highlight, "Highlighted Rankings" %>
+          <%= f.text_field :ranking_highlight, class: "form-control" %>
+        </div>
+
+        <div class="form-group col-6">
+          <%= f.label :ranking_window, "Ranking window (hours)" %>
+          <%= f.text_field :ranking_window, class: "form-control" %>
+        </div>
+
+        <div class="form-group col-6">
+          <%= f.label :score_precision, "Score Precision" %>
+          <%= f.text_field :score_precision, class: "form-control" %>
+        </div>
+
+        <% unless @challenge.secondary_sort_order == :not_used %>
+          <div class="form-group col-6">
+            <%= f.label :score_secondary_precision, "Secondary Score Precision" %>
+            <%= f.text_field :score_secondary_precision, class: "form-control" %>
+          </div>
+        <% end %>
+
+        <div class="form-group col-6">
+          <%= f.label :start_dttm, 'Round Start (UTC)' %>
+          <%= f.text_field :start_dttm, class: "form-control", data: {controller: 'flatpickr '} %>
+        </div>
+
+        <div class="form-group col-6">
+          <%= f.label :end_dttm, 'Round End (UTC)' %>
+          <%= f.text_field :end_dttm, class: "form-control", data: {controller: 'flatpickr'} %>
+        </div>
+
+
+        <div class="form-group col-12">
+          <%= f.label :leaderboard_note_markdown, 'Leaderboard Note' %>
+          <%= markdown_editor do |m| %>
+            <%= f.text_area :leaderboard_note_markdown, class: "form-control" %>
+          <% end %>
+
+        </div>
+        <div class="form-group col-4 text-center">
+          <%= link_to_remove_association "Remove Round", f, html_options = {
+              class: "btn btn-secondary"
+          } %>
+        </div>
+        <% if f.object.persisted? %>
+          <% if current_participant.admin? %>
+            <div class="form-group col-4 text-center mt-2">
+              Round ID: <%= f.object.id %>
+            </div>
+          <% end %>
+          <div class="form-group col-4 text-center mt-2">
+            <%= pluralize(f.object.submissions.count, 'submission') %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
-
-<div class="form-group">
-  <label>Round</label>
-  <%= f.text_field :challenge_round, class: "form-control" %>
-</div>
-
-<div class="form-group">
-  <label>Prior Round Min Score</label>
-  <%= f.text_field :minimum_score, class: "form-control", placeholder: 'No limitations' %>
-</div>
-
-<div class="form-group">
-  <% unless @challenge.secondary_sort_order == :not_used %>
-    <label>Prior Round Min Sec Score</label>
-    <%= f.text_field :minimum_score_secondary, class: "form-control", placeholder: 'No limitations' %>
-  <% end %>
-</div>
-
-<div class="form-group">
-  <label>Submission Limit</label>
-  <%= f.text_field :submission_limit, class: "form-control", placeholder: 'Enter maximum submissions' %>
-</div>
-
-<div class="form-group">
-  <label>Period</label>
-  <%= f.select :submission_limit_period, enum_option_pairs(ChallengeRound, :submission_limit_period), include_blank: true %>
-</div>
-
-<div class="form-group">
-  <label>Failed submissions allowed</label>
-  <%= f.text_field :failed_submissions, class: "form-control" %>
-</div>
-
-<div class="form-group">
-  <label>Parallel Submissions</label>
-  <%= f.text_field :parallel_submissions, class: "form-control" %>
-</div>
-
-<div class="form-group">
-  <label>Highlighted Rankings</label>
-  <%= f.text_field :ranking_highlight, class: "form-control" %>
-</div>
-
-<div class="form-group">
-  <label>Ranking window (hours)</label>
-  <%= f.text_field :ranking_window, class: "form-control" %>
-</div>
-
-<div class="form-group">
-  <label>Score Precision</label>
-  <%= f.text_field :score_precision, class: "form-control" %>
-</div>
-
-<div class="form-group">
-  <label>Secondary Score Precision</label>
-  <%= f.text_field :score_secondary_precision, class: "form-control" %>
-</div>
-
-<div class="form-group">
-  <%= f.label :start_dttm, 'Round Start (UTC)' %>
-  <%= f.text_field :start_dttm, class: "form-control", data: { controller: 'flatpickr' } %>
-</div>
-
-<div class="form-group">
-  <%= f.label :end_dttm, 'Round End (UTC)' %>
-  <%= f.text_field :end_dttm, class: "form-control", data: { controller: 'flatpickr' } %>
-</div>
-
-<label>Leaderboard Message</label>
-
-<%= markdown_editor do |m| %>
-  <%= f.text_area :leaderboard_note_markdown, class: "form-control" %>
-<% end %>
-
-<% if current_participant.admin? && f.object.persisted? %>
-  <span>round_id: <%= f.object.id %></span>
-<% end %>
-
-<% if f.object.persisted? && @challenge.submissions.where(challenge_round_id: f.object.id).present? %>
-  <span class='pull-right'>
-    <%= pluralize(@challenge.submissions.count,'submission') %>
-  </span>
-<% else %>
-  <%= link_to_remove_association "remove", f, class: 'pull-right' %>
-<% end %>
