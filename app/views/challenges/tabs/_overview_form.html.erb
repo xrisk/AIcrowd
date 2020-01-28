@@ -37,7 +37,7 @@
         <%= render 'challenges/fields/challenge_partner_fields', f: partner %>
       <% end %>
       <div class='links'>
-        <%= link_to_add_association '+ Partner Logo', f, :challenge_partners, html_options = { partial: 'challenges/fields/challenge_partner_fields' } %>
+        <%= link_to_add_association '+ Partner Logo', f, :challenge_partners, html_options = { partial: 'challenges/fields/challenge_partner_fields', id: 'challenges-form-add-partner' } %>
       </div>
     </div>
     <br/><br/>
