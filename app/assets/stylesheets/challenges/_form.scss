@@ -1,0 +1,11 @@
+.challenges-form {
+  max-width: none;
+
+  &__thin-tab {
+    max-width: 480px;
+  }
+
+  &__errors-paragraph {
+    color: red;
+  }
+}
