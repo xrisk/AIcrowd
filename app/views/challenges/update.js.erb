@@ -1,0 +1,9 @@
+function handleChallengeUpdate() {
+  const challengeForWrapper = document.getElementById('challenges-form__wrapper');
+
+  challengeForWrapper.innerHTML = "<%= j render 'challenges/form', challenge: @challenge %>"
+
+  // Handle edge cases
+}
+
+handleChallengeUpdate();

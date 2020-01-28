@@ -41,12 +41,16 @@ Paloma.controller('Challenges', {
         });
     },
     edit: function () {
+        const currentUrl  = new URL(window.location);
+        const currentStep = currentUrl.searchParams.get('step');
+        const currentTab = $(`#challenge-edit-${currentStep}-tab`);
+
         let switch_handler = function () {
-            $('.active-switch').each((e, checkbox) => {
-                if (checkbox !== this) {
-                    checkbox.checked = false;
-                }
-            });
+          $('.active-switch').each((e, checkbox) => {
+              if (checkbox !== this) {
+                  checkbox.checked = false;
+              }
+          });
         };
 
         $("#rounds").on('cocoon:after-insert', function(e, added_round) {
@@ -70,6 +74,10 @@ Paloma.controller('Challenges', {
         $('#challenges-form-add-partner').click(function() {
           resetChallengesFormClientValidations();
         });
+
+        if (currentTab) {
+          currentTab.tab('show');
+        }
     },
     show: function () {
         let update_table_of_contents = function (heading_ids) {
