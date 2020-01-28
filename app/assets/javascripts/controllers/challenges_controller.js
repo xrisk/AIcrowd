@@ -1,3 +1,8 @@
+function resetChallengesFormClientValidations() {
+  // We need to wait till fields show up in browser
+  setTimeout(function() { $('#challenges-form').enableClientSideValidations(); }, 1000);
+}
+
 Paloma.controller('Challenges', {
     reorder: function () {
         let calculateIndex = function () {
@@ -43,9 +48,25 @@ Paloma.controller('Challenges', {
             });
             self.checked = true;
         });
+
+        $('.challenges-form-tab-link').click(function(event) {
+          event.preventDefault();
+          $(event.target).tab('show');
+          resetChallengesFormClientValidations();
+        });
+
         $('#replace-rules-button').click(function (e) {
-            $(this).hide()
-        })
+          $(this).hide()
+          resetChallengesFormClientValidations();
+        });
+
+        $('#challenges-form-add-round').click(function() {
+          resetChallengesFormClientValidations();
+        });
+
+        $('#challenges-form-add-partner').click(function() {
+          resetChallengesFormClientValidations();
+        });
     },
     show: function () {
         let update_table_of_contents = function (heading_ids) {
