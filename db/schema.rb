@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_17_111958) do
+ActiveRecord::Schema.define(version: 2020_01_22_172417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -331,7 +331,7 @@ ActiveRecord::Schema.define(version: 2020_01_17_111958) do
     t.datetime "updated_at", null: false
     t.string "tagline"
     t.string "primary_sort_order_cd", default: "ascending"
-    t.string "secondary_sort_order_cd"
+    t.string "secondary_sort_order_cd", default: "not_used"
     t.boolean "perpetual_challenge", default: false
     t.string "answer_file_s3_key"
     t.integer "page_views", default: 0

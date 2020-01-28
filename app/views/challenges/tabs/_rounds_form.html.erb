@@ -1,0 +1,23 @@
+<div class="challenges-form__thin-tab">
+  <fieldset>
+    <h4>Challenge Rounds</h4>
+    <div id='rounds'>
+      <%= f.fields_for :challenge_rounds do |challenge_round| %>
+      <%= render 'challenges/fields/challenge_round_fields', f: challenge_round %>
+      <% end %>
+      <div class='links'>
+        <%=
+          link_to_add_association '+ Challenge Round',
+                                  f,
+                                  :challenge_rounds,
+                                  html_options = {
+                                    partial: 'challenges/fields/challenge_round_fields'
+                                  }
+        %>
+      </div>
+    </div>
+    <br/><br/>
+  </fieldset>
+
+  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f } %>
+</div>

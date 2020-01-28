@@ -157,7 +157,7 @@
     <% end %>
 
     <% if policy(challenge).edit? %>
-      <%= link_to edit_organizer_challenge_path(challenge.organizer, challenge), title: "Edit challenge", data: {turbolinks: false}, class: "nav-link" do %>
+      <%= link_to edit_challenge_path(challenge), title: "Edit challenge", data: {turbolinks: false}, class: "nav-link" do %>
         <button class="btn btn-secondary btn-sm ml-1 pull-right" role="button">Edit Challenge</button>
       <% end %>
     <% end %>

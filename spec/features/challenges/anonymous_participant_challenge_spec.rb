@@ -62,9 +62,7 @@ describe "challenge", :js do
   end
 
   describe "anonymous participant cannot access restricted pages via url manipulation" do
-    before do
-      visit '/'
-    end
+    before { visit root_path }
 
     it "show for draft challenge" do
       visit "/challenges/#{draft_challenge.id}"
@@ -78,12 +76,12 @@ describe "challenge", :js do
 
     it "edit challenge" do
       visit "/challenges/#{draft_challenge.id}/edit"
-      expect(page).to have_content("The page you are looking for doesn’t seem to exist")
+      expect(page).to have_content 'You need to sign in or sign up before continuing.'
     end
 
     it "new challenge" do
       visit "/challenges/new"
-      expect(page).to have_content("The page you are looking for doesn’t seem to exist")
+      expect(page).to have_content 'You need to sign in or sign up before continuing.'
     end
   end
 end

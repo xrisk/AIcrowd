@@ -6,8 +6,7 @@ class Challenge < ApplicationRecord
               use: %i[slugged finders history]
 
   belongs_to :organizer
-  belongs_to :clef_task,
-             optional: true
+  belongs_to :clef_task, optional: true
   has_many :dataset_files,
            dependent: :destroy
   mount_uploader :image_file, ImageUploader
@@ -73,7 +72,6 @@ class Challenge < ApplicationRecord
 
   validates :status, presence: true
   validates :challenge, presence: true
-  validates :organizer_id, presence: true
   validates :primary_sort_order, presence: true
   validates :secondary_sort_order, presence: true
   validates :challenge_client_name, uniqueness: true

@@ -2,7 +2,7 @@
   <div class="form-group">
     <label>Rules (markdown)</label>
     <%= markdown_editor do |m| %>
-    <%= f.text_area :terms_markdown, class: "form-control txt-med" %>
+      <%= f.text_area :terms_markdown, class: "form-control txt-med" %>
     <% end %>
     <hr>
   </div>
@@ -21,6 +21,6 @@
     <label>Additional Checkbox Text</label>
   </div>
   <%= markdown_editor do |m| %>
-  <%= f.text_area :additional_checkbox_text_markdown, class: "form-control txt-sml" %>
+    <%= f.text_area :additional_checkbox_text_markdown, class: "form-control txt-sml" %>
   <% end %>
 </div>
