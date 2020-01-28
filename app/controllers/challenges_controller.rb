@@ -4,7 +4,8 @@ class ChallengesController < ApplicationController
   before_action :set_challenge, only: [:show, :edit, :update, :destroy, :remove_image]
   after_action :verify_authorized, except: [:index, :show]
   before_action :set_s3_direct_post, only: [:edit, :update]
-  before_action :set_organizer, only: [:new, :create, :edit, :update]
+  before_action :set_organizer, only: [:edit, :update]
+  before_action :set_organizers_for_select, only: [:new, :create]
 
   respond_to :html, :js
 
@@ -40,13 +41,13 @@ class ChallengesController < ApplicationController
   end
 
   def new
-    @challenge = Challenge.new(organizer: @organizer)
+    @challenge = Challenge.new
     authorize @challenge
   end
 
   def create
     @challenge                = Challenge.new(challenge_params)
-    @challenge.clef_challenge = true if @organizer&.clef_organizer
+    @challenge.clef_challenge = true if @challenge.organizer&.clef_organizer
     authorize @challenge
 
     if @challenge.save
@@ -108,6 +109,11 @@ class ChallengesController < ApplicationController
     @organizer = @challenge&.organizer
   end
 
+  def set_organizers_for_select
+    # We'll need refactor to select2 with API endpoint when we'll have a lot of organizers.
+    @organizers_for_select = Organizer.pluck(:organizer, :id)
+  end
+
   def set_s3_direct_post
     @s3_direct_post = S3_BUCKET
                           .presigned_post(
@@ -142,7 +148,6 @@ class ChallengesController < ApplicationController
       :primary_sort_order,
       :secondary_sort_order,
       :other_scores_fieldname,
-      :organizer_id,
       :discourse_category_id,
       :other_scores_fieldnames,
       :description_markdown,
@@ -163,6 +168,7 @@ class ChallengesController < ApplicationController
       :dynamic_content_tab,
       :dynamic_content,
       :dynamic_content_url,
+      :organizer_id,
       image_attributes: [
         :id,
         :image,

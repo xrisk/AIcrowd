@@ -55,6 +55,76 @@ describe ChallengesController, feature: true do
     end
   end
 
+  describe '#new' do
+    context 'when user is logged in as participant' do
+      let(:participant) { create(:participant) }
+
+      before { log_in participant }
+
+      it 'renders unauthorized flash' do
+        visit new_challenge_path
+
+        expect(page).to have_http_status 200
+        expect(page).to have_current_path root_path
+        expect(page).to have_content 'You are not authorised to access this page'
+      end
+    end
+
+    context 'when user is logged in as organizer' do
+      let(:organizer) { create(:participant, :organizer) }
+
+      before { log_in organizer }
+
+      it 'renders new challenge page' do
+        visit new_challenge_path
+
+        expect(page).to have_http_status 200
+        expect(page).to have_current_path new_challenge_path
+      end
+
+      it 'allows to create challenge', js: true do
+        visit new_challenge_path
+
+        fill_in 'challenge_challenge', with: 'Created challenge title'
+        click_on 'Create challenge'
+
+        challenge = Challenge.find_by!(challenge: 'Created challenge title')
+
+        expect(page).to have_current_path edit_challenge_path(challenge, step: :overview)
+        expect(page).to have_field('challenge_challenge', with: 'Created challenge title')
+        expect(page).to have_content('Challenge created.')
+      end
+    end
+
+    context 'when user is logged in as admin' do
+      let!(:organizer) { create(:organizer) }
+      let(:admin)      { create(:participant, :admin) }
+
+      before { log_in admin }
+
+      it 'renders new challenge page' do
+        visit new_challenge_path
+
+        expect(page).to have_http_status 200
+        expect(page).to have_current_path new_challenge_path
+      end
+
+      it 'allows to create challenge', js: true do
+        visit new_challenge_path
+
+        fill_in 'challenge_challenge', with: 'Created challenge title'
+        select organizer.organizer, from: 'challenge_organizer_id'
+        click_on 'Create challenge'
+
+        challenge = Challenge.find_by!(challenge: 'Created challenge title')
+
+        expect(page).to have_current_path edit_challenge_path(challenge, step: :overview)
+        expect(page).to have_field('challenge_challenge', with: 'Created challenge title')
+        expect(page).to have_content('Challenge created.')
+      end
+    end
+  end
+
   describe '#edit' do
     let(:challenge) { create(:challenge) }
 
@@ -63,7 +133,7 @@ describe ChallengesController, feature: true do
 
       before { log_in participant }
 
-      it 'render challenge edit page' do
+      it 'renders unauthorized flash' do
         visit edit_challenge_path(challenge)
 
         expect(page).to have_http_status 200
