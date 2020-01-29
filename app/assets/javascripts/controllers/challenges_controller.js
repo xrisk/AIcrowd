@@ -43,7 +43,7 @@ Paloma.controller('Challenges', {
     edit: function () {
         const currentUrl  = new URL(window.location);
         const currentStep = currentUrl.searchParams.get('step');
-        const currentTab = $(`#challenge-edit-${currentStep}-tab`);
+        const currentTab  = $(`#challenge-edit-${currentStep}-tab`);
 
         let switch_handler = function () {
           $('.active-switch').each((e, checkbox) => {
@@ -69,8 +69,8 @@ Paloma.controller('Challenges', {
 
           resetChallengesFormClientValidations();
         });
-        $('.active-switch').on('click', switch_handler);
 
+        $('.active-switch').on('click', switch_handler);
 
         $('#replace-rules-button').click(function (e) {
           $(this).hide()
