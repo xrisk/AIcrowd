@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <%= form_with model: @challenge, id: 'challenges-form', class: 'form-rg challenges-form', multipart: true do |f| %>
+        <%= form_with model: @challenge, id: 'challenges-form', class: 'form-rg challenges-form', multipart: true, validate: true do |f| %>
           <p id="challenges-form-errors" class="challenges-form__errors-paragraph"><%= @challenge.errors.full_messages.to_sentence %></p>
 
           <% hidden_field_tag :step, id: 'challenges-form-step', value: :overview %>
