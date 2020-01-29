@@ -98,7 +98,10 @@ class ChallengesController < ApplicationController
   def remove_image
     @challenge.remove_image_file!
     @challenge.save
-    redirect_to edit_challenge_path(@challenge), notice: 'Image removed.'
+
+    respond_to do |format|
+      format.js { render :remove_image }
+    end
   end
 
   private
