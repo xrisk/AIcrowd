@@ -59,8 +59,14 @@ Paloma.controller('Challenges', {
         });
 
         $('.challenges-form-tab-link').click(function(event) {
+          const tabLink = $(event.target).tab('show');
+
           event.preventDefault();
-          $(event.target).tab('show');
+
+          // Set step in URL address
+          currentUrl.searchParams.set('step', event.target.dataset.currentTab);
+          window.history.pushState(null, null, currentUrl.toString());
+
           resetChallengesFormClientValidations();
         });
         $('.active-switch').on('click', switch_handler);

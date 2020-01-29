@@ -1,7 +1,23 @@
 function handleChallengeUpdate() {
   const challengeForWrapper = document.getElementById('challenges-form__wrapper');
+  const currentUrl          = new URL(window.location);
+  const currentTab          = currentUrl.searchParams.get('step');
+  const nextTab             = "<%= params[:next_step] %>";
+  const updateSuccessful    = "<%= @challenge.errors.none? %>";
 
-  challengeForWrapper.innerHTML = "<%= j render 'challenges/form', challenge: @challenge %>"
+  challengeForWrapper.innerHTML = "<%= j render 'challenges/form', challenge: @challenge %>";
+
+  if (updateSuccessful === 'true') {
+    if (nextTab.length) {
+      $(`#challenge-edit-${nextTab}-tab`).tab('show');
+    }
+  } else {
+    if (currentTab.length) {
+      // Active tabs are disabled, thus I need to make it inactive to make it work
+      $(`#challenge-edit-rounds-tab`).removeClass('active');
+      $(`#challenge-edit-${currentTab}-tab`).tab('show');
+    }
+  }
 
   // Handle edge cases
 }
