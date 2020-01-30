@@ -91,8 +91,11 @@ describe ChallengesController, feature: true do
         challenge = Challenge.find_by!(challenge: 'Created challenge title')
 
         expect(page).to have_current_path edit_challenge_path(challenge, step: :overview)
-        expect(page).to have_field('challenge_challenge', with: 'Created challenge title')
         expect(page).to have_content('Challenge created.')
+
+        click_on 'challenge-edit-details-tab'
+
+        expect(page).to have_field('challenge_challenge', with: 'Created challenge title')
       end
     end
 
@@ -119,8 +122,11 @@ describe ChallengesController, feature: true do
         challenge = Challenge.find_by!(challenge: 'Created challenge title')
 
         expect(page).to have_current_path edit_challenge_path(challenge, step: :overview)
-        expect(page).to have_field('challenge_challenge', with: 'Created challenge title')
         expect(page).to have_content('Challenge created.')
+
+        click_on 'challenge-edit-details-tab'
+
+        expect(page).to have_field('challenge_challenge', with: 'Created challenge title')
       end
     end
   end
@@ -161,8 +167,10 @@ describe ChallengesController, feature: true do
         click_on 'Update challenge'
 
         expect(page).to have_current_path edit_challenge_path(challenge, step: :overview)
+
+        click_on 'challenge-edit-details-tab'
+
         expect(page).to have_field('challenge_tagline', with: 'Updated challenge tagline')
-        expect(page).to have_content('Challenge updated.')
       end
     end
   end

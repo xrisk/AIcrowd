@@ -48,6 +48,7 @@ class ChallengesController < ApplicationController
   def create
     @challenge                = Challenge.new(challenge_params)
     @challenge.clef_challenge = true if @challenge.organizer&.clef_organizer
+
     authorize @challenge
 
     if @challenge.save
@@ -61,9 +62,15 @@ class ChallengesController < ApplicationController
 
   def update
     if @challenge.update(challenge_params)
-      redirect_to edit_challenge_path(@challenge, step: params[:next_step]), notice: 'Challenge updated.'
+      respond_to do |format|
+        format.html { redirect_to edit_challenge_path(@challenge, step: params[:next_step]), notice: 'Challenge updated.' }
+        format.js   { render :update }
+      end
     else
-      render :edit
+      respond_to do |format|
+        format.html { render :edit }
+        format.js   { render :update }
+      end
     end
   end
 

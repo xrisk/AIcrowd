@@ -1,4 +1,4 @@
-<div data-controller="challenges-edit" class="masthead">
+<div class="masthead">
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
@@ -10,4 +10,6 @@
 </div>
 
 <%= render partial: 'challenges/navigation', locals: { challenge: @challenge } %>
-<%= render partial: 'challenges/form', locals: { challenge: @challenge } %>
+<div id="challenges-form__wrapper">
+  <%= render partial: 'challenges/form', locals: { challenge: @challenge } %>
+</div>
