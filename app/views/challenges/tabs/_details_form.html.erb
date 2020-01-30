@@ -55,13 +55,14 @@
 
   <div class="form-group">
     <span class="label-text">Card image</span>
-    <%= concept(Image::Cell, challenge, klass: 'form-challenge-card-image') %>
+    <%= concept(Image::Cell, challenge, id: 'challenges-form-card-image', klass: 'form-challenge-card-image') %>
   </div>
 
   <div class="form-group">
     <%= f.file_field :image_file %>
-    <% if @challenge.image_file.present? %>
-      <%= link_to 'Delete', remove_image_challenge_path(@challenge), class: "form-text" %>
+    <% if @challenge.persisted? %>
+      <% remove_image_class = @challenge.image_file.present? ? '' : 'challenges-form__link--hidden' %>
+      <%= link_to 'Delete', remove_image_challenge_path(@challenge), remote: true, id: 'challenges-form-remove-card-image', class: "form-text #{remove_image_class}" %>
     <% end %>
     <small id="partnerLogoHelp" class="form-text text-muted">Your image will be cropped if necessary. 5 MB limit</small>
   </div>

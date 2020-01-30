@@ -7,6 +7,10 @@ class Image::Cell < Template::Cell
     options[:klass]
   end
 
+  def id
+    options[:id]
+  end
+
   def style
     options[:style]
   end
@@ -22,11 +26,11 @@ class Image::Cell < Template::Cell
   end
 
   def image
-    image_tag(image_url, class: klass, style: style)
+    image_tag(image_url, id: id, class: klass, style: style)
   end
 
   def image_16x9
-    image_tag(image_url, class: klass, style: "position: absolute;object-fit: cover;width: 100%;height: 100%;")
+    image_tag(image_url, id: id, class: klass, style: "position: absolute;object-fit: cover;width: 100%;height: 100%;")
   end
 
   def default_image_url
