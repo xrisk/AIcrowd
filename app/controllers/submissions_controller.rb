@@ -1,20 +1,18 @@
 class SubmissionsController < ApplicationController
-  before_action :authenticate_participant!,
-                except: [:index, :show]
-  before_action :set_submission,
-                only: [:show, :edit, :update]
+  before_action :authenticate_participant!, except: [:index, :show]
+  before_action :set_submission, only: [:show, :edit, :update]
   before_action :set_challenge
-  before_action :check_participation_terms,
-                except: [:show, :index]
-  before_action :set_s3_direct_post,
-                only: [:new, :edit, :create, :update]
-  before_action :set_submissions_remaining,
-                except: [:show, :index]
+  before_action :check_participation_terms, except: [:show, :index]
+  before_action :set_s3_direct_post, only: [:new, :edit, :create, :update]
+  before_action :set_submissions_remaining, except: [:show, :index]
+  before_action :set_current_round, only: :index
+
   layout :set_layout
   respond_to :html, :js
 
   def index
-    @current_round_id = current_round_id
+    @current_round_id = @current_round&.id
+
     if params[:baselines] == 'true'
       @search = policy_scope(Submission)
                     .where(
@@ -128,6 +126,14 @@ class SubmissionsController < ApplicationController
     @challenge = Challenge.friendly.find(params[:challenge_id])
   end
 
+  def set_current_round
+    @current_round = if params[:challenge_round_id].present?
+                       ChallengeRound.find(params[:challenge_round_id].to_i)
+                     else
+                       @challenge.challenge_rounds.where(active: true).first
+                     end
+  end
+
   def check_participation_terms
     unless policy(@challenge).has_accepted_participation_terms?
       redirect_to [@challenge, ParticipationTerms.current_terms]
@@ -213,19 +219,6 @@ class SubmissionsController < ApplicationController
       ]
     res = ActiveRecord::Base.connection.select_values(sql)
     res.any?
-  end
-
-  def current_round_id
-    round = if params[:challenge_round_id].present?
-              ChallengeRound.find(params[:challenge_round_id].to_i)
-            else
-              @challenge.challenge_rounds.where(active: true).first
-            end
-    if round.present?
-      return round.id
-    else
-      return nil
-    end
   end
 
   def set_layout

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_22_172417) do
+ActiveRecord::Schema.define(version: 2020_01_30_075718) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -305,6 +305,8 @@ ActiveRecord::Schema.define(version: 2020_01_22_172417) do
     t.text "leaderboard_note"
     t.integer "failed_submissions", default: 0
     t.integer "parallel_submissions", default: 0, null: false
+    t.string "score_title", default: "", null: false
+    t.string "score_secondary_title", default: "", null: false
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
   end
 

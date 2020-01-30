@@ -153,8 +153,6 @@ class ChallengesController < ApplicationController
       :image_file,
       :challenge_client_name,
       :grader_identifier,
-      :score_title,
-      :score_secondary_title,
       :primary_sort_order,
       :secondary_sort_order,
       :other_scores_fieldname,
@@ -192,6 +190,8 @@ class ChallengesController < ApplicationController
       ],
       challenge_rounds_attributes: [
         :id,
+        :score_title,
+        :score_secondary_title,
         :challenge_round,
         :minimum_score,
         :minimum_score_secondary,

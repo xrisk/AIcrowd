@@ -58,7 +58,7 @@ class NewCalculateLeaderboardService
   end
 
   def calculate_avg_rank(entry, final = false)
-    @scores_to_avg = [@challenge.score_title, @challenge.score_secondary_title] + @challenge.other_scores_fieldnames_array
+    @scores_to_avg = [@round.score_title, @round.score_secondary_title] + @challenge.other_scores_fieldnames_array
     column_names   = ['score', 'score_secondary'] + (1..@challenge.other_scores_fieldnames_array.length).map { |i| 'extra_score' + i.to_s }
     leaderboard    = DisentanglementLeaderboard.where(challenge_round_id: @round.id)
     submission     = Submission.find(entry.submission_id)

@@ -1,5 +1,5 @@
 <!-- submission details -->
-<div class="col-sm-12 col-md-6">              
+<div class="col-sm-12 col-md-6">
 	<div class="d-flex">
 		<h2 class="mr-2">Submission #<%= entry.id %></h2><span class="badge <%= grade_class %>"><%= entry.grading_status_cd %></span>
 	</div>
@@ -12,12 +12,12 @@
 
 	<div class="d-flex">
 		<div class="mr-4">
-			<h4><%= challenge.score_title %></h4>
+			<h4><%= entry.challenge_round&.score_title %></h4>
 			<span><%= formatted_value(entry.score_display) %></span>
 		</div>
 
 		<div>
-			<h4><%= challenge.score_secondary_title %></h4>
+			<h4><%= entry.challenge_round&.score_secondary_title %></h4>
 			<span><%= formatted_value(entry.score_secondary_display) %></span>
 		</div>
 	</div>
