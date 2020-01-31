@@ -92,25 +92,11 @@ class Challenge < ApplicationRecord
             END, challenges.participant_count DESC")
   end
 
-  after_create :init_discourse
+  after_initialize :set_defaults
+  after_create :create_discourse_category
+  after_update :update_discourse_category
 
-  after_update do
-    if ENV['DISCOURSE_DOMAIN_NAME']
-      if discourse_category_id
-        client              = DiscourseApi::Client.new(ENV['DISCOURSE_DOMAIN_NAME'])
-        client.api_key      = ENV['DISCOURSE_API_KEY']
-        client.api_username = ENV['DISCOURSE_API_USERNAME']
-        client.update_category(id:         discourse_category_id,
-                               name:       challenge.truncate(50),
-                               slug:       slug[0..49],
-                               color:      '49d9e9',
-                               text_color: 'f0fcfd'
-                              )
-      end
-    end
-  end
-
-  after_initialize do
+  def set_defaults
     if new_record?
       self.submission_license    ||= 'Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC).'
       self.challenge_client_name ||= "challenge_#{SecureRandom.hex}"
@@ -118,21 +104,16 @@ class Challenge < ApplicationRecord
     end
   end
 
-  def init_discourse
-    if ENV['DISCOURSE_DOMAIN_NAME']
-      client              = DiscourseApi::Client.new(ENV['DISCOURSE_DOMAIN_NAME'])
-      client.api_key      = ENV['DISCOURSE_API_KEY']
-      client.api_username = ENV['DISCOURSE_API_USERNAME']
-      # NATE: discourse has a hard limit of 50 chars
-      # for category name length
-      res = client.create_category(name:       challenge.truncate(50),
-                                   slug:       slug[0..49],
-                                   color:      '49d9e9',
-                                   text_color: 'f0fcfd'
-                                  )
-      self.discourse_category_id = res['id']
-      save
-    end
+  def create_discourse_category
+    return if Rails.env.development? || Rails.env.test?
+
+    Discourse::CreateCategoryService.new(challenge: self).call
+  end
+
+  def update_discourse_category
+    return if Rails.env.development? || Rails.env.test?
+
+    Discourse::UpdateCategoryService.new(challenge: self).call
   end
 
   def record_page_view
