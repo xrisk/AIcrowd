@@ -32,9 +32,12 @@ class ChallengeRound < ApplicationRecord
 
   validates :submission_limit, presence: true
   validates :submission_limit_period, presence: true
+  validates :primary_sort_order, presence: true
+  validates :secondary_sort_order, presence: true
 
-  as_enum :submission_limit_period,
-          [:day, :week, :round], map: :string
+  as_enum :submission_limit_period, [:day, :week, :round], map: :string
+  as_enum :primary_sort_order, [:ascending, :descending], map: :string, prefix: true
+  as_enum :secondary_sort_order, [:ascending, :descending, :not_used], map: :string, prefix: true
 
   default_scope { order :start_dttm }
 

@@ -153,8 +153,6 @@ class ChallengesController < ApplicationController
       :image_file,
       :challenge_client_name,
       :grader_identifier,
-      :primary_sort_order,
-      :secondary_sort_order,
       :other_scores_fieldname,
       :discourse_category_id,
       :other_scores_fieldnames,
@@ -207,6 +205,8 @@ class ChallengesController < ApplicationController
         :end_dttm,
         :active,
         :leaderboard_note_markdown,
+        :primary_sort_order,
+        :secondary_sort_order,
         :_destroy
       ],
       challenge_rules_attributes: [

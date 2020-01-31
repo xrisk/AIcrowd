@@ -389,12 +389,12 @@ class CalculateLeaderboardService
 
     return 'updated_at desc' if challenge.latest_submission == true
 
-    score_sort_order ||= sort_map(challenge.primary_sort_order_cd)
+    score_sort_order ||= sort_map(@round.primary_sort_order_cd)
     score_sort_col     = use_display ? 'score_display' : 'score'
 
-    return "#{score_sort_col} #{score_sort_order} NULLS LAST" if challenge.secondary_sort_order_cd.blank? || challenge.secondary_sort_order_cd == 'not_used'
+    return "#{score_sort_col} #{score_sort_order} NULLS LAST" if @round.secondary_sort_order_cd.blank? || @round.secondary_sort_order_cd == 'not_used'
 
-    secondary_sort_order ||= sort_map(challenge.secondary_sort_order_cd)
+    secondary_sort_order ||= sort_map(@round.secondary_sort_order_cd)
     secondary_sort_col     = use_display ? 'score_secondary_display' : 'score_secondary'
     "#{score_sort_col} #{score_sort_order} NULLS LAST, #{secondary_sort_col} #{secondary_sort_order} NULLS LAST"
   end

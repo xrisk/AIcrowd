@@ -1,8 +1,9 @@
 module SubmissionsHelper
   def score(submission)
-    challenge = submission.challenge
+    challenge_round = submission.challenge_round
+
     if submission.graded?
-      if challenge.secondary_sort_order == 'not_used'
+      if challenge_round.secondary_sort_order == 'not_used'
         return "<li>Mean F1: #{submission.score}</li>".html_safe
       else
         return "<li>Mean F1: #{submission.score}</li><li>Mean Log Loss: #{submission.score_secondary}</li>".html_safe

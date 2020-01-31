@@ -150,10 +150,6 @@ organizers.each do |org|
       chal["description_markdown"] = "#{chal["description_markdown"]}\n\n###Evaluation criteria\n#{chal["evaluation_markdown"]}\n\n###Resources\n\n#{chal["resources_markdown"]}\n\n###Prizes\n\n#{chal["prizes_markdown"]}\n\n###Datasets License\n\n#{chal["license_markdown"]}"
       chal["teams_allowed"] = false
 
-      if chal["secondary_sort_order_cd"].blank?
-        chal["secondary_sort_order_cd"] = "ascending"
-      end
-
       if !chal["clef_task_id"].nil? and chal["clef_challenge"] == true
         old_ct_id = chal["clef_task_id"]
         chal["clef_task_id"] = MigrationMapping.where(
@@ -195,6 +191,10 @@ organizers.each do |org|
         chal_round["challenge_id"] = loop_challenge.id
         chal_round["submission_limit"] = 5
         chal_round["submission_limit_period"] = "day"
+
+        if chal_round["secondary_sort_order_cd"].blank?
+          chal_round["secondary_sort_order_cd"] = "ascending"
+        end
 
         loop_challenge_round = ChallengeRound.create!(chal_round)
 
@@ -263,4 +263,3 @@ end
 puts $list_of_failed_files
 # Turn on logger
 #ActiveRecord::Base.logger = old_logger
-

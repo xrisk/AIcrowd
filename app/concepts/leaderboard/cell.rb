@@ -21,7 +21,7 @@ class Leaderboard::Cell < Template::Cell
       cols  = [:rank, :participant]
       cols << :media if challenge.media_on_leaderboard
       cols << :score
-      cols << :score_secondary unless challenge.secondary_sort_order == :not_used
+      cols << :score_secondary unless challenge_round.secondary_sort_order == :not_used
       cols << :entries
       cols << :post_challenge if post_challenge
       cols << :updated_at

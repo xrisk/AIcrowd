@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CalculateLeaderboardService, api: true do
+describe CalculateLeaderboardService, api: true do
   before do
     Timecop.freeze(
       DateTime.new(2018, 0o3, 15, 9, 0, 0, "+02:00"),
@@ -102,11 +102,8 @@ RSpec.describe CalculateLeaderboardService, api: true do
 
   describe 'counts and rounding' do
     before do
-      challenge.update(
-        primary_sort_order:   :descending,
-        secondary_sort_order: :descending)
-      described_class.new(
-        challenge_round_id: challenge_round.id).call
+      challenge_round.update!(primary_sort_order: :descending, secondary_sort_order: :descending)
+      described_class.new(challenge_round_id: challenge_round.id).call
       p1s1.reload
       p1s2.reload
       p1s3.reload
@@ -130,11 +127,7 @@ RSpec.describe CalculateLeaderboardService, api: true do
   end
 
   describe 'order by and window_border_dttm' do
-    before do
-      challenge.update(
-        primary_sort_order:   :descending,
-        secondary_sort_order: :descending)
-    end
+    before { challenge_round.update!(primary_sort_order: :descending, secondary_sort_order: :descending) }
 
     # order by
     let(:order_by) do
@@ -172,11 +165,8 @@ RSpec.describe CalculateLeaderboardService, api: true do
     #  2  |  p2s1      |  p2  |  29.00   |  0.003    |   1
 
     before do
-      challenge.update(
-        primary_sort_order:   :descending,
-        secondary_sort_order: :descending)
-      described_class.new(
-        challenge_round_id: challenge_round.id).call
+      challenge_round.update!(primary_sort_order: :descending, secondary_sort_order: :descending)
+      described_class.new(challenge_round_id: challenge_round.id).call
       p1s1.reload
       p1s2.reload
       p1s3.reload
@@ -331,11 +321,8 @@ RSpec.describe CalculateLeaderboardService, api: true do
     #  1  |  p1s2      |  p1  |  30.05  |  0.002    |    1
     #  2  |  p2s1      |  p2  |  31.00  |  0.003    |    2
     before do
-      challenge.update(
-        primary_sort_order:   :ascending,
-        secondary_sort_order: :ascending)
-      described_class.new(
-        challenge_round_id: challenge_round.id).call
+      challenge_round.update!(primary_sort_order: :ascending, secondary_sort_order: :ascending)
+      described_class.new(challenge_round_id: challenge_round.id).call
       p1s1.reload
       p1s2.reload
       p1s3.reload

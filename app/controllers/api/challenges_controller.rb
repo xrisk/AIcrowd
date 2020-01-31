@@ -9,8 +9,6 @@ class Api::ChallengesController < Api::BaseController
         :challenge,
         :organiser_id,
         :status_cd,
-        :primary_sort_order_cd,
-        :secondary_sort_order_cd,
         :perpetual_challenge,
         :grading_factor
       ] })
@@ -26,8 +24,6 @@ class Api::ChallengesController < Api::BaseController
           :challenge,
           :organiser_id,
           :status_cd,
-          :primary_sort_order_cd,
-          :secondary_sort_order_cd,
           :perpetual_challenge,
           :grading_factor
         ],

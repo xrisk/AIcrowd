@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_30_075718) do
+ActiveRecord::Schema.define(version: 2020_01_31_141335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -307,6 +307,8 @@ ActiveRecord::Schema.define(version: 2020_01_30_075718) do
     t.integer "parallel_submissions", default: 0, null: false
     t.string "score_title", default: "", null: false
     t.string "score_secondary_title", default: "", null: false
+    t.string "primary_sort_order_cd", default: "ascending", null: false
+    t.string "secondary_sort_order_cd", default: "not_used", null: false
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
   end
 
@@ -339,8 +341,6 @@ ActiveRecord::Schema.define(version: 2020_01_30_075718) do
     t.integer "page_views", default: 0
     t.integer "participant_count", default: 0
     t.integer "submissions_count", default: 0
-    t.string "score_title"
-    t.string "score_secondary_title"
     t.string "slug"
     t.string "submission_license"
     t.boolean "api_required", default: false
@@ -405,6 +405,8 @@ ActiveRecord::Schema.define(version: 2020_01_30_075718) do
     t.integer "team_freeze_seconds_before_end", default: 604800
     t.boolean "hidden_challenge", default: false, null: false
     t.datetime "team_freeze_time"
+    t.string "score_secondary_title"
+    t.string "score_title"
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["organizer_id"], name: "index_challenges_on_organizer_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true

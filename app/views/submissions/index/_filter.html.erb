@@ -51,7 +51,7 @@
         </div>
       </div>
 
-      <% unless @challenge.secondary_sort_order_cd == 'not_used' %>
+      <% unless @current_round&.secondary_sort_order_cd == 'not_used' %>
         <label><%= @current_round&.score_secondary_title %></label>
         <fieldset>
           <div class="twin-container">

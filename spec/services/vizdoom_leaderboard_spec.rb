@@ -8,8 +8,6 @@ RSpec.describe CalculateLeaderboardService, api: true do
       create :challenge,
              id:                      30,
              status_cd:               "completed",
-             primary_sort_order_cd:   "ascending",
-             secondary_sort_order_cd: "ascending",
              perpetual_challenge:     false,
              media_on_leaderboard:    true
     end
@@ -26,7 +24,10 @@ RSpec.describe CalculateLeaderboardService, api: true do
              minimum_score_secondary: nil,
              ranking_window: 24,
              ranking_highlight: 3,
-             score_precision: 3, score_secondary_precision: 3
+             score_precision: 3,
+             score_secondary_precision: 3,
+             primary_sort_order_cd:   "ascending",
+             secondary_sort_order_cd: "ascending"
     end
 
     participant_ids =

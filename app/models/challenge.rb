@@ -63,17 +63,9 @@ class Challenge < ApplicationRecord
   as_enum :status,
           %i[draft running completed starting_soon],
           map: :string
-  as_enum :primary_sort_order,
-          %i[ascending descending],
-          map: :string, prefix: true
-  as_enum :secondary_sort_order,
-          %i[ascending descending not_used],
-          map: :string, prefix: true
 
   validates :status, presence: true
   validates :challenge, presence: true
-  validates :primary_sort_order, presence: true
-  validates :secondary_sort_order, presence: true
   validates :challenge_client_name, uniqueness: true
   validates :challenge_client_name,
             format: { with: /\A[a-zA-Z0-9]/ }
