@@ -334,15 +334,11 @@ ActiveRecord::Schema.define(version: 2020_02_10_143323) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "tagline"
-    t.string "primary_sort_order_cd", default: "ascending"
-    t.string "secondary_sort_order_cd", default: "not_used"
     t.boolean "perpetual_challenge", default: false
     t.string "answer_file_s3_key"
     t.integer "page_views", default: 0
     t.integer "participant_count", default: 0
     t.integer "submissions_count", default: 0
-    t.string "score_title"
-    t.string "score_secondary_title"
     t.string "slug"
     t.string "submission_license"
     t.boolean "api_required", default: false
