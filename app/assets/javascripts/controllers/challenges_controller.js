@@ -46,16 +46,15 @@ Paloma.controller('Challenges', {
         const currentTab  = $(`#challenge-edit-${currentStep}-tab`);
 
         let switch_handler = function () {
-          $('.active-switch').each((e, checkbox) => {
+          $('.active-switch').each((event, checkbox) => {
               if (checkbox !== this) {
                   checkbox.checked = false;
               }
           });
         };
 
-        $("#rounds").on('cocoon:after-insert', function(e, added_round) {
-            added_round.find('.active-switch').on('click', switch_handler);
-            resetChallengesFormClientValidations();
+        $("#rounds").on('cocoon:after-insert', function(event, added_round) {
+          added_round.find('.active-switch').on('click', switch_handler);
         });
 
         $('.challenges-form-tab-link').click(function(event) {
@@ -72,7 +71,11 @@ Paloma.controller('Challenges', {
 
         $('.active-switch').on('click', switch_handler);
 
-        $('#replace-rules-button').click(function (e) {
+        $('.challenges-form__toggle-expand').click(function(event) {
+          resetChallengesFormClientValidations();
+        });
+
+        $('#replace-rules-button').click(function (event) {
           $(this).hide()
           resetChallengesFormClientValidations();
         });
@@ -81,8 +84,19 @@ Paloma.controller('Challenges', {
           resetChallengesFormClientValidations();
         });
 
+        $('#challenges-form-add-round').click(function() {
+          resetChallengesFormClientValidations();
+
+          setTimeout(function() {
+            $('.challenges-form__toggle-expand').click(function(event) {
+              resetChallengesFormClientValidations();
+            });
+          }, 1000);
+        });
+
         if (currentTab) {
           currentTab.tab('show');
+          resetChallengesFormClientValidations();
         }
     },
     show: function () {
