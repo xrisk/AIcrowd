@@ -1,3 +1,9 @@
-<%= concept(ParticipantChallenge::Cell::ListDetail,
-			collection: @participant_challenges,
-			current_participant: current_participant) %>
+<% @participant_challenges.each do |challenge_participant| %>
+  <% participant = challenge_participant.participant %>
+  <li class="list-group-item">
+    <%= link_to participant_path(participant) do %>
+      <%= concept(Image::Cell, participant, klass: "avatar") %>
+      <span class="text-link"><%= participant.name %></span>
+    <% end %>
+  </li>
+<% end %>
