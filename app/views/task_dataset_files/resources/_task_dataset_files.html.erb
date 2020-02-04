@@ -1,6 +1,9 @@
 <div class="row" data-cell='ParticipantClefTask::Cell::ListDetail'>
   <ul class="list-datasets">
-    <%= concept(TaskDataset::Cell::ListDetail, collection: clef_task.task_dataset_files, current_participant: current_participant) %>
+    <% clef_task.task_dataset_files.each do |task_dataset_file| %>
+      <%= render partial: 'shared/challenges/dataset_file', locals: { dataset_file: task_dataset_file, challenge: challenge } %>
+    <% end %>
+
     <br/><br/>
     <% if clef_task.eua_required? %>
       <p>Your signed End User Agreement (EUA) has been approved. You are therefore permitted to access this challenge's dataset.</p>

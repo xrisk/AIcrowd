@@ -1,8 +1,8 @@
 <!-- item -->
 <li class="list-group-item">
   <div>
-    <%= link_to dataset_file_expiring_url(dataset_file), class: 'text-link', data: { :'dataset-file-id' => dataset_file.id } do %>
-      <%= dataset_file_title(dataset_file) %> (<%= dataset_file_size(dataset_file) %>)
+    <%= link_to file_expiring_url(dataset_file), class: 'text-link', data: { :'dataset-file-id' => dataset_file.id } do %>
+      <%= file_title(dataset_file) %> (<%= file_size(dataset_file) %>)
     <% end %>
     <span class="description">
       <%= dataset_file.description %>
@@ -10,12 +10,12 @@
   </div>
 
   <% if !Pundit.policy(current_participant, dataset_file).destroy? %>
-    <%= link_to 'Download', dataset_file_expiring_url(dataset_file), class: 'btn btn-sm btn-secondary', data: { :'dataset-file-id' => dataset_file.id } %>
+    <%= link_to 'Download', file_expiring_url(dataset_file), class: 'btn btn-sm btn-secondary', data: { :'dataset-file-id' => dataset_file.id } %>
   <% end %>
 
   <% if Pundit.policy(current_participant, dataset_file).destroy? %>
     <div style="display:flex">
-      <%= link_to 'Download', dataset_file_expiring_url(dataset_file), class: 'btn btn-sm btn-secondary', data: { :'dataset-file-id' => dataset_file.id } %>
+      <%= link_to 'Download', file_expiring_url(dataset_file), class: 'btn btn-sm btn-secondary', data: { :'dataset-file-id' => dataset_file.id } %>
       <%= link_to 'Edit', edit_challenge_dataset_file_path(challenge, dataset_file), class: 'btn btn-secondary' %>
       <%= link_to 'Delete',
                   challenge_dataset_file_path(challenge,dataset_file),
