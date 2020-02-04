@@ -1,12 +1,22 @@
 require 'rails_helper'
 
-RSpec.describe CalculateLeaderboardService do
+describe CalculateLeaderboardService do
   # challenge
-  let(:challenge1) { create :challenge, :running, primary_sort_order: :descending }
-  let(:challenge2) { create :challenge, :running, primary_sort_order: :descending }
+  let(:challenge1) { create :challenge, :running }
+  let(:challenge2) { create :challenge, :running }
 
-  let(:challenge1_round) { challenge1.challenge_rounds.first }
-  let(:challenge2_round) { challenge2.challenge_rounds.first }
+  let(:challenge1_round) do
+    challenge1.challenge_rounds.first.tap do |challenge_round|
+      challenge_round.update(primary_sort_order: :descending)
+    end
+  end
+
+  let(:challenge2_round) do
+    challenge2.challenge_rounds.first.tap do |challenge_round|
+      challenge_round.update(primary_sort_order: :descending)
+    end
+  end
+
   # participants
   let!(:p1) { create :participant }
   let!(:p2) { create :participant }

@@ -12,8 +12,6 @@ FactoryBot.define do
     resources_markdown { "# Helpful resources" }
     dataset_description_markdown { "# Dataset description" }
     submission_instructions_markdown { "## Submission instructions" }
-    primary_sort_order_cd { 'ascending' }
-    secondary_sort_order_cd { 'descending' }
     score_title { 'Title_primary' }
     score_secondary_title { 'Title_secondary' }
     license_markdown { '## This is a license' }
