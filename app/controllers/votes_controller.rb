@@ -10,14 +10,23 @@ class VotesController < ApplicationController
     @vote.save
     @votable.update(vote_count: @votable.votes.count)
     Rails.logger.debug("updated: #{@votable.id}")
-    render js: concept(Vote::Cell, @votable, current_participant: current_participant).call(:refresh)
+
+    respond_to do |format|
+      format.js { render :refresh }
+    end
   end
 
   def destroy # unvote
     Vote.destroy(params[:id])
+
+    @vote = @votable.votes.where(participant_id: current_participant&.id).first if current_participant.present?
     @votable.update(vote_count: @votable.votes.count)
+
     Rails.logger.debug "rendering destroy #{@votable}"
-    render js: concept(Vote::Cell, @votable, current_participant: current_participant).call(:refresh)
+
+    respond_to do |format|
+      format.js { render :refresh }
+    end
   end
 
   private

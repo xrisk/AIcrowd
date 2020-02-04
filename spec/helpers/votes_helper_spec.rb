@@ -13,7 +13,6 @@ describe VotesHelper do
       end
 
       it { expect(challenge.votes.count).to eq(1) }
-      it { expect(helper.participant_vote_id(challenge)).to eq(challenge.votes.first.id) }
     end
 
     context 'participant has not voted' do
@@ -23,7 +22,6 @@ describe VotesHelper do
       end
 
       it { expect(challenge.votes.count).to eq(1) }
-      it { expect(helper.participant_vote_id(challenge)).to eq(nil) }
     end
   end
 end

@@ -22,9 +22,7 @@
         </div>
 
         <div class="btn-set" aria-hidden="true">
-          <%= concept(Vote::Cell,
-                @blog,
-                current_participant: current_participant) %>
+          <%= render partial: 'shared/votes/button', locals: { votable: @blog } %>
         </div>
       </div>
     </div>
@@ -47,7 +45,7 @@
       </div>
       <!-- /md content -->
 
-    </div> 
+    </div>
   </div>
 </div>
 <!-- /section -->
@@ -58,7 +56,7 @@
   <!-- blog post previews -->
   <div class="container-fluid">
     <div class="row">
-      
+
       <!-- section header -->
       <div class="col-12">
         <header class="section-header">
