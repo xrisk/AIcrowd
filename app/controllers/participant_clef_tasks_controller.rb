@@ -1,18 +1,23 @@
 class ParticipantClefTasksController < ApplicationController
+  before_action :authenticate_participant!, only: :create
+
   respond_to :js, :html
 
   def create
     clef_task             = ClefTask.find(params[:participant_clef_task][:clef_task_id])
-    participant_clef_task = ParticipantClefTask
-      .where(
-        clef_task_id: strong_params[:clef_task_id], participant_id: current_participant.id)
-      .first
+    participant_clef_task = ParticipantClefTask.where(
+      clef_task_id: participant_clef_task_params[:clef_task_id],
+      participant_id: current_participant.id
+    ).first
+
     if participant_clef_task.blank?
-      participant_clef_task = ParticipantClefTask.create!(strong_params.merge(status_cd: 'requested'))
+      participant_clef_task = ParticipantClefTask.create!(participant_clef_task_params.merge(status_cd: 'requested'))
     else
-      participant_clef_task.update(strong_params)
+      participant_clef_task.update(participant_clef_task_params)
     end
+
     set_status(clef_task, participant_clef_task)
+
     respond_to do |format|
       format.html do
         redirect_to clef_task_task_dataset_files_path(
@@ -31,7 +36,9 @@ class ParticipantClefTasksController < ApplicationController
     end
   end
 
-  def strong_params
+  private
+
+  def participant_clef_task_params
     params.require(:participant_clef_task)
           .permit(:clef_task_id,
                   :eua_file)
