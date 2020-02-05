@@ -1,5 +1,56 @@
-<%= concept(Leaderboard::Cell::TableRow,
-                      collection: @leaderboards,
-                      challenge: @challenge,
-                      current_round: @current_round,
-                      current_participant: current_participant) %>
+<% leaderboards.each do |leaderboard| %>
+  <%
+    participants = leaderboard_participants(leaderboard)
+    challenge    = leaderboard.challenge
+    participant  = leaderboard.participant
+  %>
+
+  <tr>
+    <td class="leaderboard-change">
+      <%= leaderboard_ranking_change(leaderboard) %>
+    </td>
+    <td><strong><%= "%02d" % (leaderboard.row_num) %></strong></td>
+    <td>
+      <% if participants.empty? %>
+        <%= concept(Image::Cell, nil, :klass => "avatar") %>
+        <span class="text-link">Unknown User</span>
+      <% elsif participants.length == 1 %>
+        <%= link_to participant_path(participants[0]), title: participants[0].name, data: {toggle: :tooltip} do %>
+          <%= concept(Image::Cell, participants[0], :klass => "avatar") %>
+          <span class="text-link"><%= participants[0].name %></span>
+        <% end %>
+      <% else %>
+        <%= link_to team.name, challenge_team_path(team.challenge, team) %>
+        <div class="avatar-group">
+          <% participants.each do |participant| %>
+            <%= link_to participant_path(participant), title: p.name, data: {toggle: :tooltip} do %>
+              <%= concept(Image::Cell, participant, :klass => "avatar") %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </td>
+
+    <% if challenge.media_on_leaderboard %>
+      <td>
+        <%= render partial: 'shared/challenges/media', locals: { mediable: leaderboard, size: :thumb } %>
+      </td>
+    <% end %>
+
+    <td><strong><%= leaderboard_formatted_value(@current_round, leaderboard.score) %></strong></td>
+    <td><strong><%= leaderboard_formatted_value(@current_round, leaderboard.score_secondary) %></strong></td>
+    <% leaderboard_other_scores_array(leaderboard, challenge).each do |other_score| %>
+      <td><strong><%= other_score %></strong></td>
+    <% end %>
+    <td><%= leaderboard.entries %></td>
+
+    <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
+    <td class="text-right">
+      <% unless participant.nil? %>
+        <%= link_to challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm' do %>
+          View
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
