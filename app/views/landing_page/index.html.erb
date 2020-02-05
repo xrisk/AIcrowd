@@ -4,7 +4,7 @@
 
       <div class="col-lg-12 col-xl-6">
         <h1><span class="text-primary">Crowdsourcing AI</span> to solve real-world problems</h1>
-        <p>AIcrowd enables data science experts and enthusiasts to collaboratively solve real-world problems, through challenges.</p> 
+        <p>AIcrowd enables data science experts and enthusiasts to collaboratively solve real-world problems, through challenges.</p>
           <%= link_to "Organize a challenge", landing_page_host_path , :class=>"btn btn-secondary mt-4"%>
       </div>
 
@@ -45,7 +45,7 @@
         </header>
       </div>
       <!-- /section header -->
-      <%= concept(Challenge::Cell::ListDetail, collection: @challenges, current_participant: current_participant) %>
+      <%= render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>
     </div>
   </div>
   <!-- /challenge cards -->
@@ -172,7 +172,7 @@
           <% end %>
         </div>
       </div>
-    </div> 
+    </div>
   </div>
 </section>
 <!-- /section -->

@@ -1,14 +1,13 @@
 <!-- masthead - challenge -->
 <div class="masthead masthead-challenge">
   <div class="container-fluid">
-
     <div class="row">
       <div class="col-12">
         <% challenge_rounds.each do |challenge_round| %>
-        <span class="badge <%= remaining_text(challenge_round) == "Completed" ? "badge-success" : "badge-primary" %>">
-          <img src="/assets/img/icon-time.svg">
-          <%= challenge_round.challenge_round %>: <%= remaining_text(challenge_round) %>
-        </span>
+          <span class="badge <%= challenge_remaining_text(challenge, challenge_round) == "Completed" ? "badge-success" : "badge-primary" %>">
+            <img src="/assets/img/icon-time.svg">
+            <%= challenge_round.challenge_round %>: <%= challenge_remaining_text(challenge, challenge_round) %>
+          </span>
         <% end %>
       </div>
     </div>
@@ -31,7 +30,7 @@
       </div>
 
       <div class="col-sm-12 col-md-4 col-lg-3">
-        <%= concept(Challenge::Cell::PrizesBreakdown, challenge) %>
+        <%= render partial: 'shared/challenges/prizes_breakdown', locals: { challenge: challenge } %>
       </div>
     </div>
     <!-- /title/description/prizes -->
@@ -45,9 +44,9 @@
           <% end %>
           <span>By&nbsp;
             <%= link_to organizer_path(challenge.organizer) do %>
-                <%= challenge.organizer.organizer %>
-              <% end %>
-            </span>
+              <%= challenge.organizer.organizer %>
+            <% end %>
+          </span>
         </div>
 
         <div class="stats-group" style="margin-right: 0px">
@@ -55,7 +54,7 @@
             <center>
             <span data-toggle="tooltip" data-placement="top" title="No. of views">
               <img src="/assets/img/icon-views.svg">
-              <%= concept(Challenge::Cell::Statistic, challenge, type: 'view', current_participant: current_participant) %>
+              <%= challenge_stat_count(challenge, 'view') %>
             </span>
             </center>
           </div>
@@ -63,7 +62,7 @@
             <center>
             <span data-toggle="tooltip" data-placement="top" title="No. of users">
               <img src="/assets/img/icon-users.svg">
-              <%= concept(Challenge::Cell::Statistic, challenge, type: 'participant', current_participant: current_participant) %>
+              <%= challenge_stat_count(challenge, 'participant') %>
             </span>
             </center>
           </div>
@@ -71,7 +70,7 @@
             <center>
             <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
               <img src="/assets/img/icon-submissions.svg">
-              <%= concept(Challenge::Cell::Statistic, challenge, type: 'submission', current_participant: current_participant) %>
+              <%= challenge_stat_count(challenge, 'submission') %>
             </span>
             </center>
           </div>
@@ -83,7 +82,6 @@
       </div>
     </div>
     <!-- /organizer/stats/options -->
-
   </div>
 </div>
 <!-- /masthead - challenge -->

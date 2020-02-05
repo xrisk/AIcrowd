@@ -9,15 +9,15 @@
           </div>
         <% else %>
           <ul class="list-group list-group-flush-px-0 list-group-organizers" id="pc-ul">
-            <li class="list-group-item">
-              <% unless @count_of_unknown.zero? %>
+            <% unless @count_of_unknown.zero? %>
+              <li class="list-group-item">
                 <%= link_to '#' do %>
                   <%= concept(Image::Cell, nil, klass: "avatar") %>
                   <span class="text-link"> Unknown Participant </span>
                   <span class="badge badge-primary">x<%= @count_of_unknown %></span>
                 <% end %>
-              <% end %>
-            </li>
+              </li>
+            <% end %>
             <%= render partial: 'participant_challenge_rows' %>
           </ul>
           <!-- load more -->

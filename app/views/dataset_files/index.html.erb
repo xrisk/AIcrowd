@@ -1,36 +1,27 @@
 <div class='content'>
-  <%= concept(Challenge::Cell::ChallengeMasthead, @challenge, current_participant: current_participant)%>
-  <%= render partial: 'challenges/show/subnav',
-    locals: { challenge: @challenge } %>
+  <%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds } %>
+  <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 
-
-
-
-<!-- section -->
-<section class="section-p-sm">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12">
-
-        <header class="section-header">
-                <div>
-                  <h4> Resources </h4>
-                </div>
+  <!-- section -->
+  <section class="section-p-sm">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <header class="section-header">
+            <div>
+              <h4> Resources </h4>
+            </div>
             <% if policy(@challenge).edit? %>
-                <%= link_to "New File", new_challenge_dataset_file_path(@challenge),
-                  class: 'btn btn-sm btn-secondary'%>
+              <%= link_to "New File", new_challenge_dataset_file_path(@challenge), class: 'btn btn-sm btn-secondary'%>
             <% end %>
-       </header>
+          </header>
 
-
-        <ul class="list-group list-group-flush-px-0 list-group-dataset">
+          <ul class="list-group list-group-flush-px-0 list-group-dataset">
             <hr/>
-          <%= concept(Dataset::Cell::ListDetail,
-                      collection: @dataset_files,
-                      current_participant: current_participant) %>
-
-        </ul>
+            <%= concept(Dataset::Cell::ListDetail, collection: @dataset_files, current_participant: current_participant) %>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</div>

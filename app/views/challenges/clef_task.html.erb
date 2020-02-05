@@ -1,4 +1,4 @@
-<%= concept(Challenge::Cell::ChallengeMasthead, @challenge, current_participant: current_participant) %>
+<%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds } %>
 <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 
 <div class="section-p-md">

@@ -1,12 +1,6 @@
 <div class='content'>
-  <%= concept(Challenge::Cell::ChallengeMasthead,
-                @challenge,
-                current_participant: current_participant) %>
-  <%= render partial: 'challenges/show/subnav',
-        locals: { challenge: @challenge } %>
-  <div id='dynamic-content'>
-    <%#= ERB.new(@challenge.dynamic_content).result(OpenStruct.new({challenge: @challenge, current_participant: current_participant}).instance_eval { binding }).html_safe %>
-  </div>
+  <%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds } %>
+  <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 </div>
 <% if @challenge.dynamic_content_url %>
   <script>
@@ -27,4 +21,3 @@
     <iframe class='responsive-iframe' src="<%=@challenge.dynamic_content_url%>" sandbox="allow-scripts allow-pointer-lock" onload="onDynamicFrameLoad(this)"></iframe>
   </div>
 <% end %>
-

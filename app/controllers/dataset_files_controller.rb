@@ -10,8 +10,8 @@ class DatasetFilesController < ApplicationController
   layout "application-old", only: [:new, :create, :edit]
 
   def index
-    @dataset_files = policy_scope(DatasetFile)
-      .where(challenge_id: @challenge.id)
+    @dataset_files    = policy_scope(DatasetFile).where(challenge_id: @challenge.id)
+    @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
   end
 
   def show; end
