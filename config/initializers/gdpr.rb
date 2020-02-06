@@ -21,14 +21,5 @@ GDPR_FIELDS = [
       :first_name,
       :last_name
     ]
-  },
-  {
-    table:    'Topic',
-    id_field: 'participant_id',
-    fields:   [
-      :id,
-      :created_at,
-      :topic
-    ]
   }
 ].freeze

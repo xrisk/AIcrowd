@@ -80,12 +80,6 @@ h5 {
   font-weight: 500;
 }
 
-.list-topics h5 {
-  &:visited {
-    font-weight: 400;
-  }
-}
-
 h6 {
   color: $color-accent-dark;
   font-size: 15px;
@@ -155,11 +149,4 @@ code.block {
 
 .color-accent {
   color: $color-accent-dark;
-}
-
-// added by Sean
-.list-topics h5 {
-  &:visited {
-    font-weight: 400;
-  }
 }

@@ -13,7 +13,6 @@ end
 
 # This view calculates which challenges a participant is connected with, based on:
 # - submissions made
-# - challenge forum topics entered
 # - challenge forum posts entered
 # - challenge data files downloaded
 

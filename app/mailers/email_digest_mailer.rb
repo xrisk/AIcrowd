@@ -4,17 +4,16 @@ class EmailDigestMailer < ApplicationMailer
 
     start_dttm  = set_start_dttm(digest_type)
     submissions = submissions(participant, start_dttm)
-    topics      = topics(participant, start_dttm)
+
     unless participant.admin?
-      return if submissions.blank? && topics.blank?
+      return if submissions.blank?
     end
 
     subject = build_subject(digest_type)
     body    = build_body(
       participant,
       digest_type,
-      submissions,
-      topics)
+      submissions)
     options = format_options(participant, subject, body)
 
     @model_id = nil
@@ -31,21 +30,15 @@ class EmailDigestMailer < ApplicationMailer
     "[AIcrowd] #{digest_type.capitalize} digest"
   end
 
-  def build_body(participant, digest_type, submissions, topics)
+  def build_body(participant, digest_type, submissions)
     body = body_header(digest_type) << '<br/>'
     body << render_sign_ups if participant.admin?
     body << render_submissions(submissions) << '<br/>'
-    body << render_topics(topics) << '<br/>'
     return "<div>#{body}</div>"
   end
 
   def body_header(digest_type)
     "<div>Here's a #{digest_type} summary of activity in AIcrowd.</div>"
-  end
-
-  def topics(participant, start_dttm)
-    topic_ids = TopicsDigestQuery.new(participant, start_dttm).call
-    topics    = Topic.where(id: topic_ids).order('created_at DESC')
   end
 
   def submissions(participant, start_dttm)
@@ -57,15 +50,6 @@ class EmailDigestMailer < ApplicationMailer
   def render_sign_ups
     sign_ups = ParticipantSignUpsQuery.new.call
     body     = render(partial: 'mailers/sign_ups', locals: { sign_ups: sign_ups })
-    return body
-  end
-
-  def render_topics(topics)
-    body = if topics.any?
-             render(partial: "mailers/topics_digest")
-           else
-             "<span></span>"
-           end
     return body
   end
 

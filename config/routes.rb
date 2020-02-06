@@ -131,7 +131,6 @@ Rails.application.routes.draw do
     resources :leaderboards, only: :index do
       get :submission_detail
     end
-    resources :topics, except: [:show]
     get :remove_image, on: :member
     get :clef_task
     resources :votes, only: [:create, :destroy]
@@ -152,10 +151,6 @@ Rails.application.routes.draw do
   end
 
   resources :team_members, path: "our_team", only: [:index]
-
-  resources :topics do
-    resources :votes, only: [:create, :destroy]
-  end
 
   match '/contact', to: 'pages#contact', via: :get
   match '/privacy', to: 'pages#privacy', via: :get
