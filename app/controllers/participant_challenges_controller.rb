@@ -4,6 +4,7 @@ class ParticipantChallengesController < ApplicationController
   respond_to :html, :js
 
   def index
+    @challenge_rounds       = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
     @count_of_unknown       = @challenge.challenge_participants.where(participant_id: nil).count
     @participant_challenges = @challenge
                                   .challenge_participants

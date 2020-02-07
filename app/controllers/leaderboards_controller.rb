@@ -5,8 +5,9 @@ class LeaderboardsController < ApplicationController
   respond_to :js, :html
 
   def index
-    @current_round = current_round
-    @post_challenge = true if @challenge.completed? && params[:post_challenge] == "true"
+    @current_round    = current_round
+    @post_challenge   = true if @challenge.completed? && params[:post_challenge] == "true"
+    @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
 
     current_round_id = if @current_round.blank?
                          0

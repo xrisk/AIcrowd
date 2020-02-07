@@ -14,7 +14,7 @@
 <div class="section-pt-sm-pb-md">
   <div class="container-fluid">
     <div class="row" id="challenges-div">
-      <%= render partial: 'challenges' %>
+      <%= render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>
     </div>
 
 	  <!-- load more -->

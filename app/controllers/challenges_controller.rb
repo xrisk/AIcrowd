@@ -37,7 +37,8 @@ class ChallengesController < ApplicationController
     end
 
     @challenge.record_page_view unless params[:version] # dont' record page views on history pages
-    @challenge_rules = @challenge.current_challenge_rules
+    @challenge_rules  = @challenge.current_challenge_rules
+    @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
   end
 
   def new
@@ -92,7 +93,8 @@ class ChallengesController < ApplicationController
   def clef_task
     @challenge = Challenge.friendly.find(params[:challenge_id])
     authorize @challenge
-    @clef_task = @challenge.clef_task
+    @clef_task        = @challenge.clef_task
+    @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
   end
 
   def remove_image

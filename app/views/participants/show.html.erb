@@ -40,9 +40,7 @@
       <section class="section-p-sm bg-light">
         <div class="container-fluid">
           <div class="row">
-            <%= concept(Challenge::Cell::ListDetail,
-                            collection: @challenges,
-                            current_participant: current_participant) %>
+            <%= render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>
           </div>
         </div>
       </section>
