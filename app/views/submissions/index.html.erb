@@ -15,17 +15,32 @@
             </p>
         <% end %>
 
-        <!-- sub-nav pills -->
-        <%= concept(Submission::Cell::ChallengeRoundPills, @challenge, current_round_id: @current_round_id, my_submissions: @my_submissions, current_participant: current_participant) %>
-        <!-- sub-nav pills -->
+        <% if @challenge.challenge_rounds.count > 1 %>
+          <!-- sub-nav pills -->
+          <ul class="nav nav-pills">
+            <% @challenge.challenge_rounds.each do |challenge_round| %>
+              <li class="nav-item">
+                <%= link_to challenge_round.challenge_round,
+                  challenge_submissions_path(
+                    @challenge,
+                    challenge_round_id: challenge_round.id,
+                    current_round_id: @current_round_id,
+                    my_submissions: @my_submissions),
+                    class: submission_tab_classes(challenge_round, @current_round_id) %>
+              </li>
+            <% end %>
+          </ul>
+          <!-- sub-nav pills -->
+        <% end %>
+
 
         <!-- challenge submissions -->
         <div class="table-responsive-lg">
           <table class="table">
             <%= search_form_for @search,
-            remote: true,
-            url: challenge_submissions_path(@challenge),
-            method: :get do |f| %>
+                remote: true,
+                url: challenge_submissions_path(@challenge),
+                method: :get do |f| %>
               <thead>
                 <tr>
                   <th scope="col"><%= sort_link(@search, :id,"ID") %></th>
@@ -42,7 +57,7 @@
               </thead>
             <% end %>
             <tbody id="submissions-div">
-              <%= render partial: 'submissions' %>
+              <%= render partial: 'submissions', locals: { submissions: @submissions } %>
             </tbody>
           </table>
         </div>
