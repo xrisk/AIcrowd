@@ -6,13 +6,9 @@
           <%= image_tag(challenge.image_file_url, class: 'card-img image_16x9') %>
         <% end %>
         <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
-          <%
-            # TODO: Move this nasty n + 1 query to controller
-            current_round = challenge.challenge_round_summaries.where(round_status_cd: 'current').first
-          %>
-          <span class="badge <%= challenge_remaining_text(challenge, current_round) == "Completed" ? "badge-success" : "badge-primary" %>">
+          <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>">
             <img src="/assets/img/icon-time.svg">
-            <%= challenge_remaining_text(challenge, current_round) %>
+            <%= challenge_remaining_text(challenge, challenge.active_round) %>
           </span>
         <% end %>
       </div>

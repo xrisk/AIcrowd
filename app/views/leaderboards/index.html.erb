@@ -19,11 +19,11 @@
           <!-- / Challenge Round Pills  -->
         <% end %>
 
-        <!-- challenge leaderboard -->
-        <% if @current_round.leaderboard_note.present? %>
+      <!-- challenge leaderboard -->
+        <% if @current_round&.leaderboard_note.present? %>
 		      <div class="md-content width-100">
 			      <div class="note">
-				      <%= sanitize(@current_round.leaderboard_note) %>
+				      <%= sanitize(@current_round&.leaderboard_note) %>
 			      </div>
 		      </div>
         <% end %>

@@ -1,6 +1,5 @@
 class LeaderboardsController < ApplicationController
-  before_action :authenticate_participant!,
-                except: :index
+  before_action :authenticate_participant!, except: :index
   before_action :set_challenge
   before_action :set_vote, only: :index
   before_action :set_follow, only: :index
@@ -9,7 +8,7 @@ class LeaderboardsController < ApplicationController
   def index
     @current_round    = current_round
     @post_challenge   = true if @challenge.completed? && params[:post_challenge] == "true"
-    @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
+    @challenge_rounds = @challenge.challenge_rounds.started
 
     current_round_id = if @current_round.blank?
                          0
@@ -55,9 +54,9 @@ class LeaderboardsController < ApplicationController
 
   def current_round
     if params[:challenge_round_id].present?
-      ChallengeRound.find(params[:challenge_round_id].to_i)
+      @challenge.challenge_rounds.find(params[:challenge_round_id].to_i)
     else
-      @challenge.challenge_rounds.where(active: true).first
+      @challenge.active_round
     end
   end
 end

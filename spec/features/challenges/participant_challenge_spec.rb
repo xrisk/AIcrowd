@@ -4,6 +4,9 @@ describe "participant accesses challenge", :js do
   let!(:challenge) { create(:challenge, :running) }
   let!(:draft_challenge) { create(:challenge, :draft) }
   let!(:participant) { create(:participant) }
+  let!(:running_participant) { create(:challenge_participant, challenge: challenge, participant: participant) }
+  let!(:draft_participant) { create(:challenge_participant, challenge: draft_challenge, participant: participant) }
+
 
   describe "participant can view challenges list" do
     before do

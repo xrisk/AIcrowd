@@ -14,7 +14,7 @@ class WinnersController < ApplicationController
   end
 
   def set_challenge_rounds
-    @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
+    @challenge_rounds = @challenge.challenge_rounds.started
   end
 
   def set_vote

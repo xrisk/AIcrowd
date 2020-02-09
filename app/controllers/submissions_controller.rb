@@ -114,8 +114,7 @@ class SubmissionsController < ApplicationController
   def destroy
     submission = Submission.find(params[:id])
     submission.destroy
-    redirect_to challenge_leaderboards_path(@challenge),
-                notice: 'Submission was successfully destroyed.'
+    redirect_to challenge_leaderboards_path(@challenge), notice: 'Submission was successfully destroyed.'
   end
 
   private
@@ -130,7 +129,7 @@ class SubmissionsController < ApplicationController
   end
 
   def set_challenge_rounds
-    @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
+    @challenge_rounds = @challenge.challenge_rounds.started
   end
 
   def set_vote
@@ -145,7 +144,7 @@ class SubmissionsController < ApplicationController
     @current_round = if params[:challenge_round_id].present?
                        ChallengeRound.find(params[:challenge_round_id].to_i)
                      else
-                       @challenge.challenge_rounds.where(active: true).first
+                       @challenge.active_round
                      end
   end
 

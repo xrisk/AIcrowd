@@ -3,7 +3,7 @@ class ParallelSubmissionsAllowedService
     @challenge   = challenge
     @participant = participant
     # TODO add parallel_submissions to views.
-    @round = ChallengeRound.find(@challenge.current_round.id)
+    @round = challenge.active_round
   end
 
   def call

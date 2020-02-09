@@ -201,17 +201,17 @@ class Challenge < ApplicationRecord
 
   def start_dttm
     @start_dttm ||= begin
-                      return nil if current_round.nil? || current_round.start_dttm.nil?
+                      return nil if active_round.nil? || active_round.start_dttm.nil?
 
-                      current_round.start_dttm
+                      active_round.start_dttm
                     end
   end
 
   def end_dttm
     @end_dttm ||= begin
-                    return nil if current_round.nil? || current_round.end_dttm.nil?
+                    return nil if active_round.nil? || active_round.end_dttm.nil?
 
-                    current_round.end_dttm
+                    active_round.end_dttm
                   end
   end
 
@@ -219,18 +219,19 @@ class Challenge < ApplicationRecord
     SubmissionsRemainingQuery.new(challenge: self, participant_id: participant_id).call
   end
 
-  def current_round
-    @current_round ||= challenge_round_summaries.where(round_status_cd: 'current').first
+  def active_round
+    @active_round ||= challenge_rounds.find_by(active: true)
   end
 
   def previous_round
-    return nil if current_round.row_num == 1
+    previous_rounds = challenge_rounds.where("start_dttm < ?", active_round.start_dttm)
+    return nil if previous_rounds.count == 0
 
-    challenge_round_summaries.where(row_num: current_round.row_num - 1).first
+    previous_rounds.last
   end
 
   def round_open?
-    @round_open ||= current_round.present?
+    @round_open ||= active_round.present?
   end
 
   def should_generate_new_friendly_id?
@@ -245,16 +246,12 @@ class Challenge < ApplicationRecord
     ChallengeRules.where(challenge_id: id).order('version DESC').first
   end
 
-  def current_challenge_rules_version
-    current_challenge_rules&.version
-  end
-
   def has_accepted_challenge_rules?(participant)
     return false unless participant
 
     cp = ChallengeParticipant.where(challenge_id: id, participant_id: participant.id).first
     return false unless cp
-    return false if cp.challenge_rules_accepted_version != current_challenge_rules_version
+    return false if cp.challenge_rules_accepted_version != current_challenge_rules&.version
     return false unless cp.challenge_rules_accepted_date
 
     true

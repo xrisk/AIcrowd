@@ -6,7 +6,7 @@ describe ChallengesController, type: :controller do
   let!(:challenge_draft)         { create :challenge, :draft, challenge: 'challenge_draft' }
   let!(:challenge_running)       { create :challenge, :running, challenge: 'challenge_running' }
   let!(:challenge_completed)     { create :challenge, :completed, challenge: 'challenge_completed' }
-  let!(:challenge_starting_soon) { create :challenge, :starting_soon,  challenge: 'challenge_starting_soon' }
+  let!(:challenge_starting_soon) { create :challenge, :starting_soon, challenge: 'challenge_starting_soon' }
   let!(:participant)             { create :participant }
 
   context 'participant' do

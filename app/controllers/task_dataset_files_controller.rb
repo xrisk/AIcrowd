@@ -8,7 +8,7 @@ class TaskDatasetFilesController < ApplicationController
   before_action :set_s3_direct_post, only: [:new, :create, :edit]
 
   def index
-    @challenge_rounds              = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
+    @challenge_rounds              = @challenge.challenge_rounds.started
     @current_participant_clef_task = @clef_task.participant_clef_tasks.where(participant_id: current_participant.id).first
     @task_dataset_files            = @clef_task.task_dataset_files
     js challenge_id: @challenge.id

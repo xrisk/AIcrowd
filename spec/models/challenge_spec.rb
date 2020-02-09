@@ -39,10 +39,10 @@ describe Challenge do
         challenge.update!(submission_instructions_markdown: "## Submission instructions")
         expect(challenge.submission_instructions).to eq("<h2 id=\"submission-instructions\">Submission instructions</h2>\n")
       end
-      # it 'winner_description' do
-      #  challenge.update!(winner_description_markdown: '## A Winner!!')
-      #  expect(challenge.winner_description).to eq("<h2 id=\"a-winner\">A Winner!!</h2>\n")
-      # end
+      it 'winner_description' do
+       challenge.update!(winner_description_markdown: '## A Winner!!')
+       expect(challenge.winner_description).to eq("<h2 id=\"a-winner\">A Winner!!</h2>\n")
+      end
     end
 
     describe 'after_initialize' do
@@ -61,21 +61,19 @@ describe Challenge do
       end
     end
 
-    describe '#current_round' do
+    describe '#active_round' do
       context 'single open round' do
         let(:challenge) { create :challenge, :running }
 
-        it { expect(challenge.current_round.round_status_cd).to eq('current') }
-        it { expect(challenge.current_round.active).to be true }
-        it { expect(challenge.current_round.challenge_id).to eq(challenge.id) }
+        it { expect(challenge.active_round.active).to be true }
+        it { expect(challenge.active_round.challenge_id).to eq(challenge.id) }
       end
 
       context 'previous and current round' do
         let(:challenge) { create :challenge, :previous_round }
 
-        it { expect(challenge.current_round.round_status_cd).to eq('current') }
-        it { expect(challenge.current_round.active).to be true }
-        it { expect(challenge.current_round.challenge_id).to eq(challenge.id) }
+        it { expect(challenge.active_round.active).to be true }
+        it { expect(challenge.active_round.challenge_id).to eq(challenge.id) }
       end
     end
 
@@ -104,7 +102,7 @@ describe Challenge do
         let(:challenge) { create :challenge, :previous_round }
 
         it { expect(challenge.previous_round.challenge_round).to eq('round 1') }
-        it { expect(challenge.current_round.challenge_round).to eq('round 2') }
+        it { expect(challenge.active_round.challenge_round).to eq('round 2') }
       end
     end
   end

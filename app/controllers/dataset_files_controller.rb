@@ -13,20 +13,18 @@ class DatasetFilesController < ApplicationController
 
   def index
     @dataset_files    = policy_scope(DatasetFile).where(challenge_id: @challenge.id)
-    @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
+    @challenge_rounds = @challenge.challenge_rounds.started
   end
 
   def show; end
 
   def new
-    @dataset_file = @challenge
-      .dataset_files.new
+    @dataset_file = @challenge.dataset_files.new
     authorize @dataset_file
   end
 
   def create
-    @dataset_file = @challenge
-      .dataset_files.new(dataset_file_params)
+    @dataset_file = @challenge.dataset_files.new(dataset_file_params)
     if @dataset_file.save
       redirect_to challenge_dataset_files_path(@challenge),
                   notice: 'Dataset file was successfully created.'
@@ -39,8 +37,7 @@ class DatasetFilesController < ApplicationController
 
   def update
     if @dataset_file.update(dataset_file_params)
-      redirect_to challenge_dataset_files_path(@challenge),
-                  notice: 'Dataset file was successfully updated.'
+      redirect_to challenge_dataset_files_path(@challenge), notice: 'Dataset file was successfully updated.'
     else
       render :edit
     end
@@ -52,8 +49,7 @@ class DatasetFilesController < ApplicationController
       s3.delete_object(key: @dataset_file.dataset_file_s3_key, bucket: ENV['AWS_S3_BUCKET'])
     end
     @dataset_file.destroy
-    redirect_to challenge_dataset_files_path(@challenge),
-                notice: "Dataset file #{@dataset_file.title} was deleted."
+    redirect_to challenge_dataset_files_path(@challenge), notice: "Dataset file #{@dataset_file.title} was deleted."
   end
 
   private

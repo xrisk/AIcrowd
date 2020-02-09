@@ -360,7 +360,7 @@ class Api::ExternalGradersController < Api::BaseController
         raise InvalidChallengeRoundID
       end
     end
-    round = challenge.current_round
+    round = challenge.active_round
     if round.present?
       return round.id
     else
@@ -369,12 +369,9 @@ class Api::ExternalGradersController < Api::BaseController
   end
 
   def challenge_round_open?(challenge)
-    return true if challenge.current_round.present?
+    return true if challenge.active_round.present?
 
-    round = ChallengeRoundSummary
-              .where(challenge_id:    challenge.id,
-                     round_status_cd: 'current')
-              .where("current_timestamp between start_dttm and end_dttm")
+    round = challenge.challenge_rounds.where("current_timestamp between start_dttm and end_dttm")
     return false if round.blank?
   end
 
