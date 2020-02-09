@@ -39,11 +39,13 @@ class ChallengeRound < ApplicationRecord
   default_scope { order :start_dttm }
   scope :started, -> { where("start_dttm < ?", Time.current) }
 
-  def defaults
-    self.challenge_round           ||= 'Round 1'
-    self.ranking_window            ||= 96
-    self.ranking_highlight         ||= 3
-    self.score_precision           ||= 3
-    self.score_secondary_precision ||= 3
+  after_initialize :set_defaults
+
+  def set_defaults
+    if new_record?
+      self.challenge_round ||= "Round #{(challenge&.challenge_rounds&.count || 0) + 1}"
+      self.start_dttm      ||= Time.now.utc
+      self.end_dttm        ||= self.start_dttm + 3.months
+    end
   end
 end

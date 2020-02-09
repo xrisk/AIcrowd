@@ -23,7 +23,7 @@ class ChallengesController < ApplicationController
                           @all_challenges.where(status_cd: 'draft')
                         else
                           @all_challenges
-                  end
+                        end
     @challenges = if current_participant&.admin?
                     @challenges.page(params[:page]).per(20)
                   else

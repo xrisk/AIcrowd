@@ -5,7 +5,6 @@ describe SubmissionsController, type: :controller do
 
   let!(:submissions)           { create_list(:submission, 3, challenge: challenge, participant: participant, grading_status_cd: 'graded') }
   let!(:meta)                  { create(:submission, :with_meta, challenge: challenge, participant: participant, grading_status_cd: 'graded') }
-  let!(:challenge_rules)       { create(:challenge_rules, challenge: challenge) }
   let!(:participation_terms)   { create(:participation_terms) }
   let(:participant)            { create(:participant) }
   let!(:challenge_participant) { create(:challenge_participant, challenge: challenge, participant: participant) }

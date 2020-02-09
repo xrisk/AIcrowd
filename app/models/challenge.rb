@@ -167,13 +167,19 @@ class Challenge < ApplicationRecord
   after_initialize :set_defaults
   after_create :create_discourse_category
   after_update :update_discourse_category
+  after_create :create_default_associations
 
   def set_defaults
     if new_record?
-      self.submission_license    ||= 'Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC).'
       self.challenge_client_name ||= "challenge_#{SecureRandom.hex}"
-      self.featured_sequence       = Challenge.count + 1
+      self.featured_sequence     ||= Challenge.count + 1
+      self.team_freeze_time      ||= Time.now.utc + 2.months + 3.weeks
     end
+  end
+
+  def create_default_associations
+    ChallengeRound.create!(challenge: self)
+    ChallengeRules.create!(challenge: self)
   end
 
   def create_discourse_category

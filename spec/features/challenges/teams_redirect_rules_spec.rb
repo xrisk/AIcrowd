@@ -3,7 +3,6 @@
 # feature 'Terms should be accepted before Team Invitations are accepted' do
 #
 #   let!(:challenge) { create :challenge, :running, teams_allowed: true }
-#   let!(:challenge_rules) { create :challenge_rules, challenge: challenge }
 #   let!(:participation_terms) { create :participation_terms }
 #
 #   let!(:participant_accepted) { create :participant }

@@ -15,7 +15,7 @@ describe ChallengesController, type: :controller do
     describe 'GET #index challenge_running' do
       before { get :index }
 
-      it { expect(assigns(:challenges)).to eq [challenge_running, challenge_completed, challenge_starting_soon] }
+      it { expect(assigns(:challenges)).to contain_exactly(challenge_running, challenge_completed, challenge_starting_soon) }
       it { expect(response).to render_template :index }
     end
 
@@ -23,7 +23,7 @@ describe ChallengesController, type: :controller do
       describe 'GET #index "All"' do
         before { get :index, params: { challenge_filter: 'all' } }
 
-        it { expect(assigns(:challenges).sort).to eq [challenge_running, challenge_completed, challenge_starting_soon].sort }
+        it { expect(assigns(:challenges)).to contain_exactly(challenge_running, challenge_completed, challenge_starting_soon) }
         it { expect(response).to render_template :index }
       end
 
