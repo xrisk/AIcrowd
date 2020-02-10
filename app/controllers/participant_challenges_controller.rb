@@ -2,6 +2,7 @@ class ParticipantChallengesController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_challenge, only: [:index, :approve, :deny]
   before_action :set_vote, only: :index
+  before_action :set_follow, only: :index
   respond_to :html, :js
 
   def index
@@ -24,5 +25,9 @@ class ParticipantChallengesController < ApplicationController
 
   def set_vote
     @vote = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
+  end
+
+  def set_follow
+    @follow = @challenge.follows.where(participant_id: current_participant.id).first if current_participant.present?
   end
 end

@@ -13,7 +13,7 @@ describe FollowsController, type: :controller do
 
     describe "Follow a Challenge" do
       def follow
-        post :create, params: { challenge_id: challenge.id }
+        post :create, format: :js, params: { challenge_id: challenge.id }
         challenge.reload
       end
 
@@ -26,7 +26,7 @@ describe FollowsController, type: :controller do
       let!(:follow) { create(:follow, followable: challenge, participant: participant) }
 
       def unfollow
-        delete :destroy, params: { challenge_id: challenge.id, id: follow.id }
+        delete :destroy, format: :js, params: { challenge_id: challenge.id, id: follow.id }
       end
 
       it { expect { unfollow }.to change { Follow.count }.by(-1) }

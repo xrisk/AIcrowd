@@ -3,6 +3,7 @@ class LeaderboardsController < ApplicationController
                 except: :index
   before_action :set_challenge
   before_action :set_vote, only: :index
+  before_action :set_follow, only: :index
   respond_to :js, :html
 
   def index
@@ -61,6 +62,10 @@ class LeaderboardsController < ApplicationController
 
   def set_vote
     @vote = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
+  end
+
+  def set_follow
+    @follow = @challenge.follows.where(participant_id: current_participant.id).first if current_participant.present?
   end
 
   def current_round

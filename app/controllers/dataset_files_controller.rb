@@ -4,6 +4,7 @@ class DatasetFilesController < ApplicationController
                 only: [:destroy, :edit, :update]
   before_action :set_challenge
   before_action :set_vote, only: :index
+  before_action :set_follow, only: :index
   before_action :check_participation_terms
   before_action :set_s3_direct_post,
                 only: [:new, :create, :edit]
@@ -68,6 +69,10 @@ class DatasetFilesController < ApplicationController
 
   def set_vote
     @vote = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
+  end
+
+  def set_follow
+    @follow = @challenge.follows.where(participant_id: current_participant.id).first if current_participant.present?
   end
 
   def check_participation_terms
