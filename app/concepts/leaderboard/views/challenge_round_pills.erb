@@ -1,9 +1,0 @@
-<!-- Challenge Round Pills  -->
-	<ul class="nav nav-pills">
-		<% challenge_rounds.each do |round| %>
-			<li class="nav-item">
-				<%= link_to round.challenge_round,  challenge_leaderboards_path(:challenge_round_id => round.id), :class => tab_class(round) %>
-			</li>
-		<%end%>
-	</ul>
-<!-- / Challenge Round Pills  -->

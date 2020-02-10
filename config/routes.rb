@@ -133,9 +133,7 @@ Rails.application.routes.draw do
       post :filter, on: :collection
     end
     resources :dynamic_contents, only: [:index]
-    resources :leaderboards, only: :index do
-      get :submission_detail
-    end
+    resources :leaderboards, only: :index
     resources :votes, only: [:create, :destroy]
     resources :follows, only: [:create, :destroy]
     resources :invitations, only: [] do

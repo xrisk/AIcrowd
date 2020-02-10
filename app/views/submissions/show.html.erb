@@ -80,11 +80,7 @@
         <!--Detail media start-->
         <% if @challenge.media_on_leaderboard %>
           <div class="media">
-            <%= concept(Leaderboard::Cell::Media,
-              @submission,
-              size: :large,
-              submission_id: @submission.id,
-              current_participant: current_participant) %>
+            <%= render partial: 'shared/challenges/media', locals: { mediable: @submission, size: :large } %>
           </div>
         <% end %>
         <!--Detail media end-->
