@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_06_130909) do
+ActiveRecord::Schema.define(version: 2020_02_10_143323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -1331,6 +1331,29 @@ ActiveRecord::Schema.define(version: 2020_02_06_130909) do
                       dataset_files df
                     WHERE (dfd.dataset_file_id = df.id)) x
             ORDER BY x.challenge_id, x.participant_id) y;
+  SQL
+
+  create_view "challenge_stats",  sql_definition: <<-SQL
+      SELECT row_number() OVER () AS id,
+      c.id AS challenge_id,
+      c.challenge,
+      r.id AS challenge_round_id,
+      r.challenge_round,
+      r.start_dttm,
+      r.end_dttm,
+      (r.end_dttm - r.start_dttm) AS duration,
+      ( SELECT count(s.id) AS count
+             FROM submissions s
+            WHERE (s.challenge_id = c.id)) AS submissions,
+      ( SELECT count(p.id) AS count
+             FROM participants p
+            WHERE (p.id IN ( SELECT s1.participant_id
+                     FROM submissions s1
+                    WHERE (s1.challenge_id = c.id)))) AS participants
+     FROM challenges c,
+      challenge_rounds r
+    WHERE (r.challenge_id = c.id)
+    ORDER BY (row_number() OVER ()), c.challenge;
   SQL
 
 end
