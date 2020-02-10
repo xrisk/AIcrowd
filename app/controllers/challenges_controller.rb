@@ -2,6 +2,7 @@ class ChallengesController < ApplicationController
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :terminate_challenge, only: [:show, :index]
   before_action :set_challenge, only: [:show, :edit, :update, :destroy, :remove_image]
+  before_action :set_vote, only: [:show, :clef_task]
   after_action :verify_authorized, except: [:index, :show]
   before_action :set_s3_direct_post, only: [:edit, :update]
   before_action :set_organizer, only: [:edit, :update]
@@ -115,6 +116,10 @@ class ChallengesController < ApplicationController
                        .versions[params[:version].to_i].reify
     end
     authorize @challenge
+  end
+
+  def set_vote
+    @vote = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
   end
 
   def set_organizer

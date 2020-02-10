@@ -2,6 +2,7 @@ class LeaderboardsController < ApplicationController
   before_action :authenticate_participant!,
                 except: :index
   before_action :set_challenge
+  before_action :set_vote, only: :index
   respond_to :js, :html
 
   def index
@@ -56,6 +57,10 @@ class LeaderboardsController < ApplicationController
 
   def set_challenge
     @challenge = Challenge.friendly.find(params[:challenge_id])
+  end
+
+  def set_vote
+    @vote = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
   end
 
   def current_round

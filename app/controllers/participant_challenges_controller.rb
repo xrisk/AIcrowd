@@ -1,6 +1,7 @@
 class ParticipantChallengesController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_challenge, only: [:index, :approve, :deny]
+  before_action :set_vote, only: :index
   respond_to :html, :js
 
   def index
@@ -19,5 +20,9 @@ class ParticipantChallengesController < ApplicationController
 
   def set_challenge
     @challenge = Challenge.find(params[:challenge_id])
+  end
+
+  def set_vote
+    @vote = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
   end
 end

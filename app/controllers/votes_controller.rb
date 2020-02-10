@@ -19,7 +19,7 @@ class VotesController < ApplicationController
   def destroy # unvote
     Vote.destroy(params[:id])
 
-    @vote = @votable.votes.where(participant_id: current_participant&.id).first if current_participant.present?
+    @vote = @votable.votes.where(participant_id: current_participant.id).first if current_participant.present?
     @votable.update(vote_count: @votable.votes.count)
 
     Rails.logger.debug "rendering destroy #{@votable}"

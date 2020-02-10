@@ -76,10 +76,6 @@
           </div>
         </div>
         <div class="btn-set" aria-hidden="true">
-          <%
-            # TODO: Move this query to controller
-            vote = current_participant.present? ? challenge.votes.where(participant_id: current_participant&.id).first : nil
-          %>
           <%= render partial: 'shared/votes/button', locals: { votable: challenge, vote: vote } %>
           <%= concept(Follow::Cell, challenge, current_participant: current_participant) %>
         </div>
