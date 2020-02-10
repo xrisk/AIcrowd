@@ -32,7 +32,7 @@ class ParticipantClefTasksController < ApplicationController
     participant_clef_task = ParticipantClefTask.where(clef_task_id: clef_task_id, participant_id: params[:participant_id]).first
     participant_clef_task.update(status_cd: 'registered')
     respond_to do |format|
-      format.html { redirect_to challenge_clef_task_path(params[:challenge_id]) }
+      format.html { redirect_to clef_task_challenge_path(params[:challenge_id]) }
     end
   end
 
