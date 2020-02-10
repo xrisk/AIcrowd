@@ -76,7 +76,7 @@
           </div>
         </div>
         <div class="btn-set" aria-hidden="true">
-          <%= concept(Vote::Cell, challenge, current_participant: current_participant) %>
+          <%= render partial: 'shared/votes/button', locals: { votable: challenge, vote: vote } %>
           <%= concept(Follow::Cell, challenge, current_participant: current_participant) %>
         </div>
       </div>

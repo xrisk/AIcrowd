@@ -1,6 +1,7 @@
 class DynamicContentsController < ApplicationController
   before_action :set_challenge, only: :index
   before_action :set_challenge_rounds, only: :index
+  before_action :set_vote, only: :index
 
   def index; end
 
@@ -12,5 +13,9 @@ class DynamicContentsController < ApplicationController
 
   def set_challenge_rounds
     @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
+  end
+
+  def set_vote
+    @vote = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
   end
 end

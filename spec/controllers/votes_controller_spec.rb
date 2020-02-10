@@ -11,7 +11,7 @@ describe VotesController, type: :controller do
 
     describe "POST #create for Challenge" do
       def register_vote
-        post :create, params: { challenge_id: challenge.id }
+        post :create, format: :js, params: { challenge_id: challenge.id }
         challenge.reload
       end
 

@@ -3,6 +3,7 @@ class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:show, :edit, :update]
   before_action :set_challenge
   before_action :set_challenge_rounds, only: [:index, :new, :show]
+  before_action :set_vote, only: [:index, :new, :show]
   before_action :check_participation_terms, except: [:show, :index]
   before_action :set_s3_direct_post, only: [:new, :edit, :create, :update]
   before_action :set_submissions_remaining, except: [:show, :index]
@@ -129,6 +130,10 @@ class SubmissionsController < ApplicationController
 
   def set_challenge_rounds
     @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
+  end
+
+  def set_vote
+    @vote = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
   end
 
   def set_current_round
