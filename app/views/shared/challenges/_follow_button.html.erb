@@ -1,6 +1,4 @@
 <% if current_participant.present? %>
-  <% follow = followable.follows.where(participant_id: current_participant.id).first %>
-
   <% if follow.present? %>
     <%= link_to "Unfollow",
                 follows_destroy_follow_path(followable, follow.id),

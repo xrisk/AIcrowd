@@ -2,6 +2,7 @@ class TaskDatasetFilesController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_challenge, only: :index
   before_action :set_vote, only: :index
+  before_action :set_follow, only: :index
   before_action :set_task_dataset_file, only: [:destroy, :edit, :update]
   before_action :set_clef_task
   before_action :set_s3_direct_post, only: [:new, :create, :edit]
@@ -57,6 +58,10 @@ class TaskDatasetFilesController < ApplicationController
 
   def set_vote
     @vote = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
+  end
+
+  def set_follow
+    @follow = @challenge.follows.where(participant_id: current_participant.id).first if current_participant.present?
   end
 
   def set_task_dataset_file
