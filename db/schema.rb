@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_03_133009) do
+ActiveRecord::Schema.define(version: 2020_02_06_130909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -341,6 +341,8 @@ ActiveRecord::Schema.define(version: 2020_02_03_133009) do
     t.integer "page_views", default: 0
     t.integer "participant_count", default: 0
     t.integer "submissions_count", default: 0
+    t.string "score_title"
+    t.string "score_secondary_title"
     t.string "slug"
     t.string "submission_license"
     t.boolean "api_required", default: false
@@ -405,8 +407,6 @@ ActiveRecord::Schema.define(version: 2020_02_03_133009) do
     t.integer "team_freeze_seconds_before_end", default: 604800
     t.boolean "hidden_challenge", default: false, null: false
     t.datetime "team_freeze_time"
-    t.string "score_secondary_title"
-    t.string "score_title"
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["organizer_id"], name: "index_challenges_on_organizer_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
@@ -1020,29 +1020,6 @@ ActiveRecord::Schema.define(version: 2020_02_03_133009) do
                       organizers o1,
                       participants p1
                     WHERE ((c1.clef_challenge IS TRUE) AND (o1.id = c1.organizer_id) AND (o1.id = p1.organizer_id) AND (p1.id = p.id)))))) cop;
-  SQL
-
-  create_view "challenge_stats",  sql_definition: <<-SQL
-      SELECT row_number() OVER () AS id,
-      c.id AS challenge_id,
-      c.challenge,
-      r.id AS challenge_round_id,
-      r.challenge_round,
-      r.start_dttm,
-      r.end_dttm,
-      (r.end_dttm - r.start_dttm) AS duration,
-      ( SELECT count(s.id) AS count
-             FROM submissions s
-            WHERE (s.challenge_id = c.id)) AS submissions,
-      ( SELECT count(p.id) AS count
-             FROM participants p
-            WHERE (p.id IN ( SELECT s1.participant_id
-                     FROM submissions s1
-                    WHERE (s1.challenge_id = c.id)))) AS participants
-     FROM challenges c,
-      challenge_rounds r
-    WHERE (r.challenge_id = c.id)
-    ORDER BY (row_number() OVER ()), c.challenge;
   SQL
 
   create_view "participant_sign_ups",  sql_definition: <<-SQL
