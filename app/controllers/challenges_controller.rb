@@ -1,7 +1,7 @@
 class ChallengesController < ApplicationController
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :terminate_challenge, only: [:show, :index]
-  before_action :set_challenge, only: [:show, :edit, :update, :destroy, :remove_image]
+  before_action :set_challenge, only: [:show, :edit, :update, :destroy, :clef_task, :remove_image]
   before_action :set_vote, only: [:show, :clef_task]
   after_action :verify_authorized, except: [:index, :show]
   before_action :set_s3_direct_post, only: [:edit, :update]
@@ -92,8 +92,6 @@ class ChallengesController < ApplicationController
   end
 
   def clef_task
-    @challenge = Challenge.friendly.find(params[:challenge_id])
-    authorize @challenge
     @clef_task        = @challenge.clef_task
     @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
   end

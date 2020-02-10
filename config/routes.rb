@@ -114,6 +114,11 @@ Rails.application.routes.draw do
       get :reorder
       post :assign_order
     end
+    member do
+      get :remove_image
+      get :clef_task
+    end
+
     resources :teams, only: [:create, :show], param: :name, constraints: { name: %r{[^?/]+} }, format: false, controller: 'challenges/teams' do
       resources :invitations, only: [:create], controller: 'challenges/team_invitations'
     end
@@ -131,8 +136,6 @@ Rails.application.routes.draw do
     resources :leaderboards, only: :index do
       get :submission_detail
     end
-    get :remove_image, on: :member
-    get :clef_task
     resources :votes, only: [:create, :destroy]
     resources :follows, only: [:create, :destroy]
     resources :invitations, only: [] do

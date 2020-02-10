@@ -5,13 +5,13 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-12">
-				<% if @clef_task.participant_clef_tasks.blank? %>
-					<div class="md-content">
-                		<%= "No participants for this challenge yet" %>
-              		</div>
+				<% if @clef_task&.participant_clef_tasks.blank? %>
+          <div class="md-content">
+            <%= "No participants for this challenge yet" %>
+          </div>
 				<% else %>
 					<ul class="list-group list-group-flush-px-0 list-group-organizers" id="pc-ul">
-		              <%= render partial: 'clef_participants' %>
+		        <%= render partial: 'challenges/clef_participants', locals: { clef_task: @clef_task, challenge_id: @challenge.id } %>
 					</ul>
 				<% end %>
 			</div>
