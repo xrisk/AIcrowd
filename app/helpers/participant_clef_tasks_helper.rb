@@ -18,7 +18,6 @@ module ParticipantClefTasksHelper
   def render_challenge_resources(participant_clef_task, clef_task, challenge)
     participant_clef_task_status = participant_clef_task_status(participant_clef_task)
 
-    participant_clef_task_status = 'registered'
     case participant_clef_task_status
     when 'profile_incomplete'
       render partial: 'task_dataset_files/resources/profile_incomplete', locals: { organizer: clef_task.organizer }
@@ -27,7 +26,7 @@ module ParticipantClefTasksHelper
     when 'submitted'
       render partial: 'task_dataset_files/resources/participant_submitted', locals: { clef_task: clef_task, participant_clef_task: participant_clef_task, challenge_id: challenge.id }
     when 'registered'
-      render partial: 'task_dataset_files/resources/task_dataset_files', locals: { clef_task: clef_task, challenge_id: challenge.id }
+      render partial: 'task_dataset_files/resources/task_dataset_files', locals: { clef_task: clef_task, challenge: challenge }
     end
   end
 
