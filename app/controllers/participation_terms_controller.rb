@@ -8,7 +8,7 @@ class ParticipationTermsController < ApplicationController
 
   private
 
-  # didn't call this private method
+  # Unused method
   def participation_terms_params
     params
       .require(:challenge_id)

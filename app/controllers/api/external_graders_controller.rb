@@ -218,7 +218,7 @@ class Api::ExternalGradersController < Api::BaseController
     end
   end
 
-  # didn't call from anywhere
+  # Unused method
   def validate_s3_key(s3_key)
     S3Service.new(s3_key, shared_bucket = true).valid_key?
   end
