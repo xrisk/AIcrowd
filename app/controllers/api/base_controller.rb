@@ -22,6 +22,8 @@ class Api::BaseController < ApplicationController
     end
   end
 
+  private
+
   def validate_client_name_and_api_key(challenge_client_name, api_key)
     challenge = Challenge.where(challenge_client_name: challenge_client_name).first
     organizer = Organizer.where(api_key: api_key).first

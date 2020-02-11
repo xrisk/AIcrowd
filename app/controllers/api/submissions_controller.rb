@@ -69,8 +69,6 @@ class Api::SubmissionsController < Api::BaseController
     end
   end
 
-  private
-
   def set_organizer
     token, _options = ActionController::HttpAuthentication::Token.token_and_options(request)
     @organizer      = Organizer.find_by_api_key(token)

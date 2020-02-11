@@ -17,6 +17,8 @@ class Api::ClefTasksController < Api::BaseController
         except: [:created_at, :updated_at, :eua_file, :id, :approved], status: status
   end
 
+  private
+
   def clef_participants(clef_task, status_cd)
     participant_clef_tasks = clef_task.participant_clef_tasks.includes(:participant)
     return participant_clef_tasks.where({ status_cd: status_cd }) if status_cd.present?
