@@ -31,7 +31,6 @@
 //= require modules/subnav_tabs
 //= require modules/inline_validations
 //= require modules/rangy_inputs
-//= require modules/markdown_editor
 //= require modules/flash_messages
 //= require modules/direct_s3_upload
 //= require modules/mentions
@@ -42,7 +41,6 @@
 // require pages/email_preferences_edit
 
 // -------------------- Controllers ------------------- //
-//= require controllers/articles_controller
 //= require controllers/challenges_controller
 //= require controllers/leaderboards_controller
 //= require controllers/dataset_files_controller
@@ -61,6 +59,19 @@ document.addEventListener("turbolinks:load", function () {
     Paloma.start();
 });
 
+function setupOembed(){
+  document.querySelectorAll( 'oembed[url]' ).forEach(element => {
+      // Create the <a href="..." class="embedly-card"></a> element that Embedly uses
+      // to discover the media.
+      const anchor = document.createElement('a');
+
+      anchor.setAttribute('href', element.getAttribute( 'url' ));
+      anchor.className = 'embedly-card';
+
+      element.appendChild(anchor);
+  });
+};
+
 function loadMathJax() {
     window.MathJax = null;
     $.getScript(
@@ -78,8 +89,8 @@ function loadMathJax() {
 }
 
 // Remove default Turbolinks loader
-Turbolinks.ProgressBar.prototype.refresh = function () {
-};
+Turbolinks.ProgressBar.prototype.refresh = function () {};
+
 Turbolinks.ProgressBar.defaultCSS = "";
 var loaderTimer;
 
@@ -108,23 +119,11 @@ document.addEventListener("turbolinks:load", function () {
 
 $(document).on("turbolinks:load", function () {
     loadMathJax();
+    setupOembed();
 });
 
 $(document).on("turbolinks:load", function () {
     window.setTimeout(function () {
         $(".alert:not('.alert-cookie, .alert-fixed')").alert("close");
     }, 5000);
-});
-
-// Temporary Fix for Kramdown not supporting strikethrough  ~~
-$(document).ready(function () {
-    // Looks for strikethrough elements in .markdown-wrap class elements
-    // and wraps them in <del> tags
-    $(".markdown-wrap").each(function () {
-        $(this).html(
-            $(this)
-                .html()
-                .replace(/~~(.*?)~~/gim, "<del>$1</del>")
-        );
-    });
 });

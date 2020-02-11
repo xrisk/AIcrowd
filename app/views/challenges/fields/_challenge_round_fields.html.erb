@@ -111,11 +111,10 @@
         </div>
 
         <div class="form-group col-12">
-          <%= f.label :leaderboard_note_markdown, 'Leaderboard Note' %>
-          <%= markdown_editor do |m| %>
-            <%= f.text_area :leaderboard_note_markdown, class: "form-control" %>
-          <% end %>
-
+          <div class="md-content">
+            <%= f.label :leaderboard_note, 'Leaderboard Note' %>
+            <%= f.text_area :leaderboard_note, class: "form-control", data: { controller: "ckeditor" } %>
+          </div>
         </div>
         <div class="form-group col-4 text-center">
           <%= link_to_remove_association "Remove Round", f, html_options = {

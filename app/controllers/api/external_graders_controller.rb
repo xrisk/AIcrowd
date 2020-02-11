@@ -57,7 +57,7 @@ class Api::ExternalGradersController < Api::BaseController
           participant_id:       participant.id,
           challenge_id:         challenge.id,
           challenge_round_id:   challenge_round_id,
-          description_markdown: params[:description_markdown],
+          description:          params[:description],
           post_challenge:       post_challenge(challenge, params),
           meta:                 params[:meta])
       if media_fields_present?

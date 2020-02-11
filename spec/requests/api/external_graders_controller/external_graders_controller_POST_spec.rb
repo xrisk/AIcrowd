@@ -107,7 +107,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763,
-        description_markdown:  "**My first submission!**" }
+        description:           "<p><strong>My first submission!</strong></p>\n" }
     end
 
     def valid_attributes_with_media

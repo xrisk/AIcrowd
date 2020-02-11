@@ -1,9 +1,9 @@
 <div class="challenges-form__thin-tab">
   <div class="form-group">
     <span class="label-text">Overview</span>
-    <%= markdown_editor do |m| %>
-      <%= f.text_area :description_markdown, class: "form-control" %>
-    <% end %>
+    <div class="md-content">
+      <%= f.text_area :description, class: "form-control", data: { controller: "ckeditor" } %>
+    </div>
   </div>
 
   <div class="form-group">

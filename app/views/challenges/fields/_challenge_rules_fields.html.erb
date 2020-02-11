@@ -1,9 +1,9 @@
 <div class="section-container nested-fields">
   <div class="form-group">
     <label>Rules (markdown)</label>
-    <%= markdown_editor do |m| %>
-      <%= f.text_area :terms_markdown, class: "form-control txt-med" %>
-    <% end %>
+    <div class="md-content">
+      <%= f.text_area :terms, class: "form-control txt-med", data: { controller: "ckeditor" } %>
+    </div>
     <hr>
   </div>
 
@@ -15,7 +15,8 @@
   <div class="form-group">
     <label>Additional Checkbox Text</label>
   </div>
-  <%= markdown_editor do |m| %>
-    <%= f.text_area :additional_checkbox_text_markdown, class: "form-control txt-sml" %>
-  <% end %>
+
+  <div class="md-content">
+    <%= f.text_area :additional_checkbox_text, class: "form-control ", data: { controller: "ckeditor" } %>
+  </div>
 </div>

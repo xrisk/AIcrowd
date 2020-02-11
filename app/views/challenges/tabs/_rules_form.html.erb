@@ -2,7 +2,7 @@
   <span class="label-text">Rules</span>
 
   <% if @challenge.current_challenge_rules.present? %>
-    <%= render 'challenge_rules/challenge_rules', challenge_rules: @challenge.current_challenge_rules, challenge: @challenge, organizer: @organizer %>
+    <%= sanitize(@challenge.current_challenge_rules.terms) %>
   <% else %>
     No rules added yet
   <% end %>

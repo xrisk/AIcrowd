@@ -7,9 +7,10 @@
 
   <span class="label-text">Winner's Tab (Markdown)</span>
 
-  <%= markdown_editor do |m| %>
-    <%= f.text_area :winner_description_markdown, class: "txt-med form-control" %>
-  <% end %>
+  <label>Submission Instructions</label>
+  <div class="md-content">
+    <%= f.text_area :winner_description, class: "form-control", data: { controller: "ckeditor" } %>
+  </div>
 
   <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, next_step: 'rules' } %>
 </div>
