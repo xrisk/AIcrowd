@@ -14,9 +14,13 @@ describe DatasetFilesController, type: :controller do
     before { sign_in participant }
 
     describe 'GET #index' do
-      before { get :index, params: { challenge_id: challenge.id } }
+      before { Aws::S3::Object.any_instance.stub(:exists?).and_return(false) }
 
-      it { expect(response).to render_template :index }
+      it 'renders :index template' do
+        get :index, params: { challenge_id: challenge.id }
+
+        expect(response).to render_template :index
+      end
     end
 
     describe "GET #new" do

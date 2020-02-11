@@ -1,57 +1,42 @@
 require 'rails_helper'
 
-describe "download dataset links" do
-  let!(:challenge) { create :challenge, :running }
-  let!(:challenge_rules) do
-    create :challenge_rules,
-           challenge: challenge
-  end
-  let!(:participation_terms) do
-    create :participation_terms
-  end
-  let!(:participant) { create :participant }
-  let!(:challenge_participant) do
-    create :challenge_participant,
-           challenge:   challenge,
-           participant: participant
-  end
-  let!(:admin) { create :participant, :admin }
-  let!(:challenge_admin_participant) do
-    create :challenge_participant,
-           challenge:   challenge,
-           participant: admin
-  end
-  let!(:organizer) { create :participant, organizer: challenge.organizer }
-  let!(:challenge_organizer_participant) do
-    create :challenge_participant,
-           challenge:   challenge,
-           participant: organizer
-  end
+describe 'download dataset links' do
+  let!(:challenge)                       { create :challenge, :running }
+  let!(:challenge_rules)                 { create :challenge_rules, challenge: challenge }
+  let!(:participation_terms)             { create :participation_terms }
+  let!(:participant)                     { create :participant }
+  let!(:challenge_participant)           { create :challenge_participant, challenge: challenge, participant: participant }
+  let!(:admin)                           { create :participant, :admin }
+  let!(:challenge_admin_participant)     { create :challenge_participant, challenge: challenge, participant: admin }
+  let!(:organizer)                       { create :participant, organizer: challenge.organizer }
+  let!(:challenge_organizer_participant) { create :challenge_participant, challenge: challenge, participant: organizer }
 
-  context 'download link' do
-    it 'participant' do
+  before { Aws::S3::Object.any_instance.stub(:exists?).and_return(false) }
+
+  context 'when logged in as participant' do
+    it 'does not render Delete link' do
       log_in(participant)
-      visit challenge_dataset_files_path(challenge, wait: 1)
+      visit challenge_dataset_files_path(challenge)
+
       expect(page).not_to have_link 'Delete'
     end
+  end
 
-    it 'admin' do
+  context 'when logged in as admin' do
+    it 'renders Delete link' do
       log_in(admin)
-      visit challenge_dataset_files_path(challenge, wait: 1)
-      expect(page).to have_link 'Delete'
-    end
+      visit challenge_dataset_files_path(challenge)
 
-    it 'organizer' do
-      log_in(organizer)
-      visit challenge_dataset_files_path(challenge, wait: 1)
       expect(page).to have_link 'Delete'
     end
-    # TODO after participant terms is fixed
-    # scenario 'download file', js: true do
-    #   log_in(admin)
-    #   visit challenge_dataset_files_path(challenge, wait: 1)
-    #   click_link 'first_file'
-    #   expect(DatasetFileDownload.count).to eq(1)
-    # end
+  end
+
+  context 'when logged in as organizer' do
+    it 'renders delete link' do
+      log_in(organizer)
+      visit challenge_dataset_files_path(challenge)
+
+      expect(page).to have_link 'Delete'
+    end
   end
 end
