@@ -117,6 +117,7 @@ Rails.application.routes.draw do
     member do
       get :remove_image
       get :clef_task
+      get :export
     end
 
     resources :teams, only: [:create, :show], param: :name, constraints: { name: %r{[^?/]+} }, format: false, controller: 'challenges/teams' do

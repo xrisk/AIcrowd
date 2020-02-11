@@ -2,6 +2,89 @@ class Challenge < ApplicationRecord
   include FriendlyId
   include Markdownable
 
+  IMPORTABLE_FIELDS = [
+    :challenge,
+    :status_cd,
+    :tagline,
+    :primary_sort_order_cd,
+    :secondary_sort_order_cd,
+    :perpetual_challenge,
+    :answer_file_s3_key,
+    :score_title,
+    :score_secondary_title,
+    :slug,
+    :submission_license,
+    :api_required,
+    :media_on_leaderboard,
+    :challenge_client_name,
+    :online_grading,
+    :description_markdown,
+    :description,
+    :evaluation_markdown,
+    :evaluation,
+    :rules_markdown,
+    :rules,
+    :prizes_markdown,
+    :prizes,
+    :resources_markdown,
+    :resources,
+    :submission_instructions_markdown,
+    :submission_instructions,
+    :license_markdown,
+    :license,
+    :dataset_description_markdown,
+    :dataset_description,
+    :image_file,
+    :featured_sequence,
+    :dynamic_content_flag,
+    :dynamic_content,
+    :dynamic_content_tab,
+    :winner_description_markdown,
+    :winner_description,
+    :winners_tab_active,
+    :clef_challenge,
+    :submissions_page,
+    :private_challenge,
+    :show_leaderboard,
+    :grader_identifier,
+    :online_submissions,
+    :grader_logs,
+    :require_registration,
+    :grading_history,
+    :post_challenge_submissions,
+    :submissions_downloadable,
+    :dataset_note_markdown,
+    :dataset_note,
+    :discussions_visible,
+    :require_toc_acceptance,
+    :toc_acceptance_text,
+    :toc_acceptance_instructions,
+    :toc_acceptance_instructions_markdown,
+    :toc_accordion,
+    :dynamic_content_url,
+    :prize_cash,
+    :prize_travel,
+    :prize_academic,
+    :prize_misc,
+    :latest_submission,
+    :other_scores_fieldnames,
+    :teams_allowed,
+    :max_team_participants,
+    :team_freeze_seconds_before_end,
+    :hidden_challenge,
+    :team_freeze_time
+  ].freeze
+
+  IMPORTABLE_ASSOCIATIONS = [
+    :clef_task,
+    :dataset_files,
+    :submission_file_definitions,
+    :challenge_partners,
+    :challenge_rules,
+    :challenge_rounds,
+    :challenge_round_summaries
+  ].freeze
+
   friendly_id :challenge,
               use: %i[slugged finders history]
 
@@ -40,8 +123,6 @@ class Challenge < ApplicationRecord
            class_name: 'ParticipantChallengeCount'
   has_many :challenge_registrations,
            class_name: 'ChallengeRegistration'
-  has_many :challenge_organizer_participants,
-           class_name: 'ChallengeOrganizerParticipant'
 
   has_many :votes, as: :votable
   has_many :follows, as: :followable
