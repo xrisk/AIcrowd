@@ -14,14 +14,14 @@ class BlogsController < ApplicationController
     @blog.record_page_view unless params[:version] # don't record page views on history pages
   end
 
+  private
+
   def set_blog
     @blog = Blog.friendly.find(params[:id])
     # Randomly select 3 blogs
     @selected_blogs = Blog.where.not(id: @blog.id).order("RANDOM()").sample(3)
     authorize @blog
   end
-
-  private
 
   def blog_params
     params.require(:blog).permit(:participant_id, :title, :body, :published, :vote_count, :view_count)

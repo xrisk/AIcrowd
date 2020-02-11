@@ -8,7 +8,9 @@ class TeamsController < ApplicationController
     redirect_to challenge_team_path(@team.challenge, @team), status: 301
   end
 
-  private def set_team
+  private
+
+  def set_team
     @team = Team.order(:id).find_by!(name: params[:name])
     authorize @team
   end

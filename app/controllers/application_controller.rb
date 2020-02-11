@@ -42,8 +42,6 @@ class ApplicationController < ActionController::Base
     current_participant
   end
 
-  private
-
   def after_sign_in_path_for(resource)
     unless current_participant.agreed_to_terms_of_use_and_privacy?
       flash[:notice] = 'We have changed the way we save email and notification preferences, please review them below'

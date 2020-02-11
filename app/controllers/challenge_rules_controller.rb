@@ -6,6 +6,7 @@ class ChallengeRulesController < ApplicationController
 
   private
 
+  # didn't call this private methods
   def challenge_rules_params
     params
       .require(:challenge_id)

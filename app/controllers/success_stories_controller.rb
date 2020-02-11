@@ -11,12 +11,12 @@ class SuccessStoriesController < ApplicationController
 
   def show; end
 
+  private
+
   def set_success_story
     @success_story = SuccessStory.friendly.find(params[:id])
     authorize @success_story
   end
-
-  private
 
   def success_story_params
     params.require(:success_story).permit(:title, :byline, :published, :image_file)
