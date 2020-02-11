@@ -13,6 +13,8 @@ class JobPostingsController < InheritedResources::Base
     @job_posting.record_page_view
   end
 
+  private
+
   def set_job_posting
     @job_posting = JobPosting.friendly.find(params[:id])
   end

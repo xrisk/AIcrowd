@@ -28,16 +28,18 @@ class Challenges::TeamsController < ApplicationController
       .includes(:invitee)
   end
 
-  private def set_challenge
+  private
+
+  def set_challenge
     @challenge = Challenge.friendly.find(params[:challenge_id])
   end
 
-  private def set_team
+  def set_team
     @team = @challenge.teams.find_by!(name: params[:name])
     authorize @team
   end
 
-  private def create_team_attributes
+  def create_team_attributes
     params
       .fetch(:team, {})
       .permit(:name)

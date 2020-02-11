@@ -17,19 +17,21 @@ class TeamInvitations::DeclinationsController < ApplicationController
     redirect_to @team.challenge
   end
 
-  private def set_invitation
+  private
+
+  def set_invitation
     @invitation = TeamInvitation.find_by!(uuid: params[:team_invitation_uuid])
   end
 
-  private def set_team
+  def set_team
     @team = @invitation.team
   end
 
-  private def set_invitee
+  def set_invitee
     @invitee = @invitation.invitee
   end
 
-  private def redirect_on_disallowed
+  def redirect_on_disallowed
     if @invitee.is_a?(EmailInvitation) && !@invitee.token_eq?(params[:email_token])
       flash[:error] = 'Please use the link you were sent by email and try again'
       redirect_to root_path

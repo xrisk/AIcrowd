@@ -173,33 +173,6 @@ class Api::ExternalGradersController < Api::BaseController
     end
   end
 
-  def clean_meta(params_meta)
-    # Backward Compatibility
-    # Across differrent versions of this API we have been passing
-    # `meta` as a string, serialized JSON, and a hash.
-    # This function consistently returns a Hash by parsing the
-    # meta field depending of if its a string, serrialized json or a hash.
-    #
-    if params_meta.respond_to?(:keys)
-      return params_meta
-    else
-      begin
-        # Try to parse it as a JSON
-        return JSON.parse(params_meta)
-      rescue Exception => e
-        # If its a string which is not a valid JSON
-        # Then this is from the corrupted data
-        # because of this bug :
-        # https://github.com/crowdAI/crowdai/issues/737
-        # So we return an empty Hash
-        Rails.logger.warn "Found invalid meta key: #{params_meta}.
-        Assuming the user meant an empty Hash, or it is corrupt data.
-        Reference : https://github.com/crowdAI/crowdai/issues/737 "
-        return {}
-      end
-    end
-  end
-
   def submission_info
     submission = Submission.find(params[:id])
     raise SubmissionIdInvalid if submission.blank?
@@ -243,105 +216,6 @@ class Api::ExternalGradersController < Api::BaseController
     else
       return false
     end
-  end
-
-  def media_fields_present?
-    media_large        = params[:media_large]
-    media_thumbnail    = params[:media_thumbnail]
-    media_content_type = params[:media_content_type]
-    raise MediaFieldsIncomplete unless (media_large.present? && media_thumbnail.present? && media_content_type.present?) || (media_large.blank? && media_thumbnail.blank? && media_content_type.blank?)
-    return true if media_large.present? && media_thumbnail.present? && media_content_type.present?
-    return false if media_large.blank? && media_thumbnail.blank? && media_content_type.blank?
-  end
-
-  def get_challenge_round_id(challenge:, params:)
-    if params[:challenge_round_id].present?
-      round = ChallengeRound.where(
-        challenge_id: challenge.id,
-        id:           params[:challenge_round_id]).first
-      if round.present?
-        return round.id
-      else
-        raise InvalidChallengeRoundID
-      end
-    end
-    round = challenge.current_round
-    if round.present?
-      return round.id
-    else
-      raise ChallengeRoundNotOpen
-    end
-  end
-
-  def challenge_round_open?(challenge)
-    return true if challenge.current_round.present?
-
-    round = ChallengeRoundSummary
-              .where(challenge_id:    challenge.id,
-                     round_status_cd: 'current')
-              .where("current_timestamp between start_dttm and end_dttm")
-    return false if round.blank?
-  end
-
-  def participant_qualified?(challenge, participant)
-    return true if challenge.previous_round.nil?
-
-    min_score = challenge.previous_round.minimum_score
-    return true if min_score.nil?
-
-    participant_leaderboard = challenge
-                          .leaderboards
-                          .where(participant_id:     participant.id,
-                                 challenge_round_id: challenge.previous_round.id).first
-    return false if participant_leaderboard.nil?
-    if participant_leaderboard.score >= min_score
-      return true
-    else
-      return false
-    end
-  end
-
-  def validate_s3_key(s3_key)
-    S3Service.new(s3_key, shared_bucket = true).valid_key?
-  end
-
-  def notify_admins(submission)
-    Admin::SubmissionNotificationJob.perform_later(submission)
-  end
-
-  def grading_params
-    case params[:grading_status]
-    when 'graded'
-      grading_message = params[:grading_message].presence || 'Graded successfully'
-      grading_message = params[:grading_message]
-      { score:             params[:score],
-        score_secondary:   params[:score_secondary],
-        grading_status_cd: 'graded',
-        grading_message:   grading_message }
-    when 'initiated'
-      { score:             nil,
-        score_secondary:   nil,
-        grading_status_cd: 'initiated',
-        grading_message:   params[:grading_message] }
-    when 'submitted'
-      { score:             nil,
-        score_secondary:   nil,
-        grading_status_cd: 'submitted',
-        grading_message:   params[:grading_message] }
-    when 'failed'
-      raise GradingMessageMissing if params[:grading_message].blank?
-
-      { score:             nil,
-        score_secondary:   nil,
-        grading_status_cd: 'failed',
-        grading_message:   params[:grading_message] }
-    else
-      raise GradingStatusInvalid
-    end
-  end
-
-  def parallel_submissions_allowed?(challenge, participant)
-    ParallelSubmissionsAllowedService.new(challenge, participant).call
   end
 
   class DeveloperAPIKeyInvalid < StandardError
@@ -435,5 +309,129 @@ class Api::ExternalGradersController < Api::BaseController
     def initialize(msg = 'Invalid Submission. Have you registered for this challenge and agreed to the participation terms?')
       super
     end
+  end
+
+  private
+
+  def clean_meta(params_meta)
+    # Backward Compatibility
+    # Across differrent versions of this API we have been passing
+    # `meta` as a string, serialized JSON, and a hash.
+    # This function consistently returns a Hash by parsing the
+    # meta field depending of if its a string, serrialized json or a hash.
+    #
+    if params_meta.respond_to?(:keys)
+      return params_meta
+    else
+      begin
+        # Try to parse it as a JSON
+        return JSON.parse(params_meta)
+      rescue Exception => e
+        # If its a string which is not a valid JSON
+        # Then this is from the corrupted data
+        # because of this bug :
+        # https://github.com/crowdAI/crowdai/issues/737
+        # So we return an empty Hash
+        Rails.logger.warn "Found invalid meta key: #{params_meta}.
+        Assuming the user meant an empty Hash, or it is corrupt data.
+        Reference : https://github.com/crowdAI/crowdai/issues/737 "
+        return {}
+      end
+    end
+  end
+
+  def media_fields_present?
+    media_large        = params[:media_large]
+    media_thumbnail    = params[:media_thumbnail]
+    media_content_type = params[:media_content_type]
+    raise MediaFieldsIncomplete unless (media_large.present? && media_thumbnail.present? && media_content_type.present?) || (media_large.blank? && media_thumbnail.blank? && media_content_type.blank?)
+    return true if media_large.present? && media_thumbnail.present? && media_content_type.present?
+    return false if media_large.blank? && media_thumbnail.blank? && media_content_type.blank?
+  end
+
+  def get_challenge_round_id(challenge:, params:)
+    if params[:challenge_round_id].present?
+      round = ChallengeRound.where(
+        challenge_id: challenge.id,
+        id:           params[:challenge_round_id]).first
+      if round.present?
+        return round.id
+      else
+        raise InvalidChallengeRoundID
+      end
+    end
+    round = challenge.current_round
+    if round.present?
+      return round.id
+    else
+      raise ChallengeRoundNotOpen
+    end
+  end
+
+  def challenge_round_open?(challenge)
+    return true if challenge.current_round.present?
+
+    round = ChallengeRoundSummary
+              .where(challenge_id:    challenge.id,
+                     round_status_cd: 'current')
+              .where("current_timestamp between start_dttm and end_dttm")
+    return false if round.blank?
+  end
+
+  def participant_qualified?(challenge, participant)
+    return true if challenge.previous_round.nil?
+
+    min_score = challenge.previous_round.minimum_score
+    return true if min_score.nil?
+
+    participant_leaderboard = challenge
+                          .leaderboards
+                          .where(participant_id:     participant.id,
+                                 challenge_round_id: challenge.previous_round.id).first
+    return false if participant_leaderboard.nil?
+    if participant_leaderboard.score >= min_score
+      return true
+    else
+      return false
+    end
+  end
+
+  def notify_admins(submission)
+    Admin::SubmissionNotificationJob.perform_later(submission)
+  end
+
+  def grading_params
+    case params[:grading_status]
+    when 'graded'
+      grading_message = params[:grading_message].presence || 'Graded successfully'
+      grading_message = params[:grading_message]
+      { score:             params[:score],
+        score_secondary:   params[:score_secondary],
+        grading_status_cd: 'graded',
+        grading_message:   grading_message }
+    when 'initiated'
+      { score:             nil,
+        score_secondary:   nil,
+        grading_status_cd: 'initiated',
+        grading_message:   params[:grading_message] }
+    when 'submitted'
+      { score:             nil,
+        score_secondary:   nil,
+        grading_status_cd: 'submitted',
+        grading_message:   params[:grading_message] }
+    when 'failed'
+      raise GradingMessageMissing if params[:grading_message].blank?
+
+      { score:             nil,
+        score_secondary:   nil,
+        grading_status_cd: 'failed',
+        grading_message:   params[:grading_message] }
+    else
+      raise GradingStatusInvalid
+    end
+  end
+
+  def parallel_submissions_allowed?(challenge, participant)
+    ParallelSubmissionsAllowedService.new(challenge, participant).call
   end
 end

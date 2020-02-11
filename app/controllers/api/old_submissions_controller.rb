@@ -39,6 +39,7 @@ class Api::OldSubmissionsController < Api::BaseController
   private
 
   def set_submissions(challenge_id, grading_status, after, challenge_round_id)
+    # can manage it in multi level if-else loop
     if grading_status.blank? && after.blank? && challenge_round_id.blank?
       @submissions = Submission.where(challenge_id: challenge_id)
     elsif grading_status.blank? && after.blank? && challenge_round_id.present?
@@ -64,8 +65,6 @@ class Api::OldSubmissionsController < Api::BaseController
                                       challenge_id, grading_status, challenge_round_id)
     end
   end
-
-  private
 
   def set_organizer
     token, _options = ActionController::HttpAuthentication::Token.token_and_options(request)

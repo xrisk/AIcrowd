@@ -21,15 +21,17 @@ class Challenges::TeamInvitationsController < ApplicationController
     redirect_to challenge_team_path(@team.challenge, @team)
   end
 
-  private def set_challenge
+  private
+
+  def set_challenge
     @challenge = Challenge.friendly.find(params[:challenge_id])
   end
 
-  private def set_team
+  def set_team
     @team = @challenge.teams.find_by!(name: params[:team_name])
   end
 
-  private def set_invitee
+  def set_invitee
     name_or_email = params[:invitee] || ''
     @search_field = name_or_email&.match?(Devise.email_regexp) ? :email : :name
 
@@ -45,11 +47,11 @@ class Challenges::TeamInvitationsController < ApplicationController
     end
   end
 
-  private def set_invitation
+  def set_invitation
     @invitation = @team.team_invitations.find(params[:id])
   end
 
-  private def redirect_on_create_disallowed
+  def redirect_on_create_disallowed
     issues = {}
     if !policy(@team).create_invitations?(issues)
       err = issues[:sym]
@@ -76,7 +78,7 @@ class Challenges::TeamInvitationsController < ApplicationController
     end
   end
 
-  private def error_msg(key)
+  def error_msg(key)
     i18n_scope = %i[helpers teams create_invitation_flash]
     msg        = ''
     msg << I18n.t(:error_preamble, scope: i18n_scope)

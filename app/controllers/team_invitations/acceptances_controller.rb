@@ -19,23 +19,25 @@ class TeamInvitations::AcceptancesController < ApplicationController
     redirect_to challenge_team_path(@team.challenge, @team)
   end
 
-  private def set_invitation
+  private
+
+  def set_invitation
     @invitation = TeamInvitation.find_by!(uuid: params[:team_invitation_uuid])
   end
 
-  private def set_invitee
+  def set_invitee
     @invitee = @invitation.invitee
   end
 
-  private def set_team
+  def set_team
     @team = @invitation.team
   end
 
-  private def set_challenge
+  def set_challenge
     @challenge = @invitation.team.challenge
   end
 
-  private def check_terms_and_rules
+  def check_terms_and_rules
     unless current_participant.has_accepted_participation_terms?
       @redirect = url_for([@challenge, ParticipationTerms.current_terms])
       return true
@@ -47,7 +49,7 @@ class TeamInvitations::AcceptancesController < ApplicationController
     return false
   end
 
-  private def redirect_on_disallowed
+  def redirect_on_disallowed
     if @invitee.is_a?(EmailInvitation)
       if @invitee.token_eq?(params[:email_token])
         flash[:error] = 'Please claim the email the invitation was sent to'
@@ -84,7 +86,7 @@ class TeamInvitations::AcceptancesController < ApplicationController
     end
   end
 
-  private def accept_atomically!
+  def accept_atomically!
     @mails = {
       accepted_invitations: [],
       declined_invitations: [],
@@ -144,13 +146,13 @@ class TeamInvitations::AcceptancesController < ApplicationController
     end
   end
 
-  private def recalculate_leaderboards
+  def recalculate_leaderboards
     @team.challenge.challenge_rounds.pluck(:id).each do |round_id|
       CalculateLeaderboardJob.perform_later(challenge_round_id: round_id)
     end
   end
 
-  private def notify_concerned_parties_later
+  def notify_concerned_parties_later
     Team::InvitationAcceptedNotifierJob.perform_later(current_participant.id, @mails)
   end
 end

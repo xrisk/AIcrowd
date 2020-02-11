@@ -61,34 +61,6 @@ class ParticipantsController < ApplicationController
     redirect_to participant_path(@participant), notice: 'API Key regenerated.'
   end
 
-  def sso_helper
-    decoded        = Base64.decode64(params[:sso])
-    decoded_hash   = Rack::Utils.parse_query(decoded)
-    nonce          = decoded_hash['nonce']
-    return_sso_url = decoded_hash['return_sso_url']
-    sig            = params[:sig]
-    signed         = OpenSSL::HMAC.hexdigest("sha256", ENV['SSO_SECRET'], params[:sso])
-    raise "Incorrect SSO signature" if sig != signed
-
-    avatar_url = ENV['DOMAIN_NAME'] + '/assets/users/user-avatar-default.svg'
-    avatar_url = current_user.image_file.url if current_user.image_file && !current_user.image_file.url.nil?
-
-    response_params = {
-      email:       current_user.email,
-      admin:       current_user.admin,
-      external_id: current_user.id,
-      name:        current_user.name,
-      nonce:       nonce,
-      avatar_url:  avatar_url
-    }
-
-    response_query         = response_params.to_query
-    encoded_response_query = Base64.strict_encode64(response_query)
-    response_sig           = OpenSSL::HMAC.hexdigest("sha256", ENV['SSO_SECRET'], encoded_response_query)
-
-    url = File.join(return_sso_url, "?sso=#{CGI.escape(encoded_response_query)}&sig=#{response_sig}")
-  end
-
   def sso
     authorize current_user
     url = sso_helper
@@ -149,5 +121,33 @@ class ParticipantsController < ApplicationController
         # for example during the oauth flow
         # :agreed_to_terms_of_use_and_privacy,
         :agreed_to_marketing)
-    end
+  end
+
+  def sso_helper
+    decoded        = Base64.decode64(params[:sso])
+    decoded_hash   = Rack::Utils.parse_query(decoded)
+    nonce          = decoded_hash['nonce']
+    return_sso_url = decoded_hash['return_sso_url']
+    sig            = params[:sig]
+    signed         = OpenSSL::HMAC.hexdigest("sha256", ENV['SSO_SECRET'], params[:sso])
+    raise "Incorrect SSO signature" if sig != signed
+
+    avatar_url = ENV['DOMAIN_NAME'] + '/assets/users/user-avatar-default.svg'
+    avatar_url = current_user.image_file.url if current_user.image_file && !current_user.image_file.url.nil?
+
+    response_params = {
+      email:       current_user.email,
+      admin:       current_user.admin,
+      external_id: current_user.id,
+      name:        current_user.name,
+      nonce:       nonce,
+      avatar_url:  avatar_url
+    }
+
+    response_query         = response_params.to_query
+    encoded_response_query = Base64.strict_encode64(response_query)
+    response_sig           = OpenSSL::HMAC.hexdigest("sha256", ENV['SSO_SECRET'], encoded_response_query)
+
+    url = File.join(return_sso_url, "?sso=#{CGI.escape(encoded_response_query)}&sig=#{response_sig}")
+  end
 end

@@ -8,14 +8,6 @@ class ParticipationTermsController < ApplicationController
 
   private
 
-  def participation_terms_params
-    params
-      .require(:challenge_id)
-      .permit(
-        :id,
-        :terms_markdown)
-  end
-
   def set_participation_terms
     @participation_terms = ParticipationTerms.current_terms
   end

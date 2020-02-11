@@ -6,16 +6,6 @@ class ChallengeRulesController < ApplicationController
 
   private
 
-  def challenge_rules_params
-    params
-      .require(:challenge_id)
-      .permit(
-        :id,
-        :terms_markdown,
-        :has_additional_checkbox,
-        :additional_checkbox_text_markdown)
-  end
-
   def set_challenge_rules
     @challenge_rules       = params[:id] && ChallengeRules.find(params[:id])
     @challenge             = @challenge_rules.challenge
