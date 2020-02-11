@@ -12,15 +12,17 @@ class TeamInvitations::CancellationsController < ApplicationController
     redirect_to challenge_team_path(@team.challenge, @team)
   end
 
-  private def set_invitation
+  private
+
+  def set_invitation
     @invitation = TeamInvitation.find_by!(uuid: params[:team_invitation_uuid])
   end
 
-  private def set_team
+  def set_team
     @team = @invitation.team
   end
 
-  private def redirect_on_disallowed
+  def redirect_on_disallowed
     unless @team.team_participants_organizer.exists?(participant_id: current_participant.id)
       flash[:error] = 'Only an organizer of the team may cancel an invitation'
       redirect_to challenge_team_path(@team.challenge, @team)

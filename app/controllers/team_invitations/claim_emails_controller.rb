@@ -21,7 +21,9 @@ class TeamInvitations::ClaimEmailsController < ApplicationController
     redirect_to participant_path(current_participant, anchor: 'tab-teams')
   end
 
-  private def set_invitations
+  private
+
+  def set_invitations
     @email_claim_params = params.require(:email_claim).permit(
       :email_token,
       :email_confirmation
@@ -43,7 +45,7 @@ class TeamInvitations::ClaimEmailsController < ApplicationController
              })
   end
 
-  private def redirect_from_create_on_disallowed
+  def redirect_from_create_on_disallowed
     if @claimed_email_invitation.nil?
       flash[:error] = 'Invalid claim'
       redirect_to claim_emails_path(@email_claim_params)
