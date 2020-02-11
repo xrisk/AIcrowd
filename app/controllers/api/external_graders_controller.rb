@@ -218,11 +218,6 @@ class Api::ExternalGradersController < Api::BaseController
     end
   end
 
-  # Unused method
-  def validate_s3_key(s3_key)
-    S3Service.new(s3_key, shared_bucket = true).valid_key?
-  end
-
   class DeveloperAPIKeyInvalid < StandardError
     def initialize(msg = "The API key did not match any participant record.")
       super
