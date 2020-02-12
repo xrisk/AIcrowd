@@ -12,7 +12,7 @@
             <% unless @count_of_unknown.zero? %>
               <li class="list-group-item">
                 <%= link_to '#' do %>
-                  <%= concept(Image::Cell, nil, klass: "avatar") %>
+                  <%= image_tag default_image_url, class: 'avatar' %>
                   <span class="text-link"> Unknown Participant </span>
                   <span class="badge badge-primary">x<%= @count_of_unknown %></span>
                 <% end %>

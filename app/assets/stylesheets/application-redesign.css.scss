@@ -4125,6 +4125,12 @@ input[type="button"].btn-block {
   border-radius: calc(0 - 1px);
 }
 
+.image_16x9 {
+  position: absolute;
+  object-fit: cover;
+  height: 100%;
+}
+
 .card-img-top {
   width: 100%;
   border-top-left-radius: calc(0 - 1px);

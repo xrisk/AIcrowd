@@ -40,7 +40,7 @@
       <div class="col-12 d-flex align-items-center flex-wrap">
         <div class="organizer-attribution">
           <%= link_to organizer_path(challenge.organizer) do %>
-            <%= concept(Image::Cell, challenge.organizer, current_participant: current_participant) %>
+            <%= image_tag challenge.organizer.image_file_url %>
           <% end %>
           <span>By&nbsp;
             <%= link_to organizer_path(challenge.organizer) do %>

@@ -65,7 +65,7 @@
             <div class="col-xs-12 col-sm-6">
               <div class="list-group-item-user">
                 <%= link_to(member.participant) do %>
-                  <%= concept(Image::Cell, member.participant, klass: "avatar") %>
+                  <%= image_tag member.participant.image_url, class: 'avatar' %>
                 <% end %>
                 <div>
                   <%= link_to member.participant, class: "text-link" do %>
