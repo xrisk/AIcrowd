@@ -1,8 +1,8 @@
 <% leaderboards.each do |leaderboard| %>
   <%
-    participants             = leaderboard_participants(leaderboard)
-    challenge                = leaderboard.challenge
-    leaderboard_participant  = leaderboard.participant
+    participants            = leaderboard_participants(leaderboard)
+    challenge               = leaderboard.challenge
+    leaderboard_participant = leaderboard.participant
   %>
 
   <tr>
@@ -21,6 +21,7 @@
         <% end %>
       <% else %>
         <% team = leaderboard.team %>
+
         <% if team.present? %>
           <%= link_to team.name, challenge_team_path(team.challenge, team) %>
         <% else %>

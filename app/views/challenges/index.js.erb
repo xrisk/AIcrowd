@@ -1,5 +1,5 @@
 $(".load-more").remove();
-$("#challenges-div").append("<%= j render partial: 'shared/challenges/listing', locals: { challenge: @challenge } %>");
+$("#challenges-div").append("<%= j render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>");
 $("#more-anchor").after("<%= j render partial: 'shared/load_more', locals: { collection: @challenges } %>");
 $('html, body').animate({
         scrollTop: $(document).height()-$(window).height()},

@@ -17,7 +17,6 @@ describe SubmissionsController, feature: true do
     end
 
     context 'when user is logged in' do
-
       let(:admin) { create(:participant) }
 
       before { log_in admin }
