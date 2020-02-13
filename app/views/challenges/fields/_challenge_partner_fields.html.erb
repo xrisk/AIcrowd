@@ -3,7 +3,11 @@
     <div class="twin-field">
       <div class="upload">
         <div class='markdown-wrap'>
-          <%= concept(Image::Cell,f.object,klass: 'img-logo') %>
+          <% if f.object.image_file.present? %>
+            <%= image_tag f.object.image_file.url, class: 'img-logo' %>
+          <% else %>
+            <%= image_tag default_image_url, class: 'img-logo' %>
+          <% end %>
         </div>
         <%= f.file_field :image_file, class: 'file-upload' %>
         <br/>

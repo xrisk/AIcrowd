@@ -3,8 +3,8 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <div class="d-flex align-items-start">   
-          <%= concept(Image::Cell,organizer,size: :medium, current_participant: current_participant, klass: "avatar-organizer") %>
+        <div class="d-flex align-items-start">
+          <%= image_tag organizer.image_file_url, class: 'avatar-organizer' %>
           <div>
             <h1><%= organizer.organizer %></h1>
             <p><%= organizer.description %></p>

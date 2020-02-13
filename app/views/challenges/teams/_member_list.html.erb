@@ -17,7 +17,7 @@
       <% members.each do |tp| %>
         <li class="list-group-item">
           <%= link_to tp.participant do %>
-            <%= concept(Image::Cell, tp.participant, klass: "avatar") %>
+            <%= image_tag tp.participant.image_url, class: "avatar" %>
             <span class="text-link"><%= tp.participant.name %></span>
             <% if tp.role_organizer? %>
               <span class="badge badge-success"><%= t('.members.organizer_badge') %></span>
@@ -49,7 +49,7 @@
                       toggle: :tooltip,
                     },
                   ) do %>
-                    <%= concept(Image::Cell, inv.invitee, klass: "avatar") %>
+                    <%= image_tag inv.invitee.image_url, class: "avatar" %>
                     <span class="text-link"><%= inv.invitee.name %></span>
                   <% end %>
                 <% elsif inv.invitee.is_a?(EmailInvitation) %>

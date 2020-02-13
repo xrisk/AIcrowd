@@ -4,10 +4,10 @@
     <div class="row">
       <div class="col-12">
         <div class="d-flex">
-          <%= concept(Image::Cell, participant, klass: "avatar") %>
+          <%= image_tag participant.image_url, class: 'avatar' %>
           <div class="masthead-content">
             <div class="d-flex">
-              <%= concept(Image::Cell, participant, klass: "avatar-sm") %>
+              <%= image_tag participant.image_url, class: "avatar-sm" %>
               <h1>
                 <%= participant.name %>
               </h1>

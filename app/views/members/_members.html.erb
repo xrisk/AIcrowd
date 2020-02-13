@@ -10,12 +10,11 @@
         <% end %>
         <!-- list group – team members -->
         <ul class="list-group list-group-flush-px-0 list-group-organizers">
-
           <% @members.each do |member| %>
             <!-- team member -->
             <li class="list-group-item">
               <%= link_to participant_path(member) do %>
-                <%= concept(Image::Cell, member, klass: "avatar") %>
+                <%= image_tag member.image_url, class: "avatar" %>
                 <span class="text-link"><%= member.name %></span>
               <% end %>
 

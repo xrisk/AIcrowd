@@ -6,7 +6,7 @@
     <%#= render partial: 'layouts/search' %>
     <% if current_participant %>
       <div class="user">
-        <a id='toggle-user' href='#'><%= concept(Image::Cell, current_participant) %></a>
+        <a id='toggle-user' href='#'><%= image_tag current_participant.image_url, class: 'avatar' %></a>
         <div id="user-container">
           <ul>
             <li><%= link_to current_participant.name, participant_path(current_participant) %></li>

@@ -12,7 +12,7 @@
         <div class="d-flex align-items-center">
           <div class="d-none d-sm-block">
             <% if @success_story.image_file? %>
-            <%= concept(Image::Cell,@success_story, klass: "partner-logo") %>
+            <%= image_tag @success_story.image_file_url, class: 'partner-logo' %>
             <% end %>
           </div>
         </div>
@@ -36,7 +36,7 @@
             <%= @success_story.byline.html_safe %>
             <% else %>
             <p> No content for this success story yet </p>
-            <% end %> 
+            <% end %>
           </div>
         </div>
       </div>

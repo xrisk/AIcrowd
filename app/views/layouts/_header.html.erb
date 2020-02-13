@@ -80,7 +80,7 @@
 
 				<div class="member-options">
 					<div class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= concept(Image::Cell, current_participant, klass: "avatar") %></a>
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= image_tag current_participant.image_url, class: 'avatar' %></a>
 						<div class="dropdown-menu dropdown-menu-right">
 							<%= link_to participant_path(current_participant), {class: "dropdown-item"} do %>
 								<strong><%= current_participant.name %></strong><br>

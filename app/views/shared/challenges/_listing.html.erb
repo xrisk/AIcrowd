@@ -3,7 +3,7 @@
     <div class="card card-challenge">
       <div class="image-wrapper" style="padding-bottom: 56.2%;position: relative;">
         <%= link_to challenge_path(challenge) do %>
-          <%= concept(Image::Cell, challenge, current_participant: current_participant, klass: "card-img").(:image_16x9) %>
+          <%= image_tag(challenge.image_file_url, class: 'card-img image_16x9') %>
         <% end %>
         <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
           <%
@@ -69,7 +69,7 @@
 
       <div class="card-footer">
         <%= link_to organizer_path(challenge.organizer) do %>
-          <%= concept(Image::Cell, challenge.organizer, current_participant: current_participant) %>
+          <%= image_tag challenge.organizer.image_file_url %>
           <span title="<%= challenge.organizer.organizer %>"><%= challenge.organizer.organizer %></span>
         <% end %>
       </div>
