@@ -20,6 +20,7 @@
           <span class="text-link"><%= participants[0].name %></span>
         <% end %>
       <% else %>
+        <% team = leaderboard.team %>
         <%= link_to team.name, challenge_team_path(team.challenge, team) %>
         <div class="avatar-group">
           <% participants.each do |participant| %>
