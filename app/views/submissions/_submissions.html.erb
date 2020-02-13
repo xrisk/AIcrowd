@@ -7,7 +7,13 @@
 
   <tr>
     <td><strong><%= submission.id %></strong></td>
-    <td><%= link_to participant.name, participant_path(participant) %></td>
+    <td>
+      <% if participant.present? %>
+        <%= link_to participant.name, participant_path(participant) %>
+      <% else %>
+        <span>#</span>
+      <% end %>
+    </td>
     <td><span class="badge <%= submission_grade_class(submission) %>"><%= submission.grading_status_cd %></span></td>
     <td><%= submission_formatted_value(submission, submission.score_display) %></td>
     <% if challenge_round&.score_secondary_title.present? %>
