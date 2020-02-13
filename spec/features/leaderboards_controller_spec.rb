@@ -21,7 +21,7 @@ describe LeaderboardsController, feature: true do
     end
 
     context 'when user is logged in' do
-      let(:admin) { create(:participant) }
+      let(:admin) { create(:participant, :admin) }
 
       before { log_in admin }
 
