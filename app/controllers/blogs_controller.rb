@@ -2,6 +2,7 @@ class BlogsController < ApplicationController
   before_action :authenticate_participant!,
                 except: [:show, :index]
   before_action :set_blog, only: :show
+  before_action :set_vote, only: :show
 
   def index
     @blogs = policy_scope(Blog)
@@ -21,6 +22,10 @@ class BlogsController < ApplicationController
     # Randomly select 3 blogs
     @selected_blogs = Blog.where.not(id: @blog.id).order("RANDOM()").sample(3)
     authorize @blog
+  end
+
+  def set_vote
+    @vote = @blog.votes.where(participant_id: current_participant.id).first if current_participant.present?
   end
 
   def blog_params
