@@ -22,7 +22,10 @@ module LeaderboardHelper
   end
 
   def leaderboard_ranking_change(leaderboard)
-    if leaderboard.previous_row_num == 0 || leaderboard.previous_row_num == leaderboard.row_num
+    if leaderboard.previous_row_num.blank? ||
+         leaderboard.previous_row_num == 0 ||
+         leaderboard.previous_row_num == leaderboard.row_num
+
       return image_tag(
         "icon-change-none.svg",
         data: { toggle: 'tooltip' },

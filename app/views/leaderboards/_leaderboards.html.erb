@@ -1,8 +1,8 @@
 <% leaderboards.each do |leaderboard| %>
   <%
-    participants = leaderboard_participants(leaderboard)
-    challenge    = leaderboard.challenge
-    participant  = leaderboard.participant
+    participants            = leaderboard_participants(leaderboard)
+    challenge               = leaderboard.challenge
+    leaderboard_participant = leaderboard.participant
   %>
 
   <tr>
@@ -20,10 +20,17 @@
           <span class="text-link"><%= participants[0].name %></span>
         <% end %>
       <% else %>
-        <%= link_to team.name, challenge_team_path(team.challenge, team) %>
+        <% team = leaderboard.team %>
+
+        <% if team.present? %>
+          <%= link_to team.name, challenge_team_path(team.challenge, team) %>
+        <% else %>
+          <span>#</span>
+        <% end %>
+
         <div class="avatar-group">
           <% participants.each do |participant| %>
-            <%= link_to participant_path(participant), title: p.name, data: {toggle: :tooltip} do %>
+            <%= link_to participant_path(participant), title: participant.name, data: {toggle: :tooltip} do %>
               <%= image_tag participant.image_url, class: 'avatar' %>
             <% end %>
           <% end %>
@@ -46,7 +53,7 @@
 
     <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
     <td class="text-right">
-      <% unless participant.nil? %>
+      <% if leaderboard_participant.present? %>
         <%= link_to challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm' do %>
           View
         <% end %>

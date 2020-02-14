@@ -31,7 +31,7 @@ class Organizer::EuaNotificationMailer < ApplicationMailer
   end
 
   def challenge_link(challenge)
-    link_to 'here', challenge_clef_task_url(challenge)
+    link_to 'here', clef_task_challenge_url(challenge)
   end
 
   def email_body(participant, clef_task)
