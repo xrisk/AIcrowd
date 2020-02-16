@@ -16,7 +16,7 @@ class LeaderboardsController < ApplicationController
                        else
                          @current_round.id
                        end
-    @leaderboards = if @post_challenge == 'on'
+    @leaderboards = if @post_challenge
                       policy_scope(OngoingLeaderboard)
                           .where(challenge_round_id: current_round_id)
                           .page(params[:page])
