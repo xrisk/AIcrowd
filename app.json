@@ -2,7 +2,6 @@
   "addons": [
     "logdna",
     "heroku-postgresql",
-    "heroku-postgresql",
     "redistogo",
     "rollbar"
   ],
@@ -76,15 +75,6 @@
       "required": true
     },
     "GRADER": {
-      "required": true
-    },
-    "HEROKU_POSTGRESQL_GRAY_URL": {
-      "required": true
-    },
-    "HEROKU_POSTGRESQL_NAVY_URL": {
-      "required": true
-    },
-    "HEROKU_POSTGRESQL_PURPLE_URL": {
       "required": true
     },
     "HOST": {
@@ -167,7 +157,7 @@
   },
   "name": "aicrowd-review",
   "scripts": {
-    "postdeploy": "rails review:bootstrap"
+    "postdeploy": "pg_dump $STAGING_DATABASE_URL | psql $DATABASE_URL && rails review:bootstrap && bundle exec rake db:migrate"
   },
   "stack": "heroku-18"
 }
