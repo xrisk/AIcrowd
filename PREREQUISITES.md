@@ -36,13 +36,13 @@ Ruby dependencies, or Gems, are managed with Bundler.
 `gem install bundler` - if it's not already installed, but it should be in a basic RVM ruby. 
 
 
-### Assets with npm
+### Assets with yarn
 
 Move into the `AIcrowd` folder using: `cd AIcrowd`.
 
-Install npm using: `sudo apt-get install npm`.
+Make sure you have yarn installed https://classic.yarnpkg.com/en/docs/install/
 
-Install npm packages using: `npm install .`.
+Install node packages using: `yarn install`
 
 **NOTE:** If you're having permission issues, please see https://docs.npmjs.com/getting-started/fixing-npm-permissions
 
