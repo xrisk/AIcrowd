@@ -23,7 +23,8 @@ class Participant < ApplicationRecord
          :omniauthable, omniauth_providers: %i[github oauth2_generic]
 
   default_scope { order('name ASC') }
-  belongs_to :organizer, optional: true
+  has_many :participant_organizers
+  has_many :organizers, through: :participant_organizers
   has_many :submissions, dependent: :nullify
   has_many :votes, dependent: :destroy
   has_many :blogs, dependent: :nullify
