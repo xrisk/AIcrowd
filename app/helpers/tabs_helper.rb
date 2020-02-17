@@ -2,37 +2,35 @@ module TabsHelper
   def current_tab
     case controller.controller_name
     when 'challenges'
-      'overview'
+      'Overview'
     when 'leaderboards'
-      'leaderboard'
+      'Leaderboard'
     when 'topics'
-      'discussion'
+      'Discussion'
     when 'dataset_files'
-      'dataset'
+      'Resources'
     when 'task_dataset_files'
-      'task_dataset'
+      'Resources'
     when 'participant_challenges'
-      'participants'
+      'Participants'
     when 'winners'
-      'winner'
+      'Winners'
     when 'dynamic_contents'
-      'admin'
+      challenge.dynamic_content_tab
     when 'submissions'
-      'submissions'
+      'Submissions'
     when 'clef_tasks'
-      'tasks'
+      'Tasks'
     when 'organizers'
-      'challenges'
+      'Challenges'
     when 'members'
-      'members'
+      'Members'
+    when 'challenge_rules'
+      'Rules'
     end
   end
 
   def tab_class(tab)
-    if tab == current_tab
-      return 'active'
-    else
-      return ''
-    end
+    tab == current_tab ? 'active' : ''
   end
 end

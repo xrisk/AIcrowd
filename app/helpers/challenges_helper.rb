@@ -12,27 +12,15 @@ module ChallengesHelper
     challenge = builder.object
     statuses  = Challenge.statuses.hash
     statuses  = statuses.except(:running, :completed, :terminated) if challenge.challenge_rounds.none? || challenge.dataset_files.none?
-    return builder.select(:status, statuses.map { |k, v| [v.humanize, k] }, {}, { class: "form-control", required: true })
-  end
-
-  def needs_to_agree_to_terms_or_rules?(challenge)
-    if !policy(challenge).has_accepted_participation_terms?
-      return true
-    elsif !policy(challenge).has_accepted_challenge_rules?
-      return true
-    end
-
-    return false
+    builder.select(:status, statuses.map { |k, v| [v.humanize, k] }, {}, { class: "form-control", required: true })
   end
 
   def required_terms_or_rules_path(challenge)
     if !policy(challenge).has_accepted_participation_terms?
-      return url_for([challenge, ParticipationTerms.current_terms])
+      [challenge, ParticipationTerms.current_terms]
     elsif !policy(challenge).has_accepted_challenge_rules?
-      return url_for([challenge, challenge.current_challenge_rules])
+      [challenge, challenge.current_challenge_rules]
     end
-
-    return nil
   end
 
   def challenge_remaining_text(challenge, challenge_round)
@@ -98,6 +86,26 @@ module ChallengesHelper
       "#{format('%.1f', counter / 1000.0).chomp('.0')}k"
     else
       counter
+    end
+  end
+
+  def discourse_url(challenge)
+    "#{ENV['DISCOURSE_DOMAIN_NAME']}/c/#{challenge.slug[0..49]}"
+  end
+
+  def resources_link(challenge)
+    if challenge.clef_task.present?
+      clef_task_task_dataset_files_path(challenge.clef_task, challenge_id: challenge.id)
+    else
+      challenge_dataset_files_path(challenge)
+    end
+  end
+
+  def participants_link(challenge)
+    if challenge.clef_task.present?
+      clef_task_challenge_path(challenge)
+    else
+      challenge_participant_challenges_path(challenge)
     end
   end
 end

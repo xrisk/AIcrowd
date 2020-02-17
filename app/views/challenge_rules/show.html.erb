@@ -19,7 +19,7 @@
           <div class="md-content">
             <%= sanitize(@challenge_rules.terms) %>
           </div>
-          <% if needs_to_agree_to_terms_or_rules?(@challenge) %>
+          <% if required_terms_or_rules_path(@challenge).present? %>
             <%= form_for [@challenge, @challenge_participant], validate: true, html: {class: "form-rg mt-5", multipart: true} do |f| %>
               <%= f.hidden_field :challenge_rules_accepted_version, value: @challenge_rules.version %>
 
