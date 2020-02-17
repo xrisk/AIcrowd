@@ -2,10 +2,10 @@
 
 /* eslint global-require: 0 */
 
-const webpack = require('webpack')
 const merge = require('webpack-merge')
 const CompressionPlugin = require('compression-webpack-plugin')
 const sharedConfig = require('./shared.js')
+const UglifyJSPlugin = require("uglifyjs-webpack-plugin")
 
 module.exports = merge(sharedConfig, {
   output: { filename: '[name]-[chunkhash].js' },
@@ -13,16 +13,11 @@ module.exports = merge(sharedConfig, {
   stats: 'normal',
 
   plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      minimize: true,
+    new UglifyJSPlugin({
       sourceMap: true,
-
-      compress: {
-        warnings: false
-      },
-
-      output: {
-        comments: false
+      uglifyOptions: {
+        compress: {warnings: false},
+        output: {comments: false}
       }
     }),
 
