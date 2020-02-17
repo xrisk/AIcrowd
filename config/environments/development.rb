@@ -18,21 +18,22 @@ Rails.application.configure do
     config.action_controller.perform_caching = false
     config.cache_store                       = :null_store
   end
-  config.action_mailer.logger             = nil
-  config.action_mailer.perform_caching    = false
-  config.action_mailer.delivery_method    = :letter_opener
-  config.action_mailer.perform_deliveries = true
-  config.active_support.deprecation       = :log
-  config.active_record.migration_error    = :page_load
-  config.assets.debug                     = true
-  config.assets.check_precompiled_asset   = false
-  config.assets.unknown_asset_fallback    = true
-  config.assets.quiet                     = false
-  config.assets.raise_runtime_errors      = true
-  config.file_watcher                     = ActiveSupport::EventedFileUpdateChecker
-
-  config.web_console.whiny_requests = false
-  config.active_storage.service     = :local
+  config.action_mailer.logger              = nil
+  config.action_mailer.perform_caching     = false
+  config.action_mailer.delivery_method     = :letter_opener
+  config.action_mailer.perform_deliveries  = true
+  config.active_support.deprecation        = :log
+  config.active_record.migration_error     = :page_load
+  config.assets.debug                      = true
+  config.assets.check_precompiled_asset    = false
+  config.assets.unknown_asset_fallback     = true
+  config.assets.quiet                      = false
+  config.assets.raise_runtime_errors       = true
+  config.file_watcher                      = ActiveSupport::EventedFileUpdateChecker
+  config.web_console.whiny_requests        = false
+  config.active_storage.service            = :local
+  config.action_mailer.default_url_options = { host: ENV["DOMAIN_NAME"] }
+  config.action_controller.asset_host      = ENV["DOMAIN_NAME"]
 end
 
 Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']

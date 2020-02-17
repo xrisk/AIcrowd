@@ -16,6 +16,6 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    asset_url '/assets/users/user-avatar-default.svg'
+    "#{ENV['DOMAIN_NAME']}#{asset_url('/assets/users/user-avatar-default.svg')}"
   end
 end

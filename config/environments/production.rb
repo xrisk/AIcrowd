@@ -7,7 +7,7 @@ Rails.application.configure do
   config.public_file_server.enabled        = true
   config.assets.js_compressor              = Uglifier.new(harmony: true)
   config.assets.css_compressor             = :sass
-  config.assets.compile                    = false
+  config.assets.compile                    = true
   config.force_ssl                         = true
   config.log_level                         = :warn
   config.log_tags                          = [:request_id]
@@ -39,6 +39,3 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 end
 Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']
-CarrierWave.configure do |config|
-  config.asset_host = "https://#{ENV['CLOUDFRONT_IMAGES_DOMAIN']}"
-end

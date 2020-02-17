@@ -1,6 +1,16 @@
 require 'rails_helper'
 
 describe ChallengesController, type: :request do
+  around do |example|
+    VCR.configure do |config|
+      config.ignore_localhost = false
+    end
+    example.run
+    VCR.configure do |config|
+      config.ignore_localhost = true
+    end
+  end
+
   describe "#export" do
     let!(:challenge) { create(:challenge, challenge: 'Challenge Title') }
 
@@ -10,7 +20,9 @@ describe ChallengesController, type: :request do
       before { login_as participant }
 
       it 'redirects to landing page and returns unauthorized flash' do
-        get export_challenge_path(challenge)
+        VCR.use_cassette('images/base64_encode_service/default_image_success') do
+          get export_challenge_path(challenge)
+        end
 
         expect(response).to have_http_status :redirect
         expect(response).to redirect_to(root_path)
@@ -24,7 +36,9 @@ describe ChallengesController, type: :request do
       before { login_as admin }
 
       it 'sends json file in response' do
-        get export_challenge_path(challenge)
+        VCR.use_cassette('images/base64_encode_service/default_image_success') do
+          get export_challenge_path(challenge)
+        end
 
         expect(response).to have_http_status :ok
         expect(response.header['Content-Type']).to eq 'application/json'
