@@ -48,6 +48,9 @@
   "resolutions": {
     "prop-types": "15.6.2"
   },
+  "engines": {
+    "yarn": "1.17.3"
+  },
   "name": "aicrowd",
   "version": "1.0.0",
   "main": "index.js",
