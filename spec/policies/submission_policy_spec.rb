@@ -11,6 +11,8 @@ describe SubmissionPolicy do
     end
     let!(:round) { challenge.challenge_rounds.first }
     let!(:p1) { create :participant }
+    let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizer, participant: p1)}
+
     let!(:s1) do
       create :submission,
              challenge_id:       challenge.id,
@@ -41,7 +43,7 @@ describe SubmissionPolicy do
     end
 
     describe 'organizer' do
-      let(:participant) { create :participant, organizer: challenge.organizer }
+      let(:participant) { participant_organizer.participant }
 
       it { is_expected.to permit_action(:index) }
       it { is_expected.to forbid_action(:create) }
