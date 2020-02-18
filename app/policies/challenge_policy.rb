@@ -8,7 +8,7 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def edit?
-    participant && (participant.admin? || @record.organizer_id == participant.organizer_id)
+    participant && (participant.admin? || participant.organizers.ids.include?(@record.organizer_id))
   end
 
   def reorder?
@@ -24,7 +24,7 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def new?
-    participant && (participant.admin? || participant.organizer_id.present?)
+    participant && (participant.admin? || participant.organizers.present?)
   end
 
   def create?
@@ -81,12 +81,12 @@ class ChallengePolicy < ApplicationPolicy
     @record.challenge_rounds.present? &&
       @record.show_leaderboard == true ||
       (participant &&
-          (participant.admin? || @record.organizer_id == participant.organizer_id))
+          (participant.admin? ||  participant.organizers.ids.include?(@record.organizer_id)))
   end
 
   def submissions_allowed?
     return false unless @record.online_submissions
-    return true if participant && (participant.admin? || @record.organizer_id == participant.organizer_id)
+    return true if participant && (participant.admin? ||  participant.organizers.ids.include?(@record.organizer_id))
 
     if @record.running? || (@record.completed? && @record.post_challenge_submissions?)
       if @record.clef_challenge.present?
@@ -157,6 +157,7 @@ class ChallengePolicy < ApplicationPolicy
       if participant&.admin?
         scope.all
       else
+        # need to fix for organizer
         if participant&.organizer_id
           scope.where("status_cd IN ('running','completed','starting_soon') OR organizer_id = ?", participant.organizer_id)
         elsif participant

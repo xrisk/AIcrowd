@@ -4,7 +4,7 @@ class DatasetFilePolicy < ApplicationPolicy
   end
 
   def new?
-    participant && (participant.admin? || @record.challenge.organizer_id == participant.organizer_id)
+    participant && (participant.admin? || participant.organizers.ids.include?(@record.challenge.organizer_id))
   end
 
   def create?
@@ -32,7 +32,7 @@ class DatasetFilePolicy < ApplicationPolicy
     end
 
     def resolve
-      if participant && (participant.admin? || participant.organizer_id.present?)
+      if participant && (participant.admin? || participant.organizers.present?)
         scope.all
       else
         scope.where("visible is true and evaluation is false")
