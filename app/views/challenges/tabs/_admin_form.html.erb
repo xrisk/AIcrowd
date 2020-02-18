@@ -1,4 +1,7 @@
 <div class="challenges-form__thin-tab">
+  <div class="form-group">
+    <%= link_to 'Export Challenge to JSON', export_challenge_path(challenge), class: 'btn btn-primary', data: { disable_with: 'Challenge Exported' } %>
+  </div>
 
   <div class="form-group">
     <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :submissions_downloadable, text: "Organizer submission file access?" } %>
