@@ -44,7 +44,8 @@ class ParticipantPolicy < ApplicationPolicy
   end
 
   def clef_access?
-    participant && (participant.admin? || participant.id == @record.id || participant.organizer && participant.organizer.clef_organizer == true)
+    # can't use first org
+    participant && (participant.admin? || participant.id == @record.id || participant.organizers && participant.organizers.first.clef_organizer == true)
   end
 
   class Scope

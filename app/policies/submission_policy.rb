@@ -30,7 +30,7 @@ class SubmissionPolicy < ApplicationPolicy
 
   def edit?
     participant && (participant.admin? ||
-      @record.challenge.organizer_id == participant.organizer_id)
+      participant.organizers.ids.include?(@record.challenge.organizer_id))
   end
 
   def update?
