@@ -35,8 +35,6 @@ Challenge.create!([
     require_registration: false,
     resources_markdown: File.read('resources.md'),
     rules_markdown: File.read('rules.md'),
-    score_secondary_title: "Secondary Score",
-    score_title: "Score",
     slug: "train-schedule-optimisation-challenge",
     show_leaderboard: true,
     status_cd: "running",
