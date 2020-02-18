@@ -1,7 +1,12 @@
-<header class="page-header">
-  <h1><%= t('.title') %>:</h1>
-</header>
-
-<main role="main">
-  <code id="authorization_code"><%= params[:code] %></code>
+<main>
+  <div class="masthead masthead-open">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h4><%= t('.title') %>:</h4>
+          <p id="authorization_code"><%= params[:code] %></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </main>

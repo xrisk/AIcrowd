@@ -1,7 +1,21 @@
-<div class="border-bottom mb-4">
-  <h1><%= t('doorkeeper.authorizations.error.title') %></h1>
-</div>
-
-<main role="main">
-  <pre><%= @pre_auth.error_response.body[:error_description] %></pre>
+<main>
+  <div class="masthead masthead-open">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h1><%= t('doorkeeper.authorizations.error.title') %></h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-p-sm">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <pre><%= @pre_auth.error_response.body[:error_description] %></pre>
+        Please contact help@aicrowd.com for more details
+        </div>
+      </div>
+    </div>
+  </div>
 </main>
