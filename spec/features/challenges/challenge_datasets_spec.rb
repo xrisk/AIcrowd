@@ -8,7 +8,8 @@ describe 'download dataset links' do
   let!(:challenge_participant)           { create :challenge_participant, challenge: challenge, participant: participant }
   let!(:admin)                           { create :participant, :admin }
   let!(:challenge_admin_participant)     { create :challenge_participant, challenge: challenge, participant: admin }
-  let!(:organizer)                       { create :participant, organizer: challenge.organizer }
+  let!(:organizer)                       { create :participant }
+  let(:participant_organizer)            { create(:participant_organizer, organizer: challenge.organizer, participant: organizer)}
   let!(:challenge_organizer_participant) { create :challenge_participant, challenge: challenge, participant: organizer }
 
   before { Aws::S3::Object.any_instance.stub(:exists?).and_return(false) }
@@ -33,7 +34,7 @@ describe 'download dataset links' do
 
   context 'when logged in as organizer' do
     it 'renders delete link' do
-      log_in(organizer)
+      log_in(participant_organizer.participant)
       visit challenge_dataset_files_path(challenge)
 
       expect(page).to have_link 'Delete'

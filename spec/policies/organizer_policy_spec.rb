@@ -4,8 +4,10 @@ require 'rails_helper'
 describe OrganizerPolicy do
   subject { described_class.new(participant, organizer) }
 
-  let(:organizer) { build(:organizer) }
-  let(:organizer_person) { build(:participant, organizer: organizer) }
+  let(:organizer)             { create(:organizer) }
+  let(:participant)           { create(:participant) }
+  let(:organizer_person)      { create(:participant) }
+  let(:participant_organizer) { create(:participant_organizer, organizer: organizer, participant: organizer_person)}
 
   context 'for a public participant' do
     let(:participant) { nil }
@@ -20,7 +22,7 @@ describe OrganizerPolicy do
   end
 
   context 'for the organizer' do
-    let(:participant) { organizer_person }
+    let(:participant) { participant_organizer.participant }
 
     it { is_expected.to permit_action(:show) }
     it { is_expected.to forbid_action(:index) }
