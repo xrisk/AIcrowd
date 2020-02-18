@@ -9,7 +9,7 @@ class SubmissionPolicy < ApplicationPolicy
 
     @record.challenge.submissions_page.present? && (
       (participant && (participant.admin? ||
-        @record.challenge.organizer_id == participant.organizer_id)) ||
+        participant.organizers.ids.include?(@record.challenge.organizer_id))) ||
       (@record.challenge.submissions_page.present? && @record.challenge.show_leaderboard.present? &&
         SubmissionPolicy::Scope
           .new(participant, Submission)
@@ -83,13 +83,13 @@ class SubmissionPolicy < ApplicationPolicy
       if participant&.admin?
         scope.all
       else
-        if participant&.organizer_id
+        if participant&.organizers.present?
           sql = %[
             #{participant_sql(participant)}
             OR challenge_id IN
               (SELECT c.id
                 FROM challenges c
-                WHERE c.organizer_id = #{participant.organizer_id})
+                WHERE c.organizer_id = #{participant.organizers.first.id})
           ]
           scope.where(sql)
         else

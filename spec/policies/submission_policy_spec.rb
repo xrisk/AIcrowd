@@ -128,10 +128,11 @@ describe SubmissionPolicy do
     end
 
     context 'for the organizer' do
-      let(:participant) { create :participant, organizer_id: challenge.organizer_id }
+      let(:participant) { create :participant }
+      let(:participant_organizer) { create(:participant_organizer, organizer: challenge.organizer, participant: participant)}
 
       it {
-        expect(Pundit.policy_scope(participant, Submission).sort)
+        expect(Pundit.policy_scope(participant_organizer.participant, Submission).sort)
         .to eq(Submission.all.sort)
       }
     end
@@ -285,10 +286,11 @@ describe SubmissionPolicy do
     end
 
     context 'for the organizer' do
-      let(:participant) { create :participant, organizer_id: challenge.organizer_id }
+      let(:participant) { create :participant }
+      let(:participant_organizer) { create(:participant_organizer, organizer: challenge.organizer, participant: participant)}
 
       it {
-        expect(Pundit.policy_scope(participant, Submission).sort)
+        expect(Pundit.policy_scope(participant_organizer.participant, Submission).sort)
         .to eq(Submission.all.sort)
       }
     end
@@ -359,10 +361,11 @@ describe SubmissionPolicy do
     end
 
     context 'for the organizer' do
-      let(:participant) { create :participant, organizer_id: challenge.organizer_id }
+      let(:participant) { create :participant }
+      let(:participant_organizer) { create(:participant_organizer, organizer: challenge.organizer, participant: participant)}
 
       it {
-        expect(Pundit.policy_scope(participant, Submission).sort)
+        expect(Pundit.policy_scope(participant_organizer.participant, Submission).sort)
         .to eq(Submission.all.sort)
       }
     end
@@ -586,6 +589,8 @@ describe SubmissionPolicy do
                challenge_round_id: round.id,
                submission_id:      s1.id
       end
+      let!(:organizer_p1)          { create(:participant) }
+      let!(:participant_organizer) { create(:participant_organizer, organizer: challenge.organizer, participant: organizer_p1) }
 
       context 'on leaderboard' do
         let(:submission) { s1 }
@@ -615,9 +620,7 @@ describe SubmissionPolicy do
         end
 
         context 'for the organizer' do
-          let(:participant) do
-            create :participant, organizer_id: challenge.organizer_id
-          end
+          let(:participant) { participant_organizer.participant }
 
           it { is_expected.to permit_action(:show) }
         end
