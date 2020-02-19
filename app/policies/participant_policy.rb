@@ -44,7 +44,6 @@ class ParticipantPolicy < ApplicationPolicy
   end
 
   def clef_access?
-    # can't use first org
     participant && (participant.admin? || participant.id == @record.id || participant.organizers && participant.organizers.first.clef_organizer == true)
   end
 
