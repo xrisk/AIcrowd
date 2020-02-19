@@ -7,7 +7,7 @@ describe ClefTasksController, type: :controller do
 
   let(:organizer)             { create :organizer }
   let(:organizer_admin)       { create :participant }
-  let(:participant_organizer) { create(:participant_organizer, participant: organizer_admin, organizer: organizer)}
+  let(:participant_organizer) { create(:participant_organizer, participant: organizer_admin, organizer: organizer) }
   let(:valid_attributes)      { FactoryBot.attributes_for(:clef_task) }
   let(:invalid_attributes)    { FactoryBot.attributes_for(:clef_task, :invalid) }
 
