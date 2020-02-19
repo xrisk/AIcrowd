@@ -83,13 +83,13 @@ class SubmissionPolicy < ApplicationPolicy
       if participant&.admin?
         scope.all
       else
-        if participant&.organizers.present?
+        if participant&.organizers&.any?
           sql = %[
             #{participant_sql(participant)}
             OR challenge_id IN
               (SELECT c.id
                 FROM challenges c
-                WHERE c.organizer_id = #{participant.organizers.first.id})
+                WHERE c.organizer_id IN (#{participant.organizers.pluck(:id).join(',')}))
           ]
           scope.where(sql)
         else

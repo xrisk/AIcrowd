@@ -10,7 +10,6 @@ FactoryBot.define do
     address                              { FFaker::Address.street_address }
     city                                 { FFaker::Address.city }
     country_cd                           { FFaker::Address.country_code }
-    # organizer                            { nil }
     timezone                             { 'GMT' }
     agreed_to_terms_of_use_and_privacy   { true }
     participation_terms_accepted_date    { Time.current }

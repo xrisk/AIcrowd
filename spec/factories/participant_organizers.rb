@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :participant_organizer do
-    participant { nil }
-    organizer { nil }
+    association(:participant)
+    association(:organizer)
   end
 end

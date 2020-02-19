@@ -45,12 +45,8 @@ class ChallengesController < ApplicationController
   end
 
   def new
-    @challenge = if params[:organizer_id]
-                   organizer = Organizer.find(params[:organizer_id])
-                   organizer.challenges.new
-                 else
-                   Challenge.new
-                 end
+    @organizer = Organizer.find_by(params[:organizer_id])
+    @challenge = Challenge.new(organizer: @organizer)
     authorize @challenge
   end
 

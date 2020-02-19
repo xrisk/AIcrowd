@@ -89,6 +89,8 @@ describe LeaderboardPolicy do
       create(:challenge, :running, show_leaderboard: false)
     end
     let!(:round) { challenge.challenge_rounds.first }
+    let!(:participant1)         { create(:participant) }
+    let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizer, participant: participant1)}
 
     2.times do |i|
       let!("base_#{i + 1}") do
@@ -134,7 +136,7 @@ describe LeaderboardPolicy do
     end
 
     context 'for the organizer' do
-      let(:participant) { create :participant, organizer_id: challenge.organizer_id }
+      let(:participant) { participant_organizer.participant }
 
       it {
         expect(Pundit.policy_scope(participant, Leaderboard)
@@ -150,7 +152,9 @@ describe LeaderboardPolicy do
              :running,
              private_challenge: true)
     end
-    let!(:round) { challenge.challenge_rounds.first }
+    let!(:round)                { challenge.challenge_rounds.first }
+    let!(:participant1)         { create(:participant) }
+    let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizer, participant: participant1)}
 
     2.times do |i|
       let!("base_#{i + 1}") do
@@ -214,7 +218,7 @@ describe LeaderboardPolicy do
     end
 
     context 'for the organizer' do
-      let(:participant) { create :participant, organizer_id: challenge.organizer_id }
+      let(:participant) { participant_organizer.participant }
 
       it {
         expect(Pundit.policy_scope(participant, Leaderboard)
@@ -232,6 +236,8 @@ describe LeaderboardPolicy do
              show_leaderboard:  false)
     end
     let!(:round) { challenge.challenge_rounds.first }
+    let!(:participant1)         { create(:participant) }
+    let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizer, participant: participant1)}
 
     2.times do |i|
       let!("base_#{i + 1}") do
@@ -282,7 +288,7 @@ describe LeaderboardPolicy do
     end
 
     context 'for the organizer' do
-      let(:participant) { create :participant, organizer_id: challenge.organizer_id }
+      let(:participant) { participant_organizer.participant }
 
       it {
         expect(Pundit.policy_scope(participant, Leaderboard)
