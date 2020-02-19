@@ -55,9 +55,8 @@ class OrganizerPolicy < ApplicationPolicy
       if participant&.admin?
         scope.all
       else
-        # need to fix for organizer
-        if participant&.organizer_id
-          scope.where("id = ?", participant.organizer_id)
+        if participant&.organizers&.any?
+          scope.where("id = ?", participant.organizer_ids)
         else
           scope.none
         end

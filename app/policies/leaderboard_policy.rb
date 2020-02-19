@@ -66,13 +66,13 @@ class LeaderboardPolicy < ApplicationPolicy
       if participant&.admin?
         scope.all
       else
-        if participant&.organizer_id
+        if participant&.organizers&.any?
           sql = %[
           #{participant_sql(participant)}
             OR challenge_id IN
               (SELECT c.id
                 FROM challenges c
-                WHERE c.organizer_id = #{participant.organizer_id})
+                WHERE c.organizer_id IN (#{participant.organizers.pluck(:id).join(',')}))
           ]
           scope.where(sql)
         else

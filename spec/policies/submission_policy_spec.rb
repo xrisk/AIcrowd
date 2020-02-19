@@ -654,9 +654,7 @@ describe SubmissionPolicy do
         end
 
         context 'for the organizer' do
-          let(:participant) do
-            create :participant, organizer_id: challenge.organizer_id
-          end
+          let(:participant) { participant_organizer.participant }
 
           it { is_expected.to permit_action(:show) }
         end
@@ -669,6 +667,7 @@ describe SubmissionPolicy do
       end
       let!(:round) { challenge.challenge_rounds.first }
       let!(:p1) { create :participant }
+      let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizer, participant: p1)}
       let!(:i1) do
         create(:invitation,
                challenge_id:   challenge.id,
@@ -729,9 +728,7 @@ describe SubmissionPolicy do
         end
 
         context 'for the organizer' do
-          let(:participant) do
-            create :participant, organizer_id: challenge.organizer_id
-          end
+          let(:participant) { participant_organizer.participant }
 
           it { is_expected.to permit_action(:show) }
         end
@@ -765,9 +762,7 @@ describe SubmissionPolicy do
         end
 
         context 'for the organizer' do
-          let(:participant) do
-            create :participant, organizer_id: challenge.organizer_id
-          end
+          let(:participant) { participant_organizer.participant }
 
           it { is_expected.to permit_action(:show) }
         end
@@ -782,6 +777,7 @@ describe SubmissionPolicy do
       end
       let!(:round) { challenge.challenge_rounds.first }
       let!(:p1) { create :participant }
+      let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizer, participant: p1)}
       let!(:s1) do
         create :submission,
                challenge_id:       challenge.id,
@@ -849,6 +845,7 @@ describe SubmissionPolicy do
       end
       let!(:round) { challenge.challenge_rounds.first }
       let!(:p1) { create :participant }
+      let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizer, participant: p1)}
       let!(:s1) do
         create :submission,
                challenge_id:       challenge.id,
@@ -890,9 +887,7 @@ describe SubmissionPolicy do
         end
 
         context 'for the organizer' do
-          let(:participant) do
-            create :participant, organizer_id: challenge.organizer_id
-          end
+          let(:participant) { participant_organizer.participant }
 
           it { is_expected.to permit_action(:show) }
         end
