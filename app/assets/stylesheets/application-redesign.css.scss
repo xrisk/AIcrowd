@@ -12113,13 +12113,24 @@ body {
 }
 
 .reputation-info .reputation-score {
-  color: #44B174;
   margin-right: 4px;
 }
 
 .reputation-info .reputation-rank {
   color: #77797A;
   font-weight: 400;
+}
+
+.reputation-info .variation-1 {
+  color: #136f3b;
+}
+
+.reputation-info .variation-2 {
+  color: #44B174;
+}
+
+.reputation-info .variation-3 {
+  color: #a8c72e;
 }
 
 .section-header,
