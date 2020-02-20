@@ -10,6 +10,10 @@
               <%= image_tag participant.image_url, class: "avatar-sm" %>
               <h1>
                 <%= participant.name %>
+                <div class="reputation-info">
+                  <span class="reputation-score" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reputation score"><%= participant.reputation %></span>
+                  <span class="reputation-rank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Rank">#4</span>
+                </div>
               </h1>
             </div>
             <div class="masthead-info">
