@@ -6,5 +6,6 @@ class CreateParticipantOrganizers < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
+    add_index :participant_organizers, [:participant_id , :organizer_id], unique: true
   end
 end

@@ -7,7 +7,7 @@ describe ChallengePolicy do
     let(:challenge)             { create(:challenge, organizer: organizer) }
     let(:organizer)             { create(:organizer) }
     let(:organizer_person)      { create(:participant) }
-    let(:participant_organizer) { create(:participant_organizer, participant: organizer_person, organizer: organizer)}
+    let(:participant_organizer) { create(:participant_organizer, participant: organizer_person, organizer: organizer) }
     let(:admin)                 { create(:participant, :admin) }
 
     context 'for a public participant' do
