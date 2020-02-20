@@ -688,6 +688,7 @@ ActiveRecord::Schema.define(version: 2020_02_14_084730) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["organizer_id"], name: "index_participant_organizers_on_organizer_id"
+    t.index ["participant_id", "organizer_id"], name: "index_participant_organizers_on_participant_id_and_organizer_id", unique: true
     t.index ["participant_id"], name: "index_participant_organizers_on_participant_id"
   end
 
