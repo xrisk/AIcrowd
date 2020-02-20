@@ -11,7 +11,7 @@
               <h1>
                 <%= participant.name %>
                 <div class="reputation-info">
-                  <span class="reputation-score" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reputation score"><%= participant.reputation %></span>
+                  <span class="reputation-score <%= variation_class %>" data-toggle="tooltip" data-placement="top" title="<%= participant.reputation %> +- 37" data-original-title="Reputation score"><%= participant.reputation %></span>
                   <span class="reputation-rank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Rank">#<%= participant.rank %></span>
                 </div>
               </h1>

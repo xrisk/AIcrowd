@@ -126,7 +126,7 @@ class Participant < ApplicationRecord
   end
 
   def reputation
-    rand(100..1000)
+    @reputation ||= rand(100..1000)
   end
 
   def rank
