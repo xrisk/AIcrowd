@@ -129,6 +129,10 @@ class Participant < ApplicationRecord
     rand(100..1000)
   end
 
+  def rank
+    rand(1..100)
+  end
+
   def active_for_authentication?
     super && account_disabled == false
   end
