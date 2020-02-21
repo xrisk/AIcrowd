@@ -39,7 +39,7 @@
 
               <% if current_participant.admin? %>
                 <div id='tab-dynamic' class="tab-pane fade">
-                  <%= render partial: 'challenges/tabs/admin_form', locals: { f: f, challenge: challenge } %>
+                  <%= render partial: 'challenges/tabs/admin_form', locals: { f: f, challenge: challenge, challenge_rounds: challenge_rounds } %>
                 </div>
               <% end %>
             <% end %>

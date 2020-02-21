@@ -8,6 +8,7 @@ class ChallengesController < ApplicationController
   before_action :set_s3_direct_post, only: [:edit, :update]
   before_action :set_organizer, only: [:edit, :update]
   before_action :set_organizers_for_select, only: [:new, :create]
+  before_action :set_challenge_rounds, only: [:edit, :update]
 
   respond_to :html, :js
 
@@ -145,6 +146,10 @@ class ChallengesController < ApplicationController
                             key:                   "answer_files/#{@challenge.slug}_#{SecureRandom.uuid}/${filename}",
                             success_action_status: '201',
                             acl:                   'private')
+  end
+
+  def set_challenge_rounds
+    @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
   end
 
   def challenge_params

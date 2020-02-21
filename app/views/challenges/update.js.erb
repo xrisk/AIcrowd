@@ -13,7 +13,7 @@ function handleChallengeUpdate() {
 
   // Show alert and correct tab after scrolling is completed
   setTimeout(function() {
-    challengeForWrapper.innerHTML = "<%= j render 'challenges/form', challenge: @challenge %>";
+    challengeForWrapper.innerHTML = "<%= j render 'challenges/form', challenge: @challenge, challenge_rounds: @challenge_rounds %>";
 
     if (updateSuccessful === 'true') {
       if (nextTab.length) {
