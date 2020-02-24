@@ -3,12 +3,8 @@
   <div>
     <h4>Invited</h4>
   </div>
-  <div>
-    <div class="form-group">
-      <%= f.label :invitation_email, 'Email addresses' %>
-      <%= f.text_field :invitation_email, placeholder: 'Email address', class: 'form-control', 'aria-describedby': 'emailHelp' %>
-      <small id="emailHelp" class="form-text text-muted">Separate Email by comma (,)</small><br/>
-    </div>
+  <div class="links">
+    <%= button_tag '+ Invite participant', type: 'button', class: 'btn btn-secondary btn-sm invite_btn' %>
   </div>
 </header>
 <!-- /section header -->
