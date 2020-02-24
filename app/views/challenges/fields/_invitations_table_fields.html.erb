@@ -23,14 +23,14 @@
     </thead>
     <tbody>
       <%= f.fields_for :invitations do |invitation| %>
-          <tr>
-            <td><%= invitation.object.email %></td>
-            <td><%= invitation.object.invitee_name %></td>
-            <td><%= participant_invitation(email: invitation.object.email) %></td>
-            <td><%= invitation.object.created_at %></td>
-            <td><%= link_to_remove_association "remove", invitation %></td>
-          </tr>
-        <% end %>
+        <tr>
+          <td><%= invitation.object.email %></td>
+          <td><%= invitation.object.invitee_name %></td>
+          <td><%= participant_invitation(email: invitation.object.email) %></td>
+          <td><%= invitation.object.created_at %></td>
+          <td><%= link_to "remove", remove_invited_challenge_path(@challenge, invited_id: invitation.object.id), class: 'remove_invited', remote: true %></td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>

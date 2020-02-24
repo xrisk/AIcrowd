@@ -1,7 +1,11 @@
 class ChallengesController < ApplicationController
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :terminate_challenge, only: [:show, :index]
+<<<<<<< HEAD
   before_action :set_challenge, only: [:show, :edit, :update, :destroy, :clef_task, :remove_image, :export, :import]
+=======
+  before_action :set_challenge, only: [:show, :edit, :update, :destroy, :clef_task, :remove_image, :export, :remove_invited]
+>>>>>>> Remove invited participant
   before_action :set_vote, only: [:show, :clef_task]
   before_action :set_follow, only: [:show, :clef_task]
   after_action :verify_authorized, except: [:index, :show]
@@ -124,6 +128,10 @@ class ChallengesController < ApplicationController
     else
       redirect_to edit_challenge_path(@challenge, step: :admin), flash: { error: result.value }
     end
+  end
+
+  def remove_invited
+    @challenge.invitations.find_by(id: params[:invited_id]).destroy
   end
 
   private

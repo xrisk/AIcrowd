@@ -47,7 +47,7 @@ class ChallengePolicy < ApplicationPolicy
     update?
   end
 
-  def invite_participant?
+  def remove_invited?
     update?
   end
 
