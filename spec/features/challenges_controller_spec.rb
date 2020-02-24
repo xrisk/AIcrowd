@@ -166,7 +166,7 @@ describe ChallengesController, feature: true do
         fill_in 'challenge_tagline', with: 'Updated challenge tagline'
         click_on 'Update challenge'
 
-        expect(page).to have_current_path edit_challenge_path(challenge, step: :overview)
+        expect(page).to have_current_path edit_challenge_path(challenge)
 
         click_on 'challenge-edit-details-tab'
 

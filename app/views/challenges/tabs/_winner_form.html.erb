@@ -12,5 +12,5 @@
     <%= f.text_area :winner_description, class: "form-control", data: { controller: "ckeditor" } %>
   </div>
 
-  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, next_step: 'rules' } %>
+  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, current_step: 'winner' } %>
 </div>
