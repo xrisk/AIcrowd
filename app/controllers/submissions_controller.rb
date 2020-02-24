@@ -5,7 +5,7 @@ class SubmissionsController < ApplicationController
   before_action :set_challenge_rounds, only: [:index, :new, :show]
   before_action :set_vote, only: [:index, :new, :show]
   before_action :set_follow, only: [:index, :new, :show]
-  before_action :check_participation_terms, except: [:show, :index]
+  before_action :check_participation_terms, except: [:show, :index, :export]
   before_action :set_s3_direct_post, only: [:new, :edit, :create, :update]
   before_action :set_submissions_remaining, except: [:show, :index]
   before_action :set_current_round, only: :index
@@ -115,6 +115,20 @@ class SubmissionsController < ApplicationController
     submission = Submission.find(params[:id])
     submission.destroy
     redirect_to challenge_leaderboards_path(@challenge), notice: 'Submission was successfully destroyed.'
+  end
+
+  def export
+    authorize @challenge, :export?
+
+    @submissions = @challenge.submissions
+      .includes(:participant, :challenge_round)
+      .where(challenge_round_id: params[:submissions_export_challenge_round_id].to_i)
+
+    csv_data = Submissions::CSVExportService.new(submissions: @submissions).call.value
+
+    send_data csv_data,
+              type:     'text/csv',
+              filename: "#{@challenge.challenge.to_s.parameterize.underscore}_submissions_export.csv"
   end
 
   private

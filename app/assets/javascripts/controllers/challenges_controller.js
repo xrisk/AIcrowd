@@ -162,6 +162,15 @@ Paloma.controller('Challenges', {
           $('#leaderboard-export-link').attr('href', leaderboardExportUrl.toString());
         });
 
+        $('#submissions-export-rounds-select').on('change', function(event) {
+          const submissionsExportChallengeRoundId = event.target.value;
+          const submissionsExportLink             = $('#submissions-export-link').attr('href');
+          const submissionsExportUrl              = new URL(submissionsExportLink);
+
+          submissionsExportUrl.searchParams.set('submissions_export_challenge_round_id', submissionsExportChallengeRoundId);
+          $('#submissions-export-link').attr('href', submissionsExportUrl.toString());
+        });
+
         if (currentTab) {
           currentTab.tab('show');
           resetChallengesFormClientValidations();

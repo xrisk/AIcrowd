@@ -133,6 +133,7 @@ Rails.application.routes.draw do
     resources :winners, only: [:index]
     resources :submissions do
       post :filter, on: :collection
+      get :export, on: :collection
     end
     resources :dynamic_contents, only: [:index]
     resources :leaderboards, only: :index do
