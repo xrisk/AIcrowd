@@ -40,7 +40,7 @@
 
     <% if challenge.media_on_leaderboard %>
       <td>
-        <%= render partial: 'shared/challenges/media', locals: { mediable: leaderboard, size: :thumb } %>
+        <%= render partial: 'shared/challenges/media', locals: { mediable: leaderboard, submission_id: leaderboard.submission_id, size: :thumb } %>
       </td>
     <% end %>
 
