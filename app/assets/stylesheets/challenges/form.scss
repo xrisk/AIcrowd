@@ -11,6 +11,9 @@
 
   &__thin-tab {
     max-width: 480px;
+    .ck-editor {
+      min-width: 640px;
+    }
   }
 
   &__errors-paragraph {

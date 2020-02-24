@@ -11678,18 +11678,18 @@ body {
   width: 20px;
 }
 
-.md-content h1 {
+.md-content h2 {
   font-size: 1.5rem;
   margin: 3rem 0 1.75rem 0;
 }
 
 @media (max-width: 767.98px) {
-  .md-content h1 {
+  .md-content h2 {
     font-size: 1.25rem;
   }
 }
 
-.md-content h2 {
+.md-content h3 {
   color: #DE4B46;
   font-size: .875rem;
   font-weight: 700;
@@ -11698,8 +11698,8 @@ body {
   margin: 2.5rem 0 1.5rem 0;
 }
 
-.md-content h1:before,
-.md-content h2:before {
+.md-content h2:before,
+.md-content h3:before {
   display: block;
   content: " ";
   margin-top: -84px;
@@ -11747,7 +11747,7 @@ body {
   padding: 0;
 }
 
-.md-content ol h1 {
+.md-content ol h2 {
   color: inherit;
   margin: 1.5rem 0 1rem 0;
 }

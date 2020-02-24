@@ -190,20 +190,21 @@ Paloma.controller('Challenges', {
           // JQuery Object from DOM object
           heading = $(heading);
           let heading_content = heading.text();
-          heading.attr('id', heading_content);
+          let heading_id = heading_content.replace(/ /g,"_") + index;
+          heading.attr('id', heading_id);
 
           let li = $('<li/>', {
-            "class": 'nav-link',
+            "class": 'nav-item',
           }).appendTo(toc);
 
           $('<a/>', {
-            "class": 'nav-item',
-            href: "#"+heading_content,
+            "class": 'nav-link',
+            href: "#"+heading_id,
             text: _.capitalize(heading_content)
           }).appendTo(li);
 
           // Attach ScrollSpy only after the TOC has been generated.
-          if (index === headings.length) {
+          if (index === headings.length - 1) {
             $('body').scrollspy({target: "#table-of-contents", offset: 64});
           }
         });
