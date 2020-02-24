@@ -80,7 +80,7 @@
         <!--Detail media start-->
         <% if @challenge.media_on_leaderboard %>
           <div class="media">
-            <%= render partial: 'shared/challenges/media', locals: { mediable: @submission, size: :large } %>
+            <%= render partial: 'shared/challenges/media', locals: { mediable: @submission, submission_id: @submission.id, size: :large } %>
           </div>
         <% end %>
         <!--Detail media end-->
