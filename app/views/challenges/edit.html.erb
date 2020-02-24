@@ -12,5 +12,5 @@
 
 <%= render partial: 'challenges/navigation', locals: { challenge: @challenge } %>
 <div id="challenges-form__wrapper">
-  <%= render partial: 'challenges/form', locals: { challenge: @challenge } %>
+  <%= render partial: 'challenges/form', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds } %>
 </div>
