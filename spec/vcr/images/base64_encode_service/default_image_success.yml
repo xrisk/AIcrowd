@@ -1,0 +1,44 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:3000/assets/users/user-avatar-default.svg
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - image/svg+xml
+      Cache-Control:
+      - public, must-revalidate
+      Etag:
+      - '"7fa514f9da042379bca0575190c17d049751eaae11788ab0ff8f57091edccc58"'
+      Vary:
+      - Accept-Encoding, Origin
+      X-Request-Id:
+      - 9194db74-56cb-48f3-9644-fc0bcef04e27
+      X-Runtime:
+      - '1.483377'
+      Content-Length:
+      - '327'
+    body:
+      encoding: UTF-8
+      string: <svg width="120" height="120" xmlns="http://www.w3.org/2000/svg"><g
+        fill="none" fill-rule="evenodd"><path fill="#A9AAAB" d="M0 0h120v120H0z"/><g
+        transform="translate(36 36)" fill="#FFF"><circle cx="8" cy="8" r="8"/><circle
+        cx="40" cy="8" r="8"/><path d="M4 28h40c0 11.045695-8.954305 20-20 20S4 39.045695
+        4 28z"/></g></g></svg>
+    http_version: 
+  recorded_at: Tue, 25 Feb 2020 09:05:00 GMT
+recorded_with: VCR 5.0.0

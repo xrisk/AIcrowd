@@ -55,6 +55,10 @@ class ChallengePolicy < ApplicationPolicy
     update?
   end
 
+  def import?
+    create?
+  end
+
   def starting_soon_mode?
     return @record.status == :starting_soon
   end

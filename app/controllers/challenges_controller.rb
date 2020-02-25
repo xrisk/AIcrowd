@@ -1,7 +1,7 @@
 class ChallengesController < ApplicationController
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :terminate_challenge, only: [:show, :index]
-  before_action :set_challenge, only: [:show, :edit, :update, :destroy, :clef_task, :remove_image, :export]
+  before_action :set_challenge, only: [:show, :edit, :update, :destroy, :clef_task, :remove_image, :export, :import]
   before_action :set_vote, only: [:show, :clef_task]
   before_action :set_follow, only: [:show, :clef_task]
   after_action :verify_authorized, except: [:index, :show]
@@ -108,11 +108,21 @@ class ChallengesController < ApplicationController
   end
 
   def export
-    challenge_json = @challenge.to_json(only: Challenge::IMPORTABLE_FIELDS, include: Challenge::IMPORTABLE_ASSOCIATIONS)
+    challenge_json = Export::ChallengeSerializer.new(@challenge).as_json.to_json
 
     send_data challenge_json,
               type:     'application/json',
               filename: "#{@challenge.challenge.to_s.parameterize.underscore}_export.json"
+  end
+
+  def import
+    result = Challenges::ImportService.new(import_file: params[:import_file], organizer: @challenge.organizer).call
+
+    if result.success?
+      redirect_to edit_challenge_path(@challenge, step: :admin), notice: 'New Challenge Imported'
+    else
+      redirect_to edit_challenge_path(@challenge, step: :admin), flash: { error: result.value }
+    end
   end
 
   private
