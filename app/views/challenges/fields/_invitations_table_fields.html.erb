@@ -4,7 +4,7 @@
     <h4>Invited</h4>
   </div>
   <div class="links">
-    <%= button_tag '+ Invite participant', type: 'button', class: 'btn btn-secondary btn-sm invite_btn' %>
+    <%= link_to '+ Invite participant', invite_participant_challenge_path(challenge), class: 'btn btn-secondary btn-sm', remote: true  %>
   </div>
 </header>
 <!-- /section header -->

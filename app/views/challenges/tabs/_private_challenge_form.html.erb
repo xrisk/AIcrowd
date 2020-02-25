@@ -3,11 +3,8 @@
     <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :private_challenge, text: "Private Challenge" } %>
   </div>
 
-  <div class="form-group email_invitation_form display-none">
-    <%= f.label :invitation_email, 'Email addresses' %>
-    <%= f.text_field :invitation_email, placeholder: 'Email address', class: 'form-control', 'aria-describedby': 'emailHelp' %>
-    <small id="emailHelp" class="form-text text-muted">Separate emails by comma (,)</small><br/>
-  </div>
+  <div class='email_invitation_form'></div>
+
   <%= render partial: 'challenges/fields/invitations_table_fields', locals: { challenge: @challenge, f: f } %>
 
   <% if @challenge.persisted? %>
@@ -20,11 +17,3 @@
   <% end %>
   <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, next_step: 'submissions' } %>
 </div>
-<script type="text/javascript">
-  $(document).ready(function(){
-    $('.invite_btn').on("click", function(){
-      $('.email_invitation_form').removeClass('display-none');
-      this.disabled = true;
-    });
-  });
-</script>
