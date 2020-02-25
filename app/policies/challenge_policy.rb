@@ -47,10 +47,6 @@ class ChallengePolicy < ApplicationPolicy
     update?
   end
 
-  def invite_participant?
-    update?
-  end
-
   def clef_task?
     update?
   end

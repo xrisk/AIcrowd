@@ -3,7 +3,7 @@
     <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :private_challenge, text: "Private Challenge" } %>
   </div>
 
-  <div class='email_invitation_form display-none'>
+  <div class='email_invitation_form challenges-form__thin-tab display-none'>
     <div class="form-group">
       <%= f.label :invitation_email, 'Email addresses' %>
       <%= f.text_field :invitation_email, placeholder: 'Email address', class: 'form-control', 'aria-describedby': 'emailHelp' %>
