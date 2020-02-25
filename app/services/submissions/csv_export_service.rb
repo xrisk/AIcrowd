@@ -12,7 +12,9 @@ module Submissions
         submissions.find_each do |submission|
           csv_file << [
             submission.id,
-            participant_name(submission),
+            submission_type(submission),
+            team_name(submission),
+            participants_list(submission),
             submission.score,
             submission.score_secondary,
             submission.description,
@@ -37,7 +39,9 @@ module Submissions
     def csv_headers
       [
         'Submission ID',
-        'Participant',
+        'Type',
+        'Team Name',
+        'Participants',
         'Score',
         'Secondary Score',
         'Description',
@@ -51,11 +55,27 @@ module Submissions
       ]
     end
 
-    def participant_name(submission)
-      if submission.participant.present?
-        submission.participant&.name
+    def submission_type(submission)
+      if submission.team.present?
+        'Team'
+      else
+        'Participant'
+      end
+    end
+
+    def team_name(submission)
+      if submission.team.present?
+        submission.team.name
       else
         '-'
+      end
+    end
+
+    def participants_list(submission)
+      if submission.team.present?
+        submission.team.participants.map(&:name).join(', ')
+      else
+        submission.participant&.name
       end
     end
 

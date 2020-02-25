@@ -34,7 +34,8 @@ describe SubmissionsController, type: :request do
         csv_data = CSV.parse(response.body)
 
         expect(csv_data.size).to eq 4
-        expect(csv_data[0][1]).to eq 'Participant'
+        expect(csv_data[0][1]).to eq 'Type'
+        expect(csv_data[1][1]).to eq 'Participant'
       end
     end
   end
