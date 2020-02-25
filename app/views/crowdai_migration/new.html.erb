@@ -62,7 +62,7 @@
   </div>
 </div>
 
-<% unless @current_participant %>
+<% @current_participant %>
   <div class="section">
     <div class="container-fluid">
      <h4>Please Log in to the AIcrowd account you want to migrate your data to</h4>
@@ -75,13 +75,13 @@
           <div class="section-header-mb-sm">
             <h4>Not registered?</h4>
           </div>
-          <%= link_to 'Sign up'.html_safe, new_participant_registration_path, {class: "btn btn-secondary", role: "button"} %>
+          <%= link_to 'Sign up', new_participant_registration_path, {class: "btn btn-secondary", role: "button"} %>
         </div>
         <div class="col">
           <div class="section-header-mb-sm">
             <h4>Already have an account?</h4>
           </div>
-          <%= link_to 'Log in'.html_safe, new_participant_session_path, {class: "btn btn-secondary", role: "button"} %>
+          <%= link_to 'Log in', new_participant_session_path, {class: "btn btn-secondary", role: "button"} %>
         </div>
       </div>
     </div>

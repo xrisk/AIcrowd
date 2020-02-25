@@ -130,8 +130,10 @@
 				</ul>
 
 				<div class="user-options">
-					<%= link_to '<button type="button" class="btn btn-secondary">Log in</button>'.html_safe, new_participant_session_path %>
-				</div>
+          <%= link_to new_participant_session_path do %>
+            <button type="button" class="btn btn-secondary">Log in</button>
+          <% end %>
+        </div>
 
 				<div class="dropdown">
 					<button class="app-header-toggler" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

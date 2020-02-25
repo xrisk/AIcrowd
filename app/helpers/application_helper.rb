@@ -39,7 +39,7 @@ module ApplicationHelper
   def themed_button(opts = {})
     raise ArgumentError if opts.key?(:link) && opts.key?(:modal)
 
-    title = opts[:title].presence || '&nbsp;'.html_safe
+    title = opts[:title].presence
     unless opts[:disabled]
       confirm = opts[:confirm]
       modal   = opts[:modal] if opts[:modal]

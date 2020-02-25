@@ -15,17 +15,16 @@ module DeviseHelper
     return '' if resource.errors.empty?
 
     messages = resource.errors.full_messages.map { |msg| content_tag(:li, msg) }.join
-    html     = <<-HTML
-   <div class="alert alert-warning alert-dismissible fade show" role="alert">
-    <div class="container-fluid">
-      #{messages}
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  </div>
-    HTML
 
-    html.html_safe
+    html =  "<div class='alert alert-warning alert-dismissible fade show' role='alert'>"
+    html << "<div class='container-fluid'>".html_safe
+    html << messages
+    html << "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>".html_safe
+    html << "<span aria-hidden='true'>&times;</span>".html_safe
+    html << "</button>".html_safe
+    html << "</div>".html_safe
+    html << "</div>".html_safe
+
+    html
  end
 end

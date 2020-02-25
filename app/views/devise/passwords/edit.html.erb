@@ -6,13 +6,13 @@
     <div class="row">
       <div class="col-12">
         <h1>Change your password</h1>
-        
+
         <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { class: 'form-rg', method: :put }) do |f| %>
         <%= devise_error_messages! %>
         <br/>
         <%= f.hidden_field :reset_password_token %>
         <fieldset>
-          
+
           <div class="form-group">
             <span class="label-text"><%= f.label :password, "New password" %></span>
             <%= f.password_field :password, autofocus: true, autocomplete: "new-password", class: 'form-control' %>
@@ -27,7 +27,7 @@
         <% end %>
         <br/>
         <br/>
-        
+
       </div>
     </div>
   </div>
@@ -42,7 +42,7 @@
         <div class="section-header-mb-sm">
           <h4>Not registered?</h4>
         </div>
-        <%= link_to 'Sign up'.html_safe , new_participant_registration_path, {class: "btn btn-secondary", role:"button"} %>
+        <%= link_to 'Sign up' , new_participant_registration_path, {class: "btn btn-secondary", role:"button"} %>
       </div>
     </div>
   </div>
