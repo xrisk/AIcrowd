@@ -17,7 +17,7 @@ describe Images::Base64EncodeService do
     context 'when valid image_url is provided and image exists' do
       let(:image_url) { 'http://localhost:3000/assets/images/challenges/image_file/373/cat.jpeg' }
 
-      it 'returns success and encoded image string', focus: true do
+      it 'returns success and encoded image string' do
         result = VCR.use_cassette('images/base64_encode_service/success') do
           subject.call
         end

@@ -10,7 +10,7 @@
       <div class="col-md-8 col-lg-7" id="description-wrapper">
         <div class="markdown-wrap">
           <div class="md-content">
-            <%= sanitize(@challenge.winner_description) %>
+            <%= sanitize_html(@challenge.winner_description) %>
           </div>
         </div>
       </div>

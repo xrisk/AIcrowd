@@ -31,9 +31,9 @@
         <div class="col">
           <div class="md-content">
             <% if @success_story.html_content? %>
-            <%= @success_story.html_content.html_safe %>
+            <%= sanitize_html(@success_story.html_content) %>
             <% elsif @success_story.byline? %>
-            <%= @success_story.byline.html_safe %>
+            <%= sanitize_html(@success_story.byline) %>
             <% else %>
             <p> No content for this success story yet </p>
             <% end %>

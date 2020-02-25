@@ -4,12 +4,10 @@
       <div class="col-12">
         <div class="article">
           <div class="markdown-wrap">
-            <%= sanitize(@participation_terms.terms) %>
+            <%= sanitize_html(@participation_terms.terms) %>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-

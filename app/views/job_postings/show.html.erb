@@ -28,7 +28,7 @@
 			<!-- md content -->
 			<div class="col">
 				<div class="md-content">
-					<%= @job_posting.description.html_safe %>
+					<%= sanitize_html(@job_posting.description) %>
 
 					<a class="btn btn-primary" href="<%= @job_posting.job_url %>" role="button">
 						Apply now
