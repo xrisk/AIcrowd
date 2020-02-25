@@ -131,7 +131,8 @@ class ChallengesController < ApplicationController
   end
 
   def remove_invited
-    @challenge.invitations.find_by(id: params[:invited_id]).destroy
+    challenge_invitation = @challenge.invitations.find(params[:invited_id])
+    challenge_invitation.destroy!
   end
 
   private
