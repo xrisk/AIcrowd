@@ -4,6 +4,7 @@ describe "public user accesses challenge", :js do
   let!(:organizer)   { create :organizer }
   let!(:participant) { create :participant, organizer: organizer }
   let!(:challenge)   { create :challenge, organizer: organizer }
+  let!(:invitation)  { create(:invitation, challenge_id: challenge.id, participant_id: participant.id, email: 'invited@user.com') }
 
   describe "Logged in user should invite participant" do
     before do
@@ -20,6 +21,18 @@ describe "public user accesses challenge", :js do
 
       visit "/challenges/#{challenge.id}/edit?step=private-challenge"
       expect(page).to have_text "participant1@user.com"
+    end
+  end
+
+  context "Logged in user should remove invited participant" do
+    before do
+      log_in(participant)
+      visit "/challenges/#{challenge.id}/edit?step=private-challenge"
+    end
+    it "Remove invited participant to remove link" do
+      click_link 'remove'
+
+      expect(page).to have_no_content 'invited@user.com'
     end
   end
 end
