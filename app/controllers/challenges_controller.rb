@@ -66,6 +66,7 @@ class ChallengesController < ApplicationController
 
   def update
     if @challenge.update(challenge_params)
+      create_invitations if params[:challenge][:invitation_email].present?
       respond_to do |format|
         format.html { redirect_to edit_challenge_path(@challenge, step: params[:next_step]), notice: 'Challenge updated.' }
         format.js   { render :update }
@@ -162,6 +163,12 @@ class ChallengesController < ApplicationController
     @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
   end
 
+  def create_invitations
+    params[:challenge][:invitation_email].split(',').each do |email|
+      @challenge.invitations.create!(email: email.strip)
+    end
+  end
+
   def challenge_params
     params.require(:challenge).permit(
       :challenge,
@@ -244,11 +251,6 @@ class ChallengesController < ApplicationController
         :terms,
         :has_additional_checkbox,
         :additional_checkbox_text
-      ],
-      invitations_attributes: [
-        :id,
-        :email,
-        :_destroy
       ]
     )
   end

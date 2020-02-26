@@ -1,3 +1,8 @@
+$(document).on('click', '.challenge-invite-participant', function(){
+  $('.email_invitation_form').show();
+  $('.challenge-invite-participant').attr("disabled", true);
+});
+
 // https://css-tricks.com/diy-priority-plus-nav/
 let PriorityNav = {
     init: function() {

@@ -3,15 +3,24 @@
     <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :private_challenge, text: "Private Challenge" } %>
   </div>
 
+  <div class='email_invitation_form challenges-form__thin-tab display-none'>
+    <div class="form-group">
+      <%= f.label :invitation_email, 'Email addresses' %>
+      <%= f.text_field :invitation_email, placeholder: 'Email address', class: 'form-control', 'aria-describedby': 'emailHelp' %>
+      <small id="emailHelp" class="form-text text-muted">Separate emails by comma (,)</small><br/>
+    </div>
+
+  </div>
+
   <%= render partial: 'challenges/fields/invitations_table_fields', locals: { challenge: @challenge, f: f } %>
-  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, next_step: 'submissions' } %>
 
   <% if @challenge.persisted? %>
-    <div class="mt-6">
+    <div>
       <%= form_tag import_challenge_invitations_path(@challenge), multipart: true do %>
         <%= file_field_tag :file %>
         <%= submit_tag "Invite Participants from CSV", class: 'btn' %>
       <% end %>
     </div>
   <% end %>
+  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, next_step: 'submissions' } %>
 </div>
