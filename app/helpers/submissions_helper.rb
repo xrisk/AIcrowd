@@ -20,7 +20,7 @@ module SubmissionsHelper
   def submission_enable_links_in_raw_text(text)
     return '-' if text.nil?
 
-    value = sanitize(text.gsub(%r{(https?://[\S]+)}, "<a href='\\1'>\\1</a>"))
+    value = sanitize_html(text.gsub(%r{(https?://[\S]+)}, "<a href='\\1'>\\1</a>"))
 
     return '-' if value.nil?
 

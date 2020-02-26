@@ -62,7 +62,7 @@ ActiveAdmin.register JobPosting do
       row :country
       row :remote
       row :description do
-        sanitize(job.description)
+        sanitize_html(job.description)
       end
       row :created_at
       row :updated_at

@@ -2,7 +2,7 @@
   <span class="label-text">Rules</span>
 
   <% if @challenge.current_challenge_rules.present? %>
-    <%= sanitize(@challenge.current_challenge_rules.terms) %>
+    <%= sanitize_html(@challenge.current_challenge_rules.terms) %>
   <% else %>
     No rules added yet
   <% end %>

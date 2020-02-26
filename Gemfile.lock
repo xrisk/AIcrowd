@@ -599,8 +599,8 @@ GEM
     nio4r (2.3.1)
     nokogiri (1.10.8)
       mini_portile2 (~> 2.4.0)
-    nokogumbo (1.5.0)
-      nokogiri
+    nokogumbo (2.0.2)
+      nokogiri (~> 1.8, >= 1.8.4)
     notiffany (0.1.1)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -790,10 +790,10 @@ GEM
     safe_yaml (1.0.5)
     safely_block (0.2.2)
       errbase (>= 0.1.1)
-    sanitize (4.6.6)
+    sanitize (5.1.0)
       crass (~> 1.0.2)
-      nokogiri (>= 1.4.4)
-      nokogumbo (~> 1.4)
+      nokogiri (>= 1.8.0)
+      nokogumbo (~> 2.0)
     sass (3.4.25)
     sass-rails (5.0.7)
       railties (>= 4.0.0, < 6)
@@ -1013,7 +1013,6 @@ DEPENDENCIES
   rails-assets-jQuery-File-Upload
   rails-controller-testing
   rails-erd
-  rails-html-sanitizer (~> 1.0.4)
   ransack
   remotipart
   rollbar
@@ -1024,7 +1023,7 @@ DEPENDENCIES
   rspec-rails (~> 3.6)
   rubyzip (~> 1.2.2)
   safely_block (~> 0.2.2)
-  sanitize (~> 4.6.3)
+  sanitize (~> 5.1)
   sass-rails
   scenic (~> 1.3)
   scss_lint
