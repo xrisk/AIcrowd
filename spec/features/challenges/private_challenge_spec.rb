@@ -17,6 +17,9 @@ describe "public user accesses challenge", :js do
 
       click_button 'Update challenge'
       expect(page).to have_text "Challenge updated."
+
+      visit "/challenges/#{challenge.id}/edit?step=private-challenge"
+      expect(page).to have_text "participant1@user.com"
     end
   end
 end
