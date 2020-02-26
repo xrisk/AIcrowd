@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Leaderboards::SelectUniqueMetaKeysQuery, type: :query do
+describe SelectUniqueMetaKeysQuery, type: :query do
   subject { described_class.new.call }
 
   describe '#call' do

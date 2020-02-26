@@ -1,6 +1,14 @@
 .challenges-form {
   max-width: none;
 
+  &__heading {
+    margin-bottom: 20px;
+  }
+
+  &__misc-button {
+    margin-bottom: 40px;
+  }
+
   &__thin-tab {
     max-width: 480px;
   }

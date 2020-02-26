@@ -36,7 +36,7 @@ class LeaderboardsController < ApplicationController
   def export
     authorize @challenge, :export?
 
-    @leaderboards = BaseLeaderboard
+    @leaderboards = Leaderboard
       .where(challenge_round_id: params[:leaderboard_export_challenge_round_id].to_i)
       .order(:seq)
 
@@ -44,7 +44,7 @@ class LeaderboardsController < ApplicationController
 
     send_data csv_data,
               type:     'text/csv',
-              filename: "#{@challenge.challenge.to_s.parameterize.underscore}_export.csv"
+              filename: "#{@challenge.challenge.to_s.parameterize.underscore}_leaderboard_export.csv"
   end
 
   private
