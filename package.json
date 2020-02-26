@@ -43,14 +43,14 @@
     "webpack-merge": "^4.1.1"
   },
   "devDependencies": {
-    "webpack-cli": "^3.2.3",
+    "webpack-cli": "3.3.0",
     "webpack-dev-server": "3.0.0"
   },
   "resolutions": {
     "prop-types": "15.6.2"
   },
   "engines": {
-    "yarn": "1.17.3"
+    "yarn": "1.22.0"
   },
   "name": "aicrowd",
   "version": "1.0.0",
