@@ -1,8 +1,6 @@
 <!-- section header -->
-<header class="sub-section-header">
-  <div>
-    <h4>Invited</h4>
-  </div>
+<header class="sub-section-header challenges-form__invite-participant">
+  <div></div>
   <div class="links">
     <%= button_tag '+ Invite participant', class: 'btn btn-secondary btn-sm challenge-invite-participant', type: 'button'  %>
   </div>
@@ -10,8 +8,8 @@
 <!-- /section header -->
 
 <!-- table: invited participants -->
-<div class="table-responsive mb-4">
-  <table class="table">
+<div class="table-responsive mb-4 datatable-table" data-controller="simple-datatables" data-table-id="challenges-form-invitations-datatable">
+  <table class="table" id="challenges-form-invitations-datatable">
     <thead>
       <tr>
         <th>Email</th>
