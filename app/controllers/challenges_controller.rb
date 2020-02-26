@@ -116,7 +116,6 @@ class ChallengesController < ApplicationController
               filename: "#{@challenge.challenge.to_s.parameterize.underscore}_export.json"
   end
 
-<<<<<<< HEAD
   def import
     result = Challenges::ImportService.new(import_file: params[:import_file], organizer: @challenge.organizer).call
 
@@ -127,8 +126,6 @@ class ChallengesController < ApplicationController
     end
   end
 
-=======
->>>>>>> Use JS for show invite-participant-email field
   private
 
   def set_challenge
