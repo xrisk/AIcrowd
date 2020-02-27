@@ -7,11 +7,11 @@
       <div class="col-12">
 
         <% if @my_submissions %>
-            <p>You have <%= @submissions_remaining[0] %> submissions available.
-              <% if @submissions_remaining[1].present? %>
-                Reset DTTM: <%= @submissions_remaining[1] %>
-              <% end %>
-            </p>
+          <p>You have <%= @submissions_remaining[0] %> submissions available.
+            <% if @submissions_remaining[1].present? %>
+              Reset DTTM: <%= @submissions_remaining[1] %>
+            <% end %>
+          </p>
         <% end %>
 
         <% if @challenge.challenge_rounds.count > 1 %>
@@ -20,12 +20,12 @@
             <% @challenge.challenge_rounds.each do |challenge_round| %>
               <li class="nav-item">
                 <%= link_to challenge_round.challenge_round,
-                  challenge_submissions_path(
-                    @challenge,
-                    challenge_round_id: challenge_round.id,
-                    current_round_id: @current_round_id,
-                    my_submissions: @my_submissions),
-                    class: submission_tab_classes(challenge_round, @current_round_id) %>
+                            challenge_submissions_path(
+                                @challenge,
+                                challenge_round_id: challenge_round.id,
+                                current_round_id: @current_round_id,
+                                my_submissions: @my_submissions),
+                            class: submission_tab_classes(challenge_round, @current_round_id) %>
               </li>
             <% end %>
           </ul>
@@ -37,56 +37,52 @@
         <div class="table-responsive-lg">
           <table class="table">
             <%= search_form_for @search,
-                remote: true,
-                url: challenge_submissions_path(@challenge),
-                method: :get do |f| %>
+                                remote: true,
+                                url: challenge_submissions_path(@challenge),
+                                method: :get do |f| %>
               <thead>
-                <tr>
-                  <th scope="col"><%= sort_link(@search, :id,"ID") %></th>
-                  <th scope="col"><%= sort_link(@search, :name,"Participant") %></th>
-                  <th scope="col"><%= sort_link(@search, :grading_status_cd,"Status") %></th>
-                  <th scope="col"><%= sort_link(@search, :score_display, @current_round&.score_title) %></th>
-                  <% if @current_round&.score_secondary_title.present? %>
-                    <th scope="col"><%= sort_link(@search, :score_secondary_display, @current_round.score_secondary_title) %></th>
-                  <% end %>
-                  <th scope="col" class="status"><%= sort_link(@search, :grading_message, 'Message') %></th>
-                  <th scope="col" class="text-right"><%= sort_link(@search, :created_at,"Submission") %></th>
-                  <th scope="col" class="text-right"></th>
-                </tr>
+              <tr>
+                <th scope="col"><%= sort_link(@search, :id,"ID") %></th>
+                <th scope="col"><%= sort_link(@search, :name,"Participant") %></th>
+                <th scope="col"><%= sort_link(@search, :grading_status_cd,"Status") %></th>
+                <th scope="col"><%= sort_link(@search, :score_display, @current_round&.score_title) %></th>
+                <% if @current_round&.score_secondary_title.present? %>
+                  <th scope="col"><%= sort_link(@search, :score_secondary_display, @current_round.score_secondary_title) %></th>
+                <% end %>
+                <th scope="col" class="status"><%= sort_link(@search, :grading_message, 'Message') %></th>
+                <th scope="col" class="text-right"><%= sort_link(@search, :created_at,"Submission") %></th>
+                <th scope="col" class="text-right"></th>
+              </tr>
               </thead>
             <% end %>
             <tbody id="submissions-div">
-              <%= render partial: 'submissions', locals: { submissions: @submissions } %>
+            <%= render partial: 'submissions', locals: { submissions: @submissions } %>
             </tbody>
           </table>
         </div>
         <!-- /challenge submissions -->
 
-
         <span id="more-anchor"></span>
         <%= render partial: 'shared/load_more', locals: { collection: @submissions } %>
 
-        <div class="toggle-switch-container">
-            <div class="can-toggle can-toggle--size-small">
-              <%= link_to challenge_submissions_path(@challenge, my_submissions: @my_submissions.blank?, current_round_id: @current_round_id) do %>
-                <input id="my-submissions-switch" type="checkbox" <%= "checked" if @my_submissions %> >
-                <label for="my-submissions">
-                  <div class="can-toggle__switch" data-checked="On" data-unchecked="Off"></div>
-                  <div class="can-toggle__label-text">My Submissions</div>
-                </label>
-              <% end %>
-            </div>
-            <div class="can-toggle can-toggle--size-small">
-              <%= link_to challenge_submissions_path(@challenge, baselines: @baselines.blank?, current_round_id: @current_round_id) do %>
-                <input id="baselines-switch" type="checkbox" <%= "checked" if @baselines %> >
-                <label for="baselines">
-                  <div class="can-toggle__switch" data-checked="On" data-unchecked="Off"></div>
-                  <div class="can-toggle__label-text">Baselines</div>
-                </label>
-              <% end %>
-            </div>
+        <div class="my-2">
+          <label class="toggle-switch toggle-switch-large">
+            <%= link_to challenge_submissions_path(@challenge, my_submissions: @my_submissions.blank?, current_round_id: @current_round_id) do %>
+              <input id="my-submissions-switch" type="checkbox" <%= "checked" if @my_submissions %> >
+              <span class="switcher mr-2"></span>
+              <span class="label">My Submissions</span>
+            <% end %>
+          </label>
         </div>
-
+        <div class="my-2">
+          <label class="toggle-switch toggle-switch-large">
+            <%= link_to challenge_submissions_path(@challenge, baselines: @baselines.blank?, current_round_id: @current_round_id) do %>
+              <input id="baselines-switch" type="checkbox" <%= "checked" if @baselines %> >
+              <span class="switcher mr-2"></span>
+              <span class="label">Baselines</span>
+            <% end %>
+          </label>
+        </div>
       </div>
     </div>
   </div>

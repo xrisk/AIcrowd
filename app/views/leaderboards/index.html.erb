@@ -70,16 +70,14 @@
 
         <!-- toggle switch -->
         <% if @challenge.status == :completed %>
-          <div class="toggle-switch-container">
-            <div class="can-toggle can-toggle--size-small">
+          <div class="my-2">
+            <label class="toggle-switch toggle-switch-large">
               <%= link_to challenge_leaderboards_path(challenge_round_id: @current_round, post_challenge: @post_challenge.blank?) do %>
                 <input id="post-challenge-switch" type="checkbox" <%= "checked" if @post_challenge %> >
-                <label for="post-challenge">
-                  <div class="can-toggle__switch" data-checked="On" data-unchecked="Off"></div>
-                  <div class="can-toggle__label-text">Show post-challenge submissions</div>
-                </label>
+                <span class="switcher mr-2"></span>
+                <span class="label">Show post-challenge submissions</span>
               <% end %>
-            </div>
+            </label>
           </div>
         <% end %>
         <!-- /toggle switch -->

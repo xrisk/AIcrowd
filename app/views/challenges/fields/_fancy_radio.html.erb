@@ -1,9 +1,7 @@
-<div class="toggle-switch-container">
-  <div class="can-toggle can-toggle--size-small">
-    <%= f.check_box name, p || {} %>
-    <%= f.label name do %>
-      <div class="can-toggle__switch" data-checked="Yes" data-unchecked="No"></div>
-      <div class="can-toggle__label-text"><%= text %></div>
-    <% end %>
-  </div>
+<div class="my-2">
+<%= f.label name, class: 'toggle-switch toggle-switch-large' do %>
+  <%= f.check_box name, p || {} %>
+    <span class="switcher mr-2"></span>
+  <span class="label"><%= text %></span>
+<% end %>
 </div>
