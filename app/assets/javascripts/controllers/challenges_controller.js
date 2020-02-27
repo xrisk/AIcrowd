@@ -59,7 +59,37 @@ Paloma.controller('Challenges', {
         };
 
         $("#rounds").on('cocoon:after-insert', function(event, added_round) {
-          added_round.find('.active-switch').on('click', switch_handler);
+            added_round.find('.active-switch').on('click', switch_handler);
+
+            const inputs_to_copy = [
+                'score_title',
+                'score_secondary_title',
+                'minimum_score',
+                'minimum_score_secondary',
+                'submission_limit',
+                'failed_submissions',
+                'parallel_submissions',
+                'ranking_highlight',
+                'ranking_window',
+                'score_precision',
+                'score_secondary_precision',
+            ];
+
+            // Get the round just above current round
+            const old_rounds = $($(added_round).prevAll('.round'));
+            const round_to_copy = old_rounds.first();
+
+            // Set name of new round to number of rounds + 1
+            added_round.find($("input[id$='challenge_round']")).val( `Round ${old_rounds.length + 1}`);
+
+            // Copy inputs
+            inputs_to_copy.forEach( function(identifier) {
+                    let selector = $(`input[id$='${identifier}']`);
+                    let old_input = round_to_copy.find(selector);
+                    let new_input = added_round.find(selector);
+                    $(new_input).val($(old_input).val());
+                }
+            );
         });
 
         $('.challenges-form-tab-link').click(function(event) {
