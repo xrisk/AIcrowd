@@ -5,17 +5,6 @@
     <%= link_to 'Export to JSON', export_challenge_path(challenge), class: 'btn btn-primary challenges-form__misc-button', data: { disable_with: 'Challenge Exported' } %>
   </div>
 
-  <h2 class="challenges-form__heading">Challenge Import</h2>
-
-  <div class="form-group">
-    <%= form_with url: import_challenge_path(challenge), method: :post, multipart: true, validate: true do |import_form| %>
-      <%= import_form.file_field :import_file, class: 'file-upload' %>
-      <br/>
-      <br/>
-      <%= import_form.button 'Import New Challenge', class: 'btn btn-primary challenges-form__misc-button', data: { disable_with: 'Importing...' } %>
-    <% end %>
-  </div>
-
   <h2 class="challenges-form__heading">Leaderboard Export</h2>
 
   <div class="form-group">
