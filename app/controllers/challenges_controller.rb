@@ -26,9 +26,9 @@ class ChallengesController < ApplicationController
                           @all_challenges
                         end
     @challenges = if current_participant&.admin?
-                    @challenges.page(params[:page]).per(20)
+                    @challenges.page(params[:page]).per(18)
                   else
-                    @challenges.where(hidden_challenge: false).page(params[:page]).per(20)
+                    @challenges.where(hidden_challenge: false).page(params[:page]).per(18)
                   end
   end
 
