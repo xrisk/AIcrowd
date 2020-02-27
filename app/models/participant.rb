@@ -70,7 +70,7 @@ class Participant < ApplicationRecord
   has_many :invitee_team_invitations, class_name: 'TeamInvitation', foreign_key: :invitee_id, inverse_of: :invitee_participant, foreign_type: 'Participant'
   has_many :invitor_email_invitations, class_name: 'EmailInvitation', foreign_key: :invitor_id, inverse_of: :invitor
   has_many :claimant_email_invitations, class_name: 'EmailInvitation', foreign_key: :claimant_id, inverse_of: :claimant
-
+  has_many :lines_articles, :class_name => 'Lines::Article', :foreign_key => :author_id
   validates :email,
             presence:              true,
             'valid_email_2/email': true,
@@ -101,7 +101,7 @@ class Participant < ApplicationRecord
   validates :last_name,
             length:      { in: 2...100 },
             allow_blank: true
-
+  acts_as_commontator
   def reserved_userhandle
     return unless name
 

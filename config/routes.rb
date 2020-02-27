@@ -1,5 +1,6 @@
 require 'sidekiq/web'
 require 'sidekiq/cron/web'
+require 'commontator'
 
 Rails.application.routes.draw do
   get '/robots.txt' => RobotsTxt
@@ -11,7 +12,8 @@ Rails.application.routes.draw do
   admin = lambda do |request|
     request.env['warden'].authenticate? && request.env['warden'].user.admin?
   end
-
+  mount Lines::Engine => "/blog"
+  mount Commontator::Engine => '/commontator'
   constraints admin do
     mount Blazer::Engine => '/blazer'
     mount Sidekiq::Web => '/sidekiq'

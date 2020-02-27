@@ -21,7 +21,7 @@
     <meta name="twitter:description" content="<%= meta_description %>">
     <meta name="twitter:creator" content="<%= DEFAULT_META["twitter_account"] %>">
     <meta name="twitter:image:src" content="<%= meta_image %>">
-
+    <%= yield :head %>
     <%= favicon_link_tag 'favicon/apple-icon-57x57.png', rel: 'apple-touch-icon', type: 'image/png', sizes: "57x57" %>
     <%= favicon_link_tag 'favicon/apple-icon-60x60.png', rel: 'apple-touch-icon', type: 'image/png', sizes: "60x60" %>
     <%= favicon_link_tag 'favicon/apple-icon-72x72.png', rel: 'apple-touch-icon', type: 'image/png', sizes: "72x72" %>
@@ -56,6 +56,10 @@
     <% end %>
     <%= stylesheet_link_tag    'application-redesign', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= stylesheet_link_tag    "commontator/application", media: "all" %>
+    <%= stylesheet_link_tag    "commontator/comments", media: "all" %>
+    <%= stylesheet_link_tag    "lines/admin/admin", media: "all" %>
+    <%= javascript_include_tag "lines/admin/admin" %>
     <%= csrf_meta_tags %>
     <%= javascript_pack_tag 'application' %>
     <%= stylesheet_pack_tag 'application' %>
@@ -68,6 +72,7 @@
       <div id="flash-messages-wrapper">
         <%= render 'layouts/flash_messages' %>
       </div>
+      <%= yield :navbar %>
       <%= yield %>
       <%= insert_paloma_hook %>
     </div>

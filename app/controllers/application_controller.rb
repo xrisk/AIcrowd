@@ -8,6 +8,14 @@ class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
   after_action :track_action
 
+  def current_user_lines
+    current_user
+  end
+
+  def login_lines_url
+    new_participant_session_path
+  end
+
   def track_action
     properties         = { request: request.filtered_parameters }
     properties[:flash] = flash.to_json unless flash.empty?
