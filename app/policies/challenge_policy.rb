@@ -47,6 +47,10 @@ class ChallengePolicy < ApplicationPolicy
     update?
   end
 
+  def remove_invited?
+    update?
+  end
+
   def clef_task?
     update?
   end

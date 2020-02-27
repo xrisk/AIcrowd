@@ -9,7 +9,6 @@
       <%= f.text_field :invitation_email, placeholder: 'Email address', class: 'form-control', 'aria-describedby': 'emailHelp' %>
       <small id="emailHelp" class="form-text text-muted">Separate emails by comma (,)</small><br/>
     </div>
-
   </div>
 
   <%= render partial: 'challenges/fields/invitations_table_fields', locals: { challenge: @challenge, f: f } %>
