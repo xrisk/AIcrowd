@@ -70,6 +70,8 @@ GEM
       activemodel (= 5.2.2.1)
       activesupport (= 5.2.2.1)
       arel (>= 9.0)
+    activerecord-import (1.0.4)
+      activerecord (>= 3.2)
     activestorage (5.2.2.1)
       actionpack (= 5.2.2.1)
       activerecord (= 5.2.2.1)
@@ -233,7 +235,7 @@ GEM
       temple
     errbase (0.1.1)
     erubi (1.9.0)
-    et-orbi (1.1.6)
+    et-orbi (1.2.2)
       tzinfo
     every_day_irb (2.1.0)
       cd (~> 1.0)
@@ -414,9 +416,6 @@ GEM
     formtastic_i18n (0.6.0)
     friendly_id (5.1.0)
       activerecord (>= 4.0.0)
-    fugit (1.1.6)
-      et-orbi (~> 1.1, >= 1.1.6)
-      raabro (~> 1.1)
     geocoder (1.5.0)
     get_process_mem (0.2.3)
     gibbon (3.2.0)
@@ -655,7 +654,6 @@ GEM
     pundit (1.1.0)
       activesupport (>= 3.0.0)
     quantile (0.2.1)
-    raabro (1.1.6)
     rack (2.0.8)
     rack-contrib (2.1.0)
       rack (~> 2.0)
@@ -781,8 +779,8 @@ GEM
     ruby_info (1.0.1)
     ruby_version (1.0.1)
     rubyzip (1.2.2)
-    rufus-scheduler (3.5.2)
-      fugit (~> 1.1, >= 1.1.5)
+    rufus-scheduler (3.4.2)
+      et-orbi (~> 1.0)
     safe_yaml (1.0.5)
     safely_block (0.2.2)
       errbase (>= 0.1.1)
@@ -878,7 +876,7 @@ GEM
     turbolinks (5.2.0)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
-    tzinfo (1.2.5)
+    tzinfo (1.2.6)
       thread_safe (~> 0.1)
     uber (0.1.0)
     uglifier (4.1.20)
@@ -926,6 +924,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   activeadmin (= 1.4.3)
+  activerecord-import
   ahoy_matey
   authtrail
   aws-sdk (~> 2.2)
@@ -1022,6 +1021,7 @@ DEPENDENCIES
   rspec-kickstarter
   rspec-rails (~> 3.6)
   rubyzip (~> 1.2.2)
+  rufus-scheduler (~> 3.4.0)
   safely_block (~> 0.2.2)
   sanitize (~> 5.1)
   sass-rails

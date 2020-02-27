@@ -11,6 +11,8 @@ gem 'rails-assets-jQuery-File-Upload'
 ruby '2.5.5'
 gem 'rails', '5.2.2.1'
 
+gem 'activerecord-import'
+gem 'rufus-scheduler', '~> 3.4.0'
 gem 'ahoy_matey'
 gem 'blazer', github: "aicrowd/blazer"
 gem 'active_model_serializers'
