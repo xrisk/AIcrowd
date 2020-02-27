@@ -33,6 +33,7 @@ describe "public user accesses challenge", :js do
       click_link 'remove'
 
       expect(page).to have_no_content 'invited@user.com'
+      expect(page).to have_current_path edit_challenge_path(challenge.id, step: 'private-challenge')
     end
   end
 end
