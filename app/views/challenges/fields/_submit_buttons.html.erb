@@ -1,4 +1,4 @@
 <div class="btn-set" aria-hidden="true">
-	<%= f.button (f.object.new_record? ? "Create challenge" : "Update challenge"), name: 'next_step', value: next_step, class: 'btn btn-primary btn-sm', data: { disable_with: 'Saving...' } %>
+	<%= f.button (f.object.new_record? ? "Create challenge" : "Update challenge"), name: 'current_step', value: current_step, class: 'btn btn-primary btn-sm', data: { disable_with: 'Saving...' } %>
 	<%= link_to 'Cancel', challenge_path(f.object), class: 'btn btn-secondary' if f.object.persisted? %>
 </div>

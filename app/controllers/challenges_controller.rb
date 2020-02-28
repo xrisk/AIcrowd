@@ -68,7 +68,7 @@ class ChallengesController < ApplicationController
     if @challenge.update(challenge_params)
       create_invitations if params[:challenge][:invitation_email].present?
       respond_to do |format|
-        format.html { redirect_to edit_challenge_path(@challenge, step: params[:next_step]), notice: 'Challenge updated.' }
+        format.html { redirect_to edit_challenge_path(@challenge, step: params[:current_step]), notice: 'Challenge updated.' }
         format.js   { render :update }
       end
     else
