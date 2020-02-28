@@ -64,6 +64,9 @@ Paloma.controller('Challenges', {
             const inputs_to_copy = [
                 'score_title',
                 'score_secondary_title',
+                'primary_sort_order',
+                'secondary_sort_order',
+                'submission_limit_period',
                 'minimum_score',
                 'minimum_score_secondary',
                 'submission_limit',
@@ -84,7 +87,7 @@ Paloma.controller('Challenges', {
 
             // Copy inputs
             inputs_to_copy.forEach( function(identifier) {
-                    let selector = $(`input[id$='${identifier}']`);
+                    let selector = $(`[id$='${identifier}']`);
                     let old_input = round_to_copy.find(selector);
                     let new_input = added_round.find(selector);
                     $(new_input).val($(old_input).val());
