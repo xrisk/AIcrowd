@@ -9,7 +9,7 @@
 			  <% if @submissions_remaining == 0 %>
 			    <%= render partial: 'submissions/new/no_submissions' %>
 			  <% else %>
-			    <% if @challenge.organizer.clef? %>
+			    <% if @challenge.organizers.any? { |organizer| organizer.clef? } %>
 			      <%= render partial: 'submissions/new/clef_form' %>
 			    <% else %>
 			      <%= render partial: 'submissions/new/form' %>

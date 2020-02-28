@@ -4,12 +4,10 @@ require 'rails_helper'
 describe DatasetFilePolicy do
   subject { described_class.new(participant, dataset_file) }
 
-  let(:challenge)             { create(:challenge, organizer: organizer) }
-  let(:dataset_file)          { build(:dataset_file, challenge: challenge) }
   let(:organizer)             { create(:organizer) }
-  let(:organizer_person)      { build(:participant) }
-  let(:participant_organizer) { create(:participant_organizer, organizer: organizer, participant: organizer_person)}
-
+  let(:challenge)             { create(:challenge, organizers: [organizer]) }
+  let(:dataset_file)          { create(:dataset_file, challenge: challenge) }
+  let(:organizer_person)      { create(:participant, organizers: [organizer]) }
 
   context 'for a public participant' do
     let(:participant) { nil }
@@ -36,7 +34,7 @@ describe DatasetFilePolicy do
   end
 
   context 'for the organizer' do
-    let(:participant) { participant_organizer.participant }
+    let(:participant) { organizer_person }
 
     it { is_expected.to forbid_action(:show) }
     it { is_expected.to permit_action(:index) }

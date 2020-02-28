@@ -74,11 +74,19 @@
 
   <div class="form-group">
     <span class="label-text">Organizer</span>
-    <% if @challenge.new_record? && current_participant&.admin? %>
-      <%= f.select :organizer_id, @organizers_for_select, { include_blank: true } %>
+    <% if @challenge.new_record? %>
+      <% if current_participant&.admin? %>
+        <%= f.fields_for :challenges_organizers, [@challenge.challenges_organizers.new] do |challenges_organizer_form| %>
+          <%= challenges_organizer_form.select :organizer_id, @organizers_for_select, {}, class: 'form-control' %>
+        <% end %>
+      <% else %>
+        <% organizer_id = @challenge.organizers.first&.id || current_participant.organizer_id %>
+        <%= f.fields_for :challenges_organizers, [@challenge.challenges_organizers.new(organizer_id: organizer_id)] do |challenges_organizer_form| %>
+          <%= challenges_organizer_form.hidden_field :organizer_id, { include_blank: true } %>
+        <% end %>
+      <% end %>
     <% else %>
-      <input class="form-control" type='text' value='<%= @challenge.organizer&.organizer %>' readonly>
-      <%= f.hidden_field :organizer_id, value: @challenge.organizer_id %>
+      <input class="form-control" type='text' value='<%= @challenge.organizers.first&.organizer || current_participant.organizer&.organizer %>' readonly>
     <% end %>
   </div>
 

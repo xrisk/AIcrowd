@@ -71,9 +71,11 @@
       <!-- /card body -->
 
       <div class="card-footer">
-        <%= link_to organizer_path(challenge.organizer) do %>
-          <%= image_tag challenge.organizer.image_file_url %>
-          <span title="<%= challenge.organizer.organizer %>"><%= challenge.organizer.organizer %></span>
+        <% challenge.organizers.each do |organizer| %>
+          <%= link_to organizer_path(organizer) do %>
+            <%= image_tag organizer.image_file_url %>
+            <span title="<%= organizer.organizer %>"><%= organizer.organizer %></span>
+          <% end %>
         <% end %>
       </div>
     </div>

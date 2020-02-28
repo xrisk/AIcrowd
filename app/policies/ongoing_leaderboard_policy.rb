@@ -45,13 +45,19 @@ class OngoingLeaderboardPolicy < LeaderboardPolicy
         scope.all
       else
         if participant&.organizers&.any?
-          sql = %[
-            #{participant_sql(participant)}
-            OR challenge_id IN
-              (SELECT c.id
-                FROM challenges c
-                WHERE c.organizer_id IN (#{participant.organizers.pluck(:id).join(',')}))
-          ]
+          challenges_ids = Challenge.left_joins(:organizers)
+                             .where("organizers.id IN (#{participant.organizers.pluck(:id).join(',')})")
+                             .group('challenges.id')
+                             .pluck('challenges.id')
+
+          sql = if challenges_ids.any?
+                  %[
+                    #{participant_sql(participant)}
+                    OR challenge_id IN (#{challenges_ids.join(',')})
+                  ]
+                else
+                  participant_sql(participant)
+                end
           scope.where(sql)
         else
           scope.where(participant_sql(participant))

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Challenges::ImportService do
-  subject { described_class.new(import_file: import_file, organizer: organizer) }
+  subject { described_class.new(import_file: import_file, organizers: [organizer]) }
 
   describe '#call' do
     let(:organizer) { create(:organizer) }

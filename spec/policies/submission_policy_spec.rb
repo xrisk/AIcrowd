@@ -11,7 +11,7 @@ describe SubmissionPolicy do
     end
     let!(:round) { challenge.challenge_rounds.first }
     let!(:p1) { create :participant }
-    let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizer, participant: p1)}
+    let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizers.first, participant: p1)}
 
     let!(:s1) do
       create :submission,
@@ -43,7 +43,7 @@ describe SubmissionPolicy do
     end
 
     describe 'organizer' do
-      let(:participant) { participant_organizer.participant }
+      let(:participant) { create :participant, organizers: [challenge.organizers.first] }
 
       it { is_expected.to permit_action(:index) }
       it { is_expected.to forbid_action(:create) }
@@ -121,30 +121,20 @@ describe SubmissionPolicy do
     context 'for an admin' do
       let(:participant) { create :participant, admin: true }
 
-      it {
-        expect(Pundit.policy_scope(participant, Submission).sort)
-        .to eq(Submission.all.sort)
-      }
+      it { expect(Pundit.policy_scope(participant, Submission).sort).to eq(Submission.all.sort) }
     end
 
     context 'for the organizer' do
-      let(:participant) { create :participant }
-      let(:participant_organizer) { create(:participant_organizer, organizer: challenge.organizer, participant: participant)}
+      let(:participant) { create :participant, organizers: [challenge.organizers.first] }
 
-      it {
-        expect(Pundit.policy_scope(participant_organizer.participant, Submission).sort)
-        .to eq(Submission.all.sort)
-      }
+      it { expect(Pundit.policy_scope(participant, Submission).sort).to eq(Submission.all.sort) }
     end
 
     context 'for the organizer of another challenge' do
       let(:other_organizer) { create :organizer }
       let(:participant) { create :participant, organizer_id: other_organizer.id }
 
-      it {
-        expect(Pundit.policy_scope(participant, Submission))
-        .to be_empty
-      }
+      it { expect(Pundit.policy_scope(participant, Submission)).to be_empty }
     end
   end
 
@@ -205,7 +195,7 @@ describe SubmissionPolicy do
     end
 
     context 'for the organizer' do
-      let(:participant) { create :participant, organizer_id: challenge.organizer_id }
+      let(:participant) { create :participant, organizers: [challenge.organizers.first] }
 
       it {
         expect(Pundit.policy_scope(participant, Submission).sort)
@@ -279,20 +269,13 @@ describe SubmissionPolicy do
     context 'for an admin' do
       let(:participant) { create :participant, admin: true }
 
-      it {
-        expect(Pundit.policy_scope(participant, Submission).sort)
-        .to eq(Submission.all.sort)
-      }
+      it { expect(Pundit.policy_scope(participant, Submission).sort).to eq(Submission.all.sort) }
     end
 
     context 'for the organizer' do
-      let(:participant) { create :participant }
-      let(:participant_organizer) { create(:participant_organizer, organizer: challenge.organizer, participant: participant)}
+      let(:participant) { create :participant, organizers: [challenge.organizers.first] }
 
-      it {
-        expect(Pundit.policy_scope(participant_organizer.participant, Submission).sort)
-        .to eq(Submission.all.sort)
-      }
+      it { expect(Pundit.policy_scope(participant, Submission).sort).to eq(Submission.all.sort) }
     end
   end
 
@@ -345,29 +328,19 @@ describe SubmissionPolicy do
     context 'for the private participant' do
       let(:participant) { p1 }
 
-      it {
-        expect(Pundit.policy_scope(participant, Submission).sort)
-        .to eq(Submission.all.sort)
-      }
+      it { expect(Pundit.policy_scope(participant, Submission).sort).to eq(Submission.all.sort) }
     end
 
     context 'for an admin' do
       let(:participant) { create :participant, admin: true }
 
-      it {
-        expect(Pundit.policy_scope(participant, Submission).sort)
-        .to eq(Submission.all.sort)
-      }
+      it { expect(Pundit.policy_scope(participant, Submission).sort).to eq(Submission.all.sort) }
     end
 
     context 'for the organizer' do
-      let(:participant) { create :participant }
-      let(:participant_organizer) { create(:participant_organizer, organizer: challenge.organizer, participant: participant)}
+      let(:participant) { create :participant, organizers: [challenge.organizers.first] }
 
-      it {
-        expect(Pundit.policy_scope(participant_organizer.participant, Submission).sort)
-        .to eq(Submission.all.sort)
-      }
+      it { expect(Pundit.policy_scope(participant, Submission).sort).to eq(Submission.all.sort) }
     end
   end
 
@@ -422,7 +395,7 @@ describe SubmissionPolicy do
 
         context 'for the organizer' do
           let(:participant) do
-            create :participant, organizer_id: challenge.organizer_id
+            create :participant, organizers: [challenge.organizers.first]
           end
 
           it { is_expected.to permit_action(:show) }
@@ -452,7 +425,7 @@ describe SubmissionPolicy do
 
         context 'for the organizer' do
           let(:participant) do
-            create :participant, organizer_id: challenge.organizer_id
+            create :participant, organizers: [challenge.organizers.first]
           end
 
           it { is_expected.to permit_action(:show) }
@@ -510,7 +483,7 @@ describe SubmissionPolicy do
 
         context 'for the organizer' do
           let(:participant) do
-            create :participant, organizer_id: challenge.organizer_id
+            create :participant, organizers: [challenge.organizers.first]
           end
 
           it { is_expected.to permit_action(:show) }
@@ -540,7 +513,7 @@ describe SubmissionPolicy do
 
         context 'for the organizer' do
           let(:participant) do
-            create :participant, organizer_id: challenge.organizer_id
+            create :participant, organizers: [challenge.organizers.first]
           end
 
           it { is_expected.to permit_action(:show) }
@@ -590,7 +563,7 @@ describe SubmissionPolicy do
                submission_id:      s1.id
       end
       let!(:organizer_p1)          { create(:participant) }
-      let!(:participant_organizer) { create(:participant_organizer, organizer: challenge.organizer, participant: organizer_p1) }
+      let!(:participant_organizer) { create(:participant_organizer, organizer: challenge.organizers.first, participant: organizer_p1) }
 
       context 'on leaderboard' do
         let(:submission) { s1 }
@@ -620,7 +593,9 @@ describe SubmissionPolicy do
         end
 
         context 'for the organizer' do
-          let(:participant) { participant_organizer.participant }
+          let(:participant) do
+            create :participant, organizers: [challenge.organizers.first]
+          end
 
           it { is_expected.to permit_action(:show) }
         end
@@ -654,7 +629,9 @@ describe SubmissionPolicy do
         end
 
         context 'for the organizer' do
-          let(:participant) { participant_organizer.participant }
+          let(:participant) do
+            create :participant, organizers: [challenge.organizers.first]
+          end
 
           it { is_expected.to permit_action(:show) }
         end
@@ -667,7 +644,7 @@ describe SubmissionPolicy do
       end
       let!(:round) { challenge.challenge_rounds.first }
       let!(:p1) { create :participant }
-      let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizer, participant: p1)}
+      let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizers.first, participant: p1)}
       let!(:i1) do
         create(:invitation,
                challenge_id:   challenge.id,
@@ -728,7 +705,9 @@ describe SubmissionPolicy do
         end
 
         context 'for the organizer' do
-          let(:participant) { participant_organizer.participant }
+          let(:participant) do
+            create :participant, organizers: [challenge.organizers.first]
+          end
 
           it { is_expected.to permit_action(:show) }
         end
@@ -762,7 +741,9 @@ describe SubmissionPolicy do
         end
 
         context 'for the organizer' do
-          let(:participant) { participant_organizer.participant }
+          let(:participant) do
+            create :participant, organizers: [challenge.organizers.first]
+          end
 
           it { is_expected.to permit_action(:show) }
         end
@@ -777,7 +758,7 @@ describe SubmissionPolicy do
       end
       let!(:round) { challenge.challenge_rounds.first }
       let!(:p1) { create :participant }
-      let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizer, participant: p1)}
+      let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizers.first, participant: p1)}
       let!(:s1) do
         create :submission,
                challenge_id:       challenge.id,
@@ -820,7 +801,7 @@ describe SubmissionPolicy do
 
         context 'for the organizer' do
           let(:participant) do
-            create :participant, organizer_id: challenge.organizer_id
+            create :participant, organizers: [challenge.organizers.first]
           end
 
           it { is_expected.to forbid_action(:show) }
@@ -845,7 +826,7 @@ describe SubmissionPolicy do
       end
       let!(:round) { challenge.challenge_rounds.first }
       let!(:p1) { create :participant }
-      let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizer, participant: p1)}
+      let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizers.first, participant: p1)}
       let!(:s1) do
         create :submission,
                challenge_id:       challenge.id,
@@ -887,7 +868,9 @@ describe SubmissionPolicy do
         end
 
         context 'for the organizer' do
-          let(:participant) { participant_organizer.participant }
+          let(:participant) do
+            create :participant, organizers: [challenge.organizers.first]
+          end
 
           it { is_expected.to permit_action(:show) }
         end

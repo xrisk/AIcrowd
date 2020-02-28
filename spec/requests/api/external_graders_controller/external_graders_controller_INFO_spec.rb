@@ -9,22 +9,13 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     Timecop.return
   end
 
-  let!(:organizer) { create :organizer, api_key: '3d1efc2332200314c86d2921dd33434c' }
-  let!(:challenge) do
-    create :challenge,
-           :running,
-           organizer: organizer
-  end
-  let!(:challenge_round) do
-    create :challenge_round,
-           challenge_id: challenge.id,
-           start_dttm:   4.weeks.ago,
-           end_dttm:     4.weeks.since
-  end
-  let!(:participant) { create :participant, api_key: '5762b9423a01f72662264358f071908c' }
-  let!(:submission1) { create :submission, challenge: challenge, participant: participant, created_at: 2.hours.ago }
-  let!(:submission2) { create :submission, challenge: challenge, participant: participant, created_at: 18.hours.ago }
-  let!(:submission3) { create :submission, challenge: challenge, participant: participant, created_at: 2.days.ago }
+  let!(:organizer)       { create :organizer, api_key: '3d1efc2332200314c86d2921dd33434c' }
+  let!(:challenge)       { create :challenge, :running, organizers: [organizer] }
+  let!(:challenge_round) { create :challenge_round, challenge_id: challenge.id, start_dttm: 4.weeks.ago, end_dttm: 4.weeks.since }
+  let!(:participant)     { create :participant, api_key: '5762b9423a01f72662264358f071908c' }
+  let!(:submission1)     { create :submission, challenge: challenge, participant: participant, created_at: 2.hours.ago }
+  let!(:submission2)     { create :submission, challenge: challenge, participant: participant, created_at: 18.hours.ago }
+  let!(:submission3)     { create :submission, challenge: challenge, participant: participant, created_at: 2.days.ago }
 
   # SUBMISSION INFO
   describe "GET /api/external_graders/:submission_id/submission_info : Submission Info" do

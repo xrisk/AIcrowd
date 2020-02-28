@@ -9,51 +9,15 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     Timecop.return
   end
 
-  let!(:participation_terms) do
-    create :participation_terms
-  end
-  let!(:organizer) do
-    create :organizer,
-           api_key: '3d1efc2332200314c86d2921dd33434c'
-  end
-  let!(:challenge) do
-    create :challenge,
-           :running,
-           organizer: organizer
-  end
-  let!(:challenge_round) do
-    create :challenge_round,
-           challenge_id: challenge.id,
-           start_dttm:   4.weeks.ago,
-           end_dttm:     4.weeks.since
-  end
-  let!(:participant) do
-    create :participant,
-           api_key: '5762b9423a01f72662264358f071908c'
-  end
-  let!(:challenge_participant) do
-    create :challenge_participant,
-           challenge:   challenge,
-           participant: participant
-  end
-  let!(:submission1) do
-    create :submission,
-           challenge:   challenge,
-           participant: participant,
-           created_at:  2.hours.ago
-  end
-  let!(:submission2) do
-    create :submission,
-           challenge:   challenge,
-           participant: participant,
-           created_at:  18.hours.ago
-  end
-  let!(:submission3) do
-    create :submission,
-           challenge:   challenge,
-           participant: participant,
-           created_at:  2.days.ago
-  end
+  let!(:participation_terms)   { create :participation_terms }
+  let!(:organizer)             { create :organizer, api_key: '3d1efc2332200314c86d2921dd33434c' }
+  let!(:challenge)             { create :challenge, :running, organizers: [organizer] }
+  let!(:challenge_round)       { create :challenge_round, challenge_id: challenge.id, start_dttm: 4.weeks.ago, end_dttm: 4.weeks.since }
+  let!(:participant)           { create :participant, api_key: '5762b9423a01f72662264358f071908c' }
+  let!(:challenge_participant) { create :challenge_participant, challenge: challenge, participant: participant }
+  let!(:submission1)           { create :submission, challenge: challenge, participant: participant, created_at: 2.hours.ago }
+  let!(:submission2)           { create :submission, challenge: challenge, participant: participant, created_at: 18.hours.ago }
+  let!(:submission3)           { create :submission, challenge: challenge, participant: participant, created_at: 2.days.ago }
 
   describe "POST /api/external_graders/ : create submission" do
     def valid_attributes

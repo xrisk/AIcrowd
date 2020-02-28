@@ -1,6 +1,6 @@
 class MemberPolicy < ApplicationPolicy
   def index?
-    participant&.admin? || participant && participant.organizers.ids.include?(@record.id)
+    participant&.admin? || participant && participant.organizer_ids.include?(@record.id)
   end
 
   def show?
