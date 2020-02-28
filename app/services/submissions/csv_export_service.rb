@@ -42,8 +42,8 @@ module Submissions
         'Type',
         'Team Name',
         'Participants',
-        'Score',
-        'Secondary Score',
+        challenge_round&.score_title,
+        challenge_round&.score_secondary_title,
         'Description',
         *meta_headers,
         'Post Challenge',
@@ -53,6 +53,10 @@ module Submissions
         'Grading Status',
         'Challenge Round'
       ]
+    end
+
+    def challenge_round
+      @challenge_round ||= submissions.first&.challenge_round
     end
 
     def submission_type(submission)
