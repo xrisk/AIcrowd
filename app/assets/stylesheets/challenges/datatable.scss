@@ -1,0 +1,102 @@
+.datatable-table {
+  .dataTables_length {
+    float: left;
+  }
+
+  .dataTables_filter {
+    float: right;
+  }
+
+  .dataTables_info {
+    margin-top: 10px;
+    float: left;
+  }
+
+  .dataTables_paginate {
+    float: right;
+  }
+
+  .dataTables_length > label, .dataTables_filter > label {
+    display: block;
+    color: #292C2D;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+
+  .dataTables_length > label {
+    margin-top: 24px;
+  }
+
+  .dataTables_length > label > select, .dataTables_filter > label > input {
+    padding: 0.438rem 0.5rem;
+    font-size: 1rem;
+    line-height: 1.4;
+    color: #434547;
+    background-color: #F8F9F9;
+    background-clip: padding-box;
+    border: 1px solid #D9DCDC;
+    border-radius: 2px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    outline: none;
+  }
+
+  .dataTables_length > label > select:focus, .dataTables_filter > label > input:focus {
+    color: #434547;
+    background-color: #F8F9F9;
+    border-color: #77797A;
+    outline: 0;
+    box-shadow: none;
+  }
+
+  .dataTables_length > label > select {
+    border-radius: 0;
+    height: calc(2.15rem + 2px);
+    width: 60px;
+  }
+
+  .dataTables_filter > label > input {
+    display: block;
+    width: 100%;
+  }
+
+  .paginate_button {
+    margin: 0 10px 10px 0;
+    padding: 0.438rem 0.85rem;
+    display: inline-block;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    font-size: 1rem;
+    line-height: 1.4;
+    border-radius: 1.5rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    background-color: #fff;
+    border: 1px solid #AAACAD;
+    color: #292C2D;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.08);
+    outline: none;
+    cursor: pointer;
+  }
+
+  .current {
+    border: 1px solid #F0524D;
+  }
+
+  .previous, .next {
+    padding: 0.438rem 1.25rem;
+    background-color: #F0524D;
+    color: #fff;
+    box-shadow: 0px 2px 5px 0px rgba(240, 82, 77, 0.12);
+    border: none;
+  }
+
+  .previous:hover, .previous:focus, .previous:active, .previous:visited,
+  .next:hover, .next:focus, .next:active, .next:visited {
+    color: #fff;
+    background-color: #ee403a;
+    box-shadow: 0px 2px 5px 0px rgba(240, 82, 77, 0.24);
+  }
+}
