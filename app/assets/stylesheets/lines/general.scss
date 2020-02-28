@@ -68,23 +68,4 @@ div.rss { display:none; }
   a { color: #aaa; }
 }
 
-header {
-  margin: 0 auto;
-  max-width: $max-width;
-  padding: 1.1em 0;
-  font-family: $SourceSansPro;
-  font-weight: 500;
-  font-size: 1.250em;
-  a {
-    color: #000;
-    &:hover { color: $orange; }
-  }
-  #logo { float: left; text-transform: uppercase; font-weight: 600; }
-  #lines { float: right; }
-}
 
-.container {
-  position: relative;
-  max-width: $max-width;
-  margin: 0 auto;
-}

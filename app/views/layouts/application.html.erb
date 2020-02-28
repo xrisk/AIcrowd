@@ -49,7 +49,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
     <script async charset="utf-8" src="//cdn.embedly.com/widgets/platform.js"></script>
-
+    <script>
+        function resizeIframe(obj) {
+            obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+        }
+    </script>
     <% if Rails.env.production? %>
       <%= render partial: 'layouts/google_analytics_head' %>
       <%= render partial: 'layouts/rollbar_head' %>
