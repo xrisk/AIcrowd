@@ -9,7 +9,7 @@ class UserRatingService
     ranks, teams_mu, teams_sigma, teams_participant_ids = filter_leaderboard_stats leaderboard_rating_stats
     if ranks.length > 1
       new_team_ratings, new_team_variations = RatingApiService.new.call ranks, teams_mu, teams_sigma, teams_participant_ids
-      if new_team_ratings && new_team_variations
+      if new_team_ratings.any? && new_team_variations.any?
         participant_ids, new_participant_ratings, new_participant_variations = filter_rating_api_output teams_participant_ids, new_team_ratings, new_team_variations
         update_database_columns participant_ids, new_participant_ratings, new_participant_variations
       else
