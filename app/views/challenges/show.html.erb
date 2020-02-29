@@ -1,59 +1,6 @@
 <%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
 <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 
-<!--
-TODO: Hacky addition for rendering change of table of content.
-Need to be refactored and moved to relevant js file.
--->
-
-<script>
-$(window).on('load', function() {
-  if ($('#description-wrapper .md-content').length > 0) {
-    content = $('#description-wrapper .md-content')[0].innerHTML;
-    $('<style>.force-active { color: #DE4B46 !important; font-weight: 700;}</style>').appendTo('body');
-    first_link_in_content = $('#table-of-contents a').first().attr('href').split('#')[1];
-    first_link_content = $(content).filter('h2#'+first_link_in_content)[0].outerHTML;
-    notification_data = content.split(first_link_content)[0];
-
-    $('#table-of-contents a').click(function(event){
-      clicked_id = $(this).attr('href').split('#')[1];
-      try {
-        next_to_clicked_id = $($(this).parent().next().find('a')[0]).attr('href').split('#')[1];
-      } catch(err) {
-        next_to_clicked_id = null;
-      }
-
-      content = window.content;
-      start_content = $(content).filter('h2#'+clicked_id)[0].outerHTML;
-      if (next_to_clicked_id) {
-        end_content = $(content).filter('h2#'+next_to_clicked_id)[0].outerHTML;
-        newcontent = start_content + content.split(start_content)[1].split(end_content)[0];
-      }
-      else {
-        newcontent = start_content + content.split(start_content)[1];
-      }
-
-      if (clicked_id == first_link_in_content) {
-      newcontent = window.notification_data + newcontent;
-      }
-      $('.md-content')[0].innerHTML = newcontent;
-
-     $('#table-of-contents a').removeClass('active');
-     $('#table-of-contents a').removeClass('force-active');
-     $('a[href$="'+clicked_id+'"]').addClass('force-active');
-     if (window.force_scroll) {
-       document.documentElement.scrollTop = $('#' + clicked_id).offset().top;
-     }
-     return false;
-    })
-
-    force_scroll = false;
-    $('#table-of-contents a').first().click();
-    force_scroll = true;
-  }
-})
-</script>
-
 <!-- section -->
 <section class="section-p-md">
   <div class="container-fluid">
