@@ -182,10 +182,80 @@ Paloma.controller('Challenges', {
           }
         });
       };
+
+      let table_of_content_as_tabs = function () {
+        if ($('#description-wrapper .md-content').length > 0) {
+          let force_scroll = false;
+          let content = $('#description-wrapper .md-content')[0].innerHTML;
+          $('<style>.force-active { color: #DE4B46 !important; font-weight: 700;}</style>').appendTo('body');
+          let first_link_in_content = $('#table-of-contents a').first().attr('href').split('#')[1];
+          let first_link_content = $(content).filter('h2#'+first_link_in_content)[0].outerHTML;
+          let notification_data = content.split(first_link_content)[0];
+          let reset_content_to_everything_if_mobile = function() {
+            // sub-nav-vertical-container's css display:none happens when screen size is small
+            if ($('#table-of-contents').parent('div.sub-nav-vertical-container').css('display') == "none") {
+              $('#description-wrapper .md-content')[0].innerHTML = content;
+              return true;
+            }
+            return false;
+          }
+
+          $('#table-of-contents a').click(function(event) {
+            if (reset_content_to_everything_if_mobile()) {
+              // This functionality should only work for desktop screens
+              return;
+            }
+            clicked_id = $(this).attr('href').split('#')[1];
+            try {
+              next_to_clicked_id = $($(this).parent().next().find('a')[0]).attr('href').split('#')[1];
+            } catch(err) {
+              next_to_clicked_id = null;
+            }
+
+            start_content = $(content).filter('h2#'+clicked_id)[0].outerHTML;
+            if (next_to_clicked_id) {
+              end_content = $(content).filter('h2#'+next_to_clicked_id)[0].outerHTML;
+              newcontent = start_content + content.split(start_content)[1].split(end_content)[0];
+            }
+            else {
+              newcontent = start_content + content.split(start_content)[1];
+            }
+
+            if (clicked_id == first_link_in_content) {
+              newcontent = notification_data + newcontent;
+            }
+            $('#description-wrapper .md-content')[0].innerHTML = newcontent;
+
+            $('#table-of-contents a').removeClass('active');
+            $('#table-of-contents a').removeClass('force-active');
+            $('a[href$="'+clicked_id+'"]').addClass('force-active');
+            if (force_scroll) {
+              document.documentElement.scrollTop = $('#' + clicked_id).offset().top;
+            }
+            return false;
+          });
+
+          // Final initialization
+          $('#table-of-contents a').first().click();
+          force_scroll = true;
+
+          // Started handling on the go screen resizes, to show all content when needed
+          $(window).resize(function(){
+            if (reset_content_to_everything_if_mobile()) {
+              return;
+            }
+            force_scroll = false;
+            $('#table-of-contents a').first().click();
+            force_scroll = true;
+          });
+        }
+      }
+
         // NATE: Apparently challenges#show is not using turbolinks
         $(document).ready(function () {
           let headings = $("#description-wrapper h2").get();
           update_table_of_contents(headings);
+          table_of_content_as_tabs();
         });
     }
 });
