@@ -1,0 +1,26 @@
+<section class="section-p-sm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive-md">
+          <table class="table table-leaderboard">
+            <thead>
+            <tr>
+              <th scope="col">Rank</th>
+              <th scope="col">Participants</th>
+              <th scope="col">Rating</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%= render partial: 'rating_leaderboard', locals: { participants: @participants } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span id="more-anchor"></span>
+  <%= render partial: 'shared/load_more',
+             locals: { collection: @participants } %>
+</section>
+
