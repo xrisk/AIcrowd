@@ -24,7 +24,6 @@ describe ParticipantPolicy do
     it { is_expected.to forbid_action(:edit) }
     it { is_expected.to forbid_action(:destroy) }
     it { is_expected.to forbid_action(:regen_api_key) }
-    it { is_expected.to forbid_action(:clef_access) }
   end
 
   context 'for the participant themself' do
@@ -38,7 +37,6 @@ describe ParticipantPolicy do
     it { is_expected.to permit_action(:edit) }
     it { is_expected.to permit_action(:destroy) }
     it { is_expected.to permit_action(:regen_api_key) }
-    it { is_expected.to permit_action(:clef_access) }
   end
 
   context 'for an admin' do
@@ -52,7 +50,6 @@ describe ParticipantPolicy do
     it { is_expected.to permit_action(:edit) }
     it { is_expected.to permit_action(:destroy) }
     it { is_expected.to permit_action(:regen_api_key) }
-    it { is_expected.to permit_action(:clef_access) }
   end
 
   context 'for an organizer' do
@@ -66,7 +63,6 @@ describe ParticipantPolicy do
     it { is_expected.to forbid_action(:edit) }
     it { is_expected.to forbid_action(:destroy) }
     it { is_expected.to forbid_action(:regen_api_key) }
-    it { is_expected.to forbid_action(:clef_access) }
   end
 
   context 'for an CLEF organizer' do
@@ -80,6 +76,5 @@ describe ParticipantPolicy do
     it { is_expected.to forbid_action(:edit) }
     it { is_expected.to forbid_action(:destroy) }
     it { is_expected.to forbid_action(:regen_api_key) }
-    it { is_expected.to permit_action(:clef_access) }
   end
 end

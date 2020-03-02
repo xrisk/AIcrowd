@@ -21,7 +21,7 @@ class OrganizersController < ApplicationController
       if current_participant.admin?
         redirect_to @organizer, notice: "Organizer has been created."
       else
-        current_participant.organizer = @organizer
+        current_participant.organizers << @organizer
         current_participant.save!
         redirect_to @organizer, notice: "The request to host challenges has been submitted. After review, you will be notified when #{@organizer.organizer} may begin to host challenges."
       end

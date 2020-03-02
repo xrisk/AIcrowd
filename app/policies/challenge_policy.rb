@@ -24,7 +24,7 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def new?
-    participant && (participant.admin? || participant.organizers.present?)
+    participant && (participant.admin? || participant.organizers.ids.include?(@record.organizer_id))
   end
 
   def create?
@@ -158,7 +158,7 @@ class ChallengePolicy < ApplicationPolicy
         scope.all
       else
         if participant&.organizers&.any?
-          scope.where("status_cd IN ('running','completed','starting_soon') OR organizer_id IN (#{participant.organizer_ids.join(',')})")
+          scope.where("status_cd IN ('running','completed','starting_soon') OR organizer_id IN (#{participant.organizers.ids.join(',')})")
         elsif participant
           scope.where(participant_sql(email: participant.email))
         else
