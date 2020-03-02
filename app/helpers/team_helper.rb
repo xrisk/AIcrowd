@@ -24,7 +24,9 @@ module TeamHelper
     themed_button(button_opts)
   end
 
-  private def setup_opts_for_create_team_button(opts, challenge)
+  private
+
+  def setup_opts_for_create_team_button(opts, challenge)
     opts[:small] = true
     opts[:class] = 'pull-right mr-1'
     opts[:title] = t(:title, scope: %i[helpers teams create_button])
@@ -43,7 +45,7 @@ module TeamHelper
     )
   end
 
-  private def setup_opts_for_my_team_button(opts, team)
+  def setup_opts_for_my_team_button(opts, team)
     opts[:small]   = true
     opts[:class]   = 'pull-right mr-1'
     i18n_params    = { scope: %i[helpers teams my_team_button] }
@@ -52,7 +54,7 @@ module TeamHelper
     opts[:link]    = team_path(team)
   end
 
-  private def setup_opts_for_member_invite_button(opts, team)
+  def setup_opts_for_member_invite_button(opts, team)
     opts[:title] = t(:title, scope: %i[helpers teams invite_member_button])
     issues       = {}
     if policy(team).create_invitations?(issues)
@@ -69,7 +71,7 @@ module TeamHelper
     )
   end
 
-  private def setup_opts_for_invitation_cancel_button(opts, inv)
+  def setup_opts_for_invitation_cancel_button(opts, inv)
     opts[:small] = true
     opts[:title] = t(:title, scope: %i[helpers teams cancel_invitation_button])
     if policy(inv.team).cancel_invitations?
