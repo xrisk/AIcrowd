@@ -1,0 +1,12 @@
+<% participants.each do |participant| %>
+<tr>
+  <td><strong><%= participant.ranking %></strong></td>
+  <td>
+    <%= link_to participant_path(participant), title: participant.name, data: {toggle: :tooltip} do %>
+      <%= image_tag participant.image_url, class: 'avatar' %>
+      <span class="text-link"><%= participant.name %></span>
+    <% end %>
+  </td>
+  <td><strong><%= participant.rating.round(2) %></strong></td>
+</tr>
+<% end %>

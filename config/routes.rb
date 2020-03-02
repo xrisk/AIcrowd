@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   get 'test_gauge', to: 'test#gauge'
   get 'sso', to: 'participants#sso'
+  get 'leaderboard', to: 'rating_leaderboard#index'
 
   admin = lambda do |request|
     request.env['warden'].authenticate? && request.env['warden'].user.admin?
