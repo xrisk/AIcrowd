@@ -1,4 +1,10 @@
 module TabsHelper
+  def tab_class(tab)
+    tab == current_tab ? 'active' : ''
+  end
+
+  private
+
   def current_tab
     case controller.controller_name
     when 'challenges'
@@ -28,9 +34,5 @@ module TabsHelper
     when 'challenge_rules'
       'Rules'
     end
-  end
-
-  def tab_class(tab)
-    tab == current_tab ? 'active' : ''
   end
 end

@@ -28,5 +28,5 @@ module DeviseHelper
     HTML
 
     sanitize_html(html)
- end
+  end
 end

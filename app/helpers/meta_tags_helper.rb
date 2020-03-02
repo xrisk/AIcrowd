@@ -21,6 +21,8 @@ module MetaTagsHelper
     meta_image.starts_with?("http") ? meta_image : url_to_image(meta_image)
   end
 
+  private
+
   def title_from_controller_name
     case controller.controller_name
     when 'challenges'
