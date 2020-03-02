@@ -6,7 +6,8 @@ class Organizer < ApplicationRecord
               use: [:slugged, :finders, :history]
   has_many :challenges,
            dependent: :destroy
-  has_many :participant_organizers
+  has_many :participant_organizers,
+           dependent: :destroy
   has_many :participants,
            through: :participant_organizers
   has_many :clef_tasks,
