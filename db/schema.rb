@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_14_084730) do
+ActiveRecord::Schema.define(version: 2020_03_02_110125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -222,6 +222,22 @@ ActiveRecord::Schema.define(version: 2020_02_14_084730) do
     t.datetime "posted_at"
     t.string "slug"
     t.index ["participant_id"], name: "index_blogs_on_participant_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "category_challenges", force: :cascade do |t|
+    t.bigint "category_id"
+    t.bigint "challenge_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id", "challenge_id"], name: "index_category_challenges_on_category_id_and_challenge_id", unique: true
+    t.index ["category_id"], name: "index_category_challenges_on_category_id"
+    t.index ["challenge_id"], name: "index_category_challenges_on_challenge_id"
   end
 
   create_table "challenge_call_responses", force: :cascade do |t|
