@@ -20,8 +20,9 @@ describe ClefTasksController, feature: true do
 
     context 'when user is logged in' do
       let(:admin) { create(:participant, :admin) }
+      let!(:participant_organizer) { create(:participant_organizer, participant: admin, organizer: organizer) }
 
-      before { log_in admin }
+      before { log_in participant_organizer.participant }
 
       it 'show clef_task page' do
         visit organizer_clef_task_path(organizer, clef_task)
