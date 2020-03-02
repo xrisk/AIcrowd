@@ -27,8 +27,8 @@ class ParticipantChallengePolicy < ApplicationPolicy
       if participant&.admin?
         scope.all
       else
-        if participant&.organizer_id
-          scope.where("status_cd IN ('running','completed','starting_soon') OR organizer_id = ?", participant.organizer_id)
+        if participant&.organizers.ids.present?
+          scope.where("status_cd IN ('running','completed','starting_soon') OR organizer_id IN (#{participant.organizers.ids.join(',')})")
         elsif participant
           scope.where(participant_sql(email: participant.email))
         else

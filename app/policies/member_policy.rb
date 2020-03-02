@@ -1,6 +1,6 @@
 class MemberPolicy < ApplicationPolicy
   def index?
-    participant&.admin? || participant && @record.id == participant.organizer_id
+    participant&.admin? || participant && participant.organizers.ids.include?(@record.id)
   end
 
   def show?
@@ -25,26 +25,5 @@ class MemberPolicy < ApplicationPolicy
 
   def destroy?
     index?
-  end
-
-  class Scope
-    attr_reader :participant, :scope
-
-    def initialize(participant, scope)
-      @participant = participant
-      @scope       = scope
-    end
-
-    def resolve
-      if participant&.admin?
-        scope.all
-      else
-        if participant&.organizer_id
-          scope.where("id = ?", participant.organizer_id)
-        else
-          scope.none
-        end
-      end
-    end
   end
 end

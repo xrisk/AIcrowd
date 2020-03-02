@@ -72,8 +72,8 @@
     <% if @challenge.new_record? && current_participant&.admin? %>
       <%= f.select :organizer_id, @organizers_for_select, { include_blank: true } %>
     <% else %>
-      <input class="form-control" type='text' value='<%= @challenge.organizer&.organizer || current_participant.organizer&.organizer %>' readonly>
-      <%= f.hidden_field :organizer_id, value: @challenge.organizer_id || current_participant.organizer_id %>
+      <input class="form-control" type='text' value='<%= @challenge.organizer&.organizer %>' readonly>
+      <%= f.hidden_field :organizer_id, value: @challenge.organizer_id %>
     <% end %>
   </div>
 
