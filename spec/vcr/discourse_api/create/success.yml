@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://discourse-staging.aicrowd.com/categories
+    uri: https://discourse-staging.aicrowd.com/categories.json
     body:
       encoding: UTF-8
       string: color=49d9e9&name=Short+Challenge+Name&parent_category_id&text_color=f0fcfd

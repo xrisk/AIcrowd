@@ -16,7 +16,7 @@
         <a class="nav-link nav-link-02<%= ' active' if active_tab == 'teams' %>" data-toggle='tab' href="#tab-teams" onclick="return false;">Teams</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link nav-link-03" href="<%= @discourse_link %>">Posts</a>
+        <a class="nav-link nav-link-03<%= ' active' if active_tab == 'posts' %>" data-toggle='tab' href="#tab-posts" onclick="return false;">Posts</a>
       </li>
       <li class="nav-item">
         <a class="nav-link nav-link-04<%= ' active' if active_tab == 'bio' %>" data-toggle='tab' href="#tab-bio" onclick="return false;">Bio</a>
@@ -61,6 +61,10 @@
 
   <div id="tab-teams" class="tab-pane fade<%= ' show active' if active_tab == 'teams' %>">
     <%= render partial: 'teams_list' %>
+  </div>
+
+  <div id="tab-posts" class="tab-pane fade<%= ' show active' if active_tab == 'posts' %>">
+    <%= render partial: 'discourse_posts_list', locals: { participant: @participant, discourse_posts_fetch: @discourse_posts_fetch, discourse_posts: @discourse_posts } %>
   </div>
 
   <div id='tab-bio' class="tab-pane fade<%= ' show active' if active_tab == 'bio' %>">

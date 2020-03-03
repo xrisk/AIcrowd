@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://discourse-staging.aicrowd.com/categories
+    uri: https://discourse-staging.aicrowd.com/categories.json
     body:
       encoding: UTF-8
       string: color=49d9e9&name=Discourse+Category+Name+That+Exists&parent_category_id&text_color=f0fcfd
@@ -66,7 +66,7 @@ http_interactions:
   recorded_at: Fri, 31 Jan 2020 11:00:14 GMT
 - request:
     method: post
-    uri: https://discourse-staging.aicrowd.com/categories
+    uri: https://discourse-staging.aicrowd.com/categories.json
     body:
       encoding: UTF-8
       string: color=49d9e9&name=Discourse+Category+Name+That+Existse8c022&parent_category_id&text_color=f0fcfd
@@ -132,7 +132,7 @@ http_interactions:
   recorded_at: Fri, 31 Jan 2020 11:18:50 GMT
 - request:
     method: post
-    uri: https://discourse-staging.aicrowd.com/categories
+    uri: https://discourse-staging.aicrowd.com/categories.json
     body:
       encoding: UTF-8
       string: color=49d9e9&name=Discourse+Category+Name+That+Exists890662&parent_category_id&text_color=f0fcfd

@@ -8,7 +8,7 @@ module Discourse
     def call
       retry_count ||= 0
 
-      return failure('DiscourseApi client couldn\'t be properly initialized.') if client.nil?
+      return failure('Discourse API client couldn\'t be properly initialized.') if client.nil?
 
       response = create_category_request(ensure_uniqueness: retry_count.positive?)
 
@@ -38,9 +38,8 @@ module Discourse
       # - category name has to be unique
       # - slug has to be unique
       client.post(
-        '/categories', {
+        '/categories.json', {
           name:       truncated_string(challenge.challenge, ensure_uniqueness),
-          slug:       truncated_string(challenge.slug, ensure_uniqueness),
           color:      ::Discourse::BaseService::CATEGORY_DEFAULT_COLOR,
           text_color: ::Discourse::BaseService::CATEGORY_DEFAULT_TEXT_COLOR
         }

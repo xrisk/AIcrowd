@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: put
-    uri: https://discourse-staging.aicrowd.com/categories/30
+    uri: https://discourse-staging.aicrowd.com/categories/30.json
     body:
       encoding: UTF-8
       string: color=49d9e9&id=30&name=Discourse+Category+Name+That+Exists&parent_category_id&slug=discourse-category-name-that-exists&text_color=f0fcfd
@@ -66,7 +66,7 @@ http_interactions:
   recorded_at: Fri, 31 Jan 2020 12:58:19 GMT
 - request:
     method: put
-    uri: https://discourse-staging.aicrowd.com/categories/30
+    uri: https://discourse-staging.aicrowd.com/categories/30.json
     body:
       encoding: UTF-8
       string: color=49d9e9&id=30&name=Discourse+Category+Name+That+Exists-684602&parent_category_id&slug=discourse-category-name-that-exists-137048&text_color=f0fcfd
