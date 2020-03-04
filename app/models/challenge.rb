@@ -9,6 +9,7 @@ class Challenge < ApplicationRecord
   mount_uploader :image_file, ImageUploader
 
   belongs_to :organizer
+
   belongs_to :clef_task, optional: true
   accepts_nested_attributes_for :clef_task
 
@@ -16,46 +17,34 @@ class Challenge < ApplicationRecord
   accepts_nested_attributes_for :dataset_files, reject_if: :all_blank
 
   has_many :submission_file_definitions, dependent:  :destroy, inverse_of: :challenge
-  accepts_nested_attributes_for :submission_file_definitions,
-                                reject_if:     :all_blank,
-                                allow_destroy: true
+  accepts_nested_attributes_for :submission_file_definitions, reject_if: :all_blank, allow_destroy: true
+
   has_many :challenge_partners, dependent: :destroy
-  accepts_nested_attributes_for :challenge_partners,
-                                reject_if:     :all_blank,
-                                allow_destroy: true
+  accepts_nested_attributes_for :challenge_partners, reject_if: :all_blank, allow_destroy: true
 
   has_many :challenge_rules, dependent: :destroy, class_name: 'ChallengeRules'
-  accepts_nested_attributes_for :challenge_rules,
-                                reject_if:     :all_blank,
-                                allow_destroy: true
+  accepts_nested_attributes_for :challenge_rules, reject_if: :all_blank, allow_destroy: true
 
   has_many :challenge_participants, dependent: :destroy
-
+  has_many :participants, through: :challenge_participants
   has_many :submissions, dependent: :destroy
-  has_many :leaderboards,
-           class_name: 'Leaderboard'
-  has_many :ongoing_leaderboards,
-           class_name: 'OngoingLeaderboard'
-  has_many :participant_challenges,
-           class_name: 'ParticipantChallenge'
-  has_many :participant_challenge_counts,
-           class_name: 'ParticipantChallengeCount'
-  has_many :challenge_registrations,
-           class_name: 'ChallengeRegistration'
+  has_many :leaderboards, class_name: 'Leaderboard'
+  has_many :ongoing_leaderboards, class_name: 'OngoingLeaderboard'
 
   has_many :votes, as: :votable
   has_many :follows, as: :followable
-  has_many :challenge_rounds,
-           dependent:  :destroy,
-           inverse_of: :challenge
-  accepts_nested_attributes_for :challenge_rounds,
-                                reject_if:     :all_blank,
-                                allow_destroy: true
+
+  # We may need to remove the following 3
+  has_many :participant_challenges, class_name: 'ParticipantChallenge'
+  has_many :participant_challenge_counts, class_name: 'ParticipantChallengeCount'
+  has_many :challenge_registrations, class_name: 'ChallengeRegistration'
+
+  has_many :challenge_rounds, dependent:  :destroy, inverse_of: :challenge
+  accepts_nested_attributes_for :challenge_rounds, reject_if: :all_blank, allow_destroy: true
+
   has_many :challenge_round_summaries
   has_many :invitations, dependent: :destroy
-  accepts_nested_attributes_for :invitations,
-                                reject_if:     :all_blank,
-                                allow_destroy: true
+  accepts_nested_attributes_for :invitations, reject_if: :all_blank, allow_destroy: true
 
   has_many :teams, inverse_of: :challenge
   has_many :category_challenges, dependent: :destroy

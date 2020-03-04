@@ -1,0 +1,68 @@
+<%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
+
+<%= render partial: 'shared/challenges/masthead', locals: {challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow} %>
+<%= render partial: 'challenges/show/subnav', locals: {challenge: @challenge} %>
+
+<section class="section-p-sm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <% if @challenge_rounds.size > 1 %>
+          <!-- Challenge Round Pills  -->
+          <ul class="nav nav-pills">
+            <% @challenge_rounds.each do |challenge_round| %>
+              <li class="nav-item">
+                <%= link_to challenge_round.challenge_round,
+                            challenge_insights_path(challenge_round_id: challenge_round.id),
+                            class: round_pills_tab_classes(challenge_round, @current_round) %>
+              </li>
+            <% end %>
+          </ul>
+          <!-- / Challenge Round Pills  -->
+        <% end %>
+
+        <div class="chart-wrapper pb-5" data-controller="chart" data-chart-index="1" data-chart-chart-type="LineChart">
+          <header class="section-header-decorative">
+            <div>
+              <h4>Submissions vs Time</h4>
+            </div>
+          </header>
+          <%= line_chart submissions_vs_time_challenge_insights_path(@challenge, challenge_round_id: @current_round.id, score: 'score') %>
+        </div>
+
+        <div class="chart-wrapper pb-5" data-controller="chart" data-chart-index="2" data-chart-chart-type="AreaChart">
+          <header class="section-header-decorative">
+            <div>
+              <h4>Best Score vs Time</h4>
+            </div>
+
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" data-target="chart.selectedScore">
+                <%= @current_round.get_score_title %>
+              </button>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" data-target="chart.selectScore" data-action="chart#updateChartUrl" data-chart-url="<%= top_score_vs_time_challenge_insights_path(@challenge, challenge_round_id: @current_round.id, score: 'score') %>"><%= @current_round.get_score_title %></a>
+                <a class="dropdown-item" data-target="chart.selectScore" data-action="chart#updateChartUrl" data-chart-url="<%= top_score_vs_time_challenge_insights_path(@challenge, challenge_round_id: @current_round.id, score: 'score_secondary') %>"><%= @current_round.get_score_secondary_title %></a>
+              </div>
+            </div>
+
+          </header>
+
+          <%= area_chart top_score_vs_time_challenge_insights_path(@challenge, challenge_round_id: @current_round.id, score: 'score') %>
+        </div>
+
+        <div class="chart-wrapper pb-5" data-controller="chart" data-chart-index="3" data-chart-chart-type="GeoChart">
+          <header class="section-header-decorative">
+            <div>
+              <h4>Geo Chart</h4>
+            </div>
+
+          </header>
+
+          <%= geo_chart challenge_participants_country_challenge_insights_path(@challenge), height: '600px', messages: {empty: "No data present for participant locations"} %>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

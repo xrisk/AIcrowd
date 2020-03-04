@@ -5,6 +5,7 @@
       <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Overview', link: challenge_path(challenge)} %>
       <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Discussion', link: discourse_url(challenge)} %>
       <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Resources', link: resources_link(challenge)} %>
+      <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Insights', link: challenge_insights_path(challenge)} %>
       <% unless policy(challenge).starting_soon_mode? %>
         <% if challenge.show_leaderboard || policy(challenge).edit? %>
           <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Leaderboard', link: challenge_leaderboards_path(challenge)} %>
