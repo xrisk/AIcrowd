@@ -1,0 +1,10 @@
+<div class="chart-wrapper pb-5" data-controller="chart" data-chart-index="3" data-chart-chart-type="GeoChart">
+  <header class="section-header-decorative">
+    <div>
+      <h4>Geo Chart</h4>
+    </div>
+
+  </header>
+
+  <%= geo_chart challenge_participants_country_challenge_insights_path(challenge), height: '600px', messages: {empty: "No data present for participant locations"} %>
+</div>
