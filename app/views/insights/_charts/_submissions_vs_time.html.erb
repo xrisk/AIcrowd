@@ -1,0 +1,8 @@
+<div class="chart-wrapper pb-5" data-controller="chart" data-chart-index="1" data-chart-chart-type="LineChart">
+  <header class="section-header-decorative">
+    <div>
+      <h4>Submissions vs Time</h4>
+    </div>
+  </header>
+  <%= line_chart submissions_vs_time_challenge_insights_path(challenge, challenge_round_id: current_round.id, score: 'score') %>
+</div>
