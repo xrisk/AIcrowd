@@ -3,29 +3,23 @@
   <div class="container-fluid priority-nav" data-controller="prioritynav">
     <ul class="nav">
       <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Overview', link: challenge_path(challenge)} %>
+      <% if policy(challenge).show_leaderboard? %>
+        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Leaderboard', link: challenge_leaderboards_path(challenge)} %>
+      <% end %>
       <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Discussion', link: discourse_url(challenge)} %>
       <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Resources', link: resources_link(challenge)} %>
-      <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Insights', link: challenge_insights_path(challenge)} %>
-      <% unless policy(challenge).starting_soon_mode? %>
-        <% if challenge.show_leaderboard || policy(challenge).edit? %>
-          <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Leaderboard', link: challenge_leaderboards_path(challenge)} %>
-        <% end %>
-        <% if challenge.submissions_page.present? || policy(challenge).edit? %>
-          <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Submissions', link: challenge_submissions_path(challenge)} %>
-        <% end %>
-        <% if challenge.winners_tab_active.present? %>
-          <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Winners', link: challenge_winners_path(challenge)} %>
-        <% end %>
+      <% if policy(challenge).show_submissions? %>
+        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Submissions', link: challenge_submissions_path(challenge)} %>
       <% end %>
-
+      <% if policy(challenge).show_winners? %>
+        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Winners', link: challenge_winners_path(challenge)} %>
+      <% end %>
       <% if policy(challenge).edit? %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Participants', link: participants_link(challenge)} %>
       <% end %>
-
       <% if challenge.dynamic_content_tab.present? %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: challenge.dynamic_content_tab, link: challenge_dynamic_contents_path(challenge)} %>
       <% end %>
-
       <% if required_terms_or_rules_path(challenge).blank? %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Rules', link: [challenge, challenge.current_challenge_rules]} %>
       <% end %>

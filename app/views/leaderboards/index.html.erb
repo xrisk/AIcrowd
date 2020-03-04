@@ -19,54 +19,53 @@
           <!-- / Challenge Round Pills  -->
         <% end %>
 
-      <!-- challenge leaderboard -->
+        <!-- challenge leaderboard -->
         <% if @current_round&.leaderboard_note.present? %>
-		      <div class="md-content width-100">
-			      <div class="note">
-				      <%= sanitize_html(@current_round.leaderboard_note) %>
-			      </div>
-		      </div>
+          <div class="md-content width-100">
+            <div class="note">
+              <%= sanitize_html(@current_round.leaderboard_note) %>
+            </div>
+          </div>
         <% end %>
 
         <% if policy(@challenge).show_leaderboard? %>
-          <% unless @challenge.show_leaderboard? %>
+          <% unless policy(@challenge).leaderboard_public? %>
             <div class="leaderboard-important-msg">
               <p>Leaderboard is only visible to organizers</p>
             </div>
           <% end %>
-
           <div class="table-responsive-md">
             <table class="table table-leaderboard">
               <thead>
-                <tr>
-                  <th scope="col" class="leaderboard-change">Δ</th>
-                  <th scope="col">#</th>
-                  <th scope="col">Participants</th>
-                  <% if @challenge.media_on_leaderboard %>
-                    <th scope="col">Media</th>
-                  <% end %>
-                  <th scope="col"><%= @current_round.get_score_title %></th>
-                  <% if @current_round.get_score_secondary_title.present? %>
-                    <th scope="col"><%= @current_round.get_score_secondary_title %></th>
-                  <% end %>
-                  <% @challenge.other_scores_fieldnames_array.each do |fname| %>
-                    <th scope="col"><%= fname %></th>
-                  <% end %>
-                  <th scope="col">Entries</th>
-                  <th scope="col" class="text-right">Last Submission</th>
-                  <th scope="col" class="text-right"></th>
-                </tr>
+              <tr>
+                <th scope="col" class="leaderboard-change">Δ</th>
+                <th scope="col">#</th>
+                <th scope="col">Participants</th>
+                <% if @challenge.media_on_leaderboard %>
+                  <th scope="col">Media</th>
+                <% end %>
+                <th scope="col"><%= @current_round.get_score_title %></th>
+                <% if @current_round.get_score_secondary_title.present? %>
+                  <th scope="col"><%= @current_round.get_score_secondary_title %></th>
+                <% end %>
+                <% @challenge.other_scores_fieldnames_array.each do |fname| %>
+                  <th scope="col"><%= fname %></th>
+                <% end %>
+                <th scope="col">Entries</th>
+                <th scope="col" class="text-right">Last Submission</th>
+                <th scope="col" class="text-right"></th>
+              </tr>
               </thead>
               <tbody>
-                <%= render partial: 'leaderboards', locals: { leaderboards: @leaderboards } %>
+              <%= render partial: 'leaderboards', locals: { leaderboards: @leaderboards } %>
               </tbody>
-          </table>
+            </table>
+          </div>
         <% else %>
           <div class="leaderboard-msg">
             <p>Leaderboard is not displayed yet.</p>
           </div>
         <% end %>
-      </div>
 
         <!-- toggle switch -->
         <% if @challenge.status == :completed %>
@@ -82,9 +81,8 @@
         <% end %>
         <!-- /toggle switch -->
 
-      <span id="more-anchor"></span>
-       <%= render partial: 'shared/load_more',
-        locals: { collection: @leaderboards } %>
+        <span id="more-anchor"></span>
+        <%= render partial: 'shared/load_more', locals: { collection: @leaderboards } %>
       </div>
     </div>
   </div>
