@@ -10,6 +10,17 @@
   </div>
 
   <div class="form-group">
+    <span class="label-text">Category</span>
+    <%= f.select :category, @categories, { include_blank: "Select multiple category" }, { class: "form-control" } %>
+    <span class='show_category'>
+      <% @challenge&.categories.each do |category| %>
+        <option value="<%= category.id %>" class="badge badge-success category_opt" id="<%= category.id %>"><%= category.name %></option>
+      <% end %>
+    </span>
+    <%= f.hidden_field :selected_category, value: @challenge.categories.ids %>
+  </div>
+
+  <div class="form-group">
     <span class="label-text">Options</span>
     <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :require_registration, text: "Registration required" } %>
     <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :show_leaderboard, text: "Show leaderboard" } %>

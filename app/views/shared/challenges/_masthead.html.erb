@@ -16,6 +16,9 @@
     <div class="row">
       <div class="col-sm-12 col-md-8 col-lg-9">
         <h1><%= challenge.challenge %></h1>
+        <% challenge.categories.each do |category| %>
+          <span class='badge badge-success'><%= category.name %></span>
+        <% end %>
         <% if challenge.private_challenge %>
           <span class="badge badge-secondary">
             Private
