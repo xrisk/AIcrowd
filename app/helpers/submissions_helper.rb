@@ -44,13 +44,4 @@ module SubmissionsHelper
     return true if current_participant&.admin? || current_participant&.id == submission.participant&.id
     return true if current_participant&.organizers.ids.include?(submission.challenge.organizer.id)
   end
-
-
-  def submission_tab_classes(challenge_round, current_round_id)
-    if challenge_round.id == current_round_id
-      return 'nav-link active'
-    else
-      return 'nav-link'
-    end
-  end
 end

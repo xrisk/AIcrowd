@@ -52,12 +52,4 @@ module LeaderboardHelper
     end
     return other_scores
   end
-
-  def leaderboard_tab_classes(challenge_round, current_round)
-    if challenge_round.id == current_round.id
-      return 'nav-link active'
-    else
-      return 'nav-link'
-    end
-  end
 end

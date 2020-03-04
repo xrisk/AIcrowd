@@ -12,7 +12,7 @@
               <li class="nav-item">
                 <%= link_to challenge_round.challenge_round,
                             challenge_leaderboards_path(challenge_round_id: challenge_round.id),
-                            class: leaderboard_tab_classes(challenge_round, @current_round) %>
+                            class: round_pills_tab_classes(challenge_round, @current_round) %>
               </li>
             <% end %>
           </ul>
