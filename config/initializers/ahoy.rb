@@ -19,4 +19,4 @@ Ahoy.cookies = false
 
 # Geocoding overloads our redis
 # Need db sideloaded without api calls
-Ahoy.geocode = false
+Ahoy.geocode = true
