@@ -63,8 +63,31 @@ class ChallengePolicy < ApplicationPolicy
     create?
   end
 
+  def leaderboard_public?
+    @record.show_leaderboard == true
+  end
+
+  def show_leaderboard?
+    return false if starting_soon_mode?
+    return false unless @record.challenge_rounds.present?
+
+    leaderboard_public? || edit?
+  end
+
+  def show_submissions?
+    return false if starting_soon_mode?
+
+    @record.submissions_page.present? || edit?
+  end
+
+  def show_winners?
+    return false if starting_soon_mode?
+
+    @record.winners_tab_active.present?
+  end
+
   def starting_soon_mode?
-    return @record.status == :starting_soon
+    @record.status == :starting_soon
   end
 
   def has_accepted_challenge_rules?
@@ -77,16 +100,9 @@ class ChallengePolicy < ApplicationPolicy
     return participant.has_accepted_participation_terms?
   end
 
-  def show_leaderboard?
-    @record.challenge_rounds.present? &&
-      @record.show_leaderboard == true ||
-      (participant &&
-          (participant.admin? ||  participant.organizers.ids.include?(@record.organizer_id)))
-  end
-
   def submissions_allowed?
     return false unless @record.online_submissions
-    return true if participant && (participant.admin? ||  participant.organizers.ids.include?(@record.organizer_id))
+    return true if edit?
 
     if @record.running? || (@record.completed? && @record.post_challenge_submissions?)
       if @record.clef_challenge.present?
