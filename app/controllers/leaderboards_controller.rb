@@ -9,7 +9,6 @@ class LeaderboardsController < ApplicationController
     @vote             = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
     @follow           = @challenge.follows.where(participant_id: current_participant.id).first if current_participant.present?
     @challenge_rounds = @challenge.challenge_rounds.started
-
     @post_challenge = true if @challenge.completed? && params[:post_challenge] == "true"
 
     @leaderboards = if @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"

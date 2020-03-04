@@ -14,12 +14,10 @@ class SubmissionsController < ApplicationController
   respond_to :html, :js
 
   def index
-    @current_round_id = @current_round&.id
-
     if params[:baselines] == 'true'
       @search = policy_scope(Submission)
                     .where(
-                      challenge_round_id: @current_round_id,
+                      challenge_round_id: @current_round.id,
                       challenge_id:       @challenge.id,
                       baseline:           true)
                     .where.not(participant_id: nil)
@@ -31,7 +29,7 @@ class SubmissionsController < ApplicationController
       if @my_submissions
         @search = policy_scope(Submission)
                       .where(
-                        challenge_round_id: @current_round_id,
+                        challenge_round_id: @current_round.id,
                         challenge_id:       @challenge.id,
                         participant_id:     current_participant.id)
                       .search(search_params)
@@ -41,7 +39,7 @@ class SubmissionsController < ApplicationController
       else
         @search = policy_scope(Submission)
                       .where(
-                        challenge_round_id: @current_round_id,
+                        challenge_round_id: @current_round.id,
                         challenge_id:       @challenge.id)
                       .search(search_params)
       end
@@ -156,7 +154,7 @@ class SubmissionsController < ApplicationController
 
   def set_current_round
     @current_round = if params[:challenge_round_id].present?
-                       ChallengeRound.find(params[:challenge_round_id].to_i)
+                       @challenge.challenge_rounds.find(params[:challenge_round_id].to_i)
                      else
                        @challenge.active_round
                      end
