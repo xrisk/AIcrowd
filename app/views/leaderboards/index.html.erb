@@ -45,9 +45,9 @@
                   <% if @challenge.media_on_leaderboard %>
                     <th scope="col">Media</th>
                   <% end %>
-                  <th scope="col"><%= @current_round.score_title %></th>
-                  <% if @current_round.score_secondary_title.present? %>
-                    <th scope="col"><%= @current_round.score_secondary_title %></th>
+                  <th scope="col"><%= @current_round.get_score_title %></th>
+                  <% if @current_round.get_score_secondary_title.present? %>
+                    <th scope="col"><%= @current_round.get_score_secondary_title %></th>
                   <% end %>
                   <% @challenge.other_scores_fieldnames_array.each do |fname| %>
                     <th scope="col"><%= fname %></th>

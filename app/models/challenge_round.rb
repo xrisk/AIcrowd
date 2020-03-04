@@ -41,6 +41,14 @@ class ChallengeRound < ApplicationRecord
 
   after_initialize :set_defaults
 
+  def get_score_title
+    score_title.presence || 'Primary Score'
+  end
+
+  def get_score_secondary_title
+    score_secondary_title.presence || 'Secondary Score'
+  end
+
   def set_defaults
     if new_record?
       self.challenge_round ||= "Round #{(challenge&.challenge_rounds&.count || 0) + 1}"
