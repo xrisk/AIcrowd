@@ -67,7 +67,7 @@ describe Discourse::CreateCategoryService do
         let(:challenge) { create(:challenge, challenge: 'Short Challenge Name', discourse_category_id: nil) }
 
         before do
-          allow_any_instance_of(DiscourseApi::Client).to receive(:request).and_raise(::DiscourseApi::Error)
+          allow_any_instance_of(Faraday::Connection).to receive(:post).and_raise(Discourse::Error)
         end
 
         it 'returns failure' do
