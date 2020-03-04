@@ -64,6 +64,7 @@ class Participant < ApplicationRecord
            foreign_key: :resource_owner_id,
            dependent:   :destroy
 
+  has_many :visits, class_name: "Ahoy::Visit", foreign_key: :user_id
   has_many :team_participants, inverse_of: :participant
   has_many :teams, through: :team_participants, inverse_of: :participants
   has_many :concrete_teams, -> { concrete }, through: :team_participants, source: :team, inverse_of: :participants
