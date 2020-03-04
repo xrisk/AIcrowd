@@ -9,6 +9,7 @@ class ChallengesController < ApplicationController
   before_action :set_organizer, only: [:edit, :update]
   before_action :set_organizers_for_select, only: [:new, :create]
   before_action :set_challenge_rounds, only: [:edit, :update]
+  before_action :set_category, only: [:new, :create , :edit]
 
   respond_to :html, :js
 
@@ -57,6 +58,7 @@ class ChallengesController < ApplicationController
     authorize @challenge
 
     if @challenge.save
+      create_challenge_category
       redirect_to edit_challenge_path(@challenge, step: :overview), notice: 'Challenge created.'
     else
       render :new
@@ -67,7 +69,9 @@ class ChallengesController < ApplicationController
 
   def update
     if @challenge.update(challenge_params)
+      create_challenge_category if params[:challenge][:selected_category].present?
       create_invitations if params[:challenge][:invitation_email].present?
+      set_category
       respond_to do |format|
         format.html { redirect_to edit_challenge_path(@challenge, step: params[:current_step]), notice: 'Challenge updated.' }
         format.js   { render :update }
@@ -173,6 +177,18 @@ class ChallengesController < ApplicationController
     params[:challenge][:invitation_email].split(',').each do |email|
       @challenge.invitations.create!(email: email.strip)
     end
+  end
+
+  def create_challenge_category
+    @challenge.category_challenges.destroy_all if @challenge.category_challenges.present?
+    params[:challenge][:selected_category].split(' ').each do |category|
+      @challenge.category_challenges.create(category_id: category)
+    end
+  end
+
+  def set_category
+    category = @challenge&.categories.present? ? Category.where.not(id: @challenge.categories.ids) : Category.all
+    @categories ||= category.collect{|c| [c.name, c.id]}
   end
 
   def challenge_params
