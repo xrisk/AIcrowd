@@ -4,7 +4,7 @@ class RatingApiService
   base_uri ENV["RATING_API_URL"]
   default_params output: 'json'
   format :json
-  def start_round_calculations(challenge_rounds)
+  def call(challenge_rounds)
     body = {
         rounds: challenge_rounds
     }.to_json
