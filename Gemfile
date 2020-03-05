@@ -103,7 +103,7 @@ gem 'valid_email2'
 gem 'webpacker', '~> 2.0'
 
 gem 'irbtools', require: 'irbtools/binding'
-gem "lines-engine", path: "/Users/nikhil/lines-engine/"
+gem "lines-engine", git: "https://github.com/AIcrowd/aicrowd-blog.git"
 group :development do
   gem "letter_opener"
   gem 'brakeman', require: false
