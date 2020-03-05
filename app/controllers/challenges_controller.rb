@@ -188,7 +188,7 @@ class ChallengesController < ApplicationController
 
   def set_category
     category = @challenge&.categories.present? ? Category.where.not(id: @challenge.categories.ids) : Category.all
-    category.map{|c| [c.name, c.id]}
+    @categories = category.map{|c| [c.name, c.id]}
   end
 
   def challenge_params
