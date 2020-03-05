@@ -225,14 +225,15 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
   create_table "category_challenges", force: :cascade do |t|
-    t.bigint "category_id"
-    t.bigint "challenge_id"
+    t.bigint "category_id", null: false
+    t.bigint "challenge_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id", "challenge_id"], name: "index_category_challenges_on_category_id_and_challenge_id", unique: true
