@@ -1,8 +1,8 @@
 class CreateCategoryChallenges < ActiveRecord::Migration[5.2]
   def change
     create_table :category_challenges do |t|
-      t.references :category
-      t.references :challenge
+      t.references :category, null: false
+      t.references :challenge, null: false
 
       t.timestamps
     end

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :category_challenge do
-    category_id { "" }
-    challenge_id { "" }
+    association(:category)
+    association(:challenge)
   end
 end
