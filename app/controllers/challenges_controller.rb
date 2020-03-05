@@ -56,6 +56,7 @@ class ChallengesController < ApplicationController
   def create
     @challenge                = Challenge.new(challenge_params)
     @challenge.clef_challenge = true if @challenge.organizers.any? { |organizer| organizer.clef_organizer? }
+    @challenge.organizers     = current_participant.organizers if current_participant&.admin? == false
 
     authorize @challenge
 

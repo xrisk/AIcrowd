@@ -63,28 +63,11 @@ class LeaderboardPolicy < ApplicationPolicy
     end
 
     def resolve
-      if participant&.admin?
-        scope.all
-      else
-        if participant&.organizers&.any?
-          challenges_ids = Challenge.left_joins(:organizers)
-                             .where("organizers.id IN (#{participant.organizers.pluck(:id).join(',')})")
-                             .group('challenges.id')
-                             .pluck('challenges.id')
-
-          sql = if challenges_ids.any?
-                  %[
-                    #{participant_sql(participant)}
-                    OR challenge_id IN (#{challenges_ids.join(',')})
-                  ]
-                else
-                  participant_sql(participant)
-                end
-          scope.where(sql)
-        else
-          scope.where(participant_sql(participant))
-        end
-      end
+      DefaultScopeByRoleQuery.new(
+        participant:     participant,
+        participant_sql: participant_sql(participant),
+        relation:        scope
+      ).call
     end
   end
 end
