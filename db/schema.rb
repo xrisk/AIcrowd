@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_10_143323) do
+ActiveRecord::Schema.define(version: 2020_02_14_084730) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -682,6 +682,16 @@ ActiveRecord::Schema.define(version: 2020_02_10_143323) do
     t.index ["participant_id"], name: "index_participant_clef_tasks_on_participant_id"
   end
 
+  create_table "participant_organizers", force: :cascade do |t|
+    t.bigint "participant_id"
+    t.bigint "organizer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organizer_id"], name: "index_participant_organizers_on_organizer_id"
+    t.index ["participant_id", "organizer_id"], name: "index_participant_organizers_on_participant_id_and_organizer_id", unique: true
+    t.index ["participant_id"], name: "index_participant_organizers_on_participant_id"
+  end
+
   create_table "participants", id: :serial, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -969,6 +979,8 @@ ActiveRecord::Schema.define(version: 2020_02_10_143323) do
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "participant_clef_tasks", "clef_tasks"
   add_foreign_key "participant_clef_tasks", "participants"
+  add_foreign_key "participant_organizers", "organizers"
+  add_foreign_key "participant_organizers", "participants"
   add_foreign_key "participants", "organizers"
   add_foreign_key "partners", "organizers"
   add_foreign_key "submission_file_definitions", "challenges"

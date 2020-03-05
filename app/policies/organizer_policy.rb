@@ -8,7 +8,7 @@ class OrganizerPolicy < ApplicationPolicy
   end
 
   def edit?
-    participant&.admin? || participant && @record.id == participant.organizer_id
+    participant&.admin? || participant && participant.organizers.ids.include?(@record.id)
   end
 
   def update?
@@ -24,7 +24,7 @@ class OrganizerPolicy < ApplicationPolicy
   end
 
   def destroy?
-    participant&.admin? || participant && @record.id == participant.organizer_id
+    participant&.admin? || participant && participant.organizers.ids.include?(@record.id)
   end
 
   def regen_api_key?
@@ -40,7 +40,7 @@ class OrganizerPolicy < ApplicationPolicy
   end
 
   def clef_email?
-    participant&.admin? || participant && @record.id == participant.organizer_id
+    participant&.admin? || participant && participant.organizers.ids.include?(@record.id)
   end
 
   class Scope
@@ -55,8 +55,8 @@ class OrganizerPolicy < ApplicationPolicy
       if participant&.admin?
         scope.all
       else
-        if participant&.organizer_id
-          scope.where("id = ?", participant.organizer_id)
+        if participant&.organizers&.any?
+          scope.where("id = ?", participant.organizer_ids)
         else
           scope.none
         end
