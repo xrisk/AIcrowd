@@ -2,7 +2,7 @@ class RatingCalculateJob < ApplicationJob
   queue_as :default
   def start_ranking_python_service
     challenge_rounds = ChallengeRound.where("calculated_permanent=FALSE OR calculated_permanent is NULL").select('id').order(end_dttm: :asc).map {|round| round.id}
-    RatingApiService.start_round_calculations(challenge_rounds)
+    RatingApiService.new.call(challenge_rounds)
   end
 
   def perform(*args)
