@@ -10,7 +10,7 @@ class RatingApiService
     }.to_json
     headers = { 'Content-Type' => 'application/json' }
     begin
-      result = self.class.post('http://localhost:8888/startroundcalculations/', body: body, headers: headers)
+      result = self.class.post('/startroundcalculations/', body: body, headers: headers)
     rescue HTTParty::Error => e
       Rails.logger.error e.message
     rescue StandardError => e
