@@ -1,24 +1,17 @@
 class UserRatingService
-  def initialize(round, temporary)
-    @round = round
-    @temporary = temporary
-  end
-
-  def call()
-    leaderboard_rating_stats = LeaderboardParticipantsQuery.new.participants_with_rating @round.id, @temporary
-    ranks, teams_mu, teams_sigma, teams_participant_ids = filter_leaderboard_stats leaderboard_rating_stats
-    if ranks.length > 1
-      new_team_ratings, new_team_variations = RatingApiService.new.call ranks, teams_mu, teams_sigma, teams_participant_ids
-      if new_team_ratings.any? && new_team_variations.any?
-        participant_ids, new_participant_ratings, new_participant_variations = filter_rating_api_output teams_participant_ids, new_team_ratings, new_team_variations
-        update_database_columns participant_ids, new_participant_ratings, new_participant_variations
-      else
-        Rails.logger.info("RatingApiService could be down")
-      end
+  def initialize(round_id)
+    @round = ChallengeRound.find_by(id:round_id)
+    if @round.end_dttm.present? && @round.end_dttm < Time.current
+      @temporary = false
+    else
+      @temporary = true
     end
   end
 
-  private
+  def leaderboard_query()
+    LeaderboardParticipantsQuery.new.participants_with_rating @round.id, @temporary
+  end
+
   def filter_leaderboard_stats(leaderboard_rating_stats)
     ranks, teams_mu, teams_sigma, teams_participant_ids = [], [], [], []
     for team in leaderboard_rating_stats
