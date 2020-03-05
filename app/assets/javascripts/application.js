@@ -14,8 +14,10 @@
 //= require rails.validations
 //= require local-time
 //= require lodash
-//= require jQuery-File-Upload
 
+// --------------------- Vendor ------------------------ //
+//= require jQuery-File-Upload
+//= require remodal
 
 // ------------------ Vendor / Notebooks --------------- //
 // require ansi_up.min
