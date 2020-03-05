@@ -4,22 +4,17 @@ class RatingApiService
   base_uri ENV["RATING_API_URL"]
   default_params output: 'json'
   format :json
-
-  def call(ranks, teams_mu, teams_sigma, teams_participant_ids)
+  def start_round_calculations(challenge_rounds)
     body = {
-        ranks: ranks,
-        teams_mu: teams_mu,
-        teams_sigma: teams_sigma,
-        teams_participant_ids: teams_participant_ids
+        rounds: challenge_rounds
     }.to_json
     headers = { 'Content-Type' => 'application/json' }
-    # Add http://localhost:8888/calculate for local testing of the api
     begin
-      result = self.class.post('/calculate', body: body, headers: headers)
+      result = self.class.post('http://localhost:8888/startroundcalculations/', body: body, headers: headers)
     rescue HTTParty::Error => e
       Rails.logger.error e.message
     rescue StandardError => e
-          Rails.logger.error e.message
+      Rails.logger.error e.message
     else
       case result.code
       when 500...600
