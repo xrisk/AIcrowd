@@ -10,7 +10,6 @@ gem 'rails-assets-jQuery-File-Upload'
 
 ruby '2.5.5'
 gem 'rails', '5.2.2.1'
-gem 'jquery-turbolinks'
 gem 'activerecord-import'
 gem 'rufus-scheduler', '~> 3.4.0'
 gem 'ahoy_matey'
@@ -81,7 +80,8 @@ gem 'rouge'
 gem 'rollbar'
 gem 'roo'
 gem 'rubyzip', '~> 1.2.2'
-gem 'sanitize', '~> 5.1'
+gem 'rails-html-sanitizer', '~> 1.0.4'
+gem 'sanitize', '~> 4.6.3'
 gem 'simple_enum'
 gem 'scenic', '~> 1.3'
 gem 'sprockets', '~> 4.0.0.beta8'
@@ -103,7 +103,7 @@ gem 'valid_email2'
 gem 'webpacker', '~> 2.0'
 
 gem 'irbtools', require: 'irbtools/binding'
-gem "lines-engine", git: "https://github.com/AIcrowd/aicrowd-blog.git"
+#gem "lines-engine", git: "https://github.com/AIcrowd/aicrowd-blog.git"
 group :development do
   gem "letter_opener"
   gem 'brakeman', require: false
