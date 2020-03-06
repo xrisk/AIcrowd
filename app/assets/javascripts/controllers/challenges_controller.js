@@ -3,21 +3,8 @@ $(document).on('click', '.challenge-invite-participant', function(){
   $('.challenge-invite-participant').attr("disabled", true);
 });
 
-$(document).on('click', '.category_opt', function(){
-  var new_value = $('#challenge_selected_category').val().replace($(this).val(), '');
-  $('#challenge_selected_category').val(new_value);
-  $(this).removeClass('badge badge-success category_opt');
-  $('#challenge_category').append($(this));
-});
-
-$(document).on('change', '#challenge_category', function(){
-  var new_value = $('#challenge_selected_category').val() + ' ' + $(this).val();
-  $('#challenge_selected_category').val(new_value);
-  $('.show_category').append($("option:selected", this));
-  $(".show_category option").each(function(){
-    var text = $(this).val();
-    $(this).addClass('badge badge-success category_opt').attr('id', text);
-  });
+$(document).ready(function() {
+  $('.category_select2').select2();
 });
 
 function resetChallengesFormClientValidations() {
