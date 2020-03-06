@@ -3,6 +3,10 @@ $(document).on('click', '.challenge-invite-participant', function(){
   $('.challenge-invite-participant').attr("disabled", true);
 });
 
+$(document).ready(function() {
+  $('.category_select2').select2();
+});
+
 function resetChallengesFormClientValidations() {
   // We need to wait till fields show up in browser
   setTimeout(function() { $('#challenges-form').enableClientSideValidations(); }, 1000);

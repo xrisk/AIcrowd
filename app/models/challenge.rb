@@ -58,6 +58,8 @@ class Challenge < ApplicationRecord
                                 allow_destroy: true
 
   has_many :teams, inverse_of: :challenge
+  has_many :category_challenges, dependent: :destroy
+  has_many :categories, through: :category_challenges
 
   as_enum :status,
           %i[draft running completed starting_soon],

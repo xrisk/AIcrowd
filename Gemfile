@@ -95,6 +95,7 @@ gem 'uglifier', '~> 4.1.10'
 gem 'validate_url'
 gem 'valid_email2'
 gem 'webpacker', '~> 2.0'
+gem "select2-rails"
 
 # HTTP clients
 gem 'faraday', '~> 1.0'
