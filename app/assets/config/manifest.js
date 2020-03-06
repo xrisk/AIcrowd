@@ -1,6 +1,5 @@
 //= link users/user-avatar-default.svg
 //= link application.css
-//= link lines/manifest.js
 //= link application.js
 //= link_tree ../awards
 //= link_tree ../images
