@@ -6,14 +6,8 @@ module Discourse
 
     protected
 
-    def prepare_api_client
-      return if ENV['DISCOURSE_DOMAIN_NAME'].blank?
-
-      client              = DiscourseApi::Client.new(ENV['DISCOURSE_DOMAIN_NAME'])
-      client.api_key      = ENV['DISCOURSE_API_KEY']
-      client.api_username = ENV['DISCOURSE_API_USERNAME']
-
-      client
+    def prepare_http_client
+      @http_client ||= Discourse::ApiClient.new.call
     end
 
     def truncated_string(string, ensure_uniqueness)
