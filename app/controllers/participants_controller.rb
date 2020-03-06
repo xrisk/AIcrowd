@@ -140,6 +140,7 @@ class ParticipantsController < ApplicationController
       admin:       current_user.admin,
       external_id: current_user.id,
       name:        current_user.name,
+      username:    current_user.name,
       nonce:       nonce,
       avatar_url:  avatar_url
     }
