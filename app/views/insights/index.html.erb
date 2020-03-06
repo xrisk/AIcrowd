@@ -7,6 +7,8 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
+        <%= render partial: 'insights/_charts/challenge_participants_country', locals: {challenge: @challenge} %>
+
         <% if @challenge_rounds.size > 1 %>
           <!-- Challenge Round Pills  -->
           <ul class="nav nav-pills">
@@ -22,7 +24,7 @@
         <% end %>
         <%= render partial: 'insights/_charts/submissions_vs_time', locals: {challenge: @challenge, current_round: @current_round} %>
         <%= render partial: 'insights/_charts/top_score_vs_time', locals: {challenge: @challenge, current_round: @current_round} %>
-        <%= render partial: 'insights/_charts/challenge_participants_country', locals: {challenge: @challenge} %>
+
       </div>
     </div>
   </div>
