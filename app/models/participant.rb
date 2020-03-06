@@ -175,6 +175,7 @@ class Participant < ApplicationRecord
   def after_confirmation
     super
     AddToMailChimpListJob.perform_later(id)
+    detect_country
   end
 
   def set_email_preferences
@@ -233,6 +234,16 @@ class Participant < ApplicationRecord
       ### which will allow us to force a password reset on first login
       user.skip_confirmation_notification!
     end
+  end
+
+  def detect_country
+    return if country_cd.present?
+
+    detected_country = visits.where.not(country: nil)&.last&.country
+    return unless detected_country.present?
+
+    country_code = ISO3166::Country.all_names_with_codes.to_h[detected_country]
+    update!(country_cd: country_code)
   end
 
   def current_participation_terms
