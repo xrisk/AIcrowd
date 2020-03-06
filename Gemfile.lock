@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/AIcrowd/aicrowd-blog.git
-  revision: 5a74206a147d234a681cced42d4da02e6774ad3b
+  revision: 06f396c546be6138ea8d1d78183a0a8fa991d653
   specs:
     lines-engine (1.2.6.1)
       acts-as-taggable-on (>= 3.5)
