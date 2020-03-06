@@ -7,6 +7,7 @@
         <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Leaderboard', link: challenge_leaderboards_path(challenge)} %>
       <% end %>
       <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Discussion', link: discourse_url(challenge)} %>
+      <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Insights', link: challenge_insights_path(challenge)} %>
       <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Resources', link: resources_link(challenge)} %>
       <% if policy(challenge).show_submissions? %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Submissions', link: challenge_submissions_path(challenge)} %>
