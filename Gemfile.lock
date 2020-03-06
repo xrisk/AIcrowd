@@ -1,23 +1,6 @@
 GIT
-  remote: https://github.com/aicrowd/blazer.git
-  revision: 76125e4057a4dfe53f02a5e954fd3caf0d8990fd
-  specs:
-    blazer (2.2.0)
-      activerecord (>= 5)
-      chartkick (>= 3.2)
-      railties (>= 5)
-      safely_block (>= 0.1.1)
-
-GIT
-  remote: https://github.com/crowdAI/pundit-matchers
-  revision: 4cd01555ee0c04c66f02f35d6f8bb4c046b533a0
-  specs:
-    pundit-matchers (1.2.3)
-      pundit (~> 1.1, >= 1.1.0)
-      rspec-rails (>= 3.0.0)
-
-PATH
-  remote: /Users/nikhil/lines-engine
+  remote: https://github.com/AIcrowd/aicrowd-blog.git
+  revision: 302fb11c46e9b8eb302c2f0faa436ce2fd60cc98
   specs:
     lines-engine (1.2.6.1)
       acts-as-taggable-on (>= 3.5)
@@ -53,6 +36,24 @@ PATH
       thread_safe (>= 0.3)
       turbolinks
       uglifier (>= 2)
+
+GIT
+  remote: https://github.com/aicrowd/blazer.git
+  revision: 76125e4057a4dfe53f02a5e954fd3caf0d8990fd
+  specs:
+    blazer (2.2.0)
+      activerecord (>= 5)
+      chartkick (>= 3.2)
+      railties (>= 5)
+      safely_block (>= 0.1.1)
+
+GIT
+  remote: https://github.com/crowdAI/pundit-matchers
+  revision: 4cd01555ee0c04c66f02f35d6f8bb4c046b533a0
+  specs:
+    pundit-matchers (1.2.3)
+      pundit (~> 1.1, >= 1.1.0)
+      rspec-rails (>= 3.0.0)
 
 GEM
   remote: https://rubygems.org/
