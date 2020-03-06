@@ -69,7 +69,7 @@ class ChallengesController < ApplicationController
 
   def update
     if @challenge.update(challenge_params)
-      create_challenge_category if params[:challenge][:selected_category].present?
+      create_challenge_category if params[:challenge][:category_ids].present?
       create_invitations if params[:challenge][:invitation_email].present?
       set_category
       respond_to do |format|
@@ -181,14 +181,13 @@ class ChallengesController < ApplicationController
 
   def create_challenge_category
     @challenge.category_challenges.destroy_all if @challenge.category_challenges.present?
-    params[:challenge][:selected_category].split(' ').each do |category|
-      @challenge.category_challenges.create(category_id: category)
+    params[:challenge][:category_ids].each do |category_id|
+      @challenge.category_challenges.create(category_id: category_id)
     end
   end
 
   def set_category
-    category = @challenge&.categories.present? ? Category.where.not(id: @challenge.categories.ids) : Category.all
-    @categories = category.map{|c| [c.name, c.id]}
+    @categories = Category.all.map{|c| [c.name, c.id]}
   end
 
   def challenge_params

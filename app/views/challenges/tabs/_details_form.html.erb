@@ -5,19 +5,7 @@
   </div>
 
   <div class="form-group">
-    <span class="label-text">Tagline</span>
-    <%= f.text_field :tagline, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <span class="label-text">Category</span>
-    <%= f.select :category, @categories, { include_blank: "Select multiple category" }, { class: "form-control" } %>
-    <span class='show_category'>
-      <% @challenge&.categories.each do |category| %>
-        <option value="<%= category.id %>" class="badge badge-success category_opt" id="<%= category.id %>"><%= category.name %></option>
-      <% end %>
-    </span>
-    <%= f.hidden_field :selected_category, value: @challenge.categories.ids %>
+    <%= f.select :category_ids, @categories, {}, {class: "category_select2 form-control", multiple: true} %>
   </div>
 
   <div class="form-group">
