@@ -1,4 +1,42 @@
 GIT
+  remote: https://github.com/AIcrowd/aicrowd-blog.git
+  revision: 5a74206a147d234a681cced42d4da02e6774ad3b
+  specs:
+    lines-engine (1.2.6.1)
+      acts-as-taggable-on (>= 3.5)
+      bcrypt (~> 3.1.0, >= 3.1.0)
+      bootstrap-sass
+      carrierwave (>= 0.10.0)
+      coffee-rails (>= 4.0.0, < 6)
+      commontator
+      delayed_job_active_record
+      friendly_id (~> 5.1.0)
+      httparty
+      i18n (>= 0.7.0)
+      jquery-fileupload-rails (>= 0.4.1)
+      jquery-rails (>= 3.1.0, < 6)
+      jquery-turbolinks
+      jquery-ui-rails (>= 5.0.0)
+      kaminari (>= 0.16.1)
+      meta-tags (>= 2.0.0)
+      orm_adapter (>= 0.5)
+      pygments.rb (>= 0.6.0)
+      rails (>= 3, < 6)
+      rails3-jquery-autocomplete (>= 1.0.11)
+      railties (>= 3.2.6, < 6)
+      redcarpet (>= 3.3.3)
+      rmagick (>= 2.13.4)
+      sanitize (>= 4.4.0)
+      sass-rails (>= 4.0.0)
+      sassc-rails
+      sitemap_generator (>= 5.0.5)
+      sprockets-rails (< 4)
+      thor (>= 0.19)
+      thread_safe (>= 0.3)
+      turbolinks
+      uglifier (>= 2)
+
+GIT
   remote: https://github.com/aicrowd/blazer.git
   revision: 76125e4057a4dfe53f02a5e954fd3caf0d8990fd
   specs:
@@ -70,8 +108,6 @@ GEM
       activemodel (= 5.2.2.1)
       activesupport (= 5.2.2.1)
       arel (>= 9.0)
-    activerecord-import (1.0.4)
-      activerecord (>= 3.2)
     activestorage (5.2.2.1)
       actionpack (= 5.2.2.1)
       activerecord (= 5.2.2.1)
@@ -81,6 +117,8 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    acts-as-taggable-on (6.5.0)
+      activerecord (>= 5.0, < 6.1)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     ahoy_matey (3.0.1)
@@ -99,6 +137,8 @@ GEM
       geocoder
       railties (>= 5)
       warden
+    autoprefixer-rails (9.7.4)
+      execjs
     aws-eventstream (1.0.3)
     aws-sdk (2.11.461)
       aws-sdk-resources (= 2.11.461)
@@ -113,6 +153,9 @@ GEM
     benchmark-ips (2.7.2)
     bindex (0.8.1)
     binding.repl (3.0.0)
+    bootstrap-sass (3.4.1)
+      autoprefixer-rails (>= 5.2.1)
+      sassc (>= 2.0.0)
     brakeman (4.8.0)
     browser (4.0.0)
     builder (3.2.4)
@@ -209,6 +252,11 @@ GEM
     declarative-builder (0.1.0)
       declarative-option (< 0.2.0)
     declarative-option (0.1.0)
+    delayed_job (4.1.8)
+      activesupport (>= 3.0, < 6.1)
+    delayed_job_active_record (4.1.4)
+      activerecord (>= 3.0, < 6.1)
+      delayed_job (>= 3.0, < 5)
     derailed_benchmarks (1.6.0)
       benchmark-ips (~> 2)
       get_process_mem (~> 0)
@@ -426,6 +474,9 @@ GEM
     formtastic_i18n (0.6.0)
     friendly_id (5.1.0)
       activerecord (>= 4.0.0)
+    fugit (1.3.3)
+      et-orbi (~> 1.1, >= 1.1.8)
+      raabro (~> 1.1)
     geocoder (1.6.1)
     get_process_mem (0.2.5)
       ffi (~> 1.0)
@@ -516,10 +567,17 @@ GEM
       activesupport (>= 5.0.0)
     jmespath (1.4.0)
     jquery-atwho-rails (1.5.4)
+    jquery-fileupload-rails (1.0.0)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
+      sassc
     jquery-rails (4.3.5)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
+    jquery-turbolinks (2.1.0)
+      railties (>= 3.1.0)
+      turbolinks
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
     js_cookie_rails (2.2.0)
@@ -572,6 +630,8 @@ GEM
       mimemagic (~> 0.3.2)
     maxminddb (0.1.22)
     memory_profiler (0.9.14)
+    meta-tags (2.13.0)
+      actionpack (>= 3.2.0, < 6.1)
     meta_request (0.7.2)
       rack-contrib (>= 1.1, < 3)
       railties (>= 3.0.0, < 7)
@@ -602,8 +662,8 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
-    nokogumbo (1.5.0)
-      nokogiri
+    nokogumbo (2.0.2)
+      nokogiri (~> 1.8, >= 1.8.4)
     notiffany (0.1.3)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -664,6 +724,9 @@ GEM
       puma (>= 2.7, < 5)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
+    pygments.rb (1.2.1)
+      multi_json (>= 1.0.0)
+    raabro (1.1.6)
     rack (2.2.2)
     rack-contrib (2.1.0)
       rack (~> 2.0)
@@ -700,8 +763,10 @@ GEM
       activesupport (>= 4.2)
       choice (~> 0.2.0)
       ruby-graphviz (~> 1.2)
-    rails-html-sanitizer (1.0.4)
-      loofah (~> 2.2, >= 2.2.2)
+    rails-html-sanitizer (1.3.0)
+      loofah (~> 2.3)
+    rails3-jquery-autocomplete (1.0.15)
+      rails (>= 3.2)
     railties (5.2.2.1)
       actionpack (= 5.2.2.1)
       activesupport (= 5.2.2.1)
@@ -724,6 +789,7 @@ GEM
       nokogiri (~> 1.5)
       optimist (~> 3.0)
     rdoc (4.3.0)
+    redcarpet (3.5.0)
     redis (4.1.3)
     ref (2.0.0)
     regexp_parser (1.7.0)
@@ -737,6 +803,7 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     rexml (3.2.4)
+    rmagick (4.0.0)
     rollbar (2.24.0)
     roo (2.8.2)
       nokogiri (~> 1)
@@ -785,15 +852,15 @@ GEM
     ruby_info (1.0.1)
     ruby_version (1.0.2)
     rubyzip (1.2.4)
-    rufus-scheduler (3.4.2)
-      et-orbi (~> 1.0)
+    rufus-scheduler (3.6.0)
+      fugit (~> 1.1, >= 1.1.6)
     safe_yaml (1.0.5)
     safely_block (0.2.2)
       errbase (>= 0.1.1)
-    sanitize (4.6.6)
+    sanitize (5.1.0)
       crass (~> 1.0.2)
-      nokogiri (>= 1.4.4)
-      nokogumbo (~> 1.4)
+      nokogiri (>= 1.8.0)
+      nokogumbo (~> 2.0)
     sass (3.4.25)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -848,6 +915,8 @@ GEM
       rack (~> 2.0)
       rack-protection (= 2.0.8.1)
       tilt (~> 2.0)
+    sitemap_generator (6.1.0)
+      builder (~> 3.0)
     sixarm_ruby_unaccent (1.2.0)
     skylight (3.1.5)
       skylight-core (= 3.1.5)
@@ -930,7 +999,6 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   activeadmin (= 1.4.3)
-  activerecord-import
   ahoy_matey
   authtrail
   aws-sdk (~> 2.2)
@@ -982,6 +1050,7 @@ DEPENDENCIES
   kramdown
   launchy
   letter_opener
+  lines-engine!
   local_time
   lodash-rails
   lol_dba
@@ -1017,7 +1086,6 @@ DEPENDENCIES
   rails-assets-jQuery-File-Upload
   rails-controller-testing
   rails-erd
-  rails-html-sanitizer (~> 1.0.4)
   ransack
   remotipart
   rollbar
@@ -1027,9 +1095,8 @@ DEPENDENCIES
   rspec-kickstarter
   rspec-rails (~> 3.6)
   rubyzip (~> 1.2.2)
-  rufus-scheduler (~> 3.4.0)
   safely_block (~> 0.2.2)
-  sanitize (~> 4.6.3)
+  sanitize (~> 5.1)
   sass-rails
   scenic (~> 1.3)
   scss_lint
