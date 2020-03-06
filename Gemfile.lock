@@ -31,7 +31,6 @@ GIT
       sassc-rails
       sitemap_generator (>= 5.0.5)
       sprockets-rails (< 4)
-      sqlite3
       thor (>= 0.19)
       thread_safe (>= 0.3)
       turbolinks
@@ -942,7 +941,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     stackprof (0.2.12)
     stringex (2.8.5)
     table_print (1.5.6)
