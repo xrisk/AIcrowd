@@ -1,8 +1,34 @@
-<div class="chart-wrapper pb-5" data-controller="chart" data-chart-index="1" data-chart-chart-type="LineChart">
+<div class="chart-wrapper pb-5"
+     data-controller="chart"
+     data-chart-index="<%= index %>"
+     data-chart-type="LineChart"
+     data-chart-round="<%= challenge.active_round.id %>"
+     data-chart-url="<%= submissions_vs_time_challenge_insights_path(@challenge) %>">
+
   <header class="section-header-decorative">
     <div>
       <h4>Submissions vs Time</h4>
     </div>
   </header>
-  <%= line_chart submissions_vs_time_challenge_insights_path(challenge, challenge_round_id: current_round.id, score: 'score') %>
+
+  <% if challenge_rounds.size > 1 %>
+    <!-- Challenge Round Pills  -->
+    <ul class="nav nav-pills">
+      <% challenge_rounds.each do |challenge_round| %>
+        <li class="nav-item">
+          <a href="#"
+             class="<%= round_pills_tab_classes(challenge_round, challenge.active_round) %>"
+             data-target="chart.updateRound"
+             data-action="chart#updateRound"
+             data-round="<%= challenge_round.id %>">
+              <%= challenge_round.challenge_round %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+
+    <!-- / Challenge Round Pills  -->
+  <% end %>
+  <%= line_chart submissions_vs_time_challenge_insights_path(challenge) %>
+  <progress class="display-none" max="1" value="0" style="width: 100%" data-target="chart.progressBar"></progress>
 </div>
