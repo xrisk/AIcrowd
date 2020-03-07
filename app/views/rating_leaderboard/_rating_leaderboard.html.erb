@@ -1,12 +1,21 @@
 <% participants.each do |participant| %>
 <tr>
-  <td><strong><%= participant.ranking %></strong></td>
+  <td><strong><span class="reputation-rank" style="width: 50px" data-toggle="tooltip" data-placement="top" title="" data-original-title="Rank">#<%= participant.ranking %></span>
+  </strong></td>
   <td>
     <%= link_to participant_path(participant), title: participant.name, data: {toggle: :tooltip} do %>
       <%= image_tag participant.image_url, class: 'avatar' %>
       <span class="text-link"><%= participant.name %></span>
     <% end %>
   </td>
-  <td><strong><%= participant.rating.round(2) %></strong></td>
+  <td>joined <%= (Time.now.to_date - participant.created_at.to_date).to_i %> days ago</td>
+  <td>
+    <strong>
+      <span class="reputation-info" style="float: right">
+                    <span class="reputation-score variation-2" style="float: right" data-toggle="tooltip" data-placement="top" title="<%= participant.rating.to_i %> +- <%= participant.variation.to_i %>" data-original-title="Reputation score"><%= participant.rating.to_i %>
+                    </span>
+      </span>
+  </strong>
+  </td>
 </tr>
 <% end %>
