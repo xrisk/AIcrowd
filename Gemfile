@@ -16,7 +16,6 @@ gem 'ahoy_matey'
 gem 'blazer', github: "aicrowd/blazer"
 gem 'active_model_serializers'
 gem 'activeadmin', '1.4.3'
-gem 'authtrail'
 gem 'aws-sdk', '~> 2.2'
 gem 'browser'
 gem 'carrierwave', '~> 1.0'
