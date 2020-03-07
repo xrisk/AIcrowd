@@ -103,37 +103,15 @@ gem "select2-rails"
 gem 'faraday', '~> 1.0'
 gem 'http'
 gem 'httparty'
-
-gem 'irbtools', require: 'irbtools/binding'
-gem "letter_opener"
-gem 'brakeman', require: false
-gem 'derailed_benchmarks'
-gem 'guard'
-gem 'lol_dba'
-gem 'meta_request'
-gem 'model_2_factory-rails'
-gem 'rails-erd'
-gem 'stackprof'
-gem 'seed_dump'
-gem 'sdoc', '~> 0.4.0'
-gem 'scss_lint', require: false
 gem 'web-console'
-gem 'gitlab-styles', '~> 2.8'
-gem 'pry-byebug'
-gem 'byebug'
-gem 'ffaker'
-gem 'rspec-cells'
-gem 'rspec-rails', '~> 3.6'
-gem 'rspec-kickstarter'
-gem 'oauth2'
-gem 'parallel_tests'
-gem 'spring'
-gem 'table_print'
+gem 'irbtools', require: 'irbtools/binding'
+gem 'guard'
+
 group :development do
   gem "letter_opener"
   gem 'brakeman', require: false
   gem 'derailed_benchmarks'
-  gem 'guard'
+
   gem 'lol_dba'
   gem 'meta_request'
   gem 'model_2_factory-rails'
@@ -142,7 +120,6 @@ group :development do
   gem 'seed_dump'
   gem 'sdoc', '~> 0.4.0'
   gem 'scss_lint', require: false
-  gem 'web-console'
   gem 'gitlab-styles', '~> 2.8'
 end
 
