@@ -15,7 +15,7 @@
 
   <% if @challenge.submission_instructions %>
     <p>
-      <%= @challenge.submission_instructions.html_safe %>
+      <%= sanitize_html(@challenge.submission_instructions) %>
     </p>
   <% end %>
 
@@ -65,7 +65,7 @@
 
   <% if @challenge.license %>
     <p class="margin-bottom">
-      <%= @challenge.license.html_safe %>
+      <%= sanitize_html(@challenge.license) %>
     </p>
   <% else %>
     <p class="margin-bottom">

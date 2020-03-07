@@ -1,0 +1,29 @@
+<%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
+
+<%= render partial: 'shared/challenges/masthead', locals: {challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow} %>
+<%= render partial: 'challenges/show/subnav', locals: {challenge: @challenge} %>
+
+<section class="section-p-sm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <% if @challenge_rounds.size > 1 %>
+          <!-- Challenge Round Pills  -->
+          <ul class="nav nav-pills">
+            <% @challenge_rounds.each do |challenge_round| %>
+              <li class="nav-item">
+                <%= link_to challenge_round.challenge_round,
+                            challenge_insights_path(challenge_round_id: challenge_round.id),
+                            class: round_pills_tab_classes(challenge_round, @current_round) %>
+              </li>
+            <% end %>
+          </ul>
+          <!-- / Challenge Round Pills  -->
+        <% end %>
+        <%= render partial: 'insights/_charts/submissions_vs_time', locals: {challenge: @challenge, current_round: @current_round} %>
+        <%= render partial: 'insights/_charts/top_score_vs_time', locals: {challenge: @challenge, current_round: @current_round} %>
+        <%= render partial: 'insights/_charts/challenge_participants_country', locals: {challenge: @challenge} %>
+      </div>
+    </div>
+  </div>
+</section>

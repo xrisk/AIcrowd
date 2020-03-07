@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_27_161128) do
+ActiveRecord::Schema.define(version: 2020_03_02_110125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -247,6 +247,23 @@ ActiveRecord::Schema.define(version: 2020_02_27_161128) do
     t.datetime "posted_at"
     t.string "slug"
     t.index ["participant_id"], name: "index_blogs_on_participant_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
+  create_table "category_challenges", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.bigint "challenge_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id", "challenge_id"], name: "index_category_challenges_on_category_id_and_challenge_id", unique: true
+    t.index ["category_id"], name: "index_category_challenges_on_category_id"
+    t.index ["challenge_id"], name: "index_category_challenges_on_challenge_id"
   end
 
   create_table "challenge_call_responses", force: :cascade do |t|
@@ -805,6 +822,16 @@ ActiveRecord::Schema.define(version: 2020_02_27_161128) do
     t.index ["participant_id"], name: "index_participant_clef_tasks_on_participant_id"
   end
 
+  create_table "participant_organizers", force: :cascade do |t|
+    t.bigint "participant_id"
+    t.bigint "organizer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organizer_id"], name: "index_participant_organizers_on_organizer_id"
+    t.index ["participant_id", "organizer_id"], name: "index_participant_organizers_on_participant_id_and_organizer_id", unique: true
+    t.index ["participant_id"], name: "index_participant_organizers_on_participant_id"
+  end
+
   create_table "participants", id: :serial, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -1129,6 +1156,8 @@ ActiveRecord::Schema.define(version: 2020_02_27_161128) do
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "participant_clef_tasks", "clef_tasks"
   add_foreign_key "participant_clef_tasks", "participants"
+  add_foreign_key "participant_organizers", "organizers"
+  add_foreign_key "participant_organizers", "participants"
   add_foreign_key "participants", "organizers"
   add_foreign_key "partners", "organizers"
   add_foreign_key "submission_file_definitions", "challenges"

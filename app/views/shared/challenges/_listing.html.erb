@@ -57,9 +57,16 @@
               <%= challenge_stat_count(challenge, 'submission') %>
             </span>
           </div>
-        </div>
-        <!-- stats group -->
+        </div><br/>
+        <!-- /stats group -->
 
+        <!-- category group -->
+        <div class='category-group'>
+          <% challenge.categories.each do |category| %>
+            <span class='badge badge-outline'><%= category.name %></span>
+          <% end %>
+        </div>
+        <!-- /category group -->
       </div>
       <!-- /card body -->
 

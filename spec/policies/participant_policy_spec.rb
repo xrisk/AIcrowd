@@ -4,10 +4,14 @@ require 'rails_helper'
 describe ParticipantPolicy do
   subject { described_class.new(user, participant) }
 
-  let(:participant)                 { build(:participant) }
-  let(:admin)                       { build(:participant, :admin) }
-  let(:organizer_participant)       { create(:participant, :organizer) }
-  let(:clef_organizer_participant)  { create(:participant, :clef_organizer) }
+  let(:participant)                 { create(:participant) }
+  let(:admin)                       { create(:participant, :admin) }
+  let(:organizer_participant)       { create(:participant) }
+  let(:organizer)                   { create(:organizer) }
+  let(:participant_organizer)       { create(:participant_organizer, participant: organizer_participant, organizer: organizer)}
+  let(:clef_participant)            { create(:participant) }
+  let(:clef_organizer)              { create(:organizer, :clef) }
+  let(:participant_clef_organizer)  { create(:participant_organizer, participant: clef_participant, organizer: clef_organizer)}
 
   context 'for a public participant' do
     let(:user) { nil }
@@ -20,7 +24,6 @@ describe ParticipantPolicy do
     it { is_expected.to forbid_action(:edit) }
     it { is_expected.to forbid_action(:destroy) }
     it { is_expected.to forbid_action(:regen_api_key) }
-    it { is_expected.to forbid_action(:clef_access) }
   end
 
   context 'for the participant themself' do
@@ -34,7 +37,6 @@ describe ParticipantPolicy do
     it { is_expected.to permit_action(:edit) }
     it { is_expected.to permit_action(:destroy) }
     it { is_expected.to permit_action(:regen_api_key) }
-    it { is_expected.to permit_action(:clef_access) }
   end
 
   context 'for an admin' do
@@ -48,11 +50,10 @@ describe ParticipantPolicy do
     it { is_expected.to permit_action(:edit) }
     it { is_expected.to permit_action(:destroy) }
     it { is_expected.to permit_action(:regen_api_key) }
-    it { is_expected.to permit_action(:clef_access) }
   end
 
   context 'for an organizer' do
-    let(:user) { organizer_participant }
+    let(:user) { participant_organizer.participant }
 
     it { is_expected.to permit_action(:show) }
     it { is_expected.to forbid_action(:index) }
@@ -62,11 +63,10 @@ describe ParticipantPolicy do
     it { is_expected.to forbid_action(:edit) }
     it { is_expected.to forbid_action(:destroy) }
     it { is_expected.to forbid_action(:regen_api_key) }
-    it { is_expected.to forbid_action(:clef_access) }
   end
 
   context 'for an CLEF organizer' do
-    let(:user) { clef_organizer_participant }
+    let(:user) { participant_clef_organizer.participant }
 
     it { is_expected.to permit_action(:show) }
     it { is_expected.to forbid_action(:index) }
@@ -76,6 +76,5 @@ describe ParticipantPolicy do
     it { is_expected.to forbid_action(:edit) }
     it { is_expected.to forbid_action(:destroy) }
     it { is_expected.to forbid_action(:regen_api_key) }
-    it { is_expected.to permit_action(:clef_access) }
   end
 end

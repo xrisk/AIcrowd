@@ -5,7 +5,7 @@ class SubmissionsController < ApplicationController
   before_action :set_challenge_rounds, only: [:index, :new, :show]
   before_action :set_vote, only: [:index, :new, :show]
   before_action :set_follow, only: [:index, :new, :show]
-  before_action :check_participation_terms, except: [:show, :index]
+  before_action :check_participation_terms, except: [:show, :index, :export]
   before_action :set_s3_direct_post, only: [:new, :edit, :create, :update]
   before_action :set_submissions_remaining, except: [:show, :index]
   before_action :set_current_round, only: :index
@@ -14,12 +14,10 @@ class SubmissionsController < ApplicationController
   respond_to :html, :js
 
   def index
-    @current_round_id = @current_round&.id
-
     if params[:baselines] == 'true'
       @search = policy_scope(Submission)
                     .where(
-                      challenge_round_id: @current_round_id,
+                      challenge_round_id: @current_round.id,
                       challenge_id:       @challenge.id,
                       baseline:           true)
                     .where.not(participant_id: nil)
@@ -31,7 +29,7 @@ class SubmissionsController < ApplicationController
       if @my_submissions
         @search = policy_scope(Submission)
                       .where(
-                        challenge_round_id: @current_round_id,
+                        challenge_round_id: @current_round.id,
                         challenge_id:       @challenge.id,
                         participant_id:     current_participant.id)
                       .search(search_params)
@@ -41,7 +39,7 @@ class SubmissionsController < ApplicationController
       else
         @search = policy_scope(Submission)
                       .where(
-                        challenge_round_id: @current_round_id,
+                        challenge_round_id: @current_round.id,
                         challenge_id:       @challenge.id)
                       .search(search_params)
       end
@@ -117,6 +115,20 @@ class SubmissionsController < ApplicationController
     redirect_to challenge_leaderboards_path(@challenge), notice: 'Submission was successfully destroyed.'
   end
 
+  def export
+    authorize @challenge, :export?
+
+    @submissions = @challenge.submissions
+      .includes(:participant, :challenge_round)
+      .where(challenge_round_id: params[:submissions_export_challenge_round_id].to_i)
+
+    csv_data = Submissions::CSVExportService.new(submissions: @submissions).call.value
+
+    send_data csv_data,
+              type:     'text/csv',
+              filename: "#{@challenge.challenge.to_s.parameterize.underscore}_submissions_export.csv"
+  end
+
   private
 
   def set_submission
@@ -142,7 +154,7 @@ class SubmissionsController < ApplicationController
 
   def set_current_round
     @current_round = if params[:challenge_round_id].present?
-                       ChallengeRound.find(params[:challenge_round_id].to_i)
+                       @challenge.challenge_rounds.find(params[:challenge_round_id].to_i)
                      else
                        @challenge.active_round
                      end

@@ -9,7 +9,6 @@ class LeaderboardsController < ApplicationController
     @vote             = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
     @follow           = @challenge.follows.where(participant_id: current_participant.id).first if current_participant.present?
     @challenge_rounds = @challenge.challenge_rounds.started
-
     @post_challenge = true if @challenge.completed? && params[:post_challenge] == "true"
 
     @leaderboards = if @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
@@ -36,7 +35,7 @@ class LeaderboardsController < ApplicationController
   def export
     authorize @challenge, :export?
 
-    @leaderboards = BaseLeaderboard
+    @leaderboards = Leaderboard
       .where(challenge_round_id: params[:leaderboard_export_challenge_round_id].to_i)
       .order(:seq)
 
@@ -44,7 +43,7 @@ class LeaderboardsController < ApplicationController
 
     send_data csv_data,
               type:     'text/csv',
-              filename: "#{@challenge.challenge.to_s.parameterize.underscore}_export.csv"
+              filename: "#{@challenge.challenge.to_s.parameterize.underscore}_leaderboard_export.csv"
   end
 
   private

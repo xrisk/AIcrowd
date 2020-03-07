@@ -1,8 +1,19 @@
 .challenges-form {
   max-width: none;
 
+  &__heading {
+    margin-bottom: 20px;
+  }
+
+  &__misc-button {
+    margin-bottom: 40px;
+  }
+
   &__thin-tab {
     max-width: 480px;
+    .ck-editor {
+      min-width: 640px;
+    }
   }
 
   &__errors-paragraph {
@@ -12,7 +23,16 @@
   &__link--hidden {
     display: none;
   }
+
+  &__invite-participant {
+    margin-top: 0;
+  }
 }
 .red-link{
   color: #DE4B46;
 }
+.display-none{
+  display: none;
+}
+
+.select2-results__option[aria-selected=true] { display: none; }

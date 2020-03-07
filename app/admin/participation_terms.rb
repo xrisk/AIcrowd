@@ -26,7 +26,7 @@ ActiveAdmin.register ParticipationTerms do
       row :id
       row :version
       row :terms do
-        sanitize(participation_terms.terms)
+        sanitize_html(participation_terms.terms)
       end
       row :created_at
       row :updated_at

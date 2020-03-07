@@ -2,5 +2,5 @@
   <%= link_to 'Submit Entry', new_challenge_submission_path(@challenge), class: 'btn btn-primary btn-block outline' %>
 </p>
 <div class='markdown-wrap'>
-  <%= sanitize(@challenge.submission_instructions) if @challenge.submission_instructions %>
+  <%= sanitize_html(@challenge.submission_instructions) if @challenge.submission_instructions %>
 </div>

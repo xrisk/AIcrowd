@@ -18,7 +18,7 @@
 
           <!-- terms & conditions -->
           <div class="md-content">
-            <%= sanitize(@participation_terms.terms) %>
+            <%= sanitize_html(@participation_terms.terms) %>
           </div>
 
           <%= form_for current_participant, url: participant_accept_terms_path(current_participant), validate: true, html: {class: "form-rg mt-5", multipart: true} do |f| %>

@@ -23,7 +23,8 @@ class Participant < ApplicationRecord
          :omniauthable, omniauth_providers: %i[github oauth2_generic]
 
   default_scope { order('name ASC') }
-  belongs_to :organizer, optional: true
+  has_many :participant_organizers, dependent: :destroy
+  has_many :organizers, through: :participant_organizers
   has_many :submissions, dependent: :nullify
   has_many :votes, dependent: :destroy
   has_many :blogs, dependent: :nullify
@@ -63,6 +64,7 @@ class Participant < ApplicationRecord
            foreign_key: :resource_owner_id,
            dependent:   :destroy
 
+  has_many :visits, class_name: "Ahoy::Visit", foreign_key: :user_id
   has_many :team_participants, inverse_of: :participant
   has_many :teams, through: :team_participants, inverse_of: :participants
   has_many :concrete_teams, -> { concrete }, through: :team_participants, source: :team, inverse_of: :participants

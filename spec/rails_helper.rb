@@ -9,6 +9,9 @@ require 'support/config/factory_bot'
 require 'support/config/warden'
 require 'support/config/vcr'
 
+# Load Error classes from Discourse::ApiClient
+require "#{Rails.root}/app/services/discourse/api_client.rb"
+
 require 'pundit/matchers'
 
 Dir[File.dirname(__FILE__) + "/support/helpers/*.rb"].each { |f| require f }

@@ -2,7 +2,7 @@ module Leaderboards
   class CSVExportService < ::BaseService
     def initialize(leaderboards: leaderboards)
       @leaderboards = leaderboards
-      @meta_keys    = Leaderboards::SelectUniqueMetaKeysQuery.new(leaderboards).call
+      @meta_keys    = SelectUniqueMetaKeysQuery.new(leaderboards).call
     end
 
     def call
@@ -38,11 +38,15 @@ module Leaderboards
         'Team Name',
         'Participants',
         'Submission ID',
-        'Score',
-        'Secondary Score',
+        challenge_round&.score_title,
+        challenge_round&.score_secondary_title,
         'Description',
         *meta_headers
       ]
+    end
+
+    def challenge_round
+      @challenge_round ||= leaderboards.first&.challenge_round
     end
 
     def team_name(leaderboard)

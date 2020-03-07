@@ -15,7 +15,7 @@
 <div class="section-p-md">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12">    
+      <div class="col-12">
         <%= form_for resource, as: resource_name, url: confirmation_path(resource_name), html: { class: 'form-rg', method: :post } do |f| %>
           <div class="form-group">
             <label for="email">Email</label>
@@ -25,7 +25,7 @@
           <%= f.button 'Resend confirmation instructions', type: 'submit', class: 'btn btn-primary btn-block' %>
           <% end %>
       </div>
-    </div>    
+    </div>
   </div>
 </div>
 <!-- /section -->
@@ -38,7 +38,7 @@
         <div class="section-header-mb-sm">
           <h4>Not registered?</h4>
         </div>
-        <%= link_to 'Sign up'.html_safe , new_participant_registration_path, {class: "btn btn-secondary", role:"button"} %>
+        <%= link_to 'Sign up' , new_participant_registration_path, {class: "btn btn-secondary", role:"button"} %>
       </div>
     </div>
   </div>

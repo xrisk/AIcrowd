@@ -2,7 +2,7 @@
   <span class="label-text">Rules</span>
 
   <% if @challenge.current_challenge_rules.present? %>
-    <%= sanitize(@challenge.current_challenge_rules.terms) %>
+    <%= sanitize_html(@challenge.current_challenge_rules.terms) %>
   <% else %>
     No rules added yet
   <% end %>
@@ -14,5 +14,5 @@
                                 class: 'form-text',
                                 id: 'replace-rules-button' } %>
   </div>
-  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, next_step: 'admin' } %>
+  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, current_step: 'rules' } %>
 </div>

@@ -43,7 +43,7 @@ ActiveAdmin.register Blog do
       row :seq
       row :published
       row :body do
-        sanitize(blog.body)
+        sanitize_html(blog.body)
       end
       row :posted_at
       row :created_at

@@ -20,7 +20,7 @@
         <div class="col-12">
           <%= form_for [@clef_task, @task_dataset_file], validate: true,
                        html: {class: "form-rg",
-                              'data-form-data' => @s3_direct_post.fields.to_json.html_safe,
+                              'data-form-data' => @s3_direct_post.fields.to_json,
                               'data-url' => @s3_direct_post.url,
                               'data-host' => URI.parse(@s3_direct_post.url).host} do |f| %>
 

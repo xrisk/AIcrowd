@@ -14,6 +14,7 @@
 //= require rails.validations
 //= require local-time
 //= require lodash
+//= require select2
 
 // --------------------- Vendor ------------------------ //
 //= require remodal

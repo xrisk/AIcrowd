@@ -11,7 +11,7 @@
     <p><code class="bg-light" id="secret"><%= @application.secret %></code></p>
 
     <h4><%= t('.scopes') %>:</h4>
-    <p><code class="bg-light" id="scopes"><%= @application.scopes.presence || raw('&nbsp;') %></code></p>
+    <p><code class="bg-light" id="scopes"><%= @application.scopes.presence %></code></p>
 
     <h4><%= t('.confidential') %>:</h4>
     <p><code class="bg-light" id="confidential"><%= @application.confidential? %></code></p>

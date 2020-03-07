@@ -23,7 +23,7 @@
             <b>gitlab.aicrowd.com</b> will have the ability to read your participant profile.
             This application is governed by the AIcrowd <a href='/privacy'>privacy policy</a> and <a href='/terms'>terms of use</a></p>
           <hr/>
-          <%= raw t('.prompt', client_name: content_tag(:strong, class: 'text-info') { @pre_auth.client.name }) %>
+          <%= sanitize_html(t('.prompt', client_name: content_tag(:strong, class: 'text-info') { @pre_auth.client.name })) %>
           <div class="doorkeeper-forms">
             <%= form_tag oauth_authorization_path, method: :post do %>
               <%= hidden_field_tag :client_id, @pre_auth.client.uid %>

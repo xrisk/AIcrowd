@@ -1,34 +1,5 @@
 <div class="challenges-form__thin-tab">
   <div class="form-group">
-    <%= link_to 'Export Challenge to JSON', export_challenge_path(challenge), class: 'btn btn-primary', data: { disable_with: 'Challenge Exported' } %>
-  </div>
-
-  <div class="form-group">
-    <label>Import Challenge from JSON</label>
-
-    <%= form_with url: import_challenge_path(challenge), method: :post, multipart: true, validate: true do |import_form| %>
-      <%= import_form.file_field :import_file, class: 'file-upload' %>
-      <br/>
-      <br/>
-      <%= import_form.button 'Import New Challenge', class: 'btn btn-primary', data: { disable_with: 'Importing...' } %>
-    <% end %>
-  </div>
-
-  <div class="form-group">
-    <label>Challenge Round for Leaderboard Export</label>
-    <%= select_tag :leaderboard_export_challenge_round_id,
-                   options_for_select(challenge_rounds.map { |challenge_round| [challenge_round.challenge_round, challenge_round.id] }),
-                   id: 'leaderboard-export-rounds-select',
-                   class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= link_to 'Export Leaderboard to CSV', export_challenge_leaderboards_url(challenge, leaderboard_export_challenge_round_id: challenge_rounds.first&.id.to_i), id: 'leaderboard-export-link', class: 'btn btn-primary' %>
-  </div>
-
-  <div class="form-group">
-    <label>Settings</label>
-
     <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :submissions_downloadable, text: "Organizer submission file access?" } %>
     <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :dynamic_content_flag, text: "Dynamic content?" } %>
   </div>
@@ -47,5 +18,5 @@
     <%= f.text_field :dynamic_content_url, class: "form-control" %>
   </div>
 
-  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, next_step: 'admin' } %>
+  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, current_step: 'admin' } %>
 </div>

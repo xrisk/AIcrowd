@@ -9,6 +9,9 @@
             <%= challenge_round.challenge_round %>: <%= challenge_remaining_text(challenge, challenge_round) %>
           </span>
         <% end %>
+        <% challenge.categories.each do |category| %>
+          <span class='badge badge-outline'><%= category.name %></span>
+        <% end %>
       </div>
     </div>
 

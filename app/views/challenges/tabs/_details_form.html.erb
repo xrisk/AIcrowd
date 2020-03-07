@@ -10,6 +10,11 @@
   </div>
 
   <div class="form-group">
+    <span class="label-text">Category</span>
+    <%= f.select :category_ids, @categories, {}, {class: "category_select2 form-control", multiple: true} %>
+  </div>
+
+  <div class="form-group">
     <span class="label-text">Options</span>
     <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :require_registration, text: "Registration required" } %>
     <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :show_leaderboard, text: "Show leaderboard" } %>
@@ -72,8 +77,8 @@
     <% if @challenge.new_record? && current_participant&.admin? %>
       <%= f.select :organizer_id, @organizers_for_select, { include_blank: true } %>
     <% else %>
-      <input class="form-control" type='text' value='<%= @challenge.organizer&.organizer || current_participant.organizer&.organizer %>' readonly>
-      <%= f.hidden_field :organizer_id, value: @challenge.organizer_id || current_participant.organizer_id %>
+      <input class="form-control" type='text' value='<%= @challenge.organizer&.organizer %>' readonly>
+      <%= f.hidden_field :organizer_id, value: @challenge.organizer_id %>
     <% end %>
   </div>
 
@@ -104,5 +109,5 @@
     <%= f.text_field :discourse_category_id, class: "form-control" %>
   </div>
 
-  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, next_step: 'overview' } %>
+  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, current_step: 'details' } %>
 </div>

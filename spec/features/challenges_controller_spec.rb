@@ -71,19 +71,22 @@ describe ChallengesController, feature: true do
     end
 
     context 'when user is logged in as organizer' do
-      let(:organizer) { create(:participant, :organizer) }
+      let(:participant)           { create(:participant) }
+      let(:organizer)             { create(:organizer) }
+      let(:participant_organizer) { create(:participant_organizer, organizer: organizer, participant: participant)}
 
-      before { log_in organizer }
+
+      before { log_in participant_organizer.participant }
 
       it 'renders new challenge page' do
-        visit new_challenge_path
+        visit new_challenge_path(organizer_id: organizer.id)
 
         expect(page).to have_http_status 200
-        expect(page).to have_current_path new_challenge_path
+        expect(page).to have_current_path new_challenge_path(organizer_id: organizer.id)
       end
 
       it 'allows to create challenge', js: true do
-        visit new_challenge_path
+        visit new_challenge_path(organizer_id: organizer.id)
 
         fill_in 'challenge_challenge', with: 'Created challenge title'
         click_on 'Create challenge'
@@ -166,7 +169,7 @@ describe ChallengesController, feature: true do
         fill_in 'challenge_tagline', with: 'Updated challenge tagline'
         click_on 'Update challenge'
 
-        expect(page).to have_current_path edit_challenge_path(challenge, step: :overview)
+        expect(page).to have_current_path edit_challenge_path(challenge)
 
         click_on 'challenge-edit-details-tab'
 

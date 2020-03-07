@@ -8,7 +8,7 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def edit?
-    participant && (participant.admin? || @record.organizer_id == participant.organizer_id)
+    participant && (participant.admin? || participant.organizers.ids.include?(@record.organizer_id))
   end
 
   def reorder?
@@ -24,7 +24,7 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def new?
-    participant && (participant.admin? || participant.organizer_id.present?)
+    participant && (participant.admin? || participant.organizers.ids.include?(@record.organizer_id))
   end
 
   def create?
@@ -47,6 +47,10 @@ class ChallengePolicy < ApplicationPolicy
     update?
   end
 
+  def remove_invited?
+    update?
+  end
+
   def clef_task?
     update?
   end
@@ -59,8 +63,31 @@ class ChallengePolicy < ApplicationPolicy
     create?
   end
 
+  def leaderboard_public?
+    @record.show_leaderboard == true
+  end
+
+  def show_leaderboard?
+    return false if starting_soon_mode?
+    return false unless @record.challenge_rounds.present?
+
+    leaderboard_public? || edit?
+  end
+
+  def show_submissions?
+    return false if starting_soon_mode?
+
+    @record.submissions_page.present? || edit?
+  end
+
+  def show_winners?
+    return false if starting_soon_mode?
+
+    @record.winners_tab_active.present?
+  end
+
   def starting_soon_mode?
-    return @record.status == :starting_soon
+    @record.status == :starting_soon
   end
 
   def has_accepted_challenge_rules?
@@ -73,16 +100,9 @@ class ChallengePolicy < ApplicationPolicy
     return participant.has_accepted_participation_terms?
   end
 
-  def show_leaderboard?
-    @record.challenge_rounds.present? &&
-      @record.show_leaderboard == true ||
-      (participant &&
-          (participant.admin? || @record.organizer_id == participant.organizer_id))
-  end
-
   def submissions_allowed?
     return false unless @record.online_submissions
-    return true if participant && (participant.admin? || @record.organizer_id == participant.organizer_id)
+    return true if edit?
 
     if @record.running? || (@record.completed? && @record.post_challenge_submissions?)
       if @record.clef_challenge.present?
@@ -153,8 +173,8 @@ class ChallengePolicy < ApplicationPolicy
       if participant&.admin?
         scope.all
       else
-        if participant&.organizer_id
-          scope.where("status_cd IN ('running','completed','starting_soon') OR organizer_id = ?", participant.organizer_id)
+        if participant&.organizers&.any?
+          scope.where("status_cd IN ('running','completed','starting_soon') OR organizer_id IN (#{participant.organizers.ids.join(',')})")
         elsif participant
           scope.where(participant_sql(email: participant.email))
         else

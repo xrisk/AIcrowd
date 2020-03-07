@@ -1,26 +1,4 @@
 module LeaderboardHelper
-  def status_badge(status)
-    case status
-    when 'ready', 'submitted', 'initialized'
-      klass = 'badge-amber'
-    when 'graded'
-      klass = 'badge-green'
-    when 'failed'
-      klass = 'badge-red'
-    else
-      klass = 'badge-amber'
-    end
-
-    %(
-      <div class="#{klass}">
-        <span class="badge-square"></span>
-        <span class="badge-text">
-          #{status.capitalize}
-        </span>
-      </div>
-    ).html_safe
-  end
-
   def leaderboard_ranking_change(leaderboard)
     if leaderboard.previous_row_num.blank? ||
          leaderboard.previous_row_num == 0 ||
@@ -73,13 +51,5 @@ module LeaderboardHelper
                       end
     end
     return other_scores
-  end
-
-  def leaderboard_tab_classes(challenge_round, current_round)
-    if challenge_round.id == current_round.id
-      return 'nav-link active'
-    else
-      return 'nav-link'
-    end
   end
 end

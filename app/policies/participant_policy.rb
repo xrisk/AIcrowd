@@ -43,10 +43,6 @@ class ParticipantPolicy < ApplicationPolicy
     participant && record.id == participant.id
   end
 
-  def clef_access?
-    participant && (participant.admin? || participant.id == @record.id || participant.organizer && participant.organizer.clef_organizer == true)
-  end
-
   class Scope
     attr_reader :participant, :scope
 

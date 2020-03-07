@@ -1,61 +1,11 @@
-// https://css-tricks.com/diy-priority-plus-nav/
-let PriorityNav = {
-    init: function() {
-        this.menu = $(".priority-nav");
-        this.allNavElements = $(".priority-nav > ul > li:not('.overflow-nav')");
-        this.bindUIActions();
-        this.setupMenu();
-    },
+$(document).on('click', '.challenge-invite-participant', function(){
+  $('.email_invitation_form').show();
+  $('.challenge-invite-participant').attr("disabled", true);
+});
 
-    setupMenu: function() {
-        let firstPos = $(".priority-nav > ul > li:first").position();
-        let wrappedElements = $();
-        let first = true;
-        PriorityNav.allNavElements.each(function(i) {
-            let el = $(this);
-            let pos = el.position();
-            if (pos.top !== firstPos.top) {
-                wrappedElements = wrappedElements.add(el);
-                if (first) {
-                    wrappedElements = wrappedElements.add(PriorityNav.allNavElements.eq(i-1));
-                    first = false;
-                }
-            }
-        });
-
-        if (wrappedElements.length) {
-            let newSet = wrappedElements.clone();
-            wrappedElements.addClass("d-none");
-            newSet.addClass("dropdown-item");
-            $(".overflow-nav-list").append(newSet);
-            $(".overflow-nav").addClass("show-inline-block");
-            $(".priority-nav").css("overflow", "visible");
-        }
-        else {
-            $(".overflow-nav").addClass("d-none");
-        }
-    },
-
-    tearDown: function() {
-        $(".overflow-nav-list").empty();
-        $(".overflow-nav").removeClass("d-none show-inline-block");
-        PriorityNav.allNavElements.removeClass("d-none");
-    },
-
-    bindUIActions: function() {
-        $(".overflow-nav-title").on("click", function() {
-            this.toggleClass("show");
-        });
-
-        $(window)
-            .resize(function() {PriorityNav.menu.addClass("overflow-hidden");})
-            .resize(_.debounce(function() {
-                PriorityNav.tearDown();
-                PriorityNav.setupMenu();
-                PriorityNav.menu.removeClass("overflow-hidden");
-            }, 500));
-    }
-};
+$(document).ready(function() {
+  $('.category_select2').select2();
+});
 
 function resetChallengesFormClientValidations() {
   // We need to wait till fields show up in browser
@@ -113,7 +63,40 @@ Paloma.controller('Challenges', {
         };
 
         $("#rounds").on('cocoon:after-insert', function(event, added_round) {
-          added_round.find('.active-switch').on('click', switch_handler);
+            added_round.find('.active-switch').on('click', switch_handler);
+
+            const inputs_to_copy = [
+                'score_title',
+                'score_secondary_title',
+                'primary_sort_order',
+                'secondary_sort_order',
+                'submission_limit_period',
+                'minimum_score',
+                'minimum_score_secondary',
+                'submission_limit',
+                'failed_submissions',
+                'parallel_submissions',
+                'ranking_highlight',
+                'ranking_window',
+                'score_precision',
+                'score_secondary_precision',
+            ];
+
+            // Get the round just above current round
+            const old_rounds = $($(added_round).prevAll('.round'));
+            const round_to_copy = old_rounds.first();
+
+            // Set name of new round to number of rounds + 1
+            added_round.find($("input[id$='challenge_round']")).val( `Round ${old_rounds.length + 1}`);
+
+            // Copy inputs
+            inputs_to_copy.forEach( function(identifier) {
+                    let selector = $(`[id$='${identifier}']`);
+                    let old_input = round_to_copy.find(selector);
+                    let new_input = added_round.find(selector);
+                    $(new_input).val($(old_input).val());
+                }
+            );
         });
 
         $('.challenges-form-tab-link').click(function(event) {
@@ -162,13 +145,21 @@ Paloma.controller('Challenges', {
           $('#leaderboard-export-link').attr('href', leaderboardExportUrl.toString());
         });
 
+        $('#submissions-export-rounds-select').on('change', function(event) {
+          const submissionsExportChallengeRoundId = event.target.value;
+          const submissionsExportLink             = $('#submissions-export-link').attr('href');
+          const submissionsExportUrl              = new URL(submissionsExportLink);
+
+          submissionsExportUrl.searchParams.set('submissions_export_challenge_round_id', submissionsExportChallengeRoundId);
+          $('#submissions-export-link').attr('href', submissionsExportUrl.toString());
+        });
+
         if (currentTab) {
           currentTab.tab('show');
           resetChallengesFormClientValidations();
         }
     },
     show: function () {
-        PriorityNav.init();
         let update_table_of_contents = function (headings) {
         let toc = $("#table-of-contents");
 
@@ -176,20 +167,21 @@ Paloma.controller('Challenges', {
           // JQuery Object from DOM object
           heading = $(heading);
           let heading_content = heading.text();
-          heading.attr('id', heading_content);
+          let heading_id = heading_content.replace(/ /g,"_") + index;
+          heading.attr('id', heading_id);
 
           let li = $('<li/>', {
-            "class": 'nav-link',
+            "class": 'nav-item',
           }).appendTo(toc);
 
           $('<a/>', {
-            "class": 'nav-item',
-            href: "#"+heading_content,
+            "class": 'nav-link',
+            href: "#"+heading_id,
             text: _.capitalize(heading_content)
           }).appendTo(li);
 
           // Attach ScrollSpy only after the TOC has been generated.
-          if (index === headings.length) {
+          if (index === headings.length - 1) {
             $('body').scrollspy({target: "#table-of-contents", offset: 64});
           }
         });

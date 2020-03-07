@@ -40,7 +40,7 @@
       <!-- md content -->
       <div class="col-12">
         <div class="md-content">
-          <%= @blog.body.html_safe %>
+          <%= sanitize_html(@blog.body) %>
         </div>
       </div>
       <!-- /md content -->

@@ -1,0 +1,20 @@
+<div class="chart-wrapper pb-5" data-controller="chart" data-chart-index="2" data-chart-chart-type="AreaChart">
+  <header class="section-header-decorative">
+    <div>
+      <h4>Best Score vs Time</h4>
+    </div>
+
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" data-target="chart.selectedScore">
+        <%= current_round.get_score_title %>
+      </button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" data-target="chart.selectScore" data-action="chart#updateChartUrl" data-chart-url="<%= top_score_vs_time_challenge_insights_path(@challenge, challenge_round_id: current_round.id, score: 'score') %>"><%= current_round.get_score_title %></a>
+        <a class="dropdown-item" data-target="chart.selectScore" data-action="chart#updateChartUrl" data-chart-url="<%= top_score_vs_time_challenge_insights_path(@challenge, challenge_round_id: current_round.id, score: 'score_secondary') %>"><%= current_round.get_score_secondary_title %></a>
+      </div>
+    </div>
+
+  </header>
+
+  <%= area_chart top_score_vs_time_challenge_insights_path(challenge, challenge_round_id: current_round.id, score: 'score') %>
+</div>

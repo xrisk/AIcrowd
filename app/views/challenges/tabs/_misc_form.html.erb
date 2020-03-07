@@ -1,0 +1,39 @@
+<div class="challenges-form__thin-tab">
+  <h2 class="challenges-form__heading">Challenge Export</h2>
+
+  <div class="form-group">
+    <%= link_to 'Export to JSON', export_challenge_path(challenge), class: 'btn btn-primary challenges-form__misc-button', data: { disable_with: 'Challenge Exported' } %>
+  </div>
+
+  <h2 class="challenges-form__heading">Leaderboard Export</h2>
+
+  <div class="form-group">
+    <label>Challenge Round for Leaderboard Export</label>
+    <%= select_tag :leaderboard_export_challenge_round_id,
+                   options_for_select(challenge_rounds.map { |challenge_round| [challenge_round.challenge_round, challenge_round.id] }),
+                   id: 'leaderboard-export-rounds-select',
+                   class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= link_to 'Export to CSV', export_challenge_leaderboards_url(challenge, leaderboard_export_challenge_round_id: challenge_rounds.first&.id.to_i), id: 'leaderboard-export-link', class: 'btn btn-primary challenges-form__misc-button' %>
+  </div>
+
+  <h2 class="challenges-form__heading">Submissions Export</h2>
+
+  <div class="form-group">
+    <label>Challenge Round for Submissions Export</label>
+    <%= select_tag :submissions_export_challenge_round_id,
+                  options_for_select(challenge_rounds.map { |challenge_round| [challenge_round.challenge_round, challenge_round.id] }),
+                  id: 'submissions-export-rounds-select',
+                  class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= link_to 'Export to CSV', export_challenge_submissions_url(challenge, submissions_export_challenge_round_id: challenge_rounds.first&.id.to_i), id: 'submissions-export-link', class: 'btn btn-primary challenges-form__misc-button' %>
+  </div>
+
+  <div class="btn-set" aria-hidden="true">
+    <%= link_to 'Cancel', challenge_path(f.object), class: 'btn btn-secondary' %>
+  </div>
+</div>

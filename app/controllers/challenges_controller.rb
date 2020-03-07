@@ -1,7 +1,7 @@
 class ChallengesController < ApplicationController
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :terminate_challenge, only: [:show, :index]
-  before_action :set_challenge, only: [:show, :edit, :update, :destroy, :clef_task, :remove_image, :export, :import]
+  before_action :set_challenge, only: [:show, :edit, :update, :destroy, :clef_task, :remove_image, :export, :import, :remove_invited]
   before_action :set_vote, only: [:show, :clef_task]
   before_action :set_follow, only: [:show, :clef_task]
   after_action :verify_authorized, except: [:index, :show]
@@ -9,6 +9,7 @@ class ChallengesController < ApplicationController
   before_action :set_organizer, only: [:edit, :update]
   before_action :set_organizers_for_select, only: [:new, :create]
   before_action :set_challenge_rounds, only: [:edit, :update]
+  before_action :set_category, only: [:new, :create , :edit]
 
   respond_to :html, :js
 
@@ -26,9 +27,9 @@ class ChallengesController < ApplicationController
                           @all_challenges
                         end
     @challenges = if current_participant&.admin?
-                    @challenges.page(params[:page]).per(20)
+                    @challenges.page(params[:page]).per(18)
                   else
-                    @challenges.where(hidden_challenge: false).page(params[:page]).per(20)
+                    @challenges.where(hidden_challenge: false).page(params[:page]).per(18)
                   end
   end
 
@@ -45,7 +46,8 @@ class ChallengesController < ApplicationController
   end
 
   def new
-    @challenge = Challenge.new
+    @organizer = Organizer.find_by(id: params[:organizer_id])
+    @challenge = Challenge.new(organizer: @organizer)
     authorize @challenge
   end
 
@@ -56,6 +58,7 @@ class ChallengesController < ApplicationController
     authorize @challenge
 
     if @challenge.save
+      create_challenge_category
       redirect_to edit_challenge_path(@challenge, step: :overview), notice: 'Challenge created.'
     else
       render :new
@@ -66,8 +69,11 @@ class ChallengesController < ApplicationController
 
   def update
     if @challenge.update(challenge_params)
+      create_challenge_category if params[:challenge][:category_ids].present?
+      create_invitations if params[:challenge][:invitation_email].present?
+      set_category
       respond_to do |format|
-        format.html { redirect_to edit_challenge_path(@challenge, step: params[:next_step]), notice: 'Challenge updated.' }
+        format.html { redirect_to edit_challenge_path(@challenge, step: params[:current_step]), notice: 'Challenge updated.' }
         format.js   { render :update }
       end
     else
@@ -125,6 +131,11 @@ class ChallengesController < ApplicationController
     end
   end
 
+  def remove_invited
+    challenge_invitation = @challenge.invitations.find(params[:invited_id])
+    challenge_invitation.destroy!
+  end
+
   private
 
   def set_challenge
@@ -160,6 +171,23 @@ class ChallengesController < ApplicationController
 
   def set_challenge_rounds
     @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
+  end
+
+  def create_invitations
+    params[:challenge][:invitation_email].split(',').each do |email|
+      @challenge.invitations.create!(email: email.strip)
+    end
+  end
+
+  def create_challenge_category
+    @challenge.category_challenges.destroy_all if @challenge.category_challenges.present?
+    params[:challenge][:category_ids].each do |category_id|
+      @challenge.category_challenges.create(category_id: category_id)
+    end
+  end
+
+  def set_category
+    @categories = Category.all.map{|c| [c.name, c.id]}
   end
 
   def challenge_params
@@ -244,11 +272,6 @@ class ChallengesController < ApplicationController
         :terms,
         :has_additional_checkbox,
         :additional_checkbox_text
-      ],
-      invitations_attributes: [
-        :id,
-        :email,
-        :_destroy
       ]
     )
   end
