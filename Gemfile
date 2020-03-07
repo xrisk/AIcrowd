@@ -16,6 +16,7 @@ gem 'ahoy_matey'
 gem 'blazer', github: "aicrowd/blazer"
 gem 'active_model_serializers'
 gem 'activeadmin', '1.4.3'
+gem 'authtrail'
 gem 'aws-sdk', '~> 2.2'
 gem 'browser'
 gem 'carrierwave', '~> 1.0'
@@ -103,15 +104,14 @@ gem "select2-rails"
 gem 'faraday', '~> 1.0'
 gem 'http'
 gem 'httparty'
-gem 'web-console'
+
 gem 'irbtools', require: 'irbtools/binding'
-gem 'guard'
 
 group :development do
   gem "letter_opener"
   gem 'brakeman', require: false
   gem 'derailed_benchmarks'
-
+  gem 'guard'
   gem 'lol_dba'
   gem 'meta_request'
   gem 'model_2_factory-rails'
@@ -120,6 +120,7 @@ group :development do
   gem 'seed_dump'
   gem 'sdoc', '~> 0.4.0'
   gem 'scss_lint', require: false
+  gem 'web-console'
   gem 'gitlab-styles', '~> 2.8'
 end
 

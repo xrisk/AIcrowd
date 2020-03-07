@@ -132,6 +132,11 @@ GEM
       io-like (~> 0.3.0)
     arel (9.0.0)
     ast (2.4.0)
+    authtrail (0.2.0)
+      activerecord (>= 5)
+      geocoder
+      railties (>= 5)
+      warden
     autoprefixer-rails (9.7.4)
       execjs
     aws-eventstream (1.0.3)
@@ -993,6 +998,7 @@ DEPENDENCIES
   active_model_serializers
   activeadmin (= 1.4.3)
   ahoy_matey
+  authtrail
   aws-sdk (~> 2.2)
   blazer!
   brakeman
