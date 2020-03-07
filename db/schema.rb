@@ -1176,7 +1176,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
   add_foreign_key "user_ratings", "participants"
   add_foreign_key "votes", "participants"
 
-  create_view "challenge_organizer_participants", materialized: true,  sql_definition: <<-SQL
+  create_view "challenge_organizer_participants", materialized: true, sql_definition: <<-SQL
       SELECT DISTINCT cop.id,
       cop.participant_id,
       cop.clef_task_id,
@@ -1208,8 +1208,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
                       participants p1
                     WHERE ((c1.clef_challenge IS TRUE) AND (o1.id = c1.organizer_id) AND (o1.id = p1.organizer_id) AND (p1.id = p.id)))))) cop;
   SQL
-
-  create_view "challenge_registrations",  sql_definition: <<-SQL
+  create_view "challenge_registrations", sql_definition: <<-SQL
       SELECT row_number() OVER () AS id,
       x.challenge_id,
       x.participant_id,
@@ -1244,8 +1243,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
               challenges c
             WHERE (c.clef_task_id = pc.clef_task_id)) x;
   SQL
-
-  create_view "challenge_round_views",  sql_definition: <<-SQL
+  create_view "challenge_round_views", sql_definition: <<-SQL
       SELECT cr.id,
       cr.challenge_round,
       cr.row_num,
@@ -1280,8 +1278,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
               row_number() OVER (PARTITION BY r1.challenge_id ORDER BY r1.challenge_id, r1.start_dttm) AS row_num
              FROM challenge_rounds r1) cr;
   SQL
-
-  create_view "challenge_round_summaries",  sql_definition: <<-SQL
+  create_view "challenge_round_summaries", sql_definition: <<-SQL
       SELECT cr.id,
       cr.challenge_round,
       cr.row_num,
@@ -1307,8 +1304,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
       challenges c
     WHERE ((c.id = cr.challenge_id) AND (c.id = acr.challenge_id) AND (acr.active IS TRUE));
   SQL
-
-  create_view "challenge_stats",  sql_definition: <<-SQL
+  create_view "challenge_stats", sql_definition: <<-SQL
       SELECT row_number() OVER () AS id,
       c.id AS challenge_id,
       c.challenge,
@@ -1330,8 +1326,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
     WHERE (r.challenge_id = c.id)
     ORDER BY (row_number() OVER ()), c.challenge;
   SQL
-
-  create_view "leaderboards",  sql_definition: <<-SQL
+  create_view "leaderboards", sql_definition: <<-SQL
       SELECT base_leaderboards.id,
       base_leaderboards.challenge_id,
       base_leaderboards.challenge_round_id,
@@ -1362,8 +1357,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'leaderboard'::text);
   SQL
-
-  create_view "ongoing_leaderboards",  sql_definition: <<-SQL
+  create_view "ongoing_leaderboards", sql_definition: <<-SQL
       SELECT base_leaderboards.id,
       base_leaderboards.challenge_id,
       base_leaderboards.challenge_round_id,
@@ -1394,8 +1388,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
   SQL
-
-  create_view "participant_challenge_counts",  sql_definition: <<-SQL
+  create_view "participant_challenge_counts", sql_definition: <<-SQL
       SELECT row_number() OVER () AS row_number,
       y.challenge_id,
       y.participant_id,
@@ -1422,8 +1415,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
                     WHERE (dfd.dataset_file_id = df.id)) x
             ORDER BY x.challenge_id, x.participant_id) y;
   SQL
-
-  create_view "participant_challenges",  sql_definition: <<-SQL
+  create_view "participant_challenges", sql_definition: <<-SQL
       SELECT DISTINCT p.id,
       cr.challenge_id,
       cr.participant_id,
@@ -1451,8 +1443,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
       challenge_registrations cr
     WHERE ((cr.participant_id = p.id) AND (cr.challenge_id = c.id));
   SQL
-
-  create_view "participant_sign_ups",  sql_definition: <<-SQL
+  create_view "participant_sign_ups", sql_definition: <<-SQL
       SELECT row_number() OVER () AS id,
       count(participants.id) AS count,
       (date_part('month'::text, participants.created_at))::integer AS mnth,
@@ -1461,8 +1452,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
     GROUP BY ((date_part('month'::text, participants.created_at))::integer), ((date_part('year'::text, participants.created_at))::integer)
     ORDER BY ((date_part('year'::text, participants.created_at))::integer), ((date_part('month'::text, participants.created_at))::integer);
   SQL
-
-  create_view "participant_submissions",  sql_definition: <<-SQL
+  create_view "participant_submissions", sql_definition: <<-SQL
       SELECT s.id,
       s.challenge_id,
       s.participant_id,
@@ -1480,8 +1470,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
     GROUP BY s.id, s.challenge_id, s.participant_id, p.name, s.grading_status_cd, s.post_challenge, s.score, s.score_secondary, s.created_at
     ORDER BY s.created_at DESC;
   SQL
-
-  create_view "previous_leaderboards",  sql_definition: <<-SQL
+  create_view "previous_leaderboards", sql_definition: <<-SQL
       SELECT base_leaderboards.id,
       base_leaderboards.challenge_id,
       base_leaderboards.challenge_round_id,
@@ -1511,8 +1500,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'previous'::text);
   SQL
-
-  create_view "previous_ongoing_leaderboards",  sql_definition: <<-SQL
+  create_view "previous_ongoing_leaderboards", sql_definition: <<-SQL
       SELECT base_leaderboards.id,
       base_leaderboards.challenge_id,
       base_leaderboards.challenge_round_id,
@@ -1542,5 +1530,4 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'previous_ongoing'::text);
   SQL
-
 end
