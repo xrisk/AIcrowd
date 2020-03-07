@@ -1,20 +1,49 @@
-<div class="chart-wrapper pb-5" data-controller="chart" data-chart-index="2" data-chart-chart-type="AreaChart">
+<div class="chart-wrapper pb-5"
+     data-controller="chart"
+     data-chart-index="<%= index %>"
+     data-chart-type="AreaChart"
+     data-chart-round="<%= challenge.active_round.id %>"
+     data-chart-url="<%= top_score_vs_time_challenge_insights_path(@challenge) %>">
+
   <header class="section-header-decorative">
     <div>
       <h4>Best Score vs Time</h4>
     </div>
-
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" data-target="chart.selectedScore">
-        <%= current_round.get_score_title %>
-      </button>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" data-target="chart.selectScore" data-action="chart#updateChartUrl" data-chart-url="<%= top_score_vs_time_challenge_insights_path(@challenge, challenge_round_id: current_round.id, score: 'score') %>"><%= current_round.get_score_title %></a>
-        <a class="dropdown-item" data-target="chart.selectScore" data-action="chart#updateChartUrl" data-chart-url="<%= top_score_vs_time_challenge_insights_path(@challenge, challenge_round_id: current_round.id, score: 'score_secondary') %>"><%= current_round.get_score_secondary_title %></a>
-      </div>
-    </div>
-
+    <% if challenge_rounds.size > 1 %>
+      <% challenge_rounds.each do |challenge_round| %>
+        <% if challenge_round.score_secondary_title.present? %>
+          <div class="dropdown display-none" data-target="chart.displayScore" data-round="<%= challenge_round.id %>">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
+              <%= challenge_round.get_score_title %>
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item chart-<%= index %> round-<%= challenge_round.id %> score" data-action="chart#updateScore" data-score="score"><%= challenge_round.get_score_title %></a>
+              <a class="dropdown-item chart-<%= index %> round-<%= challenge_round.id %> score_secondary" data-action="chart#updateScore" data-score="score_secondary"><%= challenge_round.get_score_secondary_title %></a>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
   </header>
 
-  <%= area_chart top_score_vs_time_challenge_insights_path(challenge, challenge_round_id: current_round.id, score: 'score') %>
+  <% if challenge_rounds.size > 1 %>
+    <!-- Challenge Round Pills  -->
+    <ul class="nav nav-pills">
+      <% challenge_rounds.each do |challenge_round| %>
+        <li class="nav-item">
+          <a href="#"
+             class="<%= round_pills_tab_classes(challenge_round, challenge.active_round) %>"
+             data-target="chart.updateRound"
+             data-action="chart#updateRound"
+             data-round="<%= challenge_round.id %>">
+
+            <%= challenge_round.challenge_round %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+    <!-- / Challenge Round Pills  -->
+  <% end %>
+  <%= area_chart top_score_vs_time_challenge_insights_path(challenge) %>
+  <progress class="display-none" max="1" value="0" style="width: 100%" data-target="chart.progressBar"></progress>
 </div>
