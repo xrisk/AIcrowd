@@ -9,12 +9,16 @@
               <th scope="col">Rank</th>
               <th scope="col">Participants</th>
               <th scope="col">Joined Date</th>
+              <th scope="col">Percentile</th>
               <th scope="col">Rating</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="table-leaderboard-body">
             <%= render partial: 'rating_leaderboard', locals: { participants: @participants } %>
             </tbody>
+            <tr><td>.</td><td>.</td><td>.</td><td>.</td><td>.</td></tr>
+            <tr><td>.</td><td>.</td><td>.</td><td>.</td><td>.</td></tr>
+            <%= render partial: 'rating_leaderboard', locals: { participants: @user_position_participants } %>
           </table>
         </div>
       </div>

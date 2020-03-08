@@ -124,13 +124,13 @@ class Participant < ApplicationRecord
       account_disabled_reason: nil,
       account_disabled_dttm:   nil)
   end
-
-  def reputation
-    @reputation ||= rand(100..1000)
+  def user_rating_history
+    user_rating_history =  UserRating.joins(:challenge_round).where(participant_id: 1).group_by_day(:end_dttm).maximum(:rating).reject { |_, v| v.nil? }
+    puts user_rating_history
+    return user_rating_history
   end
-
-  def rank
-    rand(1..100)
+  def rating
+    @rating ||= rand(100..1000)
   end
 
   def active_for_authentication?
