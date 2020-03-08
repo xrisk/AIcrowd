@@ -9,6 +9,7 @@
     <% end %>
   </td>
   <td>joined <%= (Time.now.to_date - participant.created_at.to_date).to_i %> days ago</td>
+  <td><strong><%= tier_calculate(participant.ranking) %></strong></td>
   <td>
     <strong>
       <span class="reputation-info" style="float: right">
@@ -17,5 +18,6 @@
       </span>
   </strong>
   </td>
+
 </tr>
 <% end %>

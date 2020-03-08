@@ -11,8 +11,8 @@
               <h1>
                 <%= participant.name %>
                 <div class="reputation-info">
-                  <span class="reputation-score <%= variation_class %>" data-toggle="tooltip" data-placement="top" title="<%= participant.reputation %> +- 37" data-original-title="Reputation score"><%= participant.reputation %></span>
-                  <span class="reputation-rank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Rank">#<%= participant.rank %></span>
+                  <span class="reputation-score <%= variation_class %>" data-toggle="tooltip" data-placement="top" title="<%= participant.rating.round %> +- <%= participant.variation.round %>" data-original-title="Reputation score"><%= participant.rating %></span>
+                  <span class="reputation-rank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Rank">#<%= participant.ranking %></span>
                 </div>
               </h1>
             </div>
@@ -94,6 +94,11 @@
                   <% end %>
                 </div>
               <% end %>
+              <header>
+              </header>
+              <%= line_chart participant.user_rating_history
+                              %>
+              <h4>User Rating</h4>
             </div>
           </div>
         </div>

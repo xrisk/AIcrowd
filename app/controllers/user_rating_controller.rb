@@ -14,6 +14,13 @@ class UserRatingController < ApplicationController
     render json: response.to_json
   end
   def post_new_participant_ratings
+    if params['calculate_leaderboard']
+      ParticipantRatingRanksQuery.participants_ranks_update
+      response = {
+          success: true
+      }
+      render json: response.to_json
+    end
     user_rating_service = UserRatingService.new(params['round_id'])
     teams_participant_ids, new_team_ratings, new_team_variations = params['participant_ids'], params['final_rating'], params['final_variation']
     if new_team_ratings.any? && new_team_variations.any?

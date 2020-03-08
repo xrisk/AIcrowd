@@ -106,7 +106,7 @@
               <!-- user -->
               <li class="list-group-item row">
                 <%= link_to participant_path(participant) do %>
-                  <span class="reputation-rank" style="width: 50px" data-toggle="tooltip" data-placement="top" title="" data-original-title="Rank">#<%= participant.rank %></span>
+                  <span class="reputation-rank" style="width: 50px" data-toggle="tooltip" data-placement="top" title="" data-original-title="Rank">#<%= participant.ranking %></span>
                   <%= image_tag participant.image_url, class: "avatar" %>
                   <span class="text-link" style="float: right"><%= participant.name %></span>
                   <span class="reputation-info" style="float: right">
