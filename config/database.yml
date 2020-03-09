@@ -5,9 +5,8 @@ default: &default
 
 development:
   <<: *default
-  database: aicrowd_production
-  name: postgres
-  password: sadhguru
+  database: crowdai_development
+
 
 staging:
   <<: *default
