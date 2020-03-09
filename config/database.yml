@@ -14,9 +14,7 @@ staging:
 
 test:
   <<: *default
-  database: aicrowd_production
-  name: postgres
-  password: sadhguru
+  database: crowdai_development
 
 production:
   <<: *default
