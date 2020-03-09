@@ -129,9 +129,6 @@ class Participant < ApplicationRecord
     puts user_rating_history
     return user_rating_history
   end
-  def rating
-    @rating ||= rand(100..1000)
-  end
 
   def active_for_authentication?
     super && account_disabled == false
