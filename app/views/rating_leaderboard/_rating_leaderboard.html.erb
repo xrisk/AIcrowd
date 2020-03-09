@@ -8,7 +8,7 @@
       <span class="text-link"><%= participant.name %></span>
     <% end %>
   </td>
-  <td>joined <%= (Time.now.to_date - participant.created_at.to_date).to_i %> days ago</td>
+  <td>joined <%= distance_of_time_in_words(Time.now.to_date , participant.created_at.to_date)%> ago </td>
   <td><strong><%= tier_calculate(participant.ranking) %></strong></td>
   <td>
     <strong>
