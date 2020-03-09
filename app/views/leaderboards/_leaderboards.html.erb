@@ -1,8 +1,7 @@
 <% leaderboards.each do |leaderboard| %>
   <%
-    participants            = leaderboard_participants(leaderboard)
-    challenge               = leaderboard.challenge
-    leaderboard_participant = leaderboard.participant
+    participants = leaderboard_participants(leaderboard)
+    challenge    = leaderboard.challenge
   %>
 
   <tr>
@@ -53,10 +52,10 @@
 
     <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
     <td class="text-right">
-      <% if leaderboard_participant.present? %>
-        <%= link_to challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm' do %>
-          View
-        <% end %>
+      <% if leaderboard.submitter_type != 'OldParticipant' && leaderboard.submitter.present? && leaderboard.submission.present? %>
+        <%= link_to 'View', challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm' %>
+      <% else %>
+        <%= link_to 'View', '#', class: 'btn btn-secondary btn-sm disabled disabled--with-pointer-events', title: 'Submitter or Submission was deleted' %>
       <% end %>
     </td>
   </tr>
