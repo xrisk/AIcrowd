@@ -15,7 +15,7 @@ class UserRatingController < ApplicationController
   end
   def post_new_participant_ratings
     if params['calculate_leaderboard']
-      ParticipantRatingRanksQuery.participants_ranks_update
+      ParticipantRatingRanksQuery.new.participants_ranks_update
       response = {
           success: true
       }
