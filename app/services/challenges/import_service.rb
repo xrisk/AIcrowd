@@ -1,16 +1,16 @@
 module Challenges
   class ImportService < ::BaseService
-    def initialize(import_file:, organizer:)
+    def initialize(import_file:, organizers:)
       @import_file = import_file
-      @organizer   = organizer
+      @organizers  = organizers
     end
 
     def call
       return failure('Import failed: File not selected') if import_file.blank?
 
-      new_challenge           = Challenge.new(import_challenge_params)
-      new_challenge           = import_images_from_base64(new_challenge)
-      new_challenge.organizer = organizer
+      new_challenge            = Challenge.new(import_challenge_params)
+      new_challenge            = import_images_from_base64(new_challenge)
+      new_challenge.organizers = organizers
 
       if new_challenge.save
         success(new_challenge)
@@ -23,7 +23,7 @@ module Challenges
 
     private
 
-    attr_reader :import_file, :organizer
+    attr_reader :import_file, :organizers
 
     def json_data
       @json_data ||= JSON.load(import_file).with_indifferent_access

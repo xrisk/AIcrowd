@@ -1,19 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Api::SubmissionsController, type: :request do
-  let!(:organizer) do
-    create :organizer,
-           api_key: '3d1efc2332200314c86d2921dd33434c'
-  end
-  let!(:clef_task) do
-    create :clef_task,
-           organizer: organizer
-  end
-  let!(:challenge) do
-    create :challenge,
-           :running,
-           organizer: organizer
-  end
+  let!(:organizer) { create :organizer, api_key: '3d1efc2332200314c86d2921dd33434c' }
+  let!(:clef_task) { create :clef_task, organizer: organizer }
+  let!(:challenge) { create :challenge, :running, organizers: [organizer] }
 
   5.times do |i|
     let!("submission_#{i + 1}") do

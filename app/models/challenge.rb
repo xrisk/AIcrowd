@@ -8,10 +8,14 @@ class Challenge < ApplicationRecord
 
   mount_uploader :image_file, ImageUploader
 
-  belongs_to :organizer
-
   belongs_to :clef_task, optional: true
   accepts_nested_attributes_for :clef_task
+
+  has_many :challenges_organizers, dependent: :destroy, class_name: 'ChallengesOrganizer'
+  accepts_nested_attributes_for :challenges_organizers,
+                                reject_if:     :all_blank,
+                                allow_destroy: true
+  has_many :organizers, through: :challenges_organizers, class_name: 'Organizer'
 
   has_many :dataset_files, dependent: :destroy
   accepts_nested_attributes_for :dataset_files, reject_if: :all_blank
@@ -60,7 +64,6 @@ class Challenge < ApplicationRecord
   validates :challenge_client_name,
             format: { with: /\A[a-zA-Z0-9]/ }
   validates :challenge_client_name, presence: true
-
   validate :other_scores_fieldnames_max
 
   default_scope do

@@ -62,7 +62,7 @@ describe "site navigation for admin" do
     it do
       log_in(participant)
       visit_challenge(challenge_1)
-      click_link challenge_1.organizer.organizer
+      click_link challenge_1.organizers.first.organizer
       expect(page).to have_text 'Members'
     end
   end

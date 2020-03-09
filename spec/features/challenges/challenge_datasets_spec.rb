@@ -8,8 +8,7 @@ describe 'download dataset links' do
   let!(:challenge_participant)           { create :challenge_participant, challenge: challenge, participant: participant }
   let!(:admin)                           { create :participant, :admin }
   let!(:challenge_admin_participant)     { create :challenge_participant, challenge: challenge, participant: admin }
-  let!(:organizer)                       { create :participant }
-  let!(:participant_organizer)           { create(:participant_organizer, organizer: challenge.organizer, participant: organizer) }
+  let!(:organizer)                       { create :participant, organizers: [challenge.organizers.first] }
   let!(:challenge_organizer_participant) { create :challenge_participant, challenge: challenge, participant: organizer }
 
   before { Aws::S3::Object.any_instance.stub(:exists?).and_return(false) }

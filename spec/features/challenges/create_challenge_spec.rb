@@ -18,8 +18,7 @@ end
 
 describe 'An organizer creates a challenge' do
   let!(:organizer)            { create :organizer }
-  let!(:participant)          { create :participant }
-  let(:participant_organizer) { create(:participant_organizer, organizer: organizer, participant: participant)}
+  let!(:participant)          { create :participant, organizers: [organizer] }
   let!(:challenge)            { build :challenge }
 
   it 'create challenge', :js do

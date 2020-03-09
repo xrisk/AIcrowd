@@ -25,8 +25,8 @@ class Api::BaseController < ApplicationController
   private
 
   def validate_client_name_and_api_key(challenge_client_name, api_key)
-    challenge = Challenge.where(challenge_client_name: challenge_client_name).first
-    organizer = Organizer.where(api_key: api_key).first
-    challenge.present? && organizer.present? && challenge.organizer_id == organizer.id
+    Challenge.joins(:organizers)
+             .find_by(challenge_client_name: challenge_client_name, organizers: { api_key: api_key })
+             .present?
   end
 end

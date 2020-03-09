@@ -24,11 +24,11 @@ FactoryBot.define do
     end
 
     trait :organizer do
-      organizer { FactoryBot.create(:organizer) }
+      organizers { [FactoryBot.create(:organizer)] }
     end
 
     trait :clef_organizer do
-      organizer { FactoryBot.create(:organizer, :clef) }
+      organizers { [FactoryBot.create(:organizer, :clef)] }
     end
 
     trait :invalid do

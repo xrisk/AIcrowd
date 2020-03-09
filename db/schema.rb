@@ -425,6 +425,16 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
   end
 
+  create_table "challenges_organizers", force: :cascade do |t|
+    t.bigint "challenge_id", null: false
+    t.bigint "organizer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id", "organizer_id"], name: "index_challenges_organizers_on_challenge_id_and_organizer_id", unique: true
+    t.index ["challenge_id"], name: "index_challenges_organizers_on_challenge_id"
+    t.index ["organizer_id"], name: "index_challenges_organizers_on_organizer_id"
+  end
+
   create_table "clef_tasks", force: :cascade do |t|
     t.bigint "organizer_id"
     t.string "task"
@@ -982,6 +992,8 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
   add_foreign_key "challenge_rounds", "challenges"
   add_foreign_key "challenge_rules", "challenges"
   add_foreign_key "challenges", "organizers"
+  add_foreign_key "challenges_organizers", "challenges"
+  add_foreign_key "challenges_organizers", "organizers"
   add_foreign_key "clef_tasks", "organizers"
   add_foreign_key "dataset_file_downloads", "dataset_files"
   add_foreign_key "dataset_file_downloads", "participants"

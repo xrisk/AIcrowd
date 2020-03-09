@@ -6,7 +6,7 @@ class ChallengesController < ApplicationController
   before_action :set_follow, only: [:show, :clef_task]
   after_action :verify_authorized, except: [:index, :show]
   before_action :set_s3_direct_post, only: [:edit, :update]
-  before_action :set_organizer, only: [:edit, :update]
+  before_action :set_organizers, only: [:edit, :update]
   before_action :set_organizers_for_select, only: [:new, :create]
   before_action :set_challenge_rounds, only: [:edit, :update]
   before_action :set_category, only: [:new, :create , :edit]
@@ -47,13 +47,16 @@ class ChallengesController < ApplicationController
 
   def new
     @organizer = Organizer.find_by(id: params[:organizer_id])
-    @challenge = Challenge.new(organizer: @organizer)
+    @challenge = Challenge.new
+    @challenge.organizers << @organizer if @organizer.present?
+
     authorize @challenge
   end
 
   def create
     @challenge                = Challenge.new(challenge_params)
-    @challenge.clef_challenge = true if @challenge.organizer&.clef_organizer
+    @challenge.clef_challenge = true if @challenge.organizers.any? { |organizer| organizer.clef_organizer? }
+    @challenge.organizers     = current_participant.organizers if current_participant&.admin? == false
 
     authorize @challenge
 
@@ -122,7 +125,7 @@ class ChallengesController < ApplicationController
   end
 
   def import
-    result = Challenges::ImportService.new(import_file: params[:import_file], organizer: @challenge.organizer).call
+    result = Challenges::ImportService.new(import_file: params[:import_file], organizers: @challenge.organizers).call
 
     if result.success?
       redirect_to edit_challenge_path(@challenge, step: :admin), notice: 'New Challenge Imported'
@@ -139,7 +142,7 @@ class ChallengesController < ApplicationController
   private
 
   def set_challenge
-    @challenge = Challenge.includes(:organizer).friendly.find(params[:id])
+    @challenge = Challenge.includes(:organizers).friendly.find(params[:id])
     @challenge = @challenge.versions[params[:version].to_i].reify if params[:version]
     authorize @challenge
   end
@@ -152,8 +155,8 @@ class ChallengesController < ApplicationController
     @follow = @challenge.follows.where(participant_id: current_participant.id).first if current_participant.present?
   end
 
-  def set_organizer
-    @organizer = @challenge&.organizer
+  def set_organizers
+    @organizers = @challenge&.organizers
   end
 
   def set_organizers_for_select
@@ -232,11 +235,13 @@ class ChallengesController < ApplicationController
       :dynamic_content_tab,
       :dynamic_content,
       :dynamic_content_url,
-      :organizer_id,
       image_attributes: [
         :id,
         :image,
         :_destroy
+      ],
+      challenges_organizers_attributes: [
+        :organizer_id
       ],
       challenge_partners_attributes: [
         :id,

@@ -9,33 +9,12 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     Timecop.return
   end
 
-  let!(:organizer) do
-    create :organizer,
-           api_key: '3d1efc2332200314c86d2921dd33434c'
-  end
-  let!(:participation_terms) do
-    create :participation_terms
-  end
-  let!(:challenge) do
-    create :challenge,
-           :running, organizer: organizer, post_challenge_submissions: true
-  end
-  let!(:challenge_round) do
-    create :challenge_round,
-           challenge_id: challenge.id,
-           active:       true,
-           start_dttm:   5.weeks.ago,
-           end_dttm:     4.weeks.ago
-  end
-  let!(:participant) do
-    create :participant,
-           api_key: '5762b9423a01f72662264358f071908c'
-  end
-  let!(:challenge_participant) do
-    create :challenge_participant,
-           challenge:   challenge,
-           participant: participant
-  end
+  let!(:organizer)             { create :organizer, api_key: '3d1efc2332200314c86d2921dd33434c' }
+  let!(:participation_terms)   { create :participation_terms }
+  let!(:challenge)             { create :challenge, :running, organizers: [organizer], post_challenge_submissions: true }
+  let!(:challenge_round)       { create :challenge_round, challenge_id: challenge.id, active: true, start_dttm: 5.weeks.ago, end_dttm: 4.weeks.ago }
+  let!(:participant)           { create :participant, api_key: '5762b9423a01f72662264358f071908c' }
+  let!(:challenge_participant) { create :challenge_participant, challenge: challenge, participant: participant }
 
   describe "POST /api/external_graders/ : create submission" do
     def valid_attributes

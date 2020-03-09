@@ -232,7 +232,7 @@ class SubmissionsController < ApplicationController
   end
 
   def clef_primary_run_disabled?
-    return true unless @challenge.organizer.clef?
+    return true unless @challenge.organizers.any? { |organizer| organizer.clef? }
 
     sql = %[
         SELECT 'X'

@@ -6,13 +6,12 @@ describe ClefTasksController, type: :controller do
   let!(:clef_tasks)           { create_list(:clef_task, 3, organizer: organizer) }
 
   let(:organizer)             { create :organizer }
-  let(:organizer_admin)       { create :participant }
-  let(:participant_organizer) { create(:participant_organizer, participant: organizer_admin, organizer: organizer) }
+  let(:organizer_admin)       { create :participant, organizers: [organizer] }
   let(:valid_attributes)      { FactoryBot.attributes_for(:clef_task) }
   let(:invalid_attributes)    { FactoryBot.attributes_for(:clef_task, :invalid) }
 
   context 'organizer_admin' do
-    before { sign_in participant_organizer.participant }
+    before { sign_in organizer_admin }
 
     describe 'GET #index' do
       before { get :index, params: { organizer_id: organizer.id } }
@@ -31,7 +30,7 @@ describe ClefTasksController, type: :controller do
       context "with valid params" do
         it "creates a new ClefTask" do
           expect do
-            post :create, params: { organizer_id: participant_organizer.organizer.id, clef_task: valid_attributes }
+            post :create, params: { organizer_id: organizer.id, clef_task: valid_attributes }
           end.to change(ClefTask, :count).by(1)
         end
 

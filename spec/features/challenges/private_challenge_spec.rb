@@ -3,7 +3,7 @@ require 'rails_helper'
 describe "public user accesses challenge", :js do
   let!(:organizer)   { create :organizer }
   let!(:participant) { create :participant, organizers: [organizer]  }
-  let!(:challenge)   { create :challenge, organizer: organizer }
+  let!(:challenge)   { create :challenge, organizers: [organizer] }
   let!(:invitation)  { create(:invitation, challenge_id: challenge.id, participant_id: participant.id, email: 'invited@user.com') }
 
   describe "Logged in user should invite participant" do

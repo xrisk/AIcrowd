@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :challenge, class: 'Challenge' do
-    organizer
     challenge { FFaker::Lorem.unique.sentence(3) }
     challenge_client_name { FFaker::Internet.unique.user_name }
     tagline { FFaker::Lorem.unique.sentence(3) }
@@ -18,6 +17,10 @@ FactoryBot.define do
     discussions_visible { true }
     teams_allowed { true }
     max_team_participants { 5 }
+
+    after(:create) do |challenge|
+      create(:challenges_organizer, challenge: challenge) if challenge.organizers.empty?
+    end
 
     trait :with_rules do
       after(:create) do |challenge|

@@ -4,7 +4,7 @@ describe ChallengePolicy do
   context "for a published Challenge" do
     subject { described_class.new(participant, challenge) }
 
-    let(:challenge)             { create(:challenge, organizer: organizer) }
+    let(:challenge)             { create(:challenge, organizers: [organizer]) }
     let(:organizer)             { create(:organizer) }
     let(:organizer_person)      { create(:participant) }
     let(:participant_organizer) { create(:participant_organizer, participant: organizer_person, organizer: organizer) }

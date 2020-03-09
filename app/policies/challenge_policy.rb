@@ -8,7 +8,7 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def edit?
-    participant && (participant.admin? || participant.organizers.ids.include?(@record.organizer_id))
+    participant && (participant.admin? || (participant.organizer_ids & @record.organizer_ids).any?)
   end
 
   def reorder?
@@ -24,7 +24,7 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def new?
-    participant && (participant.admin? || participant.organizers.ids.include?(@record.organizer_id))
+    participant && (participant.admin? || (participant.organizer_ids & @record.challenges_organizers.map(&:organizer_id)).any?)
   end
 
   def create?
@@ -173,8 +173,10 @@ class ChallengePolicy < ApplicationPolicy
       if participant&.admin?
         scope.all
       else
-        if participant&.organizers&.any?
-          scope.where("status_cd IN ('running','completed','starting_soon') OR organizer_id IN (#{participant.organizers.ids.join(',')})")
+        if participant&.organizers.present?
+          scope.left_joins(:organizers)
+            .where("status_cd IN ('running','completed','starting_soon') OR organizers.id IN (#{participant.organizer_ids.join(',')})")
+            .group('challenges.id')
         elsif participant
           scope.where(participant_sql(email: participant.email))
         else
