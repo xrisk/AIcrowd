@@ -5,7 +5,7 @@ Rails.application.configure do
   end
   config.cache_classes                     = false
   config.eager_load                        = false
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local       = false
   config.action_controller.perform_caching = false
   if Rails.root.join('tmp/caching-dev.txt').exist?
     config.action_controller.perform_caching = true
