@@ -32,6 +32,10 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
+    namespace :discourse do
+      resource :webhooks, only: :create
+    end
+
     resources :external_graders, only: [:create, :show, :update] do
       get :challenge_config, on: :collection
       get :presign, on: :member

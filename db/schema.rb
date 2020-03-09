@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_02_110125) do
+ActiveRecord::Schema.define(version: 2020_03_09_093951) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -225,15 +225,14 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
   end
 
   create_table "categories", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
   create_table "category_challenges", force: :cascade do |t|
-    t.bigint "category_id", null: false
-    t.bigint "challenge_id", null: false
+    t.bigint "category_id"
+    t.bigint "challenge_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id", "challenge_id"], name: "index_category_challenges_on_category_id_and_challenge_id", unique: true
@@ -420,9 +419,23 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
     t.integer "team_freeze_seconds_before_end", default: 604800
     t.boolean "hidden_challenge", default: false, null: false
     t.datetime "team_freeze_time"
+    t.string "score_title", default: "", null: false
+    t.string "score_secondary_title", default: "", null: false
+    t.string "primary_sort_order_cd", default: "ascending", null: false
+    t.string "secondary_sort_order_cd", default: "not_used", null: false
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["organizer_id"], name: "index_challenges_on_organizer_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
+  end
+
+  create_table "challenges_organizers", force: :cascade do |t|
+    t.bigint "challenge_id", null: false
+    t.bigint "organizer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id", "organizer_id"], name: "index_challenges_organizers_on_challenge_id_and_organizer_id", unique: true
+    t.index ["challenge_id"], name: "index_challenges_organizers_on_challenge_id"
+    t.index ["organizer_id"], name: "index_challenges_organizers_on_organizer_id"
   end
 
   create_table "clef_tasks", force: :cascade do |t|
@@ -458,6 +471,70 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
     t.boolean "visible", default: true
     t.string "external_file_size"
     t.index ["challenge_id"], name: "index_dataset_files_on_challenge_id"
+  end
+
+  create_table "discourse_categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "color"
+    t.string "text_color"
+    t.string "slug"
+    t.string "topic_url"
+    t.text "description"
+    t.text "description_text"
+    t.text "description_excerpt"
+    t.integer "topic_count"
+    t.integer "post_count"
+    t.integer "position"
+    t.integer "num_featured_topics"
+    t.boolean "read_restricted", default: false, null: false
+    t.jsonb "webhook_payload", default: "{}", null: false
+    t.index ["name"], name: "index_discourse_categories_on_name", unique: true
+  end
+
+  create_table "discourse_posts", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "username"
+    t.string "avatar_template"
+    t.text "cooked"
+    t.integer "post_number"
+    t.integer "post_type"
+    t.integer "reply_count"
+    t.integer "reply_to_post_number"
+    t.integer "quote_count"
+    t.integer "incoming_link_count"
+    t.integer "reads"
+    t.integer "score"
+    t.integer "version"
+    t.boolean "moderator", default: false, null: false
+    t.boolean "admin", default: false, null: false
+    t.boolean "staff", default: false, null: false
+    t.boolean "hidden", default: false, null: false
+    t.bigint "discourse_topic_id"
+    t.bigint "participant_id"
+    t.jsonb "webhook_payload", default: "{}", null: false
+    t.index ["discourse_topic_id"], name: "index_discourse_posts_on_discourse_topic_id"
+    t.index ["participant_id"], name: "index_discourse_posts_on_participant_id"
+  end
+
+  create_table "discourse_topics", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "fancy_title"
+    t.string "slug"
+    t.string "archetype"
+    t.integer "views"
+    t.integer "posts_count"
+    t.integer "reply_count"
+    t.integer "like_count"
+    t.integer "participant_count"
+    t.boolean "visible", default: true, null: false
+    t.boolean "closed", default: false, null: false
+    t.boolean "archived", default: false, null: false
+    t.datetime "last_posted_at"
+    t.bigint "discourse_category_id"
+    t.bigint "participant_id"
+    t.jsonb "webhook_payload", default: "{}", null: false
+    t.index ["discourse_category_id"], name: "index_discourse_topics_on_discourse_category_id"
+    t.index ["participant_id"], name: "index_discourse_topics_on_participant_id"
   end
 
   create_table "disentanglement_leaderboards", force: :cascade do |t|
@@ -755,6 +832,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
     t.integer "participation_terms_accepted_version"
     t.boolean "agreed_to_terms_of_use_and_privacy", default: true
     t.boolean "agreed_to_marketing", default: true
+    t.string "discourse_username"
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["organizer_id"], name: "index_participants_on_organizer_id"
@@ -982,9 +1060,15 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
   add_foreign_key "challenge_rounds", "challenges"
   add_foreign_key "challenge_rules", "challenges"
   add_foreign_key "challenges", "organizers"
+  add_foreign_key "challenges_organizers", "challenges"
+  add_foreign_key "challenges_organizers", "organizers"
   add_foreign_key "clef_tasks", "organizers"
   add_foreign_key "dataset_file_downloads", "dataset_files"
   add_foreign_key "dataset_file_downloads", "participants"
+  add_foreign_key "discourse_posts", "discourse_topics"
+  add_foreign_key "discourse_posts", "participants"
+  add_foreign_key "discourse_topics", "discourse_categories"
+  add_foreign_key "discourse_topics", "participants"
   add_foreign_key "email_invitations", "participants", column: "claimant_id"
   add_foreign_key "email_invitations", "participants", column: "invitor_id"
   add_foreign_key "email_preferences", "participants"
@@ -1139,38 +1223,6 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
     WHERE ((c.id = cr.challenge_id) AND (c.id = acr.challenge_id) AND (acr.active IS TRUE));
   SQL
 
-  create_view "leaderboards",  sql_definition: <<-SQL
-      SELECT base_leaderboards.id,
-      base_leaderboards.challenge_id,
-      base_leaderboards.challenge_round_id,
-      base_leaderboards.submitter_type,
-      base_leaderboards.submitter_id,
-      base_leaderboards.row_num,
-      base_leaderboards.previous_row_num,
-      base_leaderboards.slug,
-      base_leaderboards.name,
-      base_leaderboards.entries,
-      base_leaderboards.score,
-      base_leaderboards.score_secondary,
-      base_leaderboards.meta,
-      base_leaderboards.media_large,
-      base_leaderboards.media_thumbnail,
-      base_leaderboards.media_content_type,
-      base_leaderboards.description,
-      base_leaderboards.description_markdown,
-      base_leaderboards.leaderboard_type_cd,
-      base_leaderboards.refreshed_at,
-      base_leaderboards.created_at,
-      base_leaderboards.updated_at,
-      base_leaderboards.submission_id,
-      base_leaderboards.post_challenge,
-      base_leaderboards.seq,
-      base_leaderboards.baseline,
-      base_leaderboards.baseline_comment
-     FROM base_leaderboards
-    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'leaderboard'::text);
-  SQL
-
   create_view "ongoing_leaderboards",  sql_definition: <<-SQL
       SELECT base_leaderboards.id,
       base_leaderboards.challenge_id,
@@ -1286,7 +1338,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
           UNION
            SELECT df.challenge_id,
               dfd.participant_id,
-              'dataset_download'::text AS text,
+              'dataset_download'::text,
               NULL::integer AS clef_task_id
              FROM dataset_file_downloads dfd,
               dataset_files df
@@ -1351,11 +1403,43 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
                   UNION
                    SELECT df.challenge_id,
                       dfd.participant_id,
-                      'dataset_download'::text AS text
+                      'dataset_download'::text
                      FROM dataset_file_downloads dfd,
                       dataset_files df
                     WHERE (dfd.dataset_file_id = df.id)) x
             ORDER BY x.challenge_id, x.participant_id) y;
+  SQL
+
+  create_view "leaderboards",  sql_definition: <<-SQL
+      SELECT base_leaderboards.id,
+      base_leaderboards.challenge_id,
+      base_leaderboards.challenge_round_id,
+      base_leaderboards.row_num,
+      base_leaderboards.previous_row_num,
+      base_leaderboards.slug,
+      base_leaderboards.name,
+      base_leaderboards.entries,
+      base_leaderboards.score,
+      base_leaderboards.score_secondary,
+      base_leaderboards.media_large,
+      base_leaderboards.media_thumbnail,
+      base_leaderboards.media_content_type,
+      base_leaderboards.description,
+      base_leaderboards.description_markdown,
+      base_leaderboards.leaderboard_type_cd,
+      base_leaderboards.refreshed_at,
+      base_leaderboards.created_at,
+      base_leaderboards.updated_at,
+      base_leaderboards.submission_id,
+      base_leaderboards.post_challenge,
+      base_leaderboards.seq,
+      base_leaderboards.baseline,
+      base_leaderboards.baseline_comment,
+      base_leaderboards.meta,
+      base_leaderboards.submitter_type,
+      base_leaderboards.submitter_id
+     FROM base_leaderboards
+    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'leaderboard'::text);
   SQL
 
   create_view "challenge_stats",  sql_definition: <<-SQL

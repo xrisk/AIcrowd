@@ -22,6 +22,8 @@ development: &development
   DISCOURSE_DOMAIN_NAME: 'https://discourse-staging.aicrowd.com'
   DISCOURSE_API_KEY: "REDACTED"
   DISCOURSE_API_USERNAME: "REDACTED"
+  DISCOURSE_WEBHOOKS_USERNAME: "REDACTED"
+  DISCOURSE_WEBHOOKS_API_KEY: "REDACTED"
   FOG_LOCAL_ROOT: '~/fog'
 test:
   <<: *development
