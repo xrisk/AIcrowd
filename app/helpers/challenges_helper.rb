@@ -89,10 +89,6 @@ module ChallengesHelper
     end
   end
 
-  def discourse_url(challenge)
-    "#{ENV['DISCOURSE_DOMAIN_NAME']}/c/#{challenge.slug[0..49]}"
-  end
-
   def resources_link(challenge)
     if challenge.clef_task.present?
       clef_task_task_dataset_files_path(challenge.clef_task, challenge_id: challenge.id)
