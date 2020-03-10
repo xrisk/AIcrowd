@@ -44,8 +44,8 @@
                 <% if @challenge.media_on_leaderboard %>
                   <th scope="col">Media</th>
                 <% end %>
-                <th scope="col"><%= @current_round.get_score_title %></th>
-                <% if @current_round.get_score_secondary_title.present? %>
+                <th scope="col"><%= @current_round&.get_score_title %></th>
+                <% if @current_round&.get_score_secondary_title.present? %>
                   <th scope="col"><%= @current_round.get_score_secondary_title %></th>
                 <% end %>
                 <% @challenge.other_scores_fieldnames_array.each do |fname| %>
@@ -68,7 +68,7 @@
         <% end %>
 
         <!-- toggle switch -->
-        <% if @challenge.status == :completed %>
+        <% if @challenge.status == :completed && @current_round.present? %>
           <div class="my-2">
             <label class="toggle-switch toggle-switch-large">
               <%= link_to challenge_leaderboards_path(challenge_round_id: @current_round, post_challenge: @post_challenge.blank?) do %>
