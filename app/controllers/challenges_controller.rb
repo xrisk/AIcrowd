@@ -1,4 +1,6 @@
 class ChallengesController < ApplicationController
+  include ChallengeFilter
+
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :terminate_challenge, only: [:show, :index]
   before_action :set_challenge, only: [:show, :edit, :update, :destroy, :clef_task, :remove_image, :export, :import, :remove_invited]
@@ -10,6 +12,7 @@ class ChallengesController < ApplicationController
   before_action :set_organizers_for_select, only: [:new, :create]
   before_action :set_challenge_rounds, only: [:edit, :update]
   before_action :set_category, only: [:new, :create , :edit]
+  before_action :set_filters, only: [:index]
 
   respond_to :html, :js
 
@@ -26,11 +29,12 @@ class ChallengesController < ApplicationController
                         else
                           @all_challenges
                         end
-    @challenges = if current_participant&.admin?
-                    @challenges.page(params[:page]).per(18)
-                  else
-                    @challenges.where(hidden_challenge: false).page(params[:page]).per(18)
-                  end
+    @challenges       = filter_challenge(@challenges)
+    @challenges       = if current_participant&.admin?
+                          @challenges.page(params[:page]).per(18)
+                        else
+                          @challenges.where(hidden_challenge: false).page(params[:page]).per(18)
+                        end
   end
 
   def show

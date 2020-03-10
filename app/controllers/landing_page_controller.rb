@@ -1,8 +1,14 @@
 class LandingPageController < ApplicationController
+  include ChallengeFilter
+
   before_action :terminate_challenge, only: [:index]
+  before_action :set_filters, only: [:index]
+
+  respond_to :html, :js
 
   def index
-    @challenges = Challenge
+    @challenges = filter_challenge
+    @challenges = @challenges
                       .includes(:organizers)
                       .where(private_challenge: false)
                       .where(hidden_challenge: false)

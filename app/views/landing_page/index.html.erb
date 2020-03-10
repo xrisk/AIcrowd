@@ -22,7 +22,13 @@
     </div>
   </div>
 </div>
-
+<!-- filter -->
+<div class="filter-bar">
+  <div class="container-fluid">
+    <%= render partial: 'shared/challenges/filter', locals: { status: @status, categories: @categories, prize_hash: @prize_hash, path_of_index_page: landing_page_index_path } %>
+  </div>
+</div>
+<!-- /filter -->
 
 <!-- section -->
 <section class="section-p-md bg-light">
@@ -30,7 +36,6 @@
   <!-- challenge cards -->
   <div class="container-fluid">
     <div class="row">
-
       <!-- section header -->
       <div class="col-12">
         <header class="section-header-decorative">
@@ -44,7 +49,9 @@
 
         </header>
       </div>
-      <!-- /section header -->
+    </div>
+    <!-- /section header -->
+    <div class='row challenge-list'>
       <%= render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>
     </div>
   </div>

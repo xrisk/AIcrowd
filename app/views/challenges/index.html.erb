@@ -9,6 +9,13 @@
   </div>
 </div>
 <!-- /masthead -->
+<!-- filter -->
+<div class="filter-bar">
+  <div class="container-fluid">
+    <%= render partial: 'shared/challenges/filter', locals: { status: @status, categories: @categories, prize_hash: @prize_hash, path_of_index_page: challenges_path } %>
+  </div>
+</div>
+<!-- /filter -->
 
 <!-- challenge cards -->
 <div class="section-pt-sm-pb-md">

@@ -1,0 +1,43 @@
+<%= form_tag path_of_index_page, method: :get, remote: true, class: 'filter-dropdown-form' do %>
+  <div class="dropdown">
+    <div class="filter dropdown-toggle" id="challenge-statuses" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Active
+    </div>
+    <div class='dropdown-menu form-dropdown status-dropdown'>
+      <% @status.each do |status| %>
+        <div class="form-check">
+          <%= radio_button_tag 'status', status, false, {class: 'form-check-input'} %> <%= status %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="dropdown">
+    <div class="filter dropdown-toggle" id="challenge-categories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Categories
+    </div>
+    <div class='dropdown-menu form-dropdown'>
+      <% @categories.each do |category| %>
+        <div class="form-check">
+          <%= check_box_tag 'category[category_ids][]', category.id, false, { class:'form-check-input' } %>
+          <%= label_tag "category[category_ids][][#{category.id}]", category.name %>
+          </label>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="dropdown">
+    <div class="filter dropdown-toggle" id="challenge-prizes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Prizes
+    </div>
+    <div class='dropdown-menu form-dropdown'>
+      <% @prize_hash.each do |p_key, p_value| %>
+        <div class="form-check">
+          <%= check_box_tag 'prize[prize_type][]', p_key, false, {class: 'form-check-input'} %>
+          <%= label_tag "prize[prize_type][][#{p_key}]", p_value, class: 'form-check-label' %>
+        </div>
+      <% end %>
+      <hr>
+    </div>
+  </div>
+  <%= submit_tag 'Apply', class: 'btn btn-secondary btn-sm' %>
+<% end %>
