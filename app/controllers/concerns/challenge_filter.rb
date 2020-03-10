@@ -11,7 +11,7 @@ module ChallengeFilter
   end
 
   def filter_challenge(challenges = nil)
-    challenges = params[:category] && params[:category]['category_ids'].present? ? Challenge.joins(:categories).where('categories.id IN (?)', params[:category]['category_ids']) : Challenge.all
+    challenges = params[:category] && params[:category]['category_ids'].present? ? Challenge.joins(:categories).where('categories.id IN (?)', params[:category]['category_ids']) : challenges
     challenges = challenges.where(status_cd: params[:status]) if params[:status].present?
     if params[:prize].present?
       challenges = challenges.where.not(prize_cash: nil) if params[:prize]['prize_type'].include?('prize_cash')
