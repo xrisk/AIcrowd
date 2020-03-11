@@ -49,6 +49,9 @@ class ApplicationController < ActionController::Base
   def current_user
     current_participant
   end
+  def new_user_session_path
+    new_participant_session_path
+  end
 
   def after_sign_in_path_for(resource)
     unless current_participant.agreed_to_terms_of_use_and_privacy?

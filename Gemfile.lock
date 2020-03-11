@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/AIcrowd/aicrowd-blog.git
-  revision: c4875735031674b9c0351564598425b1777133c5
+  revision: b558b55d08db2e76678075c63f38c1f0b46ad722
   specs:
     lines-engine (1.2.6.1)
       acts-as-taggable-on (>= 3.5)
@@ -140,13 +140,13 @@ GEM
     autoprefixer-rails (9.7.4)
       execjs
     aws-eventstream (1.0.3)
-    aws-sdk (2.11.462)
-      aws-sdk-resources (= 2.11.462)
-    aws-sdk-core (2.11.462)
+    aws-sdk (2.11.463)
+      aws-sdk-resources (= 2.11.463)
+    aws-sdk-core (2.11.463)
       aws-sigv4 (~> 1.0)
       jmespath (~> 1.0)
-    aws-sdk-resources (2.11.462)
-      aws-sdk-core (= 2.11.462)
+    aws-sdk-resources (2.11.463)
+      aws-sdk-core (= 2.11.463)
     aws-sigv4 (1.1.1)
       aws-eventstream (~> 1.0, >= 1.0.2)
     bcrypt (3.1.13)
@@ -301,7 +301,7 @@ GEM
     faraday (1.0.0)
       multipart-post (>= 1.2, < 3)
     fast_blank (1.0.0)
-    ffaker (2.13.0)
+    ffaker (2.14.0)
     ffi (1.12.2)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
@@ -804,7 +804,7 @@ GEM
     roo (2.8.2)
       nokogiri (~> 1)
       rubyzip (>= 1.2.1, < 2.0.0)
-    rouge (3.16.0)
+    rouge (3.17.0)
     rspec-cells (0.3.5)
       cells (>= 4.0.0, < 6.0.0)
       rspec-rails (< 5.0)
@@ -817,7 +817,7 @@ GEM
     rspec-mocks (3.9.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
-    rspec-rails (3.9.0)
+    rspec-rails (3.9.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
@@ -972,7 +972,7 @@ GEM
       activemodel (>= 5.0)
       bindex (>= 0.4.0)
       railties (>= 5.0)
-    webmock (3.8.2)
+    webmock (3.8.3)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
