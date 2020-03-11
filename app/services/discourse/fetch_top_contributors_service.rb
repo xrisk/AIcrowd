@@ -12,7 +12,7 @@ module Discourse
       response_hash         = map_response_body_to_hash(response.body)
       response_with_avatars = merge_avatar_url_to_response(response_hash)
 
-      success(response_with_avatars)
+      success(response_with_avatars.take(5))
     rescue Discourse::Error => e
       Logger.new(::Discourse::BaseService::LOGGER_URL).error("Unable to retrieve top contributors - #{e.message}")
 

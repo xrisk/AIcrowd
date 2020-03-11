@@ -21,9 +21,13 @@ class LandingPageController < ApplicationController
                         .reorder(created_at: :desc)
                         .limit(5)
 
+    @discourse_topics_fetch = Rails.cache.fetch('discourse-latest-topics', expires_in: 5.minutes) do
+      Discourse::FetchLatestTopicsService.new.call
+    end
     @discourse_top_contributors_fetch = Rails.cache.fetch('discourse-top-contributors', expires_in: 5.minutes) do
-                                          Discourse::FetchTopContributorsService.new.call
-                                        end
+      Discourse::FetchTopContributorsService.new.call
+    end
+    @discourse_topics           = @discourse_topics_fetch.value
     @discourse_top_contributors = @discourse_top_contributors_fetch.value
   end
 

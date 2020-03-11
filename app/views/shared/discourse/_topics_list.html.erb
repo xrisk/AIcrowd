@@ -1,0 +1,38 @@
+<% discourse_topics.each do |discourse_topic| %>
+  <% author = discourse_original_poster(discourse_topic) %>
+
+  <ul class="list-group list-group-flush-px-0 list-group-discussion">
+    <!-- topic -->
+    <li class="list-group-item">
+      <div class="col-9">
+        <div class="like-counter-vertical">
+          <span><%= discourse_topic['like_count'] %></span>
+          <% if discourse_topic['like_count'].to_i.positive? %>
+            <%= image_tag image_path('img/icon-like.svg'), alt: 'Like icon' %>
+          <% else %>
+            <%= image_tag image_path('img/icon-like-grey.svg'), alt: 'Like icon' %>
+          <% end %>
+        </div>
+
+        <div>
+          <%= link_to discourse_topic['title'], discourse_topic_url(discourse_topic['slug']), class: 'topic-title text-link' %>
+          <span>By <%= link_to author['username'], discourse_user_url(author['username']), class: 'text-link' %> <%= discourse_time_ago(discourse_topic['created_at']) %></span>
+        </div>
+      </div>
+
+      <div class="avatar-group col-2">
+        <% discourse_topic['posters'].take(4).each_with_index do |poster, index| %>
+          <%= link_to discourse_user_url(poster['username']) do %>
+            <%= image_tag poster['avatar_url'], class: "avatar #{'list-group-discussion' if index.zero?}", alt: 'Poster Avatar' %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="topic-comments">
+        <%= image_tag image_path('img/icon-comment.svg') %>
+        <%= discourse_topic['posts_count'] %>
+      </div>
+    </li>
+    <!-- /topic -->
+  </ul>
+<% end %>

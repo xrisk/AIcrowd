@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Discourse::FetchTopContributorsService, :requests_allowed do
+describe Discourse::FetchLatestTopicsService, :requests_allowed do
   subject { described_class.new }
 
   describe '#call' do
@@ -17,7 +17,7 @@ describe Discourse::FetchTopContributorsService, :requests_allowed do
 
     context 'when discourse ENV variables are set' do
       it 'returns success and list of user posts' do
-        result = VCR.use_cassette('discourse_api/data_explorer_queries/top_contributors/success') do
+        result = VCR.use_cassette('discourse_api/latest_topics/success') do
           subject.call
         end
 
@@ -25,16 +25,14 @@ describe Discourse::FetchTopContributorsService, :requests_allowed do
 
         response = result.value
 
-        expect(response.size).to eq 5
-        expect(response.first['username']).to eq 'kelleni2'
-        expect(response.first['score']).to eq 751
-        expect(response.first['avatar_url']).to eq 'http://localhost:3000/assets/users/user-avatar-default.svg'
+        expect(response.size).to eq 4
+        expect(response.first['title']).to eq 'Random post for testing x2 - Shivam'
       end
     end
 
     context 'when discourse API is unavailable' do
       before do
-        allow_any_instance_of(Faraday::Connection).to receive(:post).and_raise(Discourse::Error)
+        allow_any_instance_of(Faraday::Connection).to receive(:get).and_raise(Discourse::Error)
       end
 
       it 'returns failure' do
