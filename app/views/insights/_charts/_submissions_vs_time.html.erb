@@ -3,6 +3,7 @@
      data-chart-index="<%= index %>"
      data-chart-type="LineChart"
      data-chart-round="<%= challenge.active_round.id %>"
+     data-chart-default-ytitle="Submissions"
      data-chart-url="<%= submissions_vs_time_challenge_insights_path(@challenge) %>">
 
   <header class="section-header-decorative">
@@ -29,6 +30,6 @@
 
     <!-- / Challenge Round Pills  -->
   <% end %>
-  <%= line_chart submissions_vs_time_challenge_insights_path(challenge) %>
+  <%= line_chart submissions_vs_time_challenge_insights_path(challenge), xtitle: "Time", ytitle: "Submissions" %>
   <progress class="display-none" max="1" value="0" style="width: 100%" data-target="chart.progressBar"></progress>
 </div>

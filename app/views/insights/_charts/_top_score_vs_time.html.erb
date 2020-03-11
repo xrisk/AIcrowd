@@ -3,13 +3,13 @@
      data-chart-index="<%= index %>"
      data-chart-type="AreaChart"
      data-chart-round="<%= challenge.active_round.id %>"
+     data-chart-default-ytitle="<%= challenge.active_round.get_score_title %>"
      data-chart-url="<%= top_score_vs_time_challenge_insights_path(@challenge) %>">
 
   <header class="section-header-decorative">
     <div>
       <h4>Best Score vs Time</h4>
     </div>
-    <% if challenge_rounds.size > 1 %>
       <% challenge_rounds.each do |challenge_round| %>
         <% if challenge_round.score_secondary_title.present? %>
           <div class="dropdown display-none" data-target="chart.displayScore" data-round="<%= challenge_round.id %>">
@@ -23,7 +23,6 @@
           </div>
         <% end %>
       <% end %>
-    <% end %>
   </header>
 
   <% if challenge_rounds.size > 1 %>
@@ -44,6 +43,6 @@
     </ul>
     <!-- / Challenge Round Pills  -->
   <% end %>
-  <%= area_chart top_score_vs_time_challenge_insights_path(challenge) %>
+  <%= area_chart top_score_vs_time_challenge_insights_path(challenge), xtitle: "Time", ytitle: challenge.active_round.get_score_title  %>
   <progress class="display-none" max="1" value="0" style="width: 100%" data-target="chart.progressBar"></progress>
 </div>
