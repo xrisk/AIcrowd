@@ -7,40 +7,47 @@ export default class extends Controller {
     updates;
     firstChild;
     headings;
+    fullContent;
 
-    connect() {
+    updateContent(content) {
+        this.el.html(content);
+    }
+
+    initialize() {
         this.el = $(this.element);
-
         // Convert strikeouts!
-        this.el.html(this.el.html().replace(/~~(.*?)~~/gim, "<del>$1</del>"));
-
-        if (!window.matchMedia("(max-width: 991.98px)").matches) {
-            this.toc = $("#table-of-contents");
-            this.firstChild = this.el.children().first();
-
-            // If the first child is an h2 there is no "Updates" Text
-            this.updates = null;
-            if (! this.firstChild.is('h2') ) {
-                this.updates = this.getContent(this.firstChild);
-                this.el.prepend( $('<h2/>', { text: 'Updates' }) )
-            }
-
-            this.headings = this.el.find("h2").get();
-
-            this.createTOC();
-            this.updateActive();
-
-            this.el.children().first().remove();
-            this.selectedLink.click();
-        }
-
+        this.fullContent = this.el.html().replace(/~~(.*?)~~/gim, "<del>$1</del>");
+        this.showTOC();
     }
 
     selectHeading(link, contentHTML) {
         this.selectedLink = link;
-
-        $(this.element).html(contentHTML);
+        this.updateContent(contentHTML);
         this.updateActive();
+    }
+
+    showTOC() {
+        if (window.matchMedia("(max-width: 991.98px)").matches) {
+            this.updateContent(this.fullContent);
+            return;
+        }
+        this.updateContent(this.fullContent);
+        this.toc = $("#table-of-contents");
+        this.firstChild = this.el.children().first();
+
+        // If the first child is an h2 there is no "Updates" Text
+        this.updates = null;
+        if (! this.firstChild.is('h2') ) {
+            this.updates = this.getContent(this.firstChild);
+            this.el.prepend( $('<h2/>', { text: 'Updates' }) )
+        }
+        this.headings = this.el.find("h2").get();
+        // Clear TOC
+        this.toc.empty();
+        this.createTOC();
+        this.updateActive();
+        this.el.children().first().remove();
+        this.selectedLink.click();
     }
 
     createTOC(){
