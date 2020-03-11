@@ -146,7 +146,30 @@
     </div>
   </div>
   <!-- /blog post previews -->
+</section>
+<!-- /section -->
 
+<!-- section -->
+<section class="section-p-md border-top">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- discourse latest posts list -->
+      <div class="col-sm-12 col-md-8">
+        <header class="section-header-decorative">
+          <div>
+            <h4>DISCOURSE LATEST POSTS</h4>
+          </div>
+        </header>
+      </div>
+      <!-- /discourse latest posts list -->
+      <%= render partial: 'discourse_top_contributors',
+                 locals: {
+                   discourse_top_contributors_fetch: @discourse_top_contributors_fetch,
+                   discourse_top_contributors:       @discourse_top_contributors
+                 }
+      %>
+    </div>
+  </div>
 </section>
 <!-- /section -->
 

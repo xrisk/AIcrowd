@@ -20,6 +20,11 @@ class LandingPageController < ApplicationController
     @participants = Participant
                         .reorder(created_at: :desc)
                         .limit(5)
+
+    @discourse_top_contributors_fetch = Rails.cache.fetch('discourse-top-contributors', expires_in: 5.minutes) do
+                                          Discourse::FetchTopContributorsService.new.call
+                                        end
+    @discourse_top_contributors = @discourse_top_contributors_fetch.value
   end
 
   def host
