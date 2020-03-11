@@ -1,0 +1,69 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://discourse-staging.aicrowd.com/admin/plugins/explorer/queries/1/run.json
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Api-Key:
+      - REDACTED
+      Api-Username:
+      - REDACTED
+      User-Agent:
+      - Faraday v1.0.0
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 11 Mar 2020 12:27:02 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Discourse-Username:
+      - REDACTED
+      X-Discourse-Route:
+      - query/run
+      Cache-Control:
+      - no-cache, no-store
+      X-Request-Id:
+      - 6a91301c-a04e-42d6-b0d5-c5e96513dd1c
+      Set-Cookie:
+      - __profilin=p%3Dt%2Ca%3Db2309217312b6483c7a94b2a5d10aef0%7Cbb2b388571a3cd9807d7c7765047d291;
+        path=/; secure; HttpOnly
+      X-Runtime:
+      - '0.047494'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"success":true,"errors":[],"duration":30.2,"result_count":10,"params":{},"columns":["username","score"],"default_limit":1000,"relations":{},"colrender":{},"rows":[["kelleni2",751],["bjoern.holzhauer",459],["maruthi0506",447],["shravankoninti",433],["gokuleloop",406],["carlos.cortes",384],["ngewkokyew",357],["rohitmidha23",348],["amapic",345],["josephmkahnnvs",326]]}'
+    http_version:
+  recorded_at: Wed, 11 Mar 2020 12:27:02 GMT
+recorded_with: VCR 5.0.0
