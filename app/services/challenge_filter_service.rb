@@ -1,0 +1,31 @@
+class ChallengeFilterService
+
+  def initialize(params, challenges = nil)
+    @params = params
+    @challenges = challenges
+  end
+
+  def filter_challenge
+    # category filter
+    @challenges = category? ? Challenge.joins(:categories).where('categories.id IN (?)', @params[:category]['category_ids']) : all_list
+    # status filter
+    @challenges = @challenges.where(status_cd: @params[:status]) if @params[:status].present?
+    # prize filter
+    @challenges = @challenges.where.not(prize_cash: nil) if @params.dig(:prize, 'prize_type')&.include?('prize_cash')
+    @challenges = @challenges.where.not(prize_travel: nil) if @params.dig(:prize, 'prize_type')&.include?('prize_travel')
+    @challenges = @challenges.where.not(prize_academic: nil) if @params.dig(:prize, 'prize_type')&.include?('prize_academic')
+    @challenges = @challenges.where.not(prize_misc: nil) if @params.dig(:prize, 'prize_type')&.include?('prize_misc')
+    # return filtered challenges
+    @challenges
+  end
+
+  private
+
+  def category?
+    @params.dig(:category, 'category_ids').present?
+  end
+
+  def all_list
+    @challenges || Challenge.all
+  end
+end

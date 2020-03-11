@@ -1,6 +1,4 @@
 class ChallengesController < ApplicationController
-  include ChallengeFilter
-
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :terminate_challenge, only: [:show, :index]
   before_action :set_challenge, only: [:show, :edit, :update, :destroy, :clef_task, :remove_image, :export, :import, :remove_invited]
@@ -29,7 +27,7 @@ class ChallengesController < ApplicationController
                         else
                           @all_challenges
                         end
-    @challenges       = filter_challenge(@challenges)
+    @challenges       = ChallengeFilterService.new(params, @challenges).filter_challenge
     @challenges       = if current_participant&.admin?
                           @challenges.page(params[:page]).per(18)
                         else
@@ -178,6 +176,19 @@ class ChallengesController < ApplicationController
 
   def set_challenge_rounds
     @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
+  end
+
+  def set_filters
+    @categories = Category.all
+    @status     = challenge_status
+    @prize_hash = { prize_cash:     'Cash prizes',
+                    prize_travel:   'Travel grants',
+                    prize_academic: 'Academic papers',
+                    prize_misc:     'Misc prizes' }
+  end
+
+  def challenge_status
+    params[:controller].eql?("landing_page") ? Challenge.statuses.keys - ['draft'] : Challenge.statuses.keys
   end
 
   def create_invitations
