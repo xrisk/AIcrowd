@@ -8,6 +8,7 @@ export default class extends Controller {
         this.type = this.data.get('type');
         this.currentRound = this.data.get('round');
         this.baseUrl = this.data.get('url');
+        this.defaultYTitle = this.data.get('defaultYtitle');
         this.currentScore = 'score';
         this.updateChartUrl();
     }
@@ -24,9 +25,11 @@ export default class extends Controller {
         this.currentRound = event.target.dataset.round;
         this.updateRoundTargets.forEach(target => { $(target).removeClass('active') });
         $(event.target).addClass('active');
+
         this.selectedScoreTitle = $(`.dropdown-item.chart-${this.index}.round-${this.currentRound}.${this.currentScore}`).text();
         if (!this.selectedScoreTitle){
             this.currentScore = 'score';
+
         }
         this.updateChartUrl();
     }
@@ -45,6 +48,7 @@ export default class extends Controller {
         }
 
         let params = {challenge_round_id: this.currentRound};
+
         if (this.currentScore) {
             params = {
                 challenge_round_id: this.currentRound,
@@ -56,9 +60,12 @@ export default class extends Controller {
         let progressBar = this.progressBarTarget;
         progressBar.value = 0.05;
         $(progressBar).removeClass('display-none');
+        
         new Chartkick[this.type]("chart-" + this.index, url,
             {
                 colors: ["#44B174"],
+                xtitle: 'Time',
+                ytitle: this.selectedScoreTitle || this.defaultYTitle,
                 library: { animation: {
                         duration: 2000,
                         onProgress: function(animation) {

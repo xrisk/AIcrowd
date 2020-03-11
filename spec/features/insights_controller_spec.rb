@@ -14,7 +14,7 @@ describe InsightsController, feature: true do
         expect(page).to have_current_path challenge_insights_path(challenge)
         expect(page).to have_content('Submissions vs Time')
         expect(page).to have_content('Best Score vs Time')
-        expect(page).to have_content('Geo Chart')
+        expect(page).to have_content('Participants')
         expect(page).to have_content(challenge_round_active.challenge_round)
       end
 
@@ -25,7 +25,7 @@ describe InsightsController, feature: true do
         expect(page).to have_current_path challenge_insights_path(challenge, challenge_round_id: challenge_round_non_active.id)
         expect(page).to have_content('Submissions vs Time')
         expect(page).to have_content('Best Score vs Time')
-        expect(page).to have_content('Geo Chart')
+        expect(page).to have_content('Participants')
         expect(page).to have_content(challenge_round_non_active.challenge_round)
       end
     end
