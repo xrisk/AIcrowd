@@ -20,12 +20,6 @@ export default class extends Controller {
         this.showTOC();
     }
 
-    selectHeading(link, contentHTML) {
-        this.selectedLink = link;
-        this.updateContent(contentHTML);
-        this.updateActive();
-    }
-
     showTOC() {
         if (window.matchMedia("(max-width: 991.98px)").matches) {
             this.updateContent(this.fullContent);
@@ -54,21 +48,29 @@ export default class extends Controller {
         $.each(this.headings, (index, heading) => {
             // Add mt-0 to headings
             $(heading).addClass('mt-0');
+            // Add id
+            $(heading).attr('id', `heading-${index}`);
 
             // Create new list item in the TOC
-            let li = $('<li/>', { class: 'nav-item'}).appendTo(this.toc);
+            const li = $('<li/>', { class: 'nav-item'}).appendTo(this.toc);
 
             // Create a link tag to trigger content change
-            let link = $('<a/>', { class: 'nav-link', text:  _.capitalize($(heading).text()) }).appendTo(li);
+            const link = $('<a/>', { class: 'nav-link', text:  _.capitalize($(heading).text()) }).appendTo(li);
 
             // Calculate Content
-            let content = this.getContent($(heading), index);
+            const content = this.getContent($(heading), index);
 
             // Setup click callback
-            link.click(() => this.selectHeading(link, content));
+            link.click(() => this.selectHeading(link, content, index));
         });
         this.tocLinks = this.toc.find('a');
         this.selectedLink = this.tocLinks.first();
+    }
+
+    selectHeading(link, contentHTML, index) {
+        this.selectedLink = link;
+        this.updateContent(contentHTML);
+        this.updateActive(index);
     }
 
     getContent(start, index){
@@ -87,9 +89,12 @@ export default class extends Controller {
         return content;
     }
 
-    updateActive(){
+    updateActive(index = 0){
         this.tocLinks.removeClass('active');
         this.selectedLink.addClass('active');
+        if (index > 0) {
+            document.documentElement.scrollTop = this.el.find(`#heading-${index}`).offset().top;
+        }
     }
 }
 
