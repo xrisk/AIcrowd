@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: put
-    uri: https://discourse-staging.aicrowd.com/categories/30
+    uri: https://discourse-staging.aicrowd.com/categories/30.json
     body:
       encoding: UTF-8
       string: color=49d9e9&id=30&name=Way+To+Long+Chalenge+Name+-+aaaaaaaaaaaaaaaaaaa...&parent_category_id&slug=way-to-long-chalenge-name-aaaaaaaaaaaaaaaaaaaaa...&text_color=f0fcfd
@@ -65,7 +65,7 @@ http_interactions:
   recorded_at: Fri, 31 Jan 2020 12:58:41 GMT
 - request:
     method: put
-    uri: https://discourse-staging.aicrowd.com/categories/30
+    uri: https://discourse-staging.aicrowd.com/categories/30.json
     body:
       encoding: UTF-8
       string: color=49d9e9&id=30&name=Way+To+Long+Chalenge+Name+-+aaaaaaaaaaaa...-3d5f70&parent_category_id&slug=way-to-long-chalenge-name-aaaaaaaaaaaaaa...-198891&text_color=f0fcfd

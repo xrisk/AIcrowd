@@ -16,7 +16,11 @@ class ParticipantsController < ApplicationController
                   else
                     Challenge.where(id: challenge_ids).where(hidden_challenge: false).where(private_challenge: false)
                   end
-    @discourse_link = "#{ENV['DISCOURSE_DOMAIN_NAME']}/u/#{@participant.name}/activity"
+
+    @discourse_posts_fetch = Rails.cache.fetch("discourse-user-posts/#{@participant.id}", expires_in: 5.minutes) do
+                               Discourse::FetchUserPostsService.new(participant: @participant).call
+                             end
+    @discourse_posts = @discourse_posts_fetch.value
   end
 
   def edit; end

@@ -1,0 +1,101 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://discourse-staging.aicrowd.com/admin/plugins/explorer/queries/2/run.json?params=%7B%22username%22:%20%22piotrekpasciaktest%22%7D
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Api-Key:
+      - REDACTED
+      Api-Username:
+      - REDACTED
+      User-Agent:
+      - Faraday v1.0.0
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 09 Mar 2020 15:20:50 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Discourse-Username:
+      - aicrowd-bot
+      X-Discourse-Route:
+      - query/run
+      Cache-Control:
+      - no-cache, no-store
+      X-Request-Id:
+      - 821868c5-8cc2-47d2-96b1-3c1afd7ffe60
+      Set-Cookie:
+      - __profilin=p%3Dt%2Ca%3Dc933e4984d301acd8fbe328b008f08d6%7C1fbd3f8039c718ad8abb00a31d94e130;
+        path=/; secure; HttpOnly
+      X-Runtime:
+      - '0.014827'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"success":true,"errors":[],"duration":1.2,"result_count":11,"params":{"username":"piotrekpasciaktest"},"columns":["category_name","category_slug","topic_title","topic_slug","username","raw","cooked","created_at","updated_at","like_count"],"default_limit":1000,"relations":{},"colrender":{},"rows":[["Lounge","lounge","Welcome
+        to the Lounge","welcome-to-the-lounge","piotrekpasciaktest","Lorem ipsum dolor
+        sit amet, consectetur adipiscing elit 2.","\u003cp\u003eLorem ipsum dolor
+        sit amet, consectetur adipiscing elit 2.\u003c/p\u003e","2020-03-09T15:10:41.616Z","2020-03-09T15:10:41.616Z",0],["ZZZZZ","zzzzz","About
+        the ZZZZZ category","about-the-zzzzz-category","piotrekpasciaktest","Fourth
+        one, actually.","\u003cp\u003eFourth one, actually.\u003c/p\u003e","2020-03-09T15:06:55.133Z","2020-03-09T15:06:55.309Z",0],["Train
+        Schedule Optimisation Challenge Test","train-schedule-optimisation-challenge","My
+        new Ttile for testing","my-new-ttile-for-testing","piotrekpasciaktest","Lorem
+        ipsum dolor sit amet, consectetur adipiscing elit.","\u003cp\u003eLorem ipsum
+        dolor sit amet, consectetur adipiscing elit.\u003c/p\u003e","2020-03-09T14:48:19.044Z","2020-03-09T14:48:19.044Z",0],["Lounge","lounge","Welcome
+        to the Lounge","welcome-to-the-lounge","piotrekpasciaktest","Lorem ipsum dolor
+        sit amet, consectetur adipiscing elit.","\u003cp\u003eLorem ipsum dolor sit
+        amet, consectetur adipiscing elit.\u003c/p\u003e","2020-03-09T14:48:01.452Z","2020-03-09T14:48:01.452Z",0],["Staff","staff","READ
+        ME FIRST: Admin Quick Start Guide","read-me-first-admin-quick-start-guide","piotrekpasciaktest","Lorem
+        ipsum dolor sit amet, consectetur adipiscing elit.","\u003cp\u003eLorem ipsum
+        dolor sit amet, consectetur adipiscing elit.\u003c/p\u003e","2020-03-09T14:46:36.795Z","2020-03-09T14:46:36.795Z",0],["Train
+        Schedule Optimisation Challenge Test","train-schedule-optimisation-challenge","My
+        new Ttile for testing","my-new-ttile-for-testing","piotrekpasciaktest","Lorem
+        ipsum dolor sit amet, consectetur adipiscing elit.","\u003cp\u003eLorem ipsum
+        dolor sit amet, consectetur adipiscing elit.\u003c/p\u003e","2020-03-09T14:46:21.078Z","2020-03-09T14:46:21.078Z",0],["Uncategorized","uncategorized","Test
+        post webhook","test-post-webhook","piotrekpasciaktest","Test post webhook
+        Test post webhook","\u003cp\u003eTest post webhook Test post webhook\u003c/p\u003e","2020-03-08T19:01:11.673Z","2020-03-08T19:01:11.673Z",0],["Uncategorized","uncategorized","Test
+        post webhook","test-post-webhook","piotrekpasciaktest","Test something Nananan
+        Test something Nananan","\u003cp\u003eTest something Nananan Test something
+        Nananan\u003c/p\u003e","2020-03-08T18:58:57.261Z","2020-03-08T19:01:05.209Z",0],["ZZZZZ","zzzzz","About
+        the ZZZZZ category","about-the-zzzzz-category","piotrekpasciaktest","Third
+        test of adding post to activity.","\u003cp\u003eThird test of adding post
+        to activity.\u003c/p\u003e","2020-03-06T14:25:35.514Z","2020-03-06T14:25:35.514Z",0],["ZZZZZ","zzzzz","About
+        the ZZZZZ category","about-the-zzzzz-category","piotrekpasciaktest","Second
+        test of adding post to activity.","\u003cp\u003eSecond test of adding post
+        to activity.\u003c/p\u003e","2020-03-06T14:25:27.367Z","2020-03-06T14:25:27.367Z",0],["ZZZZZ","zzzzz","About
+        the ZZZZZ category","about-the-zzzzz-category","piotrekpasciaktest","Test
+        adding post to activity.","\u003cp\u003eTest adding post to activity.\u003c/p\u003e","2020-03-06T14:24:59.072Z","2020-03-06T14:24:59.072Z",0]]}'
+    http_version:
+  recorded_at: Mon, 09 Mar 2020 15:20:50 GMT
+recorded_with: VCR 5.0.0

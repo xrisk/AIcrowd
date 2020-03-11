@@ -13,7 +13,7 @@ describe Discourse::UpdateCategoryService do
         result = subject.call
 
         expect(result.success?).to eq false
-        expect(result.value).to eq 'DiscourseApi client couldn\'t be properly initialized.'
+        expect(result.value).to eq 'Discourse API client couldn\'t be properly initialized.'
       end
     end
 

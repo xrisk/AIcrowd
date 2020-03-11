@@ -20,6 +20,11 @@ Dir[File.dirname(__FILE__) + "/support/matchers/*.rb"].each { |f| require f }
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+  config.before(:each) do
+    next if self.class.metadata[:requests_allowed]
+    Discourse::FetchUserPostsService.any_instance.stub(:call).and_return(BaseService::Result.new(true, []))
+  end
+
   config.infer_spec_type_from_file_location!
 
   config.include HeaderHelpers
