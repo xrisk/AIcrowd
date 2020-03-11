@@ -11,6 +11,10 @@ module DiscourseHelper
     "#{ENV['DISCOURSE_DOMAIN_NAME']}/t/#{topic_slug}/#{post_number}"
   end
 
+  def discourse_user_url(username)
+    "#{ENV['DISCOURSE_DOMAIN_NAME']}/u/#{username}"
+  end
+
   def discourse_post_datetime(post_created_at)
     time_ago_in_words = time_ago_in_words(post_created_at)
 

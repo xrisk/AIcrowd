@@ -16,7 +16,7 @@ module Discourse
     rescue Discourse::Error => e
       Logger.new(::Discourse::BaseService::LOGGER_URL).error("##{participant.email} - Unable to retrieve user posts - #{e.message}")
 
-      failure('Discourse API is unavailable')
+      failure('Discourse API is unavailable.')
     end
 
     private
@@ -25,10 +25,6 @@ module Discourse
 
     def user_posts_query_path
       "/admin/plugins/explorer/queries/#{ENV['DISCOURSE_API_USERS_POSTS_QUERY_ID']}/run.json?params={\"username\": \"#{participant.name}\"}"
-    end
-
-    def map_response_body_to_hash(response_body)
-      response_body['rows'].map { |response_row| response_body['columns'].zip(response_row).to_h }
     end
   end
 end

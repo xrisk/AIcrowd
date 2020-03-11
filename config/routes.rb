@@ -158,7 +158,9 @@ Rails.application.routes.draw do
     end
   end
 
-
+  resources :challenges, only: [], module: :challenges do
+    resource :discussion, only: :show
+  end
 
   get '/load_more_challenges', to: 'challenges#load_more', as: :load_more_challenges
 

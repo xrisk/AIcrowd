@@ -1,0 +1,24 @@
+<%= render partial: 'shared/challenges/masthead', locals: {challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow} %>
+<%= render partial: 'challenges/show/subnav', locals: {challenge: @challenge} %>
+
+<section>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <% if @discourse_posts_fetch.success? %>
+          <% if @discourse_posts.any? %>
+            <%= render partial: 'shared/discourse/posts_list', locals: { discourse_posts: @discourse_posts } %>
+          <% else %>
+            <div class="md-content">
+              <span>Nobody have posted anything on Discourse yet...</span>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="md-content">
+            <span><%= @discourse_posts_fetch.value %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

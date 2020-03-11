@@ -17,5 +17,9 @@ module Discourse
         string.to_s.truncate(50)
       end
     end
+
+    def map_response_body_to_hash(response_body)
+      response_body['rows'].map { |response_row| response_body['columns'].zip(response_row).to_h }
+    end
   end
 end

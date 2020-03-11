@@ -1,0 +1,69 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://discourse-staging.aicrowd.com/admin/plugins/explorer/queries/3/run.json?params=%7B%22category_id%22:%20%222%22%7D
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Api-Key:
+      - REDACTED
+      Api-Username:
+      - REDACTED
+      User-Agent:
+      - Faraday v1.0.0
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Tue, 10 Mar 2020 12:49:22 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Discourse-Username:
+      - aicrowd-bot
+      X-Discourse-Route:
+      - query/run
+      Cache-Control:
+      - no-cache, no-store
+      X-Request-Id:
+      - fd87a498-2931-48ad-97f9-e17bdfd396e2
+      Set-Cookie:
+      - __profilin=p%3Dt%2Ca%3D4e926026dc7ec2d46653910297f8065b; path=/; secure; HttpOnly
+      X-Runtime:
+      - '0.023361'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJzdWNjZXNzIjp0cnVlLCJlcnJvcnMiOltdLCJkdXJhdGlvbiI6MS4yLCJyZXN1bHRfY291bnQiOjQsInBhcmFtcyI6eyJjYXRlZ29yeV9pZCI6IjIifSwiY29sdW1ucyI6WyJjYXRlZ29yeV9uYW1lIiwiY2F0ZWdvcnlfc2x1ZyIsInRvcGljX3RpdGxlIiwidG9waWNfc2x1ZyIsInJhdyIsImNvb2tlZCIsInBvc3RfbnVtYmVyIiwiY3JlYXRlZF9hdCIsInVwZGF0ZWRfYXQiLCJsaWtlX2NvdW50Il0sImRlZmF1bHRfbGltaXQiOjEwMDAsInJlbGF0aW9ucyI6e30sImNvbHJlbmRlciI6e30sInJvd3MiOltbIkxvdW5nZSIsImxvdW5nZSIsIldlbGNvbWUgdG8gdGhlIExvdW5nZSIsIndlbGNvbWUtdG8tdGhlLWxvdW5nZSIsIkxvcmVtIGlwc3VtIGRvbG9yIHNpdCBhbWV0LCBjb25zZWN0ZXR1ciBhZGlwaXNjaW5nIGVsaXQgMi4iLCJcdTAwM2NwXHUwMDNlTG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdCAyLlx1MDAzYy9wXHUwMDNlIiwzLCIyMDIwLTAzLTA5VDE1OjEwOjQxLjYxNloiLCIyMDIwLTAzLTA5VDE1OjEwOjQxLjYxNloiLDBdLFsiTG91bmdlIiwibG91bmdlIiwiV2VsY29tZSB0byB0aGUgTG91bmdlIiwid2VsY29tZS10by10aGUtbG91bmdlIiwiTG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC4iLCJcdTAwM2NwXHUwMDNlTG9yZW0gaXBzdW0gZG9sb3Igc2l0IGFtZXQsIGNvbnNlY3RldHVyIGFkaXBpc2NpbmcgZWxpdC5cdTAwM2MvcFx1MDAzZSIsMiwiMjAyMC0wMy0wOVQxNDo0ODowMS40NTJaIiwiMjAyMC0wMy0wOVQxNDo0ODowMS40NTJaIiwwXSxbIkxvdW5nZSIsImxvdW5nZSIsIldlbGNvbWUgdG8gdGhlIExvdW5nZSIsIndlbGNvbWUtdG8tdGhlLWxvdW5nZSIsIlxuQ29uZ3JhdHVsYXRpb25zISA6Y29uZmV0dGlfYmFsbDpcblxuSWYgeW91IGNhbiBzZWUgdGhpcyB0b3BpYywgeW91IHdlcmUgcmVjZW50bHkgcHJvbW90ZWQgdG8gKipyZWd1bGFyKiogKHRydXN0IGxldmVsIDMpLlxuXG5Zb3UgY2FuIG5vdyBcdTAwMjZoZWxsaXA7XG5cbiogRWRpdCB0aGUgdGl0bGUgb2YgYW55IHRvcGljXG4qIENoYW5nZSB0aGUgY2F0ZWdvcnkgb2YgYW55IHRvcGljXG4qIEhhdmUgYWxsIHlvdXIgbGlua3MgZm9sbG93ZWQgKFthdXRvbWF0aWMgbm9mb2xsb3ddKGh0dHBzOi8vZW4ud2lraXBlZGlhLm9yZy93aWtpL05vZm9sbG93KSBpcyByZW1vdmVkKVxuKiBBY2Nlc3MgYSBwcml2YXRlIExvdW5nZSBjYXRlZ29yeSBvbmx5IHZpc2libGUgdG8gdXNlcnMgYXQgdHJ1c3QgbGV2ZWwgMyBhbmQgaGlnaGVyXG4qIEhpZGUgc3BhbSB3aXRoIGEgc2luZ2xlIGZsYWdcblxuSGVyZSdzIHRoZSBbY3VycmVudCBsaXN0IG9mIGZlbGxvdyByZWd1bGFyc10oL2JhZGdlcy8zL3JlZ3VsYXIpLiBCZSBzdXJlIHRvIHNheSBoaS5cblxuVGhhbmtzIGZvciBiZWluZyBhbiBpbXBvcnRhbnQgcGFydCBvZiB0aGlzIGNvbW11bml0eSFcblxuKEZvciBtb3JlIGluZm9ybWF0aW9uIG9uIHRydXN0IGxldmVscywgW3NlZSB0aGlzIHRvcGljXVt0cnVzdF0uIFBsZWFzZSBub3RlIHRoYXQgb25seSBtZW1iZXJzIHdobyBjb250aW51ZSB0byBtZWV0IHRoZSByZXF1aXJlbWVudHMgb3ZlciB0aW1lIHdpbGwgcmVtYWluIHJlZ3VsYXJzLilcblxuW3RydXN0XTogaHR0cHM6Ly9ibG9nLmRpc2NvdXJzZS5vcmcvMjAxOC8wNi91bmRlcnN0YW5kaW5nLWRpc2NvdXJzZS10cnVzdC1sZXZlbHMvIiwiXHUwMDNjcFx1MDAzZUNvbmdyYXR1bGF0aW9ucyEgXHUwMDNjaW1nIHNyYz1cIi8vZGlzY291cnNlLXN0YWdpbmcuYWljcm93ZC5jb20vaW1hZ2VzL2Vtb2ppL3R3aXR0ZXIvY29uZmV0dGlfYmFsbC5wbmc/dj02XCIgdGl0bGU9XCI6Y29uZmV0dGlfYmFsbDpcIiBjbGFzcz1cImVtb2ppXCIgYWx0PVwiOmNvbmZldHRpX2JhbGw6XCJcdTAwM2VcdTAwM2MvcFx1MDAzZVxuXHUwMDNjcFx1MDAzZUlmIHlvdSBjYW4gc2VlIHRoaXMgdG9waWMsIHlvdSB3ZXJlIHJlY2VudGx5IHByb21vdGVkIHRvIFx1MDAzY3N0cm9uZ1x1MDAzZXJlZ3VsYXJcdTAwM2Mvc3Ryb25nXHUwMDNlICh0cnVzdCBsZXZlbCAzKS5cdTAwM2MvcFx1MDAzZVxuXHUwMDNjcFx1MDAzZVlvdSBjYW4gbm93IOKAplx1MDAzYy9wXHUwMDNlXG5cdTAwM2N1bFx1MDAzZVxuXHUwMDNjbGlcdTAwM2VFZGl0IHRoZSB0aXRsZSBvZiBhbnkgdG9waWNcdTAwM2MvbGlcdTAwM2Vcblx1MDAzY2xpXHUwMDNlQ2hhbmdlIHRoZSBjYXRlZ29yeSBvZiBhbnkgdG9waWNcdTAwM2MvbGlcdTAwM2Vcblx1MDAzY2xpXHUwMDNlSGF2ZSBhbGwgeW91ciBsaW5rcyBmb2xsb3dlZCAoXHUwMDNjYSBocmVmPVwiaHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvTm9mb2xsb3dcIiByZWw9XCJub2ZvbGxvdyBub29wZW5lclwiXHUwMDNlYXV0b21hdGljIG5vZm9sbG93XHUwMDNjL2FcdTAwM2UgaXMgcmVtb3ZlZClcdTAwM2MvbGlcdTAwM2Vcblx1MDAzY2xpXHUwMDNlQWNjZXNzIGEgcHJpdmF0ZSBMb3VuZ2UgY2F0ZWdvcnkgb25seSB2aXNpYmxlIHRvIHVzZXJzIGF0IHRydXN0IGxldmVsIDMgYW5kIGhpZ2hlclx1MDAzYy9saVx1MDAzZVxuXHUwMDNjbGlcdTAwM2VIaWRlIHNwYW0gd2l0aCBhIHNpbmdsZSBmbGFnXHUwMDNjL2xpXHUwMDNlXG5cdTAwM2MvdWxcdTAwM2Vcblx1MDAzY3BcdTAwM2VIZXJl4oCZcyB0aGUgXHUwMDNjYSBocmVmPVwiL2JhZGdlcy8zL3JlZ3VsYXJcIlx1MDAzZWN1cnJlbnQgbGlzdCBvZiBmZWxsb3cgcmVndWxhcnNcdTAwM2MvYVx1MDAzZS4gQmUgc3VyZSB0byBzYXkgaGkuXHUwMDNjL3BcdTAwM2Vcblx1MDAzY3BcdTAwM2VUaGFua3MgZm9yIGJlaW5nIGFuIGltcG9ydGFudCBwYXJ0IG9mIHRoaXMgY29tbXVuaXR5IVx1MDAzYy9wXHUwMDNlXG5cdTAwM2NwXHUwMDNlKEZvciBtb3JlIGluZm9ybWF0aW9uIG9uIHRydXN0IGxldmVscywgXHUwMDNjYSBocmVmPVwiaHR0cHM6Ly9ibG9nLmRpc2NvdXJzZS5vcmcvMjAxOC8wNi91bmRlcnN0YW5kaW5nLWRpc2NvdXJzZS10cnVzdC1sZXZlbHMvXCIgcmVsPVwibm9mb2xsb3cgbm9vcGVuZXJcIlx1MDAzZXNlZSB0aGlzIHRvcGljXHUwMDNjL2FcdTAwM2UuIFBsZWFzZSBub3RlIHRoYXQgb25seSBtZW1iZXJzIHdobyBjb250aW51ZSB0byBtZWV0IHRoZSByZXF1aXJlbWVudHMgb3ZlciB0aW1lIHdpbGwgcmVtYWluIHJlZ3VsYXJzLilcdTAwM2MvcFx1MDAzZSIsMSwiMjAxOS0wMi0wN1QyMTowODozOS41MjFaIiwiMjAxOS0wMi0wN1QyMTowODozOS41MjFaIiwwXSxbIkxvdW5nZSIsImxvdW5nZSIsIkFib3V0IHRoZSBMb3VuZ2UgY2F0ZWdvcnkiLCJhYm91dC10aGUtbG91bmdlLWNhdGVnb3J5IiwiQSBjYXRlZ29yeSBleGNsdXNpdmUgdG8gbWVtYmVycyB3aXRoIHRydXN0IGxldmVsIDMgYW5kIGhpZ2hlci4iLCJcdTAwM2NwXHUwMDNlQSBjYXRlZ29yeSBleGNsdXNpdmUgdG8gbWVtYmVycyB3aXRoIHRydXN0IGxldmVsIDMgYW5kIGhpZ2hlci5cdTAwM2MvcFx1MDAzZSIsMSwiMjAxOS0wMi0wN1QyMTowODozNi43ODVaIiwiMjAxOS0wMi0wN1QyMTowODozNi43ODVaIiwwXV19
+    http_version:
+  recorded_at: Tue, 10 Mar 2020 12:49:22 GMT
+recorded_with: VCR 5.0.0
