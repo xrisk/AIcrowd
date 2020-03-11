@@ -3,7 +3,7 @@ module ChallengeFilter
 
   def set_filters
     @categories = Category.all
-    @status     = Challenge.statuses.keys
+    @status     = challenge_status
     @prize_hash = { prize_cash:     'Cash prizes',
                     prize_travel:   'Travel grants',
                     prize_academic: 'Academic papers',
@@ -25,6 +25,10 @@ module ChallengeFilter
   end
 
   private
+
+  def challenge_status
+    params[:controller].eql?("landing_page") ? Challenge.statuses.keys - ['draft'] : Challenge.statuses.keys
+  end
 
   def category?
     params.dig(:category, 'category_ids').present?
