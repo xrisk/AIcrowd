@@ -1,6 +1,5 @@
 ActiveAdmin.register Participant do
   permit_params :name,
-                :organizer_id,
                 :email,
                 :admin,
                 :password,
@@ -11,7 +10,6 @@ ActiveAdmin.register Participant do
     id_column
     column :email
     column :name
-    column :organizer
     column :admin
     column :confirmed_at
     column :created_at
@@ -33,7 +31,6 @@ ActiveAdmin.register Participant do
 
   filter :email
   filter :name
-  filter :organizer, as: :select, collection: Organizer.all.map { |organizer| [organizer.organizer, organizer.id] }
   filter :admin
   filter :current_sign_in_at
   filter :agreed_to_marketing
@@ -44,7 +41,6 @@ ActiveAdmin.register Participant do
     f.inputs do
       f.input :email
       f.input :name
-      f.input :organizer, as: :select, collection: Organizer.all.map { |organizer| [organizer.organizer, organizer.id] }
       f.input :admin
       f.input :password
       f.input :password_confirmation
