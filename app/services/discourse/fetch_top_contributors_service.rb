@@ -6,6 +6,7 @@ module Discourse
 
     def call
       return failure('Discourse API client couldn\'t be properly initialized.') if client.nil?
+      return failure('DISCOURSE_API_TOP_CONTRIBUTORS_QUERY_ID ENV variable is missing.') if ENV['DISCOURSE_API_TOP_CONTRIBUTORS_QUERY_ID'].blank?
 
       response              = client.post(challenge_posts_path)
       response_hash         = map_response_body_to_hash(response.body)

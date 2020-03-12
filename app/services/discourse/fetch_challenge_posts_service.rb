@@ -7,6 +7,7 @@ module Discourse
 
     def call
       return failure('Discourse API client couldn\'t be properly initialized.') if client.nil?
+      return failure('DISCOURSE_API_CHALLENGE_POSTS_QUERY_ID ENV variable is missing.') if ENV['DISCOURSE_API_CHALLENGE_POSTS_QUERY_ID'].blank?
       return failure('Challenge doesn\'t have Discourse category assigned.') if challenge.discourse_category_id.blank?
 
       response              = client.post(challenge_posts_path)
