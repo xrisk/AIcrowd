@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_05_150815) do
+ActiveRecord::Schema.define(version: 2020_03_09_134625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -270,7 +270,7 @@ ActiveRecord::Schema.define(version: 2020_03_05_150815) do
     t.bigint "organizer_id"
     t.string "headline"
     t.text "description_markdown"
-    t.boolean "acknowledged", default: false
+    t.boolean "acknowledged", default: false, null: false
     t.index ["organizer_id"], name: "index_challenge_calls_on_organizer_id"
   end
 
@@ -766,6 +766,7 @@ ActiveRecord::Schema.define(version: 2020_03_05_150815) do
     t.integer "participation_terms_accepted_version"
     t.boolean "agreed_to_terms_of_use_and_privacy", default: true
     t.boolean "agreed_to_marketing", default: true
+    t.string "state_cd"
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["organizer_id"], name: "index_participants_on_organizer_id"

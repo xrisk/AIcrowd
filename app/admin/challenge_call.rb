@@ -7,7 +7,7 @@ ActiveAdmin.register ChallengeCall do
 
   batch_action :acknowledge do |ids|
     batch_action_collection.find(ids).each do |challenge_call|
-      challenge_call.update(acknowledged: true)
+      challenge_call.update!(acknowledged: true)
     end
     redirect_to admin_challenge_calls_path, notice: "The challenge calls are acknowledged successfully"
   end
