@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Discourse::FetchChallengePostsService, :requests_allowed do
+describe Discourse::FetchChallengeTopicsService, :requests_allowed do
   subject { described_class.new(challenge: challenge) }
 
   let(:challenge) { create(:challenge, :running, discourse_category_id: 2) }
@@ -19,7 +19,7 @@ describe Discourse::FetchChallengePostsService, :requests_allowed do
 
     context 'when discourse ENV variables are set' do
       it 'returns success and list of user posts' do
-        result = VCR.use_cassette('discourse_api/data_explorer_queries/challenge_posts/success') do
+        result = VCR.use_cassette('discourse_api/challenge_topics/success') do
           subject.call
         end
 
@@ -27,14 +27,14 @@ describe Discourse::FetchChallengePostsService, :requests_allowed do
 
         response = result.value
 
-        expect(response.size).to eq 4
-        expect(response.first['cooked']).to eq '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit 2.</p>'
+        expect(response.size).to eq 2
+        expect(response.first['title']).to eq 'Welcome to the Lounge'
       end
     end
 
     context 'when discourse API is unavailable' do
       before do
-        allow_any_instance_of(Faraday::Connection).to receive(:post).and_raise(Discourse::Error)
+        allow_any_instance_of(Faraday::Connection).to receive(:get).and_raise(Discourse::Error)
       end
 
       it 'returns failure' do
