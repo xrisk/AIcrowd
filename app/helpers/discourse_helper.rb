@@ -7,8 +7,8 @@ module DiscourseHelper
     "#{ENV['DISCOURSE_DOMAIN_NAME']}/t/#{slug}"
   end
 
-  def discourse_post_url(topic_slug, post_number)
-    "#{ENV['DISCOURSE_DOMAIN_NAME']}/t/#{topic_slug}/#{post_number}"
+  def discourse_post_url(topic_slug, topic_id, post_number)
+    "#{ENV['DISCOURSE_DOMAIN_NAME']}/t/#{topic_slug}/#{topic_id}/#{post_number}"
   end
 
   def discourse_user_url(username)
