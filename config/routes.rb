@@ -28,6 +28,9 @@ Rails.application.routes.draw do
           resources :team_invitations
         end
       end
+      resources :challenge_calls, only: [] do
+        put 'acknowledge', to: 'admin/challenge_calls#acknowledge', as: :acknowledge_by_person
+      end
     end
   end
 

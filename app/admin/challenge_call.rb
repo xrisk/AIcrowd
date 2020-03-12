@@ -5,6 +5,13 @@ ActiveAdmin.register ChallengeCall do
     end
   end
 
+  batch_action :acknowledge do |ids|
+    batch_action_collection.find(ids).each do |challenge_call|
+      challenge_call.update(acknowledged: true)
+    end
+    redirect_to admin_challenge_calls_path, notice: "The challenge calls are acknowledged successfully"
+  end
+
   controller do
     def find_resource
       scoped_collection.friendly.find(params[:id])
@@ -31,6 +38,7 @@ ActiveAdmin.register ChallengeCall do
     column :reponses do |res|
       res.challenge_call_responses.count
     end
+    column :acknowledged
     column 'link' do |res|
       "https://www.aicrowd.com/call-for-challenges/#{res.slug}/apply"
     end
@@ -67,6 +75,7 @@ ActiveAdmin.register ChallengeCall do
       row 'link' do |res|
         "https://www.crowdai.org/call-for-challenges/#{res.slug}/apply"
       end
+      row :acknowledged
     end
   end
 end
