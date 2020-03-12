@@ -1,13 +1,57 @@
 <%= render partial: 'shared/challenges/masthead', locals: {challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow} %>
 <%= render partial: 'challenges/show/subnav', locals: {challenge: @challenge} %>
 
-<section>
+<section class="section-p-sm">
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <% if @discourse_posts_fetch.success? %>
-          <% if @discourse_posts.any? %>
-            <%= render partial: 'shared/discourse/posts_list', locals: { discourse_posts: @discourse_posts } %>
+        <% if @discourse_topics_fetch.success? %>
+          <header class="section-header">
+            <div>
+              <h4><%= pluralize(@discourse_topics.size, 'topic') %></h4>
+            </div>
+            <%= link_to 'New topic', discourse_new_topic_url(@challenge.slug), class: 'btn btn-secondary' %>
+          </header>
+
+          <% if @discourse_topics.any? %>
+            <% @discourse_topics.each do |discourse_topic| %>
+              <% author = discourse_original_poster(discourse_topic) %>
+
+              <ul class="list-group list-group-flush-px-0 list-group-discussion">
+                <!-- topic -->
+                <li class="list-group-item">
+                  <div class="col-9">
+                    <div class="like-counter-vertical">
+                      <span><%= discourse_topic['like_count'] %></span>
+                      <% if discourse_topic['like_count'].to_i.positive? %>
+                        <svg width="12" height="11" xmlns="http://www.w3.org/2000/svg"><path d="M10.8746251 6.14539024L5.97691577 11.0430996 1.07920644 6.14539024C.43154568 5.50196808.03030318 4.61061457.03030318 3.62554576c0-1.96049121 1.58929212-3.54978364 3.54978364-3.54978364.92305599 0 1.76382467.35231416 2.39516959.92980603.63649437-.6044087 1.49691101-.97526512 2.44394586-.97526512 1.96049123 0 3.54978363 1.58929242 3.54978363 3.54978364 0 1.00819292-.4203017 1.91821904-1.0952455 2.56441886z" fill="#F0524D" fill-rule="evenodd"></path></svg>
+                      <% else %>
+                        <svg width="12" height="11" xmlns="http://www.w3.org/2000/svg"><path d="M10.8746251 6.14539024L5.97691577 11.0430996 1.07920644 6.14539024C.43154568 5.50196808.03030318 4.61061457.03030318 3.62554576c0-1.96049121 1.58929212-3.54978364 3.54978364-3.54978364.92305599 0 1.76382467.35231416 2.39516959.92980603.63649437-.6044087 1.49691101-.97526512 2.44394586-.97526512 1.96049123 0 3.54978363 1.58929242 3.54978363 3.54978364 0 1.00819292-.4203017 1.91821904-1.0952455 2.56441886z" fill="#909293" fill-rule="evenodd"></path></svg>
+                      <% end %>
+                    </div>
+
+                    <div>
+                      <%= link_to discourse_topic['title'], discourse_topic_url(discourse_topic['slug']), class: 'topic-title text-link' %>
+                      <span>By <%= link_to author['username'], discourse_user_url(author['username']), class: 'text-link' %> <%= discourse_time_ago(discourse_topic['created_at']) %></span>
+                    </div>
+                  </div>
+
+                  <div class="avatar-group col-2">
+                    <% discourse_topic['posters'].each_with_index do |poster, index| %>
+                      <%= link_to discourse_user_url(poster['username']) do %>
+                        <%= image_tag poster['avatar_url'], class: "avatar #{'list-group-discussion' if index.zero?}", alt: 'Poster Avatar' %>
+                      <% end %>
+                    <% end %>
+                  </div>
+
+                  <div class="topic-comments">
+                    <%= image_tag image_path('img/icon-comment.svg') %>
+                    <%= discourse_topic['posts_count'] %>
+                  </div>
+                </li>
+                <!-- /topic -->
+              </ul>
+            <% end %>
           <% else %>
             <div class="md-content">
               <span>Nobody have posted anything on Discourse yet...</span>
@@ -15,7 +59,7 @@
           <% end %>
         <% else %>
           <div class="md-content">
-            <span><%= @discourse_posts_fetch.value %></span>
+            <span><%= @discourse_topics_fetch.value %></span>
           </div>
         <% end %>
       </div>
