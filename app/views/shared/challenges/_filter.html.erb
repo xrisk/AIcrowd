@@ -1,4 +1,4 @@
-<%= form_tag path_of_index_page, method: :get, remote: true, class: 'filter-dropdown-form' do %>
+<%= form_tag challenges_path, method: :get, class: 'filter-dropdown-form' do %>
   <div class="dropdown">
     <div class="filter dropdown-toggle" id="challenge-statuses" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Active
@@ -18,8 +18,8 @@
     <div class='dropdown-menu form-dropdown'>
       <% @categories.each do |category| %>
         <div class="form-check">
-          <%= check_box_tag 'category[category_ids][]', category.id, false, { class:'form-check-input' } %>
-          <%= label_tag "category[category_ids][][#{category.id}]", category.name %>
+          <%= check_box_tag 'category[category_names][]', category.name, false, { class:'form-check-input' } %>
+          <%= label_tag "category[category_names][][#{category.name}]", category.name %>
           </label>
         </div>
       <% end %>
@@ -38,5 +38,5 @@
       <% end %>
     </div>
   </div>
-  <%= submit_tag 'Apply', class: 'btn btn-link btn-sm' %>
+  <%= submit_tag 'Apply', class: 'btn btn-link btn-sm apply-filter-btn' %>
 <% end %>

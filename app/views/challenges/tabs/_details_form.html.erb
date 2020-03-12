@@ -80,7 +80,7 @@
       <% end %>
     <% else %>
       <span class="label-text">Organizer</span>
-      <input class="form-control" type='text' value='<%= @challenge.organizers.first&.organizer || current_participant.organizer&.organizer %>' readonly>
+      <input class="form-control" type='text' value='<%= @challenge.organizers.first&.organizer || current_participant.organizers.first&.organizer %>' readonly>
     <% end %>
   </div>
 

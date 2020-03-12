@@ -1,13 +1,13 @@
 class ChallengeFilterService
 
-  def initialize(params, challenges = nil)
+  def initialize(params, challenges)
     @params = params
     @challenges = challenges
   end
 
   def filter_challenge
     # category filter
-    @challenges = category? ? Challenge.joins(:categories).where('categories.id IN (?)', @params[:category]['category_ids']) : all_list
+    @challenges = @challenges.joins(:categories).where('categories.name IN (?)', @params[:category]['category_ids']) if @params.dig(:category, 'category_ids').present?
     # status filter
     @challenges = @challenges.where(status_cd: @params[:status]) if @params[:status].present?
     # prize filter
@@ -23,9 +23,5 @@ class ChallengeFilterService
 
   def category?
     @params.dig(:category, 'category_ids').present?
-  end
-
-  def all_list
-    @challenges || Challenge.all
   end
 end
