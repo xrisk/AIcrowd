@@ -1,33 +1,20 @@
 <!-- top contributors -->
-
-<div class="col-sm-12 col-md-4">
-  <% if @discourse_top_contributors_fetch.success? %>
-    <header class="section-header-decorative">
-      <div>
-        <h4>DISCOURSE TOP CONTRIBUTORS</h4>
-      </div>
-    </header>
-
-    <div class="card">
-      <ul class="list-group list-group-flush list-group-latest-contributors">
-        <% discourse_top_contributors.each do |top_contributor| %>
-          <!-- user -->
-          <li class="list-group-item">
-            <%= link_to discourse_user_url(top_contributor['username']) do %>
-              <%= image_tag top_contributor['avatar_url'], class: "avatar" %>
-              <span class="text-link"><%= top_contributor['username'] %></span>
-            <% end %>
-
-            <div class="reputation-info">
-              <span class="reputation-score" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reputation score"><%= top_contributor['score'] %></span>
-            </div>
-          </li>
-          <!-- /user -->
+<div class="card">
+  <ul class="list-group list-group-flush list-group-latest-contributors">
+    <% discourse_top_contributors.each do |top_contributor| %>
+      <!-- user -->
+      <li class="list-group-item">
+        <%= link_to discourse_user_url(top_contributor['username']) do %>
+          <%= image_tag top_contributor['avatar_url'], class: "avatar" %>
+          <span class="text-link"><%= top_contributor['username'] %></span>
         <% end %>
-      </ul>
-    </div>
-  <% else %>
-    <p><%= @discourse_top_contributors_fetch.value %></p>
-  <% end %>
+
+        <div class="reputation-info">
+          <span class="reputation-score" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reputation score"><%= top_contributor['score'] %></span>
+        </div>
+      </li>
+      <!-- /user -->
+    <% end %>
+  </ul>
 </div>
 <!-- /top contributors -->

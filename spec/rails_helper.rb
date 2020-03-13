@@ -23,6 +23,7 @@ RSpec.configure do |config|
   config.before(:each) do
     next if self.class.metadata[:requests_allowed]
 
+    Discourse::FetchLatestTopicsService.any_instance.stub(:call).and_return(BaseService::Result.new(true, []))
     Discourse::FetchUserPostsService.any_instance.stub(:call).and_return(BaseService::Result.new(true, []))
     Discourse::FetchTopContributorsService.any_instance.stub(:call).and_return(BaseService::Result.new(true, []))
   end

@@ -124,7 +124,47 @@
 <!-- /section -->
 
 <!-- section -->
-<section class="section-pb-md">
+<section class="section-p-md border-top">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- discourse latest posts list -->
+      <div class="col-sm-12 col-md-8">
+        <header class="section-header-decorative">
+          <div>
+            <h4>Latest Discussions</h4>
+          </div>
+
+          <%= link_to 'See all', ENV['DISCOURSE_DOMAIN_NAME'], class: "btn btn-secondary btn-sm" %>
+        </header>
+
+        <% if @discourse_topics_fetch.success? %>
+          <%= render partial: 'shared/discourse/topics_list', locals: { discourse_topics: @discourse_topics } %>
+        <% else %>
+          <p><%= @discourse_topics_fetch.value %></p>
+        <% end %>
+      </div>
+
+      <!-- /discourse latest posts list -->
+      <div class="col-sm-12 col-md-4">
+        <header class="section-header-decorative">
+          <div>
+            <h4>Top Contributors</h4>
+          </div>
+        </header>
+
+        <% if @discourse_top_contributors_fetch.success? %>
+          <%= render partial: 'discourse_top_contributors', locals: { discourse_top_contributors: @discourse_top_contributors } %>
+        <% else %>
+          <p><%= @discourse_top_contributors_fetch.value %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /section -->
+
+<!-- section -->
+<section class="section-p-md border-top">
 
   <!-- blog post previews -->
   <div class="container-fluid">
@@ -146,30 +186,6 @@
     </div>
   </div>
   <!-- /blog post previews -->
-</section>
-<!-- /section -->
-
-<!-- section -->
-<section class="section-p-md border-top">
-  <div class="container-fluid">
-    <div class="row">
-      <!-- discourse latest posts list -->
-      <div class="col-sm-12 col-md-8">
-        <header class="section-header-decorative">
-          <div>
-            <h4>DISCOURSE LATEST POSTS</h4>
-          </div>
-        </header>
-      </div>
-      <!-- /discourse latest posts list -->
-      <%= render partial: 'discourse_top_contributors',
-                 locals: {
-                   discourse_top_contributors_fetch: @discourse_top_contributors_fetch,
-                   discourse_top_contributors:       @discourse_top_contributors
-                 }
-      %>
-    </div>
-  </div>
 </section>
 <!-- /section -->
 
