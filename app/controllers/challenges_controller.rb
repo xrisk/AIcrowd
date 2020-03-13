@@ -27,7 +27,7 @@ class ChallengesController < ApplicationController
                         else
                           @all_challenges
                         end
-    @challenges       = ChallengeFilterService.new(params, @challenges).filter_challenge
+    @challenges       = Challenges::FilterService.new(params, @challenges).call
     @challenges       = if current_participant&.admin?
                           @challenges.page(params[:page]).per(18)
                         else
@@ -188,7 +188,7 @@ class ChallengesController < ApplicationController
   end
 
   def challenge_status
-    params[:controller].eql?("landing_page") ? Challenge.statuses.keys - ['draft'] : Challenge.statuses.keys
+    params[:controller] == "landing_page" ? Challenge.statuses.keys - ['draft'] : Challenge.statuses.keys
   end
 
   def create_invitations
