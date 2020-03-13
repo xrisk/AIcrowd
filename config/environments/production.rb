@@ -14,9 +14,6 @@ Rails.application.configure do
   config.i18n.fallbacks                    = true
   config.log_formatter                     = ::Logger::Formatter.new
 
-  # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
-
   # Use a real queuing backend for Active Job (and separate queues per environment)
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "crowdai_#{Rails.env}"
@@ -48,5 +45,15 @@ Rails.application.configure do
     user_name: ENV["SMTP_USERNAME"]
   }
   config.action_mailer.default_url_options = { host: ENV["SMTP_DOMAIN"] }
+  config.cache_store = :mem_cache_store,
+                       (ENV['MEMCACHEDCLOUD_SERVERS'].to_s).split(','),
+                       {
+                         username: ENV['MEMCACHEDCLOUD_USERNAME'],
+                         password: ENV['MEMCACHEDCLOUD_PASSWORD'],
+                         failover: true,
+                         socket_timeout: 1.5,
+                         socket_failure_delay: 0.2,
+                         down_retry_delay: 60
+                       }
 end
 Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']

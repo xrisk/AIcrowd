@@ -191,6 +191,7 @@ GEM
       activeadmin (>= 1.1.0, < 2.0)
       font-awesome-rails (~> 4.7.0.4)
       jquery-rails
+    dalli (2.7.10)
     debugging (1.1.1)
       binding.repl (~> 3.0)
       paint (>= 0.9, < 3.0)
@@ -940,6 +941,7 @@ DEPENDENCIES
   coffee-rails
   country_select
   crowdai_admin
+  dalli (~> 2.7, >= 2.7.10)
   derailed_benchmarks
   devise (~> 4.7, >= 4.7.1)
   doorkeeper (~> 5.0.3)
