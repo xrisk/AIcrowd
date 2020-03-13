@@ -1,5 +1,34 @@
 import { Controller } from 'stimulus';
 
+
+function setupOembed(){
+    document.querySelectorAll( 'oembed[url]' ).forEach(element => {
+        // Create the <a href="..." class="embedly-card"></a> element that Embedly uses
+        // to discover the media.
+        const anchor = document.createElement('a');
+
+        anchor.setAttribute('href', element.getAttribute( 'url' ));
+        anchor.className = 'embedly-card';
+
+        element.appendChild(anchor);
+    });
+};
+
+function loadMathJax() {
+    window.MathJax = null;
+    $.getScript(
+        "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML",
+        function () {
+            MathJax.Hub.Config({
+                tex2jax: {
+                    inlineMath: [["$", "$"], ["\\(", "\\)"]],
+                    displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+                    processEscapes: true
+                }
+            });
+        }
+    );
+}
 export default class extends Controller {
     selectedLink;
     tocLinks;
@@ -18,6 +47,9 @@ export default class extends Controller {
         // Convert strikeouts!
         this.fullContent = this.el.html().replace(/~~(.*?)~~/gim, "<del>$1</del>");
         this.showTOC();
+
+        loadMathJax();
+        setupOembed();
     }
 
     showTOC() {
@@ -97,4 +129,3 @@ export default class extends Controller {
         }
     }
 }
-
