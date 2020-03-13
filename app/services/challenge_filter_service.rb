@@ -7,7 +7,7 @@ class ChallengeFilterService
 
   def filter_challenge
     # category filter
-    @challenges = @challenges.joins(:categories).where('categories.name IN (?)', @params[:category]['category_ids']) if @params.dig(:category, 'category_ids').present?
+    @challenges = @challenges.joins(:categories).where('categories.name IN (?)', @params[:category]['category_names']) if @params.dig(:category, 'category_names').present?
     # status filter
     @challenges = @challenges.where(status_cd: @params[:status]) if @params[:status].present?
     # prize filter

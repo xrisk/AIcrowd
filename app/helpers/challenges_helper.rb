@@ -65,6 +65,16 @@ module ChallengesHelper
     text
   end
 
+  def check_selected_category(category, params)
+    return false unless params[:category].present?
+    params[:category].dig(:category_names).include?(category.name)
+  end
+
+  def check_selected_prize(prize, params)
+    return false unless params[:prize].present?
+    params[:prize].dig(:prize_type).include?(prize.to_s)
+  end
+
   private
 
   def remaining_time_in_hours(challenge_round)
