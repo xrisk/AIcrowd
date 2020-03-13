@@ -7,14 +7,14 @@ class Admin::ChallengeCallResponseNotificationMailer < ApplicationMailer
 
   def format_options(participant, challenge_call_response)
     options = {
-      participant_id:    challenge_call_response.id,
+      participant_id:    participant.id,
       subject:           "[ADMIN:AIcrowd] Challenge Call response",
-      to:                challenge_call_response.email,
+      to:                participant.email,
       template:          "AIcrowd General Template",
       global_merge_vars: [
         {
           name:    "NAME",
-          content: challenge_call_response.contact_name.to_s
+          content: participant.name.to_s
         },
         {
           name:    "BODY",
