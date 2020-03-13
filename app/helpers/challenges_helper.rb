@@ -57,6 +57,14 @@ module ChallengesHelper
     end
   end
 
+  def filter_message(status, category, prize)
+    text  = "Filter challenges "
+    text += "[from #{category[:category_names].join(', ').humanize} category] " if category.present?
+    text += "[with status #{status.humanize}] " if status.present?
+    text += "[prizes in form of #{prize[:prize_type].join(', ').humanize}]" if prize.present?
+    text
+  end
+
   private
 
   def remaining_time_in_hours(challenge_round)

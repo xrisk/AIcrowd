@@ -6,7 +6,7 @@
     <div class='dropdown-menu form-dropdown status-dropdown'>
       <% @status.each do |status| %>
         <div class="form-check">
-          <%= radio_button_tag 'status', status, false, {class: 'form-check-input'} %> <%= status %>
+          <%= radio_button_tag 'status', status, false, {class: 'form-check-input'} %> <%= status.humanize %>
         </div>
       <% end %>
     </div>
@@ -19,7 +19,7 @@
       <% @categories.each do |category| %>
         <div class="form-check">
           <%= check_box_tag 'category[category_names][]', category.name, false, { class:'form-check-input' } %>
-          <%= label_tag "category[category_names][][#{category.name}]", category.name %>
+          <%= label_tag "category[category_names][][#{category.name}]", category.name.humanize %>
           </label>
         </div>
       <% end %>
@@ -33,7 +33,7 @@
       <% @prize_hash.each do |p_key, p_value| %>
         <div class="form-check">
           <%= check_box_tag 'prize[prize_type][]', p_key, false, {class: 'form-check-input'} %>
-          <%= label_tag "prize[prize_type][][#{p_key}]", p_value, class: 'form-check-label' %>
+          <%= label_tag "prize[prize_type][][#{p_key}]", p_value.humanize, class: 'form-check-label' %>
         </div>
       <% end %>
     </div>

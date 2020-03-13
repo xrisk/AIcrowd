@@ -17,6 +17,17 @@
 </div>
 <!-- /filter -->
 
+<!-- filtered text -->
+<div class="container-fluid">
+  <% if params[:status].present? || params[:category].present? || params[:prize].present? %>
+    <p class='card-text'>
+      <%= filter_message(params[:status], params[:category], params[:prize]) %>
+      <%= link_to 'Clear Filter', challenges_path, class: 'btn btn-sm apply-filter-btn none-underline'  %>
+    </p>
+  <% end %>
+</div>
+<!-- /filtered text -->
+
 <!-- challenge cards -->
 <div class="section-pt-sm-pb-md">
   <div class="container-fluid">
