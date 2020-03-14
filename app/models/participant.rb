@@ -125,7 +125,7 @@ class Participant < ApplicationRecord
       account_disabled_dttm:   nil)
   end
   def user_rating_history
-    user_rating_history =  UserRating.joins(:challenge_round).where(participant_id: 1).group_by_day(:end_dttm).maximum(:rating).reject { |_, v| v.nil? }
+    user_rating_history =  UserRating.joins(:challenge_round).where(participant_id: self.id).group_by_day(:end_dttm).maximum(:rating).reject { |_, v| v.nil? }
     puts user_rating_history
     return user_rating_history
   end

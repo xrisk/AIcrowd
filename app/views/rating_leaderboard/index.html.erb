@@ -6,6 +6,7 @@
           <table class="table table-leaderboard">
             <thead>
             <tr>
+              <th scope="col" class="leaderboard-change">Δ</th>
               <th scope="col">Rank</th>
               <th scope="col">Participants</th>
               <th scope="col"></th>
@@ -16,9 +17,11 @@
             <tbody class="table-leaderboard-body">
             <%= render partial: 'rating_leaderboard', locals: { participants: @participants } %>
             </tbody>
+            <% if @user_position_participants %>
             <tr><td>.</td><td>.</td><td>.</td><td>.</td><td>.</td></tr>
             <tr><td>.</td><td>.</td><td>.</td><td>.</td><td>.</td></tr>
             <%= render partial: 'rating_leaderboard', locals: { participants: @user_position_participants } %>
+            <% end %>
           </table>
         </div>
       </div>

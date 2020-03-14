@@ -13,5 +13,25 @@ module RatingLeaderboardHelper
     when 0..60
       tier = 5
     end
+  end
+
+  def rating_leaderboard_ranking_change(participant)
+    if !(participant.ranking_change.nil? || participant.ranking_change == 0)
+      if participant.ranking_change > 0
+        image_tag(
+            "icon-change-up.svg",
+            data:  { toggle: 'tooltip' },
+            title: "+#{participant.ranking_change} change")
+      else
+        image_tag("icon-change-down.svg",
+                  data:  { toggle: 'tooltip' },
+                  title: "-#{participant.ranking_change} change")
+      end
+    else
+      image_tag(
+            "icon-change-none.svg",
+            data: { toggle: 'tooltip' },
+            title: 'No change')
     end
+  end
 end
