@@ -1,5 +1,8 @@
 <% participants.each do |participant| %>
 <tr>
+  <td class="leaderboard-change">
+    <%= rating_leaderboard_ranking_change(participant) %>
+  </td>
   <td><strong><span class="reputation-rank" style="width: 50px" data-toggle="tooltip" data-placement="top" title="" data-original-title="Rank">#<%= participant.ranking %></span>
   </strong></td>
   <td>
