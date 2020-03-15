@@ -8,7 +8,7 @@
   <td class="leaderboard-change <%= cls ||= '' %>">
     <%= rating_leaderboard_ranking_change(participant) %>
   </td>
-  <td><strong><span class="reputation-rank" style="width: 50px">#<%= participant.ranking %></span>
+  <td class="<%= cls ||= '' %>"><strong><span class="reputation-rank" style="width: 50px">#<%= participant.ranking %></span>
   </strong></td>
   <td class="<%= cls ||= '' %>">
     <%= link_to participant_path(participant.name), title: participant.name do %>
