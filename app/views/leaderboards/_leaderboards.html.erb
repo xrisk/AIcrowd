@@ -15,7 +15,7 @@
         <span class="text-link">Unknown User</span>
       <% elsif participants.length == 1 %>
         <%= link_to participant_path(participants[0]), title: participants[0].name, data: {toggle: :tooltip} do %>
-          <%= image_tag participants[0].image_url, class: 'avatar' %>
+          <%= participant_avatar participants[0] %>
           <span class="text-link"><%= participants[0].name %></span>
         <% end %>
       <% else %>
@@ -30,7 +30,7 @@
         <div class="avatar-group">
           <% participants.each do |participant| %>
             <%= link_to participant_path(participant), title: participant.name, data: {toggle: :tooltip} do %>
-              <%= image_tag participant.image_url, class: 'avatar' %>
+              <%= participant_avatar participant %>
             <% end %>
           <% end %>
         </div>

@@ -4,16 +4,13 @@
     <div class="row">
       <div class="col-12">
         <div class="d-flex">
-          <%= image_tag participant.image_url, class: 'avatar' %>
+          <%= participant_avatar participant %>
           <div class="masthead-content">
             <div class="d-flex">
-              <%= image_tag participant.image_url, class: "avatar-sm" %>
+              <%= participant_avatar participant, "avatar-sm" %>
               <h1>
                 <%= participant.name %>
-                <div class="reputation-info">
-                  <span class="reputation-score <%= variation_class %>" data-toggle="tooltip" data-placement="top" title="<%= participant.rating.round %> +- <%= participant.variation.round %>" data-original-title="Reputation score"><%= participant.rating.round %></span>
-                  <span class="reputation-rank" data-toggle="tooltip" data-placement="top" title="" data-original-title="Rank">#<%= participant.ranking %></span>
-                </div>
+                <%= render :partial => 'participants/show_reputation', locals: { participant: participant } %>
               </h1>
             </div>
             <div class="masthead-info">
@@ -41,15 +38,10 @@
                   <header>
                     <h4>Location</h4>
                   </header>
-                  <% if participant.city.present? && participant.country_cd.present? %>
-                    <span><%= participant.city %>, <%= participant.country_cd %></span>
-                  <% else %>
-                    <% if participant.country_cd.present? %>
-                      <span><%= participant.country_cd %></span>
-                    <% else %>
-                      <span><%= participant.city %></span>
-                    <% end %>
-                  <% end %>
+                  <span>
+                    <%= render :partial => 'shared/utility/flag', locals: { country_cd: participant.country_cd } %>
+                    <%= render :partial => 'location', locals: { participant: participant } %>
+                  </span>
                 </div>
               <% end %>
 

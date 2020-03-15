@@ -14,7 +14,7 @@
             <!-- team member -->
             <li class="list-group-item">
               <%= link_to participant_path(member) do %>
-                <%= image_tag member.image_url, class: "avatar" %>
+                <%= participant_avatar member %>
                 <span class="text-link"><%= member.name %></span>
               <% end %>
 
