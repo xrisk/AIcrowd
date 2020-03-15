@@ -1,0 +1,7 @@
+<% if participant.city.present? && participant.country_cd.present? %>
+    <%= participant.city %>, <%= participant.country_cd %>
+<% elsif participant.country_cd.present? %>
+    <%= participant.country_cd %>
+<% elsif participant.city.present? %>
+    <%= participant.city %>
+<% end %>

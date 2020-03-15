@@ -1,26 +1,35 @@
-<% participants.each do |participant| %>
+<%
+  participants.each do |participant|
+  if @current_participant and @current_participant.name == participant.name
+    cls = 'sticky-footer current-user'
+  end
+%>
 <tr>
-  <td class="leaderboard-change">
+  <td class="leaderboard-change <%= cls ||= '' %>">
     <%= rating_leaderboard_ranking_change(participant) %>
   </td>
-  <td><strong><span class="reputation-rank" style="width: 50px" data-toggle="tooltip" data-placement="top" title="" data-original-title="Rank">#<%= participant.ranking %></span>
+  <td><strong><span class="reputation-rank" style="width: 50px">#<%= participant.ranking %></span>
   </strong></td>
-  <td>
-    <%= link_to participant_path(participant), title: participant.name, data: {toggle: :tooltip} do %>
-      <%= image_tag participant.image_url, class: 'avatar' %>
-      <span class="text-link"><%= participant.name %></span>
+  <td class="<%= cls ||= '' %>">
+    <%= link_to participant_path(participant.name), title: participant.name do %>
+      <%= participant_avatar participant %>
+      <span class="text-link">
+        <%= participant.name.truncate(20) %>
+      </span>
     <% end %>
   </td>
-  <td>joined <%= distance_of_time_in_words(Time.now.to_date , participant.created_at.to_date)%> ago </td>
-  <td><strong><%= tier_calculate(participant.ranking) %></strong></td>
-  <td>
-    <strong>
-      <span class="reputation-info" style="float: right">
-                    <span class="reputation-score variation-2" style="float: right" data-toggle="tooltip" data-placement="top" title="<%= participant.rating.to_i %> +- <%= participant.variation.to_i %>" data-original-title="Reputation score"><%= participant.rating.to_i %>
-                    </span>
-      </span>
-  </strong>
+  <td class="<%= cls ||= '' %>"><%= participant.affiliation ||= '-' %></td>
+  <td class="<%= cls ||= '' %>">
+    <%= render :partial => 'shared/utility/flag', locals: { country_cd: participant.country_cd } %>
+    <%= render :partial => 'participants/location', locals: { participant: participant } %>
   </td>
-
+  <td class="<%= cls ||= '' %>">
+    <%= render :partial => 'participants/show_reputation', locals: { participant: participant, style: 'top: 0px;' } %>
+  </td>
+  <td class="<%= cls ||= '' %>">
+    <%= link_to participant_path(participant.name) do %>
+      <i class="fa fa-user-circle-o"></i>
+    <% end %>
+  </td>
 </tr>
 <% end %>

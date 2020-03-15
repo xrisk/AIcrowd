@@ -17,7 +17,8 @@ module ParticipantsHelper
     participant.present? ? participant_path(participant) : '#'
   end
 
-  def variation_class
-    ['variation-1', 'variation-2', 'variation-3'].sample
+  def participant_avatar(participant)
+    classes = 'avatar ' + participant.rating_tier_class
+    return image_tag participant.image_url, class: classes
   end
 end

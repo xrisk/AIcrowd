@@ -1,13 +1,13 @@
 class RatingLeaderboardController < ApplicationController
   def index
-    rating_query = ParticipantRatingRanksQuery.new
-    @count = rating_query.participants_count
-    if params[:page].to_i < 10
-      @participants = rating_query.participants_with_ranks.page(params[:page]).per(10)
-      @user_position_participants = rating_query.user_position_participants(current_participant)
+    # Top participants by ranking
+    if params[:page].to_i < 6
+      @top_participants = Participant.where("ranking > 0").reorder(:ranking).page(params[:page]).per(20)
     else
-      @participants = nil
-      @user_position_participants = nil
+      @top_participants = nil
+    @participants = @top_participants
+    if @current_participant.present? and @current_participant.ranking.present?
+      @self_standing = Participant.where("ranking < #{@current_participant.attributes['ranking'] + 3} and ranking > #{@current_participant.attributes['ranking'] - 3}").reorder('ranking asc').limit(6)
     end
   end
 end
