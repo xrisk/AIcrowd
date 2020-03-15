@@ -166,6 +166,25 @@ class Participant < ApplicationRecord
                 end
   end
 
+  def rating_tier_class
+    tier = 1
+    percentile = (1 - ((ranking - 1).to_f/Participant.where("ranking > 0").count))*100
+    case percentile
+    when 99..100
+      tier = 5
+    when 95..99
+      tier = 4
+    when 80..95
+      tier = 3
+    when 60..80
+      tier = 2
+    end
+    if self.admin?
+      tier = 0
+    end
+    return "user-rating-" + tier.to_s
+  end
+
   def process_urls
     ['website', 'github', 'linkedin', 'twitter'].each do |url_field|
       format_url(url_field)
