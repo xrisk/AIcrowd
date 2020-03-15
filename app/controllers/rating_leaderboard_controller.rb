@@ -5,6 +5,7 @@ class RatingLeaderboardController < ApplicationController
       @top_participants = Participant.where("ranking > 0").reorder(:ranking).page(params[:page]).per(20)
     else
       @top_participants = nil
+    end
     @participants = @top_participants
     if @current_participant.present? and @current_participant.ranking.present?
       @self_standing = Participant.where("ranking < #{@current_participant.attributes['ranking'] + 3} and ranking > #{@current_participant.attributes['ranking'] - 3}").reorder('ranking asc').limit(6)
