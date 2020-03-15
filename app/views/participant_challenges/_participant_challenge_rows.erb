@@ -2,7 +2,7 @@
   <% participant = challenge_participant.participant %>
   <li class="list-group-item">
     <%= link_to participant_path(participant) do %>
-      <%= image_tag participant.image_url, class: 'avatar' %>
+      <%= participant_avatar participant %>
       <span class="text-link"><%= participant.name %></span>
     <% end %>
   </li>

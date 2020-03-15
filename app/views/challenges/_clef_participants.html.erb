@@ -5,7 +5,7 @@
     <% if participant.present? %>
       <div>
         <%= link_to participant_path(participant) do %>
-          <%= image_tag participant.image_url, class: 'avatar' %>
+          <%= participant_avatar participant %>
           <span class="text-link"><%= participant.name %></span>
         <% end %>
         <span class="description"><%= participant.email %></span>

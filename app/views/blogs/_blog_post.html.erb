@@ -7,7 +7,7 @@
     </div>
 
     <div class="card-footer">
-      <%= link_to image_tag(blog.participant.image_url, class: 'avatar'), participant_path(blog.participant)%>
+      <%= link_to participant_avatar(blog.participant), participant_path(blog.participant)%>
       <span>By  <%= link_to blog.participant.name, participant_path(blog.participant) %></span>
     </div>
   </div>

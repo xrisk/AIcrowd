@@ -65,7 +65,7 @@
             <div class="col-xs-12 col-sm-6">
               <div class="list-group-item-user">
                 <%= link_to(member.participant) do %>
-                  <%= image_tag member.participant.image_url, class: 'avatar' %>
+                  <%= participant_avatar member.participant %>
                 <% end %>
                 <div>
                   <%= link_to member.participant, class: "text-link" do %>
