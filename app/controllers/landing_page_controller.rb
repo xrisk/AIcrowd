@@ -27,7 +27,9 @@ class LandingPageController < ApplicationController
     @discourse_topics           = @discourse_topics_fetch.value
     @discourse_top_contributors = @discourse_top_contributors_fetch.value
     
-    @participants = ParticipantRatingRanksQuery.new.participants_with_ranks.limit 5
+    # TODO: Migrate all the rating related code at one place, so we don't need to 
+    # change the whole codebase for future changes.
+    @participants = Participant.where("ranking > 0").reorder(:ranking).limit(5)
   end
 
   def host

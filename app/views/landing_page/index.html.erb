@@ -92,12 +92,12 @@
       </div>
       <!-- /testimonial carousel -->
 
-      <!-- top contributors -->
+      <!-- top rated -->
       <div class="col-sm-12 col-md-4">
         <header class="section-header-decorative">
           <div>
             <h4>
-              <%= link_to 'TOP USERS', leaderboard_path, {:class => "nav-link"} %>
+              <%= link_to 'Top Rated', leaderboard_path, {:class => "nav-link"} %>
             </h4>
           </div>
         </header>
@@ -105,24 +105,18 @@
         <div class="card">
           <ul class="list-group list-group-flush list-group-latest-contributors">
             <% @participants.each do |participant| %>
-              <!-- user -->
-              <li class="list-group-item row">
+              <li class="list-group-item">
                 <%= link_to participant_path(participant) do %>
-                  <span class="reputation-rank" style="width: 50px" data-toggle="tooltip" data-placement="top" title="" data-original-title="Rank">#<%= participant.ranking %></span>
-                  <%= image_tag participant.image_url, class: "avatar" %>
-                  <span class="text-link" style="float: right"><%= participant.name %></span>
-                  <span class="reputation-info" style="float: right">
-                    <span class="reputation-score variation-2" style="float: right" data-toggle="tooltip" data-placement="top" title="<%= participant.rating.to_i %> +- <%= participant.variation.to_i %>" data-original-title="Reputation score"><%= participant.rating.to_i %></span>
-                  </span>
-
+                  <%= participant_avatar participant %>
+                  <span class="text-link"><%= participant.name.truncate(20) %></span>
                 <% end %>
+                <%= render :partial => 'participants/show_reputation', locals: { participant: participant } %>
               </li>
-              <!-- /user -->
             <% end %>
           </ul>
         </div>
       </div>
-      <!-- /top contributors -->
+      <!-- /top rated -->
 
     </div>
   </div>
