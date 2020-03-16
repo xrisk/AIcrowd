@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_02_110125) do
+ActiveRecord::Schema.define(version: 2020_03_09_134625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -270,6 +270,7 @@ ActiveRecord::Schema.define(version: 2020_03_02_110125) do
     t.bigint "organizer_id"
     t.string "headline"
     t.text "description_markdown"
+    t.boolean "acknowledged", default: false, null: false
     t.index ["organizer_id"], name: "index_challenge_calls_on_organizer_id"
   end
 
