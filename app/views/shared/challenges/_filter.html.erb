@@ -1,0 +1,42 @@
+<%= form_tag challenges_path, method: :get, class: 'filter-dropdown-form' do %>
+  <div class="dropdown">
+    <div class="filter dropdown-toggle <%= 'filter-active' if params[:status] %>" id="challenge-statuses" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Active
+    </div>
+    <div class='dropdown-menu form-dropdown status-dropdown'>
+      <% @status.each do |status| %>
+        <div class="form-check">
+          <%= radio_button_tag 'status', status, status.eql?(params[:status]), {class: 'form-check-input'} %> <%= status.humanize %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="dropdown">
+    <div class="filter dropdown-toggle <%= 'filter-active' if params[:category] %>" id="challenge-categories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Categories
+    </div>
+    <div class='dropdown-menu form-dropdown'>
+      <% @categories.each do |category| %>
+        <div class="form-check">
+          <%= check_box_tag 'category[category_names][]', category.name, check_selected_category(category, params), { class:'form-check-input' } %>
+          <%= label_tag "category[category_names][][#{category.name}]", category.name.humanize %>
+          </label>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="dropdown">
+    <div class="filter dropdown-toggle <%= 'filter-active' if params[:prize] %>" id="challenge-prizes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Prizes
+    </div>
+    <div class='dropdown-menu form-dropdown'>
+      <% @prize_hash.each do |p_key, p_value| %>
+        <div class="form-check">
+          <%= check_box_tag 'prize[prize_type][]', p_key, check_selected_prize(p_key, params), {class: 'form-check-input'} %>
+          <%= label_tag "prize[prize_type][][#{p_key}]", p_value.humanize, class: 'form-check-label' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <%= submit_tag 'Apply', class: 'btn btn-link btn-sm apply-filter-btn' %>
+<% end %>

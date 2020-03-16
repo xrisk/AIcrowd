@@ -10,6 +10,7 @@ class ChallengesController < ApplicationController
   before_action :set_organizers_for_select, only: [:new, :create]
   before_action :set_challenge_rounds, only: [:edit, :update]
   before_action :set_category, only: [:new, :create , :edit]
+  before_action :set_filters, only: [:index]
 
   respond_to :html, :js
 
@@ -26,11 +27,12 @@ class ChallengesController < ApplicationController
                         else
                           @all_challenges
                         end
-    @challenges = if current_participant&.admin?
-                    @challenges.page(params[:page]).per(18)
-                  else
-                    @challenges.where(hidden_challenge: false).page(params[:page]).per(18)
-                  end
+    @challenges       = Challenges::FilterService.new(params, @challenges).call
+    @challenges       = if current_participant&.admin?
+                          @challenges.page(params[:page]).per(18)
+                        else
+                          @challenges.where(hidden_challenge: false).page(params[:page]).per(18)
+                        end
   end
 
   def show
@@ -174,6 +176,19 @@ class ChallengesController < ApplicationController
 
   def set_challenge_rounds
     @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
+  end
+
+  def set_filters
+    @categories = Category.all
+    @status     = challenge_status
+    @prize_hash = { prize_cash:     'Cash prizes',
+                    prize_travel:   'Travel grants',
+                    prize_academic: 'Academic papers',
+                    prize_misc:     'Misc prizes' }
+  end
+
+  def challenge_status
+    params[:controller] == "landing_page" ? Challenge.statuses.keys - ['draft'] : Challenge.statuses.keys
   end
 
   def create_invitations

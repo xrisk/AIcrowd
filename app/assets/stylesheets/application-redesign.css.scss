@@ -2824,6 +2824,15 @@ fieldset:disabled a.btn {
   margin-top: 0.5rem;
 }
 
+.apply-filter-btn {
+  color: #F0524D;
+  margin-left: 1rem;
+}
+
+.none-underline {
+  text-decoration: none;
+}
+
 input[type="submit"].btn-block,
 input[type="reset"].btn-block,
 input[type="button"].btn-block {
@@ -3125,7 +3134,16 @@ input[type="button"].btn-block {
   padding: 1rem 0 .75rem 0;
 }
 
+.dropdown .form-dropdown {
+  min-width: 240px;
+  padding: 1rem 0 .75rem 0;
+}
+
 .dropdown form .form-check {
+  margin: 0 1.25rem .5rem 1.25rem;
+}
+
+.dropdown .form-dropdown .form-check {
   margin: 0 1.25rem .5rem 1.25rem;
 }
 
@@ -3133,9 +3151,23 @@ input[type="button"].btn-block {
   margin: 1rem 0 .75rem 0 !important;
 }
 
+.dropdown .form-dropdown hr {
+  margin: 1rem 0 .75rem 0 !important;
+}
+
 .dropdown form .btn {
   margin: 0 1rem !important;
   padding: 0 !important;
+}
+
+.dropdown .form-dropdown .btn {
+  margin: 0 1rem !important;
+  padding: 0 !important;
+}
+
+.filter-dropdown-form {
+  display: flex;
+  align-items: center;
 }
 
 .dropdown-menu-notifications {
@@ -11263,7 +11295,7 @@ body {
 .filter-bar .container-fluid {
   display: flex;
   padding-top: .875rem;
-  padding-bottom: .375rem;
+  padding-bottom: .875rem;
 }
 
 .filter-bar .dropdown-toggle::after {
@@ -11279,7 +11311,7 @@ body {
   border: 1px solid #AAACAD;
   border-radius: 2px;
   padding: .188rem .75rem;
-  margin: 0 .5rem .5rem 0;
+  margin-right: .5rem;
   transition: .2s;
 }
 

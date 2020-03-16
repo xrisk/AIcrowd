@@ -5,6 +5,24 @@ $(document).on('click', '.challenge-invite-participant', function(){
 
 $(document).ready(function() {
   $('.category_select2').select2();
+
+  $('input[name="status"]:radio').change(function(){
+    $('#challenge-statuses').addClass('filter-active');
+  });
+  $('input[name="category[category_names][]"]:checkbox').change(function(){
+    $('#challenge-categories').removeClass('filter-active');
+    if ($('input[name="category[category_names][]"').is(':checked'))
+    {
+      $('#challenge-categories').addClass('filter-active');
+    }
+  });
+  $('input[name="prize[prize_type][]"]:checkbox').change(function(){
+    $('#challenge-prizes').removeClass('filter-active');
+    if ($('input[name="prize[prize_type][]"').is(':checked'))
+    {
+      $('#challenge-prizes').addClass('filter-active');
+    }
+  });
 });
 
 function resetChallengesFormClientValidations() {

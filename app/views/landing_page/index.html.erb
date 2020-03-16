@@ -23,14 +23,12 @@
   </div>
 </div>
 
-
 <!-- section -->
 <section class="section-p-md bg-light">
 
   <!-- challenge cards -->
   <div class="container-fluid">
     <div class="row">
-
       <!-- section header -->
       <div class="col-12">
         <header class="section-header-decorative">
@@ -44,14 +42,15 @@
 
         </header>
       </div>
-      <!-- /section header -->
+    </div>
+    <!-- /section header -->
+    <div class='row challenge-list'>
       <%= render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>
     </div>
   </div>
   <!-- /challenge cards -->
 </section>
 <!-- section -->
-
 
 <!-- section -->
 <section class="section-p-md border-top">
