@@ -3,6 +3,7 @@
 //= require rails-ujs
 //= require jquery-ui
 //= require jquery.remotipart
+//= require bootstrap
 //= require cocoon
 //= require isInViewport
 //= require turbolinks
@@ -87,4 +88,9 @@ document.addEventListener("turbolinks:click", function () {
         $("#page-content").hide();
         $("#loader-container").show();
     }, 250);
+});
+
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover();
 });
