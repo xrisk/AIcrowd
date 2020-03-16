@@ -21,6 +21,14 @@ class ParticipantsController < ApplicationController
                                Discourse::FetchUserPostsService.new(participant: @participant).call
                              end
     @discourse_posts = @discourse_posts_fetch.value
+
+    @categories = @participant.challenges.collect{
+          |challenge| challenge.categories.collect{
+            |category| category.name}
+        }.flatten().inject(Hash.new(0)) { |h, e| h[e] += 1 ; h }
+    if @categories.count == 0
+      @categories = {'No challenge participated' => 1}
+    end
   end
 
   def edit; end
