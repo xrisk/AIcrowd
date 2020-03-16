@@ -5,7 +5,7 @@ class Organizer < ApplicationRecord
   friendly_id :organizer, use: [:slugged, :finders, :history]
 
   has_many :challenges_organizers, class_name: 'ChallengesOrganizer', dependent: :destroy
-  has_many :challenges, through: :challenges_organizers, class_name: 'Organizer', dependent: :destroy
+  has_many :challenges, through: :challenges_organizers, class_name: 'Challenge', dependent: :destroy
   has_many :participant_organizers, dependent: :destroy
   has_many :participants, dependent: :nullify, through: :participant_organizers
   has_many :clef_tasks, dependent: :destroy
