@@ -1109,6 +1109,19 @@ ActiveRecord::Schema.define(version: 2020_03_14_060809) do
     t.index ["name", "challenge_id"], name: "index_teams_on_name_and_challenge_id", unique: true
   end
 
+  create_table "user_ratings", force: :cascade do |t|
+    t.bigint "participant_id"
+    t.float "rating"
+    t.float "temporary_rating"
+    t.float "variation"
+    t.float "temporary_variation"
+    t.bigint "challenge_round_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_round_id"], name: "index_user_ratings_on_challenge_round_id"
+    t.index ["participant_id"], name: "index_user_ratings_on_participant_id"
+  end
+
   create_table "versions", id: :serial, force: :cascade do |t|
     t.string "item_type", null: false
     t.integer "item_id", null: false
@@ -1174,6 +1187,8 @@ ActiveRecord::Schema.define(version: 2020_03_14_060809) do
   add_foreign_key "team_participants", "participants"
   add_foreign_key "team_participants", "teams"
   add_foreign_key "teams", "challenges"
+  add_foreign_key "user_ratings", "challenge_rounds"
+  add_foreign_key "user_ratings", "participants"
   add_foreign_key "votes", "participants"
 
   create_view "challenge_organizer_participants", materialized: true,  sql_definition: <<-SQL
@@ -1481,7 +1496,6 @@ ActiveRecord::Schema.define(version: 2020_03_14_060809) do
     ORDER BY s.created_at DESC;
   SQL
 
->>>>>>> new UI leaderboard changes
   create_view "previous_leaderboards",  sql_definition: <<-SQL
       SELECT base_leaderboards.id,
       base_leaderboards.challenge_id,

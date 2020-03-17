@@ -1,11 +1,10 @@
 class LeaderboardParticipantsQuery
-  attr_reader :relation
 
   def initialize(relation = Leaderboard.all)
     @relation = relation
   end
 
-  def participants_with_rating(challenge_round, temporary)
+  def call(challenge_round, temporary)
     # this query joins leaderboard with team participants if the submission is a team based submission, or else with the individual
     # participants, then it calls for rating and variation fields, whenever rating from a team based user is not available, it searches
     # for a rating from a participant based submission and if even a participant based submission is not available it then uses 0 as default

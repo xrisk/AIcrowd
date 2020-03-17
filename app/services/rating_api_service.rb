@@ -13,8 +13,6 @@ class RatingApiService
       result = self.class.post('/startroundcalculations/', body: body, headers: headers)
     rescue HTTParty::Error => e
       Rails.logger.error e.message
-    rescue StandardError => e
-      Rails.logger.error e.message
     else
       case result.code
       when 500...600
