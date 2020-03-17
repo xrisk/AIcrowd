@@ -59,7 +59,7 @@ class UserRatingService
       end
       UserRating.import userratings
       unless @temporary
-        @round.update_attribute :calculated_permanent, true
+        @round.update(calculated_permanent: true)
       end
     end
   end
