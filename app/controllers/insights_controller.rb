@@ -17,7 +17,8 @@ class InsightsController < ApplicationController
     # Calculate running maximum hash for dates
 
     score              = params[:score].presence || 'score'
-    precision          = @challenge.active_round["#{score}_precision"]
+    precision          = @current_round["#{score}_precision"]
+
     sort_order         = if score == 'score'
                            @current_round["primary_sort_order_cd"]
                          else
@@ -27,10 +28,10 @@ class InsightsController < ApplicationController
     grouped_collection = @collection.group_by_day(:created_at)
 
     return_hash = if sort_order == "descending"
-                    get_running_agg('min', grouped_collection.maximum(:score), precision)
+                    get_running_agg('max', grouped_collection.maximum(score), precision)
                   else
                     # sort_order == "ascending" or "not_used"
-                    get_running_agg('max', grouped_collection.minimum(:score), precision)
+                    get_running_agg('min', grouped_collection.minimum(score), precision)
                   end
 
     render json: return_hash
@@ -50,10 +51,13 @@ class InsightsController < ApplicationController
   private
 
   def get_running_agg(fn, grouped_collection, precision)
-    ret       = {}
-    current   = 0
-    current   = Float::INFINITY if fn == 'min'
+    ret     = {}
+    current = 0
+    current = Float::INFINITY if fn == 'min'
+
     grouped_collection.each do |key, value|
+      next if value.nil?
+
       current  = [current, value.to_f.round(precision)].method(fn).call
       ret[key] = current
     end
