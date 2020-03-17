@@ -13,7 +13,7 @@
           <% @members.each do |member| %>
             <!-- team member -->
             <li class="list-group-item">
-              <%= render :partial => 'participants/user_link', locals: { participant: member } %>
+              <%= render partial: 'participants/user_link', locals: { participant: member } %>
 
               <% if @organizer.clef_tasks.any? && @organizer.clef_tasks.first.eua_required? %>
                 <% if member.clef_email %>

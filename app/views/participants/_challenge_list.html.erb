@@ -45,7 +45,7 @@
       <header class="section-header">
         <h4>Latest submissions</h4>
         <% if submissions.any? %>
-          <a class="btn btn-secondary btn-sm" style="float:right" href="<%= challenge_submissions_path(challenge) %>?q%5Bparticipant_name_equals%5D=<%= participant.name %>">See All</a>
+          <a class="btn btn-secondary btn-sm pull-right" href="<%= challenge_submissions_path(challenge) %>?q%5Bparticipant_name_equals%5D=<%= participant.name %>">See All</a>
         <% end %>
       </header>
         <table class="table table-no-border">

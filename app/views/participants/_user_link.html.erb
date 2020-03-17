@@ -6,10 +6,10 @@
     <div style="display: table-row;" data-container=".<%= random_class %>" data-html="true" data-toggle="tooltip" 
         title='<%= render partial: 'participants/tooltip_profile', locals: { participant: participant } %>'>
         <a href="<%= participant_path(participant.name) %>">
-            <% if not defined?(avatar) or (defined?(avatar) and avatar) %>
+            <% if !defined?(avatar) || (defined?(avatar) && avatar) %>
                 <%= participant_avatar participant %>
             <% end %>
-            <% if not defined?(username) or (defined?(username) and username) %>
+            <% if !defined?(username) || (defined?(username) && username) %>
                 <span class="text-link"><%= participant.name %></span>
             <% end %>
         </a>

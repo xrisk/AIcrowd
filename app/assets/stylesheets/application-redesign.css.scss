@@ -13725,6 +13725,10 @@ html {
   border: 0px;
 }
 
+.country-flag {
+  width: 24px;
+}
+
 @import 'challenges/form';
 @import 'challenges/datatable';
 @import '_tooltips.scss';
