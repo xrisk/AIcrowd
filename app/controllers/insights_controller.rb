@@ -14,6 +14,7 @@ class InsightsController < ApplicationController
   end
 
   def top_score_vs_time
+    return render json: {} if @current_round.blank?
     # Calculate running maximum hash for dates
 
     score              = params[:score].presence || 'score'

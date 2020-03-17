@@ -8,8 +8,12 @@
     <div class="row">
       <div class="col-12">
         <%= render partial: 'insights/_charts/challenge_participants_country', locals: {challenge: @challenge, index: 1} %>
-        <%= render partial: 'insights/_charts/submissions_vs_time', locals: {challenge: @challenge, challenge_rounds: @challenge_rounds, index: 2} %>
-        <%= render partial: 'insights/_charts/top_score_vs_time', locals: {challenge: @challenge, challenge_rounds: @challenge_rounds, index: 3} %>
+        <% if @challenge.active_round.present? %>
+          <%= render partial: 'insights/_charts/submissions_vs_time', locals: {challenge: @challenge, challenge_rounds: @challenge_rounds, index: 2} %>
+          <%= render partial: 'insights/_charts/top_score_vs_time', locals: {challenge: @challenge, challenge_rounds: @challenge_rounds, index: 3} %>
+        <% else %>
+          <p class="text-center">There is no active round for this challenge.</p>
+        <% end %>
       </div>
     </div>
   </div>

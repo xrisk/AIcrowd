@@ -32,7 +32,9 @@
                 <td colspan="7">
                   <div>
                     <span id="more-anchor"></span>
-                    <%= render partial: 'shared/load_more', locals: { collection: @participants } %>
+                    <% if @participants.present? %>
+                      <%= render partial: 'shared/load_more', locals: { collection: @participants } %>
+                    <% end %>
                   </div>
                 </td>
               </tr>
@@ -51,4 +53,3 @@
     </div>
   </div>
 </section>
-
