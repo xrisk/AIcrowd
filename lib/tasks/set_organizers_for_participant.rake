@@ -3,8 +3,10 @@ namespace :set_organizers_for_participant do
   task existing_participant: :environment do
     participants = Participant.where.not(organizer_id: nil)
     participants.each do |participant|
-      ParticipantOrganizer.create(participant_id: participant.id,
-                                  organizer_id: participant.organizer_id)
+      ParticipantOrganizer.find_or_create_by!(
+        participant_id: participant.id,
+        organizer_id: participant.organizer_id
+      )
     end
   end
 end
