@@ -1,6 +1,6 @@
 <% @participant_challenges.each do |challenge_participant| %>
   <% participant = challenge_participant.participant %>
   <li class="list-group-item">
-    <%= render :partial => 'participants/user_link', locals: { participant: participant } %>
+    <%= render partial: 'participants/user_link', locals: { participant: participant } %>
   </li>
 <% end %>

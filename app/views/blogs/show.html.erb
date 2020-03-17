@@ -16,7 +16,7 @@
       <div class="col-12 d-flex align-items-center flex-wrap">
         <div class="author">
           <span class="mr-2">By</span>
-          <%= render :partial => 'participants/user_link', locals: { participant: @blog.participant } %>
+          <%= render partial: 'participants/user_link', locals: { participant: @blog.participant } %>
         </div>
 
         <div class="btn-set" aria-hidden="true">

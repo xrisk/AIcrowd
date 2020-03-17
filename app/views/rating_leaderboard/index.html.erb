@@ -25,14 +25,14 @@
             </tr>
             </thead>
             <tbody class="table-leaderboard-body">
-            <%= render partial: 'rating_leaderboard', locals: { participants: @top_participants } %>
+            <%= render partial: 'rating_leaderboard', locals: { participants: @participants } %>
             </tbody>
             <tbody>
               <tr>
                 <td colspan="6">
                   <div>
                     <span id="more-anchor"></span>
-                    <%= render partial: 'shared/load_more', locals: { collection: @top_participants } %>
+                    <%= render partial: 'shared/load_more', locals: { collection: @participants } %>
                   </div>
                 </td>
               </tr>

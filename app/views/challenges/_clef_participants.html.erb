@@ -4,7 +4,7 @@
   <li class="list-group-item">
     <% if participant.present? %>
       <div>
-        <%= render :partial => 'participants/user_link', locals: { participant: participant } %>
+        <%= render partial: 'participants/user_link', locals: { participant: participant } %>
         <span class="description"><%= participant.email %></span>
       </div>
     <% else %>
