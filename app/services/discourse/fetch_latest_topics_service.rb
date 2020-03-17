@@ -9,7 +9,7 @@ module Discourse
 
       response      = client.get(latest_topics_path)
       participants  = get_participants(response.body['users'])
-      latest_topics = topics_with_avatar_url(
+      latest_topics = topics_with_participant(
                         response.body['topic_list']['topics'],
                         response.body['users'],
                         participants

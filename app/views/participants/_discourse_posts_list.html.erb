@@ -14,7 +14,7 @@
               <% discourse_posts.each do |discourse_post| %>
                 <!-- topic – comment -->
                 <div class="topic-comment">
-                  <%= link_to discourse_user_url(discourse_post['username']) do %>
+                  <%= link_to discourse_user_url(participant.name) do %>
                     <%= image_tag participant.image_url, class: 'avatar' %>
                   <% end %>
                   <div class="discussion-topic-body">

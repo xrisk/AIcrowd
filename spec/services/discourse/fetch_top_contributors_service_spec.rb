@@ -16,6 +16,8 @@ describe Discourse::FetchTopContributorsService, :requests_allowed do
     end
 
     context 'when discourse ENV variables are set' do
+      let!(:participant) { create(:participant, name: 'kelleni2') }
+
       it 'returns success and list of user posts' do
         result = VCR.use_cassette('discourse_api/data_explorer_queries/top_contributors/success') do
           subject.call
@@ -28,7 +30,8 @@ describe Discourse::FetchTopContributorsService, :requests_allowed do
         expect(response.size).to eq 5
         expect(response.first['username']).to eq 'kelleni2'
         expect(response.first['score']).to eq 751
-        expect(response.first['avatar_url']).to eq 'http://localhost:3000/assets/users/user-avatar-default.svg'
+        expect(response.first['participant']).to eq participant
+        expect(response.first['participant'].image_url).to eq 'users/user-avatar-default.svg'
       end
     end
 
