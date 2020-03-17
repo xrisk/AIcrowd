@@ -11,23 +11,21 @@ function handleChallengeUpdate() {
 
   // Show alert and correct tab after scrolling is completed
   setTimeout(function() {
-    challengeForWrapper.innerHTML = "<%= j render 'challenges/form', challenge: @challenge, challenge_rounds: @challenge_rounds, organizers: @organizers %>";
+    challengeForWrapper.innerHTML = "<%= j render 'challenges/form', challenge: @challenge, challenge_rounds: @challenge_rounds %>";
 
-    $('.category_select2').select2();
-    if (currentTab.length) {
+    if (currentTab) {
       // Active tabs are disabled, thus I need to make it inactive to make it work
       $(`#challenge-edit-${currentTab}-tab`).removeClass('active');
       $(`#challenge-edit-${currentTab}-tab`).tab('show');
     }
 
     if (updateSuccessful === 'true') {
+      $('.select2').select2();
       flashMessagesWrapper.innerHTML = "<%= j render 'layouts/flash_message', type: 'notice', message: 'Challenge updated.' %>";
     } else {
       flashMessagesWrapper.innerHTML = "<%= j render 'layouts/flash_message', type: 'error', message: 'This tab couldn\'t be saved because of errors. Please correct them.' %>";
     }
   }, window.pageYOffset / 4);
-
-
 }
 
 handleChallengeUpdate();

@@ -10,8 +10,13 @@
   </div>
 
   <div class="form-group">
+      <span class="label-text">Organizers</span>
+      <%= f.select :organizer_ids, @organizers_for_select, {}, {class: "select2 form-control", multiple: true, disabled: !(current_participant&.admin?) } %>
+  </div>
+
+  <div class="form-group">
     <span class="label-text">Category</span>
-    <%= f.select :category_ids, @categories, {}, {class: "category_select2 form-control", multiple: true} %>
+    <%= f.select :category_ids, @categories_for_select, {}, {class: "select2 form-control", multiple: true} %>
   </div>
 
   <div class="form-group">
@@ -32,7 +37,6 @@
     <span class="label-text">Max Number of Participants per Team</span>
     <%= f.text_field :max_team_participants, class: "form-control" %>
   </div>
-
 
   <div class="form-group">
     <%= f.label :team_freeze_time, 'Team Freeze Time (UTC)' %>
@@ -70,18 +74,6 @@
       <%= link_to 'Delete', remove_image_challenge_path(@challenge), remote: true, id: 'challenges-form-remove-card-image', class: "form-text #{remove_image_class}" %>
     <% end %>
     <small id="partnerLogoHelp" class="form-text text-muted">Your image will be cropped if necessary. 5 MB limit</small>
-  </div>
-
-  <div class="form-group">
-    <% if @challenge.new_record? && current_participant&.admin? %>
-      <span class="label-text">Organizer</span>
-      <%= f.fields_for :challenges_organizers, [@challenge.challenges_organizers.new] do |challenges_organizer_form| %>
-        <%= challenges_organizer_form.select :organizer_id, @organizers_for_select, {}, class: 'form-control' %>
-      <% end %>
-    <% else %>
-      <span class="label-text">Organizer</span>
-      <input class="form-control" type='text' value='<%= @challenge.organizers.first&.organizer || current_participant.organizers.first&.organizer %>' readonly>
-    <% end %>
   </div>
 
   <div class='form-group'>

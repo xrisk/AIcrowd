@@ -6,11 +6,10 @@ class ChallengesController < ApplicationController
   before_action :set_follow, only: [:show, :clef_task]
   after_action :verify_authorized, except: [:index, :show]
   before_action :set_s3_direct_post, only: [:edit, :update]
-  before_action :set_organizers, only: [:edit, :update]
-  before_action :set_organizers_for_select, only: [:new, :create]
   before_action :set_challenge_rounds, only: [:edit, :update]
-  before_action :set_category, only: [:new, :create , :edit]
   before_action :set_filters, only: [:index]
+  before_action :set_organizers_for_select, only: [:new, :create, :edit, :update]
+  before_action :set_categories_for_select, only: [:new, :create, :edit, :update]
 
   respond_to :html, :js
 
@@ -57,13 +56,14 @@ class ChallengesController < ApplicationController
 
   def create
     @challenge                = Challenge.new(challenge_params)
-    @challenge.clef_challenge = true if @challenge.organizers.any? { |organizer| organizer.clef_organizer? }
     @challenge.organizers     = current_participant.organizers if current_participant&.admin? == false
+    @challenge.clef_challenge = true if @challenge.organizers.any?(&:clef_organizer?)
 
     authorize @challenge
 
     if @challenge.save
-      create_challenge_category
+      update_challenges_organizers if params[:challenge][:organizer_ids].present?
+      update_challenge_categories if params[:challenge][:category_ids].present?
       redirect_to edit_challenge_path(@challenge, step: :overview), notice: 'Challenge created.'
     else
       render :new
@@ -74,9 +74,10 @@ class ChallengesController < ApplicationController
 
   def update
     if @challenge.update(challenge_params)
-      create_challenge_category if params[:challenge][:category_ids].present?
+      update_challenges_organizers if params[:challenge][:organizer_ids].present?
+      update_challenge_categories if params[:challenge][:category_ids].present?
+      set_challenge
       create_invitations if params[:challenge][:invitation_email].present?
-      set_category
       respond_to do |format|
         format.html { redirect_to edit_challenge_path(@challenge, step: params[:current_step]), notice: 'Challenge updated.' }
         format.js   { render :update }
@@ -157,8 +158,8 @@ class ChallengesController < ApplicationController
     @follow = @challenge.follows.where(participant_id: current_participant.id).first if current_participant.present?
   end
 
-  def set_organizers
-    @organizers = @challenge&.organizers
+  def set_categories_for_select
+    @categories_for_select = Category.pluck(:name, :id)
   end
 
   def set_organizers_for_select
@@ -197,15 +198,18 @@ class ChallengesController < ApplicationController
     end
   end
 
-  def create_challenge_category
-    @challenge.category_challenges.destroy_all if @challenge.category_challenges.present?
-    params[:challenge][:category_ids].each do |category_id|
-      @challenge.category_challenges.create(category_id: category_id)
+  def update_challenges_organizers
+    @challenge.challenges_organizers.destroy_all
+    params[:challenge][:organizer_ids].each do |organizer_id|
+      @challenge.challenges_organizers.create(organizer_id: organizer_id)
     end
   end
 
-  def set_category
-    @categories = Category.all.map{|c| [c.name, c.id]}
+  def update_challenge_categories
+    @challenge.category_challenges.destroy_all
+    params[:challenge][:category_ids].each do |category_id|
+      @challenge.category_challenges.create(category_id: category_id)
+    end
   end
 
   def challenge_params
@@ -254,9 +258,6 @@ class ChallengesController < ApplicationController
         :id,
         :image,
         :_destroy
-      ],
-      challenges_organizers_attributes: [
-        :organizer_id
       ],
       challenge_partners_attributes: [
         :id,

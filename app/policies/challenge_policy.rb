@@ -24,7 +24,7 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def new?
-    participant && (participant.admin? || (participant.organizer_ids & @record.challenges_organizers.map(&:organizer_id)).any?)
+    participant && (participant.admin? || (participant.organizer_ids & @record.organizer_ids).any?)
   end
 
   def create?

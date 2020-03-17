@@ -119,7 +119,7 @@ describe ChallengesController, feature: true do
         visit new_challenge_path
 
         fill_in 'challenge_challenge', with: 'Created challenge title'
-        select organizer.organizer, from: 'challenge_challenges_organizers_attributes_0_organizer_id'
+        select organizer.organizer, from: 'challenge[organizer_ids][]'
         click_on 'Create challenge'
 
         challenge = Challenge.find_by!(challenge: 'Created challenge title')
