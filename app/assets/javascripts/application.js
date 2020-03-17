@@ -52,79 +52,39 @@
 
 // ------------------------ STARTUP -------------------------- //
 
-document.addEventListener("turbolinks:load", function () {
-    $("[data-remodal-id=modal]").remodal();
-});
-
-document.addEventListener("turbolinks:load", function () {
-    Paloma.start();
-});
-
-function setupOembed(){
-  document.querySelectorAll( 'oembed[url]' ).forEach(element => {
-      // Create the <a href="..." class="embedly-card"></a> element that Embedly uses
-      // to discover the media.
-      const anchor = document.createElement('a');
-
-      anchor.setAttribute('href', element.getAttribute( 'url' ));
-      anchor.className = 'embedly-card';
-
-      element.appendChild(anchor);
-  });
-};
-
-function loadMathJax() {
-    window.MathJax = null;
-    $.getScript(
-        "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML",
-        function () {
-            MathJax.Hub.Config({
-                tex2jax: {
-                    inlineMath: [["$", "$"], ["\\(", "\\)"]],
-                    displayMath: [["$$", "$$"], ["\\[", "\\]"]],
-                    processEscapes: true
-                }
-            });
-        }
-    );
-}
-
 // Remove default Turbolinks loader
 Turbolinks.ProgressBar.prototype.refresh = function () {};
 
 Turbolinks.ProgressBar.defaultCSS = "";
-var loaderTimer;
-
-document.addEventListener("turbolinks:click", function () {
-    loaderTimer = setTimeout(function () {
-        $("#page-content").hide();
-        $("#loader-container").show();
-    }, 250);
-});
+let loaderTimer;
 
 document.addEventListener("turbolinks:load", function () {
     clearTimeout(loaderTimer);
+    $("[data-remodal-id=modal]").remodal();
+    Paloma.start();
     $("#page-content").show();
     $("#loader-container").hide();
+
     $(".cookies-set-jobs").click(function () {
         let date = new Date();
         let days = 14
         date.setTime(+date + (days * 86400000))
         document.cookie = "hiring_banner_closed=true; expires=" + date.toGMTString() + "; path=/";
     });
+
     $(".cookies-set-accept").click(function () {
         document.cookie =
             "_cookie_eu_consented=true; expires=Fri, 31 Dec 9999 23:58:59 GMT; path=/";
     });
-});
 
-$(document).on("turbolinks:load", function () {
-    loadMathJax();
-    setupOembed();
-});
-
-$(document).on("turbolinks:load", function () {
     window.setTimeout(function () {
         $(".alert:not('.alert-cookie, .alert-fixed')").alert("close");
     }, 5000);
+});
+
+document.addEventListener("turbolinks:click", function () {
+    loaderTimer = setTimeout(function () {
+        $("#page-content").hide();
+        $("#loader-container").show();
+    }, 250);
 });
