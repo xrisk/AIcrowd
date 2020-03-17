@@ -47,7 +47,7 @@
 
     <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
     <td class="text-right">
-      <% if leaderboard.submitter_type != 'OldParticipant' && leaderboard.submitter.present? && leaderboard.submission.present? %>
+      <% if leaderboard.submitter_type != 'OldParticipant' && leaderboard.submitter.present? && leaderboard.submission_id.present? %>
         <%= link_to 'View', challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm' %>
       <% else %>
         <%= link_to 'View', '#', class: 'btn btn-secondary btn-sm disabled disabled--with-pointer-events', title: 'Submitter or Submission was deleted' %>

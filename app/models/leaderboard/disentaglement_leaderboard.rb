@@ -1,4 +1,6 @@
 class DisentanglementLeaderboard < ApplicationRecord
+  include PolymorphicSubmitter
+
   belongs_to :challenge
   belongs_to :challenge_round
   belongs_to :participant, optional: true
