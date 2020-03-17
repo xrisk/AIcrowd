@@ -209,6 +209,13 @@ Matching some string:
 rspec path/to/test/file -e 'matching string'
 ```
 
+If you run into problems with chromedriver and VCR run
+
+```
+RAILS_ENV=test rails webdrivers:chromedriver:update
+```
+
+
 ## Styleguides
 
 ### Git Commit Messages

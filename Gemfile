@@ -143,7 +143,7 @@ end
 
 group :test do
   gem 'factory_bot_rails'
-  gem 'chromedriver-helper'
+  gem 'webdrivers'
   gem 'capybara'
   gem 'capybara-screenshot'
   gem 'launchy'
