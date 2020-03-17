@@ -58,10 +58,10 @@
                     <td><%= local_time(submission.created_at, "%a, %e %b %Y") %> <%= local_time(submission.created_at, "%H:%M:%S") %></td>
                     <% if challenge.submissions_page %>
                       <%= link_to challenge_submission_path(challenge, submission.id) do %>
-                      <td aria-label="View Details" data-balloon-pos="up"><i class="fa fa-link"></i></td>
+                      <td data-toggle="tooltip" title="View Details"><i class="fa fa-link"></i></td>
                       <% end %>
                     <% else %>
-                      <td aria-label="Submission page is hidden" data-balloon-pos="up"><i class="fa fa-unlink"></i></td>
+                      <td data-toggle="tooltip" title="Submission page is hidden"><i class="fa fa-unlink"></i></td>
                     <% end %>
                 </tr>
                 <% end %>
