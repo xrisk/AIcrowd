@@ -2733,6 +2733,11 @@ fieldset:disabled a.btn {
   pointer-events: none;
 }
 
+a.btn.disabled--with-pointer-events,
+fieldset:disabled a.btn {
+  pointer-events: initial;
+}
+
 .btn-primary {
   background-color: #F0524D;
   color: #fff;
