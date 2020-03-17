@@ -4,9 +4,11 @@
     <% discourse_top_contributors.each do |top_contributor| %>
       <!-- user -->
       <li class="list-group-item">
-        <%= link_to discourse_user_url(top_contributor['username']) do %>
-          <%= image_tag top_contributor['avatar_url'], class: "avatar" %>
-          <span class="text-link"><%= top_contributor['username'] %></span>
+        <% if top_contributor['participant'].present? %>
+          <%= link_to discourse_user_url(top_contributor['participant'].name) do %>
+            <%= image_tag top_contributor['participant'].image_url, class: "avatar" %>
+            <span class="text-link"><%= top_contributor['participant'].name %></span>
+          <% end %>
         <% end %>
 
         <div class="reputation-info">

@@ -22,14 +22,14 @@ module Discourse
       response_body['rows'].map { |response_row| response_body['columns'].zip(response_row).to_h }
     end
 
-    def merge_avatar_url_to_response(response_hash)
+    def merge_participant_to_response(response_hash)
       participants = get_participants(response_hash)
 
-      response_hash.map { |row| row.merge('avatar_url' => avatar_url_by_username(participants, row['username'])) }
+      response_hash.map { |row| row.merge('participant' => participant_by_username(participants, row['username'])) }
     end
 
-    def avatar_url_by_username(participants, username)
-      participants.find { |participant| participant.name == username}&.image_url || ImageUploader.new.default_url
+    def participant_by_username(participants, username)
+      participants.find { |participant| participant.name == username }
     end
 
     def get_participants(discourse_users)
@@ -38,12 +38,11 @@ module Discourse
       Participant.where(name: usernames)
     end
 
-    def topics_with_avatar_url(topics, discourse_users, participants)
+    def topics_with_participant(topics, discourse_users, participants)
       topics.each do |topic|
         topic['posters'].each do |poster|
-          discourse_user       = discourse_users.find { |discourse_user| discourse_user['id'] == poster['user_id'] }
-          poster['username']   = discourse_user['username']
-          poster['avatar_url'] = avatar_url_by_username(participants, discourse_user['username'])
+          discourse_user        = discourse_users.find { |discourse_user| discourse_user['id'] == poster['user_id'] }
+          poster['participant'] = participant_by_username(participants, discourse_user['username'])
         end
       end
     end
