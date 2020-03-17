@@ -9,7 +9,7 @@ class UserRatingService
   end
 
   def leaderboard_query()
-    LeaderboardParticipantsQuery.new.participants_with_rating @round.id, @temporary
+    LeaderboardParticipantsQuery.new.call @round.id, @temporary
   end
 
   def filter_leaderboard_stats(leaderboard_rating_stats)
@@ -58,7 +58,7 @@ class UserRatingService
         end
       end
       UserRating.import userratings
-      if not @temporary
+      unless @temporary
         @round.update_attribute :calculated_permanent, true
       end
     end

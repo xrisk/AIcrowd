@@ -16,7 +16,7 @@ module RatingLeaderboardHelper
   end
 
   def rating_leaderboard_ranking_change(participant)
-    if !(participant.ranking_change.nil? || participant.ranking_change == 0)
+    if !(participant.ranking_change.to_i == 0)
       if participant.ranking_change > 0
         image_tag(
             "icon-change-up.svg",
