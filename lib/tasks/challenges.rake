@@ -21,7 +21,7 @@ namespace :challenges do
   desc 'Migrate challenge.organizer to challenges_organizers table'
   task migrate_challenge_organizer_to_challenges_organizers_table: :environment do
     Challenge.where.not(organizer_id: nil).find_each do |challenge|
-      ChallengesOrganizer.create!(challenge_id: challenge.id, organizer_id: challenge.organizer_id)
+      ChallengesOrganizer.find_or_create_by!(challenge_id: challenge.id, organizer_id: challenge.organizer_id)
       puts "Challenge##{challenge.id} finished migration of organizer"
     end
 
