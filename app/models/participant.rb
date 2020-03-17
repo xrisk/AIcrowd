@@ -23,6 +23,7 @@ class Participant < ApplicationRecord
          :omniauthable, omniauth_providers: %i[github oauth2_generic]
 
   default_scope { order('name ASC') }
+  scope :rated_users_count, -> { Participant.where("ranking > 0").count }
   has_many :participant_organizers, dependent: :destroy
   has_many :organizers, through: :participant_organizers
   has_many :submissions, dependent: :nullify
@@ -109,10 +110,6 @@ class Participant < ApplicationRecord
     return unless name
 
     errors.add(:name, 'is reserved for CrowdAI users.  Please log in via CrowdAI to claim this user handle.') if (provider != 'crowdai') && ReservedUserhandle.where(name: name.downcase).exists?
-  end
-
-  def rated_users
-    return Participant.where("ranking > 0").count
   end
 
   def disable_account(reason)

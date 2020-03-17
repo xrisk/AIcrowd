@@ -19,7 +19,7 @@ module ParticipantsHelper
 
   def rating_tier_class(participant)
     tier = 1
-    percentile = (1 - ((participant.ranking - 1).to_f/participant.rated_users))*100
+    percentile = (1 - ((participant.ranking - 1).to_f/Participant.rated_users_count))*100
     case percentile
     when 99..100
       tier = 5
