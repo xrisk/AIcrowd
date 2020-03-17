@@ -7,8 +7,7 @@
     </div>
 
     <div class="card-footer">
-      <%= link_to participant_avatar(blog.participant), participant_path(blog.participant)%>
-      <span>By  <%= link_to blog.participant.name, participant_path(blog.participant) %></span>
+      <%= render :partial => 'participants/user_link', locals: { participant: blog.participant } %>
     </div>
   </div>
 </div>

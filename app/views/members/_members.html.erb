@@ -13,10 +13,7 @@
           <% @members.each do |member| %>
             <!-- team member -->
             <li class="list-group-item">
-              <%= link_to participant_path(member) do %>
-                <%= participant_avatar member %>
-                <span class="text-link"><%= member.name %></span>
-              <% end %>
+              <%= render :partial => 'participants/user_link', locals: { participant: member } %>
 
               <% if @organizer.clef_tasks.any? && @organizer.clef_tasks.first.eua_required? %>
                 <% if member.clef_email %>

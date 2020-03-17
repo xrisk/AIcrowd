@@ -4,10 +4,7 @@
   <li class="list-group-item">
     <% if participant.present? %>
       <div>
-        <%= link_to participant_path(participant) do %>
-          <%= participant_avatar participant %>
-          <span class="text-link"><%= participant.name %></span>
-        <% end %>
+        <%= render :partial => 'participants/user_link', locals: { participant: participant } %>
         <span class="description"><%= participant.email %></span>
       </div>
     <% else %>

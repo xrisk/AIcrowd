@@ -15,10 +15,8 @@
     <div class="row">
       <div class="col-12 d-flex align-items-center flex-wrap">
         <div class="author">
-          <%= link_to participant_avatar(@blog.participant), participant_path(@blog.participant)%>
-          <span>
-            By <%= link_to @blog.participant.name, participant_path(@blog.participant) %>
-          </span>
+          <span class="mr-2">By</span>
+          <%= render :partial => 'participants/user_link', locals: { participant: @blog.participant } %>
         </div>
 
         <div class="btn-set" aria-hidden="true">

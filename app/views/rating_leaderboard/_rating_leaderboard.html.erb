@@ -11,12 +11,7 @@
   <td class="<%= cls ||= '' %>"><strong><span class="reputation-rank" style="width: 50px">#<%= participant.ranking %></span>
   </strong></td>
   <td class="<%= cls ||= '' %>">
-    <%= link_to participant_path(participant.name), title: participant.name do %>
-      <%= participant_avatar participant %>
-      <span class="text-link">
-        <%= participant.name.truncate(20) %>
-      </span>
-    <% end %>
+    <%= render :partial => 'participants/user_link', locals: { participant: participant } %>
   </td>
   <td class="<%= cls ||= '' %>"><%= participant.affiliation ||= '-' %></td>
   <td class="<%= cls ||= '' %>">

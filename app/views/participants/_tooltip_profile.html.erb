@@ -1,0 +1,20 @@
+<div class="tooltip-inner-top">
+<%= participant_avatar participant %>
+    <div>
+        <strong><%= participant.name %></strong>
+        <br>
+        <div class="reputation-info">
+            <%= render :partial => 'participants/show_reputation', locals: { participant: participant, style: 'top: 0px;', full: true } %>
+            <br>
+            <span class="reputation-rank">Rank: #<%= participant.ranking %></span>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="user-location">
+    <%= render partial: 'participants/location', locals: { participant: participant } %>
+    <%= render :partial => 'shared/utility/flag', locals: { country_cd: participant.country_cd } %>
+</div>
+<div class="user-organization">
+    <%= participant.affiliation %>
+</div>
