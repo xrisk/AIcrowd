@@ -29,7 +29,7 @@
               </div>
               By <% challenge.organizers.each do |organizer| %>
                 <%= link_to organizer_path(organizer) do %>
-                  <%= image_tag organizer.image_file_url %>
+                  <%= image_tag organizer.image_file_url, class: 'organizer-icon-small' %>
                   <%= organizer.organizer %>
                 <% end %>
               <% end %>
@@ -42,7 +42,7 @@
     </div>
     <div class="col-md-5 mt-n2">
       <% submissions = challenge.submissions.where(participant_id:participant.id).reorder('created_at DESC').limit(3) %>
-      <header class="section-header">
+      <header class="section-header mb-n1">
         <h4>Latest submissions</h4>
         <% if submissions.any? %>
           <a class="btn btn-secondary btn-sm pull-right" href="<%= challenge_submissions_path(challenge) %>?q%5Bparticipant_name_equals%5D=<%= participant.name %>">See All</a>

@@ -29,7 +29,7 @@
             </tbody>
             <tbody>
               <tr>
-                <td colspan="6">
+                <td colspan="7">
                   <div>
                     <span id="more-anchor"></span>
                     <%= render partial: 'shared/load_more', locals: { collection: @participants } %>
@@ -39,7 +39,7 @@
             </tbody>
             <% if @self_standing %>
             <thead>
-              <tr><th colspan="6" style="text-align: center;">Your Standings</th></tr>
+              <tr><th colspan="7" style="text-align: center;">Your Standings</th></tr>
             </thead>
             <tbody>
             <%= render partial: 'rating_leaderboard', locals: { participants: @self_standing } %>
