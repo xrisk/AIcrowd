@@ -1,0 +1,17 @@
+<% 
+    uniq_id = rand(1000)
+    random_class = 'tooltip-user-wrapper-' + uniq_id.to_s + '-' + participant.id.to_s
+%>
+<div class="tooltip-user-wrapper <%= random_class %>">
+    <div style="display: table-row;" data-container=".<%= random_class %>" data-html="true" data-toggle="tooltip" 
+        title='<%= render partial: 'participants/tooltip_profile', locals: { participant: participant } %>'>
+        <a href="<%= participant_path(participant.name) %>">
+            <% if not defined?(avatar) or (defined?(avatar) and avatar) %>
+                <%= participant_avatar participant %>
+            <% end %>
+            <% if not defined?(username) or (defined?(username) and username) %>
+                <span class="text-link"><%= participant.name %></span>
+            <% end %>
+        </a>
+    </div>
+</div>

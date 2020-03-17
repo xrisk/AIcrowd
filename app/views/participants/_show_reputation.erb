@@ -7,7 +7,11 @@
 <% else %>
   <span class="reputation-score" aria-label="<%= participant.rating.to_i %> ± <%= participant.variation.to_i %>" 
       data-balloon-pos="up">
-    <%= participant.rating.to_i %>
+    <% if defined?(full) and full %>
+      <%= participant.rating.to_i %> ± <%= participant.variation.to_i %>
+    <% else %>
+      <%= participant.rating.to_i %>
+    <% end %>
   </span>
 <% end %>
 </span>
