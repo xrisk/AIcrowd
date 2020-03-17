@@ -5,6 +5,10 @@ daily_digest:
   args:
     digest_type: "daily"
 
+leaderboard_rating:
+  cron: "30 2 * * *" # 2:30 AM every day
+  class: "RatingCalculateJob"
+
 weekly_digest:
   cron: "30 2 * * 0" # 2:30 AM every Sunday
   class: "EmailDigestJob"

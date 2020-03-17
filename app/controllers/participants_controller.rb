@@ -21,6 +21,12 @@ class ParticipantsController < ApplicationController
                                Discourse::FetchUserPostsService.new(participant: @participant).call
                              end
     @discourse_posts = @discourse_posts_fetch.value
+
+    @categories = @participant.challenges.joins(:categories).pluck('categories.name')
+                    .inject(Hash.new(0)) { |h, e| h[e] += 1 ; h }
+    if @categories.count == 0
+      @categories = {'No category information' => 1}
+    end
   end
 
   def edit; end

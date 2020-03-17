@@ -17,9 +17,6 @@ class LandingPageController < ApplicationController
                       .where(published: true)
                       .order(seq: :asc)
                       .limit(4)
-    @participants = Participant
-                        .reorder(created_at: :desc)
-                        .limit(5)
 
     @discourse_topics_fetch = Rails.cache.fetch('discourse-latest-topics', expires_in: 5.minutes) do
       Discourse::FetchLatestTopicsService.new.call
@@ -29,6 +26,10 @@ class LandingPageController < ApplicationController
     end
     @discourse_topics           = @discourse_topics_fetch.value
     @discourse_top_contributors = @discourse_top_contributors_fetch.value
+    
+    # TODO: Migrate all the rating related code at one place, so we don't need to 
+    # change the whole codebase for future changes.
+    @participants = Participant.where("ranking > 0").reorder(:ranking).limit(5)
   end
 
   def host

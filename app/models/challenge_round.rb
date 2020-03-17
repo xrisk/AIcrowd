@@ -4,7 +4,7 @@ class ChallengeRound < ApplicationRecord
   belongs_to :challenge, inverse_of: :challenge_rounds
   has_many :submissions, dependent: :restrict_with_error
   has_many :leaderboards, dependent: :destroy
-
+  has_many :user_ratings
   validates :challenge_round, presence: true
   validates :submission_limit,
             numericality: { only_integer:             true,

@@ -39,7 +39,10 @@ describe "challenge", :js do
     end
 
     it "can follow Leaderboard link" do
-      click_link "Leaderboard"
+      within('.app-header'){
+        click_link "Leaderboard"
+      }
+
       expect(page).to have_content 'Leaderboard'
     end
 

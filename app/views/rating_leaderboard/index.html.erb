@@ -1,0 +1,54 @@
+<div class="masthead">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h1>📈User Rating</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<section class="section-p-sm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive-md">
+          <table class="table table-leaderboard">
+            <thead>
+            <tr>
+              <th scope="col" class="sticky-header leaderboard-change">Δ</th>
+              <th scope="col" class="sticky-header">Rank</th>
+              <th scope="col" class="sticky-header">Participant</th>
+              <th scope="col" class="sticky-header">Affiliation</th>
+              <th scope="col" class="sticky-header">Country</th>
+              <th scope="col" class="sticky-header">Rating</th>
+              <th scope="col" class="sticky-header"></th>
+            </tr>
+            </thead>
+            <tbody class="table-leaderboard-body">
+            <%= render partial: 'rating_leaderboard', locals: { participants: @participants } %>
+            </tbody>
+            <tbody>
+              <tr>
+                <td colspan="6">
+                  <div>
+                    <span id="more-anchor"></span>
+                    <%= render partial: 'shared/load_more', locals: { collection: @participants } %>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <% if @self_standing %>
+            <thead>
+              <tr><th colspan="6" style="text-align: center;">Your Standings</th></tr>
+            </thead>
+            <tbody>
+            <%= render partial: 'rating_leaderboard', locals: { participants: @self_standing } %>
+            </tbody>
+            <% end %>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

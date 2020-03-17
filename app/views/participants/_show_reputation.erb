@@ -1,0 +1,15 @@
+<span class="reputation-info" style="<%= style ||= '' %>">
+<% if participant.admin %>
+  <span class="reputation-score" data-toggle="tooltip" title="Admin">
+    ###
+  </span>
+<% else %>
+  <span class="reputation-score" data-toggle="tooltip" title="<%= participant.rating.to_i %> ± <%= participant.variation.to_i %>">
+    <% if defined?(full) and full %>
+      <%= participant.rating.to_i %> ± <%= participant.variation.to_i %>
+    <% else %>
+      <%= participant.rating.to_i %>
+    <% end %>
+  </span>
+<% end %>
+</span>

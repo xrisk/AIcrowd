@@ -92,30 +92,31 @@
       </div>
       <!-- /testimonial carousel -->
 
-      <!-- top contributors -->
+      <!-- top rated -->
       <div class="col-sm-12 col-md-4">
         <header class="section-header-decorative">
           <div>
-            <h4>LATEST USERS</h4>
+            <h4>
+              <%= link_to 'Top Rated', leaderboard_path, {:class => "nav-link"} %>
+            </h4>
           </div>
+          <%= link_to 'See all',
+            leaderboard_path,
+            class: "btn btn-secondary btn-sm" %>
         </header>
 
         <div class="card">
           <ul class="list-group list-group-flush list-group-latest-contributors">
             <% @participants.each do |participant| %>
-              <!-- user -->
               <li class="list-group-item">
-                <%= link_to participant_path(participant) do %>
-                  <%= image_tag participant.image_url, class: "avatar" %>
-                  <span class="text-link"><%= participant.name %></span>
-                <% end %>
+                <%= render partial: 'participants/user_link', locals: { participant: participant } %>
+                <%= render partial: 'participants/show_reputation', locals: { participant: participant } %>
               </li>
-              <!-- /user -->
             <% end %>
           </ul>
         </div>
       </div>
-      <!-- /top contributors -->
+      <!-- /top rated -->
 
     </div>
   </div>

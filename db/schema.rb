@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_09_134625) do
+ActiveRecord::Schema.define(version: 2020_03_14_060809) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -327,6 +327,7 @@ ActiveRecord::Schema.define(version: 2020_03_09_134625) do
     t.string "score_secondary_title", default: "Secondary Score", null: false
     t.string "primary_sort_order_cd", default: "ascending", null: false
     t.string "secondary_sort_order_cd", default: "not_used", null: false
+    t.boolean "calculated_permanent", default: false, null: false
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
   end
 
@@ -444,6 +445,7 @@ ActiveRecord::Schema.define(version: 2020_03_09_134625) do
     t.string "eua_file"
     t.index ["organizer_id"], name: "index_clef_tasks_on_organizer_id"
   end
+
 
   create_table "dataset_file_downloads", id: :serial, force: :cascade do |t|
     t.integer "participant_id"
@@ -596,6 +598,7 @@ ActiveRecord::Schema.define(version: 2020_03_09_134625) do
     t.string "slug"
     t.text "description_markdown"
   end
+
 
   create_table "mandrill_messages", force: :cascade do |t|
     t.jsonb "res"
@@ -766,6 +769,12 @@ ActiveRecord::Schema.define(version: 2020_03_09_134625) do
     t.integer "participation_terms_accepted_version"
     t.boolean "agreed_to_terms_of_use_and_privacy", default: true
     t.boolean "agreed_to_marketing", default: true
+    t.float "rating"
+    t.float "temporary_rating"
+    t.float "variation"
+    t.float "temporary_variation"
+    t.integer "ranking", default: -1, null: false
+    t.integer "ranking_change", default: 0, null: false
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["organizer_id"], name: "index_participants_on_organizer_id"
@@ -893,6 +902,7 @@ ActiveRecord::Schema.define(version: 2020_03_09_134625) do
     t.string "image_file"
   end
 
+
   create_table "task_dataset_file_downloads", force: :cascade do |t|
     t.bigint "participant_id"
     t.bigint "task_dataset_file_id"
@@ -963,6 +973,19 @@ ActiveRecord::Schema.define(version: 2020_03_09_134625) do
     t.index ["name", "challenge_id"], name: "index_teams_on_name_and_challenge_id", unique: true
   end
 
+  create_table "user_ratings", force: :cascade do |t|
+    t.bigint "participant_id"
+    t.float "rating"
+    t.float "temporary_rating"
+    t.float "variation"
+    t.float "temporary_variation"
+    t.bigint "challenge_round_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_round_id"], name: "index_user_ratings_on_challenge_round_id"
+    t.index ["participant_id"], name: "index_user_ratings_on_participant_id"
+  end
+
   create_table "versions", id: :serial, force: :cascade do |t|
     t.string "item_type", null: false
     t.integer "item_id", null: false
@@ -1025,6 +1048,8 @@ ActiveRecord::Schema.define(version: 2020_03_09_134625) do
   add_foreign_key "team_participants", "participants"
   add_foreign_key "team_participants", "teams"
   add_foreign_key "teams", "challenges"
+  add_foreign_key "user_ratings", "challenge_rounds"
+  add_foreign_key "user_ratings", "participants"
   add_foreign_key "votes", "participants"
 
   create_view "challenge_organizer_participants", materialized: true,  sql_definition: <<-SQL
@@ -1152,6 +1177,7 @@ ActiveRecord::Schema.define(version: 2020_03_09_134625) do
     WHERE ((c.id = cr.challenge_id) AND (c.id = acr.challenge_id) AND (acr.active IS TRUE));
   SQL
 
+
   create_view "leaderboards",  sql_definition: <<-SQL
       SELECT base_leaderboards.id,
       base_leaderboards.challenge_id,
@@ -1216,6 +1242,7 @@ ActiveRecord::Schema.define(version: 2020_03_09_134625) do
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
   SQL
 
+
   create_view "previous_leaderboards",  sql_definition: <<-SQL
       SELECT base_leaderboards.id,
       base_leaderboards.challenge_id,
@@ -1277,7 +1304,6 @@ ActiveRecord::Schema.define(version: 2020_03_09_134625) do
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'previous_ongoing'::text);
   SQL
-
   create_view "challenge_registrations",  sql_definition: <<-SQL
       SELECT row_number() OVER () AS id,
       x.challenge_id,
@@ -1393,5 +1419,4 @@ ActiveRecord::Schema.define(version: 2020_03_09_134625) do
     WHERE (r.challenge_id = c.id)
     ORDER BY (row_number() OVER ()), c.challenge;
   SQL
-
 end

@@ -1,9 +1,6 @@
 <% @participant_challenges.each do |challenge_participant| %>
   <% participant = challenge_participant.participant %>
   <li class="list-group-item">
-    <%= link_to participant_path(participant) do %>
-      <%= image_tag participant.image_url, class: 'avatar' %>
-      <span class="text-link"><%= participant.name %></span>
-    <% end %>
+    <%= render partial: 'participants/user_link', locals: { participant: participant } %>
   </li>
 <% end %>

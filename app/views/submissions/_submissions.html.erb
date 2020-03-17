@@ -9,7 +9,7 @@
     <td><strong><%= submission.id %></strong></td>
     <td>
       <% if participant.present? %>
-        <%= link_to participant.name, participant_path(participant) %>
+        <%= render partial: 'participants/user_link', locals: { participant: participant, avatar: false } %>
       <% else %>
         <span>#</span>
       <% end %>

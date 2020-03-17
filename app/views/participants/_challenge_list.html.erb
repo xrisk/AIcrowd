@@ -1,0 +1,78 @@
+<% challenges.each do |challenge| %>
+<div class="row mt-3 pb-3 border-bottom">
+    <div class="col-md-3" style="height: 180px;">
+        <%= link_to challenge_path(challenge) do %>
+          <%= image_tag(challenge.image_file_url, class: 'img-responsive img-fluid card-img image_16x9') %>
+        <% end %>
+        <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
+          <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>">
+            <img src="/assets/img/icon-time.svg">
+            <%= challenge_remaining_text(challenge, challenge.active_round) %>
+          </span>
+        <% end %>
+    </div>
+    <div class="col-md-4">
+        <div class="card-body pt-0">
+            <div class="card-intro">
+              <div class="card-challenge mb-0" style="box-shadow:none;">
+                <h5 class="card-title"><%= link_to challenge.challenge, challenge_path(challenge) %>
+                  <% if challenge.private_challenge %>
+                  <span class="badge badge-secondary">
+                    Private
+                  </span>
+                  <% end %>
+                  <% if challenge.hidden_challenge %>
+                  <span class="badge badge-secondary">
+                    Hidden
+                  </span>
+                  <% end %></h5>
+              </div>
+              By <% challenge.organizers.each do |organizer| %>
+                <%= link_to organizer_path(organizer) do %>
+                  <%= image_tag organizer.image_file_url %>
+                  <%= organizer.organizer %>
+                <% end %>
+              <% end %>
+            </div>
+            <% if challenge.tagline %>
+              <p class="card-text"><%= challenge.tagline %></p>
+            <% end %>
+            <%= render partial: 'shared/challenges/prizes_breakdown', locals: { challenge: challenge } %>
+        </div>
+    </div>
+    <div class="col-md-5 mt-n2">
+      <% submissions = challenge.submissions.where(participant_id:participant.id).reorder('created_at DESC').limit(3) %>
+      <header class="section-header">
+        <h4>Latest submissions</h4>
+        <% if submissions.any? %>
+          <a class="btn btn-secondary btn-sm pull-right" href="<%= challenge_submissions_path(challenge) %>?q%5Bparticipant_name_equals%5D=<%= participant.name %>">See All</a>
+        <% end %>
+      </header>
+        <table class="table table-no-border">
+            <tbody>
+              <% if submissions.any? %>
+                <% submissions.each do |submission| %>
+                <tr>
+                    <td><span class="badge <%= submission_grade_class(submission) %>"><%= submission.grading_status_cd %></span></td>
+                    <td><strong><%= submission.id %></strong></td>
+                    <td><%= local_time(submission.created_at, "%a, %e %b %Y") %> <%= local_time(submission.created_at, "%H:%M:%S") %></td>
+                    <% if challenge.submissions_page %>
+                      <%= link_to challenge_submission_path(challenge, submission.id) do %>
+                      <td data-toggle="tooltip" title="View Details"><i class="fa fa-link"></i></td>
+                      <% end %>
+                    <% else %>
+                      <td data-toggle="tooltip" title="Submission page is hidden"><i class="fa fa-unlink"></i></td>
+                    <% end %>
+                </tr>
+                <% end %>
+              <% else %>
+              No submissions made in this challenge.
+              <% end %>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12">
+
+    </div>
+</div>
+<% end %>

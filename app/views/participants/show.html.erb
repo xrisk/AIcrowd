@@ -1,6 +1,6 @@
 <%
   active_tab = params[:tab]
-  active_tab = 'challenges' unless ['teams','bio'].include?(active_tab)
+  active_tab = 'insights' unless ['teams','bio'].include?(active_tab)
 %>
 
 <%= render partial: 'masthead', locals: { participant: @participant } %>
@@ -10,7 +10,7 @@
   <div class="container-fluid">
     <ul class="nav tabs">
       <li class="nav-item">
-        <a class="nav-link nav-link-01<%= ' active' if active_tab == 'challenges' %>" data-toggle='tab' href="#tab-challenges" onclick="return false;">Challenges</a>
+        <a class="nav-link nav-link-01<%= ' active' if active_tab == 'insights' %>" data-toggle='tab' href="#tab-insights" onclick="return false;">Insights</a>
       </li>
       <li class="nav-item">
         <a class="nav-link nav-link-02<%= ' active' if active_tab == 'teams' %>" data-toggle='tab' href="#tab-teams" onclick="return false;">Teams</a>
@@ -35,24 +35,42 @@
 <!-- /sub-nav bar -->
 
 <div class="tab-content">
-  <div id='tab-challenges' class="tab-pane fade<%= ' show active' if active_tab == 'challenges' %>">
-    <% if @challenges.any? %>
-      <section class="section-p-sm bg-light">
-        <div class="container-fluid">
-          <div class="row">
-            <%= render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>
+  <div id='tab-insights' class="tab-pane fade<%= ' show active' if active_tab == 'insights' %>">
+    <!-- section -->
+    <section class="section-p-md">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-8">
+            <header class="section-header-decorative">
+              <div>
+                <h4>Ratings Progression</h4>
+              </div>
+            </header>
+            <%= line_chart @participant.user_rating_history %>
+          </div>
+          <div class="col-4">
+            <header class="section-header-decorative">
+              <div>
+                <h4>Challenge Categories</h4>
+              </div>
+            </header>
+            <%= pie_chart @categories, colors: ["#FF8C00", "#FFD700", "#6B8E23", "#FFEBCD", "#00FF00", 
+              "#228B22", "#800000", "#32CD32", "#B8860B", "#9966CC"] %>
           </div>
         </div>
-      </section>
-    <% else %>
+      </div>
+    </section>
+    <!-- /section -->
+    <% if @challenges.any? %>
       <section class="section-p-md">
         <div class="container-fluid">
-          <div class="row">
-            <div class="col-12">
-              <div class="md-content">
-                <%= "#{@participant.name} hasn't entered any challenges yet..." %>
-              </div>
+          <header class="section-header-decorative">
+            <div>
+              <h4>Challenges Entered</h4>
             </div>
+          </header>
+          <div class="container">
+            <%= render partial: 'challenge_list', locals: { challenges: @challenges, participant: @participant } %>
           </div>
         </div>
       </section>

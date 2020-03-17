@@ -23,10 +23,12 @@ class Participant < ApplicationRecord
          :omniauthable, omniauth_providers: %i[github oauth2_generic]
 
   default_scope { order('name ASC') }
+  scope :rated_users_count, -> { Participant.where("ranking > 0").count }
   has_many :participant_organizers, dependent: :destroy
   has_many :organizers, through: :participant_organizers
   has_many :submissions, dependent: :nullify
   has_many :votes, dependent: :destroy
+  has_many :user_ratings, dependent: :destroy
   has_many :blogs, dependent: :nullify
   has_many :challenge_participants, dependent: :destroy
   has_many :leaderboards, class_name: 'Leaderboard', as: :submitter
@@ -122,6 +124,9 @@ class Participant < ApplicationRecord
       account_disabled:        false,
       account_disabled_reason: nil,
       account_disabled_dttm:   nil)
+  end
+  def user_rating_history
+    UserRating.joins(:challenge_round).where(participant_id: self.id).group_by_day(:end_dttm).maximum(:rating).reject { |_, v| v.nil? }
   end
 
   def active_for_authentication?

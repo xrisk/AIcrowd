@@ -6224,6 +6224,18 @@ button.close {
   font-size: .875rem !important;
   top: 0;
   margin-right: 22px;
+  margin-left: -1px;
+  padding: 0;
+}
+
+.tooltip-user-wrapper .tooltip-inner .reputation-score {
+  padding-left: 24px;
+}
+
+.tooltip-user-wrapper .tooltip-inner .reputation-variance {
+  color: #44B174;
+  margin: 0;
+  padding: 0;
 }
 
 @media (max-width: 991.98px) {
@@ -6253,8 +6265,10 @@ button.close {
   background-image: url("../../assets/img/icon-location.svg");
   background-repeat: no-repeat;
   background-position: 3px 1px;
+  background-size: 9px 12px;
   font-size: .875rem !important;
-  padding-left: 24px;
+  line-height: 1;
+  padding-left: 18px;
   white-space: nowrap;
   position: relative;
   margin-top: .375rem;
@@ -6264,6 +6278,8 @@ button.close {
   background-image: url("../../assets/img/icon-work.svg");
   background-repeat: no-repeat;
   background-position: 0 1px;
+  background-position: 0 0;
+  background-size: 12px 12px;
 }
 
 .tooltip-user-wrapper .tooltip.bs-tooltip-top .arrow:before, .tooltip-user-wrapper .tooltip.bs-tooltip-auto[x-placement^="top"] .arrow:before {
@@ -10986,7 +11002,6 @@ body {
 }
 
 .avatar-group .avatar {
-  box-shadow: 0px 0px 0px 2px white;
   width: 32px;
   height: 32px;
 }
@@ -12127,6 +12142,18 @@ body {
   font-weight: 400;
 }
 
+.reputation-info .variation-1 {
+  color: #136f3b;
+}
+
+.reputation-info .variation-2 {
+  color: #44B174;
+}
+
+.reputation-info .variation-3 {
+  color: #a8c72e;
+}
+
 .section-header,
 .section-header-decorative,
 .section-header-mb-sm,
@@ -12170,6 +12197,10 @@ body {
 
 .section-header-decorative h4 {
   margin-top: 1.25rem;
+}
+
+.section-header-decorative h4 a {
+  color: #DE4B46;
 }
 
 .section-header-mb-sm {
@@ -13646,6 +13677,68 @@ html {
   color: #276EF1;
 }
 
+.table-leaderboard .sticky-header, .table-leaderboard .sticky-footer {
+  position: sticky;
+  position: -webkit-sticky;
+  z-index: 3;
+}
+.table-leaderboard .sticky-footer {
+  bottom: 0;
+}
+.table-leaderboard .sticky-header {
+  top: 0;
+}
+.table-leaderboard .current-user {
+  background: #fffde5;
+}
+
+.user-rating-0,
+.user-rating-1,
+.user-rating-2,
+.user-rating-3,
+.user-rating-4,
+.user-rating-5, {
+  border: 2px solid white;
+  box-shadow: 0px 0px 0px 2px rgba(72,187,0,1);
+}
+
+.user-rating-2 {
+  box-shadow: 0px 0px 0px 2px rgba(15,144,255,1);
+}
+
+.user-rating-3 {
+  box-shadow: 0px 0px 0px 2px rgba(255,181,15,1);
+}
+
+.user-rating-4 {
+  box-shadow: 0px 0px 0px 2px rgba(240,129,58,1);
+}
+
+.user-rating-5 {
+  box-shadow: 0px 0px 0px 2px rgba(240,82,77,1);
+}
+
+.user-rating-0 {
+  box-shadow: 0px 0px 0px 2px rgba(0,0,0,1);
+}
+
+.table-no-border td {
+  border: 0px;
+}
+
+.table-no-border tr {
+  border: 0px;
+}
+
+.table-no-border tr:last-of-type {
+  border: 0px;
+}
+
+.country-flag {
+  width: 24px;
+}
+
 @import 'challenges/form';
 @import 'challenges/datatable';
 @import 'challenges/insights';
+@import '_tooltips.scss';
