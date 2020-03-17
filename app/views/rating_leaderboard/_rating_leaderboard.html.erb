@@ -1,6 +1,6 @@
 <%
   participants.each do |participant|
-  if @current_participant and @current_participant.name == participant.name
+  if @current_participant && @current_participant.name == participant.name
     cls = 'sticky-footer current-user'
   end
 %>
@@ -11,15 +11,15 @@
   <td class="<%= cls ||= '' %>"><strong><span class="reputation-rank" style="width: 50px">#<%= participant.ranking %></span>
   </strong></td>
   <td class="<%= cls ||= '' %>">
-    <%= render :partial => 'participants/user_link', locals: { participant: participant } %>
+    <%= render partial: 'participants/user_link', locals: { participant: participant } %>
   </td>
   <td class="<%= cls ||= '' %>"><%= participant.affiliation ||= '-' %></td>
   <td class="<%= cls ||= '' %>">
-    <%= render :partial => 'shared/utility/flag', locals: { country_cd: participant.country_cd } %>
-    <%= render :partial => 'participants/location', locals: { participant: participant } %>
+    <%= render partial: 'shared/utility/flag', locals: { country_cd: participant.country_cd } %>
+    <%= render partial: 'participants/location', locals: { participant: participant } %>
   </td>
   <td class="<%= cls ||= '' %>">
-    <%= render :partial => 'participants/show_reputation', locals: { participant: participant, style: 'top: 0px;' } %>
+    <%= render partial: 'participants/show_reputation', locals: { participant: participant, style: 'top: 0px;' } %>
   </td>
   <td class="<%= cls ||= '' %>">
     <%= link_to participant_path(participant.name) do %>

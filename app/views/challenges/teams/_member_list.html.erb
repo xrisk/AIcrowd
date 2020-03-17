@@ -16,7 +16,7 @@
     <ul class="list-group list-group-flush-px-0 list-group-teams">
       <% members.each do |tp| %>
         <li class="list-group-item">
-          <%= render :partial => 'participants/user_link', locals: { participant: tp.participant } %>
+          <%= render partial: 'participants/user_link', locals: { participant: tp.participant } %>
           <% if tp.role_organizer? %>
             <span class="badge badge-success"><%= t('.members.organizer_badge') %></span>
           <% end %>
@@ -40,7 +40,7 @@
             <li class="list-group-item">
               <div>
                 <% if inv.invitee.is_a?(Participant) %>
-                  <%= render :partial => 'participants/user_link', locals: { participant: inv.invitee } %>
+                  <%= render partial: 'participants/user_link', locals: { participant: inv.invitee } %>
                 <% elsif inv.invitee.is_a?(EmailInvitation) %>
                   <%= inv.invitee.email %>
                 <% else %>
