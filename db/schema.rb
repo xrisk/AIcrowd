@@ -1275,4 +1275,120 @@ ActiveRecord::Schema.define(version: 2020_03_14_060809) do
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'previous_ongoing'::text);
   SQL
 
+  create_view "challenge_registrations",  sql_definition: <<-SQL
+      SELECT row_number() OVER () AS id,	
+      x.challenge_id,	
+      x.participant_id,	
+      x.registration_type,	
+      x.clef_task_id	
+     FROM ( SELECT s.challenge_id,	
+              s.participant_id,	
+              'submission'::text AS registration_type,	
+              NULL::integer AS clef_task_id	
+             FROM submissions s	
+          UNION	
+           SELECT s.votable_id,	
+              s.participant_id,	
+              'heart'::text AS registration_type,	
+              NULL::integer AS clef_task_id	
+             FROM votes s	
+            WHERE ((s.votable_type)::text = 'Challenge'::text)	
+          UNION	
+           SELECT df.challenge_id,	
+              dfd.participant_id,	
+              'dataset_download'::text AS text,	
+              NULL::integer AS clef_task_id	
+             FROM dataset_file_downloads dfd,	
+              dataset_files df	
+            WHERE (dfd.dataset_file_id = df.id)	
+          UNION	
+           SELECT c.id,	
+              pc.participant_id,	
+              'clef_task'::text AS registration_type,	
+              pc.clef_task_id	
+             FROM participant_clef_tasks pc,	
+              challenges c	
+            WHERE (c.clef_task_id = pc.clef_task_id)) x;
+  SQL
+
+  create_view "participant_challenges",  sql_definition: <<-SQL
+      SELECT DISTINCT p.id,	
+      cr.challenge_id,	
+      cr.participant_id,	
+      c.organizer_id,	
+      c.status_cd,	
+      c.challenge,	
+      c.private_challenge,	
+      c.description,	
+      c.rules,	
+      c.prizes,	
+      c.resources,	
+      c.tagline,	
+      c.image_file,	
+      c.submissions_count,	
+      c.participant_count,	
+      c.page_views,	
+      p.name,	
+      p.email,	
+      p.bio,	
+      p.github,	
+      p.linkedin,	
+      p.twitter	
+     FROM participants p,	
+      challenges c,	
+      challenge_registrations cr	
+    WHERE ((cr.participant_id = p.id) AND (cr.challenge_id = c.id));
+  SQL
+
+  create_view "participant_challenge_counts",  sql_definition: <<-SQL
+      SELECT row_number() OVER () AS row_number,	
+      y.challenge_id,	
+      y.participant_id,	
+      y.registration_type	
+     FROM ( SELECT DISTINCT x.challenge_id,	
+              x.participant_id,	
+              x.registration_type	
+             FROM ( SELECT s.challenge_id,	
+                      s.participant_id,	
+                      'submission'::text AS registration_type	
+                     FROM submissions s	
+                  UNION	
+                   SELECT s.votable_id,	
+                      s.participant_id,	
+                      'heart'::text AS registration_type	
+                     FROM votes s	
+                    WHERE ((s.votable_type)::text = 'Challenge'::text)	
+                  UNION	
+                   SELECT df.challenge_id,	
+                      dfd.participant_id,	
+                      'dataset_download'::text AS text	
+                     FROM dataset_file_downloads dfd,	
+                      dataset_files df	
+                    WHERE (dfd.dataset_file_id = df.id)) x	
+            ORDER BY x.challenge_id, x.participant_id) y;
+  SQL
+
+  create_view "challenge_stats",  sql_definition: <<-SQL
+      SELECT row_number() OVER () AS id,	
+      c.id AS challenge_id,	
+      c.challenge,	
+      r.id AS challenge_round_id,	
+      r.challenge_round,	
+      r.start_dttm,	
+      r.end_dttm,	
+      (r.end_dttm - r.start_dttm) AS duration,	
+      ( SELECT count(s.id) AS count	
+             FROM submissions s	
+            WHERE (s.challenge_id = c.id)) AS submissions,	
+      ( SELECT count(p.id) AS count	
+             FROM participants p	
+            WHERE (p.id IN ( SELECT s1.participant_id	
+                     FROM submissions s1	
+                    WHERE (s1.challenge_id = c.id)))) AS participants	
+     FROM challenges c,	
+      challenge_rounds r	
+    WHERE (r.challenge_id = c.id)	
+    ORDER BY (row_number() OVER ()), c.challenge;
+  SQL
+
 end
