@@ -25,7 +25,7 @@ class ParticipantsController < ApplicationController
     @categories = @participant.challenges.joins(:categories).pluck('categories.name')
                     .inject(Hash.new(0)) { |h, e| h[e] += 1 ; h }
     if @categories.count == 0
-      @categories = {'No challenge participated' => 1}
+      @categories = {'No category information' => 1}
     end
   end
 
