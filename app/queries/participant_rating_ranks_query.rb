@@ -12,7 +12,7 @@ class ParticipantRatingRanksQuery
       change_in_true_ranking = participant.current_ranking - participant.previous_ranking
       if participant.previous_ranking == -1
         {'ranking_change' => 0}
-      elsif  change_in_true_ranking == 0
+      elsif  change_in_true_ranking.to_i == 0
         {'ranking_change' => participant.ranking_change}
       else
         {'ranking_change' => change_in_true_ranking}
