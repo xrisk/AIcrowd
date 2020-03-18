@@ -21,7 +21,7 @@ class MembersController < ApplicationController
 
   def destroy
     participant = Participant.friendly.find(params[:id])
-    @organizer.participants.destroy(participant)
+    @organizer.participants.destroy!(participant)
     redirect_to organizer_members_path(@organizer)
   end
 
