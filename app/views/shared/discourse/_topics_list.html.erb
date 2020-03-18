@@ -17,7 +17,7 @@
         <div>
           <%= link_to discourse_topic['title'], discourse_topic_url(discourse_topic['slug']), class: 'topic-title text-link' %>
           <% if author['participant'].present? %>
-            <span>By <%= link_to author['participant'].name, discourse_user_url(author['participant'].name), class: 'text-link' %> <%= discourse_time_ago(discourse_topic['created_at']) %></span>
+            <span>By <%= render partial: 'participants/user_link', locals: { participant: author['participant'], avatar: false } %> <%= discourse_time_ago(discourse_topic['created_at']) %></span>
           <% else %>
             <span><%= discourse_time_ago(discourse_topic['created_at']) %></span>
           <% end %>
@@ -26,9 +26,7 @@
 
       <div class="avatar-group col-2">
         <% discourse_topic['posters'].take(4).each_with_index do |poster, index| %>
-          <%= link_to discourse_user_url(poster['participant']&.name) do %>
-            <%= image_tag discourse_participant_image_or_default(poster['participant']), class: "avatar #{'list-group-discussion' if index.zero?}", alt: 'Poster Avatar' %>
-          <% end %>
+          <%= render partial: 'participants/user_link', locals: { participant: poster['participant'], username: false } %>
         <% end %>
       </div>
 
