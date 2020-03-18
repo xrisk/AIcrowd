@@ -1,5 +1,5 @@
 <%
-  participants.each do |participant|
+  participants.to_a.each do |participant|
   if @current_participant && @current_participant.name == participant.name
     cls = 'sticky-footer current-user'
   end

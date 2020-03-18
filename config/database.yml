@@ -14,7 +14,7 @@ staging:
 
 test:
   <<: *default
-  database: crowdai_test<%= ENV['TEST_ENV_NUMBER'] %>
+  database: crowdai_development
 
 production:
   <<: *default

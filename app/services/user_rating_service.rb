@@ -1,7 +1,7 @@
 class UserRatingService
   def initialize(round_id)
     @round = ChallengeRound.find_by(id:round_id)
-    if @round.end_dttm.present? && @round.end_dttm < Time.current
+    if @round && @round.end_dttm.present? && @round.end_dttm < Time.current
       @temporary = false
     else
       @temporary = true
