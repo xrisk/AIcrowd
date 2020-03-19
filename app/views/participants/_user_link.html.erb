@@ -5,7 +5,7 @@
 <div class="tooltip-user-wrapper <%= random_class %>">
     <div style="display: table-row;" data-container=".<%= random_class %>" data-html="true" data-toggle="tooltip" 
         title='<%= render partial: 'participants/tooltip_profile', locals: { participant: participant } %>'>
-        <a href="<%= participant_path(participant.name) %>">
+        <a href="<%= participant_path(participant) %>">
             <% if !defined?(avatar) || (defined?(avatar) && avatar) %>
                 <%= participant_avatar participant %>
             <% end %>
