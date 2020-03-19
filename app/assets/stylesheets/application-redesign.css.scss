@@ -5567,6 +5567,10 @@ video {
   }
 }
 
+.list-group-discussion div:first-child .tooltip-user-wrapper {
+  display: inherit;
+}
+
 .list-group-discussion div:first-child {
   display: flex;
   align-items: center;

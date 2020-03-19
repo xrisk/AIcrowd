@@ -5,10 +5,7 @@
       <!-- user -->
       <li class="list-group-item">
         <% if top_contributor['participant'].present? %>
-          <%= link_to discourse_user_url(top_contributor['participant'].name) do %>
-            <%= image_tag top_contributor['participant'].image_url, class: "avatar" %>
-            <span class="text-link"><%= top_contributor['participant'].name %></span>
-          <% end %>
+          <%= render partial: 'participants/user_link', locals: { participant: top_contributor['participant'] } %>
         <% end %>
 
         <div class="reputation-info">
