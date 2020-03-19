@@ -446,7 +446,6 @@ ActiveRecord::Schema.define(version: 2020_03_14_060809) do
     t.index ["organizer_id"], name: "index_clef_tasks_on_organizer_id"
   end
 
-
   create_table "dataset_file_downloads", id: :serial, force: :cascade do |t|
     t.integer "participant_id"
     t.integer "dataset_file_id"
@@ -598,7 +597,6 @@ ActiveRecord::Schema.define(version: 2020_03_14_060809) do
     t.string "slug"
     t.text "description_markdown"
   end
-
 
   create_table "mandrill_messages", force: :cascade do |t|
     t.jsonb "res"
@@ -902,7 +900,6 @@ ActiveRecord::Schema.define(version: 2020_03_14_060809) do
     t.string "image_file"
   end
 
-
   create_table "task_dataset_file_downloads", force: :cascade do |t|
     t.bigint "participant_id"
     t.bigint "task_dataset_file_id"
@@ -1177,7 +1174,6 @@ ActiveRecord::Schema.define(version: 2020_03_14_060809) do
     WHERE ((c.id = cr.challenge_id) AND (c.id = acr.challenge_id) AND (acr.active IS TRUE));
   SQL
 
-
   create_view "leaderboards",  sql_definition: <<-SQL
       SELECT base_leaderboards.id,
       base_leaderboards.challenge_id,
@@ -1242,7 +1238,6 @@ ActiveRecord::Schema.define(version: 2020_03_14_060809) do
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
   SQL
 
-
   create_view "previous_leaderboards",  sql_definition: <<-SQL
       SELECT base_leaderboards.id,
       base_leaderboards.challenge_id,
@@ -1304,6 +1299,7 @@ ActiveRecord::Schema.define(version: 2020_03_14_060809) do
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'previous_ongoing'::text);
   SQL
+
   create_view "challenge_registrations",  sql_definition: <<-SQL
       SELECT row_number() OVER () AS id,
       x.challenge_id,
@@ -1325,7 +1321,7 @@ ActiveRecord::Schema.define(version: 2020_03_14_060809) do
           UNION
            SELECT df.challenge_id,
               dfd.participant_id,
-              'dataset_download'::text AS text,
+              'dataset_download'::text,
               NULL::integer AS clef_task_id
              FROM dataset_file_downloads dfd,
               dataset_files df
@@ -1390,7 +1386,7 @@ ActiveRecord::Schema.define(version: 2020_03_14_060809) do
                   UNION
                    SELECT df.challenge_id,
                       dfd.participant_id,
-                      'dataset_download'::text AS text
+                      'dataset_download'::text
                      FROM dataset_file_downloads dfd,
                       dataset_files df
                     WHERE (dfd.dataset_file_id = df.id)) x
@@ -1419,4 +1415,5 @@ ActiveRecord::Schema.define(version: 2020_03_14_060809) do
     WHERE (r.challenge_id = c.id)
     ORDER BY (row_number() OVER ()), c.challenge;
   SQL
+
 end
