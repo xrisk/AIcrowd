@@ -3,6 +3,10 @@ $(document).on('click', '.challenge-invite-participant', function(){
   $('.challenge-invite-participant').attr("disabled", true);
 });
 
+$(document).ready(function() {
+  $('.category_select2').select2({
+    tags: true
+  });
 
 $(document).ready(function() {
   $('input[name="status"]:radio').change(function(){

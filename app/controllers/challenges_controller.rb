@@ -63,7 +63,7 @@ class ChallengesController < ApplicationController
 
     if @challenge.save
       update_challenges_organizers if params[:challenge][:organizer_ids].present?
-      update_challenge_categories if params[:challenge][:category_ids].present?
+      create_challenge_category if params[:challenge][:category_names].present?
       redirect_to edit_challenge_path(@challenge, step: :overview), notice: 'Challenge created.'
     else
       render :new
@@ -75,8 +75,7 @@ class ChallengesController < ApplicationController
   def update
     if @challenge.update(challenge_params)
       update_challenges_organizers if params[:challenge][:organizer_ids].present?
-      update_challenge_categories if params[:challenge][:category_ids].present?
-      set_challenge
+      create_challenge_category if params[:challenge][:category_names].present?
       create_invitations if params[:challenge][:invitation_email].present?
       respond_to do |format|
         format.html { redirect_to edit_challenge_path(@challenge, step: params[:current_step]), notice: 'Challenge updated.' }
@@ -205,10 +204,11 @@ class ChallengesController < ApplicationController
     end
   end
 
-  def update_challenge_categories
-    @challenge.category_challenges.destroy_all
-    params[:challenge][:category_ids].each do |category_id|
-      @challenge.category_challenges.create(category_id: category_id)
+  def create_challenge_category
+    @challenge.category_challenges.destroy_all if @challenge.category_challenges.present?
+    params[:challenge][:category_names].reject(&:empty?).each do |category_name|
+      category = Category.find_or_create_by!(name: category_name)
+      @challenge.category_challenges.create(category_id: category.id)
     end
   end
 
