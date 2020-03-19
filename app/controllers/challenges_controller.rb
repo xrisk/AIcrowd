@@ -208,7 +208,7 @@ class ChallengesController < ApplicationController
     @challenge.category_challenges.destroy_all if @challenge.category_challenges.present?
     params[:challenge][:category_names].reject(&:empty?).each do |category_name|
       category = Category.find_or_create_by!(name: category_name)
-      @challenge.category_challenges.create(category_id: category.id)
+      @challenge.category_challenges.create!(category_id: category.id)
     end
   end
 
