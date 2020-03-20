@@ -14,11 +14,9 @@
                      } do |f| %>
           <%= render "shared/error_messages", target: @participant %>
 
-          <div class="form-check">
-            <%= f.check_box :agreed_to_marketing, class: "form-check-input" %>
-            <label class="form-check-label" for="newsletterEmails">
-              Receive the AIcrowd Newsletter
-            </label>
+          <div class="form-group">
+            <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :agreed_to_marketing, text: 'Receive the AIcrowd Newsletter' } %>
+            <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :agreed_to_organizers_newsletter, text: 'Receive e-mails from challenge organizers' } %>
           </div>
 
           <div class="mt-5 mb-5">

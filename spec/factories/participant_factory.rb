@@ -12,6 +12,7 @@ FactoryBot.define do
     country_cd                           { FFaker::Address.country_code }
     timezone                             { 'GMT' }
     agreed_to_terms_of_use_and_privacy   { true }
+    agreed_to_organizers_newsletter      { true }
     participation_terms_accepted_date    { Time.current }
     participation_terms_accepted_version { 1 }
 

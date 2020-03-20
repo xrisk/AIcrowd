@@ -25,7 +25,7 @@ class EmailPreferencesController < ApplicationController
   end
 
   def participant_params
-    params.require(:participant).permit(:agreed_to_marketing)
+    params.require(:participant).permit(:agreed_to_marketing, :agreed_to_organizers_newsletter)
   end
 
   def email_preferences_token_or_authenticate
