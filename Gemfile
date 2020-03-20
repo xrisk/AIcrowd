@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-# source 'https://rails-assets.org'
-source 'http://insecure.rails-assets.org' # something wrong with Rails assets
 
 # Rails assets gems
-gem 'rails-assets-isInViewport'
-gem 'rails-assets-jQuery-File-Upload'
+source 'https://rails-assets.org' do
+  gem 'rails-assets-isInViewport'
+  gem 'rails-assets-jQuery-File-Upload'
+end
 
 ruby '2.5.5'
 gem 'rails', '5.2.2.1'
@@ -39,12 +39,10 @@ gem 'friendly_id', '~> 5.1.0'
 gem 'fast_blank'
 gem 'font-awesome-rails'
 gem 'figaro'
-gem 'fog'
+gem 'fog-aws'
 gem 'file_validators'
 gem 'gibbon'
 gem 'groupdate'
-gem 'http'
-gem 'httparty'
 gem 'informant-rails'
 gem 'include_media_rails'
 gem 'inline_svg'
@@ -89,6 +87,7 @@ gem 'scenic', '~> 1.3'
 gem 'sprockets', '~> 4.0.0.beta8'
 gem 'social-share-button'
 gem 'sass-rails'
+gem "safely_block", "~> 0.2.2"
 gem 'skylight', '~> 3.0'
 gem 'sidekiq', '~> 5.1.1'
 gem 'sidekiq-cron', '~> 0.6.3'
@@ -156,5 +155,3 @@ group :test do
   gem 'vcr', '~> 5.0'
   gem 'webmock', '~> 3.7', '>= 3.7.6'
 end
-
-gem "safely_block", "~> 0.2.2"
