@@ -64,7 +64,7 @@
         <div class='category-group'>
           <% challenge.categories.each do |category| %>
             <%= link_to challenges_path(category: {category_names: [category.name]}) do %>
-              <span class='badge badge-outline'><%= category.name %></span>
+              <%= render partial: 'shared/challenges/category_pill', locals: { category: category } %>
             <% end %>
           <% end %>
         </div>

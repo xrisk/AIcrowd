@@ -9,11 +9,6 @@
             <%= challenge_round.challenge_round %>: <%= challenge_remaining_text(challenge, challenge_round) %>
           </span>
         <% end %>
-        <% challenge.categories.each do |category| %>
-          <%= link_to challenges_path(category: {category_names: [category.name]}) do %>
-            <span class='badge badge-outline'><%= category.name %></span>
-          <% end %>
-        <% end %>
       </div>
     </div>
 
@@ -89,6 +84,15 @@
       </div>
     </div>
     <!-- /organizer/stats/options -->
+    <div class="row pull-right">
+      <div class="col-12 d-flex align-items-center flex-wrap">
+        <% challenge.categories.each do |category| %>
+          <%= link_to challenges_path(category: {category_names: [category.name]}) do %>
+            <%= render partial: 'shared/challenges/category_pill', locals: { category: category } %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
 <!-- /masthead - challenge -->
