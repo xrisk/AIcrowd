@@ -1,7 +1,5 @@
 <div class="load-more">
-  <% if collection.present? %>
-    <%= link_to_next_page collection, content_tag(:button, 'Load more', class: 'btn btn-secondary btn-block'), remote: true %>
-  <% end %>
+  <%= link_to_next_page collection, content_tag(:button, 'Load more', class: 'btn btn-secondary btn-block'), remote: true %>
 </div>
 <script>
   // Make sure tooltip continues to work on load more across the website
