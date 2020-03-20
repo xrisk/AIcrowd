@@ -165,6 +165,7 @@ Rails.application.routes.draw do
 
   resources :challenges, only: [], module: :challenges do
     resource :discussion, only: :show
+    resource :newsletter_emails, only: [:new, :create]
   end
 
   get '/load_more_challenges', to: 'challenges#load_more', as: :load_more_challenges

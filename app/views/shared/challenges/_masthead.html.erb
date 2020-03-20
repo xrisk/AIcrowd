@@ -86,8 +86,18 @@
           <%= render partial: 'shared/votes/button', locals: { votable: challenge, vote: vote } %>
           <%= render partial: 'shared/challenges/follow_button', locals: { followable: challenge, follow: follow } %>
         </div>
+
+        <div class="dropdown organizer-actions-dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Organizer actions
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <%= link_to 'Send newsletter e-mail', new_challenge_newsletter_emails_path(challenge), class: 'dropdown-item' %>
+          </div>
+        </div>
       </div>
     </div>
+
     <!-- /organizer/stats/options -->
   </div>
 </div>
