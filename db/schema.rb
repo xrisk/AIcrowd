@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_19_083607) do
+ActiveRecord::Schema.define(version: 2020_03_19_164103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -615,6 +615,16 @@ ActiveRecord::Schema.define(version: 2020_03_19_083607) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "newsletter_emails", force: :cascade do |t|
+    t.text "emails_list", null: false
+    t.text "cc", default: "", null: false
+    t.text "subject", null: false
+    t.text "message", null: false
+    t.boolean "pending", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.bigint "participant_id"
     t.string "notification_type"
@@ -773,7 +783,6 @@ ActiveRecord::Schema.define(version: 2020_03_19_083607) do
     t.float "temporary_variation"
     t.integer "ranking", default: -1, null: false
     t.integer "ranking_change", default: 0, null: false
-    t.boolean "agreed_to_organizers_newsletter", default: true, null: false
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["organizer_id"], name: "index_participants_on_organizer_id"
