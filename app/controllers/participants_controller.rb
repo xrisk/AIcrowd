@@ -94,7 +94,7 @@ class ParticipantsController < ApplicationController
   private
 
   def set_participant
-    @participant = Participant.friendly.find_by_friendly_id(params[:id].downcase)
+    @participant = Participant.friendly.find_by_friendly_id(params[:id])
     authorize @participant
   end
 
