@@ -1,6 +1,5 @@
 import { Controller } from 'stimulus';
 
-
 function setupOembed(){
     document.querySelectorAll( 'oembed[url]' ).forEach(element => {
         // Create the <a href="..." class="embedly-card"></a> element that Embedly uses
@@ -15,19 +14,23 @@ function setupOembed(){
 };
 
 function loadMathJax() {
-    window.MathJax = null;
+  if (window.MathJax) {
+    window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub]);
+  }
+  else {
     $.getScript(
-        "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML",
-        function () {
-            MathJax.Hub.Config({
-                tex2jax: {
-                    inlineMath: [["$", "$"], ["\\(", "\\)"]],
-                    displayMath: [["$$", "$$"], ["\\[", "\\]"]],
-                    processEscapes: true
-                }
-            });
-        }
+      "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML",
+      function () {
+        MathJax.Hub.Config({
+          tex2jax: {
+            inlineMath: [["$", "$"], ["\\(", "\\)"]],
+            displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+            processEscapes: true
+          }
+        });
+      }
     );
+  }
 }
 export default class extends Controller {
     selectedLink;
@@ -38,18 +41,25 @@ export default class extends Controller {
     headings;
     fullContent;
 
+    replaceContent(content){
+        this.fullContent = content.replace(/~~(.*?)~~/gim, "<del>$1</del>");
+        this.showTOC();
+    }
+
     updateContent(content) {
         this.el.html(content);
+        hljs.initHighlighting.called = false;
+        hljs.initHighlighting();
+        loadMathJax();
+        setupOembed();
     }
 
     initialize() {
+        this.element['controller'] = this;
         this.el = $(this.element);
         // Convert strikeouts!
         this.fullContent = this.el.html().replace(/~~(.*?)~~/gim, "<del>$1</del>");
         this.showTOC();
-
-        loadMathJax();
-        setupOembed();
     }
 
     showTOC() {
@@ -86,11 +96,10 @@ export default class extends Controller {
     }
 
     showTabularTOC() {
+        this.updateContent(this.fullContent);
         if (window.matchMedia("(max-width: 991.98px)").matches) {
-            this.updateContent(this.fullContent);
             return;
         }
-        this.updateContent(this.fullContent);
         this.toc = $("#table-of-contents");
         this.firstChild = this.el.children().first();
 
@@ -106,6 +115,7 @@ export default class extends Controller {
         this.createTOC();
         this.updateActive();
         this.el.children().first().remove();
+        this.selectedLink = this.tocLinks.first();
         this.selectedLink.click();
     }
 
@@ -120,7 +130,7 @@ export default class extends Controller {
             const li = $('<li/>', { class: 'nav-item'}).appendTo(this.toc);
 
             // Create a link tag to trigger content change
-            const link = $('<a/>', { class: 'nav-link', text:  _.capitalize($(heading).text()) }).appendTo(li);
+            const link = $('<a/>', { class: 'nav-link', text: $(heading).text() }).appendTo(li);
 
             // Calculate Content
             const content = this.getContent($(heading), index);

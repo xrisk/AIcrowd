@@ -16,6 +16,7 @@
 //= require local-time
 //= require lodash
 //= require select2
+//= require ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js
 
 // --------------------- Vendor ------------------------ //
 //= require jQuery-File-Upload
@@ -93,4 +94,5 @@ document.addEventListener("turbolinks:click", function () {
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').popover();
+    hljs.initHighlightingOnLoad();
 });
