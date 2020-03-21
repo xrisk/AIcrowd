@@ -29,7 +29,7 @@ class UserRatingService
   end
 
   def filter_rating_api_output(teams_participant_ids, new_team_ratings, new_team_variations)
-    participant_ids, new_participant_ratings, new_participant_variations = [], [], [], []
+    participant_ids, new_participant_ratings, new_participant_variations = [], [], []
     teams_participant_ids.each_with_index do |team, i|
       team.each_with_index do |participant_id, j|
         participant_ids << participant_id
@@ -37,7 +37,7 @@ class UserRatingService
           new_participant_ratings << {"temporary_rating" => new_team_ratings[i][j] }
           new_participant_variations << {"temporary_variation" => new_team_variations[i][j]}
         else
-          new_participant_ratings << {"rating" => new_team_ratings[i][j] }
+          new_participant_ratings << {"rating" => new_team_ratings[i][j], "fixed_rating" => new_team_ratings[i][j]  }
           new_participant_variations << {"variation" => new_team_variations[i][j]}
         end
       end
