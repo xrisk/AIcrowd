@@ -23,7 +23,7 @@ class UserRatingController < ApplicationController
     end
     user_rating_service = UserRatingService.new(params[:round_id])
     teams_participant_ids, new_team_ratings, new_team_variations = params[:participant_ids], params[:final_rating], params[:final_variation]
-    if new_team_ratings.any? && new_team_variations.any?
+    if new_team_ratings.blank? && new_team_variations.blank?
       participant_ids, new_participant_ratings, new_participant_variations = user_rating_service.filter_rating_api_output teams_participant_ids, new_team_ratings, new_team_variations
       user_rating_service.update_database_columns participant_ids, new_participant_ratings, new_participant_variations
     end
