@@ -1,47 +1,64 @@
-<div class="challenges-form__thin-tab">
+<div class="challenges-form">
   <div class="form-group">
+    <button type="button" class="btn btn-primary btn-sml pull-right mb-0" data-toggle="modal" data-target="#preview-modal">
+      Preview
+    </button>
     <span class="label-text">Overview</span>
+  </div>
+  </br>
+  <div class="form-group">
     <div class="md-content">
-      <%= f.text_area :description, class: "form-control", data: { controller: "ckeditor" } %>
+      <%= f.cktext_area :description, ckeditor: {height: 800} %>
     </div>
   </div>
+  <div class="challenges-form__thin-tab">
+    <div class="form-group">
+      <span class="label-text">Prizes Breakdown</span>
+    </div>
 
-  <div class="form-group">
-    <span class="label-text">Prizes Breakdown</span>
-  </div>
+    <div class="form-group">
+      <span class="label-text">Prize Money</span>
+      <%= f.text_field :prize_cash, class: "form-control" %>
+    </div>
 
-  <div class="form-group">
-    <span class="label-text">Prize Money</span>
-    <%= f.text_field :prize_cash , class: "form-control" %>
-  </div>
+    <div class="form-group">
+      <span class="label-text">Travel Grants</span>
+      <%= f.text_field :prize_travel, class: "form-control" %>
+    </div>
 
-  <div class="form-group">
-    <span class="label-text">Travel Grants</span>
-    <%= f.text_field :prize_travel , class: "form-control" %>
-  </div>
+    <div class="form-group">
+      <span class="label-text">Authorship/Co-Authorship</span>
+      <%= f.text_field :prize_academic, class: "form-control" %>
+    </div>
 
-  <div class="form-group">
-    <span class="label-text">Authorship/Co-Authorship</span>
-    <%= f.text_field :prize_academic , class: "form-control" %>
-  </div>
+    <div class="form-group">
+      <span class="label-text">Misc Prizes</span>
+      <%= f.text_field :prize_misc, class: "form-control" %>
+    </div>
 
-  <div class="form-group">
-    <span class="label-text">Misc Prizes</span>
-    <%= f.text_field :prize_misc , class: "form-control" %>
-  </div>
-
-  <fieldset>
-    <h4>Partner Logos</h4>
-    <div id='partner-logos'>
-      <%= f.fields_for :challenge_partners do |partner| %>
-        <%= render 'challenges/fields/challenge_partner_fields', f: partner %>
-      <% end %>
-      <div class='links'>
-        <%= link_to_add_association '+ Partner Logo', f, :challenge_partners, html_options = { partial: 'challenges/fields/challenge_partner_fields', id: 'challenges-form-add-partner' } %>
+    <fieldset>
+      <h4>Partner Logos</h4>
+      <div id='partner-logos'>
+        <%= f.fields_for :challenge_partners do |partner| %>
+          <%= render 'challenges/fields/challenge_partner_fields', f: partner %>
+        <% end %>
+        <div class='links'>
+          <%= link_to_add_association '+ Partner Logo', f, :challenge_partners, html_options = {partial: 'challenges/fields/challenge_partner_fields', id: 'challenges-form-add-partner'} %>
+        </div>
       </div>
-    </div>
-    <br/><br/>
-  </fieldset>
-
-  <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, current_step: 'overview' } %>
+      <br/><br/>
+    </fieldset>
+  </div>
+  <%= render partial: 'challenges/fields/submit_buttons', locals: {f: f, current_step: 'overview'} %>
 </div>
+
+
+<!-- Preview Modal -->
+<div class="modal fade" id="preview-modal" tabindex="-1" role="dialog" aria-labelledby="preview-modal-label" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <%= render partial: 'challenges/show/overview_preview', locals: {overview_for_preview: f.object.description} %>
+    </div>
+  </div>
+</div>
+<!-- /Preview Modal -->

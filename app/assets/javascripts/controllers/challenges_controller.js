@@ -180,9 +180,26 @@ Paloma.controller('Challenges', {
           $('#submissions-export-link').attr('href', submissionsExportUrl.toString());
         });
 
-        if (currentTab) {
-          currentTab.tab('show');
-          resetChallengesFormClientValidations();
+      if (currentTab) {
+        currentTab.tab('show');
+        resetChallengesFormClientValidations();
+      }
+
+      // Change here need to be copied to update.js.erb as well!
+      $('#preview-modal').on('show.bs.modal', function (event) {
+        let editor = CKEDITOR.instances["challenge_description"];
+        let modal = $(this);
+        editor.fire('saveSnapshot');
+        if (editor.mode === 'markdown') {
+          editor.setMode('wysiwyg', function () {
+            let data = editor.getData();
+            modal.find('.ck-content').get(0)['controller'].replaceContent(data);
+            editor.setMode('markdown');
+          });
+        } else {
+          let data = editor.getData();
+          modal.find('.ck-content').get(0)['controller'].replaceContent(data);
         }
+      });
     }
 });
