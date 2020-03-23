@@ -16,10 +16,11 @@ class NewsletterEmailForm
     end
 
     NewsletterEmail.create!(
-      emails_list: bcc_emails,
-      cc:          cc_emails,
+      bcc:         bcc_emails.join(', '),
+      cc:          cc_emails.join(', '),
       subject:     subject,
-      message:     message
+      message:     message,
+      participant: participant
     )
 
     true
