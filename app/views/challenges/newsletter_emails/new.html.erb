@@ -7,8 +7,8 @@
     <div class="row">
       <%= form_with model: @newsletter_email_form, url: challenge_newsletter_emails_path(@challenge), validate: true, local: true do |f| %>
         <div class="form-group">
-          <span class="label-text">To</span>
-          <%= f.text_field :to, class: "form-control" %>
+          <span class="label-text">Groups</span>
+          <%= f.select :group, @newsletter_email_groups, { include_blank: true }, { class: 'form-control' } %>
         </div>
 
         <div class="form-group">
@@ -34,7 +34,7 @@
         </div>
 
         <div class="btn-set" aria-hidden="true">
-          <%= f.button 'Create Newsletter E-mail', class: 'btn btn-primary btn-sm', data: { disable_with: 'Saving...' } %>
+          <%= f.button 'Send Newsletter E-mail', class: 'btn btn-primary btn-sm', data: { disable_with: 'Saving...' } %>
         </div>
       <% end %>
     </div>
