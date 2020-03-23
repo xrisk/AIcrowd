@@ -2,11 +2,11 @@ class UserRatingController < ApplicationController
   def get_leaderboard_ranks
     user_rating_service = UserRatingService.new(params[:round_id])
     leaderboard_rating_stats = user_rating_service.leaderboard_query
-    ranks, teams_mu, teams_sigma, teams_participant_ids = user_rating_service.filter_leaderboard_stats leaderboard_rating_stats
+    ranks, teams_rating, teams_variation, teams_participant_ids = user_rating_service.filter_leaderboard_stats leaderboard_rating_stats
     response = {
         ranks: ranks,
-        teams_mu: teams_mu,
-        teams_sigma: teams_sigma,
+        teams_rating: teams_rating,
+        teams_variation: teams_variation,
         teams_participant_ids: teams_participant_ids
     }
     render json: response.to_json

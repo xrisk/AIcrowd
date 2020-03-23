@@ -13,7 +13,7 @@ class UserRatingService
   end
 
   def filter_leaderboard_stats(leaderboard_rating_stats)
-    ranks, teams_mu, teams_sigma, teams_participant_ids = [], [], [], []
+    ranks, teams_rating, teams_variation, teams_participant_ids = [], [], [], []
     for team in leaderboard_rating_stats
       if team['participant_id'].blank?
         next
@@ -21,11 +21,11 @@ class UserRatingService
         teams_participant_ids << team['participant_id'].to_s.split(',')
       end
       ranks << team['seq']
-      teams_mu << team['participant_mu'].to_s.split(',')
-      teams_sigma << team['participant_sigma'].to_s.split(',')
+      teams_rating << team['participant_mu'].to_s.split(',')
+      teams_variation << team['participant_sigma'].to_s.split(',')
 
     end
-    return ranks, teams_mu, teams_sigma, teams_participant_ids
+    return ranks, teams_rating, teams_variation, teams_participant_ids
   end
 
   def filter_rating_api_output(teams_participant_ids, new_team_ratings, new_team_variations)
