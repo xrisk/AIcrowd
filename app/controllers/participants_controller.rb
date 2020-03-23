@@ -22,7 +22,7 @@ class ParticipantsController < ApplicationController
                              end
     @discourse_posts = @discourse_posts_fetch.value
 
-    @categories = @participant.challenges.joins(:categories).group('categories.name').reorder('catogories.name').count
+    @categories = @participant.challenges.joins(:categories).group('categories.name').reorder('categories.name').count
     if @categories.count == 0
       @categories = {'No category information' => 1}
     end
