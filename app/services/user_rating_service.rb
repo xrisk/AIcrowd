@@ -21,8 +21,8 @@ class UserRatingService
         teams_participant_ids << team['participant_id'].to_s.split(',')
       end
       ranks << team['seq']
-      teams_rating << team['participant_mu'].to_s.split(',')
-      teams_variation << team['participant_sigma'].to_s.split(',')
+      teams_rating << team['participant_rating'].to_s.split(',')
+      teams_variation << team['participant_variation'].to_s.split(',')
 
     end
     return ranks, teams_rating, teams_variation, teams_participant_ids
