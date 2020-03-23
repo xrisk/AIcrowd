@@ -7,8 +7,8 @@ class ParticipantRatingRanksQuery
 
   def call()
     @relation.where('fixed_rating is not null').map do |participant|
-      user_final_rating = UserRating.where("participant_id=#{participant.id} and rating is not null and challenge_round is not null").reorder('created_at desc').first
-      time_difference = (Time.current.to_date - user_final_rating[:created_at].to_date)
+      user_final_rating =  UserRating.where("participant_id=#{participant.id} and rating is not null and challenge_round_id is not null").joins(:challenge_round).reorder('user_ratings.created_at desc').select("user_ratings.*, challenge_rounds.end_dttm").first
+      time_difference = (Time.current.to_date - user_final_rating[:end_dttm].to_date)
       time_difference = time_difference.to_i
       total_number_of_days = 365
       updated_rating = participant.fixed_rating * (Math.exp(-time_difference/total_number_of_days))
