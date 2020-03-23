@@ -1,19 +1,19 @@
 class NewsletterEmailForm
   include ActiveModel::Model
 
-  attr_accessor :group, :cc, :bcc, :subject, :message, :challenge
+  attr_accessor :group, :cc, :bcc, :subject, :message, :challenge, :participant
 
-  validates :group, :subject, :message, presence: true
-
-  # def initialize(params= {})
-  #   @newsletter_email = NewsletterEmail.new
-  #   super(params)
-  # end
+  validates :subject, :message, presence: true
+  validates :cc, :bcc, emails_list: true
 
   def save
     return false if invalid?
 
-    return false if cc_emails.empty? && bcc_emails.empty?
+    if cc_emails.empty? && bcc_emails.empty?
+      errors.add(:base, 'Groups, CC and BCC fields don\'t provide single participant e-mail')
+
+      return false
+    end
 
     NewsletterEmail.create!(
       emails_list: bcc_emails,
@@ -52,11 +52,3 @@ class NewsletterEmailForm
     end
   end
 end
-
-# All participants: All the users who have participated in this challenge/showed interest. (challenge_participant table)
-# Participants will submissions: All users who have made at least one submission
-# Participants of “Round 1”: All users who have at least one submission in Round 1
-# Participants of “Round X”: All users who have at least one submission in Round X
-# (populate based on the names of rounds in the challenge)
-# Participant.joins(:submissions).where(submissions: { challenge_id: challenge.id }).distinct.map(&:email)
-# Participant.joins(:submissions).where(submissions: { challenge_round_id: group }).distinct.map(&:email)

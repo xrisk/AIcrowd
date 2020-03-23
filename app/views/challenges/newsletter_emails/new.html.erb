@@ -6,6 +6,10 @@
   <div class="container-fluid">
     <div class="row">
       <%= form_with model: @newsletter_email_form, url: challenge_newsletter_emails_path(@challenge), validate: true, local: true do |f| %>
+        <% if @newsletter_email_form.errors.any? %>
+          <%= render partial: 'shared/error_messages', locals: { target: @newsletter_email_form } %>
+        <% end %>
+
         <div class="form-group">
           <span class="label-text">Groups</span>
           <%= f.select :group, @newsletter_email_groups, { include_blank: true }, { class: 'form-control' } %>

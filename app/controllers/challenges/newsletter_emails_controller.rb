@@ -3,15 +3,18 @@ module Challenges
     before_action :set_newsletter_email_groups, only: [:new, :create]
 
     def new
-      @newsletter_email_form = NewsletterEmailForm.new
+      @newsletter_email_form = NewsletterEmailForm.new(challenge: @challenge, participant: current_participant)
+      authorize @newsletter_email_form
     end
 
     def create
-      @newsletter_email_form = NewsletterEmailForm.new(newsletter_email_form_params.merge(challenge: @challenge))
+      @newsletter_email_form = NewsletterEmailForm.new(newsletter_email_form_params.merge(challenge: @challenge, participant: current_participant))
+      authorize @newsletter_email_form
 
       if @newsletter_email_form.save
-        redirect_to new_challenge_newsletter_emails_path(@challenge), flash: { notice: 'E-mail will be sent to participants after admin approval.' }
+        redirect_to new_challenge_newsletter_emails_path(@challenge), flash: { notice: 'E-mail will be sent to participants after admin approval' }
       else
+        flash.now[:error] = @newsletter_email_form.errors.full_messages.to_sentence
         render :new
       end
     end
