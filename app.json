@@ -38,12 +38,6 @@
     "AWS_SECRET_ACCESS_KEY": {
       "required": true
     },
-    "CLOUDFRONT_ASSETS_DOMAIN": {
-      "required": true
-    },
-    "CLOUDFRONT_IMAGES_DOMAIN": {
-      "required": true
-    },
     "CROWDAI_API_KEY": {
       "required": true
     },
@@ -63,9 +57,6 @@
       "required": true
     },
     "DISCOURSE_DOMAIN_NAME": {
-      "required": true
-    },
-    "DOMAIN_NAME": {
       "required": true
     },
     "GITHUB_OAUTH_KEY": {
