@@ -1,9 +1,7 @@
 {
   "addons": [
-    "logdna",
     "heroku-postgresql",
-    "redistogo",
-    "rollbar"
+    "redistogo"
   ],
   "buildpacks": [
     {
@@ -38,6 +36,12 @@
     "AWS_SECRET_ACCESS_KEY": {
       "required": true
     },
+    "CLOUDFRONT_ASSETS_DOMAIN": {
+      "required": true
+    },
+    "CLOUDFRONT_IMAGES_DOMAIN": {
+      "required": true
+    },
     "CROWDAI_API_KEY": {
       "required": true
     },
@@ -65,22 +69,7 @@
     "GITHUB_OAUTH_SECRET": {
       "required": true
     },
-    "GOOGLE_ANALYTICS_KEY": {
-      "required": true
-    },
-    "GRADER": {
-      "required": true
-    },
-    "HOST": {
-      "required": true
-    },
     "LANG": {
-      "required": true
-    },
-    "LOGDNA_KEY": {
-      "required": true
-    },
-    "MAINTENANCE_PAGE_URL": {
       "required": true
     },
     "MANDRILL_KEY": {
@@ -105,12 +94,6 @@
       "required": true
     },
     "REDISTOGO_URL": {
-      "required": true
-    },
-    "ROLLBAR_ACCESS_TOKEN": {
-      "required": true
-    },
-    "ROLLBAR_ENDPOINT": {
       "required": true
     },
     "SECRET_KEY_BASE": {
