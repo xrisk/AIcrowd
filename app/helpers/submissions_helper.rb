@@ -44,4 +44,8 @@ module SubmissionsHelper
     return true if current_participant&.admin? || current_participant&.id == submission.participant&.id
     return true if current_participant&.organizer_ids.include?(submission.challenge.organizer.id)
   end
+
+  def having_media_large_or_thumbnail?(submission)
+    submission.media_large.present? || submission.media_thumbnail.present?
+  end  
 end

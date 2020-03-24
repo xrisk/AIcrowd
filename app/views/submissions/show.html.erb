@@ -62,9 +62,8 @@
           <div class="d-flex">
             <input id="shortUrl" type="text" style="display:none; position: relative; left: -10000px;" value='<%= "#{request.base_url}/#{@submission.short_url}" %>' >
             <button id="copyurlbutton" onclick="copyLink()" class="btn btn-secondary btn-sm mr-2">Copy URL</button>
-
-            <span data-title="Check out this link on AIcrowd " data-desc="<%= @submission.challenge.challenge %>" data-url="<%= "#{request.base_url}/#{@submission.short_url}?utm_source=AIcrowd&utm_medium=Facebook" %>">
-              <a data-url="<%= "#{request.base_url}/#{@submission.short_url}?utm_source=AIcrowd&utm_medium=Facebook" %>" class="btn btn-facebook btn-sm mr-2" rel="nofollow" data-site="facebook" onclick="return SocialShareButton.share(this)" title="Share to Facebook" href="#" data-toggle="tooltip" data-placement="top" title="Share to Facebook">
+            <span data-title="Check out this link on AIcrowd" data-desc="<%= @submission.challenge.challenge %>" data-source="<%= having_media_large_or_thumbnail?(@submission) ? s3_public_url(@submission, :large) : '-' %>" data-url="<%= "#{request.base_url}/#{@submission.short_url}?utm_source=AIcrowd&utm_medium=Facebook" %>">
+              <a data-url="<%= "#{request.base_url}/#{@submission.short_url}?utm_source=AIcrowd&utm_medium=Facebook" %>" class="btn btn-facebook btn-sm mr-2" rel="nofollow" data-site="facebook" data-source="<%= having_media_large_or_thumbnail?(@submission) ? s3_public_url(@submission, :large) : '-' %>" onclick="return SocialShareButton.share(this)" title="Share to Facebook" href="#" data-toggle="tooltip" data-placement="top" title="Share to Facebook">
                 <img src="/assets/img/icon-facebook.svg">
               </a>
             </span>
