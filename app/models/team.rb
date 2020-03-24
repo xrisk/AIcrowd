@@ -43,9 +43,7 @@ class Team < ApplicationRecord
   end
 
   def full?
-    num_members = team_participants.size
-    num_pending = team_invitations_pending.size
-    num_members + num_pending >= challenge.max_team_participants
+    team_participants.size >= challenge.max_team_participants
   end
 
   def concrete?
