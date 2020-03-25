@@ -46,7 +46,7 @@
                 <h4>Ratings Progression</h4>
               </div>
             </header>
-            <%= line_chart @participant.user_rating_history %>
+            <%= line_chart @participant.user_rating_history, id: "line-chart" %>
           </div>
           <div class="col-4">
             <header class="section-header-decorative">
@@ -106,3 +106,32 @@
     <!-- /section -->
   </div>
 </div>
+<script>
+    function indexOfArray(val, array) {
+        for(i = 0; i < array.length; i++) {
+            if (array[i][1] == val) {
+                return i
+            }
+        }
+    };
+    var chart = Chartkick.charts["line-chart"];
+    var newOptions = {
+        library: {
+            tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        console.log("label", tooltipItem, data);
+                        challenge_round_name = chart.dataSource[indexOfArray(tooltipItem.yLabel, chart.dataSource)][2]
+                        if(challenge_round_name == '') {
+                            return tooltipItem.yLabel
+                        }
+                        return tooltipItem.yLabel + "\nchallenge round name:" + challenge_round_name;
+
+                    }
+                }
+            }
+        }
+    };
+    var mergedOptions = jQuery.extend(chart.options,newOptions);
+    chart.setOptions(mergedOptions);
+</script>
