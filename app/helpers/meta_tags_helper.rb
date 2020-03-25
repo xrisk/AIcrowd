@@ -39,7 +39,7 @@ module MetaTagsHelper
 
   def meta_image
     if controller_name == 'submissions' && show_action? && @challenge.media_on_leaderboard
-      s3_public_url(@submission)
+      s3_image_url(@submission)
     elsif controller_name == 'challenges' && show_action? && @challenge.image_file?
       @challenge.image_file.url
     elsif controller_name == 'organizers' && show_action? && @organizer.image_file?
@@ -80,7 +80,7 @@ module MetaTagsHelper
     end
   end
 
-  def s3_public_url(submission)
+  def s3_image_url(submission)
     S3Service.new(submission.media_large).public_url
   end
 

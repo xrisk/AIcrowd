@@ -43,5 +43,5 @@ module SubmissionsHelper
     return false if submission.description.blank? || current_participant.blank?
     return true if current_participant&.admin? || current_participant&.id == submission.participant&.id
     return true if current_participant&.organizer_ids.include?(submission.challenge.organizer.id)
-  end  
+  end
 end
