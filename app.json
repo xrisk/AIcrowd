@@ -36,9 +36,6 @@
     "AWS_SECRET_ACCESS_KEY": {
       "required": true
     },
-    "CLOUDFRONT_ASSETS_DOMAIN": {
-      "required": true
-    },
     "CLOUDFRONT_IMAGES_DOMAIN": {
       "required": true
     },
