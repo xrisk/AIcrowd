@@ -1,14 +1,19 @@
 ActiveAdmin.register NewsletterEmail do
-  actions :index, :show, :new, :create
-  permit_params :bcc, :cc, :subject, :message
+  config.sort_order = :pending_desc
+
+  actions :index, :show
 
   index do
     column :id
+    column :to do |resource|
+      resource.participant&.email
+    end
     column :bcc
     column :cc
     column :subject
     column :message
     column :pending
+    column :participant
     column :created_at
     column :updated_at
     actions default: true do |resource|
@@ -19,18 +24,8 @@ ActiveAdmin.register NewsletterEmail do
     end
   end
 
-  form do |f|
-    f.inputs do
-      f.input :bcc, as: :string
-      f.input :cc, as: :string
-      f.input :subject, as: :string
-      f.input :message
-    end
-    f.actions
-  end
-
   member_action :approve, method: :post do
-    # TODO: Implement business logic in next Pull Request
+    Organizers::NewsletterEmailJob.perform_later(resource.id)
     resource.update!(pending: false)
 
     redirect_to admin_newsletter_emails_path, flash: { notice: 'Newsletter email has been sent to participants.' }
