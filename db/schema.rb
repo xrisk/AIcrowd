@@ -783,6 +783,7 @@ ActiveRecord::Schema.define(version: 2020_03_19_164103) do
     t.float "temporary_variation"
     t.integer "ranking", default: -1, null: false
     t.integer "ranking_change", default: 0, null: false
+    t.float "fixed_rating"
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["organizer_id"], name: "index_participants_on_organizer_id"
