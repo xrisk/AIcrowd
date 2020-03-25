@@ -134,4 +134,17 @@
     };
     var mergedOptions = jQuery.extend(chart.options,newOptions);
     chart.setOptions(mergedOptions);
+    pointarray = new Array(chart.chart.data.datasets[0].data.length).fill(0)
+    console.log(pointarray)
+    data_array = chart.chart.data.datasets[0].data
+    for(j in data_array) {
+        challenge_round_name = chart.dataSource[indexOfArray(data_array[j], chart.dataSource)][2]
+        if(challenge_round_name != '') {
+            console.log(j)
+            pointarray[j] = 4
+            console.log(pointarray)
+        }
+    }
+    chart.chart.data.datasets[0].pointRadius = pointarray
+    chart.chart.update()
 </script>
