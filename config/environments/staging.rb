@@ -1,7 +1,10 @@
 Rails.application.configure do
+  # Handle dynamic domain names of review_apps
+  ENV['DOMAIN_NAME'] = "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com" if ENV['IS_REVIEW_APP'] == 'true'
+
   config.cache_classes                             = true
   config.eager_load                                = true
-  config.consider_all_requests_local               = false
+  config.consider_all_requests_local               = true
   config.action_controller.perform_caching         = true
   config.public_file_server.enabled                = true
   config.assets.js_compressor                      = Uglifier.new(harmony: true)
