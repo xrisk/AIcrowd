@@ -37,6 +37,14 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
+    namespace :v1 do
+      resources :challenges, only: [], module: :challenges do
+        resources :participants, only: [] do
+          get :search, on: :collection
+        end
+      end
+    end
+
     resources :external_graders, only: [:create, :show, :update] do
       get :challenge_config, on: :collection
       get :presign, on: :member
