@@ -38,6 +38,8 @@ class UserRatingController < ApplicationController
     if new_team_ratings.present? && new_team_variations.present?
       participant_ids, new_participant_ratings, new_participant_variations = user_rating_service.filter_rating_api_output teams_participant_ids, new_team_ratings, new_team_variations
       user_rating_service.update_database_columns participant_ids, new_participant_ratings, new_participant_variations
+    elsif !teams_participant_ids.present?
+      user_rating_service.update_challenge_permanent
     end
   end
 end

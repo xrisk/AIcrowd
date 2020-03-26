@@ -8,6 +8,8 @@ class RatingCalculateJob < ApplicationJob
   def perform(*args)
     Participant.update_all(temporary_rating: nil)
     Participant.update_all(temporary_variation: nil)
+    UserRating.update_all(temporary_variation: nil)
+    UserRating.update_all(temporary_rating: nil)
     start_ranking_python_service
   end
 end

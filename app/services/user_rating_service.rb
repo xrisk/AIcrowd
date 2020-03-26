@@ -44,7 +44,11 @@ class UserRatingService
     end
     return participant_ids, new_participant_ratings, new_participant_variations
   end
-
+  def update_challenge_permanent
+    unless @temporary
+      @round.update(calculated_permanent: true)
+    end
+  end
   def update_database_columns(participant_ids, new_participant_ratings, new_participant_variations)
     ActiveRecord::Base.transaction do
       Participant.update participant_ids, new_participant_ratings
