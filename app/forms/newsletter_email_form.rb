@@ -1,7 +1,7 @@
 class NewsletterEmailForm
   include ActiveModel::Model
 
-  attr_accessor :group, :cc, :bcc, :subject, :message, :challenge, :participant
+  attr_accessor :group, :users, :cc, :bcc, :subject, :message, :challenge, :participant
 
   validates :subject, :message, presence: true
   validates :cc, :bcc, emails_list: true
