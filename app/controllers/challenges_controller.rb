@@ -9,7 +9,6 @@ class ChallengesController < ApplicationController
   before_action :set_challenge_rounds, only: [:edit, :update]
   before_action :set_filters, only: [:index]
   before_action :set_organizers_for_select, only: [:new, :create, :edit, :update]
-  before_action :set_categories_for_select, only: [:new, :create, :edit, :update]
 
   respond_to :html, :js
 
@@ -63,7 +62,7 @@ class ChallengesController < ApplicationController
 
     if @challenge.save
       update_challenges_organizers if params[:challenge][:organizer_ids].present?
-      create_challenge_category if params[:challenge][:category_names].present?
+      update_challenge_categories if params[:challenge][:category_names].present?
       redirect_to edit_challenge_path(@challenge, step: :overview), notice: 'Challenge created.'
     else
       render :new
@@ -75,7 +74,7 @@ class ChallengesController < ApplicationController
   def update
     if @challenge.update(challenge_params)
       update_challenges_organizers if params[:challenge][:organizer_ids].present?
-      create_challenge_category if params[:challenge][:category_names].present?
+      update_challenge_categories if params[:challenge][:category_names].present?
       create_invitations if params[:challenge][:invitation_email].present?
       respond_to do |format|
         format.html { redirect_to edit_challenge_path(@challenge, step: params[:current_step]), notice: 'Challenge updated.' }
@@ -157,10 +156,6 @@ class ChallengesController < ApplicationController
     @follow = @challenge.follows.where(participant_id: current_participant.id).first if current_participant.present?
   end
 
-  def set_categories_for_select
-    @categories_for_select = Category.pluck(:name, :id)
-  end
-
   def set_organizers_for_select
     # We'll need refactor to select2 with API endpoint when we'll have a lot of organizers.
     @organizers_for_select = Organizer.pluck(:organizer, :id)
@@ -204,7 +199,7 @@ class ChallengesController < ApplicationController
     end
   end
 
-  def create_challenge_category
+  def update_challenge_categories
     @challenge.category_challenges.destroy_all if @challenge.category_challenges.present?
     params[:challenge][:category_names].reject(&:empty?).each do |category_name|
       category = Category.find_or_create_by!(name: category_name)
