@@ -1,6 +1,16 @@
 module MetaTagsHelper
   def meta_title
-    if content_for?(:meta_title)
+    if show_action?
+      if controller_name == 'challenges'
+        @challenge.tagline
+      elsif controller_name == 'participants'
+        @participant.slug
+      elsif controller_name == 'organizers'
+        @organizer.slug
+      elsif controller_name == 'submission'
+        @challenge.tagline
+      end
+    elsif content_for?(:meta_title)
       content_for(:meta_title)
     elsif !@page_title.blank?
       "AIcrowd | " + @page_title
@@ -12,33 +22,43 @@ module MetaTagsHelper
   end
 
   def meta_description
-    return @submission.challenge.tagline if submissions?
+    if show_action?
+      case controller_name
+      when 'organizers'
+        return @organizer.description
+      when 'submissions'
+        return @submission.description
+      when 'challenges'
+        return @challenge.slug
+      when 'participants'
+        return @participant.bio
+      end
+    end  
     content_for?(:meta_description) ? content_for(:meta_description) : DEFAULT_META["meta_description"]
   end
 
   def meta_image
-    return s3_url_for_image
-    meta_image = (content_for?(:meta_image) ? content_for(:meta_image) : DEFAULT_META["meta_image"])
-    # little twist to make it work equally with an asset or a url
-    meta_image.starts_with?("http") ? meta_image : url_to_image(meta_image)
+    if controller_name == 'submissions' && show_action? && @challenge.media_on_leaderboard
+      s3_public_url(@submission)
+    elsif controller_name == 'challenges' && show_action? && @challenge.image_file?
+      @challenge.image_file.url
+    elsif controller_name == 'organizers' && show_action? && @organizer.image_file?
+      @organizer.image_file.url
+    elsif controller_name == 'participants' && show_action? && @participant.image_file?
+      @participant.image_file.url
+    else
+      meta_image = (content_for?(:meta_image) ? content_for(:meta_image) : DEFAULT_META["meta_image"])
+      # little twist to make it work equally with an asset or a url
+      meta_image.starts_with?("http") ? meta_image : url_to_image(meta_image)
+    end
   end
-
-  def submissions?
-    title_from_controller_name == 'Submissions' && @submission
-  end
-
-  def having_media_large_or_thumbnail?(submission)
-    submission.media_large.present? || submission.media_thumbnail.present?
-  end
-
-  def s3_url_for_image
-    s3_public_url(@submission, :large) if submissions? && having_media_large_or_thumbnail?(@submission)
-  end  
 
   private
 
   def title_from_controller_name
-    case controller.controller_name
+    case controller_name
+    when 'organizers'
+      'Organizers'
     when 'challenges'
       'Challenges'
     when 'leaderboards'
@@ -60,11 +80,15 @@ module MetaTagsHelper
     end
   end
 
-  def s3_public_url(mediable, size)
-    url = if size == :large
-            S3Service.new(mediable.media_large).public_url
-          else
-            S3Service.new(mediable.media_thumbnail).public_url
-          end
+  def s3_public_url(submission)
+    S3Service.new(submission.media_large).public_url
   end
+
+  def show_action?
+    controller.action_name == 'show'
+  end
+
+  def controller_name
+    controller.controller_name
+  end  
 end
