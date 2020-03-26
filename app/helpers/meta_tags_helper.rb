@@ -35,23 +35,23 @@ module MetaTagsHelper
       when 'participants'
         return @participant.bio
       end
-    end  
+    end 
     content_for?(:meta_description) ? content_for(:meta_description) : DEFAULT_META["meta_description"]
   end
 
   def meta_image
-    if controller_name == 'submissions' && show_action?
-      s3_public_url(@submission, :large) if having_media_image?(@challenge, @submission) 
-    elsif controller_name == 'challenges' && show_action? && @challenge.image_file?
-      @challenge.image_file.url
-    elsif controller_name == 'organizers' && show_action? && @organizer.image_file?
-      @organizer.image_file.url
-    elsif controller_name == 'participants' && show_action? && @participant.image_file?
-      @participant.image_file.url
-    else
-      meta_image = (content_for?(:meta_image) ? content_for(:meta_image) : DEFAULT_META["meta_image"])
-      # little twist to make it work equally with an asset or a url
-      meta_image.starts_with?("http") ? meta_image : url_to_image(meta_image)
+    if show_action?
+      if controller_name == 'submissions'
+        having_media_image?(@challenge, @submission) ? s3_public_url(@submission, :large) : content_for_meta_image 
+      elsif controller_name == 'challenges' && @challenge.image_file?
+        @challenge.image_file.url
+      elsif controller_name == 'organizers' && @organizer.image_file?
+        @organizer.image_file.url
+      elsif controller_name == 'participants' && @participant.image_file?
+        @participant.image_file.url
+      end  
+    else  
+      content_for_meta_image
     end
   end
 
@@ -88,5 +88,11 @@ module MetaTagsHelper
 
   def controller_name
     controller.controller_name
+  end
+
+  def content_for_meta_image
+    meta_image = (content_for?(:meta_image) ? content_for(:meta_image) : DEFAULT_META["meta_image"])
+    # little twist to make it work equally with an asset or a url
+    meta_image.starts_with?("http") ? meta_image : url_to_image(meta_image)
   end
 end
