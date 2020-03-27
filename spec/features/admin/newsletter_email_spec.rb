@@ -66,7 +66,7 @@ describe 'ActiveAdmin NewsletterEmail', feature: true do
 
         expect(page).to have_http_status 200
         expect(page).to have_current_path admin_newsletter_emails_path
-        expect(page).to have_content 'Newsletter email has been removed.'
+        expect(page).to have_content 'Newsletter email has been declined.'
       end
     end
   end

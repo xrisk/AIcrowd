@@ -37,9 +37,9 @@ ActiveAdmin.register NewsletterEmail do
   end
 
   member_action :decline, method: :delete do
-    resource.destroy!
+    resource.update!(pending: false, declined: true)
 
-    redirect_to admin_newsletter_emails_path, flash: { notice: 'Newsletter email has been removed.' }
+    redirect_to admin_newsletter_emails_path, flash: { notice: 'Newsletter email has been declined.' }
   end
 
   action_item :approve_newsletter_email, only: :show do
@@ -47,6 +47,6 @@ ActiveAdmin.register NewsletterEmail do
   end
 
   action_item :decline_newsletter_email, only: :show do
-    a 'Decline', href: decline_admin_newsletter_email_path(resource), 'data-method': :delete, 'data-confirm': 'Are you sure you want to remove this e-mail?', class: 'member_link'
+    a 'Decline', href: decline_admin_newsletter_email_path(resource), 'data-method': :delete, 'data-confirm': 'Are you sure you want to decline this e-mail?', class: 'member_link'
   end
 end
