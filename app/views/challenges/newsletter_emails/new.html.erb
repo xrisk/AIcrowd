@@ -16,8 +16,18 @@
         </div>
 
         <div class="form-group">
+          <span class="label-text">Teams</span>
+          <%= f.select :teams, [], { }, {
+              id:       'challenge-participants-select2',
+              class:    'form-control',
+              multiple: true,
+              data:     { controller: 'select2', 'select2-placeholder': 'Select teams', 'select2-url': search_api_v1_challenge_teams_url(@challenge) }
+          } %>
+        </div>
+
+        <div class="form-group">
           <span class="label-text">Users</span>
-          <%= f.select :users, @newsletter_email_form.users.to_a, { }, {
+          <%= f.select :users, [], { }, {
               id:       'challenge-participants-select2',
               class:    'form-control',
               multiple: true,

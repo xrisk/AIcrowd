@@ -42,6 +42,9 @@ Rails.application.routes.draw do
         resources :participants, only: [] do
           get :search, on: :collection
         end
+        resources :teams, only: [] do
+          get :search, on: :collection
+        end
       end
     end
 

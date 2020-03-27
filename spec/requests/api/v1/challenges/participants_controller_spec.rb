@@ -22,7 +22,7 @@ describe Api::V1::Challenges::ParticipantsController, type: :request do
     end
 
     context 'when q parameter provided' do
-      it 'returns success' do
+      it 'returns success with participant that\'s matching the query' do
         get search_api_v1_challenge_participants_path(challenge), params: { q: 'second' }
 
         expect(response).to have_http_status(:ok)
