@@ -12,38 +12,38 @@
 
         <div class="form-group">
           <span class="label-text">Groups</span>
-          <%= f.select :group, @newsletter_email_groups, { include_blank: true }, { class: 'form-control' } %>
+          <%= f.select :group, @newsletter_email_groups, { include_blank: '--- Select a group ---' }, { class: 'form-control' } %>
         </div>
 
         <div class="form-group">
           <span class="label-text">Users</span>
-          <%= f.select :users, @newsletter_email_form.users.to_a, {}, {
+          <%= f.select :users, @newsletter_email_form.users.to_a, { }, {
               id:       'challenge-participants-select2',
               class:    'form-control',
               multiple: true,
-              data:     { controller: 'select2', 'select2-url': search_api_v1_challenge_participants_url(@challenge) }
+              data:     { controller: 'select2', 'select2-placeholder': 'Select participants', 'select2-url': search_api_v1_challenge_participants_url(@challenge) }
           } %>
         </div>
 
         <div class="form-group">
           <span class="label-text">CC</span>
-          <%= f.text_field :cc, class: "form-control" %>
+          <%= f.text_field :cc, class: "form-control", placeholder: 'Enter e-mails separated by comma' %>
         </div>
 
         <div class="form-group">
           <span class="label-text">BCC</span>
-          <%= f.text_field :bcc, class: "form-control" %>
+          <%= f.text_field :bcc, class: "form-control", placeholder: 'Enter e-mails separated by comma' %>
         </div>
 
         <div class="form-group">
           <span class="label-text">Subject</span>
-          <%= f.text_field :subject, class: "form-control" %>
+          <%= f.text_field :subject, class: "form-control", placeholder: 'E-mail subject' %>
         </div>
 
         <div class="form-group">
           <span class="label-text">Message</span>
           <div class="md-content">
-            <%= f.text_area :message, class: "form-control", data: { controller: "ckeditor" } %>
+            <%= f.text_area :message, class: "form-control", placeholder: 'E-mail message', data: { controller: "ckeditor" } %>
           </div>
         </div>
 
