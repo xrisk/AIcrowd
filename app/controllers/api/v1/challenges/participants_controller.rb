@@ -5,7 +5,7 @@ module Api
         before_action :set_challenge
 
         def search
-          participants = @challenge.participants.where('participants.name ILIKE ?', "%#{params[:q]}%")
+          participants = @challenge.participants.where('participants.name ILIKE ?', "%#{params[:q]}%").limit(100)
 
           render json: Api::V1::Challenges::SearchParticipantsSerializer.new(participants: participants).serialize, status: :ok
         end

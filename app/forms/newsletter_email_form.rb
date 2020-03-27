@@ -10,7 +10,7 @@ class NewsletterEmailForm
     return false if invalid?
 
     if cc_emails.empty? && bcc_emails.empty?
-      errors.add(:base, 'Groups, CC and BCC fields don\'t provide single participant e-mail')
+      errors.add(:base, 'Groups, Users, CC and BCC fields don\'t provide single participant e-mail')
 
       return false
     end
@@ -33,7 +33,7 @@ class NewsletterEmailForm
   end
 
   def bcc_emails
-    @bcc_emails ||= bcc.split(',').map(&:strip) | map_group_to_emails
+    @bcc_emails ||= bcc.split(',').map(&:strip) | map_group_to_emails | users.reject(&:blank?)
   end
 
   def map_group_to_emails
