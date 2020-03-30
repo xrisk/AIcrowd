@@ -128,7 +128,9 @@ class Participant < ApplicationRecord
   def user_rating_history
     UserRating.joins("left outer join challenge_rounds on (challenge_rounds.id=challenge_round_id)").joins("left outer join challenges c on (c.id=challenge_rounds.challenge_id)").where(participant_id: self.id).where('rating is not null').reorder('coalesce(end_dttm, user_ratings.created_at)').pluck('coalesce(end_dttm, user_ratings.created_at)', 'rating', 'concat(challenge, challenge_round)')
   end
-
+  def final_rating
+    self.rating.to_i - 3*self.variation.to_i
+  end
   def active_for_authentication?
     super && account_disabled == false
   end

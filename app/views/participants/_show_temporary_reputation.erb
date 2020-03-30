@@ -5,7 +5,7 @@
   </span>
 <% else %>
   <span class="reputation-score" data-toggle="tooltip" title="<%= participant.temporary_rating.to_i - 3*participant.temporary_variation.to_i %> ± <%= participant.temporary_variation.to_i %>">
-    <% if defined?(full) and full %>
+    <% if defined?(full) && full %>
       <%= participant.temporary_rating.to_i - 3*participant.temporary_variation.to_i %> ± <%= participant.temporary_variation.to_i %>
     <% else %>
       <%= participant.temporary_rating.to_i - 3*participant.temporary_variation.to_i %>

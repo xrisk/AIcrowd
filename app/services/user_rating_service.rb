@@ -46,7 +46,7 @@ class UserRatingService
   end
   def update_challenge_permanent
     unless @temporary
-      @round.update(calculated_permanent: true)
+      @round.update!(calculated_permanent: true)
     end
   end
   def update_database_columns(participant_ids, new_participant_ratings, new_participant_variations)
@@ -63,7 +63,7 @@ class UserRatingService
       end
       UserRating.import userratings
       unless @temporary
-        @round.update(calculated_permanent: true)
+        @round.update!(calculated_permanent: true)
       end
     end
   end
