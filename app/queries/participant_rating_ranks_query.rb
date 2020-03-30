@@ -13,9 +13,9 @@ class ParticipantRatingRanksQuery
       if participant.previous_ranking == -1
         {'ranking_change' => 0}
       elsif  change_in_true_ranking.to_i == 0
-        {'ranking_change' => participant.ranking_change}
+        {'ranking_change' => participant.ranking_change.to_i}
       else
-        {'ranking_change' => change_in_true_ranking}
+        {'ranking_change' => change_in_true_ranking.to_i}
       end
     end
     participant_ids = ranks.map {|participant| participant.id}
