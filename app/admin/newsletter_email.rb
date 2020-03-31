@@ -1,10 +1,10 @@
 ActiveAdmin.register NewsletterEmail do
   actions :index, :show, :new, :create
-  permit_params :emails_list, :cc, :subject, :message
+  permit_params :bcc, :cc, :subject, :message
 
   index do
     column :id
-    column :emails_list
+    column :bcc
     column :cc
     column :subject
     column :message
@@ -21,7 +21,7 @@ ActiveAdmin.register NewsletterEmail do
 
   form do |f|
     f.inputs do
-      f.input :emails_list, as: :string
+      f.input :bcc, as: :string
       f.input :cc, as: :string
       f.input :subject, as: :string
       f.input :message
