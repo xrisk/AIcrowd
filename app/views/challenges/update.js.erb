@@ -16,6 +16,12 @@ function handleChallengeUpdate() {
     // Run script tags that were in the inserted HTML
     runScripts(challengeForWrapper);
 
+    $('.challenge-edit-submit').on('click', function (event) {
+      for (let selector in CKEDITOR.instances){
+        CKEDITOR.instances[selector].setMode('wysiwyg');
+      }
+    });
+
     // Change here need to be copied to Paloma Edit Controller as well!
     $('#preview-modal').on('show.bs.modal', function (event) {
       let editor = CKEDITOR.instances["challenge_description"];
