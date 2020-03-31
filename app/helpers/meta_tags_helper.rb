@@ -1,16 +1,14 @@
 module MetaTagsHelper
-  include MediaHelper
-  
   def meta_title
     if show_action?
       if controller_name == 'challenges'
-        @challenge.tagline
+        @challenge.challenge
       elsif controller_name == 'participants'
         @participant.slug
       elsif controller_name == 'organizers'
         @organizer.slug
       elsif controller_name == 'submission'
-        @challenge.tagline
+        @challenge.challenge
       end
     elsif content_for?(:meta_title)
       content_for(:meta_title)
@@ -31,7 +29,7 @@ module MetaTagsHelper
       when 'submissions'
         return @submission.description
       when 'challenges'
-        return @challenge.slug
+        return @challenge.tagline
       when 'participants'
         return @participant.bio
       end
@@ -42,7 +40,7 @@ module MetaTagsHelper
   def meta_image
     if show_action?
       if controller_name == 'submissions'
-        having_media_image?(@challenge, @submission) ? s3_public_url(@submission, :large) : content_for_meta_image 
+        having_media_large_image?(@challenge, @submission) ? s3_public_url(@submission, :large) : content_for_meta_image 
       elsif controller_name == 'challenges' && @challenge.image_file?
         @challenge.image_file.url
       elsif controller_name == 'organizers' && @organizer.image_file?
