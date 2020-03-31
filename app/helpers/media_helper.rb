@@ -82,4 +82,24 @@ module MediaHelper
             S3Service.new(mediable.media_thumbnail).public_url
           end
   end
+
+  def content_type_is_image?(mediable)
+    media_content_type(mediable) == 'image'
+  end
+
+  def having_media_large?(challenge, mediable)
+    challenge.media_on_leaderboard && mediable.media_large.present?
+  end
+
+  def having_media_thumb?(challenge, mediable)
+    challenge.media_on_leaderboard && mediable.media_thumbnail.present?
+  end
+
+  def having_media_large_image?(challenge, mediable)
+    having_media_large?(challenge, mediable) && content_type_is_image?(mediable)
+  end
+
+  def having_media_thumbnail_image?(challenge, mediable)
+    having_media_thumb?(challenge, mediable) && content_type_is_image?(mediable)
+  end
 end
