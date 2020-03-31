@@ -1,5 +1,5 @@
 class AddCodeSubmissionsToChallenge < ActiveRecord::Migration[5.2]
   def change
-    add_column :challenges, :code_submissions, :boolean, default: false
+    add_column :challenges, :code_submissions, :boolean, default: false, null: false
   end
 end
