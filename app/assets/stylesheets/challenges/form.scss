@@ -1,5 +1,5 @@
 .challenges-form {
-  max-width: none !important;
+  max-width: none;
 
   &__heading {
     margin-bottom: 20px;
@@ -17,8 +17,13 @@
     min-width: 1264px;
   }
 
+  .cke_reset {
+    min-height: 250px;
+    max-height: 1600px;
+  }
+
   &__thin-tab {
-    max-width: 480px !important;
+    max-width: 480px;
   }
 
   &__errors-paragraph {

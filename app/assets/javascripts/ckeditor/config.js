@@ -18,8 +18,12 @@ CKEDITOR.editorConfig = function( config )
 
   config.skin = 'n1theme,/assets/ckeditor/skins/n1theme/';
 
-  config.extraPlugins = 'markdown,codesnippet,divarea,mathjax,emoji';
-  config.resize_dir = 'both';
+  config.extraPlugins = 'markdown,codesnippet,divarea,mathjax,emoji,autogrow,';
+
+  config.autoGrow_onStartup = true;
+  config.autoGrow_minHeight = 250;
+  config.autoGrow_maxHeight = 1600;
+
   config.format_tags = 'p;h2;h3;h4;pre;address;div';
 
   config.mathJaxLib = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML';
