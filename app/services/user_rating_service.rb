@@ -52,9 +52,9 @@ class UserRatingService
       userratings = []
       participant_ids.each_with_index do |participant_id, i|
         if @temporary
-          userratings << UserRating.new(participant_id: participant_id, temporary_rating: new_participant_ratings[i]['temporary_rating'].to_f, temporary_variation: new_participant_variations[i]['temporary_variation'].to_f, challenge_round: @round)
+          userratings << UserRating.new(participant_id: participant_id, temporary_rating: new_participant_ratings[i]['temporary_rating'].to_f, temporary_variation: new_participant_variations[i]['temporary_variation'].to_f, challenge_round: @round, created_at: @round.end_dttm)
         else
-          userratings << UserRating.new(participant_id: participant_id, rating: new_participant_ratings[i]['rating'].to_f, variation: new_participant_variations[i]['variation'].to_f, challenge_round: @round)
+          userratings << UserRating.new(participant_id: participant_id, rating: new_participant_ratings[i]['rating'].to_f, variation: new_participant_variations[i]['variation'].to_f, challenge_round: @round, created_at: @round.end_dttm)
         end
       end
       UserRating.import userratings
