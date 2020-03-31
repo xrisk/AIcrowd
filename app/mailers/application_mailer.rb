@@ -10,12 +10,7 @@ class ApplicationMailer < ActionMailer::Base
       subject:           options[:subject],
       from_name:         'AIcrowd',
       from_email:        'no-reply@aicrowd.com',
-      to:                [
-        {
-          email: options[:to],
-          type:  'to'
-        }
-      ],
+      to:                emails_collection(options),
       global_merge_vars: options[:global_merge_vars],
       attachments:       options[:attachments]
     }
@@ -50,5 +45,38 @@ class ApplicationMailer < ActionMailer::Base
 
   def participant_id(options)
     participant_id = (participant.id if options[:participant].present?)
+  end
+
+  private
+
+  def emails_collection(options)
+    to_email(options) + cc_emails(options) + bcc_emails(options)
+  end
+
+  def to_email(options)
+    [
+      {
+        email: options[:to],
+        type:  'to'
+      }
+    ]
+  end
+
+  def cc_emails(options)
+    options[:cc].to_s.split(',').map do |cc_email|
+      {
+        email: cc_email,
+        type:  'cc'
+      }
+    end
+  end
+
+  def bcc_emails(options)
+    options[:bcc].to_s.split(',').map do |bcc_email|
+      {
+        email: bcc_email,
+        type:  'bcc'
+      }
+    end
   end
 end
