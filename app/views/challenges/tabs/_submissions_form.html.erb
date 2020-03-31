@@ -18,6 +18,12 @@
         text: "Post Challenge Submissions Permitted",
         p: {data: {target: 'challenge-submission.post'}}} %>
 
+    <%= render partial: 'challenges/fields/fancy_radio', locals: {
+        f: f,
+        name: :code_submissions,
+        text: "Code Submissions Permitted",
+        p: {data: {target: 'challenge-submission.post'}} } %>
+
   </div>
 
   <div class="form-group">

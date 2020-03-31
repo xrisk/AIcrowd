@@ -13739,6 +13739,15 @@ html {
   width: 24px;
 }
 
+.organizer-actions-dropdown {
+  margin-left: auto;
+}
+
+#code-submission {
+  width: 500px;
+  height: 80px;
+}
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';

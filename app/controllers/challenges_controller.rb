@@ -239,6 +239,7 @@ class ChallengesController < ApplicationController
       :private_challenge,
       :clef_task_id,
       :online_submissions,
+      :code_submissions,
       :post_challenge_submissions,
       :submission_instructions,
       :license,

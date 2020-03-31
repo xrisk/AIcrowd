@@ -17,6 +17,7 @@
 //= require lodash
 //= require select2
 //= require ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js
+//= require ace-rails-ap
 
 // --------------------- Vendor ------------------------ //
 //= require jQuery-File-Upload
