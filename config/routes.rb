@@ -37,6 +37,17 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
+    namespace :v1 do
+      resources :challenges, only: [], module: :challenges do
+        resources :participants, only: [] do
+          get :search, on: :collection
+        end
+        resources :teams, only: [] do
+          get :search, on: :collection
+        end
+      end
+    end
+
     resources :external_graders, only: [:create, :show, :update] do
       get :challenge_config, on: :collection
       get :presign, on: :member
@@ -165,6 +176,7 @@ Rails.application.routes.draw do
 
   resources :challenges, only: [], module: :challenges do
     resource :discussion, only: :show
+    resource :newsletter_emails, only: [:new, :create]
   end
 
   get '/load_more_challenges', to: 'challenges#load_more', as: :load_more_challenges

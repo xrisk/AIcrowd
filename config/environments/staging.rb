@@ -1,7 +1,11 @@
 Rails.application.configure do
+  is_review_app = ENV['IS_REVIEW_APP'] == 'true'
+  # Handle dynamic domain names of review_apps
+  ENV['DOMAIN_NAME'] = "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com" if is_review_app
+
   config.cache_classes                             = true
   config.eager_load                                = true
-  config.consider_all_requests_local               = false
+  config.consider_all_requests_local               = true
   config.action_controller.perform_caching         = true
   config.public_file_server.enabled                = true
   config.assets.js_compressor                      = Uglifier.new(harmony: true)
@@ -17,7 +21,12 @@ Rails.application.configure do
   config.active_support.deprecation                = :notify
   config.active_storage.service                    = :local
   config.action_mailer.default_url_options         = { host: ENV["DOMAIN_NAME"] }
-  config.action_controller.asset_host              = "https://#{ENV['CLOUDFRONT_ASSETS_DOMAIN']}"
+  config.action_controller.asset_host = if is_review_app # Fetch assets from web server for review apps
+                                          ENV['DOMAIN_NAME']
+                                        else # Fetch assets from Cloudfront for staging
+                                          "https://#{ENV['CLOUDFRONT_ASSETS_DOMAIN']}"
+                                        end
+
   config.active_record.dump_schema_after_migration = false
 end
 Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']

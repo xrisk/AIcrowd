@@ -1,5 +1,7 @@
 class NewsletterEmail < ApplicationRecord
-  validates :emails_list, presence: true
+  belongs_to :participant, class_name: 'Participant'
+
   validates :subject, presence: true
   validates :message, presence: true
+  validates :bcc, :cc, emails_list: true
 end

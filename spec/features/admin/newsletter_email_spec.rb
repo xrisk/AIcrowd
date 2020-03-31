@@ -52,7 +52,7 @@ describe 'ActiveAdmin NewsletterEmail', feature: true do
       it 'allows to approve newsletter_email' do
         visit admin_newsletter_email_path(newsletter_email)
 
-        click_on 'Approve'
+        expect { click_on 'Approve' }.to have_enqueued_job(Organizers::NewsletterEmailJob)
 
         expect(page).to have_http_status 200
         expect(page).to have_current_path admin_newsletter_emails_path
@@ -66,7 +66,7 @@ describe 'ActiveAdmin NewsletterEmail', feature: true do
 
         expect(page).to have_http_status 200
         expect(page).to have_current_path admin_newsletter_emails_path
-        expect(page).to have_content 'Newsletter email has been removed.'
+        expect(page).to have_content 'Newsletter email has been declined.'
       end
     end
   end
