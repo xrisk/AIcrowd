@@ -51,7 +51,7 @@ describe 'challenge running' do
     expect(page).to have_text 'Create Submission'
   end
 
-  it do
+  it 'have code base submission field' do
     log_in participant
     visit new_challenge_submission_path(running)
     expect(page).to have_text 'Code base submission'
@@ -72,7 +72,7 @@ describe 'challenge ended' do
     expect(page).to have_text 'This challenge is now completed. You may continue to make submissions and your entries will appear on the Ongoing Leaderboard.'
   end
 
-  it do
+  it 'have code base submission field' do
     log_in participant
     visit new_challenge_submission_path(challenge)
     expect(page).to have_text 'Code base submission'

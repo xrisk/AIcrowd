@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 2020_03_31_142624) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_stat_statements"
-  enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
@@ -423,7 +422,7 @@ ActiveRecord::Schema.define(version: 2020_03_31_142624) do
     t.integer "team_freeze_seconds_before_end", default: 604800
     t.boolean "hidden_challenge", default: false, null: false
     t.datetime "team_freeze_time"
-    t.boolean "code_submissions", default: false
+    t.boolean "code_submissions", default: false, null: false
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["organizer_id"], name: "index_challenges_on_organizer_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
