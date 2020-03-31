@@ -2,6 +2,7 @@ require 'sidekiq/web'
 require 'sidekiq/cron/web'
 
 Rails.application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
   get '/robots.txt' => RobotsTxt
   use_doorkeeper
 
