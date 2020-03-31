@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_23_162149) do
+ActiveRecord::Schema.define(version: 2020_03_27_142425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -624,6 +624,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_162149) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "participant_id"
+    t.boolean "declined", default: false, null: false
     t.index ["participant_id"], name: "index_newsletter_emails_on_participant_id"
   end
 
