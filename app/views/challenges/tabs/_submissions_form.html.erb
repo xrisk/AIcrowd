@@ -23,7 +23,7 @@
   <div class="form-group">
     <span class="label-text">Submission Instructions</span>
     <div class="md-content">
-      <%= f.cktext_area :submission_instructions, class: "form-control ", ckeditor: {height: 300} %>
+      <%= f.cktext_area :submission_instructions, class: "form-control" %>
     </div>
   </div>
 
@@ -31,7 +31,7 @@
     <span class="label-text">Submission Instructions</span>
     <h4>This license text is displayed on the submission upload page during and after the challenge</h4>
     <div class="md-content">
-      <%= f.cktext_area :license, class: "form-control ", ckeditor: {height: 300}, placeholder: "Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC)." %>
+      <%= f.cktext_area :license, class: "form-control", placeholder: "Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC)." %>
     </div>
   </div>
   <%= render partial: 'challenges/fields/submit_buttons', locals: {f: f, current_step: 'submissions'} %>

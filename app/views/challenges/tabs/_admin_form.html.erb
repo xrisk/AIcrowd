@@ -16,7 +16,7 @@
 
   <div class="form-group">
     <span class="label-text">Dynamic Content (ERB)</span>
-    <%= f.cktext_area :dynamic_content, ckeditor: { height: 200 } %>
+    <%= f.cktext_area :dynamic_content %>
   </div>
 
   <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, current_step: 'admin' } %>
