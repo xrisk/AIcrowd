@@ -22,7 +22,7 @@
                 defaultConfig = {
                     mode: 'gfm',
                     lineNumbers: true,
-                    theme: 'blackboard'
+                    theme: 'default'
                 };
             editor.config.markdown = CKEDITOR.tools.extend(defaultConfig, editor.config.markdown || {}, true);
 

@@ -36,7 +36,7 @@ export default class extends Controller {
     selectedLink;
     tocLinks;
     toc;
-    updates;
+    hasUpdates;
     firstChild;
     headings;
     fullContent;
@@ -104,17 +104,17 @@ export default class extends Controller {
         this.firstChild = this.el.children().first();
 
         // If the first child is an h2 there is no "Updates" Text
-        this.updates = null;
+        this.hasUpdates = false;
         if (! this.firstChild.is('h2') ) {
-            this.updates = this.getContent(this.firstChild);
-            this.el.prepend( $('<h2/>', { text: 'Updates' }) )
+            this.hasUpdates = true;
+            this.el.prepend( $('<h2/>', { text: 'Updates' }) );
         }
         this.headings = this.el.find("h2").get();
         // Clear TOC
         this.toc.empty();
         this.createTOC();
         this.updateActive();
-        this.el.children().first().remove();
+
         this.selectedLink = this.tocLinks.first();
         this.selectedLink.click();
     }
@@ -151,7 +151,7 @@ export default class extends Controller {
     getContent(start, index){
         let content = "";
 
-        if (index === 0){
+        if (this.hasUpdates && index === 0){
             $(start)
                 .nextUntil(' h2 ')
                 .each( (i,x) => content += x.outerHTML );

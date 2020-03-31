@@ -186,6 +186,12 @@ Paloma.controller('Challenges', {
       }
 
       // Change here need to be copied to update.js.erb as well!
+      $('.challenge-edit-submit').on('click', function (event) {
+        for (let selector in CKEDITOR.instances){
+          CKEDITOR.instances[selector].setMode('wysiwyg');
+        }
+      });
+
       $('#preview-modal').on('show.bs.modal', function (event) {
         let editor = CKEDITOR.instances["challenge_description"];
         let modal = $(this);
