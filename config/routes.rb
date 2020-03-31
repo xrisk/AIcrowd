@@ -38,6 +38,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resource :sessions, only: :show
       resources :challenges, only: [], module: :challenges do
         resources :participants, only: [] do
           get :search, on: :collection
