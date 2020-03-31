@@ -16,7 +16,7 @@
 
   <div class="form-group">
     <span class="label-text">Category</span>
-    <%= f.select :category_ids, @categories_for_select, {}, {class: "select2 form-control", multiple: true} %>
+    <%= f.select :category_names, categories_select_options(@challenge), {}, {class: "select2 category_select2 form-control", multiple: true} %>
   </div>
 
   <div class="form-group">

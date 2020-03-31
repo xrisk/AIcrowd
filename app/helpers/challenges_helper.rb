@@ -75,6 +75,10 @@ module ChallengesHelper
     params[:prize].dig(:prize_type).include?(prize.to_s)
   end
 
+  def categories_select_options(challenge)
+    options_from_collection_for_select(Category.all, :name, :name, { selected: challenge.categories.pluck(:name) })
+  end
+
   private
 
   def remaining_time_in_hours(challenge_round)
