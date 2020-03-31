@@ -88,12 +88,14 @@
         </div>
 
         <% if policy(challenge).edit? %>
-          <div class="dropdown organizer-actions-dropdown">
+          <div class="dropdown btn-set ml-auto">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Organizer actions
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <%= link_to 'Send newsletter e-mail', new_challenge_newsletter_emails_path(challenge), class: 'dropdown-item' %>
+              <%= link_to 'Edit Challenge', edit_challenge_path(challenge), class: 'dropdown-item' %>
+              <%= link_to 'List Participants', participants_link(challenge), class: 'dropdown-item' %>
+              <%= link_to 'Send Newsletter Email', new_challenge_newsletter_emails_path(challenge), class: 'dropdown-item' %>
             </div>
           </div>
         <% end %>
