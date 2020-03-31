@@ -113,6 +113,9 @@ gem 'httparty'
 
 gem 'irbtools', require: 'irbtools/binding'
 
+# ACE editor
+gem 'ace-rails-ap'
+
 group :development do
   gem "letter_opener"
   gem 'brakeman', require: false
