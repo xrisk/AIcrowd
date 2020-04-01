@@ -5,7 +5,10 @@ describe Api::V1::Challenges::NewsletterEmailsController, type: :request do
   let(:participant) { create(:participant, :admin) }
 
   describe '#preview' do
-    before { login_as participant }
+    before do
+      Organizers::NewsletterEmailMailer.any_instance.stub(:sendmail).and_return(true)
+      login_as participant
+    end
 
     context 'when valid params sent in body' do
       let(:valid_params) { { newsletter_email: { subject: 'Test Subject', message: '<p>Test Message</p>' } } }

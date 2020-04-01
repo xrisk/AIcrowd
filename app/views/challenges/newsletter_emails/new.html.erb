@@ -18,10 +18,10 @@
         <div class="form-group">
           <span class="label-text">Teams</span>
           <%= f.select :teams, [], { }, {
-              id:       'challenge-participants-select2',
+              id:       'challenge-teams-select2',
               class:    'form-control',
               multiple: true,
-              data:     { controller: 'select2', 'select2-placeholder': 'Select teams', 'select2-url': search_api_v1_challenge_teams_url(@challenge) }
+              data:     { controller: 'select2', 'select2-placeholder': 'Select teams', 'select2-id': 'challenge-teams-select2', 'select2-url': search_api_v1_challenge_teams_url(@challenge) }
           } %>
         </div>
 
@@ -31,7 +31,7 @@
               id:       'challenge-participants-select2',
               class:    'form-control',
               multiple: true,
-              data:     { controller: 'select2', 'select2-placeholder': 'Select participants', 'select2-url': search_api_v1_challenge_participants_url(@challenge) }
+              data:     { controller: 'select2', 'select2-placeholder': 'Select participants', 'select2-id': 'challenge-participants-select2', 'select2-url': search_api_v1_challenge_participants_url(@challenge) }
           } %>
         </div>
 

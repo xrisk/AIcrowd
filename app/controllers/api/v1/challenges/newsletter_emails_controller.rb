@@ -6,7 +6,7 @@ module Api
           newsletter_email = NewsletterEmail.new(newsletter_email_preview_params)
 
           if newsletter_email.valid?
-            Organizers::PreviewNewsletterEmailJob.perform_later(newsletter_email)
+            Organizers::NewsletterEmailMailer.new.sendmail(newsletter_email)
             head :ok
           else
             render json: { error: newsletter_email.errors.full_messages.to_sentence }, status: :unprocessable_entity
@@ -16,7 +16,7 @@ module Api
         private
 
         def newsletter_email_preview_params
-          params.require(:newsletter_email).permit(:subject, :message).merge(id: 0, participant: current_participant)
+          params.require(:newsletter_email).permit(:subject, :message).merge(participant: current_participant)
         end
       end
     end
