@@ -46,6 +46,7 @@ Rails.application.routes.draw do
           get :search, on: :collection
         end
       end
+      get 'check_login' => 'sessions/helpers#check_login', :as => :check_login
     end
 
     resources :external_graders, only: [:create, :show, :update] do
