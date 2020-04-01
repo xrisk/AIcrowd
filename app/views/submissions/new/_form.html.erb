@@ -31,7 +31,7 @@
       <p class="margin-bottom"></p>
       <div class="md-content">
         <strong>Code base submission</strong>
-        <div id='code-submission'></div>
+        <div data-controller='ace' data-ace-id='code-submission' id='code-submission'></div>
       </div>
     <% end %>
 
@@ -58,8 +58,3 @@
     </div>
   <% end %>
 </div>
-
-<script>
-  ace.edit("code-submission");
-</script>
-
