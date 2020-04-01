@@ -46,6 +46,7 @@ Rails.application.routes.draw do
           get :search, on: :collection
         end
       end
+      get 'check_login' => 'sessions/helpers#check_login', :as => :check_login
     end
 
     resources :external_graders, only: [:create, :show, :update] do
@@ -68,8 +69,6 @@ Rails.application.routes.draw do
     get 'user', to: 'oauth_credentials#show'
     get 'mailchimps/webhook' => 'mailchimps#verify', :as => :verify_webhook
     post 'mailchimps/webhook' => 'mailchimps#webhook', :as => :update_webhook
-    get 'check_login' => 'session_helper#check_login', :as => :check_login
-
   end
 
   namespace :components do
