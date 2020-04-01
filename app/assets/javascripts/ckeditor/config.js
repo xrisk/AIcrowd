@@ -58,8 +58,6 @@ CKEDITOR.editorConfig = function( config )
       'Format','-', 'TextColor', 'BGColor', '-', 'Bold', 'Italic', 'Underline', 'Strike', '-',
       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'NumberedList', 'BulletedList', '-',
       'Outdent', 'Indent', '-', 'Find', 'Replace', '-', 'Scayt', '-', 'Undo', 'Redo', '-', 'Link', 'Unlink','-',
-      'RemoveFormat', '-', 'Source', 'Markdown'], '/', ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-',
-      'EmojiPanel', '-', 'Blockquote','-', 'CodeSnippet','-', 'Mathjax','-', 'Image','-', 'Table','-', 'HorizontalRule'
-  ]];
-
+      'RemoveFormat', '-', 'EmojiPanel', '-', 'Blockquote','-', 'CodeSnippet','-', 'Mathjax','-', 'Image','-',
+      'Table','-', 'HorizontalRule', '-', 'Source', 'Markdown']];
 };
