@@ -42,6 +42,9 @@ Rails.application.routes.draw do
         resources :participants, only: [] do
           get :search, on: :collection
         end
+        resources :newsletter_emails, only: [] do
+          post :preview, on: :collection
+        end
         resources :teams, only: [] do
           get :search, on: :collection
         end
