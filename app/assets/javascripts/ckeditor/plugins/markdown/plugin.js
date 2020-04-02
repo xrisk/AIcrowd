@@ -164,6 +164,7 @@
                 let markdownSource = editor.getData();
                 
                 let converter = new showdown.Converter({
+                    'parseImgDimensions': 'true',
                     'omitExtraWLInCodeBlocks': 'true', 
                     'customizedHeaderId': 'true', 
                     'ghCompatibleHeaderId': 'true', 
@@ -217,6 +218,29 @@ function setupTurnDownMarkdown(editable, htmlData){
       }
     }
   );
+  function removePx(m){return m.toString().endsWith('px') ? parseInt(m, 10): m }
+  function setAuto(m){return m === "auto" ? "*": m }
+
+  turndownService = turndownService.addRule('image_size', {
+    filter: 'img',
+
+    replacement: function (content, node) {
+      let alt = node.alt || ''
+      let src = node.getAttribute('src') || ''
+      let title = node.title || ''
+      let titlePart = title ? ' "' + title + '"' : ''
+      console.log(node);
+
+      let w = setAuto(removePx(node.style['width'] || node.width));
+      let h = setAuto(removePx(node.style['height'] || node.height));
+
+      let sizePart = ` =${w}x${h}`;
+      let final = `![${alt}](${src}${titlePart}${sizePart})`;
+      return src ? final : ''
+    }
+    }
+  );
+
   turndownService = turndownService.addRule('math', {
     filter: function (node, options) {
       return (
