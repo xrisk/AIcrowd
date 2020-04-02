@@ -63,7 +63,10 @@ Rails.application.routes.draw do
     resources :notifications, only: [:index]
   end
 
-  devise_for :participants, controllers: { omniauth_callbacks: 'participants/omniauth_callbacks' }
+  devise_for :participants, controllers: {
+    omniauth_callbacks: 'participants/omniauth_callbacks',
+    registrations: 'participants/registrations'
+  }
 
   resources :participants, only: [:show, :edit, :update, :destroy, :index] do
     get :sync_mailchimp
