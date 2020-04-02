@@ -46,7 +46,7 @@
                 <h4>Ratings Progression</h4>
               </div>
             </header>
-            <%= line_chart @participant.user_rating_history %>
+            <%= line_chart @participant.user_rating_history, id: "line-chart" %>
           </div>
           <div class="col-4">
             <header class="section-header-decorative">

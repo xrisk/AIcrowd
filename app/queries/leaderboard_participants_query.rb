@@ -16,12 +16,12 @@ class LeaderboardParticipantsQuery
         .where("challenge_round_id = #{challenge_round}")
     if temporary
       @relation.select("seq, coalesce(p.id, p2.id) as participant_id,
-                 ROUND(coalesce(p.temporary_rating, p2.temporary_rating, p.rating, p2.rating, 0)::numeric, 5) as participant_mu,
-                 ROUND(coalesce(p.temporary_variation, p2.temporary_variation, p.variation, p2.variation, 0)::numeric, 5) as participant_sigma")
+                 ROUND(coalesce(p.temporary_rating, p2.temporary_rating, p.rating, p2.rating, 0)::numeric, 5) as participant_rating,
+                 ROUND(coalesce(p.temporary_variation, p2.temporary_variation, p.variation, p2.variation, 0)::numeric, 5) as participant_variation")
     else
       @relation.select("seq, coalesce(p.id, p2.id) as participant_id,
-                 ROUND(coalesce(p.rating, p2.rating, 0)::numeric, 5) as participant_mu,
-                 ROUND(coalesce(p.variation, p2.variation, 0)::numeric, 5) as participant_sigma")
+                 ROUND(coalesce(p.rating, p2.rating, 0)::numeric, 5) as participant_rating,
+                 ROUND(coalesce(p.variation, p2.variation, 0)::numeric, 5) as participant_variation")
     end
 
   end
