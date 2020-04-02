@@ -75,6 +75,7 @@ gem 'pundit'
 gem 'prometheus-client'
 gem "rack", ">= 2.0.6"
 gem "rack-cors"
+gem 'recaptcha'
 gem 'remotipart'
 gem 'ransack'
 gem 'rouge'
