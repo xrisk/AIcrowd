@@ -47,11 +47,7 @@
 
   <div class="form-group">
     <span class="label-text">Challenge status</span>
-    <% if current_participant.admin? %>
-      <%= status_dropdown_helper(builder: f) %>
-    <% else %>
-      <%= f.text_field :status_cd, readonly: true, class: "form-control" %>
-    <% end %>
+    <%= status_dropdown_helper(builder: f) %>
   </div>
 
   <div class="form-group">
