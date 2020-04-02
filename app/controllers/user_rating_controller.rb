@@ -1,4 +1,5 @@
 class UserRatingController < ApplicationController
+  before_action :auth_by_admin_api_key
   def get_leaderboard_ranks
     user_rating_service = UserRatingService.new(params[:round_id])
     leaderboard_rating_stats = user_rating_service.leaderboard_query
