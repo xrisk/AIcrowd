@@ -53,6 +53,39 @@ export default class extends Controller {
     }
 
     showTOC() {
+        let update_table_of_contents = function (headings) {
+            let toc = $("#table-of-contents");
+            $.each(headings, (index, heading) => {
+                // JQuery Object from DOM object
+                heading = $(heading);
+                let heading_content = heading.text();
+                let heading_id = heading_content.replace(/ /g,"_") + index;
+                heading.attr('id', heading_id);
+
+                let li = $('<li/>', {
+                    "class": 'nav-item',
+                }).appendTo(toc);
+
+                $('<a/>', {
+                    "class": 'nav-link',
+                    href: "#"+heading_id,
+                    text: _.capitalize(heading_content)
+                }).appendTo(li);
+
+                // Attach ScrollSpy only after the TOC has been generated.
+                if (index === headings.length - 1) {
+                    $('body').scrollspy({target: "#table-of-contents", offset: 64});
+                }
+            });
+        };
+
+        $(document).ready(function () {
+            var headings = $("#description-wrapper h2").get();
+            update_table_of_contents(headings);
+        });
+    }
+
+    showTabularTOC() {
         if (window.matchMedia("(max-width: 991.98px)").matches) {
             this.updateContent(this.fullContent);
             return;
