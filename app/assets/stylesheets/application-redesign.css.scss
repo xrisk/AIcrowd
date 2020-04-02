@@ -13742,6 +13742,10 @@ html {
   width: 24px;
 }
 
+#table-of-contents .nav-link {
+  text-transform: capitalize;
+}
+
 @import 'challenges/form';
 @import 'challenges/datatable';
 @import 'challenges/insights';
