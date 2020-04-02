@@ -103,19 +103,22 @@ class ChallengePolicy < ApplicationPolicy
   def submissions_allowed?
     return false unless @record.online_submissions
     return true if edit?
+    return false if @record.starting_soon? || @record.draft?
 
-    if @record.running? || (@record.completed? && @record.post_challenge_submissions?)
-      if @record.clef_challenge.present?
-        if clef_participant_registered?(@record)
-          return true # return true if running and clef challenge and registered
-        else
-          return false # return false if running and clef_challenge and NOT REGISTERED
-        end
-      else
-        return true # return true if running and no clef challenge
-      end
-    end
-    return false # no positive condition met
+    return false if @record.completed? && !@record.post_challenge_submissions?
+
+    # If we reach this part that means that the challenge status is set to 'running'
+    # return true if not a clef challenge
+    return true unless @record.clef_challenge.present?
+
+    # return true if a clef challenge and participant is registered
+    return true if @record.clef_challenge.present? && clef_participant_registered?(@record)
+
+    # Return false if the challenge is set to "running" but there is no active round
+    # or the active round start time is in the future
+    return false if Time.zone.now < @record.start_dttm
+
+    false # no positive condition met
   end
 
   def clef_participant_registered?(challenge)
