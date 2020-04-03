@@ -63,39 +63,6 @@ export default class extends Controller {
     }
 
     showTOC() {
-        let update_table_of_contents = function (headings) {
-            let toc = $("#table-of-contents");
-            $.each(headings, (index, heading) => {
-                // JQuery Object from DOM object
-                heading = $(heading);
-                let heading_content = heading.text();
-                let heading_id = heading_content.replace(/ /g,"_") + index;
-                heading.attr('id', heading_id);
-
-                let li = $('<li/>', {
-                    "class": 'nav-item',
-                }).appendTo(toc);
-
-                $('<a/>', {
-                    "class": 'nav-link',
-                    href: "#"+heading_id,
-                    text: _.capitalize(heading_content)
-                }).appendTo(li);
-
-                // Attach ScrollSpy only after the TOC has been generated.
-                if (index === headings.length - 1) {
-                    $('body').scrollspy({target: "#table-of-contents", offset: 64});
-                }
-            });
-        };
-
-        $(document).ready(function () {
-            var headings = $("#description-wrapper h2").get();
-            update_table_of_contents(headings);
-        });
-    }
-
-    showTabularTOC() {
         this.updateContent(this.fullContent);
         if (window.matchMedia("(max-width: 991.98px)").matches) {
             return;
@@ -113,10 +80,11 @@ export default class extends Controller {
         // Clear TOC
         this.toc.empty();
         this.createTOC();
-        this.updateActive();
 
-        this.selectedLink = this.tocLinks.first();
-        this.selectedLink.click();
+        if (this.hasUpdates){
+            this.el.children().first().hide();
+        }
+        $('body').scrollspy({target: "#table-of-contents", offset: 64});
     }
 
     createTOC(){
@@ -130,45 +98,14 @@ export default class extends Controller {
             const li = $('<li/>', { class: 'nav-item'}).appendTo(this.toc);
 
             // Create a link tag to trigger content change
-            const link = $('<a/>', { class: 'nav-link', text: $(heading).text() }).appendTo(li);
+            const link = $('<a/>', {
+                class: 'nav-link text-capitalize',
+                href: `#heading-${index}`,
+                text: $(heading).text() }).appendTo(li);
 
-            // Calculate Content
-            const content = this.getContent($(heading), index);
-
-            // Setup click callback
-            link.click(() => this.selectHeading(link, content, index));
         });
         this.tocLinks = this.toc.find('a');
         this.selectedLink = this.tocLinks.first();
     }
 
-    selectHeading(link, contentHTML, index) {
-        this.selectedLink = link;
-        this.updateContent(contentHTML);
-        this.updateActive(index);
-    }
-
-    getContent(start, index){
-        let content = "";
-
-        if (this.hasUpdates && index === 0){
-            $(start)
-                .nextUntil(' h2 ')
-                .each( (i,x) => content += x.outerHTML );
-        } else {
-            $(start).nextUntil(' h2 ')
-                .addBack() // Add back the 'start' element to the array
-                .each( (i,x) => content += x.outerHTML );
-        }
-
-        return content;
-    }
-
-    updateActive(index = 0){
-        this.tocLinks.removeClass('active');
-        this.selectedLink.addClass('active');
-        if (index > 0) {
-            document.documentElement.scrollTop = this.el.find(`#heading-${index}`).offset().top;
-        }
-    }
 }
