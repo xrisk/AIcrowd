@@ -101,8 +101,6 @@ describe CalculateLeaderboardService, api: true do
     # counts
     it { expect(Leaderboard.count).to eq(2) }
     it { expect(OngoingLeaderboard.count).to eq(2) }
-    it { expect(PreviousLeaderboard.count).to eq(2) }
-    it { expect(PreviousOngoingLeaderboard.count).to eq(2) }
 
     # rounding
     it { expect(p1s1.score_display).to eq(30.05) }
@@ -230,67 +228,6 @@ describe CalculateLeaderboardService, api: true do
       expect(Leaderboard.second.post_challenge)
           .to eq(false)
     }
-
-    # previous leaderboard
-    it {
-      expect(PreviousLeaderboard.first.participant_id)
-          .to eq(participant1.id)
-    }
-
-    it {
-      expect(PreviousLeaderboard.first.row_num)
-          .to eq(1)
-    }
-
-    it {
-      expect(PreviousLeaderboard.first.previous_row_num)
-          .to eq(0)
-    }
-
-    it {
-      expect(PreviousLeaderboard.first.score)
-          .to eq(30.051)
-    }
-
-    it {
-      expect(PreviousLeaderboard.first.score_secondary)
-          .to eq(0.001)
-    }
-
-    it {
-      expect(PreviousLeaderboard.first.post_challenge)
-          .to eq(false)
-    }
-
-    it {
-      expect(PreviousLeaderboard.second.participant_id)
-          .to eq(participant2.id)
-    }
-
-    it {
-      expect(PreviousLeaderboard.second.row_num)
-          .to eq(2)
-    }
-
-    it {
-      expect(PreviousLeaderboard.second.previous_row_num)
-          .to eq(0)
-    }
-
-    it {
-      expect(PreviousLeaderboard.second.score)
-          .to eq(29.0)
-    }
-
-    it {
-      expect(PreviousLeaderboard.second.score_secondary)
-          .to eq(0.003)
-    }
-
-    it {
-      expect(PreviousLeaderboard.second.post_challenge)
-          .to eq(false)
-    }
   end
 
   describe 'order by primary asc, secondary asc sfc' do
@@ -383,57 +320,6 @@ describe CalculateLeaderboardService, api: true do
 
     it {
       expect(Leaderboard.second.post_challenge)
-          .to eq(false)
-    }
-
-    # previous leaderboard
-    it {
-      expect(PreviousLeaderboard.first.participant_id)
-          .to eq(participant2.id)
-    }
-
-    it {
-      expect(PreviousLeaderboard.first.row_num)
-          .to eq(1)
-    }
-
-    it {
-      expect(PreviousLeaderboard.first.score)
-          .to eq(29.0)
-    }
-
-    it {
-      expect(PreviousLeaderboard.first.score_secondary)
-          .to eq(0.003)
-    }
-
-    it {
-      expect(PreviousLeaderboard.first.post_challenge)
-          .to eq(false)
-    }
-
-    it {
-      expect(PreviousLeaderboard.second.participant_id)
-          .to eq(participant1.id)
-    }
-
-    it {
-      expect(PreviousLeaderboard.second.row_num)
-          .to eq(2)
-    }
-
-    it {
-      expect(PreviousLeaderboard.second.score)
-          .to eq(30.05)
-    }
-
-    it {
-      expect(PreviousLeaderboard.second.score_secondary)
-          .to eq(0.002)
-    }
-
-    it {
-      expect(PreviousLeaderboard.second.post_challenge)
           .to eq(false)
     }
   end

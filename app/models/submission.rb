@@ -6,6 +6,7 @@ class Submission < ApplicationRecord
   before_validation :generate_short_url
 
   belongs_to :challenge, counter_cache: true
+  belongs_to :meta_challenge, optional: true, class_name: 'Challenge'
   belongs_to :participant, optional: true
   belongs_to :challenge_round, optional: true
 
