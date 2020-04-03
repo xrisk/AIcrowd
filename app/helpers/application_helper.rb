@@ -98,30 +98,41 @@ module ApplicationHelper
   end
 
   def social_share(site, challenge, mediable)
-    if mediable.class.name == 'Leaderboard'
-      data_url = "#{request.url}"
-      img = having_media_thumbnail_image?(challenge, mediable) ? s3_public_url(mediable, :thumb) : nil
-    elsif mediable.class.name == 'Submission'
-      data_url = "#{request.base_url}/#{mediable.short_url}" if mediable.class.name == 'Submission'
-      img = having_media_large_image?(challenge, mediable) ? s3_public_url(mediable, :large) : nil
-    end
+    data_img_and_url = data_image_and_url(challenge, mediable)
     content_tag(:span,
-                data: {
+                data: { 
                         title: challenge.challenge,
                         desc: challenge.tagline,
-                        img: img,
-                        url: data_url + "?utm_source=AIcrowd&utm_medium=#{site.humanize}"
+                        img: data_img_and_url[:img],
+                        url: data_img_and_url[:url] + "?utm_source=AIcrowd&utm_medium=#{site.humanize}" 
                       }) do
-      social_share_link(site, data_url) do
+      social_share_link(site, data_img_and_url[:url]) do
         image_tag(social_image_url(site))
       end
     end
   end
 
+
+  def data_image_and_url(challenge, mediable)
+    data_img_and_url = {}
+    if mediable.class.name == 'Leaderboard'
+      data_img_and_url.merge!(img: having_media_thumbnail_image?(challenge, mediable) ? s3_public_url(mediable, :thumb) : content_for_meta_image)
+      data_img_and_url.merge!(url: challenge_submission_url(challenge, mediable.submission))
+    elsif mediable.class.name == 'Submission'
+      data_img_and_url.merge!(img: having_media_large_image?(challenge, mediable) ? s3_public_url(mediable, :large) : content_for_meta_image)
+      data_img_and_url.merge!(url: "#{request.base_url}/#{mediable.short_url}")
+    end
+    data_img_and_url
+  end
+
+  def challenge_submission_url(challenge, submission)
+    "#{request.base_url}/challenges/#{challenge.friendly_id}/submissions/#{submission.id}"
+  end
+
   def social_share_link(site, data_url)
     link_to image_tag(social_image_url(site)), '#',
       {
-        class: "btn btn-#{site} btn-sm mr-2",
+        class: "btn btn-#{site} btn-sm mr-2 social-share",       
         data: {
                 url: data_url.concat("?utm_source=AIcrowd&utm_medium=#{site.humanize}"),
                 site: site,
