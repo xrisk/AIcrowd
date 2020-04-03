@@ -15,9 +15,6 @@
       <% if policy(challenge).show_winners? %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Winners', link: challenge_winners_path(challenge)} %>
       <% end %>
-      <% if policy(challenge).edit? %>
-        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Participants', link: participants_link(challenge)} %>
-      <% end %>
       <% if challenge.dynamic_content_tab.present? %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: challenge.dynamic_content_tab, link: challenge_dynamic_contents_path(challenge)} %>
       <% end %>
@@ -41,12 +38,6 @@
       <%= my_team_view_or_create_button(challenge) %>
       <% if !policy(challenge).starting_soon_mode? && policy(challenge).submissions_allowed? %>
         <%= link_to 'Create Submission', new_challenge_submission_path(challenge), class: "btn btn-primary btn-sm pull-right" %>
-      <% end %>
-    <% end %>
-
-    <% if policy(challenge).edit? %>
-      <%= link_to edit_challenge_path(challenge), title: "Edit challenge", data: {turbolinks: false}, class: "nav-link" do %>
-        <button class="btn btn-secondary btn-sm ml-1 pull-right" role="button">Edit Challenge</button>
       <% end %>
     <% end %>
   </div>

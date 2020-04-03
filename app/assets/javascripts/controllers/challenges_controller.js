@@ -3,8 +3,11 @@ $(document).on('click', '.challenge-invite-participant', function(){
   $('.challenge-invite-participant').attr("disabled", true);
 });
 
-
 $(document).ready(function() {
+  $('.select2').select2();
+  $('.category_select2').select2({
+    tags: true
+  });
   $('input[name="status"]:radio').change(function(){
     $('#challenge-statuses').addClass('filter-active');
   });
@@ -69,6 +72,9 @@ Paloma.controller('Challenges', {
     edit: function () {
         $(document).ready(function() {
             $('.select2').select2();
+            $('.category_select2').select2({
+              tags: true
+            });
         });
         const currentUrl  = new URL(window.location);
         const currentStep = currentUrl.searchParams.get('step');

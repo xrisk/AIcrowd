@@ -6,7 +6,10 @@
     <div class='dropdown-menu form-dropdown status-dropdown'>
       <% @status.each do |status| %>
         <div class="form-check">
-          <%= radio_button_tag 'status', status, status.eql?(params[:status]), {class: 'form-check-input'} %> <%= status.humanize %>
+          <%= label_tag do %>
+            <%= radio_button_tag 'status', status, status.eql?(params[:status]), {class: 'form-check-input'} %>
+            <%= status.humanize %>
+          <% end %>  
         </div>
       <% end %>
     </div>
@@ -18,9 +21,10 @@
     <div class='dropdown-menu form-dropdown'>
       <% @categories.each do |category| %>
         <div class="form-check">
-          <%= check_box_tag 'category[category_names][]', category.name, check_selected_category(category, params), { class:'form-check-input' } %>
-          <%= label_tag "category[category_names][][#{category.name}]", category.name.humanize %>
-          </label>
+          <%= label_tag do %>
+            <%= check_box_tag 'category[category_names][]', category.name, check_selected_category(category, params), { class:'form-check-input' } %>
+            <%= category.name.humanize %>
+          <% end %>
         </div>
       <% end %>
     </div>
@@ -32,8 +36,10 @@
     <div class='dropdown-menu form-dropdown'>
       <% @prize_hash.each do |p_key, p_value| %>
         <div class="form-check">
-          <%= check_box_tag 'prize[prize_type][]', p_key, check_selected_prize(p_key, params), {class: 'form-check-input'} %>
-          <%= label_tag "prize[prize_type][][#{p_key}]", p_value.humanize, class: 'form-check-label' %>
+          <%= label_tag do %>
+            <%= check_box_tag 'prize[prize_type][]', p_key, check_selected_prize(p_key, params), {class: 'form-check-input'} %>
+            <%= p_value.humanize %>
+          <% end %>  
         </div>
       <% end %>
     </div>

@@ -11,7 +11,7 @@ class OngoingLeaderboardPolicy < LeaderboardPolicy
       if participant.present?
         participant_id       = participant.id
         email                = participant.email
-        participant_team_ids = participant.teams.pluck(:id).join("','")
+        participant_team_ids = participant.teams.pluck(:id).join(',')
       else
         participant_id       = 0
         email                = nil

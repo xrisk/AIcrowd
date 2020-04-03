@@ -105,7 +105,7 @@ describe Team do
       it { expect(team.team_participants.count).to eq(2) }
       it { expect(team.team_invitations.status_pendings.count).to eq(1) }
       it { expect(team.invitations_left).to eq(0) }
-      it { expect(team.full?).to be true }
+      it { expect(team.full?).to be false }
     end
 
     describe 'decline/cancel regains invitations' do

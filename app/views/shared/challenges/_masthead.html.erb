@@ -86,8 +86,22 @@
           <%= render partial: 'shared/votes/button', locals: { votable: challenge, vote: vote } %>
           <%= render partial: 'shared/challenges/follow_button', locals: { followable: challenge, follow: follow } %>
         </div>
+
+        <% if policy(challenge).edit? %>
+          <div class="dropdown btn-set ml-auto">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Organizer actions
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <%= link_to 'Edit Challenge', edit_challenge_path(challenge), class: 'dropdown-item' %>
+              <%= link_to 'List Participants', participants_link(challenge), class: 'dropdown-item' %>
+              <%= link_to 'Send Newsletter Email', new_challenge_newsletter_emails_path(challenge), class: 'dropdown-item' %>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
+
     <!-- /organizer/stats/options -->
   </div>
 </div>

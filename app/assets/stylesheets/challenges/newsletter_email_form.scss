@@ -1,0 +1,26 @@
+.newsletter-email-form {
+  .select2-container {
+    width: 100% !important;
+  }
+
+  .select2-selection {
+    color: #434547;
+    background-color: #F8F9F9;
+    background-clip: padding-box;
+    border: 1px solid #D9DCDC;
+    -webkit-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+  .select2-container--focus .select2-selection--multiple {
+    color: #434547;
+    background-color: #F8F9F9;
+    border-color: #77797A !important;
+    outline: 0;
+    box-shadow: none;
+  }
+
+  .ck-content {
+    min-height: 205px;
+  }
+}
