@@ -1,4 +1,5 @@
 class ChallengeRound < ApplicationRecord
+  before_update :rollback_rating, :if => :end_dttm_changed?
   include Markdownable
 
   belongs_to :challenge, inverse_of: :challenge_rounds
@@ -40,22 +41,10 @@ class ChallengeRound < ApplicationRecord
   scope :started, -> { where("start_dttm < ?", Time.current) }
 
   after_initialize :set_defaults
-  after_update :rollback_rating, :if => :end_dttm_changed?
+
 
   def rollback_rating
-    ChallengeRound.where(["end_dttm >?","#{end_dttm_was}"]).update_all(calculated_permanent: false)
-    to_be_deleted_ratings = UserRating.where(['created_at >?', "#{end_dttm_was}"])
-    participant_ids = to_be_deleted_ratings.distinct('participant_id').pluck(:participant_id)
-    to_be_deleted_ratings.destroy_all
-    participant_ids.map do |participant_id|
-      user_rating =  UserRating.where(['participant_id=? and rating is not null', "#{participant_id}"]).reorder('created_at desc').first
-      updated_rating = {
-          'rating': user_ratings.rating,
-          'variation': user_rating.variation
-      }
-      Participant.find_by(id: participant_id).update!(updated_rating)
-    end
-    RatingCalculateJob.perform_later
+    RollbackRatingJob.perform_later(end_dttm_was)
   end
   def get_score_title
     score_title.presence || 'Primary Score'
