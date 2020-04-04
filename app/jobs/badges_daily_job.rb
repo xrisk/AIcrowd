@@ -10,11 +10,9 @@ class BadgesDailyJob < ApplicationJob
     if user_rating_service.temporary
       during_badge = 3
     end
-
     teams_participant_ids.each_with_index do |team, i|
       team.each_with_index do |participant_id, j|
-        participant_ids << participant_id
-        participant_ranks << ranks[i].to_f/max_rank.to_f
+        participant_ranks = ranks[i].to_f/max_rank.to_f
         if max_rank < 100
           if participant_ranks < 0.1
             Participant.find_by(id: participant_id).add_badge(3 + during_badge)
@@ -50,9 +48,12 @@ class BadgesDailyJob < ApplicationJob
         end
       end
     end
+    unless user_rating_service.temporary
+      user_rating_service.round.update(assigned_permanent_badge: true)
+    end
   end
   def perform(*args)
-    challenge_rounds = ChallengeRound.where("calculated_permanent=FALSE OR calculated_permanent is NULL").order(end_dttm: :asc).pluck(:id)
+    challenge_rounds = ChallengeRound.where("assigned_permanent_badge=FALSE OR assigned_permanent_badge is NULL").order(end_dttm: :asc).pluck(:id)
     challenge_rounds.each do |round_id|
       assign_badges_to_challenge(round_id)
     end

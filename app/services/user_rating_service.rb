@@ -1,4 +1,5 @@
 class UserRatingService
+  attr_accessor :temporary, :round
   def initialize(round_id)
     @round = ChallengeRound.find_by(id:round_id)
     if @round&.end_dttm.present? && @round.end_dttm < Time.current
