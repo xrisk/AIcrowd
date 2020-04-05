@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_185327) do
+ActiveRecord::Schema.define(version: 2020_04_04_154409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -363,6 +363,7 @@ ActiveRecord::Schema.define(version: 2020_03_31_185327) do
     t.string "primary_sort_order_cd", default: "ascending", null: false
     t.string "secondary_sort_order_cd", default: "not_used", null: false
     t.boolean "calculated_permanent", default: false, null: false
+    t.boolean "assigned_permanent_badge", default: false, null: false
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
   end
 
