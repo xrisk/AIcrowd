@@ -6,11 +6,10 @@ class Participants::RegistrationsController < Devise::RegistrationsController
 
   private
     def check_captcha
-      unless !Rails.env.production? || verify_recaptcha
-        self.resource = resource_class.new sign_up_params
-        resource.validate # Look for any other validation errors besides Recaptcha
-        set_minimum_password_length
-        respond_with_navigational(resource) { render :new }
-      end
+      return if !Rails.env.production? || verify_recaptcha
+      self.resource = resource_class.new sign_up_params
+      resource.validate # Look for any other validation errors besides Recaptcha
+      set_minimum_password_length
+      respond_with_navigational(resource) { render :new }
     end
 end
