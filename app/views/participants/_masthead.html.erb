@@ -11,6 +11,7 @@
               <h1>
                 <%= participant.name %>
                 <%= render :partial => 'participants/show_reputation', locals: { participant: participant } %>
+                <%= render :partial => 'participants/show_badges', locals: { participant: participant } %>
               </h1>
             </div>
             <div class="masthead-info">

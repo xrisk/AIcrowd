@@ -1,0 +1,7 @@
+<span class="reputation-info" style="<%= style ||= '' %>">
+  <% participant.badges.each do |badge| %>
+    <img src="/assets/awards/award-bronze.svg" class="country-flag" />
+    <p><%= badge.name %></p>
+    <p><%= badge.description %></p>
+  <% end %>
+</span>
