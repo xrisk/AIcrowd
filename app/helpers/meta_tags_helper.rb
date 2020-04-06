@@ -4,13 +4,13 @@ module MetaTagsHelper
       "AIcrowd | #{@challenge.challenge} | #{controller_name.capitalize}"
     elsif show_action?
       if controller_name == 'challenges'
-        "AIcrowd | " + @challenge.challenge
+        "AIcrowd | " + @challenge.challenge + "| #{controller_name.capitalize}"
       elsif controller_name == 'participants'
-        "AIcrowd | " + @participant.slug
+        "AIcrowd | " + @participant.slug + "| #{controller_name.capitalize}"
       elsif controller_name == 'organizers'
-        "AIcrowd | " + @organizer.slug
-      elsif controller_name == 'submission'
-        "AIcrowd | " + @challenge.challenge
+        "AIcrowd | " + @organizer.slug + "| #{controller_name.capitalize}"
+      elsif controller_name == 'submissions'
+        "AIcrowd | " + @challenge.challenge + "| #{controller_name.capitalize}"
       end
     elsif content_for?(:meta_title)
       content_for(:meta_title)
