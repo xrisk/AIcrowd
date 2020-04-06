@@ -17,12 +17,23 @@
     max-width: none;
   }
 
+  .md-content figure img {
+    max-width: 640px !important;
+    height: auto;
+  }
+
   .cke {
     min-width: 1264px;
+    border-left: none;
+    border-right: none;
   }
 
   .cke_wysiwyg_div {
     min-height: 250px;
+  }
+
+  .cke_source {
+    min-height: 500px;
   }
 
   &__thin-tab {

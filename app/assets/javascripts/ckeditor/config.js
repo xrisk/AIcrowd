@@ -23,6 +23,7 @@ CKEDITOR.editorConfig = function( config )
   config.autoGrow_onStartup = true;
   config.autoGrow_minHeight = 250;
   config.autoGrow_maxHeight = 1600;
+  config.removePlugins = 'resize';
 
   config.format_tags = 'p;h2;h3;h4;pre;address;div';
 
