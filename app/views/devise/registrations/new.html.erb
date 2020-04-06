@@ -62,6 +62,13 @@
               You also agree to receive occasional updates about AIcrowd news, including new challenge launches and other
               activities (this can be turned off in your settings).
             </div>
+
+            <% if Rails.env.production? %>
+            <div class="form-group form-check mb-4">
+              <%= recaptcha_tags %>
+            </div>
+            <% end %>
+
             <%= f.button 'Create account', type: 'submit', class: 'btn btn-primary btn-block', id: "sign-up-button"%>
           <% end %>
         </div>
