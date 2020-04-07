@@ -86,6 +86,7 @@ class SubmissionsController < ApplicationController
             online_submission: true))
     authorize @submission
     if @submission.save
+      SubmissionCodeJob.perform_later(@submission.id) if @challenge.code_submissions
       SubmissionGraderJob.perform_later(@submission.id)
       redirect_to challenge_submissions_path(@challenge),
                   notice: 'Submission accepted.'

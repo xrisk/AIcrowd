@@ -31,7 +31,7 @@
       <p class="margin-bottom"></p>
       <div class="md-content">
         <strong>Code base submission</strong>
-        <div data-controller='ace' data-ace-id='code-submission' id='code-submission'></div>
+        <%= f.text_area :code_data, data: {"controller": "ace", "ace-id": "code-submission"}, id: 'code-submission' %>
       </div>
     <% end %>
 
