@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_142624) do
+ActiveRecord::Schema.define(version: 2020_04_03_104228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -909,6 +909,7 @@ ActiveRecord::Schema.define(version: 2020_03_31_142624) do
     t.float "score_secondary_display"
     t.boolean "baseline", default: false
     t.string "baseline_comment"
+    t.string "code_data"
     t.index ["challenge_id"], name: "index_submissions_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_submissions_on_challenge_round_id"
     t.index ["participant_id"], name: "index_submissions_on_participant_id"
