@@ -4,12 +4,11 @@
  * Licensed under the MIT license
  * CodeMirror Plugin: http://codemirror.net/ (MIT License)
  * Markdown Parser:
- * HTML to Markdown Parser: 
+ * HTML to Markdown Parser:
  */
 'use strict';
 (function() {
     CKEDITOR.plugins.add('markdown', {
-        // lang: 'en,zh', // %REMOVE_LINE_CORE%
         icons: 'markdown',
         hidpi: true, // %REMOVE_LINE_CORE%
         init: function(editor) {
@@ -64,7 +63,7 @@
 
                 if (typeof (CodeMirror) == 'undefined' || typeof (CodeMirror.modes.gfm) == 'undefined') {
                     CKEDITOR.document.appendStyleSheet(rootPath + 'css/codemirror.min.css');
-                
+
                     if (config.theme.length && config.theme != 'default') {
                         CKEDITOR.document.appendStyleSheet(rootPath + 'theme/' + config.theme + '.css');
                     }
@@ -162,12 +161,12 @@
                 window["codemirror_" + editor.id].toTextArea(); // Remove codemirror and restore Data to origin textarea
                 window["codemirror_" + editor.id] = null; // Free Memory on destroy
                 let markdownSource = editor.getData();
-                
+
                 let converter = new showdown.Converter({
                     'parseImgDimensions': 'true',
-                    'omitExtraWLInCodeBlocks': 'true', 
-                    'customizedHeaderId': 'true', 
-                    'ghCompatibleHeaderId': 'true', 
+                    'omitExtraWLInCodeBlocks': 'true',
+                    'customizedHeaderId': 'true',
+                    'ghCompatibleHeaderId': 'true',
                     'headerLevelStart': '2',
                 });
 
