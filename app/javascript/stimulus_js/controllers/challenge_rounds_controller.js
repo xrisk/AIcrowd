@@ -1,4 +1,5 @@
 import { Controller } from "stimulus"
+import { showAlert } from '../helpers/alerts_helper'
 
 export default class extends Controller {
   removeChallengeRound(event) {
@@ -22,7 +23,7 @@ export default class extends Controller {
         }
       }).then(response => {
         if (response.ok) {
-          this.showAlert('success', 'Challenge round was removed');
+          showAlert('success', 'Challenge round was removed');
 
           roundWrapper.remove();
           associationInput.remove();
@@ -32,7 +33,7 @@ export default class extends Controller {
       })
       .then((result) => {
         if (result && result.error) {
-          this.showAlert('danger', result.error);
+          showAlert('danger', result.error);
         }
       })
       .catch((error) => {
@@ -51,23 +52,5 @@ export default class extends Controller {
   enablePreviewButton(button) {
     button.removeAttribute('disabled');
     button.textContent = 'Remove Round';
-  }
-
-  showAlert(alertType, alertMessage) {
-    const alertWrapper = document.getElementById('flash-messages-wrapper');
-
-    alertWrapper.innerHTML = this.alertTemplate(alertType, alertMessage);
-    window.scrollTo(0, 0);
-  }
-
-  alertTemplate(alertType, alertMessage) {
-    return `<div class="alert alert-${alertType} alert-dismissible fade show flash-message" role="alert">
-              <div class="container-fluid">
-                <center>${alertMessage}</center>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            </div>`;
   }
 }
