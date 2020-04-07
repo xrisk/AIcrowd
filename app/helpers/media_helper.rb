@@ -87,6 +87,10 @@ module MediaHelper
     media_content_type(mediable) == 'image'
   end
 
+  def content_type_is_video?(mediable)
+    media_content_type(mediable) == 'video'
+  end
+
   def having_media_large?(challenge, mediable)
     challenge.media_on_leaderboard && mediable.media_large.present?
   end
@@ -99,7 +103,15 @@ module MediaHelper
     having_media_large?(challenge, mediable) && content_type_is_image?(mediable)
   end
 
+  def having_media_large_video?(challenge, mediable)
+    having_media_large?(challenge, mediable) && content_type_is_video?(mediable)
+  end
+
   def having_media_thumbnail_image?(challenge, mediable)
     having_media_thumb?(challenge, mediable) && content_type_is_image?(mediable)
+  end
+
+  def having_media_thumbnail_video?(challenge, mediable)
+    having_media_thumb?(challenge, mediable) && content_type_is_video?(mediable)
   end
 end
