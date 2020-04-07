@@ -1,5 +1,6 @@
-import { Controller } from "stimulus"
+import { Controller } from 'stimulus'
 import { showAlert } from '../helpers/alerts_helper'
+import { enableButton, disableButton } from '../helpers/buttons_helper'
 
 export default class extends Controller {
   removeChallengeRound(event) {
@@ -12,45 +13,39 @@ export default class extends Controller {
     const roundWrapper     = document.getElementById(`challenge-round-wrapper-${challengeRoundId}`);
     const associationInput = document.getElementById(`challenge_challenge_rounds_attributes_${childIndex}_id`);
 
-    this.disablePreviewButton(removeButton);
+    disableButton(removeButton, 'Removing...');
 
     if (confirm('Are you sure you want to permanently remove this challenge round?')) {
-      fetch(requestURL, {
-        method: 'DELETE',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      }).then(response => {
-        if (response.ok) {
-          showAlert('success', 'Challenge round was removed');
-
-          roundWrapper.remove();
-          associationInput.remove();
-        } else {
-          return response.json();
-        }
-      })
-      .then((result) => {
-        if (result && result.error) {
-          showAlert('danger', result.error);
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+      this.sendRemoveChallengeRoundRequest(requestURL, roundWrapper, associationInput)
     }
 
-    this.enablePreviewButton(removeButton);
+    enableButton(removeButton, 'Remove Round');
   }
 
-  disablePreviewButton(button) {
-    button.disabled    = true;
-    button.textContent = 'Removing...';
-  }
+  sendRemoveChallengeRoundRequest(requestURL, roundWrapper, associationInput) {
+    fetch(requestURL, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    }).then(response => {
+      if (response.ok) {
+        showAlert('success', 'Challenge round was removed');
 
-  enablePreviewButton(button) {
-    button.removeAttribute('disabled');
-    button.textContent = 'Remove Round';
+        roundWrapper.remove();
+        associationInput.remove();
+      } else {
+        return response.json();
+      }
+    })
+    .then((result) => {
+      if (result && result.error) {
+        showAlert('danger', result.error);
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   }
 }
