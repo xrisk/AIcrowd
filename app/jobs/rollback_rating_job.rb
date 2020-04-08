@@ -3,8 +3,8 @@ class RollbackRatingJob < ApplicationJob
 
   def perform(end_dttm_was)
     ActiveRecord::Base.transaction do
-      ChallengeRound.where(["end_dttm >?","#{end_dttm_was}"]).update_all(calculated_permanent: false)
-      to_be_deleted_ratings = UserRating.where(['created_at >?', "#{end_dttm_was}"])
+      ChallengeRound.where(["end_dttm >=?","#{end_dttm_was}"]).update_all(calculated_permanent: false)
+      to_be_deleted_ratings = UserRating.where(['created_at >=?', "#{end_dttm_was}"])
       participant_ids = to_be_deleted_ratings.distinct('participant_id').pluck(:participant_id)
       to_be_deleted_ratings.destroy_all
       participant_ids.map do |participant_id|

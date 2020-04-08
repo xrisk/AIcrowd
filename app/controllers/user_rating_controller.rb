@@ -1,10 +1,5 @@
 class UserRatingController < ApplicationController
   before_action :auth_by_admin_api_key
-  def auth_by_admin_api_key
-    authenticate_or_request_with_http_token do |token, options|
-      (token == ENV['CROWDAI_API_KEY'])
-    end
-  end
 
   def get_leaderboard_ranks
     user_rating_service = UserRatingService.new(params[:round_id])
