@@ -25,6 +25,9 @@ $(document).ready(function() {
       $('#challenge-prizes').addClass('filter-active');
     }
   });
+  $('.form-dropdown').click(function(e) {
+    e.stopPropagation();
+  });
 });
 
 function resetChallengesFormClientValidations() {

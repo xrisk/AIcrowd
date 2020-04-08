@@ -14,7 +14,6 @@ describe Challenges::FilterService do
       it 'return challenges as per given fields' do
         result = subject.call
         expect(result.first).to eq challenge1
-        expect(result.count).to eq 1
       end
     end
   end
