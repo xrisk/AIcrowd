@@ -1,3 +1,5 @@
+<%= javascript_include_tag Ckeditor.cdn_url %>
+
 <div class="row">
   <% if @challenge.completed? %>
     <br/>
@@ -14,7 +16,7 @@
 
       <strong>Submission Description</strong>
       <div class="md-content">
-        <%= f.text_area :description, class: "form-control ", data: {controller: "ckeditor"} %>
+        <%= f.cktext_area :description, class: "form-control" %>
       </div>
 
       <% if @challenge.license.present? %>

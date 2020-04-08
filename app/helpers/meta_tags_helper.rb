@@ -1,14 +1,16 @@
 module MetaTagsHelper
   def meta_title
-    if show_action?
+    if @challenge.present? && controller_name.present? && controller_name != 'challenges'
+      "AIcrowd | #{@challenge.challenge} | #{controller_name.capitalize}"
+    elsif show_action?
       if controller_name == 'challenges'
-        @challenge.challenge
+        "AIcrowd | " + @challenge.challenge + "| #{controller_name.capitalize}"
       elsif controller_name == 'participants'
-        @participant.slug
+        "AIcrowd | " + @participant.slug + "| #{controller_name.capitalize}"
       elsif controller_name == 'organizers'
-        @organizer.slug
-      elsif controller_name == 'submission'
-        @challenge.challenge
+        "AIcrowd | " + @organizer.slug + "| #{controller_name.capitalize}"
+      elsif controller_name == 'submissions'
+        "AIcrowd | " + @challenge.challenge + "| #{controller_name.capitalize}"
       end
     elsif content_for?(:meta_title)
       content_for(:meta_title)
@@ -22,6 +24,8 @@ module MetaTagsHelper
   end
 
   def meta_description
+    return @challenge.tagline if @challenge.present? && controller_name.present?
+
     if show_action?
       case controller_name
       when 'organizers'
@@ -33,22 +37,22 @@ module MetaTagsHelper
       when 'participants'
         return @participant.bio
       end
-    end 
+    end
     content_for?(:meta_description) ? content_for(:meta_description) : DEFAULT_META["meta_description"]
   end
 
   def meta_image
     if show_action?
       if controller_name == 'submissions'
-        having_media_large_image?(@challenge, @submission) ? s3_public_url(@submission, :large) : content_for_meta_image 
+        having_media_large_image?(@challenge, @submission) ? s3_public_url(@submission, :large) : content_for_meta_image
       elsif controller_name == 'challenges' && @challenge.image_file?
         @challenge.image_file.url
       elsif controller_name == 'organizers' && @organizer.image_file?
         @organizer.image_file.url
       elsif controller_name == 'participants' && @participant.image_file?
         @participant.image_file.url
-      end  
-    else  
+      end
+    else
       content_for_meta_image
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_27_142425) do
+ActiveRecord::Schema.define(version: 2020_03_31_142624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -394,7 +394,7 @@ ActiveRecord::Schema.define(version: 2020_03_27_142425) do
     t.boolean "submissions_page"
     t.boolean "private_challenge", default: false
     t.boolean "show_leaderboard", default: true
-    t.string "grader_identifier", default: "AIcrowd_GRADER_POOL"
+    t.string "grader_identifier"
     t.boolean "online_submissions", default: false
     t.boolean "grader_logs", default: false
     t.boolean "require_registration", default: false
@@ -435,6 +435,16 @@ ActiveRecord::Schema.define(version: 2020_03_27_142425) do
     t.index ["challenge_id", "organizer_id"], name: "index_challenges_organizers_on_challenge_id_and_organizer_id", unique: true
     t.index ["challenge_id"], name: "index_challenges_organizers_on_challenge_id"
     t.index ["organizer_id"], name: "index_challenges_organizers_on_organizer_id"
+  end
+
+  create_table "ckeditor_assets", force: :cascade do |t|
+    t.string "data_file_name", null: false
+    t.string "data_content_type"
+    t.integer "data_file_size"
+    t.string "type", limit: 30
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["type"], name: "index_ckeditor_assets_on_type"
   end
 
   create_table "clef_tasks", force: :cascade do |t|
@@ -780,6 +790,7 @@ ActiveRecord::Schema.define(version: 2020_03_27_142425) do
     t.integer "participation_terms_accepted_version"
     t.boolean "agreed_to_terms_of_use_and_privacy", default: true
     t.boolean "agreed_to_marketing", default: true
+    t.integer "submissions_count", default: 0
     t.float "rating"
     t.float "temporary_rating"
     t.float "variation"
