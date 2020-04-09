@@ -14,7 +14,7 @@ class UserRatingController < ApplicationController
         total_number_of_days = 365
         updated_rating = participant.fixed_rating * (Math.exp(-time_difference/total_number_of_days))
         participant.update!({rating: updated_rating})
-        UserRating.create!(participant_id: participant.id, rating: updated_rating, variation: user_final_rating['variation'], challenge_round: nil, created_at: challenge_round.end_dttm)
+        UserRating.create!(participant_id: participant.id, rating: updated_rating, variation: user_final_rating['variation'], challenge_round: nil, created_at: challenge_round.end_dttm - 1.days)
         ranks, teams_rating, teams_variation, teams_participant_ids = user_rating_service.filter_leaderboard_stats leaderboard_rating_stats
         end
       end
