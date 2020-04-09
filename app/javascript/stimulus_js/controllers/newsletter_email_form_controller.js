@@ -10,7 +10,7 @@ export default class extends Controller {
 
     const previewButton          = event.target;
     const requestURL             = this.data.get('preview-url');
-    const newsletterEmailMessage = document.querySelectorAll('#newsletter-email-message-wrapper .ck-content')[0].innerHTML;
+    const newsletterEmailMessage = document.querySelectorAll('#newsletter-email-message-wrapper .cke_wysiwyg_div')[0].innerHTML;
     const requestBody            = { newsletter_email: { subject: this.subjectTarget.value, message: newsletterEmailMessage } };
 
     disableButton(previewButton, 'Sending Preview E-mail...');
