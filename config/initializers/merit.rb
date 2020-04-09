@@ -120,6 +120,14 @@ Merit::Badge.create!(
     description: "For every 1 user reffered",
     )
 
+discourse_initial_id = ENV['DISCOURSE_INITIAL_ID'].to_i
+Discourse::FetchBadgesMetaService.new.call.value.each do |badge|
+    Merit::Badge.create!(
+        id: discourse_initial_id + badge['id'],
+        name: badge['name'],
+        description: badge['description'],
+        )
+end
 
 #After addition of a feature to track this
 Merit::Badge.create!(
@@ -127,7 +135,6 @@ Merit::Badge.create!(
     name: "Benefactor",
     description: "For every 1 challenge submission he has open-sourced",
     )
-
 
 #Discourse
 Merit::Badge.create!(
