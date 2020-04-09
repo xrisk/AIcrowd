@@ -280,8 +280,7 @@ class ChallengesController < ApplicationController
         :active,
         :leaderboard_note,
         :primary_sort_order,
-        :secondary_sort_order,
-        :_destroy
+        :secondary_sort_order
       ],
       challenge_rules_attributes: [
         :id,
