@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 describe Challenges::ImportService do
-  subject { described_class.new(import_file: import_file, organizers: [organizer]) }
+  subject { described_class.new(import_params: import_params, organizers: [organizer]) }
 
   describe '#call' do
     let(:organizer) { create(:organizer) }
 
     context 'when file with valid JSON and valid data provided' do
-      let(:import_file) { file_fixture('json/challenge_import.json') }
+      let(:import_params) { ActionController::Parameters.new(JSON.parse(file_fixture('json/challenge_import.json').read)) }
 
       it 'return success and Challenge object' do
         result        = subject.call
@@ -19,35 +19,24 @@ describe Challenges::ImportService do
     end
 
     context 'when file not provided' do
-      let(:import_file) { nil }
+      let(:import_params) { nil }
 
       it 'return failure and error message' do
         result = subject.call
 
         expect(result.success?).to eq false
-        expect(result.value).to eq 'Import failed: File not selected'
+        expect(result.value).to eq 'Import failed: There are no params to import'
       end
     end
 
     context 'when file with valid JSON and invalid data provided' do
-      let(:import_file) { file_fixture('json/challenge_import_with_errors.json') }
+      let(:import_params) { ActionController::Parameters.new(JSON.parse(file_fixture('json/challenge_import_with_errors.json').read)) }
 
       it 'return failure and error message' do
         result = subject.call
 
         expect(result.success?).to eq false
         expect(result.value).to eq 'Import failed: Challenge can\'t be blank'
-      end
-    end
-
-    context 'when file with invalid JSON provided' do
-      let(:import_file) { file_fixture('json/challenge_import_with_invalid_json.json') }
-
-      it 'returns failure and error message' do
-        result = subject.call
-
-        expect(result.success?).to eq false
-        expect(result.value).to eq "Import failed: 822: unexpected token at 'INVALID_JSON\n'"
       end
     end
   end
