@@ -10,8 +10,8 @@
               <%= participant_avatar participant, "avatar-sm" %>
               <h1>
                 <%= participant.name %>
-                <%= render :partial => 'participants/show_reputation', locals: { participant: participant } %>
-                <%= render :partial => 'participants/show_temporary_reputation', locals: { participant: participant } %>
+                <%= render partial: 'participants/show_reputation', locals: { participant: participant } %>
+                <%= render partial: 'participants/show_temporary_reputation', locals: { participant: participant } %>
               </h1>
             </div>
             <div class="masthead-info">
