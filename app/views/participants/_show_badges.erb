@@ -1,7 +1,7 @@
-<span class="reputation-info" style="<%= style ||= '' %>">
+<span class="aicrowd-badge-info" style="<%= style ||= '' %>">
   <% participant.badges.each do |badge| %>
-    <img src="/assets/awards/award-bronze.svg" class="country-flag" />
-    <p><%= badge.name %></p>
-    <p><%= badge.description %></p>
+    <span class="badges-card" data-toggle="tooltip" title="<%= badge.name %> - <%= badge.description %>">
+      <img src="/assets/awards/award-bronze.svg" class="country-flag" />
+    </span>
   <% end %>
 </span>
