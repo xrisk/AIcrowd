@@ -134,7 +134,7 @@ class Participant < ApplicationRecord
   end
 
   def final_temporary_rating
-    self.temporary_rating.to_i - 3*self.temporary_variation.to_i
+    (self.temporary_rating || self.temporary_variation)? self.temporary_rating.to_i - 3*self.temporary_variation.to_i: self.rating.to_i - 3*self.variation.to_i
   end
   def active_for_authentication?
     super && account_disabled == false
