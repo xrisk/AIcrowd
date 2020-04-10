@@ -9,19 +9,26 @@
       <li class="list-group-item">
         <% if team.present? %>
           <%= link_to team.name, challenge_team_path(challenge, team) %>
-          <% participants.each do |participant| %>
+          <% participants.take(3).each do |participant| %>
             <%= render partial: 'participants/user_link', locals: { participant: participant, username: false } %>
+          <% end %>
+          <% if participants.count > 3 %>
+            <%= link_to '...', challenge_team_path(challenge, team) %>
           <% end %>
         <% elsif participants.length == 1 %>
           <%= render partial: 'participants/user_link', locals: { participant: participants.first } %>
         <% end %>
 
         <div class="submissions">
-          <img src="https://d33wubrfki0l68.cloudfront.net/97838519a7cb6bf9b04b337fe51cedc78b4b2e8b/4d004/assets/img/icon-submissions.svg">
+          <img src="/assets/img/icon-submissions.svg">
           <span><%= leaderboard.row_num %></span>
         </div>
       </li>
       <!-- /user -->
     <% end %>
+    <li class="list-group-item">
+      <hr>
+      <%= link_to 'See all', challenge_leaderboards_path(challenge), class: "text-link" %>
+    </li>
   </ul>
 </div>

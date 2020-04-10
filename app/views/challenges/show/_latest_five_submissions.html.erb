@@ -3,7 +3,7 @@
     <!-- user -->
     <% latest_submissions.each do |submission| %>
       <% participant = submission.participant %>
-      <li class="list-group-item">
+      <li class="list-group-item" data-toggle="tooltip" title="<%= submission.created_at.to_time.strftime('%a, %d %b %Y %H:%M:%S')%>">
         <a href="<%= participant_path(participant) %>">
           <% if !defined?(avatar) || (defined?(avatar) && avatar) %>
             <%= participant_avatar participant %>
@@ -12,9 +12,12 @@
             <span class="text-link"><%= participant.name %></span>
           <% end %>
         </a>
-        <%= local_time(submission.created_at, "%e %b %Y %H:%M") %>
       </li>
       <!-- /user -->
     <% end %>
+    <li class="list-group-item">
+      <hr>
+      <%= link_to 'See all', challenge_submissions_path(challenge), class: "text-link" %>
+    </li>
   </ul>
 </div>
