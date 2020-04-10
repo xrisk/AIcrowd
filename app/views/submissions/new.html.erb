@@ -5,17 +5,20 @@
 <section class="section-p-md">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-8 col-lg-7" id="description-wrapper">
-			  <% if @submissions_remaining == 0 %>
-			    <%= render partial: 'submissions/new/no_submissions' %>
-			  <% else %>
-			    <% if @challenge.organizers.any? { |organizer| organizer.clef? } %>
-			      <%= render partial: 'submissions/new/clef_form' %>
-			    <% else %>
-			      <%= render partial: 'submissions/new/form' %>
-			    <% end %>
-			  <% end %>
-      </div>
+      <% if @submissions_remaining == 0 %>
+        <%= render partial: 'submissions/new/no_submissions' %>
+      <% else %>
+        <% if @challenge.organizers.any? { |organizer| organizer.clef? } %>
+          <%= render partial: 'submissions/new/clef_form' %>
+        <% elsif @challenge.evaluator_type_cd == "evaluations_api" %>
+          <%= render partial: 'submissions/new/evaluations_api' %>
+        <% elsif @challenge.evaluator_type_cd == "gitlab" %>
+          <%= render partial: 'submissions/new/gitlab' %>
+        <% else %>
+          <!-- Broker based submissions, Default if form is available -->
+          <%= render partial: 'submissions/new/artifact' %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </section>
