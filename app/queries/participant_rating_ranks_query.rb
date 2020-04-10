@@ -11,7 +11,7 @@ class ParticipantRatingRanksQuery
       time_difference = (Time.current.to_date - user_final_rating[:end_dttm].to_date)
       time_difference = time_difference.to_i
       total_number_of_days = 365
-      updated_rating = participant.fixed_rating * (Math.exp(-time_difference/total_number_of_days))
+      updated_rating = participant.fixed_rating * (Math.exp(-time_difference.to_f/total_number_of_days.to_f))
       participant.update!({rating: updated_rating})
       UserRating.create!(participant_id: participant.id, rating: updated_rating, variation: user_final_rating['variation'], challenge_round: nil)
     end
