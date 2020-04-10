@@ -71,17 +71,6 @@ module Challenges
       challenges_organizers_attributes: [
         :organizer_id
       ],
-      dataset_files_attributes: [
-        :seq,
-        :description,
-        :dataset_file_s3_key,
-        :evaluation,
-        :title,
-        :hosting_location,
-        :external_url,
-        :visible,
-        :external_file_size
-      ],
       submission_file_definitions_attributes: [
         :seq,
         :submission_file_description,
@@ -101,26 +90,6 @@ module Challenges
         :additional_checkbox_text,
         :additional_checkbox_text_markdown,
         :version
-      ],
-      challenge_rounds_attributes: [
-        :challenge_round,
-        :active,
-        :submission_limit,
-        :submission_limit_period_cd,
-        :start_dttm,
-        :end_dttm,
-        :minimum_score,
-        :minimum_score_secondary,
-        :ranking_window,
-        :ranking_highlight,
-        :score_precision,
-        :score_secondary_precision,
-        :leaderboard_note_markdown,
-        :leaderboard_note,
-        :score_title,
-        :score_secondary_title,
-        :primary_sort_order_cd,
-        :secondary_sort_order_cd
       ]
     }.freeze
 
