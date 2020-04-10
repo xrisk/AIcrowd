@@ -1,0 +1,25 @@
+<div class="container-fluid" style="<%= style ||= '' %>">
+  <ul class="list-group list-group-flush-px-0 list-group-achievements">
+    <% participant.badges_with_created_time.each do |badge| %>
+      <li class="list-group-item">
+        <div>
+        <a class="award-image" href="#">
+          <img src="/assets/awards/award-bronze.svg" class="country-flag" />
+        </a>
+        <div>
+            <a class="text-link" href="#">
+              <%= badge['name'] %>
+            </a>
+            <span class="description">
+              <%= badge['description'] %>
+            </span>
+          </div>
+          </div>
+        <span class="award-date">
+          <%= badge['created_at'].to_date.strftime("%B %d, %Y") %>
+        </span>
+      </li>
+  <% end %>
+  </ul>
+
+</div>

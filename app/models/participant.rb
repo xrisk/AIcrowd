@@ -160,6 +160,10 @@ class Participant < ApplicationRecord
     end
   end
 
+  def badges_with_created_time
+    Merit::BadgesSash.where(sash_id: Participant.find_by(id:self.id).sash).map { |sash| (Merit::Badge.find sash.badge_id).as_json.merge(sash.as_json)}
+  end
+
   def image_url
     image_url = if image_file.file.present?
                   image_file.url
