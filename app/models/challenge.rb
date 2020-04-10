@@ -205,4 +205,12 @@ class Challenge < ApplicationRecord
     arr = other_scores_fieldnames
     arr&.split(',')&.map(&:strip) || []
   end
+
+  def latest_five_submissions
+    active_round.submissions.order(created_at: :desc).take(5)
+  end
+
+  def top_five_leaderboards
+    active_round.leaderboards.take(5)
+  end
 end

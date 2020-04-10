@@ -1,0 +1,20 @@
+<div class="card">
+  <ul class="list-group list-group-flush list-group-top-contributors">
+    <!-- user -->
+    <% latest_submissions.each do |submission| %>
+      <% participant = submission.participant %>
+      <li class="list-group-item">
+        <a href="<%= participant_path(participant) %>">
+          <% if !defined?(avatar) || (defined?(avatar) && avatar) %>
+            <%= participant_avatar participant %>
+          <% end %>
+          <% if !defined?(username) || (defined?(username) && username) %>
+            <span class="text-link"><%= participant.name %></span>
+          <% end %>
+        </a>
+        <%= local_time(submission.created_at, "%e %b %Y %H:%M") %>
+      </li>
+      <!-- /user -->
+    <% end %>
+  </ul>
+</div>

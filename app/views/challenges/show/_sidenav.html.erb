@@ -1,4 +1,12 @@
 <div class="top-contributors-container col-sm-12 col-md-4 col-lg-3">
+  <% if @top_five_leaderboards.any? %>
+    <h4>Top five leaderboards</h4>
+    <%= render 'challenges/show/top_five_leaderboards', top_leaderboards: @top_five_leaderboards, challenge: @challenge %><br />
+  <% end %>
+  <% if @latest_five_submissions.any? %>
+    <h4>Latest five submissions</h4>
+    <%= render 'challenges/show/latest_five_submissions', latest_submissions: @latest_five_submissions %>
+  <% end %>
   <% if challenge_baseline_discussion.present? %>
     <%= render 'challenges/show/baseline_discussions', challenge_baseline_discussion: challenge_baseline_discussion, challenge: challenge %><br/><br/>
   <% end %>
