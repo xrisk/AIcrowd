@@ -3,7 +3,7 @@
   <span class="reputation-score" data-toggle="tooltip" title="Admin">
     ###
   </span>
-<% elsif current_participant.admin %>
+<% elsif current_participant&.admin? %>
   <span class="reputation-score" data-toggle="tooltip" title="<%= participant.final_temporary_rating %> ± <%= participant.temporary_variation.to_i %>">
     <% if defined?(full) && full %>
       <%= participant.final_temporary_rating %> ± <%= participant.temporary_variation.to_i %>
