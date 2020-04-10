@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_16_102555) do
+ActiveRecord::Schema.define(version: 2020_04_10_040703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -432,6 +432,7 @@ ActiveRecord::Schema.define(version: 2020_04_16_102555) do
     t.boolean "scrollable_overview_tabs", default: true, null: false
     t.bigint "discourse_group_id"
     t.string "discourse_group_name"
+    t.string "evaluator_type_cd"
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
   end

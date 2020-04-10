@@ -12057,6 +12057,10 @@ body {
   margin: 2.5rem 0;
 }
 
+.md-content pre {
+  max-width: 640px;
+}
+
 .text-mention {
   color: #2D7680;
   font-weight: 600;
@@ -13765,7 +13769,7 @@ html {
   margin-left: auto;
 }
 
-#code-submission {
+#code-submission, .ace_editor {
   width: 500px;
   height: 80px;
 }

@@ -1,0 +1,60 @@
+<div class="col-md-12" id="description-wrapper">
+<div class="row">
+  <% if @challenge.completed? %>
+    <br/>
+    <p>This challenge is now completed. You may continue to make submissions and your entries will appear on the Ongoing Leaderboard.</p>
+  <% end %>
+  <%= form_for [@challenge,@submission], html: { class: "directUpload dbl-col md-content col-12", multipart: true },
+        data: { 'form-data' => (@s3_direct_post.fields), 'url' => @s3_direct_post.url, 'host' => URI.parse(@s3_direct_post.url).host } do |f| %>
+
+    <% if @challenge.running? %>
+    <div class="md-content">
+      <blockquote><p>ℹ️
+        <% if @reset_dttm %>
+          You have <%= pluralize(@submissions_remaining,'submission') %> remaining until <%= @reset_dttm %>.
+        <% else %>
+          You have <%= pluralize(@submissions_remaining,'submission') %> remaining.
+        <% end %>
+      </p></blockquote>
+    </div>
+    <% end %>
+
+    <% if @challenge.submission_instructions.present? %>
+      <label>
+        <%= sanitize_html(@challenge.submission_instructions) %>
+      </label>
+    <% end %>
+
+    <div class="form-group">
+      <label>Submission Description</label>
+      <%= f.text_area :description, rows: 4, class: "form-control" %>
+      <small class="form-text text-muted">This description will be visible with your submission.</small>
+    </div>
+
+    <% if @challenge.license.present? %>
+      <p class="margin-bottom">
+        <%= sanitize_html(@challenge.license) %>
+      </p>
+    <% else %>
+      <p class="margin-bottom"></p>
+    <% end %>
+
+    <div class="form-group">
+      <label>Submission File</label>
+      <%= f.fields_for :submission_files do |f| %>
+        <div class="nested-fields">
+          <%= f.hidden_field :seq %><!-- populated by controller -->
+          <%= f.file_field :submission_file_s3_key, as: :file, label: "Submissions file", class: 'file-upload s3File' %>
+          <small class="form-text text-muted">Caution: By selecting a file, the form will be automatically submitted!</small>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="form-content">
+      <div class='btn-set'>
+        <%= f.submit 'Submit Submission', class: 'btn btn-primary btn-sm' %>
+      </div>
+    </div>
+  <% end %>
+</div>
+</div>

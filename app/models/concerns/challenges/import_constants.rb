@@ -39,6 +39,7 @@ module Challenges
       :show_leaderboard,
       :grader_identifier,
       :online_submissions,
+      :evaluator_type_cd,
       :grader_logs,
       :require_registration,
       :grading_history,
