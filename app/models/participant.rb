@@ -139,13 +139,11 @@ class Participant < ApplicationRecord
     user_rating = UserRating.joins("left outer join challenge_rounds on (challenge_rounds.id=challenge_round_id)").joins("left outer join challenges c on (c.id=challenge_rounds.challenge_id)").where(participant_id: self.id).where('rating is not null').reorder('coalesce(end_dttm, user_ratings.created_at), user_ratings.id').pluck('coalesce(end_dttm, user_ratings.created_at)', 'rating', 'concat(challenge, challenge_round)')
     final_ratings = []
     user_rating.each_with_index do |rating, index|
+      current_rating = user_rating[index]
+      final_ratings << current_rating
       if index > 0
-        current_rating = user_rating[index]
-        final_ratings << current_rating
-        previous_rating = user_rating[index - 1]
         date_sequences = datetime_sequence(user_rating[index - 1][0], user_rating[index][0], 1.day)
         date_sequences = date_sequences.slice(1, date_sequences.size - 2)
-        puts date_sequences
         for day in date_sequences.to_a
           time_difference = day.to_date - user_rating[index - 1][0].to_date
           time_difference = time_difference.to_i
@@ -154,7 +152,8 @@ class Participant < ApplicationRecord
           final_ratings << [day, updated_rating, '']
         end
       end
-      end
+    end
+    puts final_ratings
     return final_ratings
   end
   def final_rating
