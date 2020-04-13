@@ -23,7 +23,7 @@
         <div class="form-check">
           <%= label_tag do %>
             <%= check_box_tag 'category[category_names][]', category.name, check_selected_category(category, params), { class:'form-check-input' } %>
-            #<%= category.name.humanize %>
+            #<%= category.name.parameterize.underscore %>
           <% end %>
         </div>
       <% end %>

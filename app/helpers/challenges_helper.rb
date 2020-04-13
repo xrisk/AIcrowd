@@ -59,7 +59,7 @@ module ChallengesHelper
 
   def filter_message(status, category, prize)
     text  = "Filter challenges "
-    text += "[from ##{category[:category_names].join(', #').humanize} tag] " if category.present?
+    text += "[from ##{category[:category_names].join(', #').humanize.parameterize.underscore} tag] " if category.present?
     text += "[with status #{status.humanize}] " if status.present?
     text += "[prizes in form of #{prize[:prize_type].join(', ').humanize}]" if prize.present?
     text
@@ -80,9 +80,9 @@ module ChallengesHelper
     raw_options        = ''
     Category.pluck(:name).each do |category_name|
       if challenge_category.include?(category_name)
-        raw_options << "<option selected='selected' value='#{category_name}''>##{category_name}</option>"
+        raw_options << sanitize_html_with_attr("<option selected='selected' value='#{category_name}''>##{category_name.parameterize.underscore}</option>", elements: ['option'], attributes: {'option' => ['selected', 'value']})
       else
-        raw_options << "<option value='#{category_name}''>##{category_name}</option>"
+        raw_options << sanitize_html_with_attr("<option value='#{category_name}''>##{category_name.parameterize.underscore}</option>", elements: ['option'], attributes: {'option' => ['value']})
       end
     end
     raw(raw_options)
