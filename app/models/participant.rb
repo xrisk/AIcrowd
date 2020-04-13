@@ -154,7 +154,6 @@ class Participant < ApplicationRecord
         end
       end
     end
-    puts final_ratings
     return final_ratings
   end
   def final_rating
