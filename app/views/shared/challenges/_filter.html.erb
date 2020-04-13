@@ -9,21 +9,21 @@
           <%= label_tag do %>
             <%= radio_button_tag 'status', status, status.eql?(params[:status]), {class: 'form-check-input'} %>
             <%= status.humanize %>
-          <% end %>  
+          <% end %>
         </div>
       <% end %>
     </div>
   </div>
   <div class="dropdown">
     <div class="filter dropdown-toggle <%= 'filter-active' if params[:category] %>" id="challenge-categories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Categories
+      Tags
     </div>
     <div class='dropdown-menu form-dropdown'>
       <% @categories.each do |category| %>
         <div class="form-check">
           <%= label_tag do %>
             <%= check_box_tag 'category[category_names][]', category.name, check_selected_category(category, params), { class:'form-check-input' } %>
-            <%= category.name.humanize %>
+            #<%= category.name.humanize %>
           <% end %>
         </div>
       <% end %>
@@ -39,7 +39,7 @@
           <%= label_tag do %>
             <%= check_box_tag 'prize[prize_type][]', p_key, check_selected_prize(p_key, params), {class: 'form-check-input'} %>
             <%= p_value.humanize %>
-          <% end %>  
+          <% end %>
         </div>
       <% end %>
     </div>
