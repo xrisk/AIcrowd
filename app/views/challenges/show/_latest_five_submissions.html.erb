@@ -4,15 +4,9 @@
   </div>
   <%= button_to 'See all', challenge_submissions_path(challenge), class: "btn btn-secondary btn-sm", method: :get %>
 </header>
-<div class="card">
-  <ul class="list-group list-group-flush list-group-top-contributors">
-    <% latest_submissions.each do |submission| %>
-      <% participant = submission.participant %>
-      <li class="list-group-item">
-        <%= render partial: 'participants/user_link', locals: { participant: participant } %>
-        <%= render partial: 'submissions/time_toggle', locals: { participant: participant, submission: submission } %>
-      </li>
-    <% end %>
-  </ul>
-</div>
+<table class="table table-responsive-md side-border">
+  <tbody id="submissions-div">
+    <%= render partial: 'submissions/submissions', locals: { submissions: latest_submissions, sidebar: true } %>
+  </tbody>
+</table>
 

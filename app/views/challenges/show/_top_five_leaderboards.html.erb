@@ -1,35 +1,11 @@
 <header class="section-header-decorative">
   <div>
-    <h4>Top 5 Teams</h4>
+    <h4>Leaderboard</h4>
   </div>
   <%= button_to 'See all', challenge_leaderboards_path(challenge), class: "btn btn-secondary btn-sm", method: :get %>
 </header>
-<div class="card">
-  <ul class="list-group list-group-flush list-group-top-contributors">
-    <% top_leaderboards.each do |leaderboard| %>
-      <%
-        participants = leaderboard_participants(leaderboard)
-        team = leaderboard.team
-      %>
-      <li class="list-group-item">
-        <strong><%= "%02d" % (leaderboard.row_num) %></strong>
-        <% if team.present? %>
-          <% participants.first(2).each do |participant| %>
-            <%= render partial: 'participants/user_link', locals: { participant: participant, username: false } %>
-          <% end %>
-          <% if participants.count > 3 %>
-            <%= link_to '..', challenge_team_path(challenge, team) %>
-          <% end %>
-          <%= link_to team.name, challenge_team_path(challenge, team) %>
-        <% elsif participants.length == 1 %>
-          <%= render partial: 'participants/user_link', locals: { participant: participants.first } %>
-        <% end %>
-
-        <div class="submissions">
-          <img src="/assets/img/icon-submissions.svg">
-          <span><%= leaderboard.row_num %></span>
-        </div>
-      </li>
-    <% end %>
-  </ul>
-</div>
+<table class="table table-responsive-md side-border">
+  <tbody>
+    <%= render partial: 'leaderboards/leaderboards', locals: { leaderboards: top_leaderboards, sidebar: true, current_round: challenge.active_round } %>
+  </tbody>
+</table>
