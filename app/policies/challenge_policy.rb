@@ -107,16 +107,16 @@ class ChallengePolicy < ApplicationPolicy
 
     return false if @record.completed? && !@record.post_challenge_submissions?
 
+    # Return false if the challenge is set to "running" but there is no active round
+    # or the active round start time is in the future
+    return false if Time.zone.now < @record.start_dttm
+
     # If we reach this part that means that the challenge status is set to 'running'
     # return true if not a clef challenge
     return true unless @record.clef_challenge.present?
 
     # return true if a clef challenge and participant is registered
     return true if @record.clef_challenge.present? && clef_participant_registered?(@record)
-
-    # Return false if the challenge is set to "running" but there is no active round
-    # or the active round start time is in the future
-    return false if Time.zone.now < @record.start_dttm
 
     false # no positive condition met
   end
