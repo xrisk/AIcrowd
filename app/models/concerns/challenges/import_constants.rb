@@ -68,6 +68,9 @@ module Challenges
     ].freeze
 
     IMPORTABLE_ASSOCIATIONS = {
+      challenges_organizers_attributes: [
+        :organizer_id
+      ],
       dataset_files_attributes: [
         :seq,
         :description,

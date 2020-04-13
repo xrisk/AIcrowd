@@ -6,10 +6,9 @@ module Api
         before_action :set_challenge, only: :update
 
         def create
-          result = ::Challenges::ImportService.new(
-            import_params: params,
-            organizers:    api_user&.organizers.to_a
-          ).call
+          authorize Challenge.new, :api_create?
+
+          result = ::Challenges::ImportService.new(import_params: params).call
 
           if result.success?
             render json: Api::V1::ChallengeSerializer.new(challenge: result.value).serialize, status: :created
@@ -21,7 +20,6 @@ module Api
         def update
           result = ::Challenges::ImportService.new(
             import_params: params,
-            organizers:    @challenge.organizers,
             challenge:     @challenge
           ).call
 

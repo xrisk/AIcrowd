@@ -12,9 +12,7 @@ class Challenge < ApplicationRecord
   accepts_nested_attributes_for :clef_task
 
   has_many :challenges_organizers, dependent: :destroy, class_name: 'ChallengesOrganizer'
-  accepts_nested_attributes_for :challenges_organizers,
-                                reject_if:     :all_blank,
-                                allow_destroy: true
+  accepts_nested_attributes_for :challenges_organizers, reject_if: :all_blank, allow_destroy: true
   has_many :organizers, through: :challenges_organizers, class_name: 'Organizer'
 
   has_many :dataset_files, dependent: :destroy

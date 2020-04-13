@@ -1,10 +1,11 @@
 require 'rails_helper'
 
 describe Challenges::ImportService do
-  subject { described_class.new(import_params: import_params, organizers: [organizer]) }
+  subject { described_class.new(import_params: import_params) }
 
   describe '#call' do
-    let(:organizer) { create(:organizer) }
+    let!(:first_organizer)  { create(:organizer, id: 1) }
+    let!(:second_organizer) { create(:organizer, id: 2) }
 
     context 'when file with valid JSON and valid data provided' do
       let(:import_params) { ActionController::Parameters.new(JSON.parse(file_fixture('json/challenge_import.json').read)) }

@@ -10,8 +10,15 @@ module Api
 
       def auth_by_participant_api_key
         authenticate_or_request_with_http_token do |token, options|
-          @api_user = Participant.find_by(api_key: token)
-          (token == ENV['CROWDAI_API_KEY'] || @api_user.present?)
+          if token == ENV['CROWDAI_API_KEY']
+            @api_user = Participant.api_admin
+
+            true
+          else
+            @api_user = Participant.find_by(api_key: token)
+
+            @api_user.present?
+          end
         end
       end
 
@@ -23,12 +30,16 @@ module Api
         @api_user
       end
 
+      def current_participant
+        api_user || super
+      end
+
       def pundit_user
-        api_user || current_participant
+        current_participant
       end
 
       def current_user
-        api_user || current_participant
+        current_participant
       end
     end
   end

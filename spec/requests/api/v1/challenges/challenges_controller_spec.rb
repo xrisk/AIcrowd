@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 describe Api::V1::Challenges::ChallengesController, type: :request do
-  let(:organizer) { create(:organizer) }
+  let!(:first_organizer)  { create(:organizer, id: 1) }
+  let!(:second_organizer) { create(:organizer, id: 2) }
 
   describe '#create' do
     context 'when authenticity token not provided' do
@@ -17,7 +18,7 @@ describe Api::V1::Challenges::ChallengesController, type: :request do
 
     context 'when authenticity token provided' do
       context 'when user is organizer' do
-        let(:participant) { create(:participant, organizers: [organizer]) }
+        let(:participant) { create(:participant, organizers: [first_organizer]) }
         let(:headers) do
           {
             'CONTENT_TYPE':  'application/json',
@@ -44,15 +45,15 @@ describe Api::V1::Challenges::ChallengesController, type: :request do
         it 'creates new challenge' do
           post api_v1_challenges_path, params: file_fixture('json/challenge_import.json').read, headers: headers
 
-          expect(response).to have_http_status(:unprocessable_entity)
-          expect(JSON.parse(response.body)['error']).to eq 'Import failed: At least one organizer must be provided'
+          expect(response).to have_http_status(:unauthorized)
+          expect(JSON.parse(response.body)['error']).to eq 'You are not authorized to perform this action'
         end
       end
     end
   end
 
   describe '#update' do
-    let!(:challenge) { create(:challenge, :running, organizers: [organizer]) }
+    let!(:challenge) { create(:challenge, :running, organizers: [first_organizer]) }
 
     context 'when authenticity token not provided' do
       let(:headers) { { 'CONTENT_TYPE':  'application/json' } }
@@ -67,7 +68,7 @@ describe Api::V1::Challenges::ChallengesController, type: :request do
 
     context 'when authenticity token provided' do
       context 'when user is challenge organizer' do
-        let(:participant) { create(:participant, organizers: [organizer]) }
+        let(:participant) { create(:participant, organizers: [first_organizer]) }
         let(:headers) do
           {
             'CONTENT_TYPE':  'application/json',

@@ -1,18 +1,18 @@
 module Challenges
   class ImportService < ::BaseService
-    def initialize(import_params:, organizers:, challenge: nil)
+    def initialize(import_params:, challenge: nil)
       @import_params = import_params
-      @organizers    = organizers
       @challenge     = Challenge.new
     end
 
     def call
       return failure('Import failed: There are no params to import') if challenge_params.blank?
-      return failure('Import failed: At least one organizer must be provided') if organizers.none?
 
       @challenge.attributes = challenge_params
-      @challenge            = import_images_from_base64
-      @challenge.organizers = organizers
+
+      return failure('Import failed: At least one organizer must be provided') if @challenge.challenges_organizers.none?
+
+      @challenge = import_images_from_base64
 
       if @challenge.save
         success(@challenge)
@@ -23,7 +23,7 @@ module Challenges
 
     private
 
-    attr_reader :import_params, :organizers
+    attr_reader :import_params
     attr_accessor :challenge
 
     def challenge_params
