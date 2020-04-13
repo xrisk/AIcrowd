@@ -13,7 +13,7 @@ class BadgesDailyJob < ApplicationJob
     teams_participant_ids.each_with_index do |team, i|
       team.each_with_index do |participant_id, j|
         participant_ranks = ranks[i].to_f/max_rank.to_f
-        if max_rank < 100
+        if max_rank < 250
           if participant_ranks < 0.1
             Participant.find_by(id: participant_id).add_badge(3 + during_badge)
           elsif participant_ranks < 0.2
@@ -21,23 +21,7 @@ class BadgesDailyJob < ApplicationJob
           elsif participant_ranks < 0.4
             Participant.find_by(id: participant_id).add_badge(1 + during_badge)
           end
-        elsif max_rank > 100 && max_rank < 250
-          if participant_ranks < 0.1
-            Participant.find_by(id: participant_id).add_badge(3 + during_badge)
-          elsif participant_ranks < 0.2
-            Participant.find_by(id: participant_id).add_badge(2 + during_badge)
-          elsif participant_ranks < 0.4
-            Participant.find_by(id: participant_id).add_badge(1 + during_badge)
-          end
-        elsif max_rank > 250 && max_rank < 1000
-          if participant_ranks < 0.01
-            Participant.find_by(id: participant_id).add_badge(3 + during_badge)
-          elsif participant_ranks < 0.05
-            Participant.find_by(id: participant_id).add_badge(2 + during_badge)
-          elsif participant_ranks < 0.1
-            Participant.find_by(id: participant_id).add_badge(1 + during_badge)
-          end
-        elsif max_rank > 1000
+        elsif max_rank > 250
           if participant_ranks < 0.01
             Participant.find_by(id: participant_id).add_badge(3 + during_badge)
           elsif participant_ranks < 0.05
