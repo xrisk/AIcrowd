@@ -19,7 +19,8 @@ class UserRatingController < ApplicationController
         if user_final_rating.present?
           time_difference = (challenge_round.end_dttm.to_date - user_final_rating[:end_dttm].to_date)
           time_difference = time_difference.to_i
-          total_number_of_days = 365
+          factor_of_decay = 4
+          total_number_of_days = factor_of_decay*365
           updated_rating = participant.fixed_rating * (Math.exp(-time_difference.to_f/total_number_of_days.to_f))
           participant.update!({rating: updated_rating})
           UserRating.create!(participant_id: participant.id, rating: updated_rating, variation: user_final_rating['variation'], challenge_round: nil, created_at: challenge_round.end_dttm - 1.days)

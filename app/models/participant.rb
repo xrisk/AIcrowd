@@ -147,7 +147,8 @@ class Participant < ApplicationRecord
         for day in date_sequences.to_a
           time_difference = day.to_date - user_rating[index - 1][0].to_date
           time_difference = time_difference.to_i
-          total_number_of_days = 365
+          factor_of_decay = 4
+          total_number_of_days = factor_of_decay*365
           updated_rating = user_rating[index - 1][1] * (Math.exp(-time_difference.to_f/total_number_of_days.to_f))
           final_ratings << [day, updated_rating, '']
         end
