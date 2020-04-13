@@ -108,7 +108,7 @@ class Participant < ApplicationRecord
             allow_blank: true
 
   def self.api_admin
-    @@api_admin ||= find_by(email: 'api_admin@example.com')
+    @@api_admin ||= find_by(email: ENV['AICROWD_API_EMAIL'])
   end
 
   def reserved_userhandle

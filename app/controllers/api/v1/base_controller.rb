@@ -10,7 +10,7 @@ module Api
 
       def auth_by_participant_api_key
         authenticate_or_request_with_http_token do |token, options|
-          if token == ENV['CROWDAI_API_KEY']
+          if token == ENV['AICROWD_API_KEY']
             @api_user = Participant.api_admin
 
             true

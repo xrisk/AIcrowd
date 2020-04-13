@@ -3,7 +3,7 @@ class UserRatingController < ApplicationController
 
   def auth_by_admin_api_key
     authenticate_or_request_with_http_token do |token, options|
-      (token == ENV['CROWDAI_API_KEY'])
+      (token == ENV['AICROWD_API_KEY'])
     end
   end
 
@@ -51,4 +51,3 @@ class UserRatingController < ApplicationController
     end
   end
 end
-
