@@ -1,4 +1,7 @@
 .newsletter-email-form {
+  width: 640px;
+  max-width: 100%;
+
   .select2-container {
     width: 100% !important;
   }
@@ -20,7 +23,7 @@
     box-shadow: none;
   }
 
-  .ck-content {
+  .cke_wysiwyg_div {
     min-height: 205px;
   }
 }

@@ -405,7 +405,7 @@ ActiveRecord::Schema.define(version: 2020_04_09_170026) do
     t.boolean "submissions_page"
     t.boolean "private_challenge", default: false
     t.boolean "show_leaderboard", default: true
-    t.string "grader_identifier", default: "AIcrowd_GRADER_POOL"
+    t.string "grader_identifier"
     t.boolean "online_submissions", default: false
     t.boolean "grader_logs", default: false
     t.boolean "require_registration", default: false
@@ -842,12 +842,14 @@ ActiveRecord::Schema.define(version: 2020_04_09_170026) do
     t.integer "participation_terms_accepted_version"
     t.boolean "agreed_to_terms_of_use_and_privacy", default: true
     t.boolean "agreed_to_marketing", default: true
+    t.integer "submissions_count", default: 0
     t.float "rating"
     t.float "temporary_rating"
     t.float "variation"
     t.float "temporary_variation"
     t.integer "ranking", default: -1, null: false
     t.integer "ranking_change", default: 0, null: false
+    t.float "fixed_rating"
     t.boolean "agreed_to_organizers_newsletter", default: true, null: false
     t.float "fixed_rating"
     t.integer "sash_id"

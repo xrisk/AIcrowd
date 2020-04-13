@@ -46,5 +46,12 @@ module Discourse
         end
       end
     end
+
+    def with_discourse_errors_handling(&block)
+      block.call
+    rescue Discourse::Error, Discourse::UnauthenticatedError, Discourse::NotFoundError => e
+      Logger.new(::Discourse::BaseService::LOGGER_URL).error(e.message)
+      failure(e.message)
+    end
   end
 end

@@ -12,6 +12,32 @@ function handleChallengeUpdate() {
   // Show alert and correct tab after scrolling is completed
   setTimeout(function() {
     challengeForWrapper.innerHTML = "<%= j render 'challenges/form', challenge: @challenge, challenge_rounds: @challenge_rounds %>";
+    $('.select2').select2();
+    // Run script tags that were in the inserted HTML
+    runScripts(challengeForWrapper);
+
+    $('.challenge-edit-submit').on('click', function (event) {
+      for (let selector in CKEDITOR.instances){
+        CKEDITOR.instances[selector].setMode('wysiwyg');
+      }
+    });
+
+    // Change here need to be copied to Paloma Edit Controller as well!
+    $('#preview-modal').on('show.bs.modal', function (event) {
+      let editor = CKEDITOR.instances["challenge_description"];
+      let modal = $(this);
+      editor.fire('saveSnapshot');
+      if (editor.mode === 'markdown') {
+        editor.setMode('wysiwyg', function () {
+          let data = editor.getData();
+          modal.find('.ck-content').get(0)['controller'].replaceContent(data);
+          editor.setMode('markdown');
+        });
+      } else {
+        let data = editor.getData();
+        modal.find('.ck-content').get(0)['controller'].replaceContent(data);
+      }
+    });
 
     if (currentTab) {
       // Active tabs are disabled, thus I need to make it inactive to make it work
@@ -20,7 +46,6 @@ function handleChallengeUpdate() {
     }
 
     if (updateSuccessful === 'true') {
-      $('.select2').select2();
       flashMessagesWrapper.innerHTML = "<%= j render 'layouts/flash_message', type: 'notice', message: 'Challenge updated.' %>";
     } else {
       flashMessagesWrapper.innerHTML = "<%= j render 'layouts/flash_message', type: 'error', message: 'This tab couldn\'t be saved because of errors. Please correct them.' %>";
@@ -29,3 +54,101 @@ function handleChallengeUpdate() {
 }
 
 handleChallengeUpdate();
+
+// Run script tags that were in the inserted HTML
+// https://ghinda.net/article/script-tags/
+/* helpers */
+
+// runs an array of async functions in sequential order
+function seq (arr, callback, index) {
+  // first call, without an index
+  if (typeof index === 'undefined') {
+    index = 0
+  }
+
+  arr[index](function () {
+    index++
+    if (index === arr.length) {
+      callback()
+    } else {
+      seq(arr, callback, index)
+    }
+  })
+}
+
+// trigger DOMContentLoaded
+function scriptsDone () {
+  var DOMContentLoadedEvent = document.createEvent('Event')
+  DOMContentLoadedEvent.initEvent('DOMContentLoaded', true, true)
+  document.dispatchEvent(DOMContentLoadedEvent)
+}
+
+/* script runner
+ */
+
+function insertScript ($script, callback) {
+  var s = document.createElement('script')
+  s.type = 'text/javascript'
+  if ($script.src) {
+    s.onload = callback
+    s.onerror = callback
+    s.src = $script.src
+  } else {
+    s.textContent = $script.innerText
+  }
+
+  // re-insert the script tag so it executes.
+  document.head.appendChild(s)
+
+  // clean-up
+  $script.parentNode.removeChild($script)
+
+  // run the callback immediately for inline scripts
+  if (!$script.src) {
+    callback()
+  }
+}
+
+// https://html.spec.whatwg.org/multipage/scripting.html
+var runScriptTypes = [
+  'application/javascript',
+  'application/ecmascript',
+  'application/x-ecmascript',
+  'application/x-javascript',
+  'text/ecmascript',
+  'text/javascript',
+  'text/javascript1.0',
+  'text/javascript1.1',
+  'text/javascript1.2',
+  'text/javascript1.3',
+  'text/javascript1.4',
+  'text/javascript1.5',
+  'text/jscript',
+  'text/livescript',
+  'text/x-ecmascript',
+  'text/x-javascript'
+]
+
+function runScripts ($container) {
+  // get scripts tags from a node
+  var $scripts = $container.querySelectorAll('script')
+  var runList = []
+  var typeAttr
+
+  [].forEach.call($scripts, function ($script) {
+    typeAttr = $script.getAttribute('type')
+
+    // only run script tags without the type attribute
+    // or with a javascript mime attribute value
+    if (!typeAttr || runScriptTypes.indexOf(typeAttr) !== -1) {
+      runList.push(function (callback) {
+        insertScript($script, callback)
+      })
+    }
+  })
+
+  // insert the script tags sequentially
+  // to preserve execution order
+  seq(runList, scriptsDone)
+}
+

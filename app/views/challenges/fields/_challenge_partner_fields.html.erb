@@ -4,7 +4,7 @@
       <div class="upload">
         <div class='markdown-wrap'>
           <% if f.object.image_file.present? %>
-            <%= image_tag f.object.image_file.url, class: 'img-logo' %>
+            <%= image_tag f.object.image_file.url, class: 'img-logo img-fluid' %>
           <% else %>
             <%= image_tag default_image_url, class: 'img-logo' %>
           <% end %>
