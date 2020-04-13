@@ -1,0 +1,9 @@
+<%
+  uniq_id = rand(1000)
+  random_class = 'tooltip-time-wrapper-' + uniq_id.to_s + '-' + participant.id.to_s
+%>
+<div class="tooltip-user-wrapper <%= random_class %>">
+  <div style="display: table-row;" data-container=".<%= random_class %>" data-html="true" data-toggle="tooltip" title='<%= submission.created_at.to_time.strftime('%a, %d %b %Y %H:%M:%S') %>'>
+    <span class="badge <%= submission_grade_class(submission) %>"><%= submission.grading_status_cd %></span>
+  </div>
+</div>

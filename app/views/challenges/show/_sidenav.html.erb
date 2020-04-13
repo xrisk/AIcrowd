@@ -1,10 +1,8 @@
 <div class="top-contributors-container col-sm-12 col-md-4 col-lg-3">
   <% if top_leaderboards.present? %>
-    <h4>Top five leaderboards</h4>
-    <%= render 'challenges/show/top_five_leaderboards', top_leaderboards: top_leaderboards, challenge: challenge %><br />
+    <%= render 'challenges/show/top_five_leaderboards', top_leaderboards: top_leaderboards, challenge: challenge %><br/><br/>
   <% end %>
   <% if latest_submissions.present? %>
-    <h4>Latest five submissions</h4>
     <%= render 'challenges/show/latest_five_submissions', latest_submissions: latest_submissions, challenge: challenge %>
   <% end %>
   <% if challenge_baseline_discussion.present? %>

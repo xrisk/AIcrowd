@@ -1,3 +1,9 @@
+<header class="section-header-decorative">
+  <div>
+    <h4>Top 5 Teams</h4>
+  </div>
+  <%= button_to 'See all', challenge_leaderboards_path(challenge), class: "btn btn-secondary btn-sm", method: :get %>
+</header>
 <div class="card">
   <ul class="list-group list-group-flush list-group-top-contributors">
     <% top_leaderboards.each do |leaderboard| %>
@@ -5,16 +11,16 @@
         participants = leaderboard_participants(leaderboard)
         team = leaderboard.team
       %>
-      <!-- user -->
       <li class="list-group-item">
+        <strong><%= "%02d" % (leaderboard.row_num) %></strong>
         <% if team.present? %>
-          <%= link_to team.name, challenge_team_path(challenge, team) %>
-          <% participants.take(3).each do |participant| %>
+          <% participants.first(2).each do |participant| %>
             <%= render partial: 'participants/user_link', locals: { participant: participant, username: false } %>
           <% end %>
           <% if participants.count > 3 %>
-            <%= link_to '...', challenge_team_path(challenge, team) %>
+            <%= link_to '..', challenge_team_path(challenge, team) %>
           <% end %>
+          <%= link_to team.name, challenge_team_path(challenge, team) %>
         <% elsif participants.length == 1 %>
           <%= render partial: 'participants/user_link', locals: { participant: participants.first } %>
         <% end %>
@@ -24,11 +30,6 @@
           <span><%= leaderboard.row_num %></span>
         </div>
       </li>
-      <!-- /user -->
     <% end %>
-    <li class="list-group-item">
-      <hr>
-      <%= link_to 'See all', challenge_leaderboards_path(challenge), class: "text-link" %>
-    </li>
   </ul>
 </div>
