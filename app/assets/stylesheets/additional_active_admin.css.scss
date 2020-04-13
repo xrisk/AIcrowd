@@ -1,0 +1,13 @@
+.papertrail-versions__table {
+  thead > tr > th {
+    padding: 8px;
+  }
+}
+
+tbody > tr > .papertrail-versions__previous-column {
+  color: red;
+}
+
+tbody > tr > .papertrail-versions__current-column {
+  color: green;
+}
