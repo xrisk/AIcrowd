@@ -2,8 +2,7 @@ module Organizers
   class NewsletterEmailMailer < ApplicationMailer
     include SanitizationHelper
 
-    def sendmail(newsletter_email_id)
-      newsletter_email = NewsletterEmail.includes(:participant).find(newsletter_email_id)
+    def sendmail(newsletter_email)
       options          = format_options(newsletter_email)
       mandrill_send(options)
     end

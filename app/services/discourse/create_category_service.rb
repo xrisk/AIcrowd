@@ -10,22 +10,20 @@ module Discourse
 
       return failure('Discourse API client couldn\'t be properly initialized.') if client.nil?
 
-      response = create_category_request(ensure_uniqueness: retry_count.positive?)
+      with_discourse_errors_handling do
+        response = create_category_request(ensure_uniqueness: retry_count.positive?)
 
-      challenge.update!(discourse_category_id: response.body['category']['id'])
+        challenge.update!(discourse_category_id: response.body['category']['id'])
 
-      success
-    rescue Discourse::UnprocessableEntity => e
-      raise e if retry_count.positive?
+        success
+      rescue Discourse::UnprocessableEntity => e
+        raise e if retry_count.positive?
 
-      retry_count += 1
+        retry_count += 1
 
-      retry if e.message.include?('Category Name has already been taken')
-      retry if e.message.include?('Slug is already in use')
-    rescue Discourse::Error => e
-      Logger.new(::Discourse::BaseService::LOGGER_URL).error("##{challenge.id} - Unable to create category - #{e.message}")
-
-      failure('Discourse API is unavailable')
+        retry if e.message.include?('Category Name has already been taken')
+        retry if e.message.include?('Slug is already in use')
+      end
     end
 
     private

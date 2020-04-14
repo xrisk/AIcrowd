@@ -2,7 +2,7 @@
 <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 
 <!-- section -->
-<section class="section-p-md">
+<section data-controller="newsletter-email-form" data-newsletter-email-form-preview-url="<%= preview_api_v1_challenge_newsletter_emails_url(@challenge) %>" class="section-p-md">
   <div class="container-fluid">
     <div class="row">
       <%= form_with model: @newsletter_email_form, url: challenge_newsletter_emails_path(@challenge), class: 'newsletter-email-form', validate: true, local: true do |f| %>
@@ -18,10 +18,10 @@
         <div class="form-group">
           <span class="label-text">Teams</span>
           <%= f.select :teams, [], { }, {
-              id:       'challenge-participants-select2',
+              id:       'challenge-teams-select2',
               class:    'form-control',
               multiple: true,
-              data:     { controller: 'select2', 'select2-placeholder': 'Select teams', 'select2-url': search_api_v1_challenge_teams_url(@challenge) }
+              data:     { controller: 'select2', 'select2-placeholder': 'Select teams', 'select2-id': 'challenge-teams-select2', 'select2-url': search_api_v1_challenge_teams_url(@challenge) }
           } %>
         </div>
 
@@ -31,7 +31,7 @@
               id:       'challenge-participants-select2',
               class:    'form-control',
               multiple: true,
-              data:     { controller: 'select2', 'select2-placeholder': 'Select participants', 'select2-url': search_api_v1_challenge_participants_url(@challenge) }
+              data:     { controller: 'select2', 'select2-placeholder': 'Select participants', 'select2-id': 'challenge-participants-select2', 'select2-url': search_api_v1_challenge_participants_url(@challenge) }
           } %>
         </div>
 
@@ -47,18 +47,22 @@
 
         <div class="form-group">
           <span class="label-text">Subject</span>
-          <%= f.text_field :subject, class: "form-control", placeholder: 'E-mail subject' %>
+          <%= f.text_field :subject, class: "form-control", placeholder: 'E-mail subject', data: { target: 'newsletter-email-form.subject' } %>
         </div>
 
         <div class="form-group">
-          <span class="label-text">Message</span>
-          <div class="md-content">
-            <%= f.text_area :message, class: "form-control", placeholder: 'E-mail message', data: { controller: "ckeditor" } %>
+          <div class="md-content" id="newsletter-email-message-wrapper">
+            <span class="label-text">Message</span>
+            <%= f.cktext_area :message %>
           </div>
         </div>
 
         <div class="btn-set" aria-hidden="true">
           <%= f.button 'Send Newsletter E-mail', class: 'btn btn-primary btn-sm', data: { disable_with: 'Saving...' } %>
+
+          <button data-action="click->newsletter-email-form#preview" class="btn btn-primary btn-sm">
+            Preview
+          </button>
         </div>
       <% end %>
     </div>

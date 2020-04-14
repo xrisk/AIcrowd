@@ -14,10 +14,7 @@ $color-grey-80:     rgba(0,0,0,0.8);
 $color-grey-87:     rgba(0,0,0,0.87);
 $color-black:       rgba(0,0,0,1);
 
-@import 'markdown';
-@import 'md-editor';
 @import 'select2';
-// End Legacy Imports
 
 :root {
   --blue: #2D7680;
@@ -11868,7 +11865,7 @@ body {
   margin: 0;
 }
 
-.md-content .note {
+.md-content blockquote {
   background-color: rgba(255, 182, 0, 0.25);
   padding: .875rem 1rem;
   border-radius: 2px;
@@ -11876,29 +11873,29 @@ body {
   border-left: 4px solid rgba(255, 182, 0, 0.5);
 }
 
-.md-content .note p,
-.md-content .note ol,
-.md-content .note ul {
+.md-content blockquote p,
+.md-content blockquote ol,
+.md-content blockquote ul {
   font-size: .938em !important;
   max-width: 100% !important;
   margin-bottom: .25em !important;
 }
 
-.md-content .note p:last-child,
-.md-content .note ol:last-child,
-.md-content .note ul:last-child {
+.md-content blockquote p:last-child,
+.md-content blockquote ol:last-child,
+.md-content blockquote ul:last-child {
   margin-bottom: 0;
 }
 
-.md-content .note li {
+.md-content blockquote li {
   margin-bottom: .25em !important;
 }
 
-.md-content .note li:last-child {
+.md-content blockquote li:last-child {
   margin-bottom: 0;
 }
 
-.md-content .note ol > li:before {
+.md-content blockquote ol > li:before {
   width: 20px;
 }
 
@@ -13742,6 +13739,7 @@ html {
   width: 24px;
 }
 
+@import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';
 @import 'challenges/insights';
