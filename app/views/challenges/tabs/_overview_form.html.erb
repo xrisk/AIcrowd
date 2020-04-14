@@ -3,6 +3,10 @@
     <button type="button" class="btn btn-primary btn-sml pull-right mb-0" data-toggle="modal" data-target="#preview-modal">
       Preview
     </button>
+    <div class="pull-right mb-0 mr-4">
+      <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :scrollable_overview_tabs, text: 'Scrollable Tabs:', label_class: 'pull-left' } %>
+    </div>
+
     <span class="label-text">Overview</span>
   </div>
   </br>
