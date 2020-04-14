@@ -13,7 +13,7 @@ class BadgesDailyJob < ApplicationJob
     teams_participant_ids.each_with_index do |team, i|
       team.each_with_index do |participant_id, j|
         participant_ranks = ranks[i].to_f/max_rank.to_f
-        if max_rank < 250
+        if max_rank <= 250
           if participant_ranks < 0.1
             Participant.find_by(id: participant_id).add_badge(3 + during_badge)
           elsif participant_ranks < 0.2
