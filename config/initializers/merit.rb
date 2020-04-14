@@ -121,14 +121,17 @@ Merit::Badge.create!(
     )
 
 discourse_initial_id = ENV['DISCOURSE_INITIAL_ID'].to_i
-Discourse::FetchBadgesMetaService.new.call.value.each do |badge|
-    Merit::Badge.create!(
-        id: discourse_initial_id.to_i + badge['id'].to_i,
-        name: badge['name'],
-        description: badge['description'],
-        )
+begin
+    Discourse::FetchBadgesMetaService.new.call.value.each do |badge|
+        Merit::Badge.create!(
+            id: discourse_initial_id.to_i + badge['id'].to_i,
+            name: badge['name'],
+            description: badge['description'],
+            )
+    end
+rescue Discourse::NotFoundError
+  puts "Update Discourse API Details in the Environment"
 end
-
 #After addition of a feature to track this
 Merit::Badge.create!(
     id: 20,
