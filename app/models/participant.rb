@@ -107,6 +107,10 @@ class Participant < ApplicationRecord
             length:      { in: 2...100 },
             allow_blank: true
 
+  def self.api_admin
+    @@api_admin ||= find_by(email: ENV['AICROWD_API_EMAIL'])
+  end
+
   def reserved_userhandle
     return unless name
 

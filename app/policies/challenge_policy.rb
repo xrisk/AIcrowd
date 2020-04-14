@@ -27,6 +27,10 @@ class ChallengePolicy < ApplicationPolicy
     participant && (participant.admin? || (participant.organizer_ids & @record.organizer_ids).any?)
   end
 
+  def api_create?
+    participant && (participant.organizers.any? || participant.admin?)
+  end
+
   def create?
     new?
   end
