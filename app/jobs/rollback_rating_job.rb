@@ -16,6 +16,8 @@ class RollbackRatingJob < ApplicationJob
         Participant.find_by(id: participant_id).update!(updated_rating)
       end
     end
-    RatingCalculateJob.perform_later
+    if ENV["RATING_API_URL"].present?
+      RatingCalculateJob.perform_later
+    end
   end
 end

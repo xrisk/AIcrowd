@@ -1,4 +1,5 @@
 class ChallengeRound < ApplicationRecord
+  before_update :rollback_rating, :if => :end_dttm_changed?
   include Markdownable
 
   belongs_to :challenge, inverse_of: :challenge_rounds
