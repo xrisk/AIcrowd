@@ -44,7 +44,7 @@ class ChallengeRound < ApplicationRecord
 
 
   def rollback_rating
-    RollbackRatingJob.perform_later(end_dttm_was)
+    RollbackRatingJob.perform_later(end_dttm_was.to_s)
   end
   def get_score_title
     score_title.presence || 'Primary Score'

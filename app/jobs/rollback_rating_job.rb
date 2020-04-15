@@ -1,7 +1,10 @@
+
 class RollbackRatingJob < ApplicationJob
   queue_as :default
 
-  def perform(end_dttm_was)
+  def perform(end_dttm_was_string)
+    end_dttm_was = Time.parse(end_dttm_was_string)
+
     ActiveRecord::Base.transaction do
       ChallengeRound.where(["end_dttm >=?","#{end_dttm_was}"]).update_all(calculated_permanent: false)
       to_be_deleted_ratings = UserRating.where(['created_at >=?', "#{end_dttm_was}"])
