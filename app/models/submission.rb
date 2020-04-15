@@ -70,10 +70,10 @@ class Submission < ApplicationRecord
       end
     end
     if Submission.where(participant_id: participant_id).count == 1
-      Participant.find_by(id: participant_id).add_badge(13)
+      Participant.find_by(id: participant_id)&.add_badge(13)
     end
     if Submission.where(participant_id: participant_id, grading_status_cd: 'graded').count == 1
-      Participant.find_by(id: participant_id).add_badge(14)
+      Participant.find_by(id: participant_id)&.add_badge(14)
     end
   end
 
