@@ -10,8 +10,9 @@ class ParticipantRatingRanksQuery
       user_final_rating =  UserRating.where("participant_id=#{participant.id} and rating is not null and challenge_round_id is not null").joins(:challenge_round).reorder('user_ratings.created_at desc').select("user_ratings.*, challenge_rounds.end_dttm").first
       time_difference = (Time.current.to_date - user_final_rating[:end_dttm].to_date)
       time_difference = time_difference.to_i
-      total_number_of_days = 365
-      updated_rating = participant.fixed_rating * (Math.exp(-time_difference/total_number_of_days))
+      factor_of_decay = 4
+      total_number_of_days = factor_of_decay*365
+      updated_rating = participant.fixed_rating * (Math.exp(-time_difference.to_f/total_number_of_days.to_f))
       participant.update!({rating: updated_rating})
       UserRating.create!(participant_id: participant.id, rating: updated_rating, variation: user_final_rating['variation'], challenge_round: nil)
     end
