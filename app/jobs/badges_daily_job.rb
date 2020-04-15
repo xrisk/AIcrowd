@@ -28,7 +28,6 @@ class BadgesDailyJob < ApplicationJob
     leaderboard_rating_stats = user_rating_service.leaderboard_query
     ranks, teams_mu, teams_sigma, teams_participant_ids = user_rating_service.filter_leaderboard_stats leaderboard_rating_stats
     max_rank = ranks.last
-    participant_ids, participant_ranks  = [], []
     during_badge = 0
     if user_rating_service.temporary
       during_badge = 3
