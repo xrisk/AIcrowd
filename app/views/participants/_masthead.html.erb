@@ -12,6 +12,7 @@
                 <%= participant.name %>
                 <%= render partial: 'participants/show_reputation', locals: { participant: participant } %>
                 <%= render partial: 'participants/show_temporary_reputation', locals: { participant: participant } %>
+                <%= render partial: 'participants/show_badges', locals: { participant: participant } %>
               </h1>
             </div>
             <div class="masthead-info">
@@ -40,8 +41,8 @@
                     <h4>Location</h4>
                   </header>
                   <span>
-                    <%= render :partial => 'shared/utility/flag', locals: { country_cd: participant.country_cd } %>
-                    <%= render :partial => 'location', locals: { participant: participant } %>
+                    <%= render partial: 'shared/utility/flag', locals: { country_cd: participant.country_cd } %>
+                    <%= render partial: 'location', locals: { participant: participant } %>
                   </span>
                 </div>
               <% end %>

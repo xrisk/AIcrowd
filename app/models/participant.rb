@@ -1,4 +1,6 @@
 class Participant < ApplicationRecord
+  has_merit
+
   include FriendlyId
   include ApiKey
   include Countries
@@ -107,6 +109,10 @@ class Participant < ApplicationRecord
             length:      { in: 2...100 },
             allow_blank: true
 
+  def self.api_admin
+    @@api_admin ||= find_by(email: ENV['AICROWD_API_EMAIL'])
+  end
+
   def reserved_userhandle
     return unless name
 
@@ -126,8 +132,35 @@ class Participant < ApplicationRecord
       account_disabled_reason: nil,
       account_disabled_dttm:   nil)
   end
+
+  def datetime_sequence(start, stop, step)
+    dates = [start]
+    while dates.last < (stop - step)
+      dates << (dates.last + step)
+    end
+    return dates
+  end
+
   def user_rating_history
-    UserRating.joins("left outer join challenge_rounds on (challenge_rounds.id=challenge_round_id)").joins("left outer join challenges c on (c.id=challenge_rounds.challenge_id)").where(participant_id: self.id).where('rating is not null').reorder('coalesce(end_dttm, user_ratings.created_at)').pluck('coalesce(end_dttm, user_ratings.created_at)', 'rating', 'concat(challenge, challenge_round)')
+    user_rating = UserRating.joins("left outer join challenge_rounds on (challenge_rounds.id=challenge_round_id)").joins("left outer join challenges c on (c.id=challenge_rounds.challenge_id)").where(participant_id: self.id).where('rating is not null').reorder('coalesce(end_dttm, user_ratings.created_at), user_ratings.id').pluck('coalesce(end_dttm, user_ratings.created_at)', 'rating', 'concat(challenge, challenge_round)')
+    final_ratings = []
+    user_rating.each_with_index do |rating, index|
+      current_rating = user_rating[index]
+      final_ratings << current_rating
+      if index > 0
+        date_sequences = datetime_sequence(user_rating[index - 1][0], user_rating[index][0], 1.day)
+        date_sequences = date_sequences.slice(1, date_sequences.size - 2)
+        for day in date_sequences.to_a
+          time_difference = day.to_date - user_rating[index - 1][0].to_date
+          time_difference = time_difference.to_i
+          factor_of_decay = 4
+          total_number_of_days = factor_of_decay*365
+          updated_rating = user_rating[index - 1][1] * (Math.exp(-time_difference.to_f/total_number_of_days.to_f))
+          final_ratings << [day, updated_rating, '']
+        end
+      end
+    end
+    return final_ratings
   end
   def final_rating
     self.rating.to_i - 3*self.variation.to_i
@@ -162,6 +195,10 @@ class Participant < ApplicationRecord
     else
       "//#{ENV['DOMAIN_NAME']}/assets/image_not_found.png"
     end
+  end
+
+  def badges_with_created_time
+    Merit::BadgesSash.where(sash_id: Participant.find_by(id:self.id).sash).map { |sash| (Merit::Badge.find sash.badge_id).as_json.merge(sash.as_json)}
   end
 
   def image_url

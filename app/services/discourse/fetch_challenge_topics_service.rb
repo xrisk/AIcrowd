@@ -9,19 +9,17 @@ module Discourse
       return failure('Discourse API client couldn\'t be properly initialized.') if client.nil?
       return failure('Challenge doesn\'t have Discourse category assigned.') if challenge.discourse_category_id.blank?
 
-      response        = client.get(challenge_posts_path)
-      participants    = get_participants(response.body['users'])
-      category_topics = topics_with_participant(
-                          response.body['topic_list']['topics'],
-                          response.body['users'],
-                          participants
-                        )
+      with_discourse_errors_handling do
+        response        = client.get(challenge_posts_path)
+        participants    = get_participants(response.body['users'])
+        category_topics = topics_with_participant(
+                            response.body['topic_list']['topics'],
+                            response.body['users'],
+                            participants
+                          )
 
-      success(category_topics)
-    rescue Discourse::Error => e
-      Logger.new(::Discourse::BaseService::LOGGER_URL).error("##{challenge.challenge} - Unable to retrieve challenge posts - #{e.message}")
-
-      failure('Discourse API is unavailable.')
+        success(category_topics)
+      end
     end
 
     private

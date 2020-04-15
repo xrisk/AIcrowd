@@ -2,6 +2,7 @@ require 'sidekiq/web'
 require 'sidekiq/cron/web'
 
 Rails.application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
   get '/robots.txt' => RobotsTxt
   use_doorkeeper
 
@@ -38,7 +39,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :challenges, only: [], module: :challenges do
+      resources :challenges, only: [:create, :update], module: :challenges do
+        resources :challenge_rounds, only: :destroy
         resources :participants, only: [] do
           get :search, on: :collection
         end

@@ -11,7 +11,7 @@ rackapp = Rack::Builder.app do
 
   map '/metrics' do
     use Rack::Auth::Basic, 'Prometheus Metrics' do |username, password|
-      Rack::Utils.secure_compare(ENV['CROWDAI_API_KEY'], password)
+      Rack::Utils.secure_compare(ENV['AICROWD_API_KEY'], password)
     end
     use Rack::Deflater
     use Prometheus::Middleware::Exporter, path: ''

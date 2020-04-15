@@ -2,7 +2,7 @@
   <div class="form-group">
     <label>Rules (markdown)</label>
     <div class="md-content">
-      <%= f.text_area :terms, class: "form-control txt-med", data: { controller: "ckeditor" } %>
+      <%= f.cktext_area :terms, class: "form-control txt-med" %>
     </div>
     <hr>
   </div>
@@ -17,6 +17,6 @@
   </div>
 
   <div class="md-content">
-    <%= f.text_area :additional_checkbox_text, class: "form-control ", data: { controller: "ckeditor" } %>
+    <%= f.cktext_area :additional_checkbox_text, class: "form-control" %>
   </div>
 </div>

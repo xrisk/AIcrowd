@@ -51,9 +51,9 @@
         </div>
 
         <div class="form-group">
-          <span class="label-text">Message</span>
           <div class="md-content" id="newsletter-email-message-wrapper">
-            <%= f.text_area :message, class: "form-control", placeholder: 'E-mail message', data: { controller: "ckeditor" } %>
+            <span class="label-text">Message</span>
+            <%= f.cktext_area :message %>
           </div>
         </div>
 
