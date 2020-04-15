@@ -60,7 +60,7 @@ class Submission < ApplicationRecord
     end
     Prometheus::SubmissionCounterService.new(submission_id: id).call
     if grading_status_cd == 'graded'
-      participant_submission_count = Submission.where(participant_id: participant_id, graded_status_cd: 'graded').count
+      participant_submission_count = Submission.where(participant_id: participant_id, grading_status_cd: 'graded').count
       if participant_submission_count == 10
         Participant.find_by(id: participant_id).add_badge(9)
       elsif participant_submission_count == 100
@@ -72,7 +72,7 @@ class Submission < ApplicationRecord
     if Submission.where(participant_id: participant_id).count == 1
       Participant.find_by(id: participant_id).add_badge(13)
     end
-    if Submission.where(participant_id: participant_id, graded_status_cd: 'graded').count == 1
+    if Submission.where(participant_id: participant_id, grading_status_cd: 'graded').count == 1
       Participant.find_by(id: participant_id).add_badge(14)
     end
   end
