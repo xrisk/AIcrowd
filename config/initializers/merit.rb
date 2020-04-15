@@ -153,7 +153,7 @@ Merit::Badge.create!(
 
 Merit::Badge.create!(
     id: 23,
-    name: "Explainer",
+    name: "Better Explainer",
     description: "For every 100 posts/comments on Dicourse",
     )
 
