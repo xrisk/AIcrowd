@@ -1,4 +1,5 @@
 class ChallengeRound < ApplicationRecord
+  before_update :rollback_rating, :if => :end_dttm_changed?
   include Markdownable
 
   belongs_to :challenge, inverse_of: :challenge_rounds
@@ -41,6 +42,10 @@ class ChallengeRound < ApplicationRecord
 
   after_initialize :set_defaults
 
+
+  def rollback_rating
+    RollbackRatingJob.perform_later(end_dttm_was.to_s)
+  end
   def get_score_title
     score_title.presence || 'Primary Score'
   end
