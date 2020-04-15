@@ -14,49 +14,7 @@
           </header>
 
           <% if @discourse_topics.any? %>
-            <% @discourse_topics.each do |discourse_topic| %>
-              <% author = discourse_original_poster(discourse_topic) %>
-
-              <ul class="list-group list-group-flush-px-0 list-group-discussion">
-                <!-- topic -->
-                <li class="list-group-item">
-                  <div class="col-9">
-                    <div class="like-counter-vertical">
-                      <span><%= discourse_topic['like_count'] %></span>
-                      <% if discourse_topic['like_count'].to_i.positive? %>
-                        <%= image_tag image_path('img/icon-like.svg'), alt: 'Like icon' %>
-                      <% else %>
-                        <%= image_tag image_path('img/icon-like-grey.svg'), alt: 'Like icon' %>
-                      <% end %>
-                    </div>
-
-                    <div>
-                      <%= link_to discourse_topic['title'], discourse_topic_url(discourse_topic['slug']), class: 'topic-title text-link' %>
-
-                      <% if author['participant'].present? %>
-                        <span>By <%= render partial: 'participants/user_link', locals: { participant: author['participant'], avatar: false } %> <%= discourse_time_ago(discourse_topic['created_at']) %></span>
-                      <% else %>
-                        <span><%= discourse_time_ago(discourse_topic['created_at']) %></span>
-                      <% end %>
-                    </div>
-                  </div>
-
-                  <div class="avatar-group col-2">
-                    <% discourse_topic['posters'].each_with_index do |poster, index| %>
-                      <% if poster['participant'].present? %>
-                        <%= render partial: 'participants/user_link', locals: { participant: poster['participant'], username: false } %>
-                      <% end %>
-                    <% end %>
-                  </div>
-
-                  <div class="topic-comments">
-                    <%= image_tag image_path('img/icon-comment.svg') %>
-                    <%= discourse_topic['posts_count'] %>
-                  </div>
-                </li>
-                <!-- /topic -->
-              </ul>
-            <% end %>
+            <%= render partial: 'discussion_list', locals: { discourse_topics: @discourse_topics, sidebar: false } %>
           <% else %>
             <div class="md-content">
               <span>Nobody have posted anything on Discourse yet...</span>

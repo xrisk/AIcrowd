@@ -13578,6 +13578,11 @@ html {
   position: relative;
 }
 
+.side-border {
+  border-left: 1px solid #D9DCDC;
+  border-right: 1px solid #D9DCDC;
+}
+
 @media (max-width: 991.98px) {
   .styles-uber-prize .uber-timeline .uber-timeline-event h3 {
     font-size: 1.5rem;

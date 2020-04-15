@@ -1,0 +1,11 @@
+<header class="section-header-decorative">
+  <div>
+    <h4>Getting Started</h4>
+  </div>
+  <%= button_to 'See all', challenge_discussion_path(challenge), class: "btn btn-secondary btn-sm", method: :get %>
+</header>
+<table class="table table-responsive-md side-border">
+  <tbody>
+    <%= render partial: 'challenges/discussions/discussion_list', locals: { discourse_topics: challenge_baseline_discussion, sidebar: true } %>
+  </tbody>
+</table>
