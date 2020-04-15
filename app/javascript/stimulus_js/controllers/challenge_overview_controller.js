@@ -71,28 +71,23 @@ export default class extends Controller {
         this.firstChild = this.el.children().first();
 
         // If the first child is an h2 there is no "Updates" Text
-        this.hasUpdates = false;
-        if (! this.firstChild.is('h2') ) {
-            this.hasUpdates = true;
-            this.el.prepend( $('<h2/>', { text: 'Updates' }) );
+        if (this.firstChild.is('h2') ) {
+            $(this.el).find('h2').first().addClass('mt-2');
         }
         this.headings = this.el.find("h2").get();
         // Clear TOC
         this.toc.empty();
         this.createTOC();
 
-        if (this.hasUpdates){
-            this.el.children().first().hide();
-        }
         $('body').scrollspy({target: "#table-of-contents", offset: 64});
     }
 
     createTOC(){
         $.each(this.headings, (index, heading) => {
-            // Add mt-0 to headings
-            $(heading).addClass('mt-0');
+            // URL friendly id
+            var urlFriendly = $(heading).text().replace(/(^\W*)|(\W*$)/g, '').replace(' ', '-').toLowerCase();
             // Add id
-            $(heading).attr('id', `heading-${index}`);
+            $(heading).attr('id', urlFriendly);
 
             // Create new list item in the TOC
             const li = $('<li/>', { class: 'nav-item'}).appendTo(this.toc);
@@ -100,7 +95,7 @@ export default class extends Controller {
             // Create a link tag to trigger content change
             const link = $('<a/>', {
                 class: 'nav-link text-capitalize',
-                href: `#heading-${index}`,
+                href: `#` + urlFriendly,
                 text: $(heading).text() }).appendTo(li);
 
         });

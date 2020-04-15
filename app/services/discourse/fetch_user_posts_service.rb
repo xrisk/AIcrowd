@@ -7,17 +7,14 @@ module Discourse
 
     def call
       return failure('Discourse API client couldn\'t be properly initialized.') if client.nil?
-      return failure('DISCOURSE_API_USERS_POSTS_QUERY_ID ENV variable is missing.') if ENV['DISCOURSE_API_USERS_POSTS_QUERY_ID'].blank?
 
-      response            = client.post(user_posts_query_path)
-      response_hash       = map_response_body_to_hash(response.body)
-      grouped_by_category = response_hash.group_by { |post| post['category_name'] }
+      with_discourse_errors_handling do
+        response            = client.post(user_posts_query_path)
+        response_hash       = map_response_body_to_hash(response.body)
+        grouped_by_category = response_hash.group_by { |post| post['category_name'] }
 
-      success(grouped_by_category)
-    rescue Discourse::Error => e
-      Logger.new(::Discourse::BaseService::LOGGER_URL).error("##{participant.email} - Unable to retrieve user posts - #{e.message}")
-
-      failure('Discourse API is unavailable.')
+        success(grouped_by_category)
+      end
     end
 
     private

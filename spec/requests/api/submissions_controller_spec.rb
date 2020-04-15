@@ -33,7 +33,7 @@ RSpec.describe Api::SubmissionsController, type: :request do
             headers: {
               'Accept':        'application/vnd.api+json',
               'Content-Type':  'application/vnd.api+json',
-              'Authorization': auth_header(ENV['CROWDAI_API_KEY'])
+              'Authorization': auth_header(ENV['AICROWD_API_KEY'])
             }
       end
 

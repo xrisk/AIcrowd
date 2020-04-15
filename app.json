@@ -39,7 +39,7 @@
     "CLOUDFRONT_IMAGES_DOMAIN": {
       "required": true
     },
-    "CROWDAI_API_KEY": {
+    "AICROWD_API_KEY": {
       "required": true
     },
     "CROWDAI_OAUTH_KEY": {

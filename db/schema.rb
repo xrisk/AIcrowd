@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_31_142624) do
+ActiveRecord::Schema.define(version: 2020_04_09_170026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -93,6 +93,16 @@ ActiveRecord::Schema.define(version: 2020_03_31_142624) do
     t.datetime "started_at"
     t.index ["user_id"], name: "index_ahoy_visits_on_user_id"
     t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
+  end
+
+  create_table "badges_sashes", force: :cascade do |t|
+    t.integer "badge_id"
+    t.integer "sash_id"
+    t.boolean "notified_user", default: false
+    t.datetime "created_at"
+    t.index ["badge_id", "sash_id"], name: "index_badges_sashes_on_badge_id_and_sash_id"
+    t.index ["badge_id"], name: "index_badges_sashes_on_badge_id"
+    t.index ["sash_id"], name: "index_badges_sashes_on_sash_id"
   end
 
   create_table "base_leaderboards", force: :cascade do |t|
@@ -328,6 +338,7 @@ ActiveRecord::Schema.define(version: 2020_03_31_142624) do
     t.string "primary_sort_order_cd", default: "ascending", null: false
     t.string "secondary_sort_order_cd", default: "not_used", null: false
     t.boolean "calculated_permanent", default: false, null: false
+    t.boolean "assigned_permanent_badge", default: false, null: false
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
   end
 
@@ -482,6 +493,12 @@ ActiveRecord::Schema.define(version: 2020_03_31_142624) do
     t.index ["challenge_id"], name: "index_dataset_files_on_challenge_id"
   end
 
+  create_table "discourse_user_badges_meta", force: :cascade do |t|
+    t.integer "previous_id", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "disentanglement_leaderboards", force: :cascade do |t|
     t.bigint "challenge_id"
     t.bigint "challenge_round_id"
@@ -615,6 +632,41 @@ ActiveRecord::Schema.define(version: 2020_03_31_142624) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "participant_id"
+  end
+
+  create_table "merit_actions", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "action_method"
+    t.integer "action_value"
+    t.boolean "had_errors", default: false
+    t.string "target_model"
+    t.integer "target_id"
+    t.text "target_data"
+    t.boolean "processed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "merit_activity_logs", force: :cascade do |t|
+    t.integer "action_id"
+    t.string "related_change_type"
+    t.integer "related_change_id"
+    t.string "description"
+    t.datetime "created_at"
+  end
+
+  create_table "merit_score_points", force: :cascade do |t|
+    t.bigint "score_id"
+    t.integer "num_points", default: 0
+    t.string "log"
+    t.datetime "created_at"
+    t.index ["score_id"], name: "index_merit_score_points_on_score_id"
+  end
+
+  create_table "merit_scores", force: :cascade do |t|
+    t.bigint "sash_id"
+    t.string "category", default: "default"
+    t.index ["sash_id"], name: "index_merit_scores_on_sash_id"
   end
 
   create_table "migration_mappings", force: :cascade do |t|
@@ -799,6 +851,9 @@ ActiveRecord::Schema.define(version: 2020_03_31_142624) do
     t.integer "ranking_change", default: 0, null: false
     t.float "fixed_rating"
     t.boolean "agreed_to_organizers_newsletter", default: true, null: false
+    t.float "fixed_rating"
+    t.integer "sash_id"
+    t.integer "level", default: 0
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["organizer_id"], name: "index_participants_on_organizer_id"
@@ -833,6 +888,11 @@ ActiveRecord::Schema.define(version: 2020_03_31_142624) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_reserved_userhandles_on_name", unique: true
+  end
+
+  create_table "sashes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "settings", force: :cascade do |t|

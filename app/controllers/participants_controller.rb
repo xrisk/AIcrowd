@@ -37,6 +37,7 @@ class ParticipantsController < ApplicationController
   def update
     @participant = Participant.friendly.find(params[:id])
     if @participant.update(participant_params)
+      @participant.add_badge(15)
       flash[:success] = "Profile updated"
       redirect_to @participant
     else

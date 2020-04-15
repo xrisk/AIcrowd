@@ -4,7 +4,7 @@ RSpec.describe Api::ChallengesController, type: :request do
   let!(:day) { create :challenge, :day }
   let!(:week) { create :challenge, :week }
   let!(:previous_round) { create :challenge, :previous_round }
-  let!(:valid_key) { ENV['CROWDAI_API_KEY'] }
+  let!(:valid_key) { ENV['AICROWD_API_KEY'] }
   let!(:invalid_key) { '123dfdfobdsfnkbndskndsraslv' }
 
   describe "GET #index" do

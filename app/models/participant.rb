@@ -1,4 +1,6 @@
 class Participant < ApplicationRecord
+  has_merit
+
   include FriendlyId
   include ApiKey
   include Countries
@@ -107,6 +109,10 @@ class Participant < ApplicationRecord
             length:      { in: 2...100 },
             allow_blank: true
 
+  def self.api_admin
+    @@api_admin ||= find_by(email: ENV['AICROWD_API_EMAIL'])
+  end
+
   def reserved_userhandle
     return unless name
 
@@ -189,6 +195,10 @@ class Participant < ApplicationRecord
     else
       "//#{ENV['DOMAIN_NAME']}/assets/image_not_found.png"
     end
+  end
+
+  def badges_with_created_time
+    Merit::BadgesSash.where(sash_id: Participant.find_by(id:self.id).sash).map { |sash| (Merit::Badge.find sash.badge_id).as_json.merge(sash.as_json)}
   end
 
   def image_url

@@ -41,7 +41,7 @@ describe Discourse::FetchChallengeTopicsService, :requests_allowed do
         result = subject.call
 
         expect(result.success?).to eq false
-        expect(result.value).to eq 'Discourse API is unavailable.'
+        expect(result.value).to eq 'Discourse::Error'
       end
     end
   end

@@ -89,7 +89,7 @@ class GraderService
         dry_run:               'false',
         parallel:              'false',
         enqueue_only:          'true',
-        grader_api_key:        ENV['CROWDAI_API_KEY']
+        grader_api_key:        ENV['AICROWD_API_KEY']
       }
     else
       Submission.update(
