@@ -1,0 +1,2 @@
+class DiscourseUserBadgesMetum < ApplicationRecord
+end

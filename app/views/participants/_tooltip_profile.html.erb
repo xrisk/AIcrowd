@@ -4,7 +4,8 @@
         <strong><%= participant.name %></strong>
         <br>
         <div class="reputation-info">
-            <%= render :partial => 'participants/show_reputation', locals: { participant: participant, style: 'top: 0px;', full: true } %>
+            <%= render partial: 'participants/show_reputation', locals: { participant: participant, style: 'top: 0px;', full: true } %>
+          <%= render partial: 'participants/show_badges', locals: { participant: participant } %>
             <br>
             <span class="reputation-rank">Rank: #<%= participant.ranking %></span>
         </div>
