@@ -6,7 +6,8 @@ class RatingApiService
   format :json
   def call(challenge_rounds)
     body = {
-        rounds: challenge_rounds
+        rounds: challenge_rounds,
+        return_url: ENV['DOMAIN_NAME']
     }.to_json
     headers = { 'Content-Type' => 'application/json' }
     begin
