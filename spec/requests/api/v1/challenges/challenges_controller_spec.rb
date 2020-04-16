@@ -55,6 +55,8 @@ describe Api::V1::Challenges::ChallengesController, type: :request do
   describe '#update' do
     let!(:challenge) { create(:challenge, :running, organizers: [first_organizer]) }
 
+    let(:challenge_round) { challenge.challenge_rounds.first }
+
     context 'when authenticity token not provided' do
       let(:headers) { { 'CONTENT_TYPE':  'application/json' } }
 
@@ -76,10 +78,27 @@ describe Api::V1::Challenges::ChallengesController, type: :request do
           }
         end
 
-        it 'updates existing challenge' do
-          patch api_v1_challenge_path(challenge), params: file_fixture('json/challenge_import.json').read, headers: headers
+        context 'when challenge has challenge_rounds with submission' do
+          let!(:submission) { create(:submission, challenge: challenge, challenge_round: challenge_round) }
 
-          expect(response).to have_http_status(:ok)
+          it 'updates existing challenge' do
+            patch api_v1_challenge_path(challenge), params: file_fixture('json/challenge_import.json').read, headers: headers
+
+            expect(response).to have_http_status(:ok)
+          end
+        end
+
+        context 'when challenge has dataset_files' do
+          let!(:dataset_files) { create_list(:dataset_file, 3, challenge: challenge) }
+
+          it 'doesn\'t import new dataset files' do
+            expect(challenge.dataset_files.count).to eq 4
+
+            patch api_v1_challenge_path(challenge), params: file_fixture('json/challenge_import.json').read, headers: headers
+
+            expect(response).to have_http_status(:ok)
+            expect(challenge.reload.dataset_files.count).to eq 4
+          end
         end
       end
 
@@ -92,7 +111,7 @@ describe Api::V1::Challenges::ChallengesController, type: :request do
           }
         end
 
-        it 'updates existing challenge' do
+        it 'returns unauthorized response' do
           patch api_v1_challenge_path(challenge), params: file_fixture('json/challenge_import.json').read, headers: headers
 
           expect(response).to have_http_status(:unauthorized)
