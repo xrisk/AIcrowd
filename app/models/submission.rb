@@ -1,5 +1,6 @@
 class Submission < ApplicationRecord
   include Markdownable
+  include BadgesHelper
   before_validation :generate_short_url
 
   belongs_to :challenge, counter_cache: true
@@ -59,22 +60,7 @@ class Submission < ApplicationRecord
         .perform_later(challenge_round_id: challenge_round_id)
     end
     Prometheus::SubmissionCounterService.new(submission_id: id).call
-    if grading_status_cd == 'graded'
-      participant_submission_count = Submission.where(participant_id: participant_id, grading_status_cd: 'graded').count
-      if participant_submission_count == 10
-        Participant.find_by(id: participant_id).add_badge(9)
-      elsif participant_submission_count == 100
-        Participant.find_by(id: participant_id).add_badge(8)
-      elsif participant_submission_count == 1000
-        Participant.find_by(id: participant_id).add_badge(7)
-      end
-    end
-    if Submission.where(participant_id: participant_id).count == 1
-      Participant.find_by(id: participant_id)&.add_badge(13)
-    end
-    if Submission.where(participant_id: participant_id, grading_status_cd: 'graded').count == 1
-      Participant.find_by(id: participant_id)&.add_badge(14)
-    end
+    submission_badges(participant_id)
   end
 
   after_destroy do
