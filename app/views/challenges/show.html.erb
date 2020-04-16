@@ -16,7 +16,7 @@
       <!-- md content -->
       <div class="col-md-8 col-lg-7" id="description-wrapper">
         <div class="markdown-wrap">
-          <div class="md-content ck-content" data-controller="challenge-overview" data-action="resize@window->challenge-overview#showTOC">
+          <div class="md-content ck-content" data-controller="challenge-overview" data-action="resize@window->challenge-overview#showTOC" data-challenge-overview-scrollable-tabs="<%= @challenge.scrollable_overview_tabs %>">
             <%= sanitize_html(@challenge.description) %>
           </div>
         </div>

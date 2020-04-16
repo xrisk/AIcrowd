@@ -2,6 +2,6 @@
 <%= f.label name, class: 'toggle-switch toggle-switch-large' do %>
   <%= f.check_box name, p || {} %>
     <span class="switcher mr-2"></span>
-  <span class="label"><%= text %></span>
-<% end %>
+    <span class="label <%= defined?(label_class) && label_class %>"><%= text %></span>
+  <% end %>
 </div>

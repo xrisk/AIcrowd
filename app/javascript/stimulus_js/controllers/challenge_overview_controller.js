@@ -40,67 +40,124 @@ export default class extends Controller {
     firstChild;
     headings;
     fullContent;
+    scrollableTabs;
 
-    replaceContent(content){
-        this.fullContent = content.replace(/~~(.*?)~~/gim, "<del>$1</del>");
-        this.showTOC();
+    initialize() {
+      this.element['controller'] = this;
+      this.el = $(this.element);
+      // Convert strikeouts!
+      this.fullContent = this.el.html().replace(/~~(.*?)~~/gim, "<del>$1</del>");
+      this.scrollableTabs = this.data.get('scrollable-tabs') === 'true'
+
+      this.showTOC();
     }
 
     updateContent(content) {
-        this.el.html(content);
-        hljs.initHighlighting.called = false;
-        hljs.initHighlighting();
-        loadMathJax();
-        setupOembed();
-    }
-
-    initialize() {
-        this.element['controller'] = this;
-        this.el = $(this.element);
-        // Convert strikeouts!
-        this.fullContent = this.el.html().replace(/~~(.*?)~~/gim, "<del>$1</del>");
-        this.showTOC();
+      this.el.html(content);
+      hljs.initHighlighting.called = false;
+      hljs.initHighlighting();
+      loadMathJax();
+      setupOembed();
     }
 
     showTOC() {
+      if (this.scrollableTabs) {
         this.updateContent(this.fullContent);
-        if (window.matchMedia("(max-width: 991.98px)").matches) {
-            return;
-        }
-        this.toc = $("#table-of-contents");
-        this.firstChild = this.el.children().first();
+      }
 
-        // If the first child is an h2 there is no "Updates" Text
-        if (this.firstChild.is('h2') ) {
-            $(this.el).find('h2').first().addClass('mt-2');
-        }
-        this.headings = this.el.find("h2").get();
-        // Clear TOC
-        this.toc.empty();
+      if (window.matchMedia("(max-width: 991.98px)").matches) {
+        return;
+      }
+      this.toc = $("#table-of-contents");
+      this.firstChild = this.el.children().first();
+
+      // If the first child is an h2 there is no "Updates" Text
+      if (this.firstChild.is('h2') ) {
+        $(this.el).find('h2').first().addClass('mt-2');
+      }
+      this.headings = this.el.find("h2").get();
+      // Clear TOC
+      this.toc.empty();
+
+      if (this.scrollableTabs) {
         this.createTOC();
-
         $('body').scrollspy({target: "#table-of-contents", offset: 64});
+      } else {
+        this.createTabularTOC();
+        this.updateActive();
+
+        this.el.children().first().remove();
+        this.selectedLink.click()
+      }
     }
 
-    createTOC(){
-        $.each(this.headings, (index, heading) => {
-            // URL friendly id
-            var urlFriendly = $(heading).text().replace(/(^\W*)|(\W*$)/g, '').replace(' ', '-').toLowerCase();
-            // Add id
-            $(heading).attr('id', urlFriendly);
-
-            // Create new list item in the TOC
-            const li = $('<li/>', { class: 'nav-item'}).appendTo(this.toc);
-
-            // Create a link tag to trigger content change
-            const link = $('<a/>', {
-                class: 'nav-link text-capitalize',
-                href: `#` + urlFriendly,
-                text: $(heading).text() }).appendTo(li);
-
-        });
-        this.tocLinks = this.toc.find('a');
-        this.selectedLink = this.tocLinks.first();
+    updateActive(index = 0){
+      this.tocLinks.removeClass('active');
+      this.selectedLink.addClass('active');
+      if (index > 0) {
+          document.documentElement.scrollTop = this.el.find(`#heading-${index}`).offset().top;
+      }
     }
 
+    createTOC() {
+      $.each(this.headings, (index, heading) => {
+        // URL friendly id
+        var urlFriendly = $(heading).text().replace(/(^\W*)|(\W*$)/g, '').replace(' ', '-').toLowerCase();
+        // Add id
+        $(heading).attr('id', urlFriendly);
+
+        // Create new list item in the TOC
+        const li = $('<li/>', { class: 'nav-item'}).appendTo(this.toc);
+
+        // Create a link tag to trigger content change
+        const link = $('<a/>', {
+            class: 'nav-link text-capitalize',
+            href: `#` + urlFriendly,
+            text: $(heading).text() }).appendTo(li);
+
+      });
+
+      this.tocLinks = this.toc.find('a');
+      this.selectedLink = this.tocLinks.first();
+    }
+
+    createTabularTOC() {
+      $.each(this.headings, (index, heading) => {
+        // Add mt-2 to headings
+        $(heading).addClass('mt-2');
+
+        // Create new list item in the TOC
+        let li = $('<li/>', { class: 'nav-item'}).appendTo(this.toc);
+
+        // Create a link tag to trigger content change
+        let link = $('<a/>', { class: 'nav-link text-capitalize cursor-pointer', text:  _.capitalize($(heading).text()) }).appendTo(li);
+
+        // Calculate Content
+        let content = this.getContent($(heading), index);
+
+        // Setup click callback
+        link.click(() => this.selectHeading(link, content));
+       });
+
+      this.tocLinks = this.toc.find('a');
+      this.selectedLink = this.tocLinks.first();
+    }
+
+    getContent(start, index){
+      let content = "";
+
+      $(start)
+        .nextUntil(' h2 ')
+        .addBack() // Add selected heading to content
+        .each( (i,x) => content += x.outerHTML );
+
+      return content;
+    }
+
+    selectHeading(link, contentHTML) {
+      this.selectedLink = link;
+
+      $(this.element).html(contentHTML);
+      this.updateActive();
+    }
 }

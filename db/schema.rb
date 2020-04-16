@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_09_170026) do
+ActiveRecord::Schema.define(version: 2020_04_14_144802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -433,6 +433,7 @@ ActiveRecord::Schema.define(version: 2020_04_09_170026) do
     t.integer "team_freeze_seconds_before_end", default: 604800
     t.boolean "hidden_challenge", default: false, null: false
     t.datetime "team_freeze_time"
+    t.boolean "scrollable_overview_tabs", default: true, null: false
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["organizer_id"], name: "index_challenges_on_organizer_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
