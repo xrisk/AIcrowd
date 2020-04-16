@@ -7,17 +7,6 @@ class LeaderboardPolicy < ApplicationPolicy
     true
   end
 
-  def submission_detail?
-    participant &&
-      (participant.admin? ||
-          @record.participant_id == participant.id ||
-          ChallengeOrganizerParticipant.where(
-            participant_id: participant.id,
-            id:             @record.challenge_id
-          ).present?
-      )
-  end
-
   class Scope
     attr_reader :participant, :scope
 
