@@ -193,7 +193,7 @@ ActiveAdmin.setup do |config|
   # and feel.
   #
   # To load a stylesheet:
-  #   config.register_stylesheet 'my_stylesheet.css'
+  config.register_stylesheet 'ckeditor.css'
   #
   # You can provide an options hash for more control, which is passed along to stylesheet_link_tag():
   #   config.register_stylesheet 'my_print_stylesheet.css', media: :print
@@ -290,6 +290,10 @@ ActiveAdmin.setup do |config|
   # You can inherit it with own class and inject it for all resources
   #
   # config.order_clause = MyOrderClause
+  # Integrate CKeditor
+  config.register_javascript 'http://cdn.ckeditor.com/4.14.0/standard-all/ckeditor.js'
+  config.register_javascript 'ckeditor/config.js'
+
   meta_tags_options                     = { viewport: 'width=device-width, initial-scale=1' }
   config.meta_tags                      = meta_tags_options
   config.meta_tags_for_logged_out_pages = meta_tags_options

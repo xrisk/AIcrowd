@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 2020_04_16_102555) do
 
   # These are extensions that must be enabled in order to support this database
@@ -227,7 +228,6 @@ ActiveRecord::Schema.define(version: 2020_04_16_102555) do
     t.integer "view_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "body_markdown"
     t.integer "seq"
     t.datetime "posted_at"
     t.string "slug"
@@ -279,7 +279,6 @@ ActiveRecord::Schema.define(version: 2020_04_16_102555) do
     t.string "slug"
     t.bigint "organizer_id"
     t.string "headline"
-    t.text "description_markdown"
     t.boolean "acknowledged", default: false, null: false
     t.index ["organizer_id"], name: "index_challenge_calls_on_organizer_id"
   end
@@ -623,7 +622,6 @@ ActiveRecord::Schema.define(version: 2020_04_16_102555) do
     t.datetime "updated_at", null: false
     t.string "job_url"
     t.string "slug"
-    t.text "description_markdown"
   end
 
   create_table "mandrill_messages", force: :cascade do |t|
@@ -865,7 +863,6 @@ ActiveRecord::Schema.define(version: 2020_04_16_102555) do
 
   create_table "participation_terms", force: :cascade do |t|
     t.text "terms"
-    t.text "terms_markdown"
     t.text "instructions"
     t.text "instructions_markdown"
     t.integer "version", default: 1

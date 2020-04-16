@@ -6,7 +6,7 @@ class JobPosting < ApplicationRecord
 
   validates :title, presence: true
   validates :organisation, presence: true
-  validates :description_markdown, presence: true
+  validates :description, presence: true
   validates :country, presence: true
   validates :posting_date, presence: true
 

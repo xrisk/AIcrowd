@@ -46,7 +46,7 @@ ActiveAdmin.register JobPosting do
       f.input :location
       f.input :country
       f.input :remote
-      f.input :description_markdown
+      f.input :description, as: :ckeditor
       f.input :job_url
     end
     f.actions

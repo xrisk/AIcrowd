@@ -29,7 +29,7 @@ ActiveAdmin.register Blog do
       f.input :slug
       f.input :seq
       f.input :published
-      f.input :body_markdown
+      f.input :body, as: :ckeditor
       f.input :posted_at
     end
     f.actions
