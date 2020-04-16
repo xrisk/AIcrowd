@@ -1,5 +1,4 @@
 class JobPosting < ApplicationRecord
-  include Markdownable
   include FriendlyId
 
   default_scope { order('created_at DESC') }

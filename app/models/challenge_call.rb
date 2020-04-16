@@ -1,6 +1,5 @@
 class ChallengeCall < ApplicationRecord
   include FriendlyId
-  include Markdownable
 
   friendly_id :title, use: [:slugged, :finders, :history]
   has_many :challenge_call_responses
