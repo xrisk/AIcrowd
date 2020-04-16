@@ -291,7 +291,7 @@ ActiveAdmin.setup do |config|
   #
   # config.order_clause = MyOrderClause
   # Integrate CKeditor
-  config.register_javascript 'http://cdn.ckeditor.com/4.14.0/standard-all/ckeditor.js'
+  config.register_javascript 'https://cdn.ckeditor.com/4.14.0/standard-all/ckeditor.js'
   config.register_javascript 'ckeditor/config.js'
 
   meta_tags_options                     = { viewport: 'width=device-width, initial-scale=1' }
