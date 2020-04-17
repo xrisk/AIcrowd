@@ -16,7 +16,7 @@ class LandingPageController < ApplicationController
     @blog_posts = Blog
                       .where(published: true)
                       .order(seq: :asc)
-                      .limit(4)
+                      .limit(3)
 
     @discourse_topics_fetch = Rails.cache.fetch('discourse-latest-topics', expires_in: 5.minutes) do
       Discourse::FetchLatestTopicsService.new.call
