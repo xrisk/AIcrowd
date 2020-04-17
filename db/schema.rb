@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_09_170026) do
+
+ActiveRecord::Schema.define(version: 2020_04_16_102555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -227,7 +228,6 @@ ActiveRecord::Schema.define(version: 2020_04_09_170026) do
     t.integer "view_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "body_markdown"
     t.integer "seq"
     t.datetime "posted_at"
     t.string "slug"
@@ -279,7 +279,6 @@ ActiveRecord::Schema.define(version: 2020_04_09_170026) do
     t.string "slug"
     t.bigint "organizer_id"
     t.string "headline"
-    t.text "description_markdown"
     t.boolean "acknowledged", default: false, null: false
     t.index ["organizer_id"], name: "index_challenge_calls_on_organizer_id"
   end
@@ -433,6 +432,7 @@ ActiveRecord::Schema.define(version: 2020_04_09_170026) do
     t.integer "team_freeze_seconds_before_end", default: 604800
     t.boolean "hidden_challenge", default: false, null: false
     t.datetime "team_freeze_time"
+    t.boolean "scrollable_overview_tabs", default: true, null: false
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["organizer_id"], name: "index_challenges_on_organizer_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
@@ -622,7 +622,6 @@ ActiveRecord::Schema.define(version: 2020_04_09_170026) do
     t.datetime "updated_at", null: false
     t.string "job_url"
     t.string "slug"
-    t.text "description_markdown"
   end
 
   create_table "mandrill_messages", force: :cascade do |t|
@@ -864,7 +863,6 @@ ActiveRecord::Schema.define(version: 2020_04_09_170026) do
 
   create_table "participation_terms", force: :cascade do |t|
     t.text "terms"
-    t.text "terms_markdown"
     t.text "instructions"
     t.text "instructions_markdown"
     t.integer "version", default: 1
@@ -1069,13 +1067,14 @@ ActiveRecord::Schema.define(version: 2020_04_09_170026) do
     t.index ["participant_id"], name: "index_user_ratings_on_participant_id"
   end
 
-  create_table "versions", id: :serial, force: :cascade do |t|
+  create_table "versions", force: :cascade do |t|
     t.string "item_type", null: false
-    t.integer "item_id", null: false
+    t.bigint "item_id", null: false
     t.string "event", null: false
     t.string "whodunnit"
     t.text "object"
     t.datetime "created_at"
+    t.text "object_changes"
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
@@ -1135,39 +1134,6 @@ ActiveRecord::Schema.define(version: 2020_04_09_170026) do
   add_foreign_key "user_ratings", "challenge_rounds"
   add_foreign_key "user_ratings", "participants"
   add_foreign_key "votes", "participants"
-
-  create_view "challenge_organizer_participants", materialized: true,  sql_definition: <<-SQL
-      SELECT DISTINCT cop.id,
-      cop.participant_id,
-      cop.clef_task_id,
-      cop.organizer_id,
-      cop.name,
-      cop.challenge
-     FROM ( SELECT c.id,
-              p.id AS participant_id,
-              c.clef_task_id,
-              c.organizer_id,
-              p.name,
-              c.challenge
-             FROM participants p,
-              challenges c,
-              organizers o
-            WHERE ((p.organizer_id = o.id) AND (c.organizer_id = o.id))
-          UNION
-           SELECT c.id,
-              p.id AS participant_id,
-              c.clef_task_id,
-              c.organizer_id,
-              p.name,
-              c.challenge
-             FROM participants p,
-              challenges c
-            WHERE ((c.clef_challenge IS TRUE) AND (c.clef_task_id IN ( SELECT c1.clef_task_id
-                     FROM challenges c1,
-                      organizers o1,
-                      participants p1
-                    WHERE ((c1.clef_challenge IS TRUE) AND (o1.id = c1.organizer_id) AND (o1.id = p1.organizer_id) AND (p1.id = p.id)))))) cop;
-  SQL
 
   create_view "participant_sign_ups",  sql_definition: <<-SQL
       SELECT row_number() OVER () AS id,

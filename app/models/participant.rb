@@ -10,7 +10,6 @@ class Participant < ApplicationRecord
   before_save { self.email = email.downcase }
   before_save :process_urls
   after_create :set_email_preferences
-  after_save :refresh_materialized_view
   after_save :publish_to_prometheus
   mount_uploader :image_file, ImageUploader
   validates :image_file, file_size: { less_than: 5.megabytes }
@@ -42,8 +41,6 @@ class Participant < ApplicationRecord
            class_name: 'ChallengeRegistration'
   has_many :participant_challenge_counts,
            class_name: 'ParticipantChallengeCount'
-  has_many :challenge_organizer_participants,
-           class_name: 'ChallengeOrganizerParticipant'
   has_many :challenges,
            through: :participant_challenges
   has_many :dataset_file_downloads,
@@ -240,10 +237,6 @@ class Participant < ApplicationRecord
     super
   rescue StandardError
     nil
-  end
-
-  def refresh_materialized_view
-    RefreshChallengeOrganizerParticipantViewJob.perform_later if saved_change_to_attribute?(:organizer_id)
   end
 
   def publish_to_prometheus

@@ -2,12 +2,13 @@ module Challenges
   class ImportService < ::BaseService
     def initialize(import_params:, challenge: nil)
       @import_params = import_params
-      @challenge     = Challenge.new
+      @challenge     = challenge || Challenge.new
     end
 
     def call
       return failure('Import failed: There are no params to import') if challenge_params.blank?
 
+      drop_unwanted_associations
       @challenge.attributes = challenge_params
 
       return failure('Import failed: At least one organizer must be provided') if @challenge.challenges_organizers.none?
@@ -32,6 +33,13 @@ module Challenges
 
     def permitted_params
       ::Challenge::IMPORTABLE_FIELDS + ::Challenge::IMPORTABLE_ASSOCIATIONS.map { |key, value| { key => value } }
+    end
+
+    def drop_unwanted_associations
+      Challenges::ImportConstants::IMPORTABLE_ASSOCIATIONS.keys.each do |association|
+        association_name = association.to_s.remove('_attributes')
+        challenge.public_send("#{association_name}=", [])
+      end
     end
 
     def import_images_from_base64

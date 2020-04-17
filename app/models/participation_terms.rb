@@ -1,6 +1,4 @@
 class ParticipationTerms < ApplicationRecord
-  include Markdownable
-
   before_create do
     self.version = if self.class.current_terms
                      self.class.current_terms.version + 1

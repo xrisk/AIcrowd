@@ -50,7 +50,7 @@ ActiveAdmin.register ChallengeCall do
       f.input :title
       f.input :organizer, as: :select, member_label: :organizer
       f.input :headline
-      f.input :description_markdown
+      f.input :description, as: :ckeditor
       f.input :closing_date
       f.input :website
       f.input :slug, input_html: { disabled: true }

@@ -1,16 +1,16 @@
 module MetaTagsHelper
   def meta_title
-    if @challenge.present? && controller_name.present? && controller_name != 'challenges'
+    if @challenge.present? && controller_name.present? && !show_action? && controller_name != 'challenges'
       "AIcrowd | #{@challenge.challenge} | #{controller_name.capitalize}"
     elsif show_action?
-      if controller_name == 'challenges'
-        "AIcrowd | " + @challenge.challenge + "| #{controller_name.capitalize}"
+      if controller_name == 'challenges' || controller_name == 'discussions' || controller_name == 'challenge_rules'
+        "AIcrowd | " + @challenge.challenge + " | #{controller_name.capitalize}"
       elsif controller_name == 'participants'
-        "AIcrowd | " + @participant.slug + "| #{controller_name.capitalize}"
+        "AIcrowd | " + @participant.slug + " | #{controller_name.capitalize}"
       elsif controller_name == 'organizers'
-        "AIcrowd | " + @organizer.slug + "| #{controller_name.capitalize}"
+        "AIcrowd | " + @organizer.slug + " | #{controller_name.capitalize}"
       elsif controller_name == 'submissions'
-        "AIcrowd | " + @challenge.challenge + "| #{controller_name.capitalize}"
+        "AIcrowd | " + @challenge.challenge + " | #{controller_name.capitalize} ##{@submission.id}"
       end
     elsif content_for?(:meta_title)
       content_for(:meta_title)
@@ -45,8 +45,8 @@ module MetaTagsHelper
     if show_action?
       if controller_name == 'submissions'
         having_media_large_image?(@challenge, @submission) ? s3_public_url(@submission, :large) : content_for_meta_image
-      elsif controller_name == 'challenges' && @challenge.image_file?
-        @challenge.image_file.url
+      elsif controller_name == 'challenges'
+        @challenge.image_file? ? @challenge.image_file.url : default_image_url
       elsif controller_name == 'organizers' && @organizer.image_file?
         @organizer.image_file.url
       elsif controller_name == 'participants' && @participant.image_file?

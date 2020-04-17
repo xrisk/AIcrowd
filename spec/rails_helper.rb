@@ -16,6 +16,7 @@ require 'pundit/matchers'
 
 Dir[File.dirname(__FILE__) + "/support/helpers/*.rb"].each { |f| require f }
 Dir[File.dirname(__FILE__) + "/support/matchers/*.rb"].each { |f| require f }
+Dir[File.dirname(__FILE__) + "/support/shared_examples/*.rb"].each { |f| require f }
 
 ActiveRecord::Migration.maintain_test_schema!
 

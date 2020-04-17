@@ -16,7 +16,7 @@ ActiveAdmin.register ParticipationTerms do
 
   form do |f|
     f.inputs do
-      f.input :terms_markdown
+      f.input :terms, as: :ckeditor
     end
     f.actions
   end

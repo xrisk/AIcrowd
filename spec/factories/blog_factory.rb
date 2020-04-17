@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :blog do
     participant
     title { FFaker::Lorem.unique.sentence(3) }
-    body_markdown { FFaker::Lorem.unique.sentence(3) }
+    body { FFaker::Lorem.unique.sentence(3) }
     published { true }
     posted_at { Time.now }
     vote_count { 1 }

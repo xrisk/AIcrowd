@@ -29,9 +29,9 @@ module ChallengesHelper
       if remaining_time_in_days(challenge_round) >= 2
         "#{pluralize(remaining_time_in_days(challenge_round), 'day')} left"
       elsif remaining_time_in_hours(challenge_round) > 0
-        "#{pluralize(remaining_time_in_hours(challenge_round), 'hour')} left &middot; Ending #{ending_dttm(challenge_round)}"
+        sanitize_html("#{pluralize(remaining_time_in_hours(challenge_round), 'hour')} left &middot; Ending #{ending_dttm(challenge_round)}")
       elsif remaining_time_in_seconds(challenge_round) > 0
-        "Less than 1 hour left &middot; Ending #{ending_dttm(challenge_round)}"
+        sanitize_html("Less than 1 hour left &middot; Ending #{ending_dttm(challenge_round)}")
       else
         "Completed" # display for perpetual challenges
       end
@@ -59,7 +59,7 @@ module ChallengesHelper
 
   def filter_message(status, category, prize)
     text  = "Filter challenges "
-    text += "[from #{category[:category_names].join(', ').humanize} category] " if category.present?
+    text += "[from ##{category[:category_names].join(', #').humanize.parameterize.underscore} tag] " if category.present?
     text += "[with status #{status.humanize}] " if status.present?
     text += "[prizes in form of #{prize[:prize_type].join(', ').humanize}]" if prize.present?
     text
@@ -76,7 +76,16 @@ module ChallengesHelper
   end
 
   def categories_select_options(challenge)
-    options_from_collection_for_select(Category.all, :name, :name, { selected: challenge.categories.pluck(:name) })
+    challenge_category = challenge.categories.pluck(:name)
+    raw_options        = ''
+    Category.pluck(:name).each do |category_name|
+      if challenge_category.include?(category_name)
+        raw_options << sanitize_html_with_attr("<option selected='selected' value='#{category_name}''>##{category_name.parameterize.underscore}</option>", elements: ['option'], attributes: {'option' => ['selected', 'value']})
+      else
+        raw_options << sanitize_html_with_attr("<option value='#{category_name}''>##{category_name.parameterize.underscore}</option>", elements: ['option'], attributes: {'option' => ['value']})
+      end
+    end
+    raw(raw_options)
   end
 
   private

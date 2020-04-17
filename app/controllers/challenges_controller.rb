@@ -249,6 +249,7 @@ class ChallengesController < ApplicationController
       :dynamic_content_tab,
       :dynamic_content,
       :dynamic_content_url,
+      :scrollable_overview_tabs,
       image_attributes: [
         :id,
         :image,

@@ -1,5 +1,4 @@
 class Blog < ApplicationRecord
-  include Markdownable
   include FriendlyId
 
   friendly_id :participant,

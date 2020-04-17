@@ -1,3 +1,11 @@
 leaderboard_rating:
   cron: "30 2 * * *" # 2:30 AM every day
   class: "RatingCalculateJob"
+
+badges_daily:
+  cron: "30 2 * * *" # 2:30 AM every day
+  class: "BadgesDailyJob"
+
+discourse_badges_daily:
+  cron: "30 2 * * *" # 2:30 AM every day
+  class: "DiscourseBadgesDailyJob"
