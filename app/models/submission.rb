@@ -1,6 +1,6 @@
 class Submission < ApplicationRecord
   include Markdownable
-  include BadgesHelper
+  include SubmissionBadges
   before_validation :generate_short_url
 
   belongs_to :challenge, counter_cache: true
@@ -60,7 +60,7 @@ class Submission < ApplicationRecord
         .perform_later(challenge_round_id: challenge_round_id)
     end
     Prometheus::SubmissionCounterService.new(submission_id: id).call
-    submission_badges(participant_id)
+    create_submission_badges(participant_id)
   end
 
   after_destroy do
