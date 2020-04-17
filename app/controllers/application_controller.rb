@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_paper_trail_whodunnit
   after_action :track_action
+  before_action :store_user_location!, if: :storable_location?
 
   def track_action
     properties         = { request: request.filtered_parameters }
@@ -42,13 +43,28 @@ class ApplicationController < ActionController::Base
     current_participant
   end
 
+  def storable_location?
+    request.get? && is_navigational_format? && !devise_controller? && !request.xhr?
+  end
+
+  def store_user_location!
+    store_location_for(:user, request.fullpath)
+  end
+
   def after_sign_in_path_for(resource)
     unless current_participant.agreed_to_terms_of_use_and_privacy?
       flash[:notice] = 'We have changed the way we save email and notification preferences, please review them below'
       current_participant.update(agreed_to_terms_of_use_and_privacy: true)
       return participant_notifications_path(current_participant)
     end
-    return session['participant_return_to'] || root_path
+
+    # Prioritise return path set by application logic
+    if session.has_key?(:participant_return_to)
+      return session['participant_return_to']
+    end
+
+    # Redirect based on available browsing history
+    return stored_location_for(:user) || root_path
   end
 
   def participant_activity
