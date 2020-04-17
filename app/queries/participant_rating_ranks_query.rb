@@ -8,6 +8,9 @@ class ParticipantRatingRanksQuery
   def call()
     @relation.where('fixed_rating is not null').map do |participant|
       user_final_rating =  UserRating.where("participant_id=#{participant.id} and rating is not null and challenge_round_id is not null").joins(:challenge_round).reorder('user_ratings.created_at desc').select("user_ratings.*, challenge_rounds.end_dttm").first
+
+      next if user_final_rating.nil?
+
       time_difference = (Time.current.to_date - user_final_rating[:end_dttm].to_date)
       time_difference = time_difference.to_i
       factor_of_decay = 4
