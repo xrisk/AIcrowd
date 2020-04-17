@@ -107,7 +107,7 @@ Rails.application.routes.draw do
     resources :clef_tasks
     resources :members
   end
-  resources :blogs do
+  resources :blogs, only: [:index, :show] do
     resources :votes, only: [:create, :destroy]
   end
 
