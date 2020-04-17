@@ -29,9 +29,9 @@ module ChallengesHelper
       if remaining_time_in_days(challenge_round) >= 2
         "#{pluralize(remaining_time_in_days(challenge_round), 'day')} left"
       elsif remaining_time_in_hours(challenge_round) > 0
-        "#{pluralize(remaining_time_in_hours(challenge_round), 'hour')} left &middot; Ending #{ending_dttm(challenge_round)}"
+        sanitize_html("#{pluralize(remaining_time_in_hours(challenge_round), 'hour')} left &middot; Ending #{ending_dttm(challenge_round)}")
       elsif remaining_time_in_seconds(challenge_round) > 0
-        "Less than 1 hour left &middot; Ending #{ending_dttm(challenge_round)}"
+        sanitize_html("Less than 1 hour left &middot; Ending #{ending_dttm(challenge_round)}")
       else
         "Completed" # display for perpetual challenges
       end
