@@ -1,5 +1,8 @@
 class Submission < ApplicationRecord
   include Markdownable
+
+  has_paper_trail
+
   before_validation :generate_short_url
 
   belongs_to :challenge, counter_cache: true
