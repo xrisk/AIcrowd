@@ -15,14 +15,14 @@
     </div>
   </div>
   <div class="dropdown">
-    <div class="filter dropdown-toggle <%= 'filter-active' if params[:category] %>" id="challenge-categories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Tags
+    <div class="filter dropdown-toggle <%= 'filter-active' if params[:categories].present? %>" id="challenge-categories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Categories
     </div>
     <div class='dropdown-menu form-dropdown'>
       <% @categories.each do |category| %>
         <div class="form-check">
           <%= label_tag do %>
-            <%= f.check_box :category, { class: 'form-check-input' }, category.name, false %>
+            <%= f.check_box :category, { checked: check_selected_category(category), class: 'form-check-input' }, category.name %>
             <%= category.name.humanize %>
           <% end %>
         </div>
@@ -30,14 +30,14 @@
     </div>
   </div>
   <div class="dropdown">
-    <div class="filter dropdown-toggle <%= 'filter-active' if params[:prize] %>" id="challenge-prizes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="filter dropdown-toggle <%= 'filter-active' if params[:prizes].present? %>" id="challenge-prizes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Prizes
     </div>
     <div class='dropdown-menu form-dropdown'>
       <% @prize_hash.each do |p_key, p_value| %>
         <div class="form-check">
           <%= label_tag do %>
-            <%= f.check_box :prize, { class: 'form-check-input' }, p_key, false %>
+            <%= f.check_box :prize, { checked: check_selected_prize(p_key), class: 'form-check-input' }, p_key %>
             <%= p_value.humanize %>
           <% end %>
         </div>
