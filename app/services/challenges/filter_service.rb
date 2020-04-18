@@ -8,7 +8,7 @@ module Challenges
 
     def call
       # category filter
-      @challenges = @challenges.joins(:categories).where('categories.name IN (?)', @params['categories'].split(',')) if @params.dig('categories').present?
+      @challenges = @challenges.joins(:categories).group('challenges.id').where('categories.name IN (?)', @params['categories'].split(',')) if @params.dig('categories').present?
       # status filter
       @challenges = @challenges.where(status_cd: @params['status']) if @params['status'].present?
       # prize filter
