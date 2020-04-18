@@ -1,4 +1,4 @@
-<%= form_tag challenges_path, method: :get, class: 'filter-dropdown-form' do %>
+<%= form_with url: challenges_path, local: true, method: :get, enforce_utf8: false, class: 'filter-dropdown-form' do |f| %>
   <div class="dropdown">
     <div class="filter dropdown-toggle <%= 'filter-active' if params[:status] %>" id="challenge-statuses" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Active
@@ -7,7 +7,7 @@
       <% @status.each do |status| %>
         <div class="form-check">
           <%= label_tag do %>
-            <%= radio_button_tag 'status', status, status.eql?(params[:status]), {class: 'form-check-input'} %>
+            <%= f.radio_button :status, status, checked: status.eql?(params[:status]), class: 'form-check-input' %>
             <%= status.humanize %>
           <% end %>
         </div>
@@ -22,8 +22,8 @@
       <% @categories.each do |category| %>
         <div class="form-check">
           <%= label_tag do %>
-            <%= check_box_tag 'category[category_names][]', category.name, check_selected_category(category, params), { class:'form-check-input' } %>
-            #<%= category.name.parameterize.underscore %>
+            <%= f.check_box :category, { class: 'form-check-input' }, category.name, false %>
+            <%= category.name.humanize %>
           <% end %>
         </div>
       <% end %>
@@ -37,12 +37,45 @@
       <% @prize_hash.each do |p_key, p_value| %>
         <div class="form-check">
           <%= label_tag do %>
-            <%= check_box_tag 'prize[prize_type][]', p_key, check_selected_prize(p_key, params), {class: 'form-check-input'} %>
+            <%= f.check_box :prize, { class: 'form-check-input' }, p_key, false %>
             <%= p_value.humanize %>
           <% end %>
         </div>
       <% end %>
     </div>
   </div>
-  <%= submit_tag 'Apply', class: 'btn btn-link btn-sm apply-filter-btn' %>
+  <%= f.submit 'Apply', name: nil, class: 'btn btn-link btn-sm apply-filter-btn' %>
 <% end %>
+<script type="text/javascript">
+  $("form").submit(function(){
+    event.preventDefault();
+
+    categories = [];
+    $('input[name="category"]:checked').each(function() {
+      categories.push(this.value);
+    });
+
+    prizes = [];
+    $('input[name="prize"]:checked').each(function() {
+      prizes.push(this.value);
+    });
+
+    url = (window.location.origin+window.location.pathname)
+
+    params = ''
+
+    if($('input[name="status"]:checked').val() != undefined){
+      params = params.concat('status=', $('input[name="status"]:checked').val());
+    }
+
+    if(categories.length > 0){
+      params = params.concat('&categories=', categories.join());
+    }
+
+    if(prizes.length > 0){
+      params = params.concat('&prizes=', prizes.join());
+    }
+
+    window.location.href = url.concat('?').concat(params);
+  });
+</script>

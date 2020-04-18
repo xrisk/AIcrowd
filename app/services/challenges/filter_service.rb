@@ -8,15 +8,15 @@ module Challenges
 
     def call
       # category filter
-      @challenges = @challenges.joins(:categories).group('challenges.id').where('categories.name IN (?)', @params[:category]['category_names']) if @params.dig(:category, 'category_names').present?
+      @challenges = @challenges.joins(:categories).where('categories.name IN (?)', @params['categories'].split(',')) if @params.dig('categories').present?
       # status filter
-      @challenges = @challenges.where(status_cd: @params[:status]) if @params[:status].present?
+      @challenges = @challenges.where(status_cd: @params['status']) if @params['status'].present?
       # prize filter
-      @challenges = @challenges.where.not(prize_cash: nil) if @params.dig(:prize, 'prize_type')&.include?('prize_cash')
-      @challenges = @challenges.where.not(prize_travel: nil) if @params.dig(:prize, 'prize_type')&.include?('prize_travel')
-      @challenges = @challenges.where.not(prize_academic: nil) if @params.dig(:prize, 'prize_type')&.include?('prize_academic')
-      @challenges = @challenges.where.not(prize_misc: nil) if @params.dig(:prize, 'prize_type')&.include?('prize_misc')
-      # return filtered challenges
+      if @params['prizes'].present?
+        @params['prizes'].split(',').each do |prize|
+          @challenges = @challenges.send(prize)
+        end
+      end
       @challenges
     end
   end

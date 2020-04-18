@@ -215,4 +215,21 @@ class Challenge < ApplicationRecord
     return unless active_round
     active_round.leaderboards.limit(5)
   end
+
+  def self.prize_cash
+    where.not(prize_cash: nil)
+  end
+
+  def self.prize_travel
+    where.not(prize_travel: nil)
+  end
+
+  def self.prize_academic
+    where.not(prize_academic: nil)
+  end
+
+  def self.prize_misc
+    where.not(prize_misc: nil)
+  end
 end
+
