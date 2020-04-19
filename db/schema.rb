@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 2020_04_16_102555) do
+ActiveRecord::Schema.define(version: 2020_04_19_194412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -289,7 +288,6 @@ ActiveRecord::Schema.define(version: 2020_04_16_102555) do
     t.string "email"
     t.string "name"
     t.boolean "registered", default: false
-    t.boolean "accepted_dataset_toc", default: false
     t.integer "clef_task_id"
     t.string "clef_eua_file"
     t.boolean "clef_approved", default: false

@@ -8,19 +8,6 @@ class GraderService
 
   def initialize(submission_id:)
     @submission           = Submission.find(submission_id)
-    challenge             = @submission.challenge
-    participant           = @submission.participant
-    challenge_participant = challenge
-      .challenge_participants
-      .find_by(participant_id: participant.id)
-
-    if challenge_participant.blank? || !challenge_participant.accepted_dataset_toc
-      Submission.update(
-        @submission.id,
-        grading_status:  'failed',
-        grading_message: 'Invalid Submission. Have you registered for this challenge and agreed to the participantion terms?')
-      return false
-    end
   end
 
   def call
@@ -76,6 +63,16 @@ class GraderService
     participant    = @submission.participant
     submission_key = get_submission_key
     team_id        = participant.teams.where(challenge: challenge).first&.id || 'undefined'
+    challenge_participant = challenge.challenge_participants.find_by(participant_id: participant.id)
+
+    # The participation terms condition should only be checked on submission creation not recomputes
+    if @submission.grading_status == 'ready' && (challenge_participant.blank? || !challenge.has_accepted_challenge_rules?(participant))
+      Submission.update(
+        @submission.id,
+        grading_status:  'failed',
+        grading_message: 'Invalid Submission. Have you registered for this challenge and agreed to the participation terms?')
+      return false
+    end
 
     if preflight_checked?(challenge, participant, submission_key)
       return body = {
