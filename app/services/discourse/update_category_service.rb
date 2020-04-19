@@ -8,10 +8,9 @@ module Discourse
     def call
       retry_count ||= 0
 
-      return failure('Discourse API client couldn\'t be properly initialized.') if client.nil?
-      return failure('Discourse category doesn\'t exist in our database.') if challenge.discourse_category_id.blank?
-
       with_discourse_errors_handling do
+        return failure('Discourse category doesn\'t exist in our database.') if challenge.discourse_category_id.blank?
+
         update_category_request(ensure_uniqueness: retry_count.positive?)
 
         success

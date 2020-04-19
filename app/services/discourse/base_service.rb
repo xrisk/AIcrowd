@@ -48,6 +48,8 @@ module Discourse
     end
 
     def with_discourse_errors_handling(&block)
+      return failure('Discourse API client couldn\'t be properly initialized.') if client.nil?
+
       block.call
     rescue Discourse::Error, Discourse::UnauthenticatedError, Discourse::NotFoundError => e
       Logger.new(::Discourse::BaseService::LOGGER_URL).error(e.message)

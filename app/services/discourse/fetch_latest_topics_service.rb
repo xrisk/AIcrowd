@@ -5,8 +5,6 @@ module Discourse
     end
 
     def call
-      return failure('Discourse API client couldn\'t be properly initialized.') if client.nil?
-
       with_discourse_errors_handling do
         response      = client.get(latest_topics_path)
         participants  = get_participants(response.body['users'])
