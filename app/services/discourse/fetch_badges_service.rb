@@ -22,7 +22,7 @@ module Discourse
     attr_reader :client
 
     def latest_badges_path
-      "/admin/plugins/explorer/queries/#{ENV['DISCOURSE_API_BADGES_QUERY_ID']}/run.json?params={\"previsou_id\": \"#{@previous_id}\"}"
+      "/admin/plugins/explorer/queries/#{ENV['DISCOURSE_API_BADGES_QUERY_ID']}/run.json?params={\"previous_id\": \"#{@previous_id}\"}"
     end
   end
 end

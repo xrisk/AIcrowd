@@ -12,7 +12,7 @@ class UserRatingController < ApplicationController
     challenge_round = ChallengeRound.find_by(id:params[:round_id])
     leaderboard_rating_stats = user_rating_service.leaderboard_query
     ranks, teams_rating, teams_variation, teams_participant_ids = user_rating_service.filter_leaderboard_stats leaderboard_rating_stats
-    if user_rating_service.temporary
+    unless user_rating_service.temporary
       teams_participant_ids.map do |participant_id|
         participant = Participant.find_by(id: participant_id[0])
         user_final_rating =  UserRating.where(["participant_id=? and rating is not null and challenge_round_id is not null","#{participant_id[0]}" ]).joins(:challenge_round).reorder('user_ratings.created_at desc').select("user_ratings.*, challenge_rounds.end_dttm").first
