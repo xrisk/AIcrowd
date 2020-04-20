@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :challenges, only: [:create, :update], module: :challenges do
+        get :masthead, on: :member
         resources :challenge_rounds, only: [:create, :update, :destroy]
         resources :participants, only: [] do
           get :search, on: :collection
