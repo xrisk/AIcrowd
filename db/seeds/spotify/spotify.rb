@@ -2,7 +2,6 @@ Challenge.create!([
   {id: 100,
     answer_file_s3_key: nil,
     api_required: false,
-    organizer_id: 21,
     challenge: "Spotify Sequential Skip Prediction Challenge",
     challenge_client_name: "spotify-sequential-skip-prediction-challenge",
     clef_task_id: nil,

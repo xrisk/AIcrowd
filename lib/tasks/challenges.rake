@@ -18,16 +18,6 @@ namespace :challenges do
     end
   end
 
-  desc 'Migrate challenge.organizer to challenges_organizers table'
-  task migrate_challenge_organizer_to_challenges_organizers_table: :environment do
-    Challenge.where.not(organizer_id: nil).find_each do |challenge|
-      ChallengesOrganizer.find_or_create_by!(challenge_id: challenge.id, organizer_id: challenge.organizer_id)
-      puts "Challenge##{challenge.id} finished migration of organizer"
-    end
-
-    puts "Challenge organizer migration completed."
-  end
-
   desc "Migrate description headings for all challenges (h1 -> h2, h2 -> h3, h3 -> h4)"
   task migrate_all_challenge_descriptions: :environment do
     puts "Migration for all challenge descriptions started"

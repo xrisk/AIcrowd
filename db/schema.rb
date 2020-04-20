@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_16_205250) do
+ActiveRecord::Schema.define(version: 2020_04_16_232006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -356,7 +356,6 @@ ActiveRecord::Schema.define(version: 2020_04_16_205250) do
   end
 
   create_table "challenges", id: :serial, force: :cascade do |t|
-    t.integer "organizer_id"
     t.string "challenge"
     t.string "status_cd", default: "draft"
     t.datetime "created_at", null: false
@@ -434,7 +433,6 @@ ActiveRecord::Schema.define(version: 2020_04_16_205250) do
     t.boolean "scrollable_overview_tabs", default: true, null: false
     t.bigint "discourse_group_id"
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
-    t.index ["organizer_id"], name: "index_challenges_on_organizer_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
   end
 
@@ -1097,7 +1095,6 @@ ActiveRecord::Schema.define(version: 2020_04_16_205250) do
   add_foreign_key "challenge_partners", "challenges"
   add_foreign_key "challenge_rounds", "challenges"
   add_foreign_key "challenge_rules", "challenges"
-  add_foreign_key "challenges", "organizers"
   add_foreign_key "challenges_organizers", "challenges"
   add_foreign_key "challenges_organizers", "organizers"
   add_foreign_key "clef_tasks", "organizers"
@@ -1389,35 +1386,6 @@ ActiveRecord::Schema.define(version: 2020_04_16_205250) do
             WHERE (c.clef_task_id = pc.clef_task_id)) x;
   SQL
 
-  create_view "participant_challenges",  sql_definition: <<-SQL
-      SELECT DISTINCT p.id,
-      cr.challenge_id,
-      cr.participant_id,
-      c.organizer_id,
-      c.status_cd,
-      c.challenge,
-      c.private_challenge,
-      c.description,
-      c.rules,
-      c.prizes,
-      c.resources,
-      c.tagline,
-      c.image_file,
-      c.submissions_count,
-      c.participant_count,
-      c.page_views,
-      p.name,
-      p.email,
-      p.bio,
-      p.github,
-      p.linkedin,
-      p.twitter
-     FROM participants p,
-      challenges c,
-      challenge_registrations cr
-    WHERE ((cr.participant_id = p.id) AND (cr.challenge_id = c.id));
-  SQL
-
   create_view "participant_challenge_counts",  sql_definition: <<-SQL
       SELECT row_number() OVER () AS row_number,
       y.challenge_id,
@@ -1467,6 +1435,34 @@ ActiveRecord::Schema.define(version: 2020_04_16_205250) do
       challenge_rounds r
     WHERE (r.challenge_id = c.id)
     ORDER BY (row_number() OVER ()), c.challenge;
+  SQL
+
+  create_view "participant_challenges",  sql_definition: <<-SQL
+    SELECT DISTINCT p.id,
+    cr.challenge_id,
+    cr.participant_id,
+    c.status_cd,
+    c.challenge,
+    c.private_challenge,
+    c.description,
+    c.rules,
+    c.prizes,
+    c.resources,
+    c.tagline,
+    c.image_file,
+    c.submissions_count,
+    c.participant_count,
+    c.page_views,
+    p.name,
+    p.email,
+    p.bio,
+    p.github,
+    p.linkedin,
+    p.twitter
+  FROM participants p,
+    challenges c,
+    challenge_registrations cr
+  WHERE ((cr.participant_id = p.id) AND (cr.challenge_id = c.id));
   SQL
 
 end
