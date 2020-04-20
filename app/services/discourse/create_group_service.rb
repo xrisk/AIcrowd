@@ -8,8 +8,6 @@ module Discourse
     def call
       retry_count ||= 0
 
-      return failure('Discourse API client couldn\'t be properly initialized.') if client.nil?
-
       with_discourse_errors_handling do
         response = create_group_request(ensure_uniqueness: retry_count.positive?)
 

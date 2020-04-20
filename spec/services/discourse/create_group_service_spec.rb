@@ -6,16 +6,7 @@ describe Discourse::CreateGroupService do
   let(:challenge) { create(:challenge) }
 
   describe '#call' do
-    context 'when discourse ENV variables are missing' do
-      before { ENV.stub(:[]).with('DISCOURSE_DOMAIN_NAME').and_return('') }
-
-      it 'returns failure' do
-        result = subject.call
-
-        expect(result.success?).to eq false
-        expect(result.value).to eq 'Discourse API client couldn\'t be properly initialized.'
-      end
-    end
+    it_behaves_like 'Discourse ServiceObject class'
 
     context 'when discourse ENV variables are set' do
       context 'when challenge complies with discourse group validations' do
@@ -60,21 +51,6 @@ describe Discourse::CreateGroupService do
 
           expect(result.success?).to eq true
           expect(challenge.reload.discourse_group_id).to eq 52
-        end
-      end
-
-      context 'when discourse API is unavailable' do
-        let(:challenge) { create(:challenge, challenge: 'Short Challenge Name', discourse_group_id: nil) }
-
-        before do
-          allow_any_instance_of(Faraday::Connection).to receive(:post).and_raise(Discourse::Error)
-        end
-
-        it 'returns failure' do
-          result = subject.call
-
-          expect(result.success?).to eq false
-          expect(result.value).to eq 'Discourse::Error'
         end
       end
     end

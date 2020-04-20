@@ -6,16 +6,7 @@ describe Discourse::FetchChallengeTopicsService, :requests_allowed do
   let(:challenge) { create(:challenge, :running, discourse_category_id: 2) }
 
   describe '#call' do
-    context 'when discourse ENV variables are missing' do
-      before { ENV.stub(:[]).with('DISCOURSE_DOMAIN_NAME').and_return('') }
-
-      it 'returns failure' do
-        result = subject.call
-
-        expect(result.success?).to eq false
-        expect(result.value).to eq 'Discourse API client couldn\'t be properly initialized.'
-      end
-    end
+    it_behaves_like 'Discourse ServiceObject class'
 
     context 'when discourse ENV variables are set' do
       it 'returns success and list of user posts' do
@@ -29,19 +20,6 @@ describe Discourse::FetchChallengeTopicsService, :requests_allowed do
 
         expect(response.size).to eq 2
         expect(response.first['title']).to eq 'Welcome to the Lounge'
-      end
-    end
-
-    context 'when discourse API is unavailable' do
-      before do
-        allow_any_instance_of(Faraday::Connection).to receive(:get).and_raise(Discourse::Error)
-      end
-
-      it 'returns failure' do
-        result = subject.call
-
-        expect(result.success?).to eq false
-        expect(result.value).to eq 'Discourse::Error'
       end
     end
   end

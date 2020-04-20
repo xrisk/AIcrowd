@@ -3,24 +3,13 @@ require 'rails_helper'
 describe Discourse::UpdateCategoryService do
   subject { described_class.new(challenge: challenge) }
 
-  let(:challenge) { create(:challenge) }
+  let(:challenge) { create(:challenge, challenge: 'Short Challenge Name', discourse_category_id: 30) }
 
   describe '#call' do
-    context 'when discourse ENV variables are missing' do
-      before { ENV.stub(:[]).with('DISCOURSE_DOMAIN_NAME').and_return('') }
-
-      it 'returns failure' do
-        result = subject.call
-
-        expect(result.success?).to eq false
-        expect(result.value).to eq 'Discourse API client couldn\'t be properly initialized.'
-      end
-    end
+    it_behaves_like 'Discourse ServiceObject class'
 
     context 'when discourse ENV variables are set' do
       context 'when challenge complies with discourse category validations' do
-        let(:challenge) { create(:challenge, challenge: 'Short Challenge Name', discourse_category_id: 30) }
-
         it 'returns success and assigns discourse_category_id to challenge' do
           result = VCR.use_cassette('discourse_api/update/success') do
             subject.call
@@ -57,21 +46,6 @@ describe Discourse::UpdateCategoryService do
           end
 
           expect(result.success?).to eq true
-        end
-      end
-
-      context 'when discourse API is unavailable' do
-        let(:challenge) { create(:challenge, challenge: 'Short Challenge Name', discourse_category_id: 30) }
-
-        before do
-          allow_any_instance_of(Faraday::Connection).to receive(:put).and_raise(Discourse::Error)
-        end
-
-        it 'returns failure' do
-          result = subject.call
-
-          expect(result.success?).to eq false
-          expect(result.value).to eq 'Discourse::Error'
         end
       end
     end
