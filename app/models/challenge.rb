@@ -101,6 +101,7 @@ class Challenge < ApplicationRecord
 
   def update_discourse_category
     return if Rails.env.development? || Rails.env.test?
+    return unless saved_change_to_attribute?(:challenge)
 
     Discourse::UpdateCategoryService.new(challenge: self).call
   end
