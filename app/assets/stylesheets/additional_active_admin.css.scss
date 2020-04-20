@@ -11,3 +11,21 @@ tbody > tr > .papertrail-versions__previous-column {
 tbody > tr > .papertrail-versions__current-column {
   color: green;
 }
+
+.newsletter-emails__actions {
+  margin-bottom: 15px;
+}
+
+.newsletter-emails__button {
+  line-height: 43px;
+  background-color: #f0524d;
+  color: white;
+  border-radius: 2px;
+  border: none;
+  display: inline-block;
+  padding: 0 12px;
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+}
