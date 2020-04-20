@@ -31,7 +31,7 @@ before_script:
 
 before_install:
   - docker pull localstack/localstack
-  - docker run -d -e SERVICES="s3" -e LOCALSTACK_HOSTNAME="localhost" -e LOCALSTACK_HOSTNAME="localhost" -p 8080:8080  -p 4572:4572 -v "/tmp/localstack:/tmp/localstack" -v "/var/run/docker.sock:/var/run/docker.sock" -e DOCKER_HOST="unix:///var/run/docker.sock" -e HOST_TMP_FOLDER="/tmp/localstack" "localstack/localstack" 
+  - docker run -d -e SERVICES="s3" -e LOCALSTACK_HOSTNAME="localhost" -e LOCALSTACK_HOSTNAME="localhost" -p 8080:8080  -p 4572:4572 -v "/tmp/localstack:/tmp/localstack" -v "/var/run/docker.sock:/var/run/docker.sock" -e DOCKER_HOST="unix:///var/run/docker.sock" -e HOST_TMP_FOLDER="/tmp/localstack" "localstack/localstack"
   - mkdir ~/fog
   - sleep 2 # give xvfb and localstack some time to start
 
@@ -39,7 +39,6 @@ script:
   - bundle exec rake db:migrate
   - RAILS_ENV=test bundle exec rails webdrivers:chromedriver:update
   - bundle exec rake spec
-  - bundle exec rubocop --fail-level error
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
