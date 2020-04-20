@@ -1,0 +1,133 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://discourse-staging.aicrowd.com/admin/groups.json
+    body:
+      encoding: UTF-8
+      string: group%5Bname%5D=discourse-category-n
+    headers:
+      Accept:
+      - application/json
+      Api-Key:
+      - REDACTED
+      Api-Username:
+      - REDACTED
+      User-Agent:
+      - Faraday v1.0.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 422
+      message: Unprocessable Entity
+    headers:
+      Date:
+      - Thu, 16 Apr 2020 22:00:15 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Discourse-Username:
+      - REDACTED
+      X-Discourse-Route:
+      - groups/create
+      Cache-Control:
+      - no-cache, no-store
+      X-Request-Id:
+      - f202b8e2-2314-434b-91d7-09b4cf54ad50
+      Set-Cookie:
+      - __profilin=p%3Dt%2Ca%3D90fb48b9606e0cc35d2cc05c41fe205d%7C731e823eb6aca96d1cefcd58d1485ccf;
+        path=/; secure; HttpOnly
+      X-Runtime:
+      - '0.013617'
+    body:
+      encoding: UTF-8
+      string: '{"errors":["Name has already been taken"]}'
+    http_version: 
+  recorded_at: Thu, 16 Apr 2020 22:00:15 GMT
+- request:
+    method: post
+    uri: https://discourse-staging.aicrowd.com/admin/groups.json
+    body:
+      encoding: UTF-8
+      string: group%5Bname%5D=discourse-cat-098b7a
+    headers:
+      Accept:
+      - application/json
+      Api-Key:
+      - REDACTED
+      Api-Username:
+      - REDACTED
+      User-Agent:
+      - Faraday v1.0.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Thu, 16 Apr 2020 22:00:15 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Discourse-Username:
+      - REDACTED
+      X-Discourse-Route:
+      - groups/create
+      Cache-Control:
+      - no-cache, no-store
+      X-Request-Id:
+      - 8f079dcb-f8d1-468c-8512-0f22c2b73dc8
+      Set-Cookie:
+      - __profilin=p%3Dt%2Ca%3D90fb48b9606e0cc35d2cc05c41fe205d%7C731e823eb6aca96d1cefcd58d1485ccf;
+        path=/; secure; HttpOnly
+      X-Runtime:
+      - '0.032931'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"basic_group":{"id":52,"automatic":false,"name":"discourse-cat-098b7a","user_count":0,"mentionable_level":0,"messageable_level":0,"visibility_level":0,"automatic_membership_email_domains":null,"automatic_membership_retroactive":false,"primary_group":false,"title":null,"grant_trust_level":null,"incoming_email":null,"has_messages":false,"flair_url":null,"flair_bg_color":null,"flair_color":null,"bio_raw":null,"bio_cooked":null,"bio_excerpt":null,"public_admission":false,"public_exit":false,"allow_membership_requests":false,"full_name":null,"default_notification_level":3,"membership_request_template":null,"members_visibility_level":0,"can_see_members":true,"publish_read_state":false}}'
+    http_version: 
+  recorded_at: Thu, 16 Apr 2020 22:00:16 GMT
+recorded_with: VCR 5.0.0

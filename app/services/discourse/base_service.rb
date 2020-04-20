@@ -10,11 +10,11 @@ module Discourse
       @http_client ||= Discourse::ApiClient.new.call
     end
 
-    def truncated_string(string, ensure_uniqueness)
+    def truncated_string(string, ensure_uniqueness, string_length = 50)
       if ensure_uniqueness
-        "#{string.to_s.truncate(43)}-#{SecureRandom.hex(3)}"
+        "#{string.to_s.first(string_length - 7)}-#{SecureRandom.hex(3)}"
       else
-        string.to_s.truncate(50)
+        string.to_s.first(string_length)
       end
     end
 
