@@ -13769,9 +13769,17 @@ html {
   margin-left: auto;
 }
 
+.ace-editor-outer {
+  border: 1px solid #c5c5c5;
+}
+
+.ace-editor-outer pre {
+  margin-bottom: 0px;
+}
+
 #code-submission, .ace_editor {
-  width: 500px;
-  height: 80px;
+  height: 600px;
+  margin: 0px;
 }
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
