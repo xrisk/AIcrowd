@@ -9,6 +9,9 @@ class SubmissionsController < ApplicationController
   before_action :set_s3_direct_post, only: [:new, :edit, :create, :update]
   before_action :set_submissions_remaining, except: [:show, :index]
   before_action :set_current_round, only: :index
+  before_action :set_form_type, only: :new
+  before_action :handle_code_based_submissions, only: [:create]
+  before_action :handle_artifact_based_submissions, only: [:create]
 
   layout :set_layout
   respond_to :html, :js
@@ -67,6 +70,19 @@ class SubmissionsController < ApplicationController
     render :show
   end
 
+  def set_form_type
+    if @challenge.evaluator_type_cd == "evaluations_api"
+      @form = "choose"
+      if params[:type].in?(['code', 'artifact', 'gitlab'])
+        @form = params[:type]
+      end
+    elsif @challenge.evaluator_type_cd == "gitlab"
+      @form = "gitlab"
+    else
+      @form = "artifact"
+    end
+  end
+
   def new
     @clef_primary_run_disabled          = clef_primary_run_disabled?
     @submissions_remaining, @reset_dttm = SubmissionsRemainingQuery.new(
@@ -86,7 +102,6 @@ class SubmissionsController < ApplicationController
             online_submission: true))
     authorize @submission
     if @submission.save
-      SubmissionCodeJob.perform_later(@submission.id) if @challenge.code_submissions
       SubmissionGraderJob.perform_later(@submission.id)
       redirect_to challenge_submissions_path(@challenge),
                   notice: 'Submission accepted.'
@@ -212,16 +227,39 @@ class SubmissionsController < ApplicationController
             :id,
             :seq,
             :submission_file_s3_key,
+            :submission_type,
             :_delete
           ])
   end
 
+  def get_s3_key
+    "submission_files/challenge_#{@challenge.id}/#{SecureRandom.uuid}_${filename}"
+  end
+
   def set_s3_direct_post
-    @s3_direct_post = S3_BUCKET
-                          .presigned_post(
-                            key:                   "submission_files/challenge_#{@challenge.id}/#{SecureRandom.uuid}_${filename}",
-                            success_action_status: '201',
-                            acl:                   'private')
+    @s3_direct_post = S3_BUCKET.presigned_post(key: get_s3_key, success_action_status: '201', acl: 'private')
+  end
+
+  def handle_code_based_submissions
+    return if params[:submission][:submission_type] != "code"
+    file_location = get_s3_key.gsub("${filename}", "editor_input." + params[:language])
+    S3_BUCKET.object(file_location).put(body: params[:submission][:submission_data])
+
+    params[:submission].merge!({
+      :submission_files_attributes => {"0" => {:seq => "", :submission_type => params[:language], :submission_file_s3_key => file_location}}
+    })
+  end
+
+  def handle_artifact_based_submissions
+    return if !params[:submission][:submission_files_attributes].has_key?("0")
+    return if params[:submission][:submission_files_attributes]["0"][:submission_type] != "artifact"
+    # TODO: Make this accepted extension list dynamic via evaluations API
+    accepted_formats = [".csv", ".ipynb", ".pt"]
+    file_path = params[:submission][:submission_files_attributes]["0"][:submission_file_s3_key]
+    extension = File.extname(file_path)
+    if accepted_formats.include?(extension)
+      params[:submission][:submission_files_attributes]["0"][:submission_type] = extension.gsub(/^./, "")
+    end
   end
 
   def set_submissions_remaining
