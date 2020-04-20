@@ -1,6 +1,8 @@
 AWS_REGION: "REDACTED"
 AICROWD_API_KEY: '8c69ef80a5eb4438ec326d200ce6ab39'
 AICROWD_API_EMAIL: 'api_admin@example.com'
+EVALUATIONS_API_KEY: "REDACTED"
+EVALUATIONS_API_HOST: "REDACTED"
 
 development: &development
   DOMAIN_NAME: 'http://localhost:3000'

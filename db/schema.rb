@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_10_040703) do
+ActiveRecord::Schema.define(version: 2020_04_19_232647) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -913,6 +913,7 @@ ActiveRecord::Schema.define(version: 2020_04_10_040703) do
     t.datetime "updated_at", null: false
     t.string "submission_file_s3_key"
     t.boolean "leaderboard_video", default: false
+    t.text "submission_type"
     t.index ["submission_id"], name: "index_submission_files_on_submission_id"
   end
 
@@ -961,7 +962,6 @@ ActiveRecord::Schema.define(version: 2020_04_10_040703) do
     t.float "score_secondary_display"
     t.boolean "baseline", default: false
     t.string "baseline_comment"
-    t.string "code_data"
     t.index ["challenge_id"], name: "index_submissions_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_submissions_on_challenge_round_id"
     t.index ["participant_id"], name: "index_submissions_on_participant_id"
