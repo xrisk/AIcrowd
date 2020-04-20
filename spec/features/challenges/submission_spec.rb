@@ -40,7 +40,7 @@ end
 
 describe 'challenge running' do
   let!(:participation_terms) { create :participation_terms }
-  let!(:running) { create :challenge, :running, online_submissions: true, code_submissions: true }
+  let!(:running) { create :challenge, :running, online_submissions: true }
 
   let!(:participant) { create :participant }
   let!(:running_participant) { create :challenge_participant, challenge: running, participant: participant }
@@ -50,17 +50,11 @@ describe 'challenge running' do
     visit new_challenge_submission_path(running)
     expect(page).to have_text 'Create Submission'
   end
-
-  it 'have code base submission field' do
-    log_in participant
-    visit new_challenge_submission_path(running)
-    expect(page).to have_text 'Code base submission'
-  end
 end
 
 describe 'challenge ended' do
   let!(:participation_terms) { create :participation_terms }
-  let!(:challenge) { create :challenge, :completed, online_submissions: true, post_challenge_submissions: true, code_submissions: true }
+  let!(:challenge) { create :challenge, :completed, online_submissions: true, post_challenge_submissions: true }
 
   let!(:participant) { create :participant }
   let!(:challenge_participant) { create :challenge_participant, challenge: challenge, participant: participant }
@@ -70,12 +64,6 @@ describe 'challenge ended' do
     visit new_challenge_submission_path(challenge)
     expect(page).to have_text 'Create Submission'
     expect(page).to have_text 'This challenge is now completed. You may continue to make submissions and your entries will appear on the Ongoing Leaderboard.'
-  end
-
-  it 'have code base submission field' do
-    log_in participant
-    visit new_challenge_submission_path(challenge)
-    expect(page).to have_text 'Code base submission'
   end
 
   it do
