@@ -27,11 +27,19 @@ ActiveAdmin.register Challenge do
     column :page_views
     column :participant_count
     column :submissions_count
-    actions
+    column '', class: 'col-actions'do |resource|
+      div class: 'table_actions' do
+        links = ''.html_safe
+        links += link_to 'View', resource_path(resource), class: "view_link member_link"
+        links += link_to 'Edit', edit_challenge_path(resource), class: "edit_link member_link"
+        links += link_to 'Delete', resource_path(resource), class: "delete_link member_link", method: :delete, data: { confirm: 'Are you sure you want to delete this?' }
+        links
+      end
+    end
   end
 
   controller do
-    actions :all, except: [:edit, :new]
+    actions :all, except: :new
     def find_resource
       scoped_collection.friendly.find(params[:id])
     end
