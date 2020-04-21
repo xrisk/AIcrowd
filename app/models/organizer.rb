@@ -10,6 +10,7 @@ class Organizer < ApplicationRecord
   has_many :participants, dependent: :nullify, through: :participant_organizers
   has_many :clef_tasks, dependent: :destroy
   has_many :challenge_calls, dependent: :destroy
+  has_many :partners
 
   validates :organizer,
             presence: true
