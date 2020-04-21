@@ -401,7 +401,7 @@ ActiveRecord::Schema.define(version: 2020_04_19_194412) do
     t.boolean "submissions_page"
     t.boolean "private_challenge", default: false
     t.boolean "show_leaderboard", default: true
-    t.string "grader_identifier"
+    t.string "grader_identifier", default: "AIcrowd_GRADER_POOL"
     t.boolean "online_submissions", default: false
     t.boolean "grader_logs", default: false
     t.boolean "require_registration", default: false
@@ -838,14 +838,12 @@ ActiveRecord::Schema.define(version: 2020_04_19_194412) do
     t.integer "participation_terms_accepted_version"
     t.boolean "agreed_to_terms_of_use_and_privacy", default: true
     t.boolean "agreed_to_marketing", default: true
-    t.integer "submissions_count", default: 0
     t.float "rating"
     t.float "temporary_rating"
     t.float "variation"
     t.float "temporary_variation"
     t.integer "ranking", default: -1, null: false
     t.integer "ranking_change", default: 0, null: false
-    t.float "fixed_rating"
     t.boolean "agreed_to_organizers_newsletter", default: true, null: false
     t.float "fixed_rating"
     t.integer "sash_id"
@@ -1437,31 +1435,31 @@ ActiveRecord::Schema.define(version: 2020_04_19_194412) do
   SQL
 
   create_view "participant_challenges",  sql_definition: <<-SQL
-    SELECT DISTINCT p.id,
-    cr.challenge_id,
-    cr.participant_id,
-    c.status_cd,
-    c.challenge,
-    c.private_challenge,
-    c.description,
-    c.rules,
-    c.prizes,
-    c.resources,
-    c.tagline,
-    c.image_file,
-    c.submissions_count,
-    c.participant_count,
-    c.page_views,
-    p.name,
-    p.email,
-    p.bio,
-    p.github,
-    p.linkedin,
-    p.twitter
-  FROM participants p,
-    challenges c,
-    challenge_registrations cr
-  WHERE ((cr.participant_id = p.id) AND (cr.challenge_id = c.id));
+      SELECT DISTINCT p.id,
+      cr.challenge_id,
+      cr.participant_id,
+      c.status_cd,
+      c.challenge,
+      c.private_challenge,
+      c.description,
+      c.rules,
+      c.prizes,
+      c.resources,
+      c.tagline,
+      c.image_file,
+      c.submissions_count,
+      c.participant_count,
+      c.page_views,
+      p.name,
+      p.email,
+      p.bio,
+      p.github,
+      p.linkedin,
+      p.twitter
+     FROM participants p,
+      challenges c,
+      challenge_registrations cr
+    WHERE ((cr.participant_id = p.id) AND (cr.challenge_id = c.id));
   SQL
 
 end

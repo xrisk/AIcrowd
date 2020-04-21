@@ -689,8 +689,8 @@ Submission.create!([
     participant_id: 112233,
     email: "test_user@example.com",
     name: "test_user",
-    registered: true,
-    accepted_dataset_toc: true)
+    registered: true
+  )
 
   ChallengeParticipant.create!(
     challenge_id: 100,
@@ -699,7 +699,7 @@ Submission.create!([
     name: "p7")
 
   ParticipationTerms.create!(
-    terms_markdown: "Sample Participation Terms. Please update at '/admin/participation_terms'"
+    terms: "Sample Participation Terms. Please update at '/admin/participation_terms'"
   )
 
 end
