@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <!-- title/description/prizes/partners -->
+    <!-- title/description/prizes -->
     <div class="row">
       <div class="col-sm-12 col-md-8 col-lg-9">
         <h1><%= challenge.challenge %></h1>
@@ -31,19 +31,6 @@
             Hidden
           </span>
         <% end %>
-        <% if controller_name == 'challenges' && show_action? && partners.present? %>
-          <div class="col-lg-12 col-xl-6 pull-right">
-            <div class="logos-organizers">
-              <% partners.each do |partner| %>
-                <% if partner.image_file.present?  %>
-                  <div class="logo-organizer">
-                    <%= image_tag partner.image_file.url, class: "img-fluid" %>
-                  </div>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
         <p><%= challenge.tagline %></p>
       </div>
 
@@ -51,7 +38,7 @@
         <%= render partial: 'shared/challenges/prizes_breakdown', locals: { challenge: challenge } %>
       </div>
     </div>
-    <!-- /title/description/prizes/partners -->
+    <!-- /title/description/prizes -->
 
     <!-- organizer/stats/options -->
     <div class="row">
