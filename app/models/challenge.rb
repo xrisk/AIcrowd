@@ -96,13 +96,14 @@ class Challenge < ApplicationRecord
   def create_discourse_category
     return if Rails.env.development? || Rails.env.test?
 
-    Discourse::CreateCategoryService.new(challenge: self).call
+    Discourse::CreateCategoryJob.perform_later(id)
   end
 
   def update_discourse_category
     return if Rails.env.development? || Rails.env.test?
+    return unless saved_change_to_attribute?(:challenge)
 
-    Discourse::UpdateCategoryService.new(challenge: self).call
+    Discourse::UpdateCategoryJob.perform_later(id)
   end
 
   def record_page_view
