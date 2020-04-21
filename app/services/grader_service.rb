@@ -67,7 +67,7 @@ class GraderService
 
     # The participation terms condition should only be checked on submission creation not recomputes
     if @submission.grading_status == 'ready' && (challenge_participant.blank? || !challenge.has_accepted_challenge_rules?(participant))
-      Submission.update(
+      Submission.update!(
         @submission.id,
         grading_status:  'failed',
         grading_message: 'Invalid Submission. Have you registered for this challenge and agreed to the participation terms?')
