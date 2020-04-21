@@ -132,7 +132,7 @@ describe SubmissionPolicy do
 
     context 'for the organizer of another challenge' do
       let(:other_organizer) { create :organizer }
-      let(:participant) { create :participant, organizer_id: other_organizer.id }
+      let(:participant) { create :participant }
 
       it { expect(Pundit.policy_scope(participant, Submission)).to be_empty }
     end
@@ -205,7 +205,7 @@ describe SubmissionPolicy do
 
     context 'for the organizer of another challenge' do
       let(:other_organizer) { create :organizer }
-      let(:participant) { create :participant, organizer_id: other_organizer.id }
+      let(:participant) { create :participant }
 
       it {
         expect(Pundit.policy_scope(participant, Submission).sort)

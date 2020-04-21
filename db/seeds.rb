@@ -67,14 +67,13 @@ if Rails.env == 'development' || Rails.env == 'staging'
     city: "Mumbai",
     first_name: "Test",
     last_name: "User",
-    organizer_id: 21)
+  )
 
   member_poznac_ids = [1020, 1050, 1110]
 
   member_poznac_ids.each do |id|
     Participant.create!(
       id: id,
-      organizer_id: 21,
       email: "p#{id}@example.com",
       password: 'password',
       password_confirmation: 'password',
@@ -87,7 +86,6 @@ if Rails.env == 'development' || Rails.env == 'staging'
   member_sbb_ids.each do |id|
     Participant.create!(
       id: id,
-      organizer_id: 17,
       email: "p#{id}@example.com",
       password: 'password',
       password_confirmation: 'password',
@@ -97,8 +95,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
 
   # Partners
   Partner.create!([
-    {id: 22, organizer_id: 21 , image_file: open('https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png'), name: "Spotify", visible: true},
-    {id: 1223, organizer_id: 17 , image_file: open('https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png'), name: "Uber", visible: true}
+    {id: 22, image_file: open('https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png'), name: "Spotify", visible: true},
+    {id: 1223, image_file: open('https://dnczkxd1gcfu5.cloudfront.net/images/challenges/image_file/50/spotify.png'), name: "Uber", visible: true}
   ])
 
   # Challenges
@@ -701,5 +699,4 @@ Submission.create!([
   ParticipationTerms.create!(
     terms: "Sample Participation Terms. Please update at '/admin/participation_terms'"
   )
-
 end

@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2020_04_19_194412) do
-
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_stat_statements"
@@ -811,7 +810,6 @@ ActiveRecord::Schema.define(version: 2020_04_19_194412) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "unconfirmed_email"
-    t.integer "organizer_id"
     t.string "name"
     t.boolean "email_public", default: false
     t.text "bio"
@@ -845,12 +843,10 @@ ActiveRecord::Schema.define(version: 2020_04_19_194412) do
     t.integer "ranking", default: -1, null: false
     t.integer "ranking_change", default: 0, null: false
     t.boolean "agreed_to_organizers_newsletter", default: true, null: false
-    t.float "fixed_rating"
     t.integer "sash_id"
     t.integer "level", default: 0
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
-    t.index ["organizer_id"], name: "index_participants_on_organizer_id"
     t.index ["reset_password_token"], name: "index_participants_on_reset_password_token", unique: true
     t.index ["slug"], name: "index_participants_on_slug", unique: true
     t.index ["unlock_token"], name: "index_participants_on_unlock_token", unique: true
@@ -1111,7 +1107,6 @@ ActiveRecord::Schema.define(version: 2020_04_19_194412) do
   add_foreign_key "participant_clef_tasks", "participants"
   add_foreign_key "participant_organizers", "organizers"
   add_foreign_key "participant_organizers", "participants"
-  add_foreign_key "participants", "organizers"
   add_foreign_key "partners", "organizers"
   add_foreign_key "submission_file_definitions", "challenges"
   add_foreign_key "submission_files", "submissions"

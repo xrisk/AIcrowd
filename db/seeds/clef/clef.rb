@@ -10,7 +10,6 @@
   member_imageclef_ids.each_with_index do |id, index|
     Participant.create!(
       id: id,
-      organizer_id: 22,
       email: "o-imageclef-#{index}@example.com",
       password: 'password',
       password_confirmation: 'password',
@@ -24,7 +23,6 @@
   member_lifeclef_ids.each_with_index do |id, index|
     Participant.create!(
       id: id,
-      organizer_id: 23,
       email: "o-lifeclef-#{index}@example.com",
       password: 'password',
       password_confirmation: 'password',
