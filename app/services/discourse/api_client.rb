@@ -1,5 +1,6 @@
 module Discourse
   class Error < StandardError; end
+  class BadRequest < StandardError; end
   class UnauthenticatedError < StandardError; end
   class NotFoundError < StandardError; end
   class UnprocessableEntity < StandardError; end
@@ -8,6 +9,8 @@ module Discourse
   class HandleErrorsMiddleware < Faraday::Response::Middleware
     def on_complete(env)
       case env[:status]
+      when 400
+        raise Discourse::BadRequest.new(env.body)
       when 403
         raise Discourse::UnauthenticatedError.new(env.body)
       when 404, 410

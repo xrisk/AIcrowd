@@ -4,16 +4,7 @@ describe Discourse::FetchTopContributorsService, :requests_allowed do
   subject { described_class.new }
 
   describe '#call' do
-    context 'when discourse ENV variables are missing' do
-      before { ENV.stub(:[]).with('DISCOURSE_DOMAIN_NAME').and_return('') }
-
-      it 'returns failure' do
-        result = subject.call
-
-        expect(result.success?).to eq false
-        expect(result.value).to eq 'Discourse API client couldn\'t be properly initialized.'
-      end
-    end
+    it_behaves_like 'Discourse ServiceObject class'
 
     context 'when discourse ENV variables are set' do
       let!(:participant) { create(:participant, name: 'kelleni2') }
@@ -32,19 +23,6 @@ describe Discourse::FetchTopContributorsService, :requests_allowed do
         expect(response.first['score']).to eq 751
         expect(response.first['participant']).to eq participant
         expect(response.first['participant'].image_url).to eq 'users/user-avatar-default.svg'
-      end
-    end
-
-    context 'when discourse API is unavailable' do
-      before do
-        allow_any_instance_of(Faraday::Connection).to receive(:post).and_raise(Discourse::Error)
-      end
-
-      it 'returns failure' do
-        result = subject.call
-
-        expect(result.success?).to eq false
-        expect(result.value).to eq 'Discourse::Error'
       end
     end
   end

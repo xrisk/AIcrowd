@@ -1,0 +1,65 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://discourse-staging.aicrowd.com/groups/50/members.json
+    body:
+      encoding: UTF-8
+      string: usernames=random_name%2Csecond_randomename
+    headers:
+      Accept:
+      - application/json
+      Api-Key:
+      - REDACTED
+      Api-Username:
+      - REDACTED
+      User-Agent:
+      - Faraday v1.0.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 400
+      message: Bad Request
+    headers:
+      Date:
+      - Fri, 17 Apr 2020 15:38:09 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Discourse-Username:
+      - REDACTED
+      X-Discourse-Route:
+      - groups/add_members
+      X-Request-Id:
+      - 0330d78d-b7ec-4ff0-808f-061db3c113e0
+      Set-Cookie:
+      - __profilin=p%3Dt%2Ca%3D82f9183a6524e12412f121825eefe9a0%7C4f602d45002f2739ff7fffae937a0bd4;
+        path=/; secure; HttpOnly
+      X-Runtime:
+      - '0.016188'
+    body:
+      encoding: UTF-8
+      string: '{"errors":["You supplied invalid parameters to the request: usernames"],"error_type":"invalid_parameters"}'
+    http_version: 
+  recorded_at: Fri, 17 Apr 2020 15:38:09 GMT
+recorded_with: VCR 5.0.0
