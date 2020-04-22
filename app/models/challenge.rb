@@ -168,7 +168,7 @@ class Challenge < ApplicationRecord
 
   def baseline_discussion
     discource_baselines = Discourse::FetchBaselineTagService.new(challenge: self).call
-    discource_baselines.value.first(5) if discource_baselines[:success]
+    discource_baselines.value.first(5) if discource_baselines.success?
   end
 
   def has_accepted_challenge_rules?(participant)
