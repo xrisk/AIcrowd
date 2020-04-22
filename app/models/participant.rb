@@ -110,6 +110,14 @@ class Participant < ApplicationRecord
     @@api_admin ||= find_by(email: ENV['AICROWD_API_EMAIL'])
   end
 
+  # Send reconfirmation e-mail after e-mail change only in production
+  def reconfirmation_required?
+    # TODO: Remove ENV['IS_REAL_PRODUCTION'] == 'true' after we update staging config
+    return super if Rails.env.production? && ENV['IS_REAL_PRODUCTION'] == 'true'
+
+    false
+  end
+
   def reserved_userhandle
     return unless name
 
