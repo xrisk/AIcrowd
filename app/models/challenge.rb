@@ -50,6 +50,8 @@ class Challenge < ApplicationRecord
 
   has_many :teams, inverse_of: :challenge
   has_many :category_challenges, dependent: :destroy
+  accepts_nested_attributes_for :category_challenges, reject_if: :all_blank
+
   has_many :categories, through: :category_challenges
 
   as_enum :status,
