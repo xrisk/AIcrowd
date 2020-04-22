@@ -6,7 +6,7 @@
 
   <tr>
     <td class="leaderboard-change">
-      <%= leaderboard_ranking_change(leaderboard) %>
+      <%= leaderboard_ranking_change(leaderboard) unless sidebar %>
     </td>
     <td><strong><%= "%02d" % (leaderboard.row_num) %></strong></td>
     <td>
@@ -19,6 +19,7 @@
         <% if team.present? %>
           <%= link_to team.name, challenge_team_path(team.challenge, team) %>
           <div class="avatar-group">
+            <% participants = participants.first(2) if sidebar %>
             <% participants.each do |participant| %>
               <%= render partial: 'participants/user_link', locals: { participant: participant, username: false } %>
             <% end %>
@@ -31,30 +32,28 @@
       <% end %>
     </td>
 
-    <% if challenge.media_on_leaderboard %>
+    <% if challenge.media_on_leaderboard && !sidebar %>
       <td>
         <%= render partial: 'shared/challenges/media', locals: { mediable: leaderboard, submission_id: leaderboard.submission_id, size: :thumb } %>
       </td>
     <% end %>
 
-    <td><strong><%= leaderboard_formatted_value(@current_round, leaderboard.score) %></strong></td>
-    <td><strong><%= leaderboard_formatted_value(@current_round, leaderboard.score_secondary) %></strong></td>
-    <% leaderboard_other_scores_array(leaderboard, challenge).each do |other_score| %>
-      <td><strong><%= other_score %></strong></td>
-    <% end %>
-    <td><%= leaderboard.entries %></td>
-
-    <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
-    <td class="text-right">
-      <% if leaderboard.try(:submitter_type) != 'OldParticipant' && leaderboard.try(:submitter).present? && leaderboard.try(:submission_id).present? %>
-        <%= link_to 'View', challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm' %>
-      <% else %>
-        <%= link_to 'View', '#', class: 'btn btn-secondary btn-sm disabled disabled--with-pointer-events', title: 'Submitter or Submission was deleted' %>
+    <td><strong><%= leaderboard_formatted_value(current_round, leaderboard.score) %></strong></td>
+    <% unless sidebar %>
+      <td><strong><%= leaderboard_formatted_value(current_round, leaderboard.score_secondary) %></strong></td>
+      <% leaderboard_other_scores_array(leaderboard, challenge).each do |other_score| %>
+        <td><strong><%= other_score %></strong></td>
       <% end %>
-    </td>
-    <!-- <td> -->
-      <%#= social_share('facebook', challenge, leaderboard) %>
-      <%#= social_share('twitter', challenge, leaderboard) %>
-    <!-- </td> -->
+      <td><%= leaderboard.entries %></td>
+
+      <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
+      <td class="text-right">
+        <% if leaderboard.try(:submitter_type) != 'OldParticipant' && leaderboard.try(:submitter).present? && leaderboard.try(:submission_id).present? %>
+          <%= link_to 'View', challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm' %>
+        <% else %>
+          <%= link_to 'View', '#', class: 'btn btn-secondary btn-sm disabled disabled--with-pointer-events', title: 'Submitter or Submission was deleted' %>
+        <% end %>
+      </td>
+    <% end %>
   </tr>
 <% end %>

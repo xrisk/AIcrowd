@@ -1,0 +1,12 @@
+<header class="section-header-decorative">
+  <div>
+    <h4>Latest Submissions</h4>
+  </div>
+  <%= button_to 'See all', challenge_submissions_path(challenge), class: "btn btn-secondary btn-sm", method: :get %>
+</header>
+<table class="table table-responsive-md side-border">
+  <tbody id="submissions-div">
+    <%= render partial: 'submissions/submissions', locals: { submissions: latest_submissions, sidebar: true } %>
+  </tbody>
+</table>
+

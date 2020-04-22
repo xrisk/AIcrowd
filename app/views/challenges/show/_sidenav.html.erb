@@ -1,5 +1,11 @@
 <div class="top-contributors-container col-sm-12 col-md-4 col-lg-3">
+  <% if policy(challenge).show_leaderboard? && top_leaderboards.present? %>
+    <%= render 'challenges/show/top_five_leaderboards', top_leaderboards: top_leaderboards, challenge: challenge %><br/><br/>
+  <% end %>
+  <% if policy(challenge).show_submissions? && latest_submissions.present? %>
+    <%= render 'challenges/show/latest_five_submissions', latest_submissions: latest_submissions, challenge: challenge %>
+  <% end %>
   <% if challenge_baseline_discussion.present? %>
-    <%= render 'challenges/show/baseline_discussions', challenge_baseline_discussion: challenge_baseline_discussion, challenge: challenge %><br/><br/>
+    <%= render 'challenges/show/baseline_discussions', challenge_baseline_discussion: challenge_baseline_discussion, challenge: challenge %>
   <% end %>
 </div>
