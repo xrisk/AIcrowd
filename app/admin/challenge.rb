@@ -1,4 +1,5 @@
 ActiveAdmin.register Challenge do
+
   sidebar "Challenge Configuration", only: [:show, :edit] do
     ul do
       li link_to "Dataset Files", admin_challenge_dataset_files_path(challenge)
@@ -27,11 +28,15 @@ ActiveAdmin.register Challenge do
     column :page_views
     column :participant_count
     column :submissions_count
-    actions
+
+    actions default: true do |resource|
+      a 'Edit', href: edit_challenge_path(resource), class: "edit_link member_link"
+    end
   end
 
   controller do
-    actions :all, except: [:edit, :new]
+    actions :all, except: [:new, :edit]
+
     def find_resource
       scoped_collection.friendly.find(params[:id])
     end
@@ -54,6 +59,10 @@ ActiveAdmin.register Challenge do
 
   action_item :reorder, only: :index do
     link_to 'Reorder Challenges Featured Sequence', reorder_challenges_path
+  end
+
+  action_item :edit, only: :show do
+    link_to 'Edit', edit_challenge_path(resource)
   end
 
   batch_action "Recalculate the Leaderboard for ", priority: 1 do |ids|
