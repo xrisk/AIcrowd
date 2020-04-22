@@ -18,6 +18,10 @@ ActiveAdmin.register Challenge do
   filter :status_cd
   filter :challenge
 
+  action_item :edit, only: :show do
+    link_to 'Edit', edit_challenge_path(resource)
+  end
+
   index do
     selectable_column
     column :id
@@ -39,7 +43,7 @@ ActiveAdmin.register Challenge do
   end
 
   controller do
-    actions :all, except: :new
+    actions :all, except: [:new, :edit]
     def find_resource
       scoped_collection.friendly.find(params[:id])
     end
