@@ -2,7 +2,7 @@
 #
 # feature "leaderboard invisible challenge completed" do
 #   let!(:organizer) { create :organizer }
-#   let!(:org_participant) { create :participant, organizer_id: organizer.id }
+#   let!(:org_participant) { create :participant }
 #   let!(:admin) { create :participant, :admin }
 #   let!(:challenge) {
 #     create :challenge,
