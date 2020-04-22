@@ -41,9 +41,10 @@ class ChallengesController < ApplicationController
     end
 
     @challenge.record_page_view unless params[:version] # dont' record page views on history pages
-    @challenge_rules  = @challenge.current_challenge_rules
-    @challenge_rounds = @challenge.challenge_rounds.started
-    @partners = Partner.where(organizer_id: @challenge.organizer_ids) if @challenge.organizers.any?
+    @challenge_rules               = @challenge.current_challenge_rules
+    @challenge_rounds              = @challenge.challenge_rounds.started
+    @challenge_baseline_discussion = @challenge.baseline_discussion
+    @partners                      = Partner.where(organizer_id: @challenge.organizer_ids) if @challenge.organizers.any?
   end
 
   def new

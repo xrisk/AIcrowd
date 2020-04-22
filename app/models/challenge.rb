@@ -166,6 +166,11 @@ class Challenge < ApplicationRecord
     ChallengeRules.where(challenge_id: id).order('version DESC').first
   end
 
+  def baseline_discussion
+    discource_baselines = Discourse::FetchBaselineTagService.new(challenge: self).call
+    discource_baselines.value if discource_baselines.success?
+  end
+
   def has_accepted_challenge_rules?(participant)
     return false unless participant
 
