@@ -58,8 +58,8 @@ module Api
         private
 
         def set_challenge
-          @challenge = Challenge.friendly.find(params[:id])
-          authorize @challenge, :edit?
+          @challenge = Challenge.find_by_slug(params[:id])
+          authorize @challenge, :edit? if @challenge
         end
 
         def set_challenge_to_discource
