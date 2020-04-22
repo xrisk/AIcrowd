@@ -16,7 +16,8 @@ ActiveAdmin.register ParticipationTerms do
 
   form do |f|
     f.inputs do
-      f.input :terms, as: :ckeditor
+      f.label 'Terms', class: 'ckeditor_label participation_terms'
+      f.text_area :terms, class: 'ckeditor'
     end
     f.actions
   end

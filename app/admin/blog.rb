@@ -29,7 +29,8 @@ ActiveAdmin.register Blog do
       f.input :slug
       f.input :seq
       f.input :published
-      f.input :body, as: :ckeditor
+      f.label 'Body', class: 'ckeditor_label blog'
+      f.text_area :body, class: 'ckeditor'
       f.input :posted_at
     end
     f.actions
