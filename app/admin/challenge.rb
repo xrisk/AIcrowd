@@ -1,4 +1,5 @@
 ActiveAdmin.register Challenge do
+
   sidebar "Challenge Configuration", only: [:show, :edit] do
     ul do
       li link_to "Dataset Files", admin_challenge_dataset_files_path(challenge)
@@ -18,10 +19,6 @@ ActiveAdmin.register Challenge do
   filter :status_cd
   filter :challenge
 
-  action_item :edit, only: :show do
-    link_to 'Edit', edit_challenge_path(resource)
-  end
-
   index do
     selectable_column
     column :id
@@ -31,19 +28,15 @@ ActiveAdmin.register Challenge do
     column :page_views
     column :participant_count
     column :submissions_count
-    column '', class: 'col-actions'do |resource|
-      div class: 'table_actions' do
-        links = ''.html_safe
-        links += link_to 'View', resource_path(resource), class: "view_link member_link"
-        links += link_to 'Edit', edit_challenge_path(resource), class: "edit_link member_link"
-        links += link_to 'Delete', resource_path(resource), class: "delete_link member_link", method: :delete, data: { confirm: 'Are you sure you want to delete this?' }
-        links
-      end
+
+    actions default: true do |resource|
+      a 'Edit', href: edit_challenge_path(resource), class: "edit_link member_link"
     end
   end
 
   controller do
     actions :all, except: [:new, :edit]
+
     def find_resource
       scoped_collection.friendly.find(params[:id])
     end
@@ -66,6 +59,10 @@ ActiveAdmin.register Challenge do
 
   action_item :reorder, only: :index do
     link_to 'Reorder Challenges Featured Sequence', reorder_challenges_path
+  end
+
+  action_item :edit, only: :show do
+    link_to 'Edit', edit_challenge_path(resource)
   end
 
   batch_action "Recalculate the Leaderboard for ", priority: 1 do |ids|
