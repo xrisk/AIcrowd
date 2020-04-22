@@ -31,9 +31,8 @@ class BadgesDailyJob < ApplicationJob
     during_badge = 0
     if user_rating_service.temporary
       during_badge = 3
-    end
-    apply_badges(teams_participant_ids, during_badge, ranks, max_rank)
-    unless user_rating_service.temporary
+    else
+      apply_badges(teams_participant_ids, during_badge, ranks, max_rank)
       user_rating_service.round.update(assigned_permanent_badge: true)
     end
   end
