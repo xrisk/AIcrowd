@@ -111,9 +111,9 @@ export default class extends Controller {
 
         // Create a link tag to trigger content change
         const link = $('<a/>', {
-            class: 'nav-link text-capitalize',
+            class: 'nav-link text-capitalize cursor-pointer',
             href: `#` + urlFriendly,
-            text: $(heading).text() }).appendTo(li);
+            text: _.capitalize($(heading).text()) }).appendTo(li);
 
       });
 
@@ -122,7 +122,12 @@ export default class extends Controller {
     }
 
     createTabularTOC() {
-      $.each(this.headings, (index, heading) => {
+      $.each(this.headings, (index, heading) => {        
+        // URL friendly id
+        var urlFriendly = $(heading).text().replace(/(^\W*)|(\W*$)/g, '').replace(' ', '-').toLowerCase();
+        // Add id
+        $(heading).attr('id', urlFriendly);
+
         // Add mt-2 to headings
         $(heading).addClass('mt-2');
 
@@ -130,7 +135,10 @@ export default class extends Controller {
         let li = $('<li/>', { class: 'nav-item'}).appendTo(this.toc);
 
         // Create a link tag to trigger content change
-        let link = $('<a/>', { class: 'nav-link text-capitalize cursor-pointer', text:  _.capitalize($(heading).text()) }).appendTo(li);
+        let link = $('<a/>', {
+            class: 'nav-link text-capitalize cursor-pointer', 
+            href: `#` + urlFriendly, 
+            text:  _.capitalize($(heading).text()) }).appendTo(li);
 
         // Calculate Content
         let content = this.getContent($(heading), index);
