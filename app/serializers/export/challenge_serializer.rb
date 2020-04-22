@@ -3,6 +3,7 @@ module Export
     include ActionView::Helpers::AssetUrlHelper
 
     attributes *::Challenge::IMPORTABLE_FIELDS, :submission_file_definitions_attributes,
+               :challenges_organizers_attributes, :category_challenges_attributes,
                :challenge_partners_attributes, :challenge_rules_attributes, :image_file
 
     def image_file
@@ -21,6 +22,14 @@ module Export
 
     def challenge_rules_attributes
       object.challenge_rules.map { |challenge_rule| Export::ChallengeRuleSerializer.new(challenge_rule).as_json }
+    end
+
+    def challenges_organizers_attributes
+      object.challenges_organizers.map { |challenges_organizer| Export::ChallengesOrganizerSerializer.new(challenges_organizer).as_json }
+    end
+
+    def category_challenges_attributes
+      object.category_challenges.map { |category_challenge| Export::CategoryChallengeSerializer.new(category_challenge).as_json }
     end
   end
 end

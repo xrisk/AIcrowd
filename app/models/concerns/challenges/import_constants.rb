@@ -72,6 +72,9 @@ module Challenges
       challenges_organizers_attributes: [
         :organizer_id
       ],
+      category_challenges_attributes: [
+        :category_id
+      ],
       submission_file_definitions_attributes: [
         :seq,
         :submission_file_description,
