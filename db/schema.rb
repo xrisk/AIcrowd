@@ -9,8 +9,7 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-
-ActiveRecord::Schema.define(version: 2020_04_19_194412) do
+ActiveRecord::Schema.define(version: 2020_04_20_142821) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_stat_statements"
@@ -843,6 +842,7 @@ ActiveRecord::Schema.define(version: 2020_04_19_194412) do
     t.integer "ranking", default: -1, null: false
     t.integer "ranking_change", default: 0, null: false
     t.boolean "agreed_to_organizers_newsletter", default: true, null: false
+    t.float "fixed_rating"
     t.integer "sash_id"
     t.integer "level", default: 0
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
