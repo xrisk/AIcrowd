@@ -1,8 +1,21 @@
 .cke_chrome {
-  width: 50% !important;
+  width: 75% !important;
   overflow: hidden;
 }
 
 .cke_1.cke.cke_reset.cke_chrome.cke_ltr.cke_browser_webkit {
   margin-left: 25%;
+  margin-bottom: 2%;
+}
+
+label.ckeditor_label.job_posting, label.ckeditor_label.participation_terms {
+  margin-left: 18.5%;
+}
+
+label.ckeditor_label.blog {
+  margin-left: 21.4%;
+}
+
+label.ckeditor_label.challenge_call {
+  margin-left: 17%;
 }
