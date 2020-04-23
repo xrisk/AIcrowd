@@ -5,6 +5,11 @@ module Discourse
     def perform(challenge_id)
       challenge = Challenge.find(challenge_id)
 
+      if challenge.hidden_in_discourse?
+        Discourse::CreateGroupService.new(challenge: challenge).call
+        Discourse::AddUsersToGroupService.new(challenge: challenge, participants: challenge.participants).call
+      end
+
       Discourse::CreateCategoryService.new(challenge: challenge).call
     end
   end

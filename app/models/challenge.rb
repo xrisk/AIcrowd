@@ -81,41 +81,23 @@ class Challenge < ApplicationRecord
   scope :prize_academic, -> { where.not(prize_academic: nil) }
   scope :prize_misc, -> { where.not(prize_misc: nil) }
 
+  scope :draft_or_private, -> { where("status_cd = 'draft' OR private_challenge = TRUE") }
+
   after_initialize :set_defaults
-  after_create :create_discourse_category
-  after_update :update_discourse_category
-  after_create :create_default_associations
+  after_commit :create_discourse_category, on: :create
+  after_commit :create_default_associations, on: :create
 
-  def set_defaults
-    if new_record?
-      self.challenge_client_name ||= "challenge_#{SecureRandom.hex}"
-      self.featured_sequence     ||= Challenge.count + 1
-      self.team_freeze_time      ||= Time.now.utc + 2.months + 3.weeks
-    end
-  end
-
-  def create_default_associations
-    ChallengeRound.create!(challenge: self)
-    ChallengeRules.create!(challenge: self)
-  end
-
-  def create_discourse_category
-    return if Rails.env.development? || Rails.env.test?
-
-    Discourse::CreateCategoryJob.perform_later(id)
-  end
-
-  def update_discourse_category
-    return if Rails.env.development? || Rails.env.test?
-    return unless saved_change_to_attribute?(:challenge)
-
-    Discourse::UpdateCategoryJob.perform_later(id)
-  end
+  after_commit :update_discourse_category, on: :update
+  after_commit :update_discourse_permissions, on: :update
 
   def record_page_view
     self.page_views ||= 0
     self.page_views  += 1
     save
+  end
+
+  def participants_and_organizers
+    participants + organizers.flat_map { |organizer| organizer.participants }
   end
 
   def status_formatted
@@ -218,5 +200,44 @@ class Challenge < ApplicationRecord
   def top_five_leaderboards
     return unless active_round
     active_round.leaderboards.limit(5)
+  end
+
+  def hidden_in_discourse?
+    draft? || private_challenge?
+  end
+
+  private
+
+  def set_defaults
+    if new_record?
+      self.challenge_client_name ||= "challenge_#{SecureRandom.hex}"
+      self.featured_sequence     ||= Challenge.count + 1
+      self.team_freeze_time      ||= Time.now.utc + 2.months + 3.weeks
+    end
+  end
+
+  def create_default_associations
+    ChallengeRound.create!(challenge: self)
+    ChallengeRules.create!(challenge: self)
+  end
+
+  def create_discourse_category
+    return if Rails.env.development? || Rails.env.test?
+
+    Discourse::CreateCategoryJob.perform_later(id)
+  end
+
+  def update_discourse_category
+    return if Rails.env.development? || Rails.env.test?
+    return unless saved_change_to_attribute?(:challenge)
+
+    Discourse::UpdateCategoryJob.perform_later(id)
+  end
+
+  def update_discourse_permissions
+    return if Rails.env.development? || Rails.env.test?
+    return unless saved_change_to_attribute?(:private_challenge) || saved_change_to_attribute?(:status_cd)
+
+    Discourse::UpdatePermissionsJob.perform_later(id)
   end
 end

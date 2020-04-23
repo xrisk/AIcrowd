@@ -11,7 +11,10 @@ module Discourse
       with_discourse_errors_handling do
         response = create_group_request(ensure_uniqueness: retry_count.positive?)
 
-        challenge.update!(discourse_group_id: response.body['basic_group']['id'])
+        challenge.update!(
+          discourse_group_id:   response.body['basic_group']['id'],
+          discourse_group_name: response.body['basic_group']['name']
+        )
 
         success(response)
       rescue Discourse::UnprocessableEntity => e

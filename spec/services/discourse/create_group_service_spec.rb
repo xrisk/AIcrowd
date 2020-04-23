@@ -19,6 +19,7 @@ describe Discourse::CreateGroupService do
 
           expect(result.success?).to eq true
           expect(challenge.reload.discourse_group_id).to eq 49
+          expect(challenge.discourse_group_name).to eq 'short-challenge-name'
         end
       end
 
@@ -38,6 +39,7 @@ describe Discourse::CreateGroupService do
 
           expect(result.success?).to eq true
           expect(challenge.reload.discourse_group_id).to eq 50
+          expect(challenge.discourse_group_name).to eq 'way-to-long-chalenge'
         end
       end
 
@@ -51,6 +53,7 @@ describe Discourse::CreateGroupService do
 
           expect(result.success?).to eq true
           expect(challenge.reload.discourse_group_id).to eq 52
+          expect(challenge.discourse_group_name).to eq 'discourse-cat-098b7a'
         end
       end
     end
