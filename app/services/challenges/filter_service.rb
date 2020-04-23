@@ -14,7 +14,7 @@ module Challenges
       # prize filter
       if @params['prizes'].present?
         @params['prizes'].split(',').each do |prize|
-          @challenges = @challenges.send(prize)
+          @challenges = @challenges.public_send(prize)
         end
       end
       @challenges

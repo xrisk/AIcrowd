@@ -1,4 +1,4 @@
-<%= form_with url: challenges_path, local: true, method: :get, enforce_utf8: false, class: 'filter-dropdown-form' do |f| %>
+<%= form_with url: challenges_path, local: true, method: :get, enforce_utf8: false, data: {controller: "challenges" }, class: 'filter-dropdown-form' do |f| %>
   <div class="dropdown">
     <div class="filter dropdown-toggle <%= 'filter-active' if params[:status] %>" id="challenge-statuses" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Active
@@ -44,38 +44,5 @@
       <% end %>
     </div>
   </div>
-  <%= f.submit 'Apply', name: nil, class: 'btn btn-link btn-sm apply-filter-btn' %>
+  <%= f.submit 'Apply', name: nil, data: { action: 'click->challenges#filterUrl'}, class: 'btn btn-link btn-sm apply-filter-btn' %>
 <% end %>
-<script type="text/javascript">
-  $("form").submit(function(){
-    event.preventDefault();
-
-    categories = [];
-    $('input[name="category"]:checked').each(function() {
-      categories.push(this.value);
-    });
-
-    prizes = [];
-    $('input[name="prize"]:checked').each(function() {
-      prizes.push(this.value);
-    });
-
-    url = (window.location.origin+window.location.pathname)
-
-    params = ''
-
-    if($('input[name="status"]:checked').val() != undefined){
-      params = params.concat('status=', $('input[name="status"]:checked').val());
-    }
-
-    if(categories.length > 0){
-      params = params.concat('&categories=', categories.join());
-    }
-
-    if(prizes.length > 0){
-      params = params.concat('&prizes=', prizes.join());
-    }
-
-    window.location.href = url.concat('?').concat(params);
-  });
-</script>

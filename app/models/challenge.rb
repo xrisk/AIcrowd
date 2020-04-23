@@ -76,6 +76,10 @@ class Challenge < ApplicationRecord
               ELSE 5
             END, challenges.participant_count DESC")
   end
+  scope :prize_cash, -> { where.not(prize_cash: nil) }
+  scope :prize_travel, -> { where.not(prize_travel: nil) }
+  scope :prize_academic, -> { where.not(prize_academic: nil) }
+  scope :prize_misc, -> { where.not(prize_misc: nil) }
 
   after_initialize :set_defaults
   after_create :create_discourse_category
@@ -215,21 +219,4 @@ class Challenge < ApplicationRecord
     return unless active_round
     active_round.leaderboards.limit(5)
   end
-
-  def self.prize_cash
-    where.not(prize_cash: nil)
-  end
-
-  def self.prize_travel
-    where.not(prize_travel: nil)
-  end
-
-  def self.prize_academic
-    where.not(prize_academic: nil)
-  end
-
-  def self.prize_misc
-    where.not(prize_misc: nil)
-  end
 end
-
