@@ -40,25 +40,21 @@ module Api
         end
 
         def masthead
-          if @challenge.present?
-            render json: {
-              masthead:
-                render_to_string(
-                  partial: 'shared/challenges/masthead',
-                  formats: :html,
-                  layout: false,
-                  locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow }
-                )
-            }
-          else
-            render json: { error: 'Challenge not present.' }, status: :unprocessable_entity
-          end
+          render json: {
+            masthead:
+              render_to_string(
+                partial: 'shared/challenges/masthead',
+                formats: :html,
+                layout: false,
+                locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow }
+              )
+          }
         end
 
         private
 
         def set_challenge
-          @challenge = Challenge.find_by_slug(params[:id])
+          @challenge = Challenge.friendly.find(params[:id])
           authorize @challenge, :edit? if @challenge
         end
 
