@@ -12115,6 +12115,19 @@ body {
   top: -13px;
 }
 
+.community-info {
+  background-image: url("../../assets/img/community.svg");
+  background-repeat: no-repeat;
+  background-position: 0 4px;
+  display: inline-block;
+  font-size: 1rem !important;
+  font-weight: 600;
+  padding-left: 22px;
+  white-space: nowrap;
+  position: relative;
+  top: -13px;
+}
+
 @media (max-width: 991.98px) {
   .reputation-info {
     top: -12px;
