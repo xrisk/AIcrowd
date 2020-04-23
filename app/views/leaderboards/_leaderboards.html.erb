@@ -105,19 +105,19 @@
         <% else %>
           <%= link_to 'View', '#', class: 'btn btn-secondary btn-sm disabled disabled--with-pointer-events', title: 'Submitter or Submission was deleted' %>
         <% end %>
-    </td>
-    <% submission = leaderboard.submission %>
-    <% if submission.present? && policy(submission).show? %>
-      <td>
-        <%= social_share('facebook', challenge, leaderboard) %>
-        <%= social_share('twitter', challenge, leaderboard) %>
       </td>
+      <% submission = leaderboard.try(:submission) %>
       <td>
-        <% submission = leaderboard.try(:submission) %>
         <% if submission.present? && submission&.submission_link.present? %>
           <%= link_to image_tag('/assets/img/code_snippet.svg'), leaderboard&.submission&.submission_link, title: 'View Code', target: "_blank" %>
         <% end %>
       </td>
+      <% if submission.present? && policy(submission).show? %>
+        <td>
+          <%= social_share('facebook', challenge, leaderboard) %>
+          <%= social_share('twitter', challenge, leaderboard) %>
+        </td>
+      <% end %>
     <% end %>
   </tr>
 <% end %>
