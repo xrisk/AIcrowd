@@ -19,9 +19,9 @@
 
 <!-- filtered text -->
 <div class="container-fluid">
-  <% if params[:status].present? || params[:category].present? || params[:prize].present? %>
+  <% if params[:status].present? || params[:categories].present? || params[:prizes].present? %>
     <p class='card-text'>
-      <%= filter_message(params[:status], params[:category], params[:prize]) %>
+      <%= filter_message(params[:status], params[:categories], params[:prizes]) %>
       <%= link_to 'Clear Filter', challenges_path, class: 'btn btn-sm apply-filter-btn none-underline'  %>
     </p>
   <% end %>

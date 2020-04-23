@@ -1,4 +1,4 @@
-<%= form_tag challenges_path, method: :get, class: 'filter-dropdown-form' do %>
+<%= form_with url: challenges_path, local: true, method: :get, enforce_utf8: false, data: {controller: "challenges" }, class: 'filter-dropdown-form' do |f| %>
   <div class="dropdown">
     <div class="filter dropdown-toggle <%= 'filter-active' if params[:status] %>" id="challenge-statuses" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Active
@@ -7,7 +7,7 @@
       <% @status.each do |status| %>
         <div class="form-check">
           <%= label_tag do %>
-            <%= radio_button_tag 'status', status, status.eql?(params[:status]), {class: 'form-check-input'} %>
+            <%= f.radio_button :status, status, checked: status.eql?(params[:status]), class: 'form-check-input' %>
             <%= status.humanize %>
           <% end %>
         </div>
@@ -15,34 +15,34 @@
     </div>
   </div>
   <div class="dropdown">
-    <div class="filter dropdown-toggle <%= 'filter-active' if params[:category] %>" id="challenge-categories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Tags
+    <div class="filter dropdown-toggle <%= 'filter-active' if params[:categories].present? %>" id="challenge-categories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Categories
     </div>
     <div class='dropdown-menu form-dropdown'>
       <% @categories.each do |category| %>
         <div class="form-check">
           <%= label_tag do %>
-            <%= check_box_tag 'category[category_names][]', category.name, check_selected_category(category, params), { class:'form-check-input' } %>
-            #<%= category.name.parameterize.underscore %>
+            <%= f.check_box :category, { checked: check_selected_category(category), class: 'form-check-input' }, category.name %>
+            <%= category.name.humanize %>
           <% end %>
         </div>
       <% end %>
     </div>
   </div>
   <div class="dropdown">
-    <div class="filter dropdown-toggle <%= 'filter-active' if params[:prize] %>" id="challenge-prizes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="filter dropdown-toggle <%= 'filter-active' if params[:prizes].present? %>" id="challenge-prizes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Prizes
     </div>
     <div class='dropdown-menu form-dropdown'>
       <% @prize_hash.each do |p_key, p_value| %>
         <div class="form-check">
           <%= label_tag do %>
-            <%= check_box_tag 'prize[prize_type][]', p_key, check_selected_prize(p_key, params), {class: 'form-check-input'} %>
+            <%= f.check_box :prize, { checked: check_selected_prize(p_key), class: 'form-check-input' }, p_key %>
             <%= p_value.humanize %>
           <% end %>
         </div>
       <% end %>
     </div>
   </div>
-  <%= submit_tag 'Apply', class: 'btn btn-link btn-sm apply-filter-btn' %>
+  <%= f.submit 'Apply', name: nil, data: { action: 'click->challenges#filterUrl'}, class: 'btn btn-link btn-sm apply-filter-btn' %>
 <% end %>

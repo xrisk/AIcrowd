@@ -57,22 +57,22 @@ module ChallengesHelper
     end
   end
 
-  def filter_message(status, category, prize)
+  def filter_message(status, categories, prizes)
     text  = "Filter challenges "
-    text += "[from ##{category[:category_names].join(', #').humanize.parameterize.underscore} tag] " if category.present?
-    text += "[with status #{status.humanize}] " if status.present?
-    text += "[prizes in form of #{prize[:prize_type].join(', ').humanize}]" if prize.present?
+    text += "[from #{categories} category] " if categories.present?
+    text += "[with status #{status}] " if status.present?
+    text += "[prizes in form of #{prizes}]" if prizes.present?
     text
   end
 
-  def check_selected_category(category, params)
-    return false unless params[:category].present?
-    params[:category].dig(:category_names).include?(category.name)
+  def check_selected_category(category)
+    return false unless params[:categories].present?
+    params[:categories].split(',').include?(category.name)
   end
 
-  def check_selected_prize(prize, params)
-    return false unless params[:prize].present?
-    params[:prize].dig(:prize_type).include?(prize.to_s)
+  def check_selected_prize(prize)
+    return false unless params[:prizes].present?
+    params[:prizes].split(',').include?(prize.to_s)
   end
 
   def categories_select_options(challenge)

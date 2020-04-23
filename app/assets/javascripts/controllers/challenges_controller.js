@@ -11,16 +11,16 @@ $(document).ready(function() {
   $('input[name="status"]:radio').change(function(){
     $('#challenge-statuses').addClass('filter-active');
   });
-  $('input[name="category[category_names][]"]:checkbox').change(function(){
+  $('input[name="category"]:checkbox').change(function(){
     $('#challenge-categories').removeClass('filter-active');
-    if ($('input[name="category[category_names][]"').is(':checked'))
+    if ($('input[name="category"]').is(':checked'))
     {
       $('#challenge-categories').addClass('filter-active');
     }
   });
-  $('input[name="prize[prize_type][]"]:checkbox').change(function(){
+  $('input[name="prize"]:checkbox').change(function(){
     $('#challenge-prizes').removeClass('filter-active');
-    if ($('input[name="prize[prize_type][]"').is(':checked'))
+    if ($('input[name="prize"]').is(':checked'))
     {
       $('#challenge-prizes').addClass('filter-active');
     }
