@@ -120,4 +120,36 @@ describe Api::V1::Challenges::ChallengesController, type: :request do
       end
     end
   end
+
+  describe '#masthead' do
+    context 'when authenticity token not provided' do
+      let!(:challenge) { create(:challenge, :running, organizers: [first_organizer]) }
+      let(:headers) { { 'CONTENT_TYPE':  'application/json' } }
+
+      it 'returns unauthorized response' do
+        get masthead_api_v1_challenge_path(challenge), headers: headers
+
+        expect(response).to have_http_status(:unauthorized)
+        expect(response.body).to eq "HTTP Token: Access denied.\n"
+      end
+    end
+
+    context 'when authenticity token provided' do
+      context 'when user is organizer' do
+        let!(:challenge) { create(:challenge, :running, organizers: [first_organizer], discourse_category_id: '1') }
+        let(:participant) { create(:participant, organizers: [first_organizer]) }
+        let(:headers) do
+          {
+            'CONTENT_TYPE':  'application/json',
+            'Authorization': auth_header(participant.api_key)
+          }
+        end
+
+        it 'should respond with status ok' do
+          get masthead_api_v1_challenge_path(challenge, id: '1'), headers: headers
+          expect(response).to have_http_status(:ok)
+        end
+      end
+    end
+  end
 end
