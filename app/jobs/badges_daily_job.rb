@@ -1,5 +1,15 @@
 class BadgesDailyJob < ApplicationJob
   queue_as :default
+
+  def perform(*args)
+    challenge_rounds = ChallengeRound.where("assigned_permanent_badge=FALSE OR assigned_permanent_badge is NULL").order(end_dttm: :asc).pluck(:id)
+    challenge_rounds.each do |round_id|
+      assign_badges_to_challenge(round_id)
+    end
+  end
+
+  private
+
   def badges_addition_condition(params, during_badge, participant_ranks, participant_id)
     if participant_ranks < params[0]
       Participant.find_by(id: participant_id).add_badge(3 + during_badge)
@@ -34,13 +44,6 @@ class BadgesDailyJob < ApplicationJob
     else
       apply_badges(teams_participant_ids, during_badge, ranks, max_rank)
       user_rating_service.round.update(assigned_permanent_badge: true)
-    end
-  end
-
-  def perform(*args)
-    challenge_rounds = ChallengeRound.where("assigned_permanent_badge=FALSE OR assigned_permanent_badge is NULL").order(end_dttm: :asc).pluck(:id)
-    challenge_rounds.each do |round_id|
-      assign_badges_to_challenge(round_id)
     end
   end
 end
