@@ -55,7 +55,7 @@ module Api
 
         def set_challenge
           @challenge = Challenge.friendly.find(params[:id])
-          authorize @challenge, :edit? if @challenge
+          authorize @challenge, :edit?
         end
 
         def set_challenge_to_discource
@@ -63,15 +63,15 @@ module Api
         end
 
         def set_challenge_rounds
-          @challenge_rounds = @challenge.challenge_rounds.started if @challenge.present?
+          @challenge_rounds = @challenge.challenge_rounds.started
         end
 
         def set_vote
-          @vote = @challenge.votes.where(participant_id: @api_user.id).first if @challenge.present? && @api_user.present?
+          @vote = @challenge.votes.where(participant_id: @api_user.id).first if @api_user.present?
         end
 
         def set_follow
-          @follow = @challenge.follows.where(participant_id: @api_user.id).first if @challenge.present? && @api_user.present?
+          @follow = @challenge.follows.where(participant_id: @api_user.id).first if @api_user.present?
         end
       end
     end
