@@ -40,4 +40,14 @@ module ParticipantsHelper
     classes = base_class + ' ' + rating_tier_class(participant)
     return image_tag participant.image_url, class: classes
   end
+
+  def avatar
+    params[:avatar].present? ? params[:avatar] : true
+  end
+
+  def location_id(participant)
+    uniq_id = rand(1000)
+    random_class = uniq_id.to_s + '-' + participant.id.to_s
+    "participant_#{random_class}"
+  end
 end

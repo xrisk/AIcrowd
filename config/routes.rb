@@ -52,6 +52,9 @@ Rails.application.routes.draw do
           get :search, on: :collection
         end
       end
+      resources :participants, only: [] do
+        get :user_profile, on: :member
+      end
       get 'check_login' => 'sessions/helpers#check_login', :as => :check_login
     end
 

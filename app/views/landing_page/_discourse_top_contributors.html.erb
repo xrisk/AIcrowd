@@ -5,7 +5,7 @@
       <!-- user -->
       <li class="list-group-item">
         <% if top_contributor['participant'].present? %>
-          <%= render partial: 'participants/user_link', locals: { participant: top_contributor['participant'] } %>
+          <%= render partial: 'participants/get_user_profile', locals: { participant: top_contributor['participant'] } %>
         <% end %>
 
         <div class="community-info">

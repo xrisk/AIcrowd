@@ -21,11 +21,11 @@
           <div class="avatar-group">
             <% participants = participants.first(2) if sidebar %>
             <% participants.each do |participant| %>
-              <%= render partial: 'participants/user_link', locals: { participant: participant, username: false } %>
+              <%= render partial: 'participants/get_user_profile', locals: { participant: participant, username: 'false' } %>
             <% end %>
           </div>
         <% elsif participants.length == 1 %>
-          <%= render partial: 'participants/user_link', locals: { participant: participants[0] } %>
+          <%= render partial: 'participants/get_user_profile', locals: { participant: participants[0] } %>
         <% else %>
           <span>#</span>
         <% end %>
@@ -57,3 +57,4 @@
     <% end %>
   </tr>
 <% end %>
+</script>

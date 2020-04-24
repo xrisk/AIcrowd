@@ -109,7 +109,7 @@
           <ul class="list-group list-group-flush list-group-latest-contributors">
             <% @participants.each do |participant| %>
               <li class="list-group-item">
-                <%= render partial: 'participants/user_link', locals: { participant: participant } %>
+                <%= render partial: 'participants/get_user_profile', locals: { participant: participant } %>
                 <%= render partial: 'participants/show_reputation', locals: { participant: participant } %>
               </li>
             <% end %>
