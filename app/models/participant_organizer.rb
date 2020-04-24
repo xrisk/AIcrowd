@@ -4,6 +4,7 @@ class ParticipantOrganizer < ApplicationRecord
   validates :organizer_id, uniqueness: { scope: :participant_id }
 
   after_commit :add_participant_to_discourse_groups, on: :create
+  after_commit :remove_participant_from_discourse_group, on: :destroy
 
   private
 
@@ -12,6 +13,14 @@ class ParticipantOrganizer < ApplicationRecord
 
     organizer.challenges.draft_or_private.find_each do |challenge|
       Discourse::AddUsersToGroupJob.perform_later(challenge.id, [participant.id])
+    end
+  end
+
+  def remove_participant_from_discourse_group
+    return if Rails.env.development? || Rails.env.test?
+
+    organizer.challenges.find_each do |challenge|
+      Discourse::RemoveUsersFromGroupJob.perform_later(challenge.id, organizer.participant.name)
     end
   end
 end
