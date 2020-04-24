@@ -1,7 +1,7 @@
 <% avatar = avatar.present? ? avatar : true %>
 <% username = username.present? ? username : true %>
 <%
-  uniq_id = rand(1000)
+  uniq_id = SecureRandom.hex(2)
   random_class = 'tooltip-user-wrapper-' + uniq_id.to_s + '-' + participant.id.to_s
 %>
 <div class="tooltip-user-wrapper <%= random_class %>">
