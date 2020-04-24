@@ -2,5 +2,6 @@
   <script>
     ga('set', 'location', location.href.split('#')[0]);
     ga('send', 'pageview', {"title": document.title});
+    ga('send', 'pageview', {'page': location.pathname + location.search + location.hash});
   </script>
 <% end %>
