@@ -1,5 +1,5 @@
 $(".load-more").remove();
-$(".table-leaderboard").append("<%= j render partial: 'leaderboards', locals: { leaderboards: @leaderboards } %>");
+$(".table-leaderboard").append("<%= j render partial: 'leaderboards', locals: { leaderboards: @leaderboards, sidebar: false, current_round: @current_round } %>");
 $("#more-anchor").after("<%= j render partial: 'shared/load_more', locals: { collection: @leaderboards } %>");
 $('html, body').animate({
    scrollTop: $(document).height()-$(window).height()},
