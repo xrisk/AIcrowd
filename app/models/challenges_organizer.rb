@@ -11,6 +11,6 @@ class ChallengesOrganizer < ApplicationRecord
   def add_organizer_to_discourse_group
     return if Rails.env.development? || Rails.env.test?
 
-    Discourse::AddUsersToGroupJob.perform_later(challenge, organizer.participants)
+    Discourse::AddUsersToGroupJob.perform_later(challenge.id, organizer.participants.ids)
   end
 end

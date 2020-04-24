@@ -11,7 +11,7 @@ class ParticipantOrganizer < ApplicationRecord
     return if Rails.env.development? || Rails.env.test?
 
     organizer.challenges.draft_or_private.find_each do |challenge|
-      Discourse::AddUsersToGroupJob.perform_later(challenge, [participant])
+      Discourse::AddUsersToGroupJob.perform_later(challenge.id, [participant.id])
     end
   end
 end

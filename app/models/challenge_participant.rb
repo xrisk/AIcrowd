@@ -11,6 +11,6 @@ class ChallengeParticipant < ApplicationRecord
     return if Rails.env.development? || Rails.env.test?
     return unless challenge.hidden_in_discourse?
 
-    Discourse::AddUsersToGroupJob.perform_later(challenge, [participant])
+    Discourse::AddUsersToGroupJob.perform_later(challenge.id, [participant.id])
   end
 end
