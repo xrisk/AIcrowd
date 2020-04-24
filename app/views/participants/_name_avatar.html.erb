@@ -1,0 +1,6 @@
+<% if !defined?(avatar) || (defined?(avatar) && avatar && avatar != 'false') %>
+  <%= participant_avatar participant %>
+<% end %>
+<% if !defined?(username) || (defined?(username) && username && username != 'false') %>
+  <span class="text-link"><%= participant.name %></span>
+<% end %>

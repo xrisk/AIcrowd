@@ -17,7 +17,7 @@
         <div>
           <%= link_to discourse_topic['title'], discourse_topic_url(discourse_topic['slug']), class: 'topic-title text-link' %>
           <% if author['participant'].present? %>
-            <span>By <%= render partial: 'participants/user_link', locals: { participant: author['participant'], avatar: false } %> <%= discourse_time_ago(discourse_topic['created_at']) %></span>
+            <span>By <%= render partial: 'participants/get_user_profile', locals: { participant: author['participant'], avatar: 'false' } %> <%= discourse_time_ago(discourse_topic['created_at']) %></span>
           <% else %>
             <span><%= discourse_time_ago(discourse_topic['created_at']) %></span>
           <% end %>
@@ -27,7 +27,7 @@
       <div class="avatar-group col-2">
         <% discourse_topic['posters'].take(4).each_with_index do |poster, index| %>
           <% if poster['participant'].present? %>
-            <%= render partial: 'participants/user_link', locals: { participant: poster['participant'], username: false } %>
+            <%= render partial: 'participants/get_user_profile', locals: { participant: poster['participant'], username: 'false' } %>
           <% else %>
           <!-- TODO: Render profile for a default or deleted user ? -->
           <% end %>
