@@ -8,12 +8,19 @@ if Rails.env == 'development' || Rails.env == 'staging'
   Submission.destroy_all
   Partner.destroy_all
   ChallengeParticipant.destroy_all
+  ParticipantOrganizer.destroy_all
+  TeamMember.destroy_all
+  TeamParticipant.destroy_all
   Participant.destroy_all
   BaseLeaderboard.destroy_all
+  ChallengesOrganizer.destroy_all
   ChallengeRound.destroy_all
+  Team.destroy_all
   Challenge.destroy_all
   Partner.destroy_all
   Organizer.destroy_all
+  CategoryChallenge.destroy_all
+  Category.destroy_all
 
   # Admin
   Participant.create!(
@@ -23,6 +30,16 @@ if Rails.env == 'development' || Rails.env == 'staging'
     password_confirmation: 'password',
     admin: true,
     name: 'adminuser',
+    participation_terms_accepted_date: DateTime.now + 2,
+    participation_terms_accepted_version: 2,
+    agreed_to_terms_of_use_and_privacy: FFaker::Boolean.sample,
+    variation: rand(27).to_f,
+    temporary_variation: rand(27).to_f,
+    ranking: 5,
+    agreed_to_organizers_newsletter: FFaker::Boolean.sample,
+    agreed_to_marketing: FFaker::Boolean.sample,
+    fixed_rating: rand(27).to_f,
+    level: 2,
     confirmed_at: Time.now)
 
   # Users
@@ -37,6 +54,16 @@ if Rails.env == 'development' || Rails.env == 'staging'
       password_confirmation: 'password',
       name: "p#{id}",
       confirmed_at: Time.now,
+      participation_terms_accepted_date: DateTime.now + id,
+      participation_terms_accepted_version: id,
+      agreed_to_terms_of_use_and_privacy: FFaker::Boolean.sample,
+      variation: rand(27).to_f,
+      temporary_variation: rand(27).to_f,
+      ranking: id,
+      agreed_to_organizers_newsletter: FFaker::Boolean.sample,
+      agreed_to_marketing: FFaker::Boolean.sample,
+      fixed_rating: rand(27).to_f,
+      level: id
       )
   end
 
@@ -67,6 +94,16 @@ if Rails.env == 'development' || Rails.env == 'staging'
     city: "Mumbai",
     first_name: "Test",
     last_name: "User",
+    participation_terms_accepted_date: DateTime.now + 3,
+    participation_terms_accepted_version: 3,
+    agreed_to_organizers_newsletter: FFaker::Boolean.sample,
+    agreed_to_marketing: FFaker::Boolean.sample,
+    variation: rand(27).to_f,
+    temporary_variation: rand(27).to_f,
+    ranking: 10,
+    agreed_to_organizers_newsletter: FFaker::Boolean.sample,
+    fixed_rating: rand(27).to_f,
+    level: 7
   )
 
   member_poznac_ids = [1020, 1050, 1110]
@@ -78,6 +115,16 @@ if Rails.env == 'development' || Rails.env == 'staging'
       password: 'password',
       password_confirmation: 'password',
       name: "p#{id}",
+      participation_terms_accepted_date: DateTime.now + id,
+      participation_terms_accepted_version: 2,
+      agreed_to_organizers_newsletter: FFaker::Boolean.sample,
+      agreed_to_marketing: FFaker::Boolean.sample,
+      variation: rand(27).to_f,
+      temporary_variation: rand(27).to_f,
+      ranking: id,
+      agreed_to_organizers_newsletter: FFaker::Boolean.sample,
+      fixed_rating: rand(27).to_f,
+      level: id,
       confirmed_at: Time.now)
   end
 
@@ -90,6 +137,16 @@ if Rails.env == 'development' || Rails.env == 'staging'
       password: 'password',
       password_confirmation: 'password',
       name: "p#{id}",
+      participation_terms_accepted_date: DateTime.now + id,
+      participation_terms_accepted_version: id,
+      agreed_to_organizers_newsletter: FFaker::Boolean.sample,
+      agreed_to_marketing: FFaker::Boolean.sample,
+      variation: rand(27).to_f,
+      temporary_variation: rand(27).to_f,
+      ranking: id,
+      agreed_to_organizers_newsletter: FFaker::Boolean.sample,
+      fixed_rating: rand(27).to_f,
+      level: id,
       confirmed_at: Time.now)
   end
 
@@ -144,6 +201,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       require_registration: false,
       grading_history: true,
       post_challenge_submissions: false,
+      scrollable_overview_tabs: true,
+      other_scores_fieldnames: 'field_name_1',
       latest_submission: false},
     {id: 370,
       challenge: "TEST: Train Schedule Optimisation Challenge",
@@ -188,6 +247,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       require_registration: false,
       grading_history: true,
       post_challenge_submissions: false,
+      scrollable_overview_tabs: false,
+      other_scores_fieldnames: 'field_name_2',
     latest_submission: false},
     {id: 371,
       challenge: "TEST:2 Programmer Schedule Optimisation Challenge",
@@ -232,6 +293,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       require_registration: false,
       grading_history: true,
       post_challenge_submissions: false,
+      scrollable_overview_tabs: true,
+      other_scores_fieldnames: 'field_name_3',
     latest_submission: false},
     {id: 373,
       challenge: "TEST:3 Programmer Schedule Optimisation Challenge",
@@ -276,6 +339,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       require_registration: false,
       grading_history: true,
       post_challenge_submissions: false,
+      scrollable_overview_tabs: false,
+      other_scores_fieldnames: 'field_name_4',
     latest_submission: false},
     {id: 372,
       challenge: "TEST:4 Programmer Schedule Optimisation Challenge",
@@ -320,6 +385,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       require_registration: false,
       grading_history: true,
       post_challenge_submissions: false,
+      scrollable_overview_tabs: true,
+      other_scores_fieldnames: 'field_name_5',
     latest_submission: false},
     {id: 30,
       challenge: "Visual Doom AI Competition 2018 - Singleplayer Track (1)",
@@ -363,6 +430,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       require_registration: false,
       grading_history: false,
       post_challenge_submissions: false,
+      other_scores_fieldnames: 'field_name_6',
+      scrollable_overview_tabs: false,
     latest_submission: false}
   ])
 
@@ -382,6 +451,7 @@ if Rails.env == 'development' || Rails.env == 'staging'
       score_precision: 3,
       score_secondary_precision: 3,
       leaderboard_note_markdown: "",
+      assigned_permanent_badge: true,
       leaderboard_note: "\n"},
     {id: 52,
       challenge_id: 37,
@@ -398,6 +468,7 @@ if Rails.env == 'development' || Rails.env == 'staging'
       score_precision: 3,
       score_secondary_precision: 3,
       leaderboard_note_markdown: "",
+      assigned_permanent_badge: false,
       leaderboard_note: "\n"},
     {id: 42,
       challenge_id: 30,
@@ -414,6 +485,7 @@ if Rails.env == 'development' || Rails.env == 'staging'
       score_precision: 3,
       score_secondary_precision: 3,
       leaderboard_note_markdown: "",
+      assigned_permanent_badge: true,
       leaderboard_note: "\n"}
   ])
 
@@ -699,4 +771,66 @@ Submission.create!([
   ParticipationTerms.create!(
     terms: "Sample Participation Terms. Please update at '/admin/participation_terms'"
   )
+
+  #Create Team,TeamParticipant, ParticipantOrganizer and ChallengesOrganizer
+  organizer_ids = Organizer.all.ids
+  challenge_ids = Challenge.all.ids
+
+  challenge_ids.each do |challenge_id|
+    Team.create(name: "Team#{challenge_id}", challenge_id: challenge_id)
+    ChallengeParticipant.create(challenge_id: challenge_id, participant_id: participant_ids.sample, email: "cp#{challenge_id}@example.com", name: "test_cp_#{challenge_id}", registered: FFaker::Boolean.sample)
+    ChallengesOrganizer.create(challenge_id: challenge_id, organizer_id: organizer_ids.sample)
+  end
+
+  team_ids = Team.all.ids
+
+  #TeamParticipant with role organizer
+  team_ids.each do |team_id|
+    TeamParticipant.create(participant_id: participant_ids.first(10).sample, team_id: team_id, role: :organizer)
+  end
+
+  #TeamParticipant with role member
+  team_ids.each do |team_id|
+    TeamParticipant.create(participant_id: participant_ids.last(10).sample, team_id: team_id, role: :member)
+  end
+
+  #TeamMember
+  participant_ids.first(10).each do |participant_id|
+    TeamMember.create(name: "team-main-member#{participant_id}", title: FFaker::Lorem.unique.sentence(3), section: 'Main', seq: participant_id, participant_id: participant_id)
+  end
+
+  participant_ids.last(10).each do |participant_id|
+    TeamMember.create(name: "team-member#{participant_id}", title: FFaker::Lorem.unique.sentence(3), section: 'Member', seq: participant_id, participant_id: participant_id)
+  end
+
+  Participant.all.each do |participant|
+    ParticipantOrganizer.create(participant_id: participant.id, organizer_id: organizer_ids.sample)
+  end
+
+  #Create ChallengeCall
+  organizer_ids.each_with_index do |org_id, indx|
+    ChallengeCall.create(title: FFaker::Lorem.unique.sentence(3), website: "challenge_call#{indx}@example.com", closing_date: DateTime.now + 10, organizer_id: org_id, acknowledged: FFaker::Boolean.sample)
+  end
+
+  #Create Category & CategoryChallenge
+  (1..20).each do |n|
+    Category.create(id: n, name: "Category#{n}")
+    CategoryChallenge.create(category_id: n, challenge_id: challenge_ids.sample)
+  end
+
+  #Create Leaderboard with submitter Participant
+  BaseLeaderboard.create!([
+    {
+      challenge_id: 30, challenge_round_id: 32, submitter_type: 'Participant', submitter_id: 5366, row_num: 2, previous_row_num: 1, slug: 'p-leaderboard-1', name: 'leaderboard1', entries: 5, score: 344.5, description: '<p>description1</p>', leaderboard_type_cd: "leaderboard", submission_id: 12447
+    },
+    {
+      challenge_id: 30, challenge_round_id: 32, submitter_type: 'Participant', submitter_id: 112233, row_num: 3, previous_row_num: 2, slug: 'p-leaderboard-2', name: 'leaderboard2', entries: 6, score: 355.5, description: '<p>description2</p>', leaderboard_type_cd: "leaderboard", submission_id: 12448
+    },
+    {
+      challenge_id: 30, challenge_round_id: 32, submitter_type: 'Participant', submitter_id: 11816, row_num: 4, previous_row_num: 3, slug: 'p-leaderboard-3', name: 'leaderboard3', entries: 7, score: 455.5, description: '<p>description3</p>', leaderboard_type_cd: "leaderboard", submission_id: 11816
+    },
+    {
+      challenge_id: 30, challenge_round_id: 32, submitter_type: 'Participant', submitter_id: 11817, row_num: 5, previous_row_num: 4, slug: 'p-leaderboard-4', name: 'leaderboard4', entries: 8, score: 555.5, description: '<p>description4</p>', leaderboard_type_cd: "leaderboard", submission_id: 11817
+    }
+  ])
 end
