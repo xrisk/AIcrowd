@@ -7,7 +7,7 @@ export default class extends Controller {
     }
     
     $(document).ready(function() {
-      var submission = ace.edit('ace-editor');
+      const submission = ace.edit('ace-editor');
       submission.getSession().setMode("ace/mode/python");
     
       //--- Theme Handler ----//

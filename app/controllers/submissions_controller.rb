@@ -243,7 +243,11 @@ class SubmissionsController < ApplicationController
   def handle_code_based_submissions
     return if params[:submission][:submission_type] != "code"
     file_location = get_s3_key.gsub("${filename}", "editor_input." + params[:language])
-    S3_BUCKET.object(file_location).put(body: params[:submission][:submission_data])
+    begin
+      S3_BUCKET.object(file_location).put(body: params[:submission][:submission_data])
+    rescue Aws::S3::Errors::ServiceError
+      redirect_to challenge_submissions_path(@challenge), notice: 'Submission upload failed, please try again.'
+    end
 
     params[:submission].merge!({
       submission_files_attributes: {"0": {seq: "", submission_type: params[:language], submission_file_s3_key: file_location}}
@@ -251,8 +255,8 @@ class SubmissionsController < ApplicationController
   end
 
   def handle_artifact_based_submissions
-    return if !params[:submission][:submission_files_attributes].has_key?("0")
-    return if params[:submission][:submission_files_attributes]["0"][:submission_type] != "artifact"
+    return if !params.dig('submission', 'submission_files_attributes').has_key?("0")
+    return if params.dig('submission', 'submission_files_attributes', '0', 'submission_type') != 'artifact'
     # TODO: Make this accepted extension list dynamic via evaluations API
     accepted_formats = [".csv", ".ipynb", ".pt"]
     file_path = params[:submission][:submission_files_attributes]["0"][:submission_file_s3_key]
