@@ -63,7 +63,7 @@
         <!-- category group -->
         <div class='category-group'>
           <% challenge.categories.each do |category| %>
-            <%= link_to challenges_path(category: {category_names: [category.name]}) do %>
+            <%= link_to challenges_path(categories: category.name) do %>
               <span class='badge badge-outline'>#<%= category.name.parameterize.underscore %></span>
             <% end %>
           <% end %>
