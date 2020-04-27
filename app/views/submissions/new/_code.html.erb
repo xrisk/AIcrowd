@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-md-12" data-controller="code-based-submission">
   <% if @challenge.completed? %>
     <br/>
     <p>This challenge is now completed. You may continue to make submissions and your entries will appear on the Ongoing Leaderboard.</p>
@@ -44,38 +44,6 @@
       <div class="ace-editor-pad"></div>
     </div>
     <small class="form-text">The code should generate all the artifacts, see example codes for more idea.</small>
-
-    <script>
-    if (localStorage.getItem("aceEditorTheme") === null) {
-      localStorage.setItem("aceEditorTheme", "ace/theme/github");
-    }
-
-    $(document).ready(function() {
-      var submission = ace.edit('ace-editor');
-
-      submission.getSession().setMode("ace/mode/python");
-
-      //--- Theme Handler ----//
-      var userSelectedTheme = localStorage.getItem("aceEditorTheme");
-      submission.setTheme(userSelectedTheme);
-      $('#ace-editor-theme').val(userSelectedTheme);
-      // Future theme changes
-      $('#ace-editor-theme').change(function() {
-        selectedTheme = $(this).val();
-        localStorage.setItem("aceEditorTheme", selectedTheme);
-        submission.setTheme(selectedTheme);
-      });
-      //--- End Theme Handler ----//
-
-      //--- Ace Editor to form field ---//
-      var textarea = $('#ace-editor-value');
-      submission.getSession().on("change", function () {
-        textarea.val(submission.getSession().getValue());
-      });
-      //--- End Ace Editor to form field ---//
-    });
-    </script>
-
     <% if @challenge.license.present? %>
       <p class="margin-bottom">
         <%= sanitize_html(@challenge.license) %>
