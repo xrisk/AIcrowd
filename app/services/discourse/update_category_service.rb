@@ -34,12 +34,32 @@ module Discourse
       # - category name has to be unique
       # - slug has to be unique
       client.put(
-        "/categories/#{challenge.discourse_category_id}.json", {
-          name:       truncated_string(challenge.challenge, ensure_uniqueness),
-          color:      ::Discourse::BaseService::CATEGORY_DEFAULT_COLOR,
-          text_color: ::Discourse::BaseService::CATEGORY_DEFAULT_TEXT_COLOR
-        }
+        "/categories/#{challenge.discourse_category_id}.json", category_request_payload(ensure_uniqueness)
       )
+    end
+
+    def category_request_payload(ensure_uniqueness)
+      payload = {
+        name:       truncated_string(challenge.challenge, ensure_uniqueness),
+        color:      ::Discourse::BaseService::CATEGORY_DEFAULT_COLOR,
+        text_color: ::Discourse::BaseService::CATEGORY_DEFAULT_TEXT_COLOR
+      }
+
+      payload.merge!(permissions: discourse_permissions) if challenge.discourse_group_name.present?
+
+      payload
+    end
+
+    def discourse_permissions
+      if challenge.hidden_in_discourse?
+        {
+          challenge.discourse_group_name => ::Discourse::BaseService::DEFAULT_GROUP_PERMISSIONS
+        }
+      else
+        {
+          ::Discourse::BaseService::DEFAULT_GROUP_NAME => ::Discourse::BaseService::DEFAULT_GROUP_PERMISSIONS
+        }
+      end
     end
   end
 end

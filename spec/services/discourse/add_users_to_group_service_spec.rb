@@ -48,10 +48,13 @@ describe Discourse::AddUsersToGroupService do
         let(:first_participant)  { create(:participant, name: 'random_name') }
         let(:second_participant) { create(:participant, name: 'second_randomename') }
 
-        it 'raises Discourse::BadRequest error' do
-          VCR.use_cassette('discourse_api/add_users_to_group/failure_username_does_not_exist_in_discourse') do
-            expect { subject.call }.to raise_error(Discourse::BadRequest)
+        it 'returns failure' do
+          result = VCR.use_cassette('discourse_api/add_users_to_group/failure_username_does_not_exist_in_discourse') do
+            subject.call
           end
+
+          expect(result).to be_failure
+          expect(result.value).to include('You supplied invalid parameters to the request: usernames')
         end
       end
     end

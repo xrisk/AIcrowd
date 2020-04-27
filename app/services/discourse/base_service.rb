@@ -3,6 +3,8 @@ module Discourse
     LOGGER_URL                  = 'log/discourse_api.log'.freeze
     CATEGORY_DEFAULT_COLOR      = '49d9e9'.freeze
     CATEGORY_DEFAULT_TEXT_COLOR = 'f0fcfd'.freeze
+    DEFAULT_GROUP_PERMISSIONS   = 1.freeze
+    DEFAULT_GROUP_NAME          = 'everyone'.freeze
 
     protected
 
@@ -32,6 +34,7 @@ module Discourse
       participants.find { |participant| participant.name == username }
     end
 
+
     def get_participants(discourse_users)
       usernames = discourse_users.map { |discourse_user| discourse_user['username'] }.uniq
 
@@ -52,8 +55,12 @@ module Discourse
 
       block.call
     rescue Discourse::Error, Discourse::UnauthenticatedError, Discourse::NotFoundError => e
-      Logger.new(::Discourse::BaseService::LOGGER_URL).error(e.message)
+      discourse_logger.error(e.message)
       failure(e.message)
+    end
+
+    def discourse_logger
+      @logger ||= Logger.new(::Discourse::BaseService::LOGGER_URL)
     end
   end
 end
