@@ -4,7 +4,8 @@ module Export
 
     attributes *::Challenge::IMPORTABLE_FIELDS, :submission_file_definitions_attributes,
                :challenges_organizers_attributes, :category_challenges_attributes,
-               :challenge_partners_attributes, :challenge_rules_attributes, :image_file
+               :challenge_partners_attributes, :challenge_rules_attributes, :image_file,
+               :dataset_files_attributes
 
     def image_file
       ::Images::Base64EncodeService.new(image_url: object.image_file.url).call.value
@@ -30,6 +31,10 @@ module Export
 
     def category_challenges_attributes
       object.category_challenges.map { |category_challenge| Export::CategoryChallengeSerializer.new(category_challenge).as_json }
+    end
+
+    def dataset_files_attributes
+      object.dataset_files.map { |dataset_file| Export::DatasetFileSerializer.new(dataset_file).as_json }
     end
   end
 end

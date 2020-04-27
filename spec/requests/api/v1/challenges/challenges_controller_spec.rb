@@ -91,13 +91,13 @@ describe Api::V1::Challenges::ChallengesController, type: :request do
         context 'when challenge has dataset_files' do
           let!(:dataset_files) { create_list(:dataset_file, 3, challenge: challenge) }
 
-          it 'doesn\'t import new dataset files' do
+          it 'does import new dataset files' do
             expect(challenge.dataset_files.count).to eq 4
 
             patch api_v1_challenge_path(challenge), params: file_fixture('json/challenge_import.json').read, headers: headers
 
             expect(response).to have_http_status(:ok)
-            expect(challenge.reload.dataset_files.count).to eq 4
+            expect(challenge.reload.dataset_files.count).to eq 6
           end
         end
       end
