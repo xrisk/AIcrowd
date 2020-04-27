@@ -12,4 +12,6 @@ VCR.configure do |config|
 
   config.filter_sensitive_data('REDACTED') { ENV['DISCOURSE_API_USERNAME'] }
   config.filter_sensitive_data('REDACTED') { ENV['DISCOURSE_API_KEY'] }
+  config.filter_sensitive_data('REDACTED') { ENV['EVALUATIONS_API_KEY'] }
+  config.filter_sensitive_data('REDACTED') { ENV['EVALUATIONS_API_HOST'] }
 end

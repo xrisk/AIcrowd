@@ -10,38 +10,40 @@ class EvaluationsApiService
     grader = get_grader
     create_submission(grader.id)
   rescue StandardError => e
-    Submission.update(
+    Submission.update!(
       @submission.id,
       grading_status:  'failed',
       grading_message: e.message)
     raise e
   end
 
+  private
+
   def create_submission(grader_id)
     artifact = get_submission_artifact
     attribute = {
-      :participant_id => @submission.participant.id,
-      :grader_id => grader_id,
-      :round_id => @submission.challenge_round_id,
-      :submission_data => {
-        :type => artifact.submission_type,
+      grader_id: grader_id,
+      meta: {
+        participant_id: @submission.participant.id,
+        round_id: @submission.challenge_round_id,
+        submission_id: @submission.id,
+        challenge_client_name: @submission.challenge.challenge_client_name,
+        domain_name: ENV['DOMAIN_NAME'],
+        aicrowd_token: ENV['AICROWD_API_KEY']
+      }.to_json,
+      submission_data: {
+        type: artifact.submission_type,
         # TODO: Directly submit s3 url as submission instead of downloading
-        :code => download_s3_file(artifact.submission_file_s3_key)
+        code: download_s3_file(artifact.submission_file_s3_key)
       }
     }
     payload = AIcrowdEvaluations::Submissions.new attribute
     submission_api = AIcrowdEvaluations::SubmissionsApi.new
     submission_response = submission_api.create_submission(payload)
-    Submission.update(
+    Submission.update!(
       @submission.id,
       grading_status: 'submitted',
       grading_message: 'Evaluating...')
-  rescue StandardError => e
-    Submission.update(
-      @submission.id,
-      grading_status:  'failed',
-      grading_message: e.message)
-    raise e
   end
 
   def get_grader
@@ -50,7 +52,7 @@ class EvaluationsApiService
     grader = grader_api.get_grader(@grader_id)
     if grader.status != "Completed"
       message = "Grader not ready for submissions"
-      Submission.update(
+      Submission.update!(
         @submission.id,
         grading_status: 'failed',
         grading_message: message)

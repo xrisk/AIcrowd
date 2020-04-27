@@ -246,7 +246,7 @@ class SubmissionsController < ApplicationController
     S3_BUCKET.object(file_location).put(body: params[:submission][:submission_data])
 
     params[:submission].merge!({
-      :submission_files_attributes => {"0" => {:seq => "", :submission_type => params[:language], :submission_file_s3_key => file_location}}
+      submission_files_attributes: {"0": {seq: "", submission_type: params[:language], submission_file_s3_key: file_location}}
     })
   end
 
