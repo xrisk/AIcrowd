@@ -76,10 +76,10 @@ class Challenge < ApplicationRecord
               ELSE 5
             END, challenges.participant_count DESC")
   end
-  scope :prize_cash, -> { where.not(prize_cash: nil) }
-  scope :prize_travel, -> { where.not(prize_travel: nil) }
-  scope :prize_academic, -> { where.not(prize_academic: nil) }
-  scope :prize_misc, -> { where.not(prize_misc: nil) }
+  scope :prize_cash, -> { where.not(prize_cash: [nil, ""]) }
+  scope :prize_travel, -> { where.not(prize_travel: [nil, ""]) }
+  scope :prize_academic, -> { where.not(prize_academic: [nil, ""]) }
+  scope :prize_misc, -> { where.not(prize_misc: [nil, ""]) }
 
   after_initialize :set_defaults
   after_create :create_discourse_category

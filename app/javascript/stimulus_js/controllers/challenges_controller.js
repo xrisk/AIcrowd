@@ -21,7 +21,7 @@ export default class extends Controller {
     let url = window.location.origin + window.location.pathname
     let params = ''
 
-    if(status.value !== undefined){
+    if(status !== null && status.value !== undefined){
       params = params.concat('status=', status.value);
     }
 
