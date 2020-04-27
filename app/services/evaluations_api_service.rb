@@ -10,8 +10,7 @@ class EvaluationsApiService
     grader = get_grader
     create_submission(grader.id)
   rescue StandardError => e
-    Submission.update(
-      @submission.id,
+    @submission.update!(
       grading_status:  'failed',
       grading_message: e.message)
     raise e
@@ -40,8 +39,7 @@ class EvaluationsApiService
     payload = AIcrowdEvaluations::Submissions.new attribute
     submission_api = AIcrowdEvaluations::SubmissionsApi.new
     submission_response = submission_api.create_submission(payload)
-    Submission.update(
-      @submission.id,
+    @submission.update!(
       grading_status: 'submitted',
       grading_message: 'Evaluating...')
   end
@@ -52,8 +50,7 @@ class EvaluationsApiService
     grader = grader_api.get_grader(@grader_id)
     if grader.status != "Completed"
       message = "Grader not ready for submissions"
-      Submission.update(
-        @submission.id,
+      @submission.update!(
         grading_status: 'failed',
         grading_message: message)
       raise message
