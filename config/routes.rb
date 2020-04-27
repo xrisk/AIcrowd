@@ -55,6 +55,9 @@ Rails.application.routes.draw do
       resources :participants, only: [] do
         get :user_profile, on: :member
       end
+      resources :newsletter_emails, only: [] do
+        post :decline, on: :member
+      end
       resource :api_user, only: :show
 
       get 'check_login' => 'sessions/helpers#check_login', :as => :check_login

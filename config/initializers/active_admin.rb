@@ -293,6 +293,7 @@ ActiveAdmin.setup do |config|
   # Integrate CKeditor
   config.register_javascript 'https://cdn.ckeditor.com/4.14.0/standard-all/ckeditor.js'
   config.register_javascript 'ckeditor/config.js'
+  config.register_javascript 'active_admin/newsletter_emails.js'
 
   meta_tags_options                     = { viewport: 'width=device-width, initial-scale=1' }
   config.meta_tags                      = meta_tags_options
