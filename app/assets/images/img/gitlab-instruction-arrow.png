@@ -1,0 +1,11 @@
+--2020-04-27 21:59:17--  https://i.imgur.com/Mp0lGtQ.png
+Resolving i.imgur.com (i.imgur.com)... 151.101.196.193
+Connecting to i.imgur.com (i.imgur.com)|151.101.196.193|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2805 (2.7K) [image/png]
+Saving to: ‘Mp0lGtQ.png’
+
+     0K ..                                                    100% 4.67M=0.001s
+
+2020-04-27 21:59:18 (4.67 MB/s) - ‘Mp0lGtQ.png’ saved [2805/2805]
+
