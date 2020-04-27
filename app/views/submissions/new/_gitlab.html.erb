@@ -40,8 +40,13 @@
     <pre>
     <code class="hljs json">
     {
+<% if @challenge.evaluator_type_cd == "evaluations_api" %>
+      "challenge_id" : "<%= @challenge.slug %>",
+      "grader_id": "<%= @challenge.slug %>",
+<% else %>
       "challenge_id" : "<%= @challenge.challenge_client_name %>",
       "grader_id": "<%= @challenge.challenge_client_name %>",
+<% end %>
       "authors" : ["<%= current_participant.name %>"],
       "description" : "<%= @challenge.challenge %> Agent",
       "debug" : false
