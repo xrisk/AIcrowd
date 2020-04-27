@@ -94,8 +94,28 @@ module Challenges
         :additional_checkbox_text,
         :additional_checkbox_text_markdown,
         :version
+      ],
+      dataset_files_attributes: [
+        :id,
+        :seq,
+        :description,
+        :dataset_file_s3_key,
+        :evaluation,
+        :title,
+        :hosting_location,
+        :external_url,
+        :visible,
+        :external_file_size
       ]
     }.freeze
+
+    RESETTABLE_ASSOCIATIONS = [
+      :challenges_organizers,
+      :category_challenges,
+      :submission_file_definitions,
+      :challenge_partners,
+      :challenge_rules,
+    ].freeze
 
     IMPORTABLE_IMAGES = [
       :image_file,

@@ -8,7 +8,9 @@ module Challenges
     def call
       return failure('Import failed: There are no params to import') if challenge_params.blank?
 
-      drop_unwanted_associations
+      reset_associations
+      remove_ids_from_not_existing_records
+
       @challenge.attributes = challenge_params
 
       return failure('Import failed: At least one organizer must be provided') if @challenge.challenges_organizers.none?
@@ -24,21 +26,25 @@ module Challenges
 
     private
 
-    attr_reader :import_params
-    attr_accessor :challenge
+    attr_accessor :challenge, :import_params
 
     def challenge_params
-      @challenge_params ||= import_params&.permit(*permitted_params)
+      import_params&.permit(*permitted_params)
     end
 
     def permitted_params
       ::Challenge::IMPORTABLE_FIELDS + ::Challenge::IMPORTABLE_ASSOCIATIONS.map { |key, value| { key => value } }
     end
 
-    def drop_unwanted_associations
-      Challenges::ImportConstants::IMPORTABLE_ASSOCIATIONS.keys.each do |association|
-        association_name = association.to_s.remove('_attributes')
-        challenge.public_send("#{association_name}=", [])
+    def reset_associations
+      Challenges::ImportConstants::RESETTABLE_ASSOCIATIONS.each do |association|
+        challenge.public_send("#{association}=", [])
+      end
+    end
+
+    def remove_ids_from_not_existing_records
+      import_params[:dataset_files_attributes].each do |dataset_file|
+        dataset_file[:id] = nil unless DatasetFile.exists?(id: dataset_file[:id], challenge_id: challenge.id)
       end
     end
 
