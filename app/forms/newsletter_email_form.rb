@@ -20,7 +20,8 @@ class NewsletterEmailForm
       cc:          cc_emails.join(', '),
       subject:     subject,
       message:     message,
-      participant: participant
+      participant: participant,
+      challenge:   challenge
     )
 
     true

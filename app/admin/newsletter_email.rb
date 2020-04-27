@@ -20,6 +20,7 @@ ActiveAdmin.register NewsletterEmail do
     column :message
     column :pending
     column :participant
+    column :challenge
     column :created_at
     column :updated_at
     actions default: true do |resource|

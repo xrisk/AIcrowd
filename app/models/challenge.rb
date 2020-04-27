@@ -53,6 +53,7 @@ class Challenge < ApplicationRecord
   accepts_nested_attributes_for :category_challenges, reject_if: :all_blank
 
   has_many :categories, through: :category_challenges
+  has_many :newsletter_emails, class_name: 'NewsletterEmail'
 
   as_enum :status,
           %i[draft running completed starting_soon],
