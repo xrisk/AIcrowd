@@ -7,7 +7,7 @@
             <%= render partial: 'participants/show_reputation', locals: { participant: participant, full: true, partial_class: 'reputation-top' } %>
             <%= render partial: 'participants/show_temporary_reputation', locals: { participant: participant, full: true, partial_class: 'reputation-top' } %>
             <br>
-            <span class="reputation-rank">Rank: #<%= participant.ranking %></span>
+            <span class="reputation-rank">Rank: #<%= (participant.ranking != -1)? participant.ranking: "Not Applicable to the User" %></span>
         </div>
     </div>
 </div>
