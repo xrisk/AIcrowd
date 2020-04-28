@@ -3,8 +3,8 @@ require 'rails_helper'
 describe BlogsController, type: :controller do
   render_views
 
-  let!(:blog_1)      { create(:blog) }
-  let!(:blog_2)      { create(:blog) }
+  let!(:blog_1)      { create(:blog, seq: 1) }
+  let!(:blog_2)      { create(:blog, seq: 2) }
   let!(:unpublished) { create(:blog, published: false, participant_id: author.id) }
 
   let(:participant) { create(:participant) }
