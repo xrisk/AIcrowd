@@ -255,7 +255,6 @@ class SubmissionsController < ApplicationController
   end
 
   def handle_artifact_based_submissions
-    return if !params.dig('submission', 'submission_files_attributes').has_key?("0")
     return if params.dig('submission', 'submission_files_attributes', '0', 'submission_type') != 'artifact'
     # TODO: Make this accepted extension list dynamic via evaluations API
     accepted_formats = [".csv", ".ipynb", ".pt"]
