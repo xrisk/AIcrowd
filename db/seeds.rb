@@ -777,60 +777,49 @@ Submission.create!([
   challenge_ids = Challenge.all.ids
 
   challenge_ids.each do |challenge_id|
-    Team.create(name: "Team#{challenge_id}", challenge_id: challenge_id)
-    ChallengeParticipant.create(challenge_id: challenge_id, participant_id: participant_ids.sample, email: "cp#{challenge_id}@example.com", name: "test_cp_#{challenge_id}", registered: FFaker::Boolean.sample)
-    ChallengesOrganizer.create(challenge_id: challenge_id, organizer_id: organizer_ids.sample)
+    Team.create!(name: "Team#{challenge_id}", challenge_id: challenge_id)
+    ChallengeParticipant.create!(challenge_id: challenge_id, participant_id: participant_ids.sample, email: "cp#{challenge_id}@example.com", name: "test_cp_#{challenge_id}", registered: FFaker::Boolean.sample)
+    ChallengesOrganizer.create!(challenge_id: challenge_id, organizer_id: organizer_ids.sample)
   end
 
   team_ids = Team.all.ids
 
   #TeamParticipant with role organizer
   team_ids.each do |team_id|
-    TeamParticipant.create(participant_id: participant_ids.first(10).sample, team_id: team_id, role: :organizer)
+    TeamParticipant.create!(participant_id: participant_ids.first(10).sample, team_id: team_id, role: :organizer)
   end
 
   #TeamParticipant with role member
   team_ids.each do |team_id|
-    TeamParticipant.create(participant_id: participant_ids.last(10).sample, team_id: team_id, role: :member)
+    TeamParticipant.create!(participant_id: participant_ids.last(10).sample, team_id: team_id, role: :member)
   end
 
   #TeamMember
   participant_ids.first(10).each do |participant_id|
-    TeamMember.create(name: "team-main-member#{participant_id}", title: FFaker::Lorem.unique.sentence(3), section: 'Main', seq: participant_id, participant_id: participant_id)
+    TeamMember.create!(name: "team-main-member#{participant_id}", title: FFaker::Lorem.unique.sentence(3), section: 'Main', seq: participant_id, participant_id: participant_id)
   end
 
   participant_ids.last(10).each do |participant_id|
-    TeamMember.create(name: "team-member#{participant_id}", title: FFaker::Lorem.unique.sentence(3), section: 'Member', seq: participant_id, participant_id: participant_id)
+    TeamMember.create!(name: "team-member#{participant_id}", title: FFaker::Lorem.unique.sentence(3), section: 'Member', seq: participant_id, participant_id: participant_id)
   end
 
   Participant.all.each do |participant|
-    ParticipantOrganizer.create(participant_id: participant.id, organizer_id: organizer_ids.sample)
+    ParticipantOrganizer.create!(participant_id: participant.id, organizer_id: organizer_ids.sample)
   end
 
   #Create ChallengeCall
   organizer_ids.each_with_index do |org_id, indx|
-    ChallengeCall.create(title: FFaker::Lorem.unique.sentence(3), website: "challenge_call#{indx}@example.com", closing_date: DateTime.now + 10, organizer_id: org_id, acknowledged: FFaker::Boolean.sample)
+    ChallengeCall.create!(title: FFaker::Lorem.unique.sentence(3), website: "challenge_call#{indx}@example.com", closing_date: DateTime.now + 10, organizer_id: org_id, acknowledged: FFaker::Boolean.sample)
   end
 
   #Create Category & CategoryChallenge
   (1..20).each do |n|
-    Category.create(id: n, name: "Category#{n}")
-    CategoryChallenge.create(category_id: n, challenge_id: challenge_ids.sample)
+    Category.create!(id: n, name: "Category#{n}")
+    CategoryChallenge.create!(category_id: n, challenge_id: challenge_ids.sample)
   end
 
   #Create Leaderboard with submitter Participant
-  BaseLeaderboard.create!([
-    {
-      challenge_id: 30, challenge_round_id: 32, submitter_type: 'Participant', submitter_id: 5366, row_num: 2, previous_row_num: 1, slug: 'p-leaderboard-1', name: 'leaderboard1', entries: 5, score: 344.5, description: '<p>description1</p>', leaderboard_type_cd: "leaderboard", submission_id: 12447
-    },
-    {
-      challenge_id: 30, challenge_round_id: 32, submitter_type: 'Participant', submitter_id: 112233, row_num: 3, previous_row_num: 2, slug: 'p-leaderboard-2', name: 'leaderboard2', entries: 6, score: 355.5, description: '<p>description2</p>', leaderboard_type_cd: "leaderboard", submission_id: 12448
-    },
-    {
-      challenge_id: 30, challenge_round_id: 32, submitter_type: 'Participant', submitter_id: 11816, row_num: 4, previous_row_num: 3, slug: 'p-leaderboard-3', name: 'leaderboard3', entries: 7, score: 455.5, description: '<p>description3</p>', leaderboard_type_cd: "leaderboard", submission_id: 11816
-    },
-    {
-      challenge_id: 30, challenge_round_id: 32, submitter_type: 'Participant', submitter_id: 11817, row_num: 5, previous_row_num: 4, slug: 'p-leaderboard-4', name: 'leaderboard4', entries: 8, score: 555.5, description: '<p>description4</p>', leaderboard_type_cd: "leaderboard", submission_id: 11817
-    }
-  ])
+  Submission.all.each_with_index do |submission, indx|
+    BaseLeaderboard.create!(challenge_id: submission.challenge_id, challenge_round_id: submission.challenge_round_id, submitter_type: 'Participant', submitter_id: submission.participant_id, row_num: indx + 2, previous_row_num: indx + 1, slug: "p-leaderboard-#{indx}", name: "leaderboard#{indx}", entries: submission.id, score: indx + submission.id, description: "<p>description#{indx}</p>", leaderboard_type_cd: "leaderboard", submission_id: submission.id)
+  end
 end
