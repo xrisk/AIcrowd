@@ -9,9 +9,7 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-
-ActiveRecord::Schema.define(version: 2020_04_20_071527) do
-
+ActiveRecord::Schema.define(version: 2020_04_27_094259) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_stat_statements"
@@ -684,7 +682,9 @@ ActiveRecord::Schema.define(version: 2020_04_20_071527) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "participant_id"
-    t.boolean "declined", default: false, null: false
+    t.bigint "challenge_id"
+    t.text "decline_reason"
+    t.index ["challenge_id"], name: "index_newsletter_emails_on_challenge_id"
     t.index ["participant_id"], name: "index_newsletter_emails_on_participant_id"
   end
 
@@ -1104,6 +1104,7 @@ ActiveRecord::Schema.define(version: 2020_04_20_071527) do
   add_foreign_key "follows", "participants"
   add_foreign_key "invitations", "challenges"
   add_foreign_key "invitations", "participants"
+  add_foreign_key "newsletter_emails", "challenges"
   add_foreign_key "newsletter_emails", "participants"
   add_foreign_key "notifications", "participants"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"

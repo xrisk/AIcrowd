@@ -1,5 +1,5 @@
 module Organizers
-  class NewsletterEmailMailer < ApplicationMailer
+  class DeclinedEmailMailer < ApplicationMailer
     include SanitizationHelper
 
     def sendmail(newsletter_email)
@@ -12,27 +12,29 @@ module Organizers
     def format_options(newsletter_email)
       options = {
         participant_id:    newsletter_email.participant_id,
-        subject:           "[#{newsletter_email.challenge&.challenge}] #{newsletter_email.subject}",
+        subject:           "[#{newsletter_email.challenge&.challenge}] Your newsletter e-mail was declined",
         to:                newsletter_email.participant.email,
-        cc:                newsletter_email.cc,
-        bcc:               newsletter_email.bcc,
-        template:          'AICrowd Newsletter Email Template',
+        template:          'AICrowd Declined Email Template',
         global_merge_vars: [
           {
             name:    'BODY',
-            content: sanitize_html(newsletter_email.message)
+            content: newsletter_email.decline_reason
+          },
+          {
+            name:    'NAME',
+            content: newsletter_email.participant.name
           },
           {
             name:    'CHALLENGE_NAME',
             content: newsletter_email.challenge&.challenge.to_s
           },
           {
-            name:    'CHALLENGE_URL',
-            content: challenge_url(id: newsletter_email&.challenge&.id.to_i)
+            name:    'DECLINE_REASON',
+            content: newsletter_email.decline_reason
           },
           {
-            name:    'EMAIL_PREFERENCES_URL',
-            content: edit_participant_registration_url
+            name:    'NEW_NEWSLETTER_EMAIL_URL',
+            content: new_challenge_newsletter_emails_url(challenge_id: newsletter_email.challenge_id.to_i)
           }
         ]
       }
