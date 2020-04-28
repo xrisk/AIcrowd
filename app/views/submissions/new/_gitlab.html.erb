@@ -1,0 +1,118 @@
+<div class="col-md-8 col-lg-7" id="description-wrapper">
+  <div class="md-content">
+    <% if @challenge.completed? %>
+      <p>This challenge is now completed. You may continue to make submissions and your entries will appear on the Ongoing Leaderboard.</p>
+    <% end %>
+
+    <% if @challenge.running? %>
+    <blockquote><p>ℹ️
+        <% if @reset_dttm %>
+          You have <%= pluralize(@submissions_remaining,'submission') %> remaining until <%= @reset_dttm %>.
+        <% else %>
+          You have <%= pluralize(@submissions_remaining,'submission') %> remaining.
+        <% end %>
+      </p></blockquote>
+    <% end %>
+
+    <% if @challenge.submission_instructions.present? %>
+      <label>
+        <%= sanitize_html(@challenge.submission_instructions) %>
+      </label>
+    <% end %>
+
+    <% if @challenge.license.present? %>
+    <p class="margin-bottom">
+    <%= sanitize_html(@challenge.license) %>
+    </p>
+    <% end %>
+
+    <h2>How this works?</h2>
+    <p>To submit to the challenge you'll need to ensure you've set up an appropriate repository structure, create a private git repository at&nbsp;<a href="https://gitlab.aicrowd.com/">https://gitlab.aicrowd.com</a>&nbsp;with the contents of your submission, and push a git tag corresponding to the version of your repository you'd like to submit.</p>
+
+    <h2 id="repository-structure">Repository Structure</h2>
+
+    <p>We have created this sample submission repository which you can use as reference. <b>For up to date structure for your challenge, please starter kit provided by challenge organisers.</b></p>
+
+    <h3 id="aicrowdjson">aicrowd.json</h3>
+
+    <p>Your repository should have a aicrowd.json file with following fields:</p>
+
+    <pre>
+    <code class="hljs json">
+    {
+<% if @challenge.evaluator_type_cd == "evaluations_api" %>
+      "challenge_id" : "<%= @challenge.slug %>",
+      "grader_id": "<%= @challenge.slug %>",
+<% else %>
+      "challenge_id" : "<%= @challenge.challenge_client_name %>",
+      "grader_id": "<%= @challenge.challenge_client_name %>",
+<% end %>
+      "authors" : ["<%= current_participant.name %>"],
+      "description" : "<%= @challenge.challenge %> Agent",
+      "debug" : false
+    }
+    </code>
+    </pre>
+
+    <p>This file is used to identify your submission as a part of the <%= @challenge.challenge %> Challenge. You must use the <code>challenge_id</code> and <code>grader_id</code> specified above in the submission. You can enable <a href="https://discourse.aicrowd.com/t/how-to-view-logs-for-your-submission/2370">"debug" mode</a> for having quicker submission with smaller dataset, for integration testing, those submissions score would not be counted toward leaderboard.</p>
+
+    <h3 id="submission-environment-configuration">Submission environment configuration</h3>
+
+    <p>You can specify your software environment by using <code>Dockerfile</code>, <code>environment.yml</code>, <code>requirements.txt</code> and so on. The list of available methods <a href="https://discourse.aicrowd.com/t/how-to-specify-runtime-environment-for-your-submission/2274" target="_blank">are available here</a>.</p>
+
+    <p>For example, to use Anaconda configuration files you can include an <code>environment.yml</code> file:</p>
+
+    <pre>
+      <code class=" hljs coffeescript">
+      conda env <span class="hljs-reserved">export</span> --<span class="hljs-literal">no</span>-build &gt; environment.yml
+      </code>
+    </pre>
+
+    <h4 id="code-entrypoint">Code Entrypoint</h4>
+
+    <p>The evaluator will use&nbsp;<code>/home/aicrowd/run.sh</code>&nbsp;as the entrypoint. Please remember to have a&nbsp;<code>run.sh</code>&nbsp;at the root which can instantiate any necessary environment variables and execute your code. This repository includes a sample&nbsp;<code>run.sh</code>&nbsp;file.</p>
+
+    <h2 id="submitting">Submitting</h2>
+
+    <blockquote>🖥️ Before making submission, you need to have your git setup done and <a href="https://discourse.aicrowd.com/t/how-to-add-ssh-key-to-gitlab/2603" target="_blank">add SSH key on AIcrowd GitLab</a>.</blockquote>
+
+    <p>You can create a submission by making a <em>tag push</em> to your repository with prefix <code>submission-</code>. An example is shown below (you can keep repository name as you desire or have multiple repositories):</p>
+
+    <pre>
+      <code class=" hljs php">
+# Optional: Start working with starter kit as starting point.
+git clone &lt;starter-kit-url&gt;
+cd <%= @challenge.slug %>
+
+# Add AICrowd git remote endpoint
+git remote add aicrowd git@gitlab.aicrowd.com:<%= current_participant.name %>/<%= @challenge.slug %>.git
+git push aicrowd master
+
+# Create a tag for your submission and push
+git tag -am "submission-v0.1" submission-v0.1
+git push aicrowd master
+git push aicrowd submission-v0.1
+
+# Note : If the contents of your repository (latest commit hash) does not change, 
+# then pushing a new tag will not trigger a new evaluation.
+      </code>
+    </pre>
+
+    <p>You now should be able to see the details of your submission in the repository's issue tracker. Example based on above: <a href="https://gitlab.aicrowd.com/<%= current_participant.name %>/<%= @challenge.slug %>/issues" target="_blank">https://gitlab.aicrowd.com/<%= current_participant.name %>/<%= @challenge.slug %>/issues</a></p>
+
+    <p>Happy Submitting!! 🚀</p>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="md-content">
+      <blockquote>💬 Any questions? Discuss with community and work together by joining <a href="i<%= challenge_discussion_path(challenge) =>">Discourse Forum</a>.</blockquote>
+    </div>
+    <img class="img-fluid mb-4" src="/assets/img/gitlab-instruction-1.png" />
+    <img class="img-fluid mx-auto d-block w-25" src="/assets/img/gitlab-instruction-arrow.png" />
+    <img class="img-fluid mb-4" src="/assets/img/gitlab-instruction-2.png" />
+    <img class="img-fluid mx-auto d-block w-25" src="/assets/img/gitlab-instruction-arrow.png" />
+    <img class="img-fluid mb-4" src="/assets/img/gitlab-instruction-3.png" />
+    <img class="img-fluid mx-auto d-block w-25" src="/assets/img/gitlab-instruction-arrow.png" />
+    <img class="img-fluid mb-4" src="/assets/img/gitlab-instruction-4.png" />
+  </div>
+</div>

@@ -4,6 +4,7 @@ class Api::SubmissionFileSerializer < ActiveModel::Serializer
 
   attributes :id,
              :submission_file_s3_key,
+             :submission_type,
              :aws_url
 
   def aws_url

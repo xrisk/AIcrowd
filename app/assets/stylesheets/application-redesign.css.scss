@@ -12057,6 +12057,10 @@ body {
   margin: 2.5rem 0;
 }
 
+.md-content pre {
+  max-width: 640px;
+}
+
 .text-mention {
   color: #2D7680;
   font-weight: 600;
@@ -13759,6 +13763,23 @@ html {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.organizer-actions-dropdown {
+  margin-left: auto;
+}
+
+.ace-editor-outer {
+  border: 1px solid #c5c5c5;
+}
+
+.ace-editor-outer pre {
+  margin-bottom: 0px;
+}
+
+#code-submission, .ace_editor {
+  height: 600px;
+  margin: 0px;
 }
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';

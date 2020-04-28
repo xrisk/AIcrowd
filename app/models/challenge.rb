@@ -66,6 +66,16 @@ class Challenge < ApplicationRecord
   validates :challenge_client_name, presence: true
   validate :other_scores_fieldnames_max
 
+
+  EVALUATOR_TYPES = {
+    'Not Configured' => :not_configured,
+    'CSV Submissions (v1, Default)' => :broker,
+    'GitLab Submissions (v1)' => :gitlab,
+    'Evaluations API (v2, Beta)' => :evaluations_api
+  }.freeze
+
+  as_enum :evaluator_type, EVALUATOR_TYPES.keys(), map: :string
+
   default_scope do
     order("challenges.featured_sequence,
             CASE challenges.status_cd

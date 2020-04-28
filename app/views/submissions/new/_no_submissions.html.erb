@@ -1,3 +1,4 @@
+<div class="col-md-12" id="description-wrapper">
 <div class='info-content'>
 <% if @reset_dttm.nil? %>
   <% if @challenge.challenge_rounds.count > 1 %>
@@ -9,4 +10,5 @@
   <p>You do not have any submissions remaining.</p>
   <p>Submissions will be possible as of <%= @reset_dttm %>.</p>
 <% end %>
+</div>
 </div>

@@ -113,6 +113,9 @@ gem 'httparty'
 
 gem 'irbtools', require: 'irbtools/binding'
 
+# ACE editor
+gem 'ace-rails-ap'
+
 group :development do
   gem "letter_opener"
   gem 'brakeman', require: false
@@ -158,3 +161,5 @@ group :test do
   gem 'vcr', '~> 5.0'
   gem 'webmock', '~> 3.7', '>= 3.7.6'
 end
+
+gem 'aicrowd_evaluations', :git => 'http://gitlab.aicrowd.com/aicrowd/evaluations-api-clients.git', :branch => 'rails', glob: 'ruby/*.gemspec'

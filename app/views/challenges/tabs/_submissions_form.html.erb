@@ -1,5 +1,6 @@
 <div>
-  <h4>This page configures the optional online submissions page, if the challenge requires it.</h4>
+  <h4 class="mb-4">Submission Settings</h4>
+
   <div class="form-group">
     <% if challenge.organizers.any?(&:clef_organizer?) %>
       <%= render partial: 'challenges/fields/clef_fields', locals: {f: f} %>
@@ -8,7 +9,7 @@
     <%= render partial: 'challenges/fields/fancy_radio', locals: {
         f: f,
         name: :online_submissions,
-        text: "Online Submissions Permitted",
+        text: "Submissions Enabled",
         p: {data: {target: 'challenge-submission.online', action: 'click->challenge-submission#toggleOnline'}}} %>
 
 
@@ -20,6 +21,39 @@
 
   </div>
 
+  <hr/>
+
+  <div class="form-group">
+  <h4>Evaluation Configuration</h4>
+  <span>⚠️ <i>Please take help from AIcrowd team in this section.</i></span>
+  </div>
+
+
+  <p>
+  </p>
+  <div class="row">
+    <div class="form-group col-sm-12 col-md-4">
+      <span class="label-text">Grader Type</span>
+      <%= f.select :evaluator_type_cd, Challenge::EVALUATOR_TYPES, {}, class: 'form-control' %>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-4">
+      <span class="label-text">Challenge client name</span>
+      <%= f.text_field :challenge_client_name, class: "form-control" %>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-4">
+      <span class="label-text">Grader identifier</span>
+      <%= f.text_field :grader_identifier, class: "form-control" %>
+    </div>
+  </div>
+
+  <hr/>
+
+  <div class="form-group">
+  <h4>Instructions and License</h4>
+  </div>
+
   <div class="form-group">
     <span class="label-text">Submission Instructions</span>
     <div class="md-content">
@@ -28,9 +62,9 @@
   </div>
 
   <div class="form-group">
-    <span class="label-text">Submission Instructions</span>
-    <h4>This license text is displayed on the submission upload page during and after the challenge</h4>
-    <div class="md-content">
+    <span class="label-text">Submission License Text</span>
+    <i>This license text is displayed on the submission upload page during and after the challenge</i>
+    <div class="md-content mt-2">
       <%= f.cktext_area :license, class: "form-control", placeholder: "Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC)." %>
     </div>
   </div>

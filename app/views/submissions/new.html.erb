@@ -5,17 +5,15 @@
 <section class="section-p-md">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-8 col-lg-7" id="description-wrapper">
-			  <% if @submissions_remaining == 0 %>
-			    <%= render partial: 'submissions/new/no_submissions' %>
-			  <% else %>
-			    <% if @challenge.organizers.any? { |organizer| organizer.clef? } %>
-			      <%= render partial: 'submissions/new/clef_form' %>
-			    <% else %>
-			      <%= render partial: 'submissions/new/form' %>
-			    <% end %>
-			  <% end %>
-      </div>
+      <% if @submissions_remaining == 0 %>
+        <%= render partial: 'submissions/new/no_submissions' %>
+      <% else %>
+        <% if @challenge.organizers.any? { |organizer| organizer.clef? } %>
+          <%= render partial: 'submissions/new/clef_form' %>
+        <% else %>
+          <%= render partial: 'submissions/new/' + @form %>
+        <% end %>
+      <% end %>
     </div>
   </div>
 </section>
