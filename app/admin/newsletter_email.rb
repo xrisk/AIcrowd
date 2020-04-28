@@ -27,7 +27,7 @@ ActiveAdmin.register NewsletterEmail do
     actions default: true do |resource|
       if resource.pending?
         a 'Approve', href: approve_admin_newsletter_email_path(resource), 'data-method': :post, 'data-confirm':  'Are you sure you want to send this e-mail to participants?', class: 'member_link'
-        a 'Deccline', href: '#', 'data-request-url': decline_admin_newsletter_email_url(resource), class: 'member_link newsletter-emails__decline-button'
+        a 'Decline', href: '#', 'data-request-url': decline_admin_newsletter_email_url(resource), class: 'member_link newsletter-emails__decline-button'
       end
     end
   end
@@ -44,7 +44,7 @@ ActiveAdmin.register NewsletterEmail do
     div class: 'actions newsletter-emails__actions' do
       if resource.pending?
         a 'Approve', href: approve_admin_newsletter_email_path(resource), 'data-method': :post, 'data-confirm':  'Are you sure you want to send this e-mail to participants?', class: 'member_link newsletter-emails__button'
-        a 'Deccline', href: '#', 'data-request-url': decline_admin_newsletter_email_url(resource), class: 'member_link newsletter-emails__decline-button'
+        a 'Decline', href: '#', 'data-request-url': decline_admin_newsletter_email_url(resource), class: 'member_link newsletter-emails__decline-button'
       end
     end
 
@@ -60,6 +60,7 @@ ActiveAdmin.register NewsletterEmail do
 
   member_action :decline, method: :post do
     resource.update!(pending: false, decline_reason: params[:decline_reason])
+    Organizers::DeclinedEmailJob.perform_later(resource.id)
 
     redirect_to admin_newsletter_emails_path, flash: { notice: 'Newsletter email has been declined.' }
   end
