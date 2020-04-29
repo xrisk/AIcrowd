@@ -15,7 +15,7 @@ class NewsletterEmailForm
       return false
     end
 
-    NewsletterEmail.create!(
+    newsletter_email = NewsletterEmail.create!(
       bcc:         bcc_emails.join(', '),
       cc:          cc_emails.join(', '),
       subject:     subject,
@@ -23,6 +23,8 @@ class NewsletterEmailForm
       participant: participant,
       challenge:   challenge
     )
+
+    Admin::NewsletterEmailNotificationJob.perform_later(newsletter_email.id)
 
     true
   end

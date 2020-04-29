@@ -24,7 +24,10 @@ class Participant < ApplicationRecord
          :omniauthable, omniauth_providers: %i[github oauth2_generic]
 
   default_scope { order('participants.name ASC') }
+
   scope :rated_users_count, -> { Participant.where("ranking > 0").count }
+  scope :admins, -> { where(admin: true) }
+
   has_many :participant_organizers, dependent: :destroy
   has_many :organizers, through: :participant_organizers
   has_many :submissions, dependent: :nullify
