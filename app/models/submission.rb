@@ -23,19 +23,8 @@ class Submission < ApplicationRecord
 
   validates :challenge_id, presence: true
   validates :grading_status, presence: true
-  validate :clef_validations
 
   delegate :name, :email, to: :participant, allow_nil: true
-
-  def clef_validations
-    return true
-    return true unless challenge.organizer.clef?
-
-    if clef_method_description.length < 5
-      errors.add(:clef_method_description,
-                 'Must be at least 5 characters.')
-    end
-  end
 
   after_create do
     if challenge_round_id.blank?
