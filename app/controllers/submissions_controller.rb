@@ -259,6 +259,9 @@ class SubmissionsController < ApplicationController
     # TODO: Make this accepted extension list dynamic via evaluations API
     accepted_formats = [".csv", ".ipynb", ".pt"]
     file_path = params[:submission][:submission_files_attributes]["0"][:submission_file_s3_key]
+
+    return if file_path.blank?
+
     extension = File.extname(file_path)
     if accepted_formats.include?(extension)
       params[:submission][:submission_files_attributes]["0"][:submission_type] = extension.gsub(/^./, "")
