@@ -9,7 +9,8 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema.define(version: 2020_04_27_094259) do
+ActiveRecord::Schema.define(version: 2020_04_29_101948) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_stat_statements"
@@ -576,6 +577,12 @@ ActiveRecord::Schema.define(version: 2020_04_27_094259) do
     t.datetime "updated_at", null: false
     t.index ["followable_id", "followable_type"], name: "index_follows_on_followable_id_and_followable_type"
     t.index ["participant_id"], name: "index_follows_on_participant_id"
+  end
+
+  create_table "footers", force: :cascade do |t|
+    t.text "body", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
