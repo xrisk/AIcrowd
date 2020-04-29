@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 ActiveRecord::Schema.define(version: 2020_04_30_234339) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_stat_statements"
@@ -900,6 +901,8 @@ ActiveRecord::Schema.define(version: 2020_04_30_234339) do
     t.boolean "jobs_visible", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "banner_text", default: "We are Hiring!", null: false
+    t.string "banner_color", default: "#F0524D", null: false
   end
 
   create_table "submission_file_definitions", id: :serial, force: :cascade do |t|
