@@ -101,6 +101,12 @@ module ChallengesHelper
     end
   end
 
+  def detect_meta_challenge(challenge)
+    if is_current_page_meta_challenge_child(challenge)
+      return Challenge.friendly.find(params[:meta_challenge_id])
+    end
+  end
+
   private
 
   def remaining_time_in_hours(challenge_round)
@@ -149,19 +155,26 @@ module ChallengesHelper
     end
   end
 
-  def meta_challenge(link, challenge)
+  def is_current_page_meta_challenge_child(challenge)
     if params.has_key?('meta_challenge_id')
       if challenge.is_a?(String)
         if challenge != params['meta_challenge_id']
-          return challenge_path(params['meta_challenge_id']) + link.gsub(/^\/challenges/, "/problems")
+          return true
         end
       elsif challenge.is_a?(Hash)
         if challenge.has_key?(:challenge_id) && (challenge[:challenge_id] != params['meta_challenge_id'])
-          return challenge_path(params['meta_challenge_id']) + link.gsub(/^\/challenges/, "/problems")
+          return true
         end
       elsif challenge.slug != params['meta_challenge_id']
-        return challenge_path(params['meta_challenge_id']) + link.gsub(/^\/challenges/, "/problems")
+        return true
       end
+    end
+    return false
+  end
+
+  def meta_challenge(link, challenge)
+    if is_current_page_meta_challenge_child(challenge)
+      return challenge_path(params['meta_challenge_id']) + link.gsub(/^\/challenges/, "/problems")
     end
     return link
   end
@@ -237,4 +250,68 @@ module ChallengesHelper
     meta_challenge(path, args[0])
   end
 
+ def edit_challenge_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def edit_challenge_dataset_file_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def export_challenge_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def filter_challenge_submissions_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def import_challenge_invitations_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def new_challenge_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def new_challenge_dataset_file_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def new_challenge_newsletter_emails_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def new_challenge_submission_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def remove_image_challenge_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def remove_invited_challenge_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def submissions_vs_time_challenge_insights_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def top_score_vs_time_challenge_insights_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
 end

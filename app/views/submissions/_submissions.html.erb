@@ -27,6 +27,7 @@
       <td class="text-right"><%= local_time(submission.created_at, "%a, %e %b %Y") %> <br>
         <%= local_time(submission.created_at, "%H:%M:%S") %></td>
     <% unless sidebar %>
+      <% if @challenge.meta_challenge %><td><%= link_to challenge.challenge, challenge_path(challenge) %></td><% end %>
       <% if challenge.submissions_page %>
         <td class="text-right"><%= link_to "View", challenge_submission_path(challenge, submission.id), class: "btn btn-secondary btn-sm" %></td>
       <% end %>
