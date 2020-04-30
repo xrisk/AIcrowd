@@ -20,7 +20,7 @@ class SubmissionsController < ApplicationController
     if params[:baselines] == 'true'
       @search = policy_scope(Submission)
                     .where(
-                      challenge_round_id: @current_round.id,
+                      challenge_round_id: @current_round&.id,
                       challenge_id:       @challenge.id,
                       baseline:           true)
                     .where.not(participant_id: nil)
@@ -32,7 +32,7 @@ class SubmissionsController < ApplicationController
       if @my_submissions
         @search = policy_scope(Submission)
                       .where(
-                        challenge_round_id: @current_round.id,
+                        challenge_round_id: @current_round&.id,
                         challenge_id:       @challenge.id,
                         participant_id:     current_participant.id)
                       .search(search_params)
@@ -42,7 +42,7 @@ class SubmissionsController < ApplicationController
       else
         @search = policy_scope(Submission)
                       .where(
-                        challenge_round_id: @current_round.id,
+                        challenge_round_id: @current_round&.id,
                         challenge_id:       @challenge.id)
                       .search(search_params)
       end
@@ -172,7 +172,7 @@ class SubmissionsController < ApplicationController
     @current_round = if params[:challenge_round_id].present?
                        @challenge.challenge_rounds.find(params[:challenge_round_id].to_i)
                      else
-                       @challenge.active_round
+                       @challenge.active_round || @challenge.challenge_rounds.first
                      end
   end
 
@@ -259,6 +259,9 @@ class SubmissionsController < ApplicationController
     # TODO: Make this accepted extension list dynamic via evaluations API
     accepted_formats = [".csv", ".ipynb", ".pt"]
     file_path = params[:submission][:submission_files_attributes]["0"][:submission_file_s3_key]
+
+    return if file_path.blank?
+
     extension = File.extname(file_path)
     if accepted_formats.include?(extension)
       params[:submission][:submission_files_attributes]["0"][:submission_type] = extension.gsub(/^./, "")
