@@ -47,6 +47,15 @@ class SubmissionsController < ApplicationController
                       .search(search_params)
       end
     end
+
+    if @challenge.meta_challenge
+      params[:meta_challenge_id] = @challenge.slug
+      @search = policy_scope(Submission)
+                      .where(
+                        challenge_round_id: [@challenge.meta_active_round_ids])
+                      .search(search_params)
+    end
+
     @search.sorts = 'created_at desc' if @search.sorts.empty?
     @submissions  = @search.result.includes(:participant).page(params[:page]).per(10)
   end

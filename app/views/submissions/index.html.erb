@@ -15,7 +15,7 @@
             </p>
           <% end %>
 
-          <% if @challenge.challenge_rounds.count > 1 %>
+          <% if @challenge.challenge_rounds.count > 1 && !@challenge.meta_challenge %>
             <!-- sub-nav pills -->
             <ul class="nav nav-pills">
               <% @challenge.challenge_rounds.each do |challenge_round| %>
@@ -52,6 +52,7 @@
                   <% end %>
                   <th scope="col" class="status"><%= sort_link(@search, :grading_message, 'Message') %></th>
                   <th scope="col" class="text-right"><%= sort_link(@search, :created_at,"Submission") %></th>
+                  <% if @challenge.meta_challenge %><th scope="col">Challenge</th><% end %>
                   <th scope="col" class="text-right"></th>
                 </tr>
                 </thead>
