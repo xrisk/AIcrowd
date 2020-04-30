@@ -1,3 +1,14 @@
+<% if @meta_challenge %>
+<div class="navigation" style="padding: 10px;background: #ef514d;">
+  <div class="container-fluid">
+    <span>
+      <%= link_to challenge_path(@meta_challenge.slug), {:style=>'color:white;'} do %>
+        Back to <%= @meta_challenge.challenge %>
+      <% end %>
+    </span>
+  </div>
+</div>
+<% end %>
 <!-- masthead - challenge -->
 <div class="masthead masthead-challenge">
   <div class="container-fluid">
@@ -13,6 +24,9 @@
           <%= link_to challenges_path(categories: category.name) do %>
             <span class='badge badge-outline'>#<%= category.name.parameterize.underscore %></span>
           <% end %>
+        <% end %>
+        <% if challenge_weight(challenge) %>
+          <span class="badge badge-gold">Weight: <%= challenge_weight(challenge) %></span>
         <% end %>
       </div>
     </div>

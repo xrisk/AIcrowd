@@ -16,6 +16,10 @@ module ChallengesHelper
   end
 
   def required_terms_or_rules_path(challenge)
+    if params.has_key?('meta_challenge_id')
+      challenge = Challenge.friendly.find(params[:meta_challenge_id])
+    end
+
     if !policy(challenge).has_accepted_participation_terms?
       [challenge, ParticipationTerms.current_terms]
     elsif !policy(challenge).has_accepted_challenge_rules?
@@ -88,6 +92,15 @@ module ChallengesHelper
     raw(raw_options)
   end
 
+  def challenge_weight(challenge)
+    if params.has_key?(:meta_challenge_id)
+      challenge_problem_mapping = Challenge.friendly.find(params[:meta_challenge_id]).challenge_problems.find_by(problem_id: challenge.id)
+      if challenge_problem_mapping
+        return challenge_problem_mapping.weight
+      end
+    end
+  end
+
   private
 
   def remaining_time_in_hours(challenge_round)
@@ -135,4 +148,93 @@ module ChallengesHelper
       challenge_participant_challenges_path(challenge)
     end
   end
+
+  def meta_challenge(link, challenge)
+    if params.has_key?('meta_challenge_id')
+      if challenge.is_a?(String)
+        if challenge != params['meta_challenge_id']
+          return challenge_path(params['meta_challenge_id']) + link.gsub(/^\/challenges/, "/problems")
+        end
+      elsif challenge.is_a?(Hash)
+        if challenge.has_key?(:challenge_id) && (challenge[:challenge_id] != params['meta_challenge_id'])
+          return challenge_path(params['meta_challenge_id']) + link.gsub(/^\/challenges/, "/problems")
+        end
+      elsif challenge.slug != params['meta_challenge_id']
+        return challenge_path(params['meta_challenge_id']) + link.gsub(/^\/challenges/, "/problems")
+      end
+    end
+    return link
+  end
+
+  #TODO: Generate below routes dynamically via meta programming
+  def challenge_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def challenge_dataset_file_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def challenge_discussion_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def challenge_dynamic_contents_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def challenge_insights_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def challenge_leaderboards_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def challenge_newsletter_emails_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def challenge_participants_country_challenge_insights_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def challenge_submission_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def challenge_submissions_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def challenge_team_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def challenge_team_invitations_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def challenge_teams_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
+  def challenge_winners_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
 end
