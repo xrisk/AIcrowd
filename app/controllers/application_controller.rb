@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :set_paper_trail_whodunnit
   after_action :track_action
   before_action :store_user_location!, if: :storable_location?
+  before_action :modify_params_for_meta_challenges
 
   def track_action
     properties         = { request: request.filtered_parameters }
@@ -32,6 +33,22 @@ class ApplicationController < ActionController::Base
       u.permit(:name, :email, :password, :password_confirmation, :remember_me,
                :agreed_to_terms_of_use_and_privacy,
                :agreed_to_marketing)
+    end
+  end
+
+  def modify_params_for_meta_challenges
+    if controller_name == "challenges"
+      if params.has_key?('challenge_id')
+        params[:meta_challenge_id] = params['challenge_id']
+        params.delete('challenge_id')
+      end
+    end
+    if params.has_key?('problem_id')
+      if params.has_key?('challenge_id')
+        params[:meta_challenge_id] = params['challenge_id']
+        params[:challenge_id] = params['problem_id']
+        params.delete('problem_id')
+      end
     end
   end
 
