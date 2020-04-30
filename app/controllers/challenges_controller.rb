@@ -47,6 +47,11 @@ class ChallengesController < ApplicationController
     @challenge_baseline_discussion = @challenge.baseline_discussion
     @latest_five_submissions = @challenge.latest_five_submissions
     @top_five_leaderboards = @challenge.top_five_leaderboards
+
+    if @challenge.meta_challenge
+      params[:meta_challenge_id] = params['id']
+      render :template => "challenges/show_meta_challenge"
+    end
   end
 
   def new
@@ -150,6 +155,12 @@ class ChallengesController < ApplicationController
     @challenge = Challenge.includes(:organizers).friendly.find(params[:id])
     @challenge = @challenge.versions[params[:version].to_i].reify if params[:version]
     authorize @challenge
+    if params.has_key?('meta_challenge_id')
+      @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id])
+      if !@meta_challenge.meta_challenge or !@meta_challenge.problems.include?(@challenge)
+        raise ActionController::RoutingError.new('Not Found')
+      end
+    end
   end
 
   def set_vote
@@ -255,6 +266,7 @@ class ChallengesController < ApplicationController
       :dynamic_content,
       :dynamic_content_url,
       :scrollable_overview_tabs,
+      :meta_challenge,
       image_attributes: [
         :id,
         :image,

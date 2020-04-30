@@ -1,0 +1,62 @@
+<%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
+<%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
+
+<!-- section -->
+<section class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="row col-lg-9">
+        <header class="section-header-decorative">
+          <div>
+            <h4>Problem Statements</h4>
+          </div>
+        </header>
+        <div class="row col-md-12">
+          <%= render partial: 'shared/challenges/listing_compact', locals: { challenges: @challenge.problems } %>
+          <% if policy(@challenge).edit? %>
+              <div class="col-md-4">
+                <div style="height: 90%;border: 1px dashed #d8d0d0;min-height: 300px;">
+                  <%= link_to "problems" do %>
+                  <div style="margin-top: 30%; position: absolute; font-size: 30px; color: #ded5d5; text-align: center;">
+                    <img src="/assets/img/icon-plus-grey.png"><br/>
+                    <span>Add/Remove Problems</span>
+                  </div>
+                  <% end %>
+                </div>
+              </div>
+          <% end %>
+        </div>
+        <header class="section-header-decorative mt-4">
+          <div>
+            <h4>About</h4>
+          </div>
+        </header>
+        <div class="row">
+          <!-- md content -->
+          <div class="col-md-12" id="description-wrapper">
+            <div class="markdown-wrap">
+              <div class="md-content ck-content" data-controller="challenge-overview" data-action="resize@window->challenge-overview#showTOC">
+                <%= sanitize_html(@challenge.description) %>
+                <% if controller_name == 'challenges' && show_action? && @partners.present? %>
+                <h2>Sponsors and Partners</h2>
+                  <% @partners.each do |partner| %>
+                    <% if partner.image_file.present?  %>
+                      <figure class="image">
+                        <%= image_tag partner.image_file.url %>
+                      </figure>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="top-contributors-container col-sm-12 col-md-4 col-lg-3">
+        <%= render 'challenges/show/sidenav', challenge: @challenge, top_leaderboards: @top_five_leaderboards, latest_submissions: @latest_five_submissions, challenge_baseline_discussion: @challenge_baseline_discussion %>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /section -->
