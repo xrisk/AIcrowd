@@ -1,6 +1,6 @@
 <% @participant_challenges.each do |challenge_participant| %>
   <% participant = challenge_participant.participant %>
-  <li class="list-group-item">
+  <li class="list-group-item" style="z-index: auto;">
     <%= render partial: 'participants/get_user_profile', locals: { participant: participant } %>
   </li>
 <% end %>
