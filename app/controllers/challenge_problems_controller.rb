@@ -13,6 +13,8 @@ class ChallengeProblemsController < ApplicationController
     end
   end
 
+  private
+
   def create
     obj = ChallengeProblems.new({
       challenge_id: @challenge.id,
@@ -34,31 +36,8 @@ class ChallengeProblemsController < ApplicationController
     end
   end
 
-  private
-
-  def challenge_call_response_params
-    params
-      .require(:challenge_call_response)
-      .permit(
-        :contact_name,
-        :email,
-        :phone,
-        :organization,
-        :challenge_title,
-        :challenge_description,
-        :motivation,
-        :organizers_bio,
-        :timeline,
-        :other,
-        :evaluation_criteria)
-  end
-
   def set_challenge
     @challenge = Challenge.friendly.find(params[:id])
     @challenge_rounds = @challenge.challenge_rounds
-    #authorize @challenge
-    #if !@challenge.meta_challenge
-    #  raise ActionController::RoutingError.new('Not Found')
-    #end
   end
 end
