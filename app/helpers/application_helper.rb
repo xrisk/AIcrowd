@@ -139,10 +139,18 @@ module ApplicationHelper
   end
 
   def banner_text
-    Setting.first&.banner_text&.gsub('<p>', '')&.gsub('</p>', '')&.html_safe || 'We are Hiring!'
+    Setting.banner_record&.gsub('<p>', '')&.gsub('</p>', '')&.html_safe
   end
 
   def banner_color
-    Setting.first&.banner_color || '#F0524D'
+    Setting.banner_color_value
+  end
+
+  def footer_text
+    Setting.footer_record
+  end
+
+  def footer_color
+    Setting.footer_color_value
   end
 end

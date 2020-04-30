@@ -42,7 +42,7 @@
 						<%= link_to 'Our Team', team_members_path, {:class => "nav-link"} %>
 					</li>
 					<li class="nav-item">
-						<%= link_to banner_text, job_postings_path, {:class => "nav-link"} %>
+						<%= link_to 'We are Hiring!', job_postings_path, {:class => "nav-link"} %>
 					</li>
 				</ul>
 			</div>
@@ -100,4 +100,11 @@
 		</div>
 	</div>
 </footer>
+<!-- custom footer -->
+<% if  Setting.footer_record.present? %>
+	<div class="alert alert-flash alert-dismissible fade show alert-fixed" role="alert" style="background-color: <%= footer_color %> !important">
+		<%= footer_text %>
+	</div>
+<% end %>
+<!-- /custom footer -->
 <!-- /app footer -->
