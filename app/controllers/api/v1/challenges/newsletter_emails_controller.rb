@@ -2,6 +2,8 @@ module Api
   module V1
     module Challenges
       class NewsletterEmailsController < ActionController::API
+        before_action :set_challenge, only: :preview
+
         def preview
           newsletter_email = NewsletterEmail.new(newsletter_email_preview_params)
 
@@ -16,7 +18,11 @@ module Api
         private
 
         def newsletter_email_preview_params
-          params.require(:newsletter_email).permit(:subject, :message).merge(participant: current_participant)
+          params.require(:newsletter_email).permit(:subject, :message).merge(participant: current_participant, challenge: @challenge)
+        end
+
+        def set_challenge
+          @challenge = Challenge.find(params[:challenge_id])
         end
       end
     end
