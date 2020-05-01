@@ -59,11 +59,9 @@
   <body id='<%= body_id %>' data-turbolinks="false">
     <%= render partial: 'layouts/loader' %>
     <div id='page-content'>
-      <%= render partial: 'layouts/header_old' %>
       <%= render 'layouts/flash_messages' %>
       <%= yield %>
       <%= insert_paloma_hook %>
-      <%= render partial: 'layouts/footer_old' %>
     </div>
     <%= render partial: 'layouts/google_analytics_body' %>
   </body>
