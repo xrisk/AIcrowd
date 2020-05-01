@@ -47,6 +47,7 @@ gem 'groupdate'
 gem 'informant-rails'
 gem 'include_media_rails'
 gem 'inline_svg'
+gem "intercom-rails"
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jbuilder'
