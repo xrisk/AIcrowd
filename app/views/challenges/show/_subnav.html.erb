@@ -12,7 +12,9 @@
       <% if !challenge.meta_challenge %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Insights', link: challenge_insights_path(challenge)} %>
       <% end %>
-      <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Resources', link: resources_link(challenge)} %>
+      <% if !challenge.meta_challenge %>
+        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Resources', link: resources_link(challenge)} %>
+      <% end %>
       <% if policy(challenge).show_submissions? %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Submissions', link: challenge_submissions_path(challenge)} %>
       <% end %>
