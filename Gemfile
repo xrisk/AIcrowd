@@ -51,7 +51,6 @@ gem 'lodash-rails'
 gem 'local_time'
 gem "loofah", ">= 2.2.3"
 gem 'mandrill-api'
-gem 'merit'
 gem 'momentjs-rails', '~> 2.9'
 gem 'mini_magick'
 gem 'mini_racer'

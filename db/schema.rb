@@ -95,14 +95,42 @@ ActiveRecord::Schema.define(version: 2020_05_13_101320) do
     t.index ["visit_token"], name: "index_ahoy_visits_on_visit_token", unique: true
   end
 
-  create_table "badges_sashes", force: :cascade do |t|
-    t.integer "badge_id"
-    t.integer "sash_id"
-    t.boolean "notified_user", default: false
-    t.datetime "created_at"
-    t.index ["badge_id", "sash_id"], name: "index_badges_sashes_on_badge_id_and_sash_id"
-    t.index ["badge_id"], name: "index_badges_sashes_on_badge_id"
-    t.index ["sash_id"], name: "index_badges_sashes_on_sash_id"
+  create_table "aicrowd_badges", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.integer "badge_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "code"
+    t.bigint "badges_event_id"
+    t.string "image"
+    t.index ["badges_event_id"], name: "index_aicrowd_badges_on_badges_event_id"
+    t.index ["name"], name: "index_aicrowd_badges_on_name", unique: true
+  end
+
+  create_table "aicrowd_user_badges", force: :cascade do |t|
+    t.bigint "aicrowd_badge_id"
+    t.bigint "participant_id"
+    t.jsonb "custom_fields"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aicrowd_badge_id"], name: "index_aicrowd_user_badges_on_aicrowd_badge_id"
+    t.index ["participant_id"], name: "index_aicrowd_user_badges_on_participant_id"
+  end
+
+  create_table "badge_types", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "color_hexcode"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "badges_events", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_badges_events_on_name", unique: true
   end
 
   create_table "base_leaderboards", force: :cascade do |t|
@@ -669,41 +697,6 @@ ActiveRecord::Schema.define(version: 2020_05_13_101320) do
     t.integer "participant_id"
   end
 
-  create_table "merit_actions", force: :cascade do |t|
-    t.integer "user_id"
-    t.string "action_method"
-    t.integer "action_value"
-    t.boolean "had_errors", default: false
-    t.string "target_model"
-    t.integer "target_id"
-    t.text "target_data"
-    t.boolean "processed", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "merit_activity_logs", force: :cascade do |t|
-    t.integer "action_id"
-    t.string "related_change_type"
-    t.integer "related_change_id"
-    t.string "description"
-    t.datetime "created_at"
-  end
-
-  create_table "merit_score_points", force: :cascade do |t|
-    t.bigint "score_id"
-    t.integer "num_points", default: 0
-    t.string "log"
-    t.datetime "created_at"
-    t.index ["score_id"], name: "index_merit_score_points_on_score_id"
-  end
-
-  create_table "merit_scores", force: :cascade do |t|
-    t.bigint "sash_id"
-    t.string "category", default: "default"
-    t.index ["sash_id"], name: "index_merit_scores_on_sash_id"
-  end
-
   create_table "migration_mappings", force: :cascade do |t|
     t.string "source_type"
     t.integer "source_id"
@@ -886,8 +879,6 @@ ActiveRecord::Schema.define(version: 2020_05_13_101320) do
     t.integer "ranking_change", default: 0, null: false
     t.boolean "agreed_to_organizers_newsletter", default: true, null: false
     t.float "fixed_rating"
-    t.integer "sash_id"
-    t.integer "level", default: 0
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["reset_password_token"], name: "index_participants_on_reset_password_token", unique: true
@@ -920,11 +911,6 @@ ActiveRecord::Schema.define(version: 2020_05_13_101320) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_reserved_userhandles_on_name", unique: true
-  end
-
-  create_table "sashes", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "settings", force: :cascade do |t|
@@ -1129,6 +1115,9 @@ ActiveRecord::Schema.define(version: 2020_05_13_101320) do
     t.index ["votable_id", "votable_type"], name: "index_votes_on_votable_id_and_votable_type"
   end
 
+  add_foreign_key "aicrowd_badges", "badges_events"
+  add_foreign_key "aicrowd_user_badges", "aicrowd_badges"
+  add_foreign_key "aicrowd_user_badges", "participants"
   add_foreign_key "base_leaderboards", "challenge_rounds"
   add_foreign_key "base_leaderboards", "challenges"
   add_foreign_key "blogs", "participants"

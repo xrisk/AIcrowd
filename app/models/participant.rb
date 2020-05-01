@@ -1,5 +1,4 @@
 class Participant < ApplicationRecord
-  has_merit
 
   include FriendlyId
   include ApiKey
@@ -28,6 +27,7 @@ class Participant < ApplicationRecord
   scope :rated_users_count, -> { Participant.where("ranking > 0").count }
   scope :admins, -> { where(admin: true) }
 
+  has_many :aicrowd_user_badges
   has_many :participant_organizers, dependent: :destroy
   has_many :organizers, through: :participant_organizers
   has_many :submissions, dependent: :nullify
@@ -149,6 +149,19 @@ class Participant < ApplicationRecord
     return dates
   end
 
+  def add_badge(name, custom_fields={})
+    badge_id = AicrowdBadge.find_by(name: name).id
+    AicrowdUserBadge.create!(aicrowd_badge_id: badge_id, participant_id: id, custom_fields: custom_fields)
+  end
+
+  def rm_badge(name)
+    badge_id = AicrowdBadge.find_by(name: name).id
+    AicrowdUserBadge.find_by(aicrowd_badges_id: badge_id, participant_id: id).destroy
+  end
+
+  def badges
+    aicrowd_user_badges
+  end
   def user_rating_history
     user_rating = UserRating.joins("left outer join challenge_rounds on (challenge_rounds.id=challenge_round_id)").joins("left outer join challenges c on (c.id=challenge_rounds.challenge_id)").where(participant_id: self.id).where('rating is not null').reorder('coalesce(end_dttm, user_ratings.created_at), user_ratings.id').pluck('coalesce(end_dttm, user_ratings.created_at)', 'rating', 'concat(challenge, challenge_round)')
     final_ratings = []
@@ -205,9 +218,6 @@ class Participant < ApplicationRecord
     end
   end
 
-  def badges_with_created_time
-    Merit::BadgesSash.where(sash_id: Participant.find_by(id:self.id).sash).map { |sash| (Merit::Badge.find sash.badge_id).as_json.merge(sash.as_json)}
-  end
 
   def image_url
     image_url = if image_file.file.present?

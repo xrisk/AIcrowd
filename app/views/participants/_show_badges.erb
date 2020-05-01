@@ -1,6 +1,6 @@
 <span class="aicrowd-badge-info" style="<%= style ||= '' %>">
   <% participant.badges.each do |badge| %>
-    <span class="badges-card" data-toggle="tooltip" title="<%= badge.name %> - <%= badge.description %>">
+    <span class="badges-card" data-toggle="tooltip" title="<%= badge.aicrowd_badge.name %> - <%= badge.aicrowd_badge.description %>">
       <img src="/assets/awards/award-bronze.svg" class="country-flag" />
     </span>
   <% end %>
