@@ -15,7 +15,7 @@
           <% if policy(@challenge).edit? || !(@challenge.starting_soon? || @challenge.draft?) %>
             <%= render partial: 'shared/challenges/listing_compact', locals: { challenges: @challenge.problems } %>
           <% else %>
-            <div class="col-md-12">
+            <div class="col-md-12 mb-5">
               <div style="height: 90%;border: 1px dashed #d8d0d0;min-height: 300px;">
                 <div style="margin-top: 100px; font-size: 20px; color: #ded5d5; text-align: center;">
                   <img src="/assets/img/icon-lock-grey.png"><br/>
