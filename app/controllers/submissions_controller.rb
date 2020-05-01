@@ -47,6 +47,15 @@ class SubmissionsController < ApplicationController
                       .search(search_params)
       end
     end
+
+    if @challenge.meta_challenge
+      params[:meta_challenge_id] = @challenge.slug
+      @search = policy_scope(Submission)
+                      .where(
+                        challenge_round_id: @challenge.meta_active_round_ids)
+                      .search(search_params)
+    end
+
     @search.sorts = 'created_at desc' if @search.sorts.empty?
     @submissions  = @search.result.includes(:participant).page(params[:page]).per(10)
   end
@@ -103,8 +112,7 @@ class SubmissionsController < ApplicationController
     authorize @submission
     if @submission.save
       SubmissionGraderJob.perform_later(@submission.id)
-      redirect_to challenge_submissions_path(@challenge),
-                  notice: 'Submission accepted.'
+      redirect_to helpers.challenge_submissions_path(@challenge), notice: 'Submission accepted.'
     else
       @errors = @submission.errors
       render :new
@@ -128,7 +136,7 @@ class SubmissionsController < ApplicationController
   def destroy
     submission = Submission.find(params[:id])
     submission.destroy
-    redirect_to challenge_leaderboards_path(@challenge), notice: 'Submission was successfully destroyed.'
+    redirect_to helpers.challenge_leaderboards_path(@challenge), notice: 'Submission was successfully destroyed.'
   end
 
   def export
@@ -177,13 +185,18 @@ class SubmissionsController < ApplicationController
   end
 
   def check_participation_terms
-    unless policy(@challenge).has_accepted_participation_terms?
-      redirect_to [@challenge, ParticipationTerms.current_terms]
+    challenge = @challenge
+    if params.has_key?(:meta_challenge_id)
+      challenge = Challenge.friendly.find(params[:meta_challenge_id])
+    end
+
+    unless policy(challenge).has_accepted_participation_terms?
+      redirect_to [challenge, ParticipationTerms.current_terms]
       return
     end
 
-    unless policy(@challenge).has_accepted_challenge_rules?
-      redirect_to [@challenge, @challenge.current_challenge_rules]
+    unless policy(challenge).has_accepted_challenge_rules?
+      redirect_to [challenge, challenge.current_challenge_rules]
       return
     end
   end

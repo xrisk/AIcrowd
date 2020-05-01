@@ -9,7 +9,7 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema.define(version: 2020_04_27_094259) do
+ActiveRecord::Schema.define(version: 2020_04_30_234339) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_stat_statements"
@@ -308,6 +308,13 @@ ActiveRecord::Schema.define(version: 2020_04_27_094259) do
     t.index ["challenge_id"], name: "index_challenge_partners_on_challenge_id"
   end
 
+  create_table "challenge_problems", force: :cascade do |t|
+    t.integer "challenge_id"
+    t.integer "problem_id"
+    t.float "weight"
+    t.integer "challenge_round_id"
+  end
+
   create_table "challenge_rounds", force: :cascade do |t|
     t.bigint "challenge_id"
     t.string "challenge_round"
@@ -431,6 +438,7 @@ ActiveRecord::Schema.define(version: 2020_04_27_094259) do
     t.bigint "discourse_group_id"
     t.string "discourse_group_name"
     t.string "evaluator_type_cd"
+    t.boolean "meta_challenge"
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
   end

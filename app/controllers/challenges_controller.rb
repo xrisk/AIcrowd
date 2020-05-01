@@ -47,6 +47,11 @@ class ChallengesController < ApplicationController
     @challenge_baseline_discussion = @challenge.baseline_discussion
     @latest_five_submissions = @challenge.latest_five_submissions
     @top_five_leaderboards = @challenge.top_five_leaderboards
+
+    if @challenge.meta_challenge
+      params[:meta_challenge_id] = params[:id]
+      render template: "challenges/show_meta_challenge"
+    end
   end
 
   def new
@@ -67,7 +72,7 @@ class ChallengesController < ApplicationController
     if @challenge.save
       update_challenges_organizers if params[:challenge][:organizer_ids].present?
       update_challenge_categories if params[:challenge][:category_names].present?
-      redirect_to edit_challenge_path(@challenge, step: :overview), notice: 'Challenge created.'
+      redirect_to helpers.edit_challenge_path(@challenge, step: :overview), notice: 'Challenge created.'
     else
       render :new
     end
@@ -81,7 +86,7 @@ class ChallengesController < ApplicationController
       update_challenge_categories if params[:challenge][:category_names].present?
       create_invitations if params[:challenge][:invitation_email].present?
       respond_to do |format|
-        format.html { redirect_to edit_challenge_path(@challenge, step: params[:current_step]), notice: 'Challenge updated.' }
+        format.html { redirect_to helpers.edit_challenge_path(@challenge, step: params[:current_step]), notice: 'Challenge updated.' }
         format.js   { render :update }
       end
     else
@@ -104,7 +109,7 @@ class ChallengesController < ApplicationController
       Challenge.friendly.find(ch).update(featured_sequence: idx)
     end
 
-    redirect_to reorder_challenges_path
+    redirect_to helpers.reorder_challenges_path
   end
 
   def clef_task
@@ -133,9 +138,9 @@ class ChallengesController < ApplicationController
     result = Challenges::ImportService.new(import_file: params[:import_file], organizers: @challenge.organizers).call
 
     if result.success?
-      redirect_to edit_challenge_path(@challenge, step: :admin), notice: 'New Challenge Imported'
+      redirect_to helpers.edit_challenge_path(@challenge, step: :admin), notice: 'New Challenge Imported'
     else
-      redirect_to edit_challenge_path(@challenge, step: :admin), flash: { error: result.value }
+      redirect_to helpers.edit_challenge_path(@challenge, step: :admin), flash: { error: result.value }
     end
   end
 
@@ -150,6 +155,12 @@ class ChallengesController < ApplicationController
     @challenge = Challenge.includes(:organizers).friendly.find(params[:id])
     @challenge = @challenge.versions[params[:version].to_i].reify if params[:version]
     authorize @challenge
+    if params.has_key?('meta_challenge_id')
+      @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id])
+      if !@meta_challenge.meta_challenge || !@meta_challenge.problems.include?(@challenge)
+        raise ActionController::RoutingError.new('Not Found')
+      end
+    end
   end
 
   def set_vote
@@ -255,6 +266,7 @@ class ChallengesController < ApplicationController
       :dynamic_content,
       :dynamic_content_url,
       :scrollable_overview_tabs,
+      :meta_challenge,
       image_attributes: [
         :id,
         :image,

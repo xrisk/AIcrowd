@@ -13791,6 +13791,34 @@ html {
   margin: 0px;
 }
 
+.participants.floating-button {
+  position:absolute;
+  margin-left:25%;
+  z-index:10000;
+  margin-top:25%;
+}
+
+.participants.floating-base {
+  filter: blur(1px);
+}
+
+.empty-card-compact {
+  height: 100%;
+  border: 1px dashed #d8d0d0;
+  min-height: 300px;
+}
+
+.empty-card-compact .text {
+  margin-top: 30%;
+  font-size: 30px;
+  color: #ded5d5;
+  text-align: center;
+}
+
+.empty-card-compact .text.text-small {
+  font-size: 20px;
+}
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';

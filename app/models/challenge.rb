@@ -33,6 +33,8 @@ class Challenge < ApplicationRecord
   has_many :leaderboards, class_name: 'Leaderboard'
   has_many :ongoing_leaderboards, class_name: 'OngoingLeaderboard'
 
+  has_many :challenge_problems, foreign_key: "challenge_id", class_name: "ChallengeProblems"
+
   has_many :votes, as: :votable
   has_many :follows, as: :followable
 
@@ -199,6 +201,9 @@ class Challenge < ApplicationRecord
   end
 
   def other_scores_fieldnames_array
+    if meta_challenge
+      return challenge_problems.pluck('challenge_round_id')
+    end
     arr = other_scores_fieldnames
     arr&.split(',')&.map(&:strip) || []
   end
@@ -214,7 +219,19 @@ class Challenge < ApplicationRecord
   end
 
   def hidden_in_discourse?
-    draft? || private_challenge?
+    draft? || private_challenge? || meta_challenge?
+  end
+
+  def problems
+    if meta_challenge?
+      return Challenge.where(id: challenge_problems.pluck('problem_id'))
+    end
+  end
+
+  def meta_active_round_ids
+    if meta_challenge?
+      return challenge_problems.pluck('challenge_round_id')
+    end
   end
 
   private

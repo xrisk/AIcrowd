@@ -66,7 +66,8 @@ module Challenges
       :hidden_challenge,
       :team_freeze_time,
       :clef_task_id,
-      :scrollable_overview_tabs
+      :scrollable_overview_tabs,
+      :meta_challenge
     ].freeze
 
     IMPORTABLE_ASSOCIATIONS = {

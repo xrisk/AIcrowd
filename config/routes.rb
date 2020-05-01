@@ -1,6 +1,57 @@
 require 'sidekiq/web'
 require 'sidekiq/cron/web'
 
+
+def challenge_routes
+  collection do
+    get :reorder
+    post :assign_order
+  end
+
+  member do
+    get :remove_image
+    get :clef_task
+    get :export
+    post :import
+    get :remove_invited
+  end
+
+  resources :teams, only: [:create, :show], param: :name, constraints: { name: %r{[^?/]+} }, format: false, controller: 'challenges/teams' do
+    resources :invitations, only: [:create], controller: 'challenges/team_invitations'
+  end
+  resources :dataset_files
+  resources :participant_challenges, only: [:index] do
+    get :approve, on: :collection
+    get :deny, on: :collection
+  end
+  resources :events
+  resources :winners, only: [:index]
+  resources :submissions do
+    post :filter, on: :collection
+    get :export, on: :collection
+  end
+  resources :dynamic_contents, only: [:index]
+  resources :leaderboards, only: :index do
+    get :export, on: :collection
+  end
+  resources :votes, only: [:create, :destroy]
+  resources :follows, only: [:create, :destroy]
+  resources :invitations, only: [] do
+    collection { post :import }
+  end
+  resources :dataset_terms, only: [:update]
+  resources :participation_terms, only: [:show, :create, :index]
+  resources :challenge_rules, only: [:show]
+  resources :challenge_participants
+  resources :insights, only: [:index] do
+    collection do
+      get 'submissions_vs_time'
+      get 'top_score_vs_time'
+      get 'challenge_participants_country'
+    end
+  end
+end
+
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   get '/robots.txt' => RobotsTxt
@@ -142,59 +193,24 @@ Rails.application.routes.draw do
 
   resources :participation_terms, only: [:index]
 
+  match '/challenges/:id/problems', to: 'challenge_problems#show', via: [:get, :post]
+
   # TODO: Move below challenge routes into Challenges module
   resources :challenges, only: [:index, :show, :new, :create, :edit, :update] do
-    collection do
-      get :reorder
-      post :assign_order
-    end
-    member do
-      get :remove_image
-      get :clef_task
-      get :export
-      post :import
-      get :remove_invited
-    end
-
-    resources :teams, only: [:create, :show], param: :name, constraints: { name: %r{[^?/]+} }, format: false, controller: 'challenges/teams' do
-      resources :invitations, only: [:create], controller: 'challenges/team_invitations'
-    end
-    resources :dataset_files
-    resources :participant_challenges, only: [:index] do
-      get :approve, on: :collection
-      get :deny, on: :collection
-    end
-    resources :events
-    resources :winners, only: [:index]
-    resources :submissions do
-      post :filter, on: :collection
-      get :export, on: :collection
-    end
-    resources :dynamic_contents, only: [:index]
-    resources :leaderboards, only: :index do
-      get :export, on: :collection
-    end
-    resources :votes, only: [:create, :destroy]
-    resources :follows, only: [:create, :destroy]
-    resources :invitations, only: [] do
-      collection { post :import }
-    end
-    resources :dataset_terms, only: [:update]
-    resources :participation_terms, only: [:show, :create, :index]
-    resources :challenge_rules, only: [:show]
-    resources :challenge_participants
-    resources :insights, only: [:index] do
-      collection do
-        get 'submissions_vs_time'
-        get 'top_score_vs_time'
-        get 'challenge_participants_country'
-      end
+    challenge_routes
+    resources :problems, only: [:show, :edit, :update], controller: 'challenges', key: :challenge do |problem|
+      challenge_routes
     end
   end
 
   resources :challenges, only: [], module: :challenges do
     resource :discussion, only: :show
     resource :newsletter_emails, only: [:new, :create]
+
+    resources :problems, only: :show do |problem|
+      resource :discussion, only: :show
+      resource :newsletter_emails, only: [:new, :create]
+    end
   end
 
   get '/load_more_challenges', to: 'challenges#load_more', as: :load_more_challenges

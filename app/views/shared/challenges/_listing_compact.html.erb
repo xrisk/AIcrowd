@@ -1,5 +1,5 @@
 <% challenges.each do |challenge| %>
-  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+  <div class="col-md-4">
     <div class="card card-challenge">
       <div class="image-wrapper" style="padding-bottom: 56.2%;position: relative;">
         <%= link_to challenge_path(challenge) do %>
@@ -17,28 +17,10 @@
       </div>
       <!-- card body -->
       <div class="card-body">
-        <div class="card-intro">
-          <h5 class="card-title"><%= link_to challenge.challenge, challenge_path(challenge) %>
-            <% if challenge.private_challenge %>
-            <span class="badge badge-secondary">
-              Private
-            </span>
-            <% end %>
-            <% if challenge.hidden_challenge %>
-            <span class="badge badge-secondary">
-              Hidden
-            </span>
-            <% end %>
-          </h5>
-          <% if challenge.tagline %>
-            <p class="card-text"><%= challenge.tagline %></p>
-          <% end %>
+        <div class="card-intro" style="margin-bottom:10px">
+          <h5 class="card-title"><%= link_to challenge.challenge, challenge_path(challenge) %></h5>
+          <p class="card-text"><%= challenge.tagline %></p>
         </div>
-
-        <!-- prizes breakdown -->
-        <%= render partial: 'shared/challenges/prizes_breakdown', locals: { challenge: challenge } %>
-        <!-- /prizes breakdown -->
-
         <!-- stats group -->
         <div class="stats-group">
           <div class="stat-item">
@@ -60,10 +42,11 @@
               <%= challenge_stat_count(challenge, 'submission') %>
             </span>
           </div>
-        </div><br/>
+        </div>
         <!-- /stats group -->
 
         <!-- category group -->
+        <% if challenge.categories.any? %>
         <div class='category-group'>
           <% challenge.categories.each do |category| %>
             <%= link_to challenges_path(categories: category.name) do %>
@@ -71,18 +54,10 @@
             <% end %>
           <% end %>
         </div>
+        <% end %>
         <!-- /category group -->
       </div>
       <!-- /card body -->
-
-      <div class="card-footer">
-        <% challenge.organizers.each do |organizer| %>
-          <%= link_to organizer_path(organizer) do %>
-            <%= image_tag organizer.image_file_url %>
-            <span title="<%= organizer.organizer %>"><%= organizer.organizer %></span>
-          <% end %>
-        <% end %>
-      </div>
     </div>
   </div>
 <% end %>
