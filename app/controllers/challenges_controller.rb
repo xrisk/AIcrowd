@@ -72,7 +72,7 @@ class ChallengesController < ApplicationController
     if @challenge.save
       update_challenges_organizers if params[:challenge][:organizer_ids].present?
       update_challenge_categories if params[:challenge][:category_names].present?
-      redirect_to edit_challenge_path(@challenge, step: :overview), notice: 'Challenge created.'
+      redirect_to helpers.edit_challenge_path(@challenge, step: :overview), notice: 'Challenge created.'
     else
       render :new
     end
@@ -86,7 +86,7 @@ class ChallengesController < ApplicationController
       update_challenge_categories if params[:challenge][:category_names].present?
       create_invitations if params[:challenge][:invitation_email].present?
       respond_to do |format|
-        format.html { redirect_to edit_challenge_path(@challenge, step: params[:current_step]), notice: 'Challenge updated.' }
+        format.html { redirect_to helpers.edit_challenge_path(@challenge, step: params[:current_step]), notice: 'Challenge updated.' }
         format.js   { render :update }
       end
     else
@@ -109,7 +109,7 @@ class ChallengesController < ApplicationController
       Challenge.friendly.find(ch).update(featured_sequence: idx)
     end
 
-    redirect_to reorder_challenges_path
+    redirect_to helpers.reorder_challenges_path
   end
 
   def clef_task
@@ -138,9 +138,9 @@ class ChallengesController < ApplicationController
     result = Challenges::ImportService.new(import_file: params[:import_file], organizers: @challenge.organizers).call
 
     if result.success?
-      redirect_to edit_challenge_path(@challenge, step: :admin), notice: 'New Challenge Imported'
+      redirect_to helpers.edit_challenge_path(@challenge, step: :admin), notice: 'New Challenge Imported'
     else
-      redirect_to edit_challenge_path(@challenge, step: :admin), flash: { error: result.value }
+      redirect_to helpers.edit_challenge_path(@challenge, step: :admin), flash: { error: result.value }
     end
   end
 
