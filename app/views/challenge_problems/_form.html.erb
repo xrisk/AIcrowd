@@ -4,8 +4,13 @@
         <%= form_for @challenge.challenge_problems.new, :url => "#" do |f| %>
 
         <div class="form-group">
-            <label>Problem (ID of the challenge)</label>
+            <label>Challenge (ID of the challenge)</label>
             <%= f.text_field :problem_id, class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+            <label>Challenge Round ID</label>
+            <%= f.text_field :challenge_round_id, class: "form-control" %>
         </div>
 
         <div class="form-group">

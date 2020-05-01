@@ -19,7 +19,8 @@ class ChallengeProblemsController < ApplicationController
     obj = ChallengeProblems.new({
       challenge_id: @challenge.id,
       problem_id: params[:challenge_problems][:problem_id],
-      weight: params[:challenge_problems][:weight]
+      weight: params[:challenge_problems][:weight],
+      challenge_round_id: params[:challenge_problems][:challenge_round_id]
     })
     obj.save!
   end
@@ -32,6 +33,7 @@ class ChallengeProblemsController < ApplicationController
     challenge_problems.each do |problem_id, value|
       obj = ChallengeProblems.find_by(challenge_id: @challenge.id, problem_id: problem_id)
       obj.weight = value['weight']
+      obj.challenge_round_id = value['challenge_round_id']
       obj.save!
     end
   end

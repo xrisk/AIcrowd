@@ -227,11 +227,7 @@ class Challenge < ApplicationRecord
 
   def meta_active_round_ids
     if self.meta_challenge
-      active_round_ids = []
-      self.problems.each do |problem|
-        active_round_ids.push(problem.active_round.id)
-      end
-      return active_round_ids
+      return self.challenge_problems.pluck('challenge_round_id')
     end
   end
 
