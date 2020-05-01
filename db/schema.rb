@@ -9,7 +9,7 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema.define(version: 2020_04_29_085640) do
+ActiveRecord::Schema.define(version: 2020_04_30_234339) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_stat_statements"
@@ -312,6 +312,7 @@ ActiveRecord::Schema.define(version: 2020_04_29_085640) do
     t.integer "challenge_id"
     t.integer "problem_id"
     t.float "weight"
+    t.integer "challenge_round_id"
   end
 
   create_table "challenge_rounds", force: :cascade do |t|
