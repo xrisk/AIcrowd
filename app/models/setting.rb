@@ -11,8 +11,4 @@ class Setting < ApplicationRecord
   def self.footer_record
     first&.footer_text if first&.enable_footer
   end
-
-  def self.footer_color_value
-    first&.footer_color if first&.enable_footer
-  end
 end

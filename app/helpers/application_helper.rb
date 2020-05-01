@@ -149,8 +149,4 @@ module ApplicationHelper
   def footer_text
     Setting.footer_record
   end
-
-  def footer_color
-    Setting.footer_color_value
-  end
 end
