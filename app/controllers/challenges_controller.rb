@@ -1,10 +1,10 @@
 class ChallengesController < ApplicationController
-  before_action :authenticate_participant!, except: [:show, :index]
+  before_action :authenticate_participant!, except: [:show, :index, :practice]
   before_action :terminate_challenge, only: [:show, :index]
   before_action :set_challenge, only: [:show, :edit, :update, :clef_task, :remove_image, :remove_banner, :export, :import, :remove_invited]
   before_action :set_vote, only: [:show, :clef_task]
   before_action :set_follow, only: [:show, :clef_task]
-  after_action :verify_authorized, except: [:index, :show]
+  after_action :verify_authorized, except: [:index, :show, :practice]
   before_action :set_s3_direct_post, only: [:edit, :update]
   before_action :set_challenge_rounds, only: [:edit, :update]
   before_action :set_filters, only: [:index]
@@ -14,7 +14,7 @@ class ChallengesController < ApplicationController
 
   def index
     @challenge_filter = params[:challenge_filter] ||= 'all'
-    @all_challenges   = policy_scope(Challenge)
+    @all_challenges   = policy_scope(Challenge).not_practice
     @challenges       = case @challenge_filter
                         when 'active'
                           @all_challenges.where(status_cd: ['running', 'starting_soon'])
@@ -171,6 +171,11 @@ class ChallengesController < ApplicationController
     challenge_invitation.destroy!
   end
 
+  def practice
+    @all_challenges = policy_scope(Challenge)
+    @challenges     = @all_challenges.practice.page(params[:page]).per(18)
+  end
+
   private
 
   def set_challenge
@@ -307,6 +312,7 @@ class ChallengesController < ApplicationController
       :banner_mobile_file,
       :banner_color,
       :big_challenge_card_image,
+      :practice_flag,
       image_attributes: [
         :id,
         :image,

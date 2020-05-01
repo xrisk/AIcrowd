@@ -99,7 +99,8 @@ class Challenge < ApplicationRecord
   scope :prize_travel, -> { where.not(prize_travel: [nil, ""]) }
   scope :prize_academic, -> { where.not(prize_academic: [nil, ""]) }
   scope :prize_misc, -> { where.not(prize_misc: [nil, ""]) }
-
+  scope :practice, -> { where(practice_flag: true) }
+  scope :not_practice, -> { where(practice_flag: false) }
   scope :draft_or_private, -> { where("status_cd = 'draft' OR private_challenge = TRUE") }
 
   after_initialize :set_defaults

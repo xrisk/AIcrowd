@@ -19,6 +19,10 @@ class ChallengePolicy < ApplicationPolicy
     participant&.admin?
   end
 
+  def practice?
+    true
+  end
+
   def update?
     edit?
   end

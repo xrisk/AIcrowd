@@ -1,0 +1,26 @@
+<!-- masthead -->
+<div class="masthead">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h1>Practice</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /masthead -->
+
+<!-- challenge cards -->
+<div class="section-pt-sm-pb-md">
+  <div class="container-fluid">
+    <div class="row" id="challenges-div">
+      <%= render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>
+    </div>
+
+    <!-- load more -->
+    <span id="more-anchor"></span>
+    <%= render partial: 'shared/load_more', locals: { collection: @challenges } %>
+    <!-- /load more -->
+  </div>
+</div>
+<!-- /challenge cards -->
