@@ -7,12 +7,12 @@
   <div>
     <% users = challenge.challenge_participants.sample(50) %>
     <% if required_terms_or_rules_path(challenge).present? %>
-      <div style="position:absolute;margin-left:25%;z-index:10000;margin-top:25%;">
+      <div class="participants floating-button">
         <%= link_to required_terms_or_rules_path(challenge) do %>
           <button type="button" class="btn btn-primary btn-block" data-toggle="Click to register for challenge">🔓 Participate</button>
         <% end %>
       </div>
-      <div class="row avatar-group p-3" style="filter: blur(1px);">
+      <div class="row avatar-group p-3 participants floating-base">
     <% else %>
       <div class="row avatar-group p-3">
     <% end %>

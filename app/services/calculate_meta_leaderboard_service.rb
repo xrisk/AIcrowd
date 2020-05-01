@@ -21,17 +21,17 @@ class CalculateMetaLeaderboardService
   def call
     start_time = Time.zone.now
     if @child_leaderboards.present?
-      #ActiveRecord::Base.transaction do
       create_leaderboard
-      #end
     end
     now = Time.zone.now
     Rails.logger.info "Calculated leaderboard for round #{@round.id} in #{format('%0.3f', (now - start_time).to_f)}s."
     true
   end
 
+  private
+
   def common_values
-    values = {
+    {
       challenge_id: @challenge.id,
       challenge_round_id: @round.id,
       leaderboard_type_cd: "leaderboard",
@@ -40,7 +40,7 @@ class CalculateMetaLeaderboardService
   end
 
   def participant_values(rank, participant, scores)
-    values = {
+    {
       row_num: rank,
       previous_row_num: rank, #TODO: show progress
       entries: scores['entries'],

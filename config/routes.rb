@@ -198,7 +198,7 @@ Rails.application.routes.draw do
   # TODO: Move below challenge routes into Challenges module
   resources :challenges, only: [:index, :show, :new, :create, :edit, :update] do
     challenge_routes
-    resources :problems, only: [:show, :edit, :update], :controller => "challenges", :key => :challenge do |problem|
+    resources :problems, only: [:show, :edit, :update], controller: 'challenges', key: :challenge do |problem|
       challenge_routes
     end
   end
