@@ -43,7 +43,7 @@ module LeaderboardHelper
 
   def leaderboard_other_scores_array(leaderboard, challenge)
     other_scores = []
-    challenge.other_scores_fieldnames_array.each do |fname|
+    challenge.other_scores_fieldnames_array.map(&:to_s).each do |fname|
       other_scores << if leaderboard.meta && (leaderboard.meta.key? fname)
                         (leaderboard.meta[fname].nil? ? "-" : format("%.3f", leaderboard.meta[fname].to_f))
                       else
