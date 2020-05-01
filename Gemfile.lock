@@ -199,8 +199,6 @@ GEM
       sprockets (< 4.0)
     concurrent-ruby (1.1.6)
     connection_pool (2.2.2)
-    cookies_eu (1.7.3)
-      js_cookie_rails (~> 2.2.0)
     countries (2.1.4)
       i18n_data (~> 0.8.0)
       money (~> 6.9)
@@ -532,8 +530,6 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    js_cookie_rails (2.2.0)
-      railties (>= 3.1)
     js_regex (3.1.1)
       character_set (~> 1.1)
       regexp_parser (~> 1.1)
@@ -985,7 +981,6 @@ DEPENDENCIES
   codemirror-rails
   coffee-rails
   compass-rails
-  cookies_eu
   country_select
   crowdai_admin
   derailed_benchmarks
