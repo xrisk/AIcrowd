@@ -40,20 +40,33 @@
 
     <td><strong><%= leaderboard_formatted_value(current_round, leaderboard.score) %></strong></td>
     <% unless sidebar %>
-      <td><strong><%= leaderboard_formatted_value(current_round, leaderboard.score_secondary) %></strong></td>
-      <% leaderboard_other_scores_array(leaderboard, challenge).each do |other_score| %>
-        <td><strong><%= other_score %></strong></td>
+      <% if @current_round&.get_score_secondary_title.present? && !@challenge.meta_challenge %>
+        <td><strong><%= leaderboard_formatted_value(current_round, leaderboard.score_secondary) %></strong></td>
       <% end %>
-      <td><%= leaderboard.entries %></td>
-
-      <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
-      <td class="text-right">
-        <% if leaderboard.try(:submitter_type) != 'OldParticipant' && leaderboard.try(:submitter).present? && leaderboard.try(:submission_id).present? %>
-          <%= link_to 'View', challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm' %>
+      <% leaderboard_other_scores_array(leaderboard, challenge).each do |other_score| %>
+        <% if @challenge.meta_challenge %>
+          <td><strong>
+            <% if other_score.to_i == 1 %>
+              <img src="/assets/img/award-gold.svg" style="width: 32px" />
+            <% else %>
+              <%= other_score.to_i %>
+            <% end %>
+          </strong></td>
         <% else %>
-          <%= link_to 'View', '#', class: 'btn btn-secondary btn-sm disabled disabled--with-pointer-events', title: 'Submitter or Submission was deleted' %>
+          <td><strong><%= other_score %></strong></td>
         <% end %>
-      </td>
+      <% end %>
+      <% if !@challenge.meta_challenge %>
+        <td><%= leaderboard.entries %></td>
+        <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
+        <td class="text-right">
+          <% if leaderboard.try(:submitter_type) != 'OldParticipant' && leaderboard.try(:submitter).present? && leaderboard.try(:submission_id).present? %>
+            <%= link_to 'View', challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm' %>
+          <% else %>
+            <%= link_to 'View', '#', class: 'btn btn-secondary btn-sm disabled disabled--with-pointer-events', title: 'Submitter or Submission was deleted' %>
+          <% end %>
+        </td>
+      <% end %>
     <% end %>
   </tr>
 <% end %>

@@ -201,6 +201,9 @@ class Challenge < ApplicationRecord
   end
 
   def other_scores_fieldnames_array
+    if self.meta_challenge
+      return self.challenge_problems.pluck('challenge_round_id')
+    end
     arr = other_scores_fieldnames
     arr&.split(',')&.map(&:strip) || []
   end
