@@ -49,7 +49,7 @@
             <% if other_score.to_i == 1 %>
               <img src="/assets/img/award-gold.svg" style="width: 32px" />
             <% else %>
-              <%= other_score.to_i %>
+              <%= other_score.to_i != 0 ? other_score.to_i : other_score%>
             <% end %>
           </strong></td>
         <% else %>
