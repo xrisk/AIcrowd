@@ -20,6 +20,7 @@
       <td><%= submission_formatted_value(submission, submission.score_secondary_display) %></td>
     <% end %>
     <td><%= submission_enable_links_in_raw_text(submission.grading_message) %></td>
+    <% if @challenge.meta_challenge %><td><%= link_to challenge.challenge, challenge_path(challenge) %></td><% end %>
     <td class="text-right"><%= local_time(submission.created_at, "%a, %e %b %Y") %> <br>
       <%= local_time(submission.created_at, "%H:%M:%S") %></td>
     <% if challenge.submissions_page %>
