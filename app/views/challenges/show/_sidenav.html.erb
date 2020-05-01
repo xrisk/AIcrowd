@@ -16,15 +16,17 @@
     <% else %>
       <div class="row avatar-group p-3">
     <% end %>
-    <% if current_participant %>
+    <% if current_participant && !required_terms_or_rules_path(challenge).present? %>
       <span>
         <%= render partial: 'participants/get_user_profile', locals: { participant: current_participant, username: 'false' } %>
       </span>
     <% end %>
     <% users.each do |user| %>
-      <span>
-        <%= render partial: 'participants/get_user_profile', locals: { participant: user.participant, username: 'false' } %>
-      </span>
+      <% if !current_participant || user.id=current_participant.id %>
+        <span>
+          <%= render partial: 'participants/get_user_profile', locals: { participant: user.participant, username: 'false' } %>
+        </span>
+      <% end %>
     <% end %>
     </div>
   </div>
@@ -32,7 +34,7 @@
 <% if policy(challenge).show_leaderboard? && top_leaderboards.present? %>
   <%= render 'challenges/show/top_five_leaderboards', top_leaderboards: top_leaderboards, challenge: challenge %>
 <% end %>
-<% if policy(challenge).show_submissions? && latest_submissions.present? %>
+<% if policy(challenge).show_submissions? && (latest_submissions.present? || @challenge.meta_challenge) %>
   <%= render 'challenges/show/latest_five_submissions', latest_submissions: latest_submissions, challenge: challenge %>
 <% end %>
 <% if challenge_baseline_discussion.present? %>
