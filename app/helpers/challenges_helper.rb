@@ -107,8 +107,6 @@ module ChallengesHelper
     end
   end
 
-  private
-
   def remaining_time_in_hours(challenge_round)
     (remaining_time_in_seconds(challenge_round) / (60 * 60)).floor
   end
