@@ -102,9 +102,7 @@
 </footer>
 <!-- custom footer -->
 <% if  Setting.footer_record.present? %>
-	<div class="alert alert-flash alert-dismissible fade show alert-fixed" role="alert" style="background-color: <%= footer_color %> !important">
-		<%= footer_text %>
-	</div>
+	<%= sanitize_html(footer_text) %>
 <% end %>
 <!-- /custom footer -->
 <!-- /app footer -->

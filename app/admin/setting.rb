@@ -19,7 +19,6 @@ ActiveAdmin.register Setting do
       panel 'Footer' do
         f.input :enable_footer
         f.input :footer_text
-        f.input :footer_color
       end
       f.actions
     end
