@@ -14,7 +14,7 @@
           </header>
 
           <% if @discourse_topics.any? %>
-            <%= render partial: 'discussion_list', locals: { discourse_topics: @discourse_topics, sidebar: false } %>
+            <%= render partial: 'discussion_list', locals: { discourse_topics: @discourse_topics } %>
           <% else %>
             <div class="md-content">
               <span>Nobody have posted anything on Discourse yet...</span>

@@ -135,4 +135,8 @@ module ChallengesHelper
       challenge_participant_challenges_path(challenge)
     end
   end
+
+  def submission_time(submission)
+    submission.created_at.strftime("%a, %e %b %Y") + ' ' + submission.created_at.strftime("%H:%M:%S")
+  end
 end

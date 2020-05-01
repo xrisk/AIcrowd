@@ -6,7 +6,23 @@
 </header>
 <table class="table table-responsive-md side-border">
   <tbody id="submissions-div">
-    <%= render partial: 'submissions/submissions', locals: { submissions: latest_submissions, sidebar: true } %>
+    <% latest_submissions.each do |submission| %>
+      <%
+        participant     = submission.participant
+        challenge       = submission.challenge
+        challenge_round = submission.challenge_round
+      %>
+      <tr>
+        <td>
+          <% if participant.present? %>
+            <%= render partial: 'participants/get_user_profile', locals: { participant: participant, avatar: 'false' } %>
+          <% else %>
+            <span>#</span>
+          <% end %>
+        </td>
+        <td><span class="badge <%= submission_grade_class(submission) %>" data-toggle="tooltip" data-placement="top" title="<%= submission_time(submission) %>" ><%= submission.grading_status_cd %></span></td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 

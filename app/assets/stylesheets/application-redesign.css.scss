@@ -10277,6 +10277,15 @@ button.bg-bronze:focus {
   white-space: nowrap;
 }
 
+.truncate{
+   height: 16px;
+   width: 125px;
+   overflow: hidden;
+   display: inline-block;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+}
+
 .text-left {
   text-align: left !important;
 }

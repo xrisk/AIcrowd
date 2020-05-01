@@ -2,5 +2,5 @@
   <%= participant_avatar participant %>
 <% end %>
 <% if !defined?(username) || (defined?(username) && username && username != 'false') %>
-  <span class="text-link"><%= participant.name %></span>
+  <span class="text-link truncate"><%= participant.name %></span>
 <% end %>
