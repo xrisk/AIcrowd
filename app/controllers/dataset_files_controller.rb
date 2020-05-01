@@ -103,10 +103,14 @@ class DatasetFilesController < ApplicationController
         :visible,
         :title,
         :file_size,
-        :external_url,
-        :external_file_size,
         :dataset_file_s3_key,
-        :hosting_location)
+        :hosting_location,
+        :directory_path,
+        :aws_access_key,
+        :aws_secret_key,
+        :bucket_name,
+        :endpoint
+      )
   end
 
   def set_s3_direct_post

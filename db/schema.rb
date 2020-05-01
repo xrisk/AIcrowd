@@ -502,6 +502,11 @@ ActiveRecord::Schema.define(version: 2020_05_02_142113) do
     t.string "external_url"
     t.boolean "visible", default: true
     t.string "external_file_size"
+    t.text "directory_path"
+    t.text "aws_access_key"
+    t.text "aws_secret_key"
+    t.text "bucket_name"
+    t.text "endpoint"
     t.index ["challenge_id"], name: "index_dataset_files_on_challenge_id"
   end
 

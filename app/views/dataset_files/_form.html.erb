@@ -4,7 +4,7 @@
       <div class="col-12">
         <h2><%= @dataset_file.persisted? ? "Update File" : "Add File" %></h2>
 
-        <%= form_for [@challenge, @dataset_file], html: { class: "form-rg sgl-col directUpload", 'data-form-data' => @s3_direct_post.fields.to_json, 'data-url' => @s3_direct_post.url, 'data-host' => URI.parse(@s3_direct_post.url).host } do |f| %>
+        <%= form_with model: @dataset_file, url: challenge_dataset_files_path(@challenge), validate: true, html: { class: "form-rg sgl-col directUpload", 'data-form-data' => @s3_direct_post.fields.to_json, 'data-url' => @s3_direct_post.url, 'data-host' => URI.parse(@s3_direct_post.url).host } do |f| %>
           <div class="form-group">
             <label>File Title</label>
             <%= f.text_field :title, class: 'form-control' %>
@@ -23,14 +23,16 @@
             <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :visible, text: "Visible" } %>
           </div>
 
-          <h3>Dataset File Storage</h3>
-
           <div class="form-group">
-            <%= f.radio_button :hosting_location, 'crowdAI', checked: true %>
-            <%= f.label :hosting_location, 'AICrowd S3', value: 'crowdAI' %>
+            <label>Dataset File Storage</label>
 
-            <%= f.radio_button :hosting_location, 'External' %>
-            <%= f.label :hosting_location, 'External', value: 'External' %>
+            <div>
+              <%= f.radio_button :hosting_location, 'crowdAI', checked: true %>
+              <%= f.label :hosting_location, 'AICrowd S3', value: 'crowdAI' %>
+
+              <%= f.radio_button :hosting_location, 'External' %>
+              <%= f.label :hosting_location, 'Own S3', value: 'External' %>
+            </div>
           </div>
 
           <div id='dataset-file-s3-key' class="form-group">
@@ -43,13 +45,29 @@
 
           <div id='external-url' class="form-group">
             <div class="form-group">
-              <label>External Dataset Url</label>
-              <%= f.text_field :external_url, class: 'form-control' %>
+              <label>Path to directory</label>
+              <%= f.text_field :directory_path, class: 'form-control' %>
             </div>
 
             <div class="form-group">
-              <label>File Size</label>
-              <%= f.text_field :external_file_size, class: 'form-control' %>
+              <label>AWS Access Key</label>
+              <%= f.text_field :aws_access_key, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <label>AWS Secret Access Key</label>
+              <%= f.text_field :aws_secret_key, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <label>Bucket Name</label>
+              <%= f.text_field :bucket_name, class: 'form-control' %>
+            </div>
+
+
+            <div class="form-group">
+              <label>Endpoint</label>
+              <%= f.text_field :endpoint, class: 'form-control' %>
             </div>
           </div/>
 
