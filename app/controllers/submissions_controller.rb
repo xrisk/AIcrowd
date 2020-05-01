@@ -52,7 +52,7 @@ class SubmissionsController < ApplicationController
       params[:meta_challenge_id] = @challenge.slug
       @search = policy_scope(Submission)
                       .where(
-                        challenge_round_id: [@challenge.meta_active_round_ids])
+                        challenge_round_id: @challenge.meta_active_round_ids)
                       .search(search_params)
     end
 

@@ -201,8 +201,8 @@ class Challenge < ApplicationRecord
   end
 
   def other_scores_fieldnames_array
-    if self.meta_challenge
-      return self.challenge_problems.pluck('challenge_round_id')
+    if meta_challenge
+      return challenge_problems.pluck('challenge_round_id')
     end
     arr = other_scores_fieldnames
     arr&.split(',')&.map(&:strip) || []
@@ -219,18 +219,18 @@ class Challenge < ApplicationRecord
   end
 
   def hidden_in_discourse?
-    draft? || private_challenge? || self.meta_challenge
+    draft? || private_challenge? || meta_challenge?
   end
 
   def problems
-    if self.meta_challenge
-      return Challenge.where(id: self.challenge_problems.pluck('problem_id'))
+    if meta_challenge?
+      return Challenge.where(id: challenge_problems.pluck('problem_id'))
     end
   end
 
   def meta_active_round_ids
-    if self.meta_challenge
-      return self.challenge_problems.pluck('challenge_round_id')
+    if meta_challenge?
+      return challenge_problems.pluck('challenge_round_id')
     end
   end
 
