@@ -5,6 +5,5 @@ class AddBannerToSetting < ActiveRecord::Migration[5.2]
     add_column :settings, :enable_banner, :boolean, default: false
     add_column :settings, :footer_text, :text
     add_column :settings, :enable_footer, :boolean, default: false
-    add_column :settings, :footer_color, :string, default: '#0F1214'
   end
 end

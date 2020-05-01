@@ -906,7 +906,6 @@ ActiveRecord::Schema.define(version: 2020_04_30_234339) do
     t.boolean "enable_banner", default: false
     t.text "footer_text"
     t.boolean "enable_footer", default: false
-    t.string "footer_color", default: "#0F1214"
   end
 
   create_table "submission_file_definitions", id: :serial, force: :cascade do |t|
