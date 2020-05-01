@@ -26,7 +26,7 @@ class DatasetFilesController < ApplicationController
   def create
     @dataset_file = @challenge.dataset_files.new(dataset_file_params)
     if @dataset_file.save
-      redirect_to challenge_dataset_files_path(@challenge),
+      redirect_to helpers.challenge_dataset_files_path(@challenge),
                   notice: 'Dataset file was successfully created.'
     else
       render :new
@@ -37,7 +37,7 @@ class DatasetFilesController < ApplicationController
 
   def update
     if @dataset_file.update(dataset_file_params)
-      redirect_to challenge_dataset_files_path(@challenge), notice: 'Dataset file was successfully updated.'
+      redirect_to helpers.challenge_dataset_files_path(@challenge), notice: 'Dataset file was successfully updated.'
     else
       render :edit
     end
@@ -49,7 +49,7 @@ class DatasetFilesController < ApplicationController
       s3.delete_object(key: @dataset_file.dataset_file_s3_key, bucket: ENV['AWS_S3_BUCKET'])
     end
     @dataset_file.destroy
-    redirect_to challenge_dataset_files_path(@challenge), notice: "Dataset file #{@dataset_file.title} was deleted."
+    redirect_to helpers.challenge_dataset_files_path(@challenge), notice: "Dataset file #{@dataset_file.title} was deleted."
   end
 
   private
