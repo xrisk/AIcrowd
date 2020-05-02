@@ -30,6 +30,10 @@ class CalculateMetaLeaderboardService
 
   private
 
+  def ranking_formula(rank, challenge_round_id)
+    rank * @weight_hash[challenge_round_id]
+  end
+
   def common_values
     {
       challenge_id: @challenge.id,
@@ -54,10 +58,6 @@ class CalculateMetaLeaderboardService
     }
   end
 
-  def total_weight
-    @challenge.challenge_problems.pluck('weight').sum
-  end
-
   def create_leaderboard
     people = {}
     @child_leaderboards.each do |child_leaderboard|
@@ -71,8 +71,17 @@ class CalculateMetaLeaderboardService
           people[key]['submission_id'] = entry['submission_id']
         end
         people[key]['rank'][entry['challenge_round_id']] = entry['seq']
-        people[key]['score'] += (entry['seq'] * total_weight)/@weight_hash[entry['challenge_round_id']]
+        people[key]['score'] += ranking_formula(entry['seq'], entry['challenge_round_id'])
         people[key]['entries'] += entry['entries']
+      end
+    end
+
+    worst_rank = people.keys.length
+    all_challenge_round_ids = @weight_hash.keys
+    people.each do |submittor, standing|
+      challenge_round_not_participated = all_challenge_round_ids - standing['rank'].keys
+      challenge_round_not_participated.each do |challenge_round|
+        people[submittor]['score'] += ranking_formula(worst_rank, challenge_round)
       end
     end
 
@@ -83,6 +92,7 @@ class CalculateMetaLeaderboardService
     people.sort_by{|k, v| v['score']}.each do |key, value|
       if value['score'] > last_score
         rank += 1
+        last_score = value['score']
       end
       obj = BaseLeaderboard.new(common_values.merge(participant_values(rank, key, value)))
       obj.save!
