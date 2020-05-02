@@ -51,6 +51,7 @@ class ChallengesController < ApplicationController
     end
 
     if @challenge.meta_challenge
+      @latest_five_submissions = Submission.where(meta_challenge_id: @challenge).order(created_at: :desc).limit(5)
       params[:meta_challenge_id] = params[:id]
       render template: "challenges/show_meta_challenge"
     end
