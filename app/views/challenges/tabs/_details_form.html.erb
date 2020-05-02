@@ -89,7 +89,7 @@
 
   <div class='form-group'>
     <span class="label-text">Banner Color (Hex Color)</span>
-    <%= f.text_field :banner_color, value: "F8F9F9",class: "form-control" %>
+    <%= f.text_field :banner_color, placeholder: "F8F9F9", class: "form-control" %>
   </div>
 
   <div class='form-group <% if !(current_participant&.admin?) %>d-none<% end %>'>
