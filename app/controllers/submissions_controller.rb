@@ -47,6 +47,8 @@ class SubmissionsController < ApplicationController
 
     if @meta_challenge.present?
       filter = filter.where(meta_challenge_id: @meta_challenge.id)
+    else
+      filter = filter.where(meta_challenge_id: nil)
     end
 
     if @challenge.meta_challenge
