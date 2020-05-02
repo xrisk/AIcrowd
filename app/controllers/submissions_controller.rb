@@ -52,8 +52,8 @@ class SubmissionsController < ApplicationController
     if @challenge.meta_challenge
       params[:meta_challenge_id] = @challenge.slug
       filter = policy_scope(Submission)
-                      .where(
-                        challenge_round_id: @challenge.meta_active_round_ids)
+                      .where(challenge_round_id: @challenge.meta_active_round_ids, 
+                             meta_challenge_id: @challenge.id)
     end
 
     @search = filter.search(search_params)
