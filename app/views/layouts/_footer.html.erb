@@ -100,4 +100,9 @@
 		</div>
 	</div>
 </footer>
+<!-- custom footer -->
+<% if Setting.footer_record.present? %>
+	<%= sanitize_html(footer_text) %>
+<% end %>
+<!-- /custom footer -->
 <!-- /app footer -->

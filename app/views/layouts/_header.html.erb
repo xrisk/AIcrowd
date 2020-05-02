@@ -1,14 +1,14 @@
-<% if !cookies[:hiring_banner_closed] %>
+<% if !cookies[:hiring_banner_closed] && Setting.banner_record.present? %>
 	<!-- Fixed Alert -->
-	<div class="alert alert-flash alert-dismissible fade show alert-fixed" role="alert">
+	<div class="alert alert-flash alert-dismissible fade show alert-fixed" role="alert" style="background-color: <%= banner_color %> !important">
 		<div class="container-fluid">
-			<%= link_to "We are hiring!", job_postings_path %>
+			<%= link_to banner_text, job_postings_path %>
 			<button type="button" class="close cookies-set-jobs" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
 		</div>
 	</div>
-	<!-- /Flash Alert -->
+	<!-- /Fixed Alert -->
 <% end %>
 
 <!-- app header -->

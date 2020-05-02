@@ -907,6 +907,11 @@ ActiveRecord::Schema.define(version: 2020_05_02_142113) do
     t.boolean "jobs_visible", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "banner_text", default: "We are Hiring!"
+    t.string "banner_color", default: "#F0524D"
+    t.boolean "enable_banner", default: false
+    t.text "footer_text"
+    t.boolean "enable_footer", default: false
   end
 
   create_table "submission_file_definitions", id: :serial, force: :cascade do |t|

@@ -104,13 +104,13 @@ module ApplicationHelper
     elsif mediable.class.name == 'Submission'
       data_url = "#{request.base_url}/#{mediable.short_url}" if mediable.class.name == 'Submission'
       img = having_media_large_image?(challenge, mediable) ? s3_public_url(mediable, :large) : nil
-    end  
-    content_tag(:span, 
-                data: { 
+    end
+    content_tag(:span,
+                data: {
                         title: challenge.challenge,
                         desc: challenge.tagline,
                         img: img,
-                        url: data_url + "?utm_source=AIcrowd&utm_medium=#{site.humanize}" 
+                        url: data_url + "?utm_source=AIcrowd&utm_medium=#{site.humanize}"
                       }) do
       social_share_link(site, data_url) do
         image_tag(social_image_url(site))
@@ -121,20 +121,32 @@ module ApplicationHelper
   def social_share_link(site, data_url)
     link_to image_tag(social_image_url(site)), '#',
       {
-        class: "btn btn-#{site} btn-sm mr-2",       
+        class: "btn btn-#{site} btn-sm mr-2",
         data: {
                 url: data_url.concat("?utm_source=AIcrowd&utm_medium=#{site.humanize}"),
                 site: site,
                 toggle: 'tooltip',
                 placement: 'top'
                },
-        onclick: "return SocialShareButton.share(this)",       
+        onclick: "return SocialShareButton.share(this)",
         title: "Share to #{site.humanize}",
         rel: 'nofollow'
       }
   end
 
   def social_image_url(site)
-    "/assets/img/icon-#{site}.svg" 
+    "/assets/img/icon-#{site}.svg"
+  end
+
+  def banner_text
+    Setting.banner_record&.gsub('<p>', '')&.gsub('</p>', '')&.html_safe
+  end
+
+  def banner_color
+    Setting.banner_color_value
+  end
+
+  def footer_text
+    Setting.footer_record
   end
 end
