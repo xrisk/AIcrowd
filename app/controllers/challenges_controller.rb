@@ -1,7 +1,7 @@
 class ChallengesController < ApplicationController
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :terminate_challenge, only: [:show, :index]
-  before_action :set_challenge, only: [:show, :edit, :update, :clef_task, :remove_image, :export, :import, :remove_invited]
+  before_action :set_challenge, only: [:show, :edit, :update, :clef_task, :remove_image, :remove_banner, :export, :import, :remove_invited]
   before_action :set_vote, only: [:show, :clef_task]
   before_action :set_follow, only: [:show, :clef_task]
   after_action :verify_authorized, except: [:index, :show]
@@ -131,7 +131,7 @@ class ChallengesController < ApplicationController
     @challenge.save
 
     respond_to do |format|
-      format.js { render :remove_banner }
+      format.js { render :remove_image }
     end
   end
 
