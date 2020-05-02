@@ -7,7 +7,7 @@ class OrganizersController < ApplicationController
     @challenges = if policy(@organizer).update?
                     @organizer.challenges
                   else
-                    @organizer.challenges.where(hidden_challenge: false).where(private_challenge: false)
+                    @organizer.challenges.where.not(status_cd: 'draft').where(hidden_challenge: false).where(private_challenge: false)
                   end
   end
 
