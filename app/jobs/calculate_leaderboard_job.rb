@@ -8,7 +8,9 @@ class CalculateLeaderboardJob < ApplicationJob
       CalculateMetaLeaderboardService.new(challenge_id: ChallengeRound.find(challenge_round_id).challenge.id).call
     else
       CalculateLeaderboardService.new(challenge_round_id: challenge_round_id).call
+      # Trigger all the leaderboard computations in case this round_id is being used for meta challenge
       ChallengeProblems.where(challenge_round_id: challenge_round_id).each do |challenge_problem|
+        CalculateLeaderboardService.new(challenge_round_id: challenge_round_id, meta_challenge_id: challenge_problem.challenge_id).call
         CalculateMetaLeaderboardService.new(challenge_id: challenge_problem.challenge_id).call
       end
     end
