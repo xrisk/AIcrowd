@@ -17,6 +17,7 @@ FactoryBot.define do
     discussions_visible { true }
     teams_allowed { true }
     max_team_participants { 5 }
+    big_challenge_card_image { false }
 
     after(:create) do |challenge|
       create(:challenges_organizer, challenge: challenge) if challenge.organizers.empty?
