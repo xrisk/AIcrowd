@@ -1,7 +1,13 @@
 class CalculateLeaderboardService
-  def initialize(challenge_round_id:)
+  def initialize(challenge_round_id:, meta_challenge_id: nil)
     @round = ChallengeRound.find(challenge_round_id)
     @conn  = ActiveRecord::Base.connection
+
+    @meta_challenge_id = meta_challenge_id
+    @meta_challenge_condition = " is null "
+    if meta_challenge_id.present?
+      @meta_challenge_condition = " =#{meta_challenge_id} "
+    end
   end
 
   def call
@@ -42,12 +48,13 @@ class CalculateLeaderboardService
         score_display = ROUND(score::numeric,#{@round.score_precision}),
         score_secondary_display = ROUND(score_secondary::numeric,#{@round.score_secondary_precision})
       WHERE challenge_round_id = #{@round.id}
+      AND meta_challenge_id #{@meta_challenge_condition};
     SQL
   end
 
   def window_border_dttm
     most_recent = Submission
-                      .where(challenge_round_id: @round.id)
+                      .where(challenge_round_id: @round.id, meta_challenge_id: @meta_challenge_id)
                       .order(created_at: :desc)
                       .limit(1)
                       .first
@@ -59,7 +66,8 @@ class CalculateLeaderboardService
     @conn.execute <<~SQL
       DELETE
       FROM base_leaderboards
-      WHERE challenge_round_id = #{@round.id};
+      WHERE challenge_round_id = #{@round.id}
+      AND meta_challenge_id #{@meta_challenge_condition};
     SQL
   end
 
@@ -111,15 +119,20 @@ class CalculateLeaderboardService
     SQL
 
     # Select only those Team Participants that are related to this challenge.
+    team_information_from_challenge = @round.challenge.id
+    if @meta_challenge_id.present?
+      team_information_from_challenge = @meta_challenge_id
+    end
+
     relevant_team_participants = <<~SQL
-      SELECT * FROM team_participants tp INNER JOIN teams t ON tp.team_id = t.id where t.challenge_id = #{@round.challenge.id}
+      SELECT * FROM team_participants tp INNER JOIN teams t ON tp.team_id = t.id where t.challenge_id = #{team_information_from_challenge}
     SQL
 
     relevant_old_participants = <<~SQL
       SELECT *
         FROM migration_mappings mm INNER JOIN submissions s ON mm.source_id = s.id
-        WHERE mm.source_type='Submission' AND s.challenge_round_id = #{@round.id} AND s.created_at <= #{cuttoff_dttm}
-        AND s.baseline IS FALSE
+        WHERE mm.source_type='Submission' AND s.challenge_round_id = #{@round.id} AND s.meta_challenge_id #{@meta_challenge_condition}
+        AND s.created_at <= #{cuttoff_dttm} AND s.baseline IS FALSE
     SQL
 
     # associate relevant submissions with their submitter
@@ -134,6 +147,7 @@ class CalculateLeaderboardService
       LEFT JOIN (#{relevant_team_participants}) tp ON p.id = tp.participant_id
       WHERE
         s.challenge_round_id = #{@round.id}
+        AND s.meta_challenge_id #{@meta_challenge_condition}
         AND s.post_challenge IN #{post_challenge}
         AND s.created_at <= #{cuttoff_dttm}
         AND s.baseline IS FALSE
@@ -203,6 +217,7 @@ class CalculateLeaderboardService
     @conn.execute <<~SQL
       INSERT INTO base_leaderboards (
         id,
+        meta_challenge_id,
         challenge_id,
         challenge_round_id,
         submitter_type,
@@ -228,6 +243,7 @@ class CalculateLeaderboardService
       )
       SELECT
         nextval('base_leaderboards_id_seq'::regclass),
+        #{@meta_challenge_id || "null"},
         #{@round.challenge_id},
         #{@round.id},
         stats.submitter_type,
@@ -280,6 +296,7 @@ class CalculateLeaderboardService
       WHERE base_leaderboards.leaderboard_type_cd = '#{leaderboard}'
       AND base_leaderboards.challenge_round_id = lb.challenge_round_id
       AND base_leaderboards.challenge_round_id = #{@round.id}
+      AND base_leaderboards.meta_challenge_id #{@meta_challenge_condition}
       AND base_leaderboards.submitter_type = lb.submitter_type
       AND base_leaderboards.submitter_id = lb.submitter_id
     SQL
@@ -290,6 +307,7 @@ class CalculateLeaderboardService
     @conn.execute <<~SQL
       INSERT INTO base_leaderboards (
         id,
+        meta_challenge_id,
         challenge_id,
         challenge_round_id,
         submitter_type,
@@ -317,6 +335,7 @@ class CalculateLeaderboardService
       )
       SELECT
         nextval('base_leaderboards_id_seq'::regclass),
+        s.meta_challenge_id,
         s.challenge_id,
         s.challenge_round_id,
         'Participant',
@@ -343,6 +362,7 @@ class CalculateLeaderboardService
         s.updated_at
       FROM submissions s
       WHERE s.challenge_round_id = #{@round.id}
+      AND s.meta_challenge_id #{@meta_challenge_condition}
       AND s.grading_status_cd = 'graded'
       AND s.post_challenge IN #{post_challenge}
       AND s.created_at <= #{cuttoff_dttm}
@@ -365,7 +385,8 @@ class CalculateLeaderboardService
                          l.leaderboard_type_cd
             ORDER BY #{order_by}, l.row_num asc) AS SEQ
         FROM base_leaderboards l
-        WHERE l.challenge_round_id = #{@round.id})
+        WHERE l.challenge_round_id = #{@round.id}
+        AND l.meta_challenge_id #{@meta_challenge_condition})
       UPDATE base_leaderboards
       SET seq = lb.seq
       FROM lb

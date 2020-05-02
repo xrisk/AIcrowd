@@ -61,6 +61,9 @@ class DatasetFilesController < ApplicationController
 
   def set_challenge
     @challenge = Challenge.friendly.find(params[:challenge_id])
+    if params.has_key?('meta_challenge_id')
+      @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id])
+    end
   end
 
   def set_vote
@@ -72,13 +75,18 @@ class DatasetFilesController < ApplicationController
   end
 
   def check_participation_terms
-    unless policy(@challenge).has_accepted_participation_terms?
-      redirect_to [@challenge, ParticipationTerms.current_terms]
+    challenge = @challenge
+    if @meta_challenge.present?
+      challenge = @meta_challenge
+    end
+
+    unless policy(challenge).has_accepted_participation_terms?
+      redirect_to [challenge, ParticipationTerms.current_terms]
       return
     end
 
-    unless policy(@challenge).has_accepted_challenge_rules?
-      redirect_to [@challenge, @challenge.current_challenge_rules]
+    unless policy(challenge).has_accepted_challenge_rules?
+      redirect_to [challenge, challenge.current_challenge_rules]
       return
     end
   end

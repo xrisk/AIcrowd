@@ -316,4 +316,9 @@ module ChallengesHelper
     path = super(*args)
     meta_challenge(path, args[0])
   end
+
+  def challenge_dataset_files_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
 end

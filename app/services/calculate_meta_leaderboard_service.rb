@@ -11,9 +11,9 @@ class CalculateMetaLeaderboardService
     @weight_hash = {}
     @challenge.challenge_problems.each do |challenge_problem|
       @weight_hash[challenge_problem.challenge_round_id] = challenge_problem.weight
-      challenge_round = ChallengeRound.find(challenge_problem.challenge_round_id)
-      if challenge_round.leaderboards.present?
-        @child_leaderboards.append(challenge_round.leaderboards)
+      child_leaderboard = ChallengeRound.find(challenge_problem.challenge_round_id).leaderboards.where(meta_challenge_id: challenge_id)
+      if child_leaderboard.present?
+        @child_leaderboards.append(child_leaderboard)
       end
     end
   end

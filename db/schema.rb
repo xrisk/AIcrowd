@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_02_001504) do
+ActiveRecord::Schema.define(version: 2020_05_02_080127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(version: 2020_05_02_001504) do
     t.json "meta"
     t.string "submitter_type"
     t.bigint "submitter_id"
+    t.integer "meta_challenge_id"
     t.index ["challenge_id"], name: "index_base_leaderboards_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_base_leaderboards_on_challenge_round_id"
     t.index ["leaderboard_type_cd"], name: "index_base_leaderboards_on_leaderboard_type_cd"
@@ -974,6 +975,7 @@ ActiveRecord::Schema.define(version: 2020_05_02_001504) do
     t.float "score_secondary_display"
     t.boolean "baseline", default: false
     t.string "baseline_comment"
+    t.integer "meta_challenge_id"
     t.index ["challenge_id"], name: "index_submissions_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_submissions_on_challenge_round_id"
     t.index ["participant_id"], name: "index_submissions_on_participant_id"
@@ -1261,7 +1263,8 @@ ActiveRecord::Schema.define(version: 2020_05_02_001504) do
       base_leaderboards.post_challenge,
       base_leaderboards.seq,
       base_leaderboards.baseline,
-      base_leaderboards.baseline_comment
+      base_leaderboards.baseline_comment,
+      base_leaderboards.meta_challenge_id
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'leaderboard'::text);
   SQL
@@ -1293,7 +1296,8 @@ ActiveRecord::Schema.define(version: 2020_05_02_001504) do
       base_leaderboards.post_challenge,
       base_leaderboards.seq,
       base_leaderboards.baseline,
-      base_leaderboards.baseline_comment
+      base_leaderboards.baseline_comment,
+      base_leaderboards.meta_challenge_id
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
   SQL
@@ -1324,7 +1328,8 @@ ActiveRecord::Schema.define(version: 2020_05_02_001504) do
       base_leaderboards.post_challenge,
       base_leaderboards.seq,
       base_leaderboards.baseline,
-      base_leaderboards.baseline_comment
+      base_leaderboards.baseline_comment,
+      base_leaderboards.meta_challenge_id
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'previous'::text);
   SQL
@@ -1355,7 +1360,8 @@ ActiveRecord::Schema.define(version: 2020_05_02_001504) do
       base_leaderboards.post_challenge,
       base_leaderboards.seq,
       base_leaderboards.baseline,
-      base_leaderboards.baseline_comment
+      base_leaderboards.baseline_comment,
+      base_leaderboards.meta_challenge_id
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'previous_ongoing'::text);
   SQL
