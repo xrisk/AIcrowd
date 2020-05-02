@@ -65,6 +65,7 @@
 
   <div class="form-group">
     <%= f.file_field :image_file %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :big_challenge_card_image, text: "Use image for big cards" } %>
     <% if @challenge.persisted? %>
       <% remove_image_class = @challenge.image_file.present? ? '' : 'challenges-form__link--hidden' %>
       <%= link_to 'Delete', remove_image_challenge_path(@challenge), remote: true, id: 'challenges-form-remove-card-image', class: "form-text #{remove_image_class}" %>

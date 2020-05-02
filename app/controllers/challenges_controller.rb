@@ -281,6 +281,7 @@ class ChallengesController < ApplicationController
       :meta_challenge,
       :banner_file,
       :banner_color,
+      :big_challenge_card_image,
       image_attributes: [
         :id,
         :image,
