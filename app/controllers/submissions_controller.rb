@@ -18,44 +18,45 @@ class SubmissionsController < ApplicationController
 
   def index
     if params[:baselines] == 'true'
-      @search = policy_scope(Submission)
+      filter = policy_scope(Submission)
                     .where(
                       challenge_round_id: @current_round&.id,
                       challenge_id:       @challenge.id,
                       baseline:           true)
                     .where.not(participant_id: nil)
-                    .search(search_params)
       @baselines = true
     else
       @baselines      = false
       @my_submissions = true if params[:my_submissions] == 'true' && current_participant
       if @my_submissions
-        @search = policy_scope(Submission)
+        filter = policy_scope(Submission)
                       .where(
                         challenge_round_id: @current_round&.id,
                         challenge_id:       @challenge.id,
                         participant_id:     current_participant.id)
-                      .search(search_params)
         @submissions_remaining = SubmissionsRemainingQuery.new(
           challenge:      @challenge,
           participant_id: current_participant.id).call
       else
-        @search = policy_scope(Submission)
+        filter = policy_scope(Submission)
                       .where(
                         challenge_round_id: @current_round&.id,
                         challenge_id:       @challenge.id)
-                      .search(search_params)
       end
+    end
+
+    if @meta_challenge.present?
+      filter = filter.where(meta_challenge_id: @meta_challenge.id)
     end
 
     if @challenge.meta_challenge
       params[:meta_challenge_id] = @challenge.slug
-      @search = policy_scope(Submission)
-                      .where(
-                        challenge_round_id: @challenge.meta_active_round_ids)
-                      .search(search_params)
+      filter = policy_scope(Submission)
+                      .where(challenge_round_id: @challenge.meta_active_round_ids, 
+                             meta_challenge_id: @challenge.id)
     end
 
+    @search = filter.search(search_params)
     @search.sorts = 'created_at desc' if @search.sorts.empty?
     @submissions  = @search.result.includes(:participant).page(params[:page]).per(10)
   end
@@ -104,11 +105,11 @@ class SubmissionsController < ApplicationController
   end
 
   def create
-    @submission = @challenge.submissions.new(
-      submission_params
-          .merge(
-            participant_id:    current_participant.id,
-            online_submission: true))
+    session_info = {participant_id: current_participant.id, online_submission: true}
+    if @meta_challenge.present?
+      session_info[:meta_challenge_id] = @meta_challenge.id
+    end
+    @submission = @challenge.submissions.new(submission_params.merge(session_info))
     authorize @submission
     if @submission.save
       SubmissionGraderJob.perform_later(@submission.id)
@@ -162,6 +163,9 @@ class SubmissionsController < ApplicationController
 
   def set_challenge
     @challenge = Challenge.friendly.find(params[:challenge_id])
+    if params.has_key?('meta_challenge_id')
+      @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id])
+    end
   end
 
   def set_challenge_rounds
@@ -186,8 +190,8 @@ class SubmissionsController < ApplicationController
 
   def check_participation_terms
     challenge = @challenge
-    if params.has_key?(:meta_challenge_id)
-      challenge = Challenge.friendly.find(params[:meta_challenge_id])
+    if @meta_challenge.present?
+      challenge = @meta_challenge
     end
 
     unless policy(challenge).has_accepted_participation_terms?
@@ -214,6 +218,7 @@ class SubmissionsController < ApplicationController
     params
         .require(:submission)
         .permit(
+          :meta_challenge_id,
           :challenge_id,
           :participant_id,
           :description_markdown,
@@ -259,7 +264,7 @@ class SubmissionsController < ApplicationController
     begin
       S3_BUCKET.object(file_location).put(body: params[:submission][:submission_data])
     rescue Aws::S3::Errors::ServiceError
-      redirect_to challenge_submissions_path(@challenge), notice: 'Submission upload failed, please try again.'
+      redirect_to helpers.challenge_submissions_path(@challenge), notice: 'Submission upload failed, please try again.'
     end
 
     params[:submission].merge!({

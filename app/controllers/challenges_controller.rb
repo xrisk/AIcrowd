@@ -45,10 +45,13 @@ class ChallengesController < ApplicationController
     @challenge_rounds = @challenge.challenge_rounds.started
     @partners = Partner.where(organizer_id: @challenge.organizer_ids) if @challenge.organizers.any?
     @challenge_baseline_discussion = @challenge.baseline_discussion
-    @latest_five_submissions = @challenge.latest_five_submissions
-    @top_five_leaderboards = @challenge.top_five_leaderboards
+    if @challenge.active_round
+      @top_five_leaderboards = @challenge.leaderboards.where(meta_challenge_id: @meta_challenge).limit(5)
+      @latest_five_submissions = @challenge.submissions.where(meta_challenge_id: @meta_challenge).order(created_at: :desc).limit(5)
+    end
 
     if @challenge.meta_challenge
+      @latest_five_submissions = Submission.where(meta_challenge_id: @challenge).order(created_at: :desc).limit(5)
       params[:meta_challenge_id] = params[:id]
       render template: "challenges/show_meta_challenge"
     end

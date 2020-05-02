@@ -12,6 +12,11 @@ class LeaderboardsController < ApplicationController
     @post_challenge = true if @challenge.completed? && params[:post_challenge] == "true"
     @post_challenge = false if @challenge.meta_challenge?
 
+    filter = {challenge_round_id: @current_round.id}
+    if @meta_challenge.present?
+      filter[:meta_challenge_id] = @meta_challenge.id
+    end
+
     @leaderboards = if @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
       DisentanglementLeaderboard
         .where(challenge_round_id: @current_round)
@@ -20,13 +25,13 @@ class LeaderboardsController < ApplicationController
         .order(:row_num)
     elsif @post_challenge
       policy_scope(OngoingLeaderboard)
-        .where(challenge_round_id: @current_round&.id.to_i)
+        .where(filter)
         .page(params[:page])
         .per(10)
         .order(:seq)
     else
       policy_scope(Leaderboard)
-        .where(challenge_round_id: @current_round&.id.to_i)
+        .where(filter)
         .page(params[:page])
         .per(10)
         .order(:seq)
@@ -51,6 +56,9 @@ class LeaderboardsController < ApplicationController
 
   def set_challenge
     @challenge = Challenge.friendly.find(params[:challenge_id])
+    if params.has_key?('meta_challenge_id')
+      @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id])
+    end
   end
 
   def set_current_round

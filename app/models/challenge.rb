@@ -209,16 +209,6 @@ class Challenge < ApplicationRecord
     arr&.split(',')&.map(&:strip) || []
   end
 
-  def latest_five_submissions
-    return unless active_round
-    active_round.submissions.order(created_at: :desc).limit(5)
-  end
-
-  def top_five_leaderboards
-    return unless active_round
-    active_round.leaderboards.limit(5)
-  end
-
   def hidden_in_discourse?
     draft? || private_challenge? || meta_challenge?
   end

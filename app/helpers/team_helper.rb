@@ -1,5 +1,9 @@
 module TeamHelper
   def my_team_view_or_create_button(challenge)
+    if is_current_page_meta_challenge_child(challenge)
+      return my_team_view_or_create_button(detect_meta_challenge(challenge))
+    end
+
     return nil unless challenge.teams_allowed
 
     button_opts = {}
