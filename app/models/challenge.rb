@@ -7,6 +7,7 @@ class Challenge < ApplicationRecord
               use: %i[slugged finders history]
 
   mount_uploader :image_file, ImageUploader
+  mount_uploader :banner_file, RawImageUploader
 
   belongs_to :clef_task, optional: true
   accepts_nested_attributes_for :clef_task
@@ -68,7 +69,7 @@ class Challenge < ApplicationRecord
             format: { with: /\A[a-zA-Z0-9]/ }
   validates :challenge_client_name, presence: true
   validate :other_scores_fieldnames_max
-
+  #validate :banner_color, format: { with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i }
 
   EVALUATOR_TYPES = {
     'Not Configured' => :not_configured,

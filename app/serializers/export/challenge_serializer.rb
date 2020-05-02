@@ -5,10 +5,14 @@ module Export
     attributes *::Challenge::IMPORTABLE_FIELDS, :submission_file_definitions_attributes,
                :challenges_organizers_attributes, :category_challenges_attributes,
                :challenge_partners_attributes, :challenge_rules_attributes, :image_file,
-               :dataset_files_attributes
+               :banner_file, :dataset_files_attributes
 
     def image_file
       ::Images::Base64EncodeService.new(image_url: object.image_file.url).call.value
+    end
+
+    def banner_file
+      ::Images::Base64EncodeService.new(image_url: object.banner_file.url).call.value
     end
 
     def submission_file_definitions_attributes
