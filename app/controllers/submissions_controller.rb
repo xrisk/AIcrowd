@@ -84,7 +84,8 @@ class SubmissionsController < ApplicationController
 
   def set_form_type
     if @challenge.evaluator_type_cd == "evaluations_api"
-      @form = "choose"
+      # TODO: Implement "choose" properly with boolean flag before enabling back
+      @form = "artifact"
       if params[:type].in?(['code', 'artifact', 'gitlab'])
         @form = params[:type]
       end
