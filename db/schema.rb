@@ -9,7 +9,9 @@
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended that you check this file into your version control system.
-ActiveRecord::Schema.define(version: 2020_04_30_234339) do
+
+ActiveRecord::Schema.define(version: 2020_05_02_001504) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_stat_statements"
@@ -439,6 +441,8 @@ ActiveRecord::Schema.define(version: 2020_04_30_234339) do
     t.string "discourse_group_name"
     t.string "evaluator_type_cd"
     t.boolean "meta_challenge"
+    t.string "banner_file"
+    t.string "banner_color"
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
   end

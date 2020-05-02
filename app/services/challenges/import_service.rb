@@ -50,6 +50,7 @@ module Challenges
 
     def import_images_from_base64
       challenge.image_file = decode_base64_data(import_params[:image_file])
+      challenge.banner_file = decode_base64_data(import_params[:banner_file])
 
       ::Challenge::IMPORTABLE_IMAGES.each do |element|
         if element.is_a?(Symbol) # :field_name

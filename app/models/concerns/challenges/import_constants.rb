@@ -67,7 +67,8 @@ module Challenges
       :team_freeze_time,
       :clef_task_id,
       :scrollable_overview_tabs,
-      :meta_challenge
+      :meta_challenge,
+      :banner_color
     ].freeze
 
     IMPORTABLE_ASSOCIATIONS = {
@@ -121,6 +122,7 @@ module Challenges
 
     IMPORTABLE_IMAGES = [
       :image_file,
+      :banner_file,
       challenge_partners: :image_file
     ]
   end

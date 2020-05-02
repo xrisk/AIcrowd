@@ -13800,6 +13800,7 @@ html {
 
 .participants.floating-base {
   filter: blur(1px);
+  min-height: 200px;
 }
 
 .empty-card-compact {
@@ -13817,6 +13818,12 @@ html {
 
 .empty-card-compact .text.text-small {
   font-size: 20px;
+}
+
+.masthead-banner {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto 100%;
 }
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';

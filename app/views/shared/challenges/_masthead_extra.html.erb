@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-12 d-flex align-items-center flex-wrap">
+    <div class="organizer-attribution">
+      <% challenge.organizers.each do |organizer| %>
+        <%= link_to organizer_path(organizer) do %>
+          <%= image_tag organizer.image_file_url %>
+        <% end %>
+        <span>By&nbsp;
+          <%= link_to organizer_path(organizer) do %>
+            <%= organizer.organizer %>&nbsp;
+          <% end %>
+        </span>
+      <% end %>
+    </div>
+
+    <div class="stats-group" style="margin-right: 0px">
+      <div class="stat-item" style="width: 72px">
+        <center>
+        <span data-toggle="tooltip" data-placement="top" title="No. of views">
+          <img src="/assets/img/icon-views.svg">
+          <%= challenge_stat_count(challenge, 'view') %>
+        </span>
+        </center>
+      </div>
+      <div class="stat-item" style="width: 72px">
+        <center>
+        <span data-toggle="tooltip" data-placement="top" title="No. of users">
+          <img src="/assets/img/icon-users.svg">
+          <%= challenge_stat_count(challenge, 'participant') %>
+        </span>
+        </center>
+      </div>
+      <div class="stat-item" style="width: 72px">
+        <center>
+        <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
+          <img src="/assets/img/icon-submissions.svg">
+          <%= challenge_stat_count(challenge, 'submission') %>
+        </span>
+        </center>
+      </div>
+    </div>
+    <div class="btn-set" aria-hidden="true">
+      <%= render partial: 'shared/votes/button', locals: { votable: challenge, vote: vote } %>
+      <%= render partial: 'shared/challenges/follow_button', locals: { followable: challenge, follow: follow } %>
+    </div>
+
+    <% if policy(challenge).edit? %>
+      <div class="dropdown btn-set ml-auto">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Organizer actions
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <%= link_to 'Edit Challenge', edit_challenge_path(challenge), class: 'dropdown-item' %>
+          <%= link_to 'List Participants', participants_link(challenge), class: 'dropdown-item' %>
+          <%= link_to 'Send Newsletter Email', new_challenge_newsletter_emails_path(challenge), class: 'dropdown-item' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

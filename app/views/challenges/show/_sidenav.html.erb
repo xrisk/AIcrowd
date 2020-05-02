@@ -22,7 +22,7 @@
       </span>
     <% end %>
     <% users.each do |user| %>
-      <% if !(current_participant && user.id==current_participant.id) %>
+      <% if !(current_participant && user.participant_id==current_participant.id) %>
         <span>
           <%= render partial: 'participants/get_user_profile', locals: { participant: user.participant, username: 'false' } %>
         </span>
