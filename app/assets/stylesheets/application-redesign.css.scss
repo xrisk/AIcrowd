@@ -12251,6 +12251,16 @@ body {
   border-radius: 20px;
 }
 
+@media (max-width: 768px) {
+  .stats-group {
+    background: #ffffff;
+    display: inline-flex;
+    padding: 1px;
+    border: 1px solid #c2c2c2;
+    border-radius: 20px;
+  }
+}
+
 .stat-item {
   font-size: .875rem;
   width: 76px;

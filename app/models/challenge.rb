@@ -8,6 +8,7 @@ class Challenge < ApplicationRecord
 
   mount_uploader :image_file, ImageUploader
   mount_uploader :banner_file, RawImageUploader
+  mount_uploader :banner_mobile_file, RawImageUploader
 
   belongs_to :clef_task, optional: true
   accepts_nested_attributes_for :clef_task

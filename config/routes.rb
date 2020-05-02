@@ -11,6 +11,7 @@ def challenge_routes
   member do
     get :remove_image
     get :remove_banner
+    get :remove_banner_mobile
     get :clef_task
     get :export
     post :import

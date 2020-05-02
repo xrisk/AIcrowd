@@ -138,6 +138,15 @@ class ChallengesController < ApplicationController
     end
   end
 
+  def remove_banner_mobile
+    @challenge.remove_banner_mobile_file!
+    @challenge.save
+
+    respond_to do |format|
+      format.js { render :remove_image }
+    end
+  end
+
   def export
     challenge_json = Export::ChallengeSerializer.new(@challenge).as_json.to_json
 
@@ -280,6 +289,7 @@ class ChallengesController < ApplicationController
       :scrollable_overview_tabs,
       :meta_challenge,
       :banner_file,
+      :banner_mobile_file,
       :banner_color,
       :big_challenge_card_image,
       image_attributes: [
