@@ -1,5 +1,7 @@
 class ChallengeProblemsController < ApplicationController
+  before_action :authenticate_participant!
   before_action :set_challenge
+  after_action :verify_authorized
 
   def show
     if request.post?
@@ -11,6 +13,7 @@ class ChallengeProblemsController < ApplicationController
         update(params[:data])
       end
     end
+    authorize @challenge.challenge_problems
   end
 
   private
@@ -22,10 +25,12 @@ class ChallengeProblemsController < ApplicationController
       weight: params[:challenge_problems][:weight],
       challenge_round_id: params[:challenge_problems][:challenge_round_id]
     })
+    authorize obj
     obj.save!
   end
 
   def delete(problem_id)
+    authorize @challenge.challenge_problems
     ChallengeProblems.where(challenge_id: @challenge.id, problem_id: problem_id).destroy_all
   end
 
@@ -34,6 +39,7 @@ class ChallengeProblemsController < ApplicationController
       obj = ChallengeProblems.find_by(challenge_id: @challenge.id, problem_id: problem_id)
       obj.weight = value['weight']
       obj.challenge_round_id = value['challenge_round_id']
+      authorize obj
       obj.save!
     end
   end
