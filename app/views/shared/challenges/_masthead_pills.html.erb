@@ -1,10 +1,20 @@
 <div class="row">
   <div class="col-12">
-    <% challenge_rounds.each do |challenge_round| %>
-      <span class="badge <%= challenge_remaining_text(challenge, challenge_round) == "Completed" ? "badge-success" : "badge-primary" %>">
-        <img src="/assets/img/icon-time.svg">
-        <%= challenge_round.challenge_round %>: <%= challenge_remaining_text(challenge, challenge_round) %>
-      </span>
+    <% if !is_current_page_meta_challenge_child(challenge) %>
+      <% challenge_rounds.each do |challenge_round| %>
+        <span class="badge <%= challenge_remaining_text(challenge, challenge_round) == "Completed" ? "badge-success" : "badge-primary" %>">
+          <img src="/assets/img/icon-time.svg">
+          <%= challenge_round.challenge_round %>: <%= challenge_remaining_text(challenge, challenge_round) %>
+        </span>
+      <% end %>
+    <% else %>
+      <% meta_challenge = detect_meta_challenge(challenge) %>
+      <% meta_challenge.challenge_rounds.started.each do |challenge_round| %>
+        <span class="badge <%= challenge_remaining_text(meta_challenge, challenge_round) == "Completed" ? "badge-success" : "badge-primary" %>">
+          <img src="/assets/img/icon-time.svg">
+          <%= challenge_round.challenge_round %>: <%= challenge_remaining_text(meta_challenge, challenge_round) %>
+        </span>
+      <% end %>
     <% end %>
     <% challenge.categories.each do |category| %>
       <%= link_to challenges_path(categories: category.name) do %>

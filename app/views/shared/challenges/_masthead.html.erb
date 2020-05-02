@@ -1,5 +1,5 @@
-<% if detect_meta_challenge(challenge) %>
-<% meta_challenge = detect_meta_challenge(challenge) %>
+<% if is_current_page_meta_challenge_child(challenge) %>
+  <% meta_challenge = detect_meta_challenge(challenge) %>
   <div class="navigation btn-primary p-2">
     <div class="container-fluid">
       <span>
@@ -12,8 +12,27 @@
 <% end %>
 <!-- masthead - challenge -->
 <% if challenge.banner_file.present? %>
-<div class="masthead masthead-challenge masthead-banner"
-  style="background-image:url('<%= challenge.banner_file.url %>');background-color:#<%= challenge.banner_color.presence || "F8F9F9" %>">
+  <!--- TODO: move this embeeded css outside -->
+  <style>
+  .masthead-banner {
+    background-image: url('<%= challenge.banner_file.url %>');
+    background-color: #<%= challenge.banner_color.presence || "F8F9F9" %>
+  }
+  @media (max-width: 768px) {
+    .masthead-banner {
+      background-image: url('<%= challenge.banner_mobile_file.url %>');
+      background-size: 100% auto;
+    }
+    .mobile-mt-100 {
+      margin-top: 100px;
+    }
+    .mobile-mt-100 .organizer-attribution,
+    .mobile-mt-100 .dropdown {
+      display: none;
+    }
+  }
+  </style>
+  <div class="masthead masthead-challenge masthead-banner">
 <% else %>
 <div class="masthead masthead-challenge">
 <% end %>

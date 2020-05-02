@@ -5,8 +5,6 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   storage :fog
 
-  process resize_to_fill: [600, 600]
-
   def store_dir
     "images/#{model.class.to_s.pluralize.underscore}/#{mounted_as}/#{model.id}"
   end
