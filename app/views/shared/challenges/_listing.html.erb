@@ -1,7 +1,9 @@
 <% challenges.each do |challenge| %>
   <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
     <% if !challenge.big_challenge_card_image? %>
-      <div class="card card-challenge">
+      <%= link_to challenge_path(challenge) do %>
+        <div class="card card-challenge">
+      <% end %>
     <% else %>
       <div class="card card-challenge" style="background-image: url('<%= challenge.image_file_url %>');background-size: 100% auto;">
     <% end %>
@@ -22,7 +24,6 @@
       <!-- card body -->
       <div class="card-body">
         <div class="card-intro">
-          <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
           <% if !challenge.big_challenge_card_image? %>
             <h5 class="card-title"><%= link_to challenge.challenge, challenge_path(challenge) %>
               <% if challenge.private_challenge %>
@@ -39,7 +40,9 @@
             <% if challenge.tagline %>
               <p class="card-text"><%= challenge.tagline %></p>
             <% end %>
-          <% end %>
+          <% else %>
+            <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
+            <% end %>
           <% end %>
         </div>
 
