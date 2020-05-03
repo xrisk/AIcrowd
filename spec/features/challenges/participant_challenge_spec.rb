@@ -42,14 +42,6 @@ describe "participant accesses challenge", :js do
       expect(page).to have_content 'Overview'
     end
 
-    it "can follow User Rankings link" do
-      within('.app-header'){
-        click_link "User Rankings"
-      }
-
-      expect(page).to have_content 'User Rankings'
-    end
-
     it "can follow Resources link" do
       click_link "Resources"
       expect(page).to have_content 'Resources'
@@ -61,14 +53,6 @@ describe "participant accesses challenge", :js do
       log_in participant
       visit '/challenges'
       click_link challenge.challenge
-    end
-
-    it "follow User Rankings link" do
-      within('.app-header'){
-        click_link "User Rankings"
-      }
-
-      expect(page).to have_content 'User Rankings'
     end
 
     it "follow Resources link" do
