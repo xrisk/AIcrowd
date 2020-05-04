@@ -139,7 +139,7 @@ module ApplicationHelper
   end
 
   def banner_text
-    Setting.banner_record&.gsub('<p>', '')&.gsub('</p>', '')&.html_safe
+    sanitize_html Setting.banner_record&.gsub('<p>', '')&.gsub('</p>', '')
   end
 
   def banner_color
@@ -147,6 +147,6 @@ module ApplicationHelper
   end
 
   def footer_text
-    Setting.footer_record
+    sanitize_html Setting.footer_record
   end
 end

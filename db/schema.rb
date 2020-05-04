@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_02_142113) do
+ActiveRecord::Schema.define(version: 2020_05_04_111847) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -907,7 +907,7 @@ ActiveRecord::Schema.define(version: 2020_05_02_142113) do
     t.boolean "jobs_visible", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "banner_text", default: "We are Hiring!"
+    t.text "banner_text", default: "We are Hiring!"
     t.string "banner_color", default: "#F0524D"
     t.boolean "enable_banner", default: false
     t.text "footer_text"
