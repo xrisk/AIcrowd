@@ -75,8 +75,8 @@
                 <% end %>
               </tr>
               </thead>
-              <tbody>
-              <%= render partial: 'leaderboards', locals: { leaderboards: @leaderboards, current_round: @current_round } %>
+              <tbody id="leaderboards-div" data-page='1' data-request-completed='true' data-challenge-id='<%= @challenge.friendly_id %>' data-controller="leaderboards">
+                <%= render partial: 'leaderboards', locals: { leaderboards: @leaderboards, current_round: @current_round } %>
               </tbody>
             </table>
           </div>
@@ -99,9 +99,6 @@
           </div>
         <% end %>
         <!-- /toggle switch -->
-
-        <span id="more-anchor"></span>
-        <%= render partial: 'shared/load_more', locals: { collection: @leaderboards } %>
       </div>
     </div>
   </div>

@@ -1,8 +1,7 @@
-$(".load-more").remove();
+<% if @submissions.count < 10 %>
+  $('#submissions-div').attr("data-request-completed", false);
+<% else %>
+  $('#submissions-div').attr("data-request-completed", true);
+<% end %>
+$("#loader-container").hide();
 $("#submissions-div").append("<%= j render partial: 'submissions', locals: { submissions: @submissions } %>");
-$("#more-anchor").after("<%= j render partial: 'shared/load_more', locals: { collection: @submissions } %>");
-$('html, body').animate({
-   scrollTop: $(document).height()-$(window).height()},
-   1400,
-   "easeOutQuint"
-);

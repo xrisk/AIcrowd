@@ -25,20 +25,8 @@
               <th scope="col" class="sticky-header"></th>
             </tr>
             </thead>
-            <tbody class="table-leaderboard-body">
-            <%= render partial: 'rating_leaderboard', locals: { participants: @participants } %>
-            </tbody>
-            <tbody>
-              <tr>
-                <td colspan="7">
-                  <div>
-                    <span id="more-anchor"></span>
-                    <% if @participants.present? %>
-                      <%= render partial: 'shared/load_more', locals: { collection: @participants } %>
-                    <% end %>
-                  </div>
-                </td>
-              </tr>
+            <tbody class="table-leaderboard-body" data-page='1' data-request-completed='true' data-controller="rating-leaderboard">
+              <%= render partial: 'rating_leaderboard', locals: { participants: @participants } %>
             </tbody>
             <% if @self_standing %>
             <thead>
