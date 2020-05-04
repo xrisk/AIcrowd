@@ -54,8 +54,18 @@
         <% end %>
         <!-- /prizes breakdown -->
 
+        <!-- category group -->
+        <div class='category-group'>
+          <% challenge.categories.each do |category| %>
+            <%= link_to challenges_path(categories: category.name) do %>
+              <span class='badge badge-outline'>#<%= category.name.parameterize.underscore %></span>
+            <% end %>
+          <% end %>
+        </div>
+        <!-- /category group -->
+
         <!-- stats group -->
-        <div class="stats-group <% if challenge.big_challenge_card_image? %>stats-group-fg<% end %>">
+        <div class="stats-group stat-above-footer <% if challenge.big_challenge_card_image? %>stats-group-fg<% end %>">
           <div class="stat-item ml-1 mr-1">
             <span data-toggle="tooltip" data-placement="top" title="No. of views">
               <img src="/assets/img/icon-views.svg">
@@ -77,16 +87,6 @@
           </div>
         </div><br/>
         <!-- /stats group -->
-
-        <!-- category group -->
-        <div class='category-group'>
-          <% challenge.categories.each do |category| %>
-            <%= link_to challenges_path(categories: category.name) do %>
-              <span class='badge badge-light'>#<%= category.name.parameterize.underscore %></span>
-            <% end %>
-          <% end %>
-        </div>
-        <!-- /category group -->
       </div>
       <!-- /card body -->
 

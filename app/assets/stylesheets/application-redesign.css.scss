@@ -13842,6 +13842,11 @@ html {
   background-size: auto 100%;
 }
 
+.stat-above-footer {
+  position: absolute;
+  margin-top: 12px;
+}
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';
