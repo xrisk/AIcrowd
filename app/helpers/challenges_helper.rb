@@ -51,7 +51,7 @@ module ChallengesHelper
   def challenge_stat_count(challenge, stat_type)
     case stat_type
     when 'submission'
-      formatted_count(challenge.submissions_count)
+      formatted_count(challenge.submissions.count)
     when 'view'
       formatted_count(challenge.page_views)
     when 'participant'
