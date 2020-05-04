@@ -12,7 +12,7 @@
     </div>
   </header>
 
-  <% if challenge_rounds.size > 1 %>
+  <% if challenge_rounds.size > 1 && !@challenge.meta_challenge %>
     <!-- Challenge Round Pills  -->
     <ul class="nav nav-pills">
       <% challenge_rounds.each do |challenge_round| %>
