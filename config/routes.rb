@@ -1,7 +1,6 @@
 require 'sidekiq/web'
 require 'sidekiq/cron/web'
 
-
 def challenge_routes
   collection do
     get :reorder
@@ -22,6 +21,7 @@ def challenge_routes
     resources :invitations, only: [:create], controller: 'challenges/team_invitations'
   end
   resources :dataset_files
+  resources :dataset_folders, only: [:new, :create, :edit, :update, :destroy]
   resources :participant_challenges, only: [:index] do
     get :approve, on: :collection
     get :deny, on: :collection

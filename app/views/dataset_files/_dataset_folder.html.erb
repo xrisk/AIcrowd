@@ -1,0 +1,33 @@
+<!-- item -->
+<li class="list-group-item dataset-folder">
+  <div class="dataset-folder__info">
+    <div class="dataset-folder__icon">
+      <i class="fa fa-folder"></i>
+    </div>
+
+    <div>
+      <strong><%= dataset_folder.title %></strong>
+      <div class="description">
+        <%= dataset_folder.description %>
+      </div>
+    </div>
+
+    <% if dataset_folder.error_message.present? %>
+      <div class="dataset-folder__error-message">
+        <%= dataset_folder.error_message %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="dataset-folder__actions">
+    <% if Pundit.policy(current_participant, dataset_folder).edit? %>
+      <%= link_to 'Edit', edit_challenge_dataset_folder_path(challenge, dataset_folder), class: 'btn btn-secondary' %>
+      <%= link_to 'Delete',
+                  challenge_dataset_folder_path(challenge, dataset_folder),
+                  method: :delete,
+                  class: 'btn btn-secondary',
+                  data: { confirm: 'Are you sure?' } %>
+    <% end %>
+  </div>
+</li>
+<!-- /item -->
