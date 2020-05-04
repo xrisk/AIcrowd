@@ -36,10 +36,34 @@ function copyLink() {
   return false;
 }
 
+function geekView(is_enabled) {
+  if(is_enabled) {
+    $('.geek-view-normal').addClass('d-none', 100);
+    $('.geek-view-advanced').removeClass('d-none', 100);
+  } else {
+    $('.geek-view-normal').removeClass('d-none', 100);
+    $('.geek-view-advanced').addClass('d-none', 100);
+  }
+  localStorage.setItem('leaderboard-geek-view', is_enabled);
+}
+
+function enableGeekView() {
+  if (localStorage.getItem('leaderboard-geek-view') == "true") {
+    geekView(true);
+    $("#geek-view-toogle input[type=checkbox]")[0].checked = true;
+  }
+  $("#geek-view-toogle").click(function() {
+    var currentCheckbox = $(this).find("input[type=checkbox]")[0];
+    var currentValue = currentCheckbox.checked;
+    geekView(!currentValue);
+    currentCheckbox.checked = !currentValue;
+  });
+}
 
 Paloma.controller('Leaderboards', {
   index: function(){
     pauseAndPlay();
+    enableGeekView();
   },
   show: function(){
     pauseAndPlay();

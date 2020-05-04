@@ -34,6 +34,15 @@
               <p>Leaderboard is only visible to organizers</p>
             </div>
           <% end %>
+          <% if @challenge.meta_challenge %>
+            <div class="float-right mb-4" id="geek-view-toogle">
+              <label class="toggle-switch" data-toggle="tooltip" data-placement="top" title="Geek view show scores">
+                <input type="checkbox">
+                <span class="switcher"></span>
+                <span class="label">🤓 Geek View</span>
+              </label>
+            </div>
+          <% end %>
           <div class="table-responsive-md">
             <table class="table table-leaderboard">
               <thead>
@@ -48,17 +57,17 @@
                 <% if @current_round&.get_score_secondary_title.present? && !@challenge.meta_challenge %>
                   <th scope="col"><%= @current_round.get_score_secondary_title %></th>
                 <% end %>
-                <% @challenge.other_scores_fieldnames_array.each do |fname| %>
-                  <% if @challenge.meta_challenge %>
+                <% if @challenge.meta_challenge %>
+                  <% @challenge.challenge_problems.each do |challenge_problem| %>
                     <th scope="col">
-                      <%= ChallengeRound.find(fname).challenge.challenge %><br/>
-                      <span class="badge badge-gold">Weight: <%= ChallengeProblems.find_by(challenge_round_id: fname, challenge_id: @challenge.id).weight %></span>
+                      <%= link_to challenge_problem.problem.challenge, challenge_leaderboards_path(challenge_problem.problem), data: { toggle: 'tooltip', placement: 'top' }, title: 'Leaderboard for ' + challenge_problem.problem.challenge %><br/>
+                      <span class="badge badge-gold">Weight: <%= challenge_problem.weight %></span>
                     </th>
-                  <% else %>
+                  <% end %>
+                <% else %>
+                  <% @challenge.other_scores_fieldnames_array.each do |fname| %>
                     <th scope="col"><%= fname %></th>
                   <% end %>
-                <% end %>
-                <% if !@challenge.meta_challenge %>
                   <th scope="col">Entries</th>
                   <th scope="col" class="text-right">Last Submission</th>
                   <th scope="col" class="text-right"></th>
