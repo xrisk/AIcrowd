@@ -52,4 +52,16 @@ module LeaderboardHelper
     end
     return other_scores
   end
+
+  def leaderboard_meta_challenge_other_scores_array(leaderboard, challenge)
+    other_scores = []
+    challenge.other_scores_fieldnames_array.map(&:to_s).each do |fname|
+      if leaderboard.meta && (leaderboard.meta.key? fname) && (leaderboard.meta[fname]) && (leaderboard.meta[fname].key? 'position')
+        other_scores << leaderboard.meta[fname]
+      else
+        other_scores << {'position': '-', 'score': '-'}
+      end
+    end
+    return other_scores
+  end
 end

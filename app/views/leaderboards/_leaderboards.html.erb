@@ -40,20 +40,30 @@
     <% if @current_round&.get_score_secondary_title.present? && !@challenge.meta_challenge %>
       <td><strong><%= leaderboard_formatted_value(current_round, leaderboard.score_secondary) %></strong></td>
     <% end %>
-    <% leaderboard_other_scores_array(leaderboard, challenge).each do |other_score| %>
-      <% if @challenge.meta_challenge %>
-        <td><strong>
-          <% if other_score.to_i == 1 %>
-            <img src="/assets/img/award-gold.svg" style="width: 32px" />
+
+    <% if @challenge.meta_challenge %>
+      <% leaderboard_meta_challenge_other_scores_array(leaderboard, challenge).each do |problem_score| %>
+        <td>
+          <% if problem_score['position'].present? %> 
+            <span class="geek-view-normal" data-toggle="tooltip" data-placement="top" title="Rank in problem"><strong>
+              <% if problem_score['position'] == 1 %>
+                <img src="/assets/img/award-gold.svg" style="width: 32px" />
+              <% else %>
+                <%= problem_score['position'] %>
+              <% end %>
+            </strong></span>
+            <span class="geek-view-advanced d-none" data-toggle="tooltip" data-placement="top" title="Score in problem">
+              <%= problem_score['score'] %>
+            </span>
           <% else %>
-            <%= other_score.to_i != 0 ? other_score.to_i : other_score%>
+            -
           <% end %>
         </strong></td>
-        <% else %>
+      <% end %>
+    <% else %>
+      <% leaderboard_other_scores_array(leaderboard, challenge).each do |other_score| %>
         <td><strong><%= other_score %></strong></td>
       <% end %>
-    <% end %>
-    <% if !@challenge.meta_challenge %>
       <td><%= leaderboard.entries %></td>
       <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
       <td class="text-right">
