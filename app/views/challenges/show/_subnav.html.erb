@@ -9,9 +9,7 @@
       <% if !challenge.meta_challenge %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Discussion', link: challenge_discussion_path(challenge)} %>
       <% end %>
-      <% if !challenge.meta_challenge %>
-        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Insights', link: challenge_insights_path(challenge)} %>
-      <% end %>
+      <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Insights', link: challenge_insights_path(challenge)} %>
       <% if !challenge.meta_challenge %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Resources', link: resources_link(challenge)} %>
       <% end %>

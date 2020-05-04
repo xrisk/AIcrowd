@@ -136,6 +136,13 @@ class Challenge < ApplicationRecord
                   end
   end
 
+  def submissions
+    if meta_challenge?
+      return Submission.where(meta_challenge_id: id)
+    end
+    return super
+  end
+
   def submissions_remaining(participant_id)
     SubmissionsRemainingQuery.new(challenge: self, participant_id: participant_id).call
   end
