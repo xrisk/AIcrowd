@@ -168,6 +168,8 @@ class SubmissionsController < ApplicationController
     @challenge = Challenge.friendly.find(params[:challenge_id])
     if params.has_key?('meta_challenge_id')
       @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id])
+    elsif @challenge.meta_challenge
+      params[:meta_challenge_id] = params[:challenge_id]
     end
   end
 

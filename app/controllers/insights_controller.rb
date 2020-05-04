@@ -67,6 +67,11 @@ class InsightsController < ApplicationController
 
   def set_challenge
     @challenge = Challenge.friendly.find(params[:challenge_id])
+    if params.has_key?('meta_challenge_id')
+      @meta_challenge = Challenge.friendly.find(params[:meta_challenge_id])
+    elsif @challenge.meta_challenge
+      params[:meta_challenge_id] = params[:challenge_id]
+    end
   end
 
   def set_current_round
@@ -80,6 +85,11 @@ class InsightsController < ApplicationController
   def set_collection
     @collection = @challenge.submissions
     @collection = @current_round.submissions if @current_round.present?
+    if @challenge.meta_challenge?
+      @collection = @challenge.submissions
+    elsif @meta_challenge
+      @collection = @collection.where(meta_challenge_id: @meta_challenge.id)
+    end
   end
 
   def set_challenge_rounds
