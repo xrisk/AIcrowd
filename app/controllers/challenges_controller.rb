@@ -46,8 +46,8 @@ class ChallengesController < ApplicationController
     @partners = Partner.where(organizer_id: @challenge.organizer_ids) if @challenge.organizers.any?
     @challenge_baseline_discussion = @challenge.baseline_discussion
     if @challenge.active_round
-      @top_five_leaderboards = @challenge.leaderboards.where(meta_challenge_id: @meta_challenge).limit(5)
-      @latest_five_submissions = @challenge.submissions.where(meta_challenge_id: @meta_challenge).order(created_at: :desc).limit(5)
+      @top_five_leaderboards = @challenge.active_round.leaderboards.where(meta_challenge_id: @meta_challenge).limit(5)
+      @latest_five_submissions = @challenge.active_round.submissions.where(meta_challenge_id: @meta_challenge).order(created_at: :desc).limit(5)
     end
 
     if @challenge.meta_challenge
