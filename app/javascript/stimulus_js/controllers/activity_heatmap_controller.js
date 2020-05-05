@@ -1,97 +1,84 @@
-import { Controller } from "stimulus"
-import * as d3 from "d3";
+import { Controller } from "stimulus";
+import * as Plottable from 'plottable';
 
 export default class extends Controller {
   connect() {
-    const calendarData = [
-      {day: "2020-05-12", count: "171"},
-      {day: "2020-06-17", count: "139"},
-      {day: "2020-05-02", count: "556"}
-    ];
+    const calendarData = JSON.parse(this.data.get('data'));
 
     this.drawCalendar(calendarData);
   }
 
-  drawCalendar(dateData){
-    const weeksInMonth = function(month) {
-      const m = d3.timeMonth.floor(month)
-      return d3.timeWeeks(d3.timeWeek.floor(m), d3.timeMonth.offset(m,1)).length;
+  drawCalendar(calendarData) {
+    const elementId  = this.data.get('element-id');
+    const data       = calendarData.map(activity => { return { date: new Date(activity['date'].split('-')), val: activity['val'] } });
+    const startYear  = calendarData[0]['date'].split('-')[0];
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const xScale     = new Plottable.Scales.Category();
+    const yScale     = new Plottable.Scales.Category();
+
+    yScale.domain(daysOfWeek);
+
+    const xAxis = new Plottable.Axes.Category(xScale, "bottom");
+    const yAxis = new Plottable.Axes.Category(yScale, "left");
+    xAxis.formatter(monthFormatter());
+
+    const colorScale = new Plottable.Scales.InterpolatedColor();
+    colorScale.domain([0, 100]);
+    colorScale.range(["#feeeed", "#fbcbca", "#f69794", "#f37571", "#f0524d"]);
+
+    const plot = new Plottable.Plots.Rectangle()
+      .addDataset(new Plottable.Dataset(data))
+      .x(function(d) {
+        const year = d.date.getFullYear();
+        const week = getWeekOfTheYear(d.date);
+
+        // Move first week of year back to remove the gap
+        if (year > startYear && week === 0) {
+          return [startYear, 52]
+        } else {
+          return [d.date.getFullYear(), getWeekOfTheYear(d.date)]
+        }
+      }, xScale)
+      .y(function(d) { return daysOfWeek[d.date.getDay()] }, yScale)
+      .attr("fill", function(d) { return d.val; }, colorScale)
+      .attr("stroke", "#fff")
+      .attr("stroke-width", 2);
+
+    const table = new Plottable.Components.Table([
+      [yAxis, plot],
+      [null,  xAxis]
+    ]);
+
+    table.renderTo(`#${elementId}`);
+  }
+}
+
+// Gets the date of the top left square in the calendar, i.e. the first Sunday on / before Jan 1
+function getFirstDisplayableSunday(date) {
+  return new Date(
+    date.getFullYear(),
+    0,
+    1 - new Date(date.getFullYear(), 0, 1).getDay()
+  );
+}
+
+function getWeekOfTheYear(date) {
+  const firstSunday = getFirstDisplayableSunday(date);
+  const diff = date - firstSunday;
+  const oneDay = 1000 * 60 * 60 * 24;
+  return Math.floor(Math.ceil(diff / oneDay) / 7);
+}
+
+function monthFormatter() {
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  return function(yearAndWeek) {
+    const year = yearAndWeek[0];
+    const week = yearAndWeek[1];
+    const startOfWeek = new Date(year, 0, (week + 1) * 7 - new Date(year, 0, 1).getDay());
+    if (startOfWeek.getDate() > 7) {
+      return "";
     }
-
-    // const daysInLastMonth = function(month) {
-    //   const m = d3.timeMonth.floor(month)
-    // }
-
-    const minDate = new Date(new Date().getFullYear(), 0, 1);
-    const maxDate = new Date(new Date().getFullYear(), 11, 31);
-
-    const cellMargin = 2;
-    const cellSize = 14;
-
-    const day = d3.timeFormat("%w");
-    const week = d3.timeFormat("%U");
-    const format = d3.timeFormat("%Y-%m-%d");
-    const titleFormat = d3.utcFormat("%a, %d-%b");
-    const monthName = d3.timeFormat("%B");
-    const months = d3.timeMonth.range(d3.timeMonth.floor(minDate), maxDate);
-
-    const svg = d3.select("#calendar").selectAll("svg")
-      .data(months)
-      .enter().append("svg")
-      .attr("class", "month")
-      .attr("height", ((cellSize * 7) + (cellMargin * 8) + 20) ) // the 20 is for the month labels
-      .attr("style", "margin-right: 16px;")
-      .attr("width", function(d) {
-        var columns = weeksInMonth(d);
-        return ((cellSize * columns) + (cellMargin * (columns + 1)));
-      })
-      .append("g")
-
-    svg.append("text")
-      .attr("class", "month-name")
-      .attr("y", (cellSize * 7) + (cellMargin * 8) + 15 )
-      .attr("x", function(d) {
-        var columns = weeksInMonth(d);
-        return (((cellSize * columns) + (cellMargin * (columns + 1))) / 2);
-      })
-      .attr("text-anchor", "middle")
-      .text(function(d) { return monthName(d); })
-
-    const rect = svg.selectAll("rect.day")
-      .data(function(d, i) { return d3.timeDays(d, new Date(d.getFullYear(), d.getMonth()+1, 1)); })
-      .enter().append("rect")
-      .attr("class", "day")
-      .attr("width", cellSize)
-      .attr("height", cellSize)
-      .attr("rx", 3).attr("ry", 3) // rounded corners
-      .attr("fill", '#FFF7EB')
-      .attr("y", function(d) { return (day(d) * cellSize) + (day(d) * cellMargin) + cellMargin; })
-      .attr("x", function(d) { return ((week(d) - week(new Date(d.getFullYear(),d.getMonth(),1))) * cellSize) + ((week(d) - week(new Date(d.getFullYear(),d.getMonth(),1))) * cellMargin) + cellMargin ; })
-      .on("mouseover", function(d) {
-        d3.select(this).classed('hover', true);
-      })
-      .on("mouseout", function(d) {
-        d3.select(this).classed('hover', false);
-      })
-      .datum(format);
-
-    rect.append("title")
-      .text(function(d) { return titleFormat(new Date(d)); });
-
-    const lookup = d3.nest()
-      .key(function(d) { return d.day; })
-      .rollup(function(leaves) {
-        return d3.sum(leaves, function(d){ return parseInt(d.count); });
-      })
-      .object(dateData);
-
-    const scale = d3.scaleLinear()
-      .domain(d3.extent(dateData, function(d) { return parseInt(d.count); }))
-      .range([0.4,1]);
-
-    rect.filter(function(d) { return d in lookup; })
-      .style("fill", function(d) { return d3.interpolateOrRd(scale(lookup[d])); })
-      .select("title")
-      .text(function(d) { return titleFormat(new Date(d)) + ":  " + lookup[d]; });
+    return months[startOfWeek.getMonth()];
   }
 }

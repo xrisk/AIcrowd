@@ -40,6 +40,42 @@
 <div class="tab-content">
   <div id='tab-insights' class="tab-pane fade<%= ' show active' if active_tab == 'insights' %>">
     <!-- section -->
+    <section class="section-p-md activity-heatmap__section">
+      <div class="container-fluid">
+        <header class="section-header-decorative">
+          <div>
+            <h4>Activity</h4>
+          </div>
+        </header>
+
+        <div class="activity-heatmap__legend">
+          <div class="pull-right activity-heatmap__points-wrapper">
+            <div class="activity-heatmap__points"><span>Visit - 1 point</span></div>
+            <div class="activity-heatmap__points"><span>Submission - 10 points</span></div>
+          </div>
+
+          <div class="pull-left activity-heatmap__squares-wrapper">
+            <span class="activity-heatmap__square activity-heatmap__square--first"></span><span class="activity-heatmap__legend-text"> 0 - 20</span>
+            <span class="activity-heatmap__square activity-heatmap__square--second"></span><span class="activity-heatmap__legend-text"> 20 - 40</span>
+            <span class="activity-heatmap__square activity-heatmap__square--third"></span><span class="activity-heatmap__legend-text"> 40 - 60</span>
+            <span class="activity-heatmap__square activity-heatmap__square--fourth"></span><span class="activity-heatmap__legend-text"> 60 - 80</span>
+            <span class="activity-heatmap__square activity-heatmap__square--fifth"></span><span class="activity-heatmap__legend-text"> 80+</span>
+          </div>
+        </div>
+
+        <div
+          class="activity-heatmap-wrapper text-center"
+          data-controller="activity-heatmap"
+          data-activity-heatmap-element-id="activity-heatmap"
+          data-activity-heatmap-data="<%= @activity_data %>"
+        >
+          <svg id="activity-heatmap"></svg>
+        </div>
+      </div>
+    </section>
+    <!-- /section -->
+
+    <!-- section -->
     <section class="section-p-md">
       <div class="container-fluid">
         <div class="row">
@@ -60,22 +96,6 @@
             <%= pie_chart @categories, colors: ["#FF8C00", "#FFD700", "#6B8E23", "#FFEBCD", "#00FF00",
               "#228B22", "#800000", "#32CD32", "#B8860B", "#9966CC"] %>
           </div>
-        </div>
-      </div>
-    </section>
-    <!-- /section -->
-
-    <!-- section -->
-    <section>
-      <div class="container-fluid">
-        <header class="section-header-decorative">
-          <div>
-            <h4>Activity</h4>
-          </div>
-        </header>
-
-        <div class="text-center" data-controller="activity-heatmap" data-activity-heatmap-element-id="cal-heatmap">
-          <div id="calendar"></div>
         </div>
       </div>
     </section>

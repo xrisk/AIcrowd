@@ -22,6 +22,8 @@ class ParticipantsController < ApplicationController
                              end
     @discourse_posts = @discourse_posts_fetch.value
 
+    @activity_data = Participants::ActivityQuery.new(participant: @participant).call.to_json
+
     @categories = @participant.challenges.joins(:categories).group('categories.name').reorder('categories.name').count
     if @categories.count == 0
       @categories = {'No category information' => 1}
