@@ -11,19 +11,13 @@
         <% if !challenge.big_challenge_card_image? %>
           <%= image_tag(challenge.image_file_url, class: 'card-img image_16x9') %>
         <% end %>
-        <% if challenge.practice_flag %>
-          <%= link_to practice_challenges_path, class: "card-img-overlay" do  %>
-            <span class="badge badge-light">Practice</span>
-          <% end %>
-        <% else %>
-          <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
-            <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>">
-              <img src="/assets/img/icon-time.svg">
-              <%= challenge_remaining_text(challenge, challenge.active_round) %>
-            </span>
-            <% if challenge_weight(challenge) %>
-              <span class="badge badge-gold">Weight: <%= challenge_weight(challenge) %></span>
-            <% end %>
+        <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
+          <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>">
+            <img src="/assets/img/icon-time.svg">
+            <%= challenge_remaining_text(challenge, challenge.active_round) %>
+          </span>
+          <% if challenge_weight(challenge) %>
+            <span class="badge badge-gold">Weight: <%= challenge_weight(challenge) %></span>
           <% end %>
         <% end %>
       </div>

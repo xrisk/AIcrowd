@@ -31,7 +31,7 @@
 <% if @practice_challenges.present? %>
   <div class="container-fluid practice_bg">
     <div class="row" id="challenges-div">
-      <%= render partial: 'shared/challenges/listing', locals: { challenges: @practice_challenges } %>
+      <%= render partial: 'shared/challenges/listing_compact', locals: { challenges: @practice_challenges } %>
     </div>
   </div>
 <% end %>
@@ -43,11 +43,6 @@
     <div class="row" id="challenges-div">
       <%= render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>
     </div>
-
-    <!-- load more -->
-    <span id="more-anchor"></span>
-    <%= render partial: 'shared/load_more', locals: { collection: @challenges } %>
-    <!-- /load more -->
   </div>
 </div>
 <!-- /challenge cards -->
