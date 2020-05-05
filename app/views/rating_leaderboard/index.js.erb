@@ -1,4 +1,4 @@
-<% if @participants.count < 10 %>
+<% if @participants.nil? || @participants.count < 20 %>
   $('.table-leaderboard-body').attr("data-request-completed", false);
 <% else %>
   $('.table-leaderboard-body').attr("data-request-completed", true);

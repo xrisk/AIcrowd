@@ -25,16 +25,16 @@
               <th scope="col" class="sticky-header"></th>
             </tr>
             </thead>
-            <tbody class="table-leaderboard-body" data-page='1' data-request-completed='true' data-controller="rating-leaderboard">
+            <tbody class="table-leaderboard-body" data-page='1' data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data">
               <%= render partial: 'rating_leaderboard', locals: { participants: @participants } %>
             </tbody>
             <% if @self_standing %>
-            <thead>
-              <tr><th colspan="7" style="text-align: center;">Your Standings</th></tr>
-            </thead>
-            <tbody>
-            <%= render partial: 'rating_leaderboard', locals: { participants: @self_standing } %>
-            </tbody>
+              <thead>
+                <tr><th colspan="7" style="text-align: center;">Your Standings</th></tr>
+              </thead>
+              <tbody>
+                <%= render partial: 'rating_leaderboard', locals: { participants: @self_standing } %>
+              </tbody>
             <% end %>
           </table>
         </div>

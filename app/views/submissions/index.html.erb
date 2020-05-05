@@ -57,8 +57,8 @@
                 </tr>
                 </thead>
               <% end %>
-              <tbody id="submissions-div" data-page='1' data-request-completed='true' data-challenge-id='<%= @challenge.friendly_id %>' data-controller="submissions">
-              <%= render partial: 'submissions', locals: { submissions: @submissions } %>
+              <tbody id="submissions-div" data-page='1' data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data">
+                <%= render partial: 'submissions', locals: { submissions: @submissions } %>
               </tbody>
             </table>
           </div>

@@ -8,7 +8,7 @@
             <%= "No participants for this challenge yet" %>
           </div>
         <% else %>
-          <ul class="list-group list-group-flush-px-0 list-group-organizers" id="pc-ul" data-page='1' data-request-completed='true' data-challenge-id='<%= @challenge.friendly_id %>' data-controller="participant-challenges">
+          <ul class="list-group list-group-flush-px-0 list-group-organizers" id="pc-ul" data-page='1' data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data">
             <% unless @count_of_unknown.zero? %>
               <li class="list-group-item">
                 <%= link_to '#' do %>
