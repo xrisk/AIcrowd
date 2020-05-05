@@ -64,6 +64,23 @@
       </div>
     </section>
     <!-- /section -->
+
+    <!-- section -->
+    <section>
+      <div class="container-fluid">
+        <header class="section-header-decorative">
+          <div>
+            <h4>Activity</h4>
+          </div>
+        </header>
+
+        <div class="text-center" data-controller="activity-heatmap" data-activity-heatmap-element-id="cal-heatmap">
+          <div id="calendar"></div>
+        </div>
+      </div>
+    </section>
+    <!-- /section -->
+
     <% if @challenges.any? %>
       <section class="section-p-md">
         <div class="container-fluid">
@@ -79,6 +96,7 @@
       </section>
     <% end %>
   </div>
+
   <div id="tab-badges" class="tab-pane fade<%= ' show active' if active_tab == 'badges' %>">
     <%= render partial: 'badges_list', locals: { participant: @participant } %>
   </div>
