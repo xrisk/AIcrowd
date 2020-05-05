@@ -124,6 +124,10 @@
     <span class="label-text">Discourse category ID</span>
     <%= f.text_field :discourse_category_id, class: "form-control" %>
   </div>
+  <div class="form-group">
+    <span class="label-text">Weight for Challenge</span>
+    <%= f.text_field :weight, class: "form-control" %>
+  </div>
 
   <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, current_step: 'details' } %>
 </div>

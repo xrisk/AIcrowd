@@ -28,6 +28,7 @@ ActiveAdmin.register Challenge do
     column :page_views
     column :participant_count
     column :submissions_count
+    column :weight
 
     actions default: true do |resource|
       a 'Edit', href: edit_challenge_path(resource), class: "edit_link member_link"
