@@ -48,6 +48,9 @@ function geekView(is_enabled) {
 }
 
 function enableGeekView() {
+  if($("#geek-view-toogle").length == 0) {
+    return;
+  }
   if (localStorage.getItem('leaderboard-geek-view') == "true") {
     geekView(true);
     $("#geek-view-toogle input[type=checkbox]")[0].checked = true;
