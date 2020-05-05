@@ -51,6 +51,7 @@ class Submission < ApplicationRecord
         .perform_later(challenge_round_id: challenge_round_id)
     end
     Prometheus::SubmissionCounterService.new(submission_id: id).call
+    IntercomService.new.send_event('made_submission', Participant.find_by(id: participant_id))
     if grading_status_cd == 'graded'
       participant_submission_count = Submission.where(participant_id: participant_id, grading_status_cd: 'graded').count
       if participant_submission_count == 10

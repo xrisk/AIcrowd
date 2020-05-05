@@ -48,6 +48,7 @@ gem 'informant-rails'
 gem 'include_media_rails'
 gem 'inline_svg'
 gem "intercom-rails"
+gem 'intercom', '~> 4.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jbuilder'
