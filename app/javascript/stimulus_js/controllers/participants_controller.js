@@ -18,6 +18,5 @@ export default class extends Controller {
                   hljs.initHighlightingOnLoad();
                 }
     })
-    console.log("Get user #" + participantId + " detail.");
   }
 }

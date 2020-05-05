@@ -18,13 +18,10 @@ export default class extends Controller {
   }
 
   filterChanged(){
-    console.log('keyup');
-    console.log(this.queryTarget.value);
     this.submitTarget.click();
   }
 
   onPostSuccess(event) {
-    console.log('posted');
     let [data, status, xhr] = event.detail;
     this.submissionsTarget.innerHTML = xhr.response;
   }
