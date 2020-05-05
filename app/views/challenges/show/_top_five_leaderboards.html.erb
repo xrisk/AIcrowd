@@ -22,7 +22,10 @@
             <% team = leaderboard.try(:team) %>
 
             <% if team.present? %>
-              <%= link_to team.name, challenge_team_path(team.challenge, team) %>
+              <div class="community-info">
+                <span>&nbsp;</span>
+                <span class="reputation-score"> <%= link_to team.name, challenge_team_path(team.challenge, team) %></span>
+              </div>
               <div class="avatar-group">
                 <% participants = participants.first(4) %>
                 <% participants.each do |participant| %>
@@ -30,7 +33,7 @@
                 <% end %>
               </div>
             <% elsif participants.length == 1 %>
-              <%= render partial: 'participants/get_user_profile', locals: { participant: participants[0] } %>
+              <%= render partial: 'participants/get_user_profile', locals: { participant: participants[0], truncate: 'true' } %>
             <% else %>
               <span>#</span>
             <% end %>

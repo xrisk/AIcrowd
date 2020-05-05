@@ -5,12 +5,13 @@ export default class extends Controller {
     const avatar        = this.data.get('avatar');
     const location      = this.data.get('location');
     const username      = this.data.get('username');
+    const truncate      = this.data.get('truncate');
     const participantId = this.data.get('participant');
 
     $.ajax({
       url: '/api/v1/participants/'+ participantId +'/user_profile',
       type: 'GET',
-      data: {avatar: avatar, username: username},
+      data: {avatar: avatar, username: username, truncate: truncate},
       success:  function(result){
                   jQuery("#"+location).html(result);
                   $('[data-toggle="tooltip"]').tooltip();
