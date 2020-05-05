@@ -32,7 +32,6 @@ let PriorityNav = {
         });
 
         if (wrappedElements.length) {
-            console.log(wrappedElements);
             let newSet = wrappedElements.clone();
             wrappedElements.addClass("d-none");
             newSet.addClass("dropdown-item");

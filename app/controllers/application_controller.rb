@@ -45,9 +45,11 @@ class ApplicationController < ActionController::Base
     end
     if params.has_key?('problem_id')
       if params.has_key?('challenge_id')
-        params[:meta_challenge_id] = params['challenge_id']
-        params[:challenge_id] = params['problem_id']
-        params.delete('problem_id')
+        if !params.has_key?('meta_challenge_id')
+          params[:meta_challenge_id] = params[:challenge_id]
+          params[:challenge_id] = params[:problem_id]
+          params.delete('problem_id')
+        end
       end
     end
   end
