@@ -7,7 +7,7 @@ class ChallengesController < ApplicationController
   after_action :verify_authorized, except: [:index, :show, :practice]
   before_action :set_s3_direct_post, only: [:edit, :update]
   before_action :set_challenge_rounds, only: [:edit, :update]
-  before_action :set_filters, only: [:index]
+  before_action :set_filters, only: [:index, :practice]
   before_action :set_organizers_for_select, only: [:new, :create, :edit, :update]
 
   respond_to :html, :js
@@ -172,8 +172,10 @@ class ChallengesController < ApplicationController
   end
 
   def practice
-    @all_challenges = policy_scope(Challenge)
-    @challenges     = @all_challenges.practice.page(params[:page]).per(18)
+    @all_challenges      = policy_scope(Challenge)
+    @practice_challenges = @all_challenges.practice.page
+    @practice_challenges = Challenges::FilterService.new(params, @practice_challenges).call
+    @challenges          = @all_challenges.not_practice.page(params[:page]).per(18)
   end
 
   private

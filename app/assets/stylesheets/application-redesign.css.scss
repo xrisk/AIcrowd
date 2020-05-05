@@ -4309,6 +4309,11 @@ input[type="button"].btn-block {
   transition: .2s ease;
 }
 
+.practice_bg {
+  padding-top: 3rem;
+  background: #fffdd0;
+}
+
 @media (max-width: 1279.98px) {
   .card-challenge {
     margin-bottom: 20px;
@@ -10213,6 +10218,10 @@ button.bg-bronze:focus {
 .section-pt-sm-pb-md {
   padding-top: 40px;
   padding-bottom: 60px;
+}
+
+.section-pt-sm {
+  padding-top: 40px;
 }
 
 @media (max-width: 767.98px) {

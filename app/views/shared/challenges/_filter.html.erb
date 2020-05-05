@@ -1,19 +1,21 @@
-<%= form_with url: challenges_path, local: true, method: :get, enforce_utf8: false, data: {controller: "challenges" }, class: 'filter-dropdown-form' do |f| %>
-  <div class="dropdown">
-    <div class="filter dropdown-toggle <%= 'filter-active' if params[:status] %>" id="challenge-statuses" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Active
+<%= form_with url: path, local: true, method: :get, enforce_utf8: false, data: {controller: "challenges" }, class: 'filter-dropdown-form' do |f| %>
+  <% unless is_practice %>
+    <div class="dropdown">
+      <div class="filter dropdown-toggle <%= 'filter-active' if params[:status] %>" id="challenge-statuses" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Active
+      </div>
+      <div class='dropdown-menu form-dropdown status-dropdown'>
+        <% @status.each do |status| %>
+          <div class="form-check">
+            <%= label_tag do %>
+              <%= f.radio_button :status, status, checked: status.eql?(params[:status]), class: 'form-check-input' %>
+              <%= status.humanize %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
-    <div class='dropdown-menu form-dropdown status-dropdown'>
-      <% @status.each do |status| %>
-        <div class="form-check">
-          <%= label_tag do %>
-            <%= f.radio_button :status, status, checked: status.eql?(params[:status]), class: 'form-check-input' %>
-            <%= status.humanize %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-  </div>
+  <% end %>
   <div class="dropdown">
     <div class="filter dropdown-toggle <%= 'filter-active' if params[:categories].present? %>" id="challenge-categories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Categories
@@ -29,20 +31,22 @@
       <% end %>
     </div>
   </div>
-  <div class="dropdown">
-    <div class="filter dropdown-toggle <%= 'filter-active' if params[:prizes].present? %>" id="challenge-prizes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Prizes
+  <% unless is_practice %>
+    <div class="dropdown">
+      <div class="filter dropdown-toggle <%= 'filter-active' if params[:prizes].present? %>" id="challenge-prizes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Prizes
+      </div>
+      <div class='dropdown-menu form-dropdown'>
+        <% @prize_hash.each do |p_key, p_value| %>
+          <div class="form-check">
+            <%= label_tag do %>
+              <%= f.check_box :prize, { checked: check_selected_prize(p_key), class: 'form-check-input' }, p_key %>
+              <%= p_value.humanize %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
-    <div class='dropdown-menu form-dropdown'>
-      <% @prize_hash.each do |p_key, p_value| %>
-        <div class="form-check">
-          <%= label_tag do %>
-            <%= f.check_box :prize, { checked: check_selected_prize(p_key), class: 'form-check-input' }, p_key %>
-            <%= p_value.humanize %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-  </div>
+  <% end %>
   <%= f.submit 'Apply', name: nil, data: { action: 'click->challenges#filterUrl'}, class: 'btn btn-link btn-sm apply-filter-btn' %>
 <% end %>
