@@ -11,10 +11,13 @@ export default class extends Controller {
     let page = this.element.dataset.page;
     let nextPage = parseInt(page) + 1;
     let url = '';
-    if($(window).scrollTop() >= (parseInt(this.element.offsetHeight) - (500 * parseInt(page)))) {
+    let footerHeight = $('.app-footer').height();
+    let heightTillFooter = document.body.scrollHeight - (footerHeight + 176);
+
+    if($(window).scrollTop() >= (parseInt(this.element.offsetHeight) - (footerHeight + 20))) {
       this.element.dataset.page = nextPage;
       this.element.dataset.requestCompleted = false;
-      $("#loader-container").removeAttr('style').addClass('spinner-above-footer').show();
+      $("#loader-container").removeAttr('style').addClass('spinner-above-footer').css('top', heightTillFooter).show();
       $.ajax({
         url: window.location.href + '.js?page=' + nextPage,
         type: 'GET'
