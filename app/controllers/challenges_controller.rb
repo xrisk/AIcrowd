@@ -1,13 +1,13 @@
 class ChallengesController < ApplicationController
-  before_action :authenticate_participant!, except: [:show, :index, :practice]
+  before_action :authenticate_participant!, except: [:show, :index]
   before_action :terminate_challenge, only: [:show, :index]
   before_action :set_challenge, only: [:show, :edit, :update, :clef_task, :remove_image, :remove_banner, :export, :import, :remove_invited]
   before_action :set_vote, only: [:show, :clef_task]
   before_action :set_follow, only: [:show, :clef_task]
-  after_action :verify_authorized, except: [:index, :show, :practice]
+  after_action :verify_authorized, except: [:index, :show]
   before_action :set_s3_direct_post, only: [:edit, :update]
   before_action :set_challenge_rounds, only: [:edit, :update]
-  before_action :set_filters, only: [:index, :practice]
+  before_action :set_filters, only: [:index]
   before_action :set_organizers_for_select, only: [:new, :create, :edit, :update]
 
   respond_to :html, :js
@@ -169,13 +169,6 @@ class ChallengesController < ApplicationController
   def remove_invited
     challenge_invitation = @challenge.invitations.find(params[:invited_id])
     challenge_invitation.destroy!
-  end
-
-  def practice
-    @all_challenges      = policy_scope(Challenge)
-    @practice_challenges = @all_challenges.practice.page
-    @practice_challenges = Challenges::FilterService.new(params, @practice_challenges).call
-    @challenges          = @all_challenges.not_practice.page(params[:page]).per(18)
   end
 
   private

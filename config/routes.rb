@@ -217,13 +217,13 @@ Rails.application.routes.draw do
   end
 
   get '/load_more_challenges', to: 'challenges#load_more', as: :load_more_challenges
-  get '/practice', to: 'challenges#practice', as: :practice_challenges
 
   resources :dataset_files, only: [] do
     resources :dataset_file_downloads, only: [:create]
   end
 
   resources :team_members, path: "our_team", only: [:index]
+  resources :practices, only: [:index]
 
   match '/contact', to: 'pages#contact', via: :get
   match '/privacy', to: 'pages#privacy', via: :get
