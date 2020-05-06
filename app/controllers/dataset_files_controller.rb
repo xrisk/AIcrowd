@@ -86,7 +86,7 @@ class DatasetFilesController < ApplicationController
     end
 
     unless policy(challenge).has_accepted_challenge_rules?
-      redirect_to [challenge, challenge.current_challenge_rules]
+      redirect_to challenge_challenge_rules_path(challenge)
       return
     end
   end

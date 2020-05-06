@@ -23,7 +23,7 @@ module ChallengesHelper
     if !policy(challenge).has_accepted_participation_terms?
       [challenge, ParticipationTerms.current_terms]
     elsif !policy(challenge).has_accepted_challenge_rules?
-      [challenge, challenge.current_challenge_rules]
+      challenge_challenge_rules_path(challenge)
     end
   end
 
