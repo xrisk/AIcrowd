@@ -7,8 +7,14 @@ class ChallengeRulesController < ApplicationController
   private
 
   def set_challenge_rules
-    @challenge_rules       = params[:id] && ChallengeRules.find(params[:id])
-    @challenge             = @challenge_rules.challenge
+    @challenge = Challenge.friendly.find(params[:challenge_id])
+
+    @challenge_rules = if params[:id].present?
+                         @challenge.challenge_rules.find(params[:id])
+                       else
+                         @challenge.current_challenge_rules
+                       end
+
     @challenge_participant =
       ChallengeParticipant
         .where(challenge_id: @challenge.id, participant_id: current_participant.id)

@@ -54,7 +54,7 @@ class SubmissionsController < ApplicationController
     if @challenge.meta_challenge
       params[:meta_challenge_id] = @challenge.slug
       filter = policy_scope(Submission)
-                      .where(challenge_round_id: @challenge.meta_active_round_ids, 
+                      .where(challenge_round_id: @challenge.meta_active_round_ids,
                              meta_challenge_id: @challenge.id)
     end
 
@@ -205,7 +205,7 @@ class SubmissionsController < ApplicationController
     end
 
     unless policy(challenge).has_accepted_challenge_rules?
-      redirect_to [challenge, challenge.current_challenge_rules]
+      redirect_to challenge_challenge_rules_path(challenge)
       return
     end
   end

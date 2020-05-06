@@ -23,7 +23,7 @@
         <%= render partial: 'challenges/show/subnav_link', locals: {text: challenge.dynamic_content_tab, link: challenge_dynamic_contents_path(challenge)} %>
       <% end %>
       <% if required_terms_or_rules_path(challenge).blank? %>
-        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Rules', link: [challenge, challenge.current_challenge_rules]} %>
+        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Rules', link: challenge_challenge_rules_path(challenge) } %>
       <% end %>
 
       <li class="overflow-nav nav-item dropdown ml-auto">

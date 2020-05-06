@@ -43,6 +43,7 @@ def challenge_routes
   end
   resources :dataset_terms, only: [:update]
   resources :participation_terms, only: [:show, :create, :index]
+  resource :challenge_rules, only: [:show]
   resources :challenge_rules, only: [:show]
   resources :challenge_participants
   resources :insights, only: [:index] do

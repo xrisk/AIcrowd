@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
-          <h4><%= @challenge.challenge %></h4>
+          <h4><%= link_to @challenge.challenge, challenge_path(@challenge), class: 'red-link' %></h4>
           <h1>Challenge Rules</h1>
         </div>
       </div>
