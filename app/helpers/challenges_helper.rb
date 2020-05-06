@@ -58,6 +58,8 @@ module ChallengesHelper
       formatted_count(challenge.challenge_participants.size)
     when 'vote'
       formatted_count(challenge.vote_count)
+    when 'team'
+      formatted_count(challenge.teams_count)
     end
   end
 

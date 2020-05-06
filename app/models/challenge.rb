@@ -233,6 +233,14 @@ class Challenge < ApplicationRecord
     end
   end
 
+  def teams_count
+    teams.count + (participants.count - teams_participant_count)
+  end
+
+  def teams_participant_count
+    TeamParticipant.where(team_id: team_ids).count
+  end
+
   private
 
   def set_defaults
