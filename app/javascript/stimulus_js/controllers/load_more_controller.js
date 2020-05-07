@@ -19,8 +19,10 @@ export default class extends Controller {
       this.element.dataset.requestCompleted = false;
       $("#loader-container").removeAttr('style').addClass('spinner-above-footer').css('top', heightTillFooter).show();
       $.ajax({
-        url: window.location.href + '.js?page=' + nextPage,
-        type: 'GET'
+        url: window.location.href,
+        type: 'GET',
+        data: { page: nextPage },
+        dataType: 'script'
       });
     }
   }

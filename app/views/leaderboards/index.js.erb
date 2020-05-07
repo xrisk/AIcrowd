@@ -5,3 +5,5 @@
 <% end %>
 $("#loader-container").hide();
 $(".table-leaderboard").append("<%= j render partial: 'leaderboards', locals: { leaderboards: @leaderboards, current_round: @current_round } %>");
+
+enableGeekView();
