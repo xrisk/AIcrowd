@@ -10277,11 +10277,11 @@ button.bg-bronze:focus {
 }
 
 .truncate{
-   width: 125px;
-   overflow: hidden;
-   display: inline-block;
-   text-overflow: ellipsis;
-   white-space: nowrap;
+  width: 119px;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .text-left {
@@ -12136,7 +12136,7 @@ body {
   padding-left: 22px;
   white-space: nowrap;
   position: relative;
-  top: -13px;
+  top: -5px;
 }
 
 @media (max-width: 991.98px) {

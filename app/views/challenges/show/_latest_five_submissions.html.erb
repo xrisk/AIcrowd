@@ -15,7 +15,7 @@
       <tr>
         <td>
           <% if participant.present? %>
-            <%= render partial: 'participants/get_user_profile', locals: { participant: participant, avatar: 'false' } %>
+            <%= render partial: 'participants/get_user_profile', locals: { participant: participant, avatar: 'false', truncate: 'true' } %>
           <% else %>
             <span>#</span>
           <% end %>

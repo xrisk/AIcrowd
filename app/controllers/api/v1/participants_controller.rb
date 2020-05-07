@@ -7,8 +7,10 @@ module Api
       def user_profile
         username    = params[:username]
         avatar      = params[:avatar]
+        truncate    = params[:truncate]
         participant = Participant.find_by(id: params[:id])
-        render partial: 'participants/user_link', locals: { participant: participant, username: username, avatar: avatar }, layout: false
+
+        render partial: 'participants/user_link', locals: { participant: participant, username: username, avatar: avatar, truncate: truncate }, layout: false
       end
     end
   end
