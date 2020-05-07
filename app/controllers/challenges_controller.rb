@@ -182,6 +182,14 @@ class ChallengesController < ApplicationController
         raise ActionController::RoutingError.new('Not Found')
       end
     end
+
+    if !params.has_key?('meta_challenge_id')
+      cp = ChallengeProblems.find_by(problem_id: @challenge.id)
+      if cp.present?
+        params[:meta_challenge_id] = Challenge.find(cp.challenge_id).slug
+        redirect_to helpers.challenge_path(@challenge)
+      end
+    end
   end
 
   def set_vote

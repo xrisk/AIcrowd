@@ -171,6 +171,14 @@ class SubmissionsController < ApplicationController
     elsif @challenge.meta_challenge
       params[:meta_challenge_id] = params[:challenge_id]
     end
+
+    if !params.has_key?('meta_challenge_id')
+      cp = ChallengeProblems.find_by(problem_id: @challenge.id)
+      if cp.present?
+        params[:meta_challenge_id] = Challenge.find(cp.challenge_id).slug
+        redirect_to helpers.challenge_submissions_path(@challenge)
+      end
+    end
   end
 
   def set_challenge_rounds
