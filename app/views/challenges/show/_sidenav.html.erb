@@ -5,7 +5,10 @@
     </div>
   </header>
   <div>
-    <% users = challenge.challenge_participants.sample(50) %>
+    <%
+      users = challenge.challenge_participants.sample(50)
+      users_remaining_count = challenge.challenge_participants.count - 50
+    %>
     <% if required_terms_or_rules_path(challenge).present? %>
       <div class="participants floating-button">
         <%= link_to required_terms_or_rules_path(challenge) do %>
@@ -27,6 +30,11 @@
           <%= render partial: 'participants/get_user_profile', locals: { participant: user.participant, username: 'false' } %>
         </span>
       <% end %>
+    <% end %>
+    <% if users_remaining_count > 0 %>
+      <span class="avatar user-rating-0 text-center" data-toggle="tooltip" title="<%= users_remaining_count %> more participants">
+        <span class="fa fa-ellipsis-h align-bottom"></span>
+      </span>
     <% end %>
     </div>
   </div>
