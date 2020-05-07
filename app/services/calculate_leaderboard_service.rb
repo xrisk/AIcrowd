@@ -12,7 +12,7 @@ class CalculateLeaderboardService
 
   def call
     start_time = Time.zone.now
-    if @round.submissions.blank?
+    if @round.submissions.where(meta_challenge_id: @meta_challenge_id).blank?
       purge_leaderboard
     else
       ActiveRecord::Base.transaction do
