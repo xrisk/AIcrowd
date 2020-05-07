@@ -22,8 +22,8 @@
             <% team = leaderboard.try(:team) %>
 
             <% if team.present? %>
-              <div class="community-info">
-                <span>&nbsp;</span>
+              <div>
+                <span class="fa fa-users" data-toggle="tooltip" fa="" title="Team Participation">&nbsp;</span>
                 <span class="reputation-score"> <%= link_to team.name, challenge_team_path(team.challenge, team) %></span>
               </div>
               <div class="avatar-group">
