@@ -392,6 +392,26 @@ class CalculateLeaderboardService
       FROM lb
       WHERE base_leaderboards.id = lb.id
     SQL
+
+
+    # Doing second pass on seq for providing same rank in case of tie
+    @conn.execute <<~SQL
+        WITH lb AS (
+        SELECT
+          l.id,
+          (SELECT COUNT(*)+1 FROM base_leaderboards l2
+            WHERE l2.challenge_round_id = #{@round.id}
+            AND l2.meta_challenge_id #{@meta_challenge_condition}
+            AND l2.seq < l.seq AND l2.leaderboard_type_cd = l.leaderboard_type_cd
+            AND NOT (l2.score = l.score AND l2.score_secondary = l.score_secondary)) AS SEQ
+        FROM base_leaderboards l
+        WHERE l.challenge_round_id = #{@round.id}
+        AND l.meta_challenge_id #{@meta_challenge_condition})
+      UPDATE base_leaderboards
+      SET seq = lb.seq, row_num = lb.seq
+      FROM lb
+      WHERE base_leaderboards.id = lb.id
+    SQL
   end
 
   def sort_map(sort_field)
