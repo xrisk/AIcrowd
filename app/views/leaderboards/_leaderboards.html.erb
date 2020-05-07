@@ -47,7 +47,7 @@
     <% if @challenge.meta_challenge %>
       <% leaderboard_meta_challenge_other_scores_array(leaderboard, challenge).each do |problem_score| %>
         <td>
-          <% if problem_score['position'].present? %> 
+          <% if problem_score['position'].present? %>
             <span class="geek-view-normal" data-toggle="tooltip" data-placement="top" title="Rank in problem"><strong>
               <% if problem_score['position'] == 1 %>
                 <img src="/assets/img/award-gold.svg" style="width: 32px" />
@@ -69,6 +69,9 @@
       <% end %>
       <td><%= leaderboard.entries %></td>
       <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
+      <% if leaderboard.submission.submission_link.present? %>
+        <td><%= link_to image_tag('/assets/img/code_snippet.svg'), leaderboard.submission.submission_link, target: "_blank" %></td>
+      <% end %>
       <td class="text-right">
         <% if leaderboard.try(:submitter_type) != 'OldParticipant' && leaderboard.try(:submitter).present? && leaderboard.try(:submission_id).present? %>
           <%= link_to 'View', challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm' %>

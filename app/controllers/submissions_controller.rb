@@ -254,6 +254,7 @@ class SubmissionsController < ApplicationController
           :online_submission,
           :baseline,
           :baseline_comment,
+          :submission_link,
           submission_files_attributes: [
             :id,
             :seq,
