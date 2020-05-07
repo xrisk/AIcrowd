@@ -15,11 +15,19 @@ class ChallengeRulesController < ApplicationController
                        end
 
     if current_participant.present?
+      authorize @challenge
+
       @challenge_participant =
       ChallengeParticipant
         .where(challenge_id: @challenge.id, participant_id: current_participant.id)
         .first_or_create
       @challenge_participant.challenge_rules_accepted_version = @challenge_rules.version
+    end
+
+    if @challenge.draft? || @challenge.private_challenge?
+      if !current_participant.present?
+        raise ActionController::RoutingError, 'Not Found'
+      end
     end
   end
 end
