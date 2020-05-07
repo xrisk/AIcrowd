@@ -47,20 +47,26 @@ function geekView(is_enabled) {
   localStorage.setItem('leaderboard-geek-view', is_enabled);
 }
 
-function enableGeekView() {
-  if($("#geek-view-toogle").length == 0) {
-    return;
-  }
-  if (localStorage.getItem('leaderboard-geek-view') == "true") {
-    geekView(true);
-    $("#geek-view-toogle input[type=checkbox]")[0].checked = true;
-  }
+function setupGeekViewOnClick() {
+  setupGeekViewOnClick = function(){};
   $("#geek-view-toogle").click(function() {
     var currentCheckbox = $(this).find("input[type=checkbox]")[0];
     var currentValue = currentCheckbox.checked;
     geekView(!currentValue);
     currentCheckbox.checked = !currentValue;
   });
+}
+
+function enableGeekView() {
+  if($("#geek-view-toogle").length == 0) {
+    return;
+  }
+  // Make sure initialisation happen once
+  if (localStorage.getItem('leaderboard-geek-view') == "true") {
+    geekView(true);
+    $("#geek-view-toogle input[type=checkbox]")[0].checked = true;
+  }
+  setupGeekViewOnClick();
 }
 
 Paloma.controller('Leaderboards', {
