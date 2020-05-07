@@ -181,6 +181,15 @@ module ChallengesHelper
     return link
   end
 
+  def sequence_num
+    @challenge.persisted? ? @challenge.featured_sequence : next_sequence
+  end
+
+  def next_sequence
+    max_seq = Challenge.maximum('featured_sequence') || 0
+    max_seq + 1
+  end
+
   #TODO: Generate below routes dynamically via meta programming
   def challenge_path(*args)
     path = super(*args)
