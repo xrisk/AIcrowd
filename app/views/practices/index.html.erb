@@ -29,9 +29,11 @@
 <!-- /filtered text -->
 <!-- practice challenge cards -->
 <% if @practice_challenges.present? %>
-  <div class="container-fluid practice_bg">
-    <div class="row" id="challenges-div">
-      <%= render partial: 'shared/challenges/listing_compact', locals: { challenges: @practice_challenges } %>
+  <div class="section-pt-sm-pb-md">
+    <div class="container-fluid practice_bg">
+      <div class="row" id="challenges-div">
+        <%= render partial: 'shared/challenges/listing_compact', locals: { challenges: @practice_challenges } %>
+      </div>
     </div>
   </div>
 <% end %>
