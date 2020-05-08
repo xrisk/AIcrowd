@@ -196,7 +196,7 @@ class Challenge < ApplicationRecord
   end
 
   def greater_than_zero
-    errors.add(:featured_sequence, 'should be greater than zero') if featured_sequence <= 0
+    errors.add(:featured_sequence, 'should be greater than zero') if featured_sequence.to_i <= 0
   end
 
   def teams_frozen?
