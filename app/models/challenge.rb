@@ -71,6 +71,7 @@ class Challenge < ApplicationRecord
   validates :challenge_client_name, presence: true
   validates :slug, uniqueness: true
   validate :other_scores_fieldnames_max
+  validate :greater_than_zero
   #validate :banner_color, format: { with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i }
 
   EVALUATOR_TYPES = {
@@ -193,6 +194,10 @@ class Challenge < ApplicationRecord
 
   def other_scores_fieldnames_max
     errors.add(:other_scores_fieldnames, 'A max of 5 other scores Fieldnames are allowed') if other_scores_fieldnames && (other_scores_fieldnames.count(',') > 4)
+  end
+
+  def greater_than_zero
+    errors.add(:featured_sequence, 'should be greater than zero') if featured_sequence.to_i <= 0
   end
 
   def teams_frozen?
