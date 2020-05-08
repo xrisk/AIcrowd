@@ -2,6 +2,7 @@
   <%
     participants = leaderboard_participants(leaderboard)
     challenge    = leaderboard.challenge
+    truncate     = truncate.present? ? truncate : false
   %>
   <tr>
     <td class="leaderboard-change">
@@ -18,7 +19,7 @@
         <% if team.present? %>
           <div>
             <span class="fa fa-users" data-toggle="tooltip" fa="" title="Team Participation">&nbsp;</span>
-            <span class="reputation-score"> <%= link_to team.name, challenge_team_path(team.challenge, team) %></span>
+            <span class="reputation-score <%= 'truncate' if truncate == 'true' %>"> <%= link_to team.name, challenge_team_path(team.challenge, team) %></span>
           </div>
           <div class="avatar-group">
             <% participants.each do |participant| %>

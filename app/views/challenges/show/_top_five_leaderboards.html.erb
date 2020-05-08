@@ -1,3 +1,4 @@
+<% truncate = truncate.present? ? truncate : false %>
 <header class="section-header-decorative mt-4">
   <div>
     <h4>Leaderboard</h4>
@@ -24,7 +25,7 @@
             <% if team.present? %>
               <div>
                 <span class="fa fa-users" data-toggle="tooltip" fa="" title="Team Participation">&nbsp;</span>
-                <span class="reputation-score"> <%= link_to team.name, challenge_team_path(team.challenge, team) %></span>
+                <span class="reputation-score <%= 'truncate' if truncate == 'true' %>"> <%= link_to team.name, challenge_team_path(team.challenge, team) %></span>
               </div>
               <div class="avatar-group">
                 <% participants = participants.first(4) %>
