@@ -7,7 +7,8 @@ class PracticesController < ApplicationController
     @all_challenges      = policy_scope(Challenge)
     @practice_challenges = @all_challenges.practice.page
     @practice_challenges = Challenges::FilterService.new(params, @practice_challenges).call
-    @challenges          = @all_challenges.not_practice.page(params[:page]).per(18)
+    @editor_challenges   = @practice_challenges.editors_selection
+    @practice_challenges = @practice_challenges.not_editors_selection.page(params[:page]).per(18)
   end
 
   private
