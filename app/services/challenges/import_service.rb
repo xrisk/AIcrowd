@@ -43,7 +43,7 @@ module Challenges
     end
 
     def remove_ids_from_not_existing_records
-      import_params[:dataset_files_attributes].each do |dataset_file|
+      import_params[:dataset_files_attributes]&.each do |dataset_file|
         dataset_file[:id] = nil unless DatasetFile.exists?(id: dataset_file[:id], challenge_id: challenge.id)
       end
     end
