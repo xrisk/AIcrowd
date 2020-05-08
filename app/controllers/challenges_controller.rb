@@ -88,6 +88,7 @@ class ChallengesController < ApplicationController
       update_challenges_organizers if params[:challenge][:organizer_ids].present?
       update_challenge_categories if params[:challenge][:category_names].present?
       create_invitations if params[:challenge][:invitation_email].present?
+      leaderboard_recomputations
       respond_to do |format|
         format.html { redirect_to helpers.edit_challenge_path(@challenge, step: params[:current_step]), notice: 'Challenge updated.' }
         format.js   { render :update }
@@ -233,6 +234,12 @@ class ChallengesController < ApplicationController
   def create_invitations
     params[:challenge][:invitation_email].split(',').each do |email|
       @challenge.invitations.create!(email: email.strip)
+    end
+  end
+
+  def leaderboard_recomputations
+    @challenge.challenge_rounds.pluck(:id).each do |round_id|
+      CalculateLeaderboardJob.perform_later(challenge_round_id: round_id)
     end
   end
 
