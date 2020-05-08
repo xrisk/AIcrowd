@@ -8,7 +8,7 @@
             <%= "No participants for this challenge yet" %>
           </div>
         <% else %>
-          <ul class="list-group list-group-flush-px-0 list-group-organizers" id="pc-ul">
+          <ul class="list-group list-group-flush-px-0 list-group-organizers" id="pc-ul" data-page='1' data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data">
             <% unless @count_of_unknown.zero? %>
               <li class="list-group-item">
                 <%= link_to '#' do %>
@@ -20,10 +20,6 @@
             <% end %>
             <%= render partial: 'participant_challenge_rows' %>
           </ul>
-          <!-- load more -->
-          <span id="more-anchor"></span>
-          <%= render partial: 'shared/load_more', locals: {collection: @participant_challenges} %>
-          <!-- /load more -->
         <% end %>
       </div>
     </div>
