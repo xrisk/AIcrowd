@@ -20,5 +20,10 @@
     <%= f.cktext_area :dynamic_content %>
   </div>
 
+  <div class="form-group">
+    <span class="label-text">Weight for Challenge</span>
+    <%= f.text_field :weight, class: "form-control" %>
+  </div>
+
   <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, current_step: 'admin' } %>
 </div>
