@@ -27,16 +27,19 @@
   <% end %>
 </div>
 <!-- /filtered text -->
+
 <!-- practice challenge cards -->
-<% if @practice_challenges.present? %>
-  <div class="section-pt-sm-pb-md">
-    <div class="container-fluid practice_bg">
-      <div class="row" id="challenges-div">
-        <%= render partial: 'shared/challenges/listing_compact', locals: { challenges: @practice_challenges } %>
-      </div>
+<div class="section-pt-sm-pb-md">
+  <div class="container-fluid">
+    <div class="row practice_bg" id="challenges-div">
+      <% if @practice_challenges.present? %>
+        <%= render partial: 'shared/challenges/listing_compact', locals: { challenges: @practice_challenges, is_practice: true } %>
+      <% else %>
+        <p>No practice challenge present.</p>
+      <% end %>
     </div>
   </div>
-<% end %>
+</div>
 <!-- /practice challenge cards -->
 
 <!-- challenge cards -->

@@ -1,5 +1,5 @@
 <% challenges.each do |challenge| %>
-  <div class="col-md-4">
+  <div class="<%= is_practice ? 'col-md-3' : 'col-md-4' %>">
     <div class="card card-challenge">
       <div class="image-wrapper" style="padding-bottom: 56.2%;position: relative;">
         <%= link_to challenge_path(challenge) do %>
