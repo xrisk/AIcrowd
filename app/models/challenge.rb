@@ -69,6 +69,7 @@ class Challenge < ApplicationRecord
   validates :challenge_client_name,
             format: { with: /\A[a-zA-Z0-9]/ }
   validates :challenge_client_name, presence: true
+  validates :slug, uniqueness: true
   validate :other_scores_fieldnames_max
   #validate :banner_color, format: { with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i }
 

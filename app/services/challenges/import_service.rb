@@ -38,7 +38,7 @@ module Challenges
 
     def reset_associations
       Challenges::ImportConstants::RESETTABLE_ASSOCIATIONS.each do |association|
-        challenge.public_send("#{association}=", [])
+        challenge.public_send("#{association}=", []) if import_params["#{association}_attributes"].present?
       end
     end
 
