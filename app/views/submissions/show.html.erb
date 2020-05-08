@@ -32,7 +32,13 @@
             <h4><%= @submission.challenge_round&.score_secondary_title %></h4>
             <span><%= submission_formatted_value(@submission, @submission.score_secondary_display) %></span>
           </div>
-        </div>
+        </div><br>
+        <% if @submission.submission_link.present? %>
+          <div class="mr-4">
+            <h4>Submission Link</h4>
+            <%= link_to image_tag('/assets/img/code_snippet.svg'), @submission.submission_link, target: "_blank" %>
+          </div>
+        <% end %>
 
         <% if @submission.meta.present? %>
           <div class="section-header mt-4 pt-5 border-top">
