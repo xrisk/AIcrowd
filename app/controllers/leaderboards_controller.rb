@@ -12,7 +12,7 @@ class LeaderboardsController < ApplicationController
     @post_challenge = true if @challenge.completed? && params[:post_challenge] == "true"
     @post_challenge = false if @challenge.meta_challenge?
 
-    filter = {challenge_round_id: @current_round.id, meta_challenge_id: nil}
+    filter = {challenge_round_id: @current_round&.id.to_i, meta_challenge_id: nil}
     if @meta_challenge.present?
       filter[:meta_challenge_id] = @meta_challenge.id
     end
