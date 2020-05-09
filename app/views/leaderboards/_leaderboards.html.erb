@@ -76,10 +76,11 @@
         <% else %>
           <%= link_to 'View', '#', class: 'btn btn-secondary btn-sm disabled disabled--with-pointer-events', title: 'Submitter or Submission was deleted' %>
         <% end %>
+        <% submission = leaderboard.try(:submission) %>
+        <% if submission.present? && submission&.submission_link.present? %>
+          <%= link_to image_tag('/assets/img/code_snippet.svg'), leaderboard&.submission&.submission_link, title: 'View Code', target: "_blank" %>
+        <% end %>
       </td>
-    <% end %>
-    <% if leaderboard&.submission&.submission_link.present? %>
-      <td><%= link_to image_tag('/assets/img/code_snippet.svg'), leaderboard&.submission&.submission_link, target: "_blank" %></td>
     <% end %>
   </tr>
 <% end %>
