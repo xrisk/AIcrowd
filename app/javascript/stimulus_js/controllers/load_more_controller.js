@@ -14,7 +14,7 @@ export default class extends Controller {
     let footerHeight = $('.app-footer').height();
     let heightTillFooter = document.body.scrollHeight - (footerHeight + 176);
 
-    if($(window).scrollTop() >= (parseInt(this.element.offsetHeight) - (footerHeight + 20))) {
+    if($(window).scrollTop() + $(window).height() + 50 >= $('.app-footer').offset().top) {
       this.element.dataset.page = nextPage;
       this.element.dataset.requestCompleted = false;
       $("#loader-container").removeAttr('style').addClass('spinner-above-footer').css('top', heightTillFooter).show();
