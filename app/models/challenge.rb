@@ -20,6 +20,8 @@ class Challenge < ApplicationRecord
   has_many :dataset_files, dependent: :destroy
   accepts_nested_attributes_for :dataset_files, reject_if: :all_blank
 
+  has_many :dataset_folders, dependent: :destroy, class_name: 'DatasetFolder'
+
   has_many :submission_file_definitions, dependent:  :destroy, inverse_of: :challenge
   accepts_nested_attributes_for :submission_file_definitions, reject_if: :all_blank, allow_destroy: true
 

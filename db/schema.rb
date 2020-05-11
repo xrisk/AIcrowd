@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_07_164323) do
+ActiveRecord::Schema.define(version: 2020_05_10_182517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -495,19 +495,31 @@ ActiveRecord::Schema.define(version: 2020_05_07_164323) do
     t.datetime "updated_at", null: false
     t.string "description"
     t.integer "challenge_id"
-    t.string "dataset_file_s3_key"
+    t.string "dataset
+    _file_s3_key"
     t.boolean "evaluation", default: false
     t.string "title"
     t.string "hosting_location"
     t.string "external_url"
     t.boolean "visible", default: true
     t.string "external_file_size"
-    t.text "directory_path"
-    t.text "aws_access_key"
-    t.text "aws_secret_key"
-    t.text "bucket_name"
-    t.text "endpoint"
     t.index ["challenge_id"], name: "index_dataset_files_on_challenge_id"
+  end
+
+  create_table "dataset_folders", force: :cascade do |t|
+    t.text "title", null: false
+    t.text "description"
+    t.text "directory_path", null: false
+    t.string "aws_access_key", null: false
+    t.string "aws_secret_key", null: false
+    t.text "bucket_name", null: false
+    t.string "region", null: false
+    t.boolean "visible", default: true, null: false
+    t.boolean "evaluation", default: false, null: false
+    t.bigint "challenge_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_dataset_folders_on_challenge_id"
   end
 
   create_table "discourse_user_badges_meta", force: :cascade do |t|
@@ -1124,6 +1136,7 @@ ActiveRecord::Schema.define(version: 2020_05_07_164323) do
   add_foreign_key "clef_tasks", "organizers"
   add_foreign_key "dataset_file_downloads", "dataset_files"
   add_foreign_key "dataset_file_downloads", "participants"
+  add_foreign_key "dataset_folders", "challenges"
   add_foreign_key "email_invitations", "participants", column: "claimant_id"
   add_foreign_key "email_invitations", "participants", column: "invitor_id"
   add_foreign_key "email_preferences", "participants"

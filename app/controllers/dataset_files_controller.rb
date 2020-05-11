@@ -11,7 +11,20 @@ class DatasetFilesController < ApplicationController
                 only: [:new, :create, :edit]
 
   def index
-    @dataset_files = policy_scope(DatasetFile).where(challenge_id: @challenge.id)
+    @dataset_files   = policy_scope(DatasetFile).where(challenge_id: @challenge.id)
+    @dataset_folders = policy_scope(DatasetFolder).where(challenge_id: @challenge.id)
+
+    @dataset_folders.each do |dataset_folder|
+      result = Rails.cache.fetch(dataset_folder_cache_key(dataset_folder), expires_in: 5.minutes) do
+        Aws::FetchDatasetFilesService.new(dataset_folder: dataset_folder).call
+      end
+
+      if result.success?
+        dataset_folder.dataset_files = result.value
+      else
+        dataset_folder.error_message = result.value
+      end
+    end
   end
 
   def show; end
@@ -108,12 +121,7 @@ class DatasetFilesController < ApplicationController
         :title,
         :file_size,
         :dataset_file_s3_key,
-        :hosting_location,
-        :directory_path,
-        :aws_access_key,
-        :aws_secret_key,
-        :bucket_name,
-        :endpoint
+        :hosting_location
       )
   end
 
@@ -123,5 +131,9 @@ class DatasetFilesController < ApplicationController
         key:                   "dataset_files/challenge_#{@challenge.id}/#{SecureRandom.uuid}_${filename}",
         success_action_status: '201',
         acl:                   'private')
+  end
+
+  def dataset_folder_cache_key(dataset_folder)
+    "aws-dataset-folder/#{dataset_folder.id}-#{dataset_folder.updated_at.to_i}"
   end
 end

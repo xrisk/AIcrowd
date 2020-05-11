@@ -2,5 +2,5 @@
   <%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
   <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 
-  <%= render 'form' %>
+  <%= render partial: 'form', locals: { form_url: challenge_dataset_file_path(@challenge, @dataset_file) } %>
 </div>

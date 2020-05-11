@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://test-s3-integratioon.s3.eu-north-1.amazonaws.com/?encoding-type=url&prefix=test_things
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Content-Type:
+      - ''
+      Accept-Encoding:
+      - ''
+      User-Agent:
+      - aws-sdk-ruby2/2.11.190 ruby/2.5.5 x86_64-darwin18 resources
+      X-Amz-Date:
+      - 20200510T233240Z
+      X-Amz-Content-Sha256:
+      - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=INVALID_ACCESS_KEY/20200510/eu-north-1/s3/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=521e0ff99609c97283cb96a911b8144f9230eb3a647f37bab1b3d7b298a99cb2
+      Content-Length:
+      - '0'
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      X-Amz-Bucket-Region:
+      - eu-north-1
+      X-Amz-Request-Id:
+      - 88352C321ADED0F8
+      X-Amz-Id-2:
+      - e+uTJptEKV2nB2S1oi2ibr3gRxq3IwTwsVM8BScJILSbr6S+ddO/bm21WjRrG9nfRoakdqHGOQo=
+      Content-Type:
+      - application/xml
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Sun, 10 May 2020 23:32:41 GMT
+      Server:
+      - AmazonS3
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?>
+        <Error><Code>InvalidAccessKeyId</Code><Message>The AWS Access Key Id you provided does not exist in our records.</Message><AWSAccessKeyId>INVALID_ACCESS_KEY</AWSAccessKeyId><RequestId>88352C321ADED0F8</RequestId><HostId>e+uTJptEKV2nB2S1oi2ibr3gRxq3IwTwsVM8BScJILSbr6S+ddO/bm21WjRrG9nfRoakdqHGOQo=</HostId></Error>
+    http_version:
+  recorded_at: Sun, 10 May 2020 23:32:41 GMT
