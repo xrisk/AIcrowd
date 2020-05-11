@@ -30,7 +30,14 @@
         </span>
         </center>
       </div>
-      <%= render partial: 'shared/challenges/team_stat', locals: { challenge: challenge } %>
+      <div class="stat-item" style="width: 72px">
+        <center>
+          <span data-toggle="tooltip" data-placement="top" title="No. of teams">
+            <img src="/assets/img/icon-teams.svg">
+            <%= challenge_stat_count(challenge, 'team') %>
+          </span>
+        </center>
+      </div>
       <div class="stat-item" style="width: 72px">
         <center>
         <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
