@@ -1,0 +1,226 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.intercom.io/events
+    body:
+      encoding: UTF-8
+      string: '{"event_name":"test_event","created_at":1589225001,"email":"karima_ruecker@raynorgleason.biz","metadata":{}}'
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Accept:
+      - application/vnd.intercom.3+json
+      User-Agent:
+      - Intercom-Ruby/4.0.1
+      Content-Type:
+      - application/json
+      Acceptencoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer dG9rOmExZWM4ZDdhXzc0NWNfNDc2Nl9hM2RkXzNjZTQxODRhYmIzNjoxOjA=
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Mon, 11 May 2020 19:23:22 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      Cache-Control:
+      - no-cache
+      X-Ratelimit-Limit:
+      - '167'
+      X-Ratelimit-Reset:
+      - '1589225010'
+      Strict-Transport-Security:
+      - max-age=31556952; includeSubDomains; preload
+      X-Ratelimit-Remaining:
+      - '166'
+      X-Intercom-Version:
+      - bba27adae1ddf144733ae79b446d79b8c9121ec1
+      Vary:
+      - Accept-Encoding
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Encoding:
+      - gzip
+      X-Request-Id:
+      - '000148a9vbg3glm54uag'
+      Intercom-Version:
+      - '2.0'
+      X-Runtime:
+      - '0.042784'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Set-Cookie:
+      - _mkra_ctxt=4f65a7e15eace24835175220dfbe3eb4--404; path=/; max-age=5; HttpOnly;
+        secure
+      Server:
+      - nginx
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIACqmuV4AA6pWKqksSFWyUkotKsov0svJLC5R0lEqSi0sTS0uic9MAcoYGBgYmlgkWpYlpRun5+SampQmpgPVgDUUK1lFVysl56eAjMjLL4lPyy/NSwHK5qYWFyemg0RDi1OLFPzySxTcwFK1sbUAAAAA//8DAC/FZFh0AAAA
+    http_version: 
+  recorded_at: Mon, 11 May 2020 19:23:22 GMT
+- request:
+    method: post
+    uri: https://api.intercom.io/contacts
+    body:
+      encoding: UTF-8
+      string: '{"email":"karima_ruecker@raynorgleason.biz","role":"user","custom_attributes":{}}'
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Accept:
+      - application/vnd.intercom.3+json
+      User-Agent:
+      - Intercom-Ruby/4.0.1
+      Content-Type:
+      - application/json
+      Acceptencoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer dG9rOmExZWM4ZDdhXzc0NWNfNDc2Nl9hM2RkXzNjZTQxODRhYmIzNjoxOjA=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 11 May 2020 19:23:22 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ratelimit-Limit:
+      - '167'
+      X-Ratelimit-Reset:
+      - '1589225010'
+      Strict-Transport-Security:
+      - max-age=31556952; includeSubDomains; preload
+      X-Ratelimit-Remaining:
+      - '165'
+      X-Intercom-Version:
+      - bba27adae1ddf144733ae79b446d79b8c9121ec1
+      Vary:
+      - Accept-Encoding
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Encoding:
+      - gzip
+      X-Request-Id:
+      - 0002ra6sqhj1g3rve2j0
+      Intercom-Version:
+      - '2.0'
+      Etag:
+      - W/"16230daf61799c9c35f30bae1c623843"
+      X-Runtime:
+      - '0.195499'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Set-Cookie:
+      - _mkra_ctxt=624b5588d2bfdd45bb2d038ad8f28a65--200; path=/; max-age=5; HttpOnly;
+        secure
+      Server:
+      - nginx
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIACqmuV4AA6xU227bMAz9Fz0Hy2XNWudp/zEMBi0xjmBZFCgpWVb030c7sZs4SbcBfbPOoQ4PRdKvKh0Dqo3S5BPopGbKGjmusSrg2wqMXjwti2dTPK9enoptJfyBuIkBNJZ9JLjl11zUv4XBXwnZg+sJn52bKSbXqeeI3AW0YJ0cG2DbQskZdYP8neHoiWuHEMl/qWynFXbkcVDx0I7fsIcEPJzo4JEv8kXSVgwEpq11GNXmdSjQ2dhVZ+S22vz4+TZTO4jlDtiUFWWvUTS24CLOVAvcoCl7t6UESbXtSGYfcxU120pCtkztKS6OAZoRknCQ1Ga5filWq/VisZKLwdzFo629wDn0zKkMBzGVEdFPMcbg7FnkAj5375Y41UAB/SNOO6ubCenrDDWWtEdma8anr5gOXSOvj6VERUt+Cg8yY6vimIA0pP7Ge3cGSN5PupH4OE4Q1hfi2qYzIw0Eb5isWA+hvBqRC3xibqAM7q2+uUDxUXw0zSPqXq+sKE1dDdhEpoOv3XTIrZMOveOig+850DkmmU1ISSY1p34V5MkS1B8shQwpd/s5P89TnD/6D8x7IdGjJOvWt0xtFqedaonxvA2S0VP6aA//I+VJ6V9yamoDePtJed/V/p777Q8AAAD//wMAoBBMAFEFAAA=
+    http_version: 
+  recorded_at: Mon, 11 May 2020 19:23:23 GMT
+- request:
+    method: post
+    uri: https://api.intercom.io/events
+    body:
+      encoding: UTF-8
+      string: '{"event_name":"test_event","created_at":1589225003,"email":"karima_ruecker@raynorgleason.biz","metadata":{}}'
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Accept:
+      - application/vnd.intercom.3+json
+      User-Agent:
+      - Intercom-Ruby/4.0.1
+      Content-Type:
+      - application/json
+      Acceptencoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer dG9rOmExZWM4ZDdhXzc0NWNfNDc2Nl9hM2RkXzNjZTQxODRhYmIzNjoxOjA=
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Date:
+      - Mon, 11 May 2020 19:23:23 GMT
+      Content-Type:
+      - text/html
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 202 Accepted
+      Cache-Control:
+      - no-cache
+      X-Ratelimit-Limit:
+      - '167'
+      X-Ratelimit-Reset:
+      - '1589225010'
+      Strict-Transport-Security:
+      - max-age=31556952; includeSubDomains; preload
+      X-Ratelimit-Remaining:
+      - '164'
+      X-Intercom-Version:
+      - bba27adae1ddf144733ae79b446d79b8c9121ec1
+      Vary:
+      - Accept-Encoding
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Encoding:
+      - gzip
+      X-Intercomrade:
+      - Like APIs? Check out https://www.intercom.io/careers
+      Intercom-Version:
+      - '2.0'
+      X-Request-Id:
+      - 0002radin4n0indcmkug
+      X-Runtime:
+      - '0.076283'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Set-Cookie:
+      - _mkra_ctxt=aeaa8d8dcd4686d3c47744a1faa3592a--202; path=/; max-age=5; HttpOnly;
+        secure
+      Server:
+      - nginx
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIACumuV4AAwMAAAAAAAAAAAA=
+    http_version: 
+  recorded_at: Mon, 11 May 2020 19:23:23 GMT
+recorded_with: VCR 5.0.0

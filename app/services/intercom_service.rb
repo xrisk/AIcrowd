@@ -6,7 +6,7 @@ class IntercomService
     @client      = Intercom::Client.new(token: ENV['INTERCOM_TOKEN'])
   rescue Intercom::MisconfiguredClientError => e
     Rails.logger.info "Intercom: #{e.message}"
-    raise
+    raise e
   end
 
   def call

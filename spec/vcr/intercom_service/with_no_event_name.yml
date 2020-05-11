@@ -1,0 +1,224 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.intercom.io/events
+    body:
+      encoding: UTF-8
+      string: '{"event_name":"","created_at":1589224998,"email":"donte@mueller.us","metadata":{}}'
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Accept:
+      - application/vnd.intercom.3+json
+      User-Agent:
+      - Intercom-Ruby/4.0.1
+      Content-Type:
+      - application/json
+      Acceptencoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer dG9rOmExZWM4ZDdhXzc0NWNfNDc2Nl9hM2RkXzNjZTQxODRhYmIzNjoxOjA=
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Mon, 11 May 2020 19:23:19 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 404 Not Found
+      Cache-Control:
+      - no-cache
+      X-Ratelimit-Limit:
+      - '167'
+      X-Ratelimit-Reset:
+      - '1589225000'
+      Strict-Transport-Security:
+      - max-age=31556952; includeSubDomains; preload
+      X-Ratelimit-Remaining:
+      - '167'
+      X-Intercom-Version:
+      - bba27adae1ddf144733ae79b446d79b8c9121ec1
+      Vary:
+      - Accept-Encoding
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Encoding:
+      - gzip
+      X-Request-Id:
+      - 0002r9aujlsqonbthiog
+      Intercom-Version:
+      - '2.0'
+      X-Runtime:
+      - '0.045186'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Set-Cookie:
+      - _mkra_ctxt=57a77078f566bd42e1e41ee0e96b9c75--404; path=/; max-age=5; HttpOnly;
+        secure
+      Server:
+      - nginx
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIACemuV4AA6pWKqksSFWyUkotKsov0svJLC5R0lEqSi0sTS0uic9MAcoYGBgYFVkmlmblFBfm5yWVZGTmpwPVgDUUK1lFVysl56eAjMjLL4lPyy/NSwHK5qYWFyemg0RDi1OLFPzySxTcwFK1sbUAAAAA//8DANUdlz90AAAA
+    http_version: 
+  recorded_at: Mon, 11 May 2020 19:23:19 GMT
+- request:
+    method: post
+    uri: https://api.intercom.io/contacts
+    body:
+      encoding: UTF-8
+      string: '{"email":"donte@mueller.us","role":"user","custom_attributes":{}}'
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Accept:
+      - application/vnd.intercom.3+json
+      User-Agent:
+      - Intercom-Ruby/4.0.1
+      Content-Type:
+      - application/json
+      Acceptencoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer dG9rOmExZWM4ZDdhXzc0NWNfNDc2Nl9hM2RkXzNjZTQxODRhYmIzNjoxOjA=
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 11 May 2020 19:23:20 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 200 OK
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Ratelimit-Limit:
+      - '167'
+      X-Ratelimit-Reset:
+      - '1589225000'
+      Strict-Transport-Security:
+      - max-age=31556952; includeSubDomains; preload
+      X-Ratelimit-Remaining:
+      - '166'
+      X-Intercom-Version:
+      - bba27adae1ddf144733ae79b446d79b8c9121ec1
+      Vary:
+      - Accept-Encoding
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Encoding:
+      - gzip
+      X-Request-Id:
+      - 002l8sg6o0lffbs2h2ig
+      Intercom-Version:
+      - '2.0'
+      Etag:
+      - W/"1d72b4054f7082d2b82229c8f1eedf67"
+      X-Runtime:
+      - '0.255179'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Set-Cookie:
+      - _mkra_ctxt=413e5e39ad09ac8835f39ddb915e089a--200; path=/; max-age=5; HttpOnly;
+        secure
+      Server:
+      - nginx
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIACimuV4AA6xTwZLaMAz9F5+ZUmjZJTn1PzqdjGKL4MGxPZIN3e7sv1cJSRYCbNuZ3qz3pCfJkl5VeomoSqWDT6CTWihrxNxgXcDT+nmzBSzq3WpX6+enbWGEPwU6cASNVe8JbvUlF80vYfBnQvLgesJn5xaKguvUMyN1Di1YJ6aRZPitzegc0qfMQsV98DhGeWinNxwhAY1WOHmkC30O2krCSGFnHbIqX8eGnOWuGyPRqvz+422h9sDVHshUdcheo2jswDEuVAt0QFP11VXiJN21E5k955o12VpcdhTasx9PDpoQknCQVLnabIv1+mtRFBIYzV2cbeMFzrFnzm044FQxop9jhNHZQeQCHqZ1S5x7CBH9I047qw8z0jcZGqzCEYmsmb6+pnDqBndtVuLFNvg5PMpMo+IpQdCQ+oj36YyQ/J9MI9HLtDHYXIhrmwZGBgjeULBSeozV1Ypc4LPiRsrg0eqbgMCP/NkcHlH3ZmVFaV7ViM1kOvi6mg65raRD71TRwfcq0JmT7CakJJuaU38K8mUJmg+OQpaUuntcDvvEy0d3v+yFRC8kObd+ZKr8fL6pNhAO1yAZfUgf3eE/pDwr/U1OHdoI3v6nvO9qf8799hsAAP//AwDV/JiKQQUAAA==
+    http_version: 
+  recorded_at: Mon, 11 May 2020 19:23:20 GMT
+- request:
+    method: post
+    uri: https://api.intercom.io/events
+    body:
+      encoding: UTF-8
+      string: '{"event_name":"","created_at":1589225000,"email":"donte@mueller.us","metadata":{}}'
+    headers:
+      Accept-Encoding:
+      - gzip, deflate
+      Accept:
+      - application/vnd.intercom.3+json
+      User-Agent:
+      - Intercom-Ruby/4.0.1
+      Content-Type:
+      - application/json
+      Acceptencoding:
+      - gzip, deflate
+      Authorization:
+      - Bearer dG9rOmExZWM4ZDdhXzc0NWNfNDc2Nl9hM2RkXzNjZTQxODRhYmIzNjoxOjA=
+  response:
+    status:
+      code: 422
+      message: Unprocessable Entity
+    headers:
+      Date:
+      - Mon, 11 May 2020 19:23:21 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Status:
+      - 422 Unprocessable Entity
+      Cache-Control:
+      - no-cache
+      X-Ratelimit-Limit:
+      - '167'
+      X-Ratelimit-Reset:
+      - '1589225010'
+      Strict-Transport-Security:
+      - max-age=31556952; includeSubDomains; preload
+      X-Ratelimit-Remaining:
+      - '167'
+      X-Intercom-Version:
+      - bba27adae1ddf144733ae79b446d79b8c9121ec1
+      Vary:
+      - Accept-Encoding
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Encoding:
+      - gzip
+      X-Request-Id:
+      - 001uureia0bfk3g1ljk0
+      Intercom-Version:
+      - '2.0'
+      X-Runtime:
+      - '0.276715'
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Content-Type-Options:
+      - nosniff
+      Set-Cookie:
+      - _mkra_ctxt=2254d652bf79927fb3e08e4056ce45a4--422; path=/; max-age=5; HttpOnly;
+        secure
+      Server:
+      - nginx
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIACmmuV4AAxyMwQ6CQAxEf2XTszELeuLuVxhjClRcYbvYdkkI4d9dPM68ebOBrTNBAySS5DwFNTiB0DeT2jP0hXhf5SwU0Lev8TJU02f0ZfMXFJr7Bl3qj4trXZc+kioOR74txKauQ+Zk7o0LOWRHcbbVMUaC/bH/AAAA//8DALPTvBGAAAAA
+    http_version: 
+  recorded_at: Mon, 11 May 2020 19:23:21 GMT
+recorded_with: VCR 5.0.0
