@@ -68,6 +68,10 @@ class DatasetFilesController < ApplicationController
     @challenge_rounds = @challenge.challenge_rounds.started
   end
 
+  def set_challenge_rounds
+    @challenge_rounds = @challenge.challenge_rounds.started
+  end
+
   def set_vote
     @vote = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
   end
