@@ -4,44 +4,56 @@ describe IntercomService, focus: true do
   let!(:participant) { create :participant }
 
   describe '#call' do
-    before(:context) do
-      Intercom::Client.contacts.create(email: participant.email, role: "user")
-    end
-
-    context 'with a null token' do
-      ENV["INTERCOM_TOKEN"] = nil
-      subject { described_class.new }
-      it { expect(subject).to raise_exception Intercom::MisconfiguredClientError }
-    end
-
     context 'with no event name' do
-      subject { described_class.new.call('', participant, {}) }
-      it { expect(subject).to raise_exception Intercom::IntercomError }
-    end
-
-    context 'with a right event name' do
-      subject { described_class.new.call('test_event', participant, {}) }
-      it { expect(subject).to be_a nil }
+      it 'returns raises excetion of Intercom' do
+        VCR.use_cassette('intercom_service/with_no_event_name') do
+          expect(IntercomService.new('', participant).call).to raise_exception Intercom::UnexpectedError
+        end
+      end
     end
 
     context 'with a participant not a contact of intercom' do
-      subject { described_class.new.call('test_event', participant, {}) }
-      it { expect(subject).to be_a nil }
+      it 'returns null with not a contact of intercom' do
+        VCR.use_cassette('intercom_service/with_participant_not_contact') do
+          expect(IntercomService.new('test_event', participant, {}).call).to be_a nil
+        end
+      end
     end
 
+    context 'with a right event name' do
+      it 'returns null with right event name' do
+        VCR.use_cassette('intercom_service/with_right_event_name') do
+          expect(IntercomService.new('test_event', participant, {}).call).to be_a nil
+        end
+      end
+    end
+
+
+
     context 'with no participant' do
-      subject { described_class.new.call('test_event', nil, {}) }
-      it { expect(subject).to be_a nil }
+      it 'returns raises excetion of Intercom' do
+        VCR.use_cassette('intercom_service/with_no_participant') do
+          expect(IntercomService.new('test_event', nil, {}).call).to be_a nil
+        end
+      end
     end
 
     context 'with a participant not having email' do
-      subject { described_class.new.call('test_event', participant, {}) }
-      it { expect(subject).to be_a nil }
+      it 'returns raises excetion of Intercom' do
+        VCR.use_cassette('intercom_service/with_participant_not_having_email') do
+          expect(IntercomService.new('test_event', participant, {}).call).to be_a nil
+        end
+      end
+
+
     end
 
     context 'with metadata has a hash' do
-      subject { described_class.new.call('test_event', participant, 'sht') }
-      it { expect(subject).to be_a nil }
+      it 'returns raises excetion of Intercom' do
+        VCR.use_cassette('intercom_service/with_non_hash_metadata') do
+          expect(IntercomService.new('test_event', participant, 'sht').call).to be_a nil
+        end
+      end
     end
   end
 end
