@@ -675,9 +675,6 @@ GEM
       pry (~> 0.10)
     public_suffix (4.0.3)
     puma (3.12.4)
-    puma_worker_killer (0.1.0)
-      get_process_mem (~> 0.2)
-      puma (>= 2.7, < 4)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
     quantile (0.2.1)
@@ -1047,7 +1044,6 @@ DEPENDENCIES
   prometheus-client
   pry-byebug
   puma
-  puma_worker_killer
   pundit
   pundit-matchers!
   rack (>= 2.0.6)
