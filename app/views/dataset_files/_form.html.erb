@@ -1,60 +1,82 @@
-<div class='content'>
-  <div class="masthead">
+<div class="section-p-md">
+  <div class="container-fluid">
     <div class="row">
-      <h2><%= @dataset_file.persisted? ? "Update File" : "Add File" %></h2>
+      <div class="col-12">
+        <h2><%= @dataset_file.persisted? ? "Update File" : "Add File" %></h2>
+
+        <%= form_with model: @dataset_file, url: challenge_dataset_files_path(@challenge), validate: true, html: { class: "form-rg sgl-col directUpload", 'data-form-data' => @s3_direct_post.fields.to_json, 'data-url' => @s3_direct_post.url, 'data-host' => URI.parse(@s3_direct_post.url).host } do |f| %>
+          <div class="form-group">
+            <label>File Title</label>
+            <%= f.text_field :title, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <label>File Description</label>
+            <%= f.text_field :description, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :evaluation, text: "Evaluation" } %>
+          </div>
+
+          <div class="form-group">
+            <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :visible, text: "Visible" } %>
+          </div>
+
+          <div class="form-group">
+            <label>Dataset File Storage</label>
+
+            <div>
+              <%= f.radio_button :hosting_location, 'crowdAI', checked: true %>
+              <%= f.label :hosting_location, 'AICrowd S3', value: 'crowdAI' %>
+
+              <%= f.radio_button :hosting_location, 'External' %>
+              <%= f.label :hosting_location, 'Own S3', value: 'External' %>
+            </div>
+          </div>
+
+          <div id='dataset-file-s3-key' class="form-group">
+            <label>Dataset file</label>
+            <%= f.file_field :dataset_file_s3_key, class: 'file-upload s3File form-control' %>
+            <% if f.object.dataset_file_s3_key.present? %>
+              <span><%= link_to f.object.dataset_file_s3_key, f.object.dataset_file_s3_key %></span>
+            <% end %>
+          </div>
+
+          <div id='external-url' class="form-group">
+            <div class="form-group">
+              <label>Path to directory</label>
+              <%= f.text_field :directory_path, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <label>AWS Access Key</label>
+              <%= f.text_field :aws_access_key, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <label>AWS Secret Access Key</label>
+              <%= f.text_field :aws_secret_key, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <label>Bucket Name</label>
+              <%= f.text_field :bucket_name, class: 'form-control' %>
+            </div>
+
+
+            <div class="form-group">
+              <label>Endpoint</label>
+              <%= f.text_field :endpoint, class: 'form-control' %>
+            </div>
+          </div/>
+
+          <div class="btn-set">
+            <%= f.button (f.object.new_record? ? "Add File" : "Update File"), class: 'btn btn-primary', id: 'submitS3' %>
+            <%= link_to 'Cancel', challenge_path(@challenge), class: "btn btn-secondary" %>
+          </div>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <%= form_for [@challenge, @dataset_file],
-                    html: { class: "sgl-col directUpload", 'data-form-data' => @s3_direct_post.fields.to_json, 'data-url' => @s3_direct_post.url, 'data-host' => URI.parse(@s3_direct_post.url).host } do |f| %>
-      <fieldset>
-        <label>File Title</label>
-        <%= f.text_field :title %>
-        <label>File Description</label>
-        <%= f.text_field :description %>
-        <fieldset class="checkbox">
-          <div>
-            <%= f.check_box :evaluation, {}, "true", "false" %>
-            <label for="file-evalution">Evaluation</label>
-          </div>
-        </fieldset>
-        <fieldset class="checkbox">
-          <div>
-            <%= f.check_box :visible, {}, "true", "false" %>
-            <%= f.label :visible, 'Visible ?' %>
-          </div>
-        </fieldset>
-
-        <fieldset class="radiogroup">
-          <legend>Dataset File Storage</legend>
-          <div>
-            <%= f.radio_button :hosting_location, 'crowdAI', :checked => true %>
-            <%= f.label :hosting_location, 'crowdAI S3' %>
-          </div>
-          <div>
-            <%= f.radio_button :hosting_location, 'External' %>
-            <%= f.label :hosting_location, 'External' %>
-          </div>
-        </fieldset>
-
-        <fieldset id='dataset-file-s3-key'>
-          <label>Dataset file</label>
-          <%= f.file_field :dataset_file_s3_key, class: 'file-upload s3File' %>
-          <% if f.object.dataset_file_s3_key.present? %>
-            <span><%= link_to f.object.dataset_file_s3_key, f.object.dataset_file_s3_key %></span>
-          <% end %>
-        </fieldset>
-        <fieldset id='external-url'>
-          <label>External Dataset Url</label>
-          <%= f.text_field :external_url %>
-          <label>File Size</label>
-          <%= f.text_field :external_file_size %>
-        </fieldset>
-
-        <div class="button-group">
-          <%= f.button (f.object.new_record? ? "Add File" : "Update File"), class: 'btn btn-primary', id: 'submitS3' %>
-          <%= link_to 'Cancel', challenge_path(@challenge), class: "btn btn-secondary" %>
-        </div>
-    <% end %>
   </div>
 </div>

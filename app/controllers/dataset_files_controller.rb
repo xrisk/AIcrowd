@@ -3,17 +3,15 @@ class DatasetFilesController < ApplicationController
   before_action :set_dataset_file,
                 only: [:destroy, :edit, :update]
   before_action :set_challenge
-  before_action :set_vote, only: :index
-  before_action :set_follow, only: :index
+  before_action :set_challenge_rounds, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  before_action :set_vote, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+  before_action :set_follow, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   before_action :check_participation_terms
   before_action :set_s3_direct_post,
                 only: [:new, :create, :edit]
 
-  layout "application-old", only: [:new, :create, :edit]
-
   def index
-    @dataset_files    = policy_scope(DatasetFile).where(challenge_id: @challenge.id)
-    @challenge_rounds = @challenge.challenge_rounds.started
+    @dataset_files = policy_scope(DatasetFile).where(challenge_id: @challenge.id)
   end
 
   def show; end
@@ -66,6 +64,10 @@ class DatasetFilesController < ApplicationController
     end
   end
 
+  def set_challenge_rounds
+    @challenge_rounds = @challenge.challenge_rounds.started
+  end
+
   def set_vote
     @vote = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
   end
@@ -101,10 +103,14 @@ class DatasetFilesController < ApplicationController
         :visible,
         :title,
         :file_size,
-        :external_url,
-        :external_file_size,
         :dataset_file_s3_key,
-        :hosting_location)
+        :hosting_location,
+        :directory_path,
+        :aws_access_key,
+        :aws_secret_key,
+        :bucket_name,
+        :endpoint
+      )
   end
 
   def set_s3_direct_post
