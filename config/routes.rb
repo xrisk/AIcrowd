@@ -105,6 +105,7 @@ Rails.application.routes.draw do
         resources :teams, only: [] do
           get :search, on: :collection
         end
+        resources :dataset_files, only: [:create, :update, :destroy]
       end
       resources :participants, only: [] do
         get :user_profile, on: :member
