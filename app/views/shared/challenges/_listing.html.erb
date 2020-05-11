@@ -78,14 +78,7 @@
               <%= challenge_stat_count(challenge, 'participant') %>
             </span>
           </div>
-          <div class="stat-item ml-1 mr-1">
-            <center>
-              <span data-toggle="tooltip" data-placement="top" title="No. of teams">
-                <img src="/assets/img/icon-teams.svg">
-                <%= challenge_stat_count(challenge, 'team') %>
-              </span>
-            </center>
-          </div>
+          <%= render partial: 'shared/challenges/team_stat', locals: { challenge: challenge } %>
           <div class="stat-item ml-1 mr-1">
             <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
               <img src="/assets/img/icon-submissions.svg">
