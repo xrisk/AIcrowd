@@ -71,7 +71,7 @@ gem 'omniauth-oauth2-generic'
 gem 'paloma', '~> 5.1.0'
 gem 'paper_trail', '~> 10.3', '>= 10.3.1'
 gem 'pg'
-gem 'puma'
+gem 'puma', '~> 4.3', '>= 4.3.3'
 gem 'pundit'
 gem 'prometheus-client'
 gem "rack", ">= 2.0.6"
