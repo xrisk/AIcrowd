@@ -213,8 +213,13 @@ class Participant < ApplicationRecord
     image_url = if image_file.file.present?
                   image_file.url
                 else
-                  'users/user-avatar-default.svg'
+                  get_default_image
                 end
+  end
+
+  def get_default_image
+    num = id % 8
+    "users/AIcrowd-DarkerBG (#{num}).png"
   end
 
   def process_urls

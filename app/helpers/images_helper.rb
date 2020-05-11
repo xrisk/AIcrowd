@@ -9,6 +9,11 @@ module ImagesHelper
   end
 
   def default_image_url
-    image_path 'users/user-avatar-default.svg'
+    image_path get_default_image
+  end
+
+  def get_default_image
+    num = model.id % 8
+    "users/AIcrowd-DarkerBG (#{num}).png"
   end
 end
