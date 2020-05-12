@@ -26,9 +26,9 @@
   "license":"\u003cp\u003eaaaaa\u003c/p\u003e",
   "dataset_description_markdown":"Example ",
   "dataset_description":"\u003cp\u003eExample\u003c/p\u003e\n",
-  // "image_file":{
-     // "url":"/assets/users/user-avatar-default.svg"
-  // },
+  "image_file":{
+     "url":"/assets/users/user-avatar-default.svg"
+  },
   "featured_sequence":6,
   "dynamic_content_flag":false,
   "dynamic_content":"",

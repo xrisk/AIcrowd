@@ -18,7 +18,11 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def get_default_image
-    num = model.id % 8
-    "/assets/users/AIcrowd-DarkerBG (#{num}).png"
+    if model.class.name == 'Participant'
+      num = model.id % 8
+      "/assets/users/AIcrowd-DarkerBG (#{num}).png"
+    else
+      '/assets/users/user-avatar-default.svg'
+    end
   end
 end
