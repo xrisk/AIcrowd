@@ -110,7 +110,7 @@ class ChallengesController < ApplicationController
     authorize Challenge
     @final_order = params[:order].split(',')
     @final_order.each_with_index do |ch, idx|
-      Challenge.friendly.find(ch).update(featured_sequence: idx)
+      Challenge.friendly.find(ch).update(featured_sequence: idx+1)
     end
 
     redirect_to helpers.reorder_challenges_path
