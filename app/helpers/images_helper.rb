@@ -16,4 +16,8 @@ module ImagesHelper
     num = model.id % 8
     "users/AIcrowd-DarkerBG (#{num}).png"
   end
+
+  def challenge_default_image_url
+    image_path 'users/user-avatar-default.svg'
+  end
 end
