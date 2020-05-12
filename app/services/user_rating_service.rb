@@ -7,6 +7,7 @@ class UserRatingService
     else
       @temporary = true
     end
+    @weight = @round.challenge.weight
   end
 
   def leaderboard_query()
@@ -38,8 +39,15 @@ class UserRatingService
           new_participant_ratings << {"temporary_rating" => new_team_ratings[i][j] }
           new_participant_variations << {"temporary_variation" => new_team_variations[i][j]}
         else
-          new_participant_ratings << {"rating" => new_team_ratings[i][j], "fixed_rating" => new_team_ratings[i][j]  }
-          new_participant_variations << {"variation" => new_team_variations[i][j]}
+          current_participant = Participant.find_by(id: participant_id)
+          current_participant_previous_rating = current_participant.rating.to_f
+          current_participant_true_rating = new_team_ratings[i][j]
+          current_participant_true_variation = current_participant.variation.to_f
+          current_participant_previous_variation = new_team_variations[i][j]
+          current_participant_weighted_rating = current_participant_previous_rating + @weight * (current_participant_true_rating - current_participant_previous_rating)
+          current_participant_weighted_variation = current_participant_previous_variation + (@weight **2) * (current_participant_true_variation - current_participant_previous_variation)
+          new_participant_ratings << {"rating" => current_participant_weighted_rating, "fixed_rating" => current_participant_weighted_rating }
+          new_participant_variations << {"variation" => current_participant_weighted_variation}
         end
       end
     end
