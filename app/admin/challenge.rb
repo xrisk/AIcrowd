@@ -29,6 +29,7 @@ ActiveAdmin.register Challenge do
     column :participant_count
     column :submissions_count
     column :weight
+    column :practice_flag
 
     actions default: true do |resource|
       a 'Edit', href: edit_challenge_path(resource), class: "edit_link member_link"
