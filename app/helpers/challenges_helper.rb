@@ -23,7 +23,7 @@ module ChallengesHelper
     if !policy(challenge).has_accepted_participation_terms?
       [challenge, ParticipationTerms.current_terms]
     elsif !policy(challenge).has_accepted_challenge_rules?
-      [challenge, challenge.current_challenge_rules]
+      challenge_challenge_rules_path(challenge)
     end
   end
 
@@ -58,6 +58,8 @@ module ChallengesHelper
       formatted_count(challenge.challenge_participants.size)
     when 'vote'
       formatted_count(challenge.vote_count)
+    when 'team'
+      formatted_count(challenge.teams_count)
     end
   end
 
@@ -179,6 +181,15 @@ module ChallengesHelper
       return challenge_path(params['meta_challenge_id']) + link.gsub(/^\/challenges/, "/problems")
     end
     return link
+  end
+
+  def sequence_num
+    @challenge.persisted? ? @challenge.featured_sequence : next_sequence
+  end
+
+  def next_sequence
+    max_seq = Challenge.maximum('featured_sequence') || 0
+    max_seq + 1
   end
 
   #TODO: Generate below routes dynamically via meta programming

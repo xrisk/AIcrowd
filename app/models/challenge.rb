@@ -20,6 +20,8 @@ class Challenge < ApplicationRecord
   has_many :dataset_files, dependent: :destroy
   accepts_nested_attributes_for :dataset_files, reject_if: :all_blank
 
+  has_many :dataset_folders, dependent: :destroy, class_name: 'DatasetFolder'
+
   has_many :submission_file_definitions, dependent:  :destroy, inverse_of: :challenge
   accepts_nested_attributes_for :submission_file_definitions, reject_if: :all_blank, allow_destroy: true
 
@@ -69,7 +71,9 @@ class Challenge < ApplicationRecord
   validates :challenge_client_name,
             format: { with: /\A[a-zA-Z0-9]/ }
   validates :challenge_client_name, presence: true
+  validates :slug, uniqueness: true
   validate :other_scores_fieldnames_max
+  validate :greater_than_zero
   #validate :banner_color, format: { with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i }
 
   EVALUATOR_TYPES = {
@@ -194,6 +198,10 @@ class Challenge < ApplicationRecord
     errors.add(:other_scores_fieldnames, 'A max of 5 other scores Fieldnames are allowed') if other_scores_fieldnames && (other_scores_fieldnames.count(',') > 4)
   end
 
+  def greater_than_zero
+    errors.add(:featured_sequence, 'should be greater than zero') if featured_sequence.to_i <= 0
+  end
+
   def teams_frozen?
     if status == :completed
       # status set
@@ -231,6 +239,14 @@ class Challenge < ApplicationRecord
     if meta_challenge?
       return challenge_problems.pluck('challenge_round_id')
     end
+  end
+
+  def teams_count
+    teams.count + (participants.count - teams_participant_count)
+  end
+
+  def teams_participant_count
+    TeamParticipant.where(team_id: team_ids).count
   end
 
   private

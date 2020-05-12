@@ -1,11 +1,7 @@
-$(".load-more").remove();
-$(".table-leaderboard-body").append("<%= j render partial: 'rating_leaderboard', locals: { participants: @participants } %>");
-<% if @participants.present? %>
-  $("#more-anchor").after("<%= j render partial: 'shared/load_more', locals: { collection: @participants } %>");
+<% if @participants.nil? || @participants.count < 20 %>
+  $('.table-leaderboard-body').attr("data-request-completed", false);
+<% else %>
+  $('.table-leaderboard-body').attr("data-request-completed", true);
 <% end %>
-
-$('html, body').animate({
-        scrollTop: $(document).height()-$(window).height()},
-    1400,
-    "easeOutQuint"
-);
+$("#loader-container").hide();
+$(".table-leaderboard-body").append("<%= j render partial: 'rating_leaderboard', locals: { participants: @participants } %>");

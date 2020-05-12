@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://test-s3-integratioon.s3.eu-north-1.amazonaws.com/?encoding-type=url&prefix=test_things
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Content-Type:
+      - ''
+      Accept-Encoding:
+      - ''
+      User-Agent:
+      - aws-sdk-ruby2/2.11.190 ruby/2.5.5 x86_64-darwin18 resources
+      X-Amz-Date:
+      - 20200510T231553Z
+      X-Amz-Content-Sha256:
+      - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=REDACTED/20200510/eu-north-1/s3/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=56f5f5657614139cc16a8c05a67f9515e585d27a9f3686887aa335a744943578
+      Content-Length:
+      - '0'
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Amz-Id-2:
+      - bVI8TJdWA5/UT2lb3+YBb95jVwPqUlDCD4gxjoCdEroorSKnXgwdCBov1FOdEL1L2oTxdJ1fego=
+      X-Amz-Request-Id:
+      - 9F290AEEC4304632
+      Date:
+      - Sun, 10 May 2020 23:15:56 GMT
+      X-Amz-Bucket-Region:
+      - eu-north-1
+      Content-Type:
+      - application/xml
+      Transfer-Encoding:
+      - chunked
+      Server:
+      - AmazonS3
+    body:
+      encoding: UTF-8
+      string: |-
+        <?xml version="1.0" encoding="UTF-8"?>
+        <ListBucketResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/"><Name>test-s3-integratioon</Name><Prefix>test_things</Prefix><Marker></Marker><MaxKeys>1000</MaxKeys><EncodingType>url</EncodingType><IsTruncated>false</IsTruncated><Contents><Key>test_things/</Key><LastModified>2020-05-07T10:00:21.000Z</LastModified><ETag>&quot;d41d8cd98f00b204e9800998ecf8427e&quot;</ETag><Size>0</Size><Owner><ID>baadf103faaee817bb5a2383cf484e6eeadbd97745cd52a2cc489873b61651de</ID></Owner><StorageClass>STANDARD</StorageClass></Contents><Contents><Key>test_things/Screenshot+2020-04-28+at+11.23.35.png</Key><LastModified>2020-05-07T10:04:27.000Z</LastModified><ETag>&quot;37ea4150d00822c7bdbd8a644064fef8&quot;</ETag><Size>12285</Size><Owner><ID>baadf103faaee817bb5a2383cf484e6eeadbd97745cd52a2cc489873b61651de</ID></Owner><StorageClass>STANDARD</StorageClass></Contents></ListBucketResult>
+    http_version:
+  recorded_at: Sun, 10 May 2020 23:15:55 GMT

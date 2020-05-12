@@ -12,8 +12,7 @@ ActiveAdmin.register Setting do
       f.input :jobs_visible
       panel 'Header Banner' do
         f.input :enable_banner
-        f.label 'Banner text', class: 'ckeditor_label participation_terms'
-        f.text_area :banner_text, class: 'ckeditor'
+        f.input :banner_text
         f.input :banner_color
       end
       panel 'Footer' do

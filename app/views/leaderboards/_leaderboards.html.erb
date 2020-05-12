@@ -2,6 +2,7 @@
   <%
     participants = leaderboard_participants(leaderboard)
     challenge    = leaderboard.challenge
+    truncate     = truncate.present? ? truncate : false
   %>
   <tr>
     <td class="leaderboard-change">
@@ -16,14 +17,17 @@
         <% team = leaderboard.try(:team) %>
 
         <% if team.present? %>
-          <%= link_to team.name, challenge_team_path(team.challenge, team) %>
+          <div>
+            <span class="fa fa-users" data-toggle="tooltip" fa="" title="Team Participation">&nbsp;</span>
+            <span class="reputation-score <%= 'truncate' if truncate == 'true' %>"> <%= link_to team.name, challenge_team_path(team.challenge, team) %></span>
+          </div>
           <div class="avatar-group">
             <% participants.each do |participant| %>
               <%= render partial: 'participants/get_user_profile', locals: { participant: participant, username: 'false' } %>
             <% end %>
           </div>
         <% elsif participants.length == 1 %>
-          <%= render partial: 'participants/get_user_profile', locals: { participant: participants[0] } %>
+          <%= render partial: 'participants/get_user_profile', locals: { participant: participants[0], truncate: 'true' } %>
         <% else %>
           <span>#</span>
         <% end %>
@@ -44,7 +48,7 @@
     <% if @challenge.meta_challenge %>
       <% leaderboard_meta_challenge_other_scores_array(leaderboard, challenge).each do |problem_score| %>
         <td>
-          <% if problem_score['position'].present? %> 
+          <% if problem_score['position'].present? %>
             <span class="geek-view-normal" data-toggle="tooltip" data-placement="top" title="Rank in problem"><strong>
               <% if problem_score['position'] == 1 %>
                 <img src="/assets/img/award-gold.svg" style="width: 32px" />
@@ -71,6 +75,10 @@
           <%= link_to 'View', challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm' %>
         <% else %>
           <%= link_to 'View', '#', class: 'btn btn-secondary btn-sm disabled disabled--with-pointer-events', title: 'Submitter or Submission was deleted' %>
+        <% end %>
+        <% submission = leaderboard.try(:submission) %>
+        <% if submission.present? && submission&.submission_link.present? %>
+          <%= link_to image_tag('/assets/img/code_snippet.svg'), leaderboard&.submission&.submission_link, title: 'View Code', target: "_blank" %>
         <% end %>
       </td>
     <% end %>

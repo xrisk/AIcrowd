@@ -1,3 +1,4 @@
+<% truncate = truncate.present? ? truncate : false %>
 <header class="section-header-decorative mt-4">
   <div>
     <h4>Leaderboard</h4>
@@ -22,7 +23,10 @@
             <% team = leaderboard.try(:team) %>
 
             <% if team.present? %>
-              <%= link_to team.name, challenge_team_path(team.challenge, team) %>
+              <div>
+                <span class="fa fa-users" data-toggle="tooltip" fa="" title="Team Participation">&nbsp;</span>
+                <span class="reputation-score <%= 'truncate' if truncate == 'true' %>"> <%= link_to team.name, challenge_team_path(team.challenge, team) %></span>
+              </div>
               <div class="avatar-group">
                 <% participants = participants.first(4) %>
                 <% participants.each do |participant| %>
@@ -30,7 +34,7 @@
                 <% end %>
               </div>
             <% elsif participants.length == 1 %>
-              <%= render partial: 'participants/get_user_profile', locals: { participant: participants[0] } %>
+              <%= render partial: 'participants/get_user_profile', locals: { participant: participants[0], truncate: 'true' } %>
             <% else %>
               <span>#</span>
             <% end %>

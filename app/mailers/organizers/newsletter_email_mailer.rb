@@ -14,8 +14,8 @@ module Organizers
         participant_id:    newsletter_email.participant_id,
         subject:           "[#{newsletter_email.challenge&.challenge}] #{newsletter_email.subject}",
         to:                newsletter_email.participant.email,
-        cc:                allowed_cc_emails(newsletter_email),
-        bcc:               allowed_bcc_emails(newsletter_email),
+        cc:                allowed_emails(newsletter_email, :cc),
+        bcc:               allowed_emails(newsletter_email, :bcc),
         template:          'AICrowd Newsletter Email Template',
         global_merge_vars: [
           {
@@ -38,12 +38,13 @@ module Organizers
       }
     end
 
-    def allowed_cc_emails(newsletter_email)
-      Participant.where(email: newsletter_email.cc.split(','), agreed_to_organizers_newsletter: true).pluck(:email).join(',')
-    end
+    def allowed_emails(newsletter_email, attribute)
+      newsletter_emails   = newsletter_email.public_send(attribute).split(',').map(&:strip)
+      existing_emails     = Participant.where(email: newsletter_emails).pluck(:email)
+      not_existing_emails = newsletter_emails - existing_emails
+      allowed_emails      = Participant.where(email: existing_emails, agreed_to_organizers_newsletter: true).pluck(:email)
 
-    def allowed_bcc_emails(newsletter_email)
-      Participant.where(email: newsletter_email.bcc.split(','), agreed_to_organizers_newsletter: true).pluck(:email).join(',')
+      (not_existing_emails + allowed_emails).join(',')
     end
   end
 end

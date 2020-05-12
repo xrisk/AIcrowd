@@ -54,18 +54,16 @@
                   <% if @challenge.meta_challenge %><th scope="col">Challenge</th><% end %>
                   <th scope="col" class="text-right"><%= sort_link(@search, :created_at,"Submission") %></th>
                   <th scope="col" class="text-right"></th>
+                  <th scope="col" class="text-right"></th>
                 </tr>
                 </thead>
               <% end %>
-              <tbody id="submissions-div">
-              <%= render partial: 'submissions', locals: { submissions: @submissions } %>
+              <tbody id="submissions-div" data-page='1' data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data">
+                <%= render partial: 'submissions', locals: { submissions: @submissions } %>
               </tbody>
             </table>
           </div>
           <!-- /challenge submissions -->
-
-          <span id="more-anchor"></span>
-          <%= render partial: 'shared/load_more', locals: { collection: @submissions } %>
 
           <div class="my-2">
             <label class="toggle-switch toggle-switch-large">

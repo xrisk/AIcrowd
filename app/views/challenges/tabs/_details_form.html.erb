@@ -52,7 +52,7 @@
   <div class="form-group">
     <span class="label-text">Featured sequence</span>
     <% if current_participant.admin? %>
-      <%= f.text_field :featured_sequence, class: "form-control" %>
+      <%= f.text_field :featured_sequence, value: sequence_num, class: "form-control" %>
     <% else %>
       <%= f.text_field :featured_sequence, readonly: true, class: "form-control" %>
     <% end %>

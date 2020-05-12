@@ -38,12 +38,12 @@ module Challenges
 
     def reset_associations
       Challenges::ImportConstants::RESETTABLE_ASSOCIATIONS.each do |association|
-        challenge.public_send("#{association}=", [])
+        challenge.public_send("#{association}=", []) if import_params["#{association}_attributes"].present?
       end
     end
 
     def remove_ids_from_not_existing_records
-      import_params[:dataset_files_attributes].each do |dataset_file|
+      import_params[:dataset_files_attributes]&.each do |dataset_file|
         dataset_file[:id] = nil unless DatasetFile.exists?(id: dataset_file[:id], challenge_id: challenge.id)
       end
     end

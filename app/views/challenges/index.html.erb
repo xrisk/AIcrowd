@@ -31,14 +31,9 @@
 <!-- challenge cards -->
 <div class="section-pt-sm-pb-md">
   <div class="container-fluid">
-    <div class="row" id="challenges-div">
+    <div class="row" id="challenges-div" data-page='1' data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data">
       <%= render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>
     </div>
-
-	  <!-- load more -->
-	  <span id="more-anchor"></span>
-	  <%= render partial: 'shared/load_more', locals: { collection: @challenges} %>
-	  <!-- /load more -->
   </div>
 </div>
 <!-- /challenge cards -->

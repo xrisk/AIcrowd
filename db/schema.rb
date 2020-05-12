@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_08_111832) do
+ActiveRecord::Schema.define(version: 2020_05_10_182517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -397,7 +397,7 @@ ActiveRecord::Schema.define(version: 2020_05_08_111832) do
     t.text "dataset_description_markdown"
     t.text "dataset_description"
     t.string "image_file"
-    t.integer "featured_sequence", default: 0
+    t.integer "featured_sequence", default: 1
     t.boolean "dynamic_content_flag", default: false
     t.text "dynamic_content"
     t.string "dynamic_content_tab"
@@ -496,7 +496,8 @@ ActiveRecord::Schema.define(version: 2020_05_08_111832) do
     t.datetime "updated_at", null: false
     t.string "description"
     t.integer "challenge_id"
-    t.string "dataset_file_s3_key"
+    t.string "dataset
+    _file_s3_key"
     t.boolean "evaluation", default: false
     t.string "title"
     t.string "hosting_location"
@@ -504,6 +505,22 @@ ActiveRecord::Schema.define(version: 2020_05_08_111832) do
     t.boolean "visible", default: true
     t.string "external_file_size"
     t.index ["challenge_id"], name: "index_dataset_files_on_challenge_id"
+  end
+
+  create_table "dataset_folders", force: :cascade do |t|
+    t.text "title", null: false
+    t.text "description"
+    t.text "directory_path", null: false
+    t.string "aws_access_key", null: false
+    t.string "aws_secret_key", null: false
+    t.text "bucket_name", null: false
+    t.string "region", null: false
+    t.boolean "visible", default: true, null: false
+    t.boolean "evaluation", default: false, null: false
+    t.bigint "challenge_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_dataset_folders_on_challenge_id"
   end
 
   create_table "discourse_user_badges_meta", force: :cascade do |t|
@@ -908,7 +925,7 @@ ActiveRecord::Schema.define(version: 2020_05_08_111832) do
     t.boolean "jobs_visible", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "banner_text", default: "We are Hiring!"
+    t.text "banner_text", default: "We are Hiring!"
     t.string "banner_color", default: "#F0524D"
     t.boolean "enable_banner", default: false
     t.text "footer_text"
@@ -1120,6 +1137,7 @@ ActiveRecord::Schema.define(version: 2020_05_08_111832) do
   add_foreign_key "clef_tasks", "organizers"
   add_foreign_key "dataset_file_downloads", "dataset_files"
   add_foreign_key "dataset_file_downloads", "participants"
+  add_foreign_key "dataset_folders", "challenges"
   add_foreign_key "email_invitations", "participants", column: "claimant_id"
   add_foreign_key "email_invitations", "participants", column: "invitor_id"
   add_foreign_key "email_preferences", "participants"

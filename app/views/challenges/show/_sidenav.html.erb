@@ -5,7 +5,10 @@
     </div>
   </header>
   <div>
-    <% users = challenge.challenge_participants.sample(50) %>
+    <%
+      users = challenge.challenge_participants.sample(50)
+      users_remaining_count = challenge.challenge_participants.count - 50
+    %>
     <% if required_terms_or_rules_path(challenge).present? %>
       <div class="participants floating-button">
         <%= link_to required_terms_or_rules_path(challenge) do %>
@@ -28,6 +31,11 @@
         </span>
       <% end %>
     <% end %>
+    <% if users_remaining_count > 0 %>
+      <span class="avatar user-rating-0 text-center" data-toggle="tooltip" title="<%= users_remaining_count %> more participants">
+        <span class="fa fa-ellipsis-h align-bottom"></span>
+      </span>
+    <% end %>
     </div>
   </div>
 <% end %>
@@ -35,7 +43,7 @@
   <%= render 'challenges/show/baseline_discussions', challenge_baseline_discussion: challenge_baseline_discussion, challenge: challenge %>
 <% end %>
 <% if policy(challenge).show_leaderboard? && top_leaderboards.present? %>
-  <%= render 'challenges/show/top_five_leaderboards', top_leaderboards: top_leaderboards, challenge: challenge %>
+  <%= render 'challenges/show/top_five_leaderboards', top_leaderboards: top_leaderboards, challenge: challenge, truncate: 'true' %>
 <% end %>
 <% if policy(challenge).show_submissions? && (latest_submissions.present? || @challenge.meta_challenge) %>
   <%= render 'challenges/show/latest_five_submissions', latest_submissions: latest_submissions, challenge: challenge %>

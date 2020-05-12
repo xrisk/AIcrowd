@@ -54,7 +54,7 @@ class SubmissionsController < ApplicationController
     if @challenge.meta_challenge
       params[:meta_challenge_id] = @challenge.slug
       filter = policy_scope(Submission)
-                      .where(challenge_round_id: @challenge.meta_active_round_ids, 
+                      .where(challenge_round_id: @challenge.meta_active_round_ids,
                              meta_challenge_id: @challenge.id)
     end
 
@@ -171,6 +171,14 @@ class SubmissionsController < ApplicationController
     elsif @challenge.meta_challenge
       params[:meta_challenge_id] = params[:challenge_id]
     end
+
+    if !params.has_key?('meta_challenge_id')
+      cp = ChallengeProblems.find_by(problem_id: @challenge.id)
+      if cp.present?
+        params[:meta_challenge_id] = Challenge.find(cp.challenge_id).slug
+        redirect_to helpers.challenge_submissions_path(@challenge)
+      end
+    end
   end
 
   def set_challenge_rounds
@@ -205,7 +213,7 @@ class SubmissionsController < ApplicationController
     end
 
     unless policy(challenge).has_accepted_challenge_rules?
-      redirect_to [challenge, challenge.current_challenge_rules]
+      redirect_to challenge_challenge_rules_path(challenge)
       return
     end
   end
@@ -246,6 +254,7 @@ class SubmissionsController < ApplicationController
           :online_submission,
           :baseline,
           :baseline_comment,
+          :submission_link,
           submission_files_attributes: [
             :id,
             :seq,

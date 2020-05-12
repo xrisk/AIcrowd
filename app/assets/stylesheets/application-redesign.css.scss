@@ -10277,11 +10277,11 @@ button.bg-bronze:focus {
 }
 
 .truncate{
-   width: 125px;
-   overflow: hidden;
-   display: inline-block;
-   text-overflow: ellipsis;
-   white-space: nowrap;
+  width: 119px;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .text-left {
@@ -12136,7 +12136,7 @@ body {
   padding-left: 22px;
   white-space: nowrap;
   position: relative;
-  top: -13px;
+  top: -5px;
 }
 
 @media (max-width: 991.98px) {
@@ -13847,9 +13847,17 @@ html {
   margin-top: 12px;
 }
 
+.spinner-above-footer {
+  position: absolute;
+  left: 50%;
+  z-index: 1;
+}
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';
 @import 'challenges/insights';
 @import '_tooltips.scss';
 @import 'challenges/newsletter_email_form';
+@import 'participants/activity_heatmap';
+@import 'challenges/dataset_files';

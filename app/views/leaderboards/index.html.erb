@@ -11,7 +11,7 @@
             <% @challenge_rounds.each do |challenge_round| %>
               <li class="nav-item">
                 <%= link_to challenge_round.challenge_round,
-                            challenge_leaderboards_path(challenge_round_id: challenge_round.id),
+                            challenge_leaderboards_path(@challenge, challenge_round_id: challenge_round.id),
                             class: round_pills_tab_classes(challenge_round, @current_round) %>
               </li>
             <% end %>
@@ -71,12 +71,11 @@
                   <th scope="col">Entries</th>
                   <th scope="col" class="text-right">Last Submission</th>
                   <th scope="col" class="text-right"></th>
-                  <!-- <th scope="col" class="text-right"></th> -->
                 <% end %>
               </tr>
               </thead>
-              <tbody>
-              <%= render partial: 'leaderboards', locals: { leaderboards: @leaderboards, current_round: @current_round } %>
+              <tbody id="leaderboards-div" data-page='1' data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data">
+                <%= render partial: 'leaderboards', locals: { leaderboards: @leaderboards, current_round: @current_round, truncate: 'true' } %>
               </tbody>
             </table>
           </div>
@@ -99,9 +98,6 @@
           </div>
         <% end %>
         <!-- /toggle switch -->
-
-        <span id="more-anchor"></span>
-        <%= render partial: 'shared/load_more', locals: { collection: @leaderboards } %>
       </div>
     </div>
   </div>

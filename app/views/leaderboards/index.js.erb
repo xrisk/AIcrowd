@@ -1,8 +1,9 @@
-$(".load-more").remove();
+<% if @leaderboards.count < 10 %>
+  $('#leaderboards-div').attr("data-request-completed", false);
+<% else %>
+  $('#leaderboards-div').attr("data-request-completed", true);
+<% end %>
+$("#loader-container").hide();
 $(".table-leaderboard").append("<%= j render partial: 'leaderboards', locals: { leaderboards: @leaderboards, current_round: @current_round } %>");
-$("#more-anchor").after("<%= j render partial: 'shared/load_more', locals: { collection: @leaderboards } %>");
-$('html, body').animate({
-   scrollTop: $(document).height()-$(window).height()},
-   1400,
-   "easeOutQuint"
-);
+
+enableGeekView();

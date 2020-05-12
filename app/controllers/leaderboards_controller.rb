@@ -12,7 +12,7 @@ class LeaderboardsController < ApplicationController
     @post_challenge = true if @challenge.completed? && params[:post_challenge] == "true"
     @post_challenge = false if @challenge.meta_challenge?
 
-    filter = {challenge_round_id: @current_round.id, meta_challenge_id: nil}
+    filter = {challenge_round_id: @current_round&.id.to_i, meta_challenge_id: nil}
     if @meta_challenge.present?
       filter[:meta_challenge_id] = @meta_challenge.id
     end
@@ -60,6 +60,14 @@ class LeaderboardsController < ApplicationController
       @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id])
     elsif @challenge.meta_challenge
       params[:meta_challenge_id] = params[:challenge_id]
+    end
+
+    if !params.has_key?('meta_challenge_id')
+      cp = ChallengeProblems.find_by(problem_id: @challenge.id)
+      if cp.present?
+        params[:meta_challenge_id] = Challenge.find(cp.challenge_id).slug
+        redirect_to helpers.challenge_leaderboards_path(@challenge)
+      end
     end
   end
 

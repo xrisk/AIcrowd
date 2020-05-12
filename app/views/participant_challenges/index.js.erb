@@ -1,8 +1,7 @@
-$(".load-more").remove();
+<% if @participant_challenges.count < 10 %>
+  $('#pc-ul').attr("data-request-completed", false);
+<% else %>
+  $('#pc-ul').attr("data-request-completed", true);
+<% end %>
+$("#loader-container").hide();
 $("#pc-ul").append("<%= j render partial: 'participant_challenge_rows' %>");
-$("#more-anchor").after("<%= j render partial: 'shared/load_more', locals: { collection: @participant_challenges } %>");
-$('html, body').animate({
-   scrollTop: $(document).height()-$(window).height()},
-   1400,
-   "easeOutQuint"
-);

@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
-          <h4><%= @challenge.challenge %></h4>
+          <h4><%= link_to @challenge.challenge, challenge_path(@challenge), class: 'red-link' %></h4>
           <h1>Challenge Rules</h1>
         </div>
       </div>
@@ -19,7 +19,7 @@
           <div class="md-content">
             <%= sanitize_html(@challenge_rules.terms) %>
           </div>
-          <% if required_terms_or_rules_path(@challenge).present? %>
+          <% if current_participant.present? && required_terms_or_rules_path(@challenge).present? %>
             <%= form_for [@challenge, @challenge_participant], validate: true, html: {class: "form-rg mt-5", multipart: true} do |f| %>
               <%= f.hidden_field :challenge_rules_accepted_version, value: @challenge_rules.version %>
 
