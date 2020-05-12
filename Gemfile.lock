@@ -555,7 +555,6 @@ GEM
       json (>= 1.7.7, < 2.0)
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
-    maxminddb (0.1.22)
     memory_profiler (0.9.12)
     merit (3.0.3)
       ambry (~> 1.0.0)
@@ -990,7 +989,6 @@ DEPENDENCIES
   lol_dba
   loofah (>= 2.2.3)
   mandrill-api
-  maxminddb
   merit
   meta_request
   mini_magick

@@ -50,7 +50,6 @@ gem 'kaminari'
 gem 'lodash-rails'
 gem 'local_time'
 gem "loofah", ">= 2.2.3"
-gem 'maxminddb'
 gem 'mandrill-api'
 gem 'merit'
 gem 'momentjs-rails', '~> 2.9'
