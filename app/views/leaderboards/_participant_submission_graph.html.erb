@@ -1,0 +1,2 @@
+<% submissions = challenge.meta_challenge? ? submitter.meta_challenge_submissions(challenge) : submitter.challenge_submissions(challenge) %>
+<%= line_chart submissions.group_by_created_at, width: width, height: "50px", library: { scales: { yAxes: [{display: false }], xAxes: [{ display: false }]} }, points: false, id: "chart-#{id}" %>

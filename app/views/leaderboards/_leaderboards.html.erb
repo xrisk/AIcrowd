@@ -3,44 +3,45 @@
     participants = leaderboard_participants(leaderboard)
     challenge    = leaderboard.challenge
     truncate     = truncate.present? ? truncate : false
+    submitter = leaderboard.submitter
   %>
   <tr>
-  <% if !leaderboard.baseline? %>
-    <td class="leaderboard-change">
-      <%= leaderboard_ranking_change(leaderboard) %>
-    </td>
-    <td><strong><%= "%02d" % (leaderboard.row_num) %></strong></td>
-    <td>
-      <% if participants.empty? %>
-        <%= image_tag default_image_url, class: 'avatar' %>
-        <span class="text-link">Unknown User</span>
-      <% else %>
-        <% team = leaderboard.try(:team) %>
-
-        <% if team.present? %>
-          <div>
-            <span class="fa fa-users" data-toggle="tooltip" fa="" title="Team Participation">&nbsp;</span>
-            <span class="reputation-score <%= 'truncate' if truncate == 'true' %>"> <%= link_to team.name, challenge_team_path(team.challenge, team) %></span>
-          </div>
-          <div class="avatar-group">
-            <% participants.each do |participant| %>
-              <%= render partial: 'participants/get_user_profile', locals: { participant: participant, username: 'false' } %>
-            <% end %>
-          </div>
-        <% elsif participants.length == 1 %>
-          <%= render partial: 'participants/get_user_profile', locals: { participant: participants[0], truncate: 'true' } %>
+    <% if !leaderboard.baseline? %>
+      <td class="leaderboard-change">
+        <%= leaderboard_ranking_change(leaderboard) %>
+      </td>
+      <td><strong><%= "%02d" % (leaderboard.row_num) %></strong></td>
+      <td>
+        <% if participants.empty? %>
+          <%= image_tag default_image_url, class: 'avatar' %>
+          <span class="text-link">Unknown User</span>
         <% else %>
-          <span>#</span>
+          <% team = leaderboard.try(:team) %>
+
+          <% if team.present? %>
+            <div>
+              <span class="fa fa-users" data-toggle="tooltip" fa="" title="Team Participation">&nbsp;</span>
+              <span class="reputation-score <%= 'truncate' if truncate == 'true' %>"> <%= link_to team.name, challenge_team_path(team.challenge, team) %></span>
+            </div>
+            <div class="avatar-group">
+              <% participants.each do |participant| %>
+                <%= render partial: 'participants/get_user_profile', locals: { participant: participant, username: 'false' } %>
+              <% end %>
+            </div>
+          <% elsif participants.length == 1 %>
+            <%= render partial: 'participants/get_user_profile', locals: { participant: participants[0], truncate: 'true' } %>
+          <% else %>
+            <span>#</span>
+          <% end %>
         <% end %>
-      <% end %>
-    </td>
-  <% else %>
-    <td><span class="fa fa-thumb-tack" data-toggle="tooltip" data-placement="top" title="Baseline"></span></td>
-    <td></td>
-    <td class="participant">
-      <div>Baseline <mark><%= leaderboard.baseline_comment %></mark></div>
-    </td>
-  <% end %>
+      </td>
+    <% else %>
+      <td><span class="fa fa-thumb-tack" data-toggle="tooltip" data-placement="top" title="Baseline"></span></td>
+      <td></td>
+      <td class="participant">
+        <div>Baseline <mark><%= leaderboard.baseline_comment %></mark></div>
+      </td>
+    <% end %>
 
     <% if challenge.media_on_leaderboard %>
       <td>
@@ -54,8 +55,14 @@
         <td><strong><%= leaderboard_formatted_value(current_round, leaderboard.score_secondary) %></strong></td>
       <% end %>
     <% end %>
-
     <% if @challenge.meta_challenge %>
+      <td class="pull-right">
+        <% unless @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge" %>
+          <% if submitter.present? %>
+            <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: challenge, width: '200px', id: submitter.id + 3 } %>
+          <% end %>
+        <% end %>
+      </td>
       <% leaderboard_meta_challenge_other_scores_array(leaderboard, challenge).each do |problem_score| %>
         <td>
           <% if problem_score['position'].present? %>
@@ -78,19 +85,27 @@
       <% leaderboard_other_scores_array(leaderboard, challenge).each do |other_score| %>
         <td><strong><%= other_score %></strong></td>
       <% end %>
-
       <% if !leaderboard.baseline? %>
         <td><%= leaderboard.entries %></td>
         <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
       <% else %>
         <td colspan="2"></td>
       <% end %>
+      <td class="pull-right">
+        <% unless @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge" %>
+          <% if submitter.present? %>
+            <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: challenge, width: '200px', id: submitter.id + 3 } %>
+          <% end %>
+        <% end %>
+      </td>
       <td class="text-right">
         <% if leaderboard.try(:submitter_type) != 'OldParticipant' && leaderboard.try(:submitter).present? && leaderboard.try(:submission_id).present? %>
           <%= link_to 'View', challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm' %>
         <% else %>
           <%= link_to 'View', '#', class: 'btn btn-secondary btn-sm disabled disabled--with-pointer-events', title: 'Submitter or Submission was deleted' %>
         <% end %>
+      </td>
+      <td>
         <% submission = leaderboard.try(:submission) %>
         <% if submission.present? && submission&.submission_link.present? %>
           <%= link_to image_tag('/assets/img/code_snippet.svg'), leaderboard&.submission&.submission_link, title: 'View Code', target: "_blank" %>

@@ -14038,9 +14038,91 @@ html {
   }
 }
 
-.growl-large {
-  width: 320px;
+.leaderboard-position-gold,
+.leaderboard-position-silver,
+.leaderboard-position-bronze {
+  background-color: #fff5ea;
+  background-image: url(../../assets/img/award-gold.svg);
+  background-position: top 16px right 12px;
+  background-repeat: no-repeat;
+  border: 1px solid #FFAA47;
+  border-radius: 2px;
+  color: #292C2D;
+  line-height: 1.25;
+  margin-bottom: 24px;
+  padding: 16px;
 }
+
+@media (max-width: 991.98px) {
+  .leaderboard-position-gold,
+  .leaderboard-position-silver,
+  .leaderboard-position-bronze {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .leaderboard-position-gold,
+  .leaderboard-position-silver,
+  .leaderboard-position-bronze {
+    margin-bottom: 16px;
+  }
+}
+
+.leaderboard-position-gold .leaderboard-position-user,
+.leaderboard-position-silver .leaderboard-position-user,
+.leaderboard-position-bronze .leaderboard-position-user {
+  align-items: center;
+  display: flex;
+  height: 60px;
+}
+
+.leaderboard-position-gold .leaderboard-position-user .leaderboard-position-avatar,
+.leaderboard-position-silver .leaderboard-position-user .leaderboard-position-avatar,
+.leaderboard-position-bronze .leaderboard-position-user .leaderboard-position-avatar {
+  display: flex;
+  flex: 0 0 auto;
+}
+
+.leaderboard-position-gold .leaderboard-position-user .leaderboard-position-avatar img,
+.leaderboard-position-silver .leaderboard-position-user .leaderboard-position-avatar img,
+.leaderboard-position-bronze .leaderboard-position-user .leaderboard-position-avatar img {
+  height: 52px;
+  width: 52px;
+}
+
+.leaderboard-position-gold .leaderboard-position-user-details,
+.leaderboard-position-silver .leaderboard-position-user-details,
+.leaderboard-position-bronze .leaderboard-position-user-details {
+  margin-left: 8px;
+}
+
+.leaderboard-position-gold .leaderboard-position-user-score,
+.leaderboard-position-silver .leaderboard-position-user-score,
+.leaderboard-position-bronze .leaderboard-position-user-score {
+  display: block;
+}
+
+.leaderboard-position-gold .leaderboard-position-graph,
+.leaderboard-position-silver .leaderboard-position-graph,
+.leaderboard-position-bronze .leaderboard-position-graph {
+  height: auto;
+  margin-top: 12px;
+  max-width: 100%;
+}
+
+.leaderboard-position-silver {
+  background-color: #f6f6f6;
+  background-image: url(../../assets/img/award-silver.svg);
+  border: 1px solid #C3C3C3;
+}
+
+.leaderboard-position-bronze {
+  background-color: #f6e2d6;
+  background-image: url(../../assets/img/award-bronze.svg);
+  border: 1px solid #D88151;
+}
+
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
