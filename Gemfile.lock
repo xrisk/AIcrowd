@@ -966,7 +966,6 @@ DEPENDENCIES
   devise (~> 4.6.1)
   doorkeeper (~> 5.0.3)
   erbse (= 0.1.1)
-  excon
   factory_bot_rails
   faraday (~> 1.0)
   ffaker
