@@ -1,6 +1,5 @@
-<% content_type = media_content_type(mediable) %>
-
-<% if ['video','image','youtube'].include?(content_type) && size == :thumb %>
+<% content_type = size == :thumb ? thumb_media_content_type(mediable) : media_content_type(mediable) %>
+<% if ['video','image','youtube'].include?(content_type) %>
   <%= link_to challenge_submission_path(mediable.challenge, submission_id) do %>
     <%= media_asset(mediable, content_type, size) %>
   <% end %>
