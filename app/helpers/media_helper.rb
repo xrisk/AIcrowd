@@ -11,6 +11,17 @@ module MediaHelper
     return content_type
   end
 
+  def thumb_media_content_type(mediable)
+    return nil if mediable.media_thumbnail.nil? || !mediable.media_thumbnail.include?('.')
+
+    media     = mediable.media_thumbnail.split('.')
+    file_type = media[1]
+
+    return 'youtube' if mediable.media_content_type&.split('/')&.last == 'youtube'
+    return 'image' if ['png', 'jpg', 'gif'].include?(file_type)
+    return 'video' if ['mp4', 'webM'].include?(file_type)
+  end
+
   def media_asset(mediable, content_type, size)
     case content_type
     when nil
