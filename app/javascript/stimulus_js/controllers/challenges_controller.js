@@ -36,4 +36,15 @@ export default class extends Controller {
 
     window.location.href = url.concat('?').concat(params);
   }
+
+  alert_for_new_rules() {
+    if(this.element.innerHTML === 'Update challenge' && this.element.value === 'rules')
+    {
+      let isConfirmed = confirm('WARNING! On updating existing rules, Participants have to accept the rules again to make new submissions. Are you sure you want to proceed?');
+      if(!isConfirmed)
+      {
+        event.preventDefault();
+      }
+    }
+  }
 }
