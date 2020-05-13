@@ -84,7 +84,7 @@ ActiveAdmin.register Submission do
   csv do
     column :id
     column :participant_id
-    column(:participant) { |submission| submission.participant.name }
+    column(:participant) { |submission| submission.participant&.name.to_s }
     column :score
     column :score_secondary
     column :meta
