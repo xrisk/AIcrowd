@@ -1,6 +1,6 @@
 module FilesHelper
   def file_expiring_url(file)
-    if file.try(:hosting_location) == 'External' || file.new_record?
+    if file.try(:hosting_location) == 'External' || file.try(:hosting_location) == 'Own S3' || file.new_record?
       return file.external_url
     else
       if get_s3_file_obj(file)
@@ -16,7 +16,7 @@ module FilesHelper
   end
 
   def file_size(file)
-    if file.try(:hosting_location) == 'External' || file.new_record?
+    if file.try(:hosting_location) == 'External' || file.try(:hosting_location) == 'Own S3' || file.new_record?
       number_to_human_size(file.external_file_size.to_i)
     else
       return 0 if get_s3_file_obj(file).nil? || !get_s3_file_obj(file).exists?

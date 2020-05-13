@@ -1,15 +1,5 @@
 module Aws
-  class FetchDatasetFilesService < ::BaseService
-    HANDLED_AWS_ERRORS = [
-      Aws::S3::Errors::InvalidAccessKeyId,
-      Aws::S3::Errors::SignatureDoesNotMatch,
-      Aws::Errors::NoSuchEndpointError,
-      Aws::S3::Errors::NoSuchBucket,
-      Aws::S3::Errors::ServiceError
-    ].freeze
-    DEFAULT_EXPIRY_TIME = 1.day.freeze
-    LOGGER_URL          = 'log/aws_s3_api.log'.freeze
-
+  class FetchDatasetFolderService < ::Aws::BaseService
     def initialize(dataset_folder:)
       @dataset_folder = dataset_folder
       @client         = build_aws_s3_client
@@ -40,10 +30,6 @@ module Aws
       )
     end
 
-    def aws_file(aws_object)
-      { url: aws_object.presigned_url(:get, expires_in: DEFAULT_EXPIRY_TIME), size: aws_object.content_length }
-    end
-
     def build_dataset_file(aws_file)
       DatasetFile.new(
         title:              file_title(aws_file[:url]),
@@ -55,10 +41,6 @@ module Aws
     def file_title(file_url)
       uri = URI::parse(file_url)
       uri.path.split('/').last
-    end
-
-    def aws_logger
-      Logger.new(LOGGER_URL)
     end
   end
 end

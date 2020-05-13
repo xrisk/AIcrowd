@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_10_182517) do
+ActiveRecord::Schema.define(version: 2020_05_13_101320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -503,6 +503,11 @@ ActiveRecord::Schema.define(version: 2020_05_10_182517) do
     t.string "external_url"
     t.boolean "visible", default: true
     t.string "external_file_size"
+    t.text "file_path"
+    t.string "aws_access_key"
+    t.string "aws_secret_key"
+    t.text "bucket_name"
+    t.string "region"
     t.index ["challenge_id"], name: "index_dataset_files_on_challenge_id"
   end
 

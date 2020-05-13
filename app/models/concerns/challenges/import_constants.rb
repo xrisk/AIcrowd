@@ -110,7 +110,12 @@ module Challenges
         :hosting_location,
         :external_url,
         :visible,
-        :external_file_size
+        :external_file_size,
+        :file_path,
+        :aws_access_key,
+        :aws_secret_key,
+        :bucket_name,
+        :region
       ]
     }.freeze
 

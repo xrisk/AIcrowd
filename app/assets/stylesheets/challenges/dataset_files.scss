@@ -1,5 +1,5 @@
 .dataset-files-list {
-  .dataset-folder__info {
+  .dataset-folder__info, .dataset-file__info {
     display: flex;
     align-items: center;
   }
@@ -17,7 +17,7 @@
     margin-left: 42px;
   }
 
-  .dataset-folder__error-message {
+  .dataset-folder__error-message, .dataset-file__error-message {
     margin-left: 10px;
     color: red;
   }
