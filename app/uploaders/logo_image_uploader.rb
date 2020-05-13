@@ -14,6 +14,15 @@ class LogoImageUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    "#{ENV['DOMAIN_NAME']}#{asset_url('/assets/users/user-avatar-default.svg')}"
+    "#{ENV['DOMAIN_NAME']}#{asset_url(get_default_image)}"
+  end
+
+  def get_default_image
+    if model.class.name == 'Participant'
+      num = model.id % 8
+      "/assets/users/AIcrowd-DarkerBG (#{num}).png"
+    else
+      '/assets/users/user-avatar-default.svg'
+    end
   end
 end

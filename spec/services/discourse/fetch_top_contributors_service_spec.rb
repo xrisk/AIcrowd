@@ -22,7 +22,7 @@ describe Discourse::FetchTopContributorsService, :requests_allowed do
         expect(response.first['username']).to eq 'kelleni2'
         expect(response.first['score']).to eq 751
         expect(response.first['participant']).to eq participant
-        expect(response.first['participant'].image_url).to eq 'users/user-avatar-default.svg'
+        expect(response.first['participant'].image_url).to eq "users/AIcrowd-DarkerBG (#{response.first['participant'].id % 8}).png"
       end
     end
   end

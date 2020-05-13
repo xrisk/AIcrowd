@@ -144,7 +144,7 @@ class ParticipantsController < ApplicationController
     signed         = OpenSSL::HMAC.hexdigest("sha256", ENV['SSO_SECRET'], params[:sso])
     raise "Incorrect SSO signature" if sig != signed
 
-    avatar_url = ENV['DOMAIN_NAME'] + '/assets/users/user-avatar-default.svg'
+    avatar_url = ENV['DOMAIN_NAME'] + get_default_image
     avatar_url = current_user.image_file.url if current_user.image_file && !current_user.image_file.url.nil?
 
     response_params = {
@@ -162,5 +162,10 @@ class ParticipantsController < ApplicationController
     response_sig           = OpenSSL::HMAC.hexdigest("sha256", ENV['SSO_SECRET'], encoded_response_query)
 
     url = File.join(return_sso_url, "?sso=#{CGI.escape(encoded_response_query)}&sig=#{response_sig}")
+  end
+
+  def get_default_image
+    num = current_user.id % 8
+    "/assets/users/AIcrowd-DarkerBG (#{num}).png"
   end
 end
