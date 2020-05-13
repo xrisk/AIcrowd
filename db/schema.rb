@@ -496,8 +496,7 @@ ActiveRecord::Schema.define(version: 2020_05_10_182517) do
     t.datetime "updated_at", null: false
     t.string "description"
     t.integer "challenge_id"
-    t.string "dataset
-    _file_s3_key"
+    t.string "dataset_file_s3_key"
     t.boolean "evaluation", default: false
     t.string "title"
     t.string "hosting_location"

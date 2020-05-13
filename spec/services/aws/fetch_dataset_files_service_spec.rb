@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Aws::FetchDatasetFilesService, focus: true do
+describe Aws::FetchDatasetFilesService do
   subject { described_class.new(dataset_folder: dataset_folder) }
 
   describe '#call' do

@@ -13,7 +13,7 @@ module ImagesHelper
   end
 
   def get_default_image
-    if model.class.name == 'Participant'
+    if try(:model)&.class&.name == 'Participant'
       num = model.id % 8
       "users/AIcrowd-DarkerBG (#{num}).png"
     else
