@@ -13,8 +13,12 @@ module ImagesHelper
   end
 
   def get_default_image
-    num = model.id % 8
-    "users/AIcrowd-DarkerBG (#{num}).png"
+    if model.class.name == 'Participant'
+      num = model.id % 8
+      "users/AIcrowd-DarkerBG (#{num}).png"
+    else
+      'users/user-avatar-default.svg'
+    end
   end
 
   def challenge_default_image_url
