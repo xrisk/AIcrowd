@@ -1,16 +1,27 @@
 <!-- item -->
 <li class="list-group-item">
-  <div class="<%= defined?(list_item_class) ? list_item_class : '' %>">
-    <%= link_to file_expiring_url(dataset_file), class: 'text-link', data: { :'dataset-file-id' => dataset_file.id } do %>
-      <%= file_title(dataset_file) %> (<%= file_size(dataset_file) %>)
+  <div class="dataset-file__info <%= defined?(list_item_class) ? list_item_class : '' %>">
+    <div>
+      <%= link_to file_expiring_url(dataset_file), class: 'text-link', data: { :'dataset-file-id' => dataset_file.id } do %>
+        <%= file_title(dataset_file) %> (<%= file_size(dataset_file) %>)
+      <% end %>
+
+      <span class="description">
+        <%= dataset_file.description %>
+      </span>
+    </div>
+
+    <% if dataset_file.error_message.present? %>
+      <div class="dataset-file__error-message">
+        <%= dataset_file.error_message %>
+      </div>
     <% end %>
-    <span class="description">
-      <%= dataset_file.description %>
-    </span>
   </div>
 
   <div style="display:flex">
-    <%= link_to 'Download', file_expiring_url(dataset_file), class: 'btn btn-secondary', target: '_blank', data: { :'dataset-file-id' => dataset_file.id.to_i } %>
+    <% if dataset_file.error_message.blank? %>
+      <%= link_to 'Download', file_expiring_url(dataset_file), class: 'btn btn-secondary', target: '_blank', data: { :'dataset-file-id' => dataset_file.id.to_i } %>
+    <% end %>
 
     <% if Pundit.policy(current_participant, dataset_file).destroy? && dataset_file.persisted? %>
       <%= link_to 'Edit', edit_challenge_dataset_file_path(challenge, dataset_file), class: 'btn btn-secondary' %>

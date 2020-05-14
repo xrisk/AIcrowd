@@ -31,7 +31,10 @@
               <%= f.label :hosting_location, 'AICrowd S3', value: 'crowdAI' %>
 
               <%= f.radio_button :hosting_location, 'External' %>
-              <%= f.label :hosting_location, 'Own S3', value: 'External' %>
+              <%= f.label :hosting_location, 'External', value: 'External' %>
+
+              <%= f.radio_button :hosting_location, 'Own S3' %>
+              <%= f.label :hosting_location, 'Own S3', value: 'Own S3' %>
             </div>
           </div>
 
@@ -47,6 +50,33 @@
             <div class="form-group">
               <label>File S3 URL</label>
               <%= f.text_field :external_url, class: 'form-control' %>
+            </div>
+          </div/>
+
+          <div id='own-s3' class="form-group">
+            <div class="form-group">
+              <label>Path to file</label>
+              <%= f.text_field :file_path, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <label>AWS Access Key</label>
+              <%= f.text_field :aws_access_key, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <label>AWS Secret Access Key</label>
+              <%= f.text_field :aws_secret_key, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <label>Bucket Name</label>
+              <%= f.text_field :bucket_name, class: 'form-control' %>
+            </div>
+
+            <div class="form-group">
+              <label>Region</label>
+              <%= f.text_field :region, class: 'form-control' %>
             </div>
           </div/>
 

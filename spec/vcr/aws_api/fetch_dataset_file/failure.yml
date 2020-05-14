@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: head
+    uri: https://test-s3-integratioon.s3.eu-north-1.amazonaws.com/other_dataset/8d8183c9-4705-48d7-add1-22653634477f_archived-datasets.txt
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Content-Type:
+      - ''
+      Accept-Encoding:
+      - ''
+      User-Agent:
+      - aws-sdk-ruby2/2.11.190 ruby/2.5.5 x86_64-darwin18 resources
+      X-Amz-Date:
+      - 20200513T182224Z
+      X-Amz-Content-Sha256:
+      - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=INVALID_KEY/20200513/eu-north-1/s3/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=bb86d92b0b46af78ec9e50926ca6a71b2b692d074403fbfb045d01007df664b4
+      Content-Length:
+      - '0'
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      X-Amz-Request-Id:
+      - 28F88CA1C3DCE1B4
+      X-Amz-Id-2:
+      - w8sff8BblpLWtUcvgG1pMTLqSKzSI9IIhL6cFJNFCOOMri6y0ChEjRsJ5pl4NMzO2Sd/L8iBZUs=
+      Content-Type:
+      - application/xml
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Wed, 13 May 2020 18:22:24 GMT
+      Server:
+      - AmazonS3
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Wed, 13 May 2020 18:22:24 GMT
+recorded_with: VCR 5.0.0

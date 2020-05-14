@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Aws::FetchDatasetFilesService do
+describe Aws::FetchDatasetFolderService do
   subject { described_class.new(dataset_folder: dataset_folder) }
 
   describe '#call' do
@@ -23,7 +23,7 @@ describe Aws::FetchDatasetFilesService do
       end
 
       it 'returns success with list of dataset_files' do
-        result = VCR.use_cassette('aws_api/fetch_dataset_files/success') do
+        result = VCR.use_cassette('aws_api/fetch_dataset_folder/success') do
           subject.call
         end
 
@@ -44,7 +44,7 @@ describe Aws::FetchDatasetFilesService do
       end
 
       it 'returns failure with error message' do
-        result = VCR.use_cassette('aws_api/fetch_dataset_files/failure') do
+        result = VCR.use_cassette('aws_api/fetch_dataset_folder/failure') do
           subject.call
         end
 

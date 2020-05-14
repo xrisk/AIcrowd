@@ -11,12 +11,28 @@ class DatasetFilesController < ApplicationController
                 only: [:new, :create, :edit]
 
   def index
-    @dataset_files   = policy_scope(DatasetFile).where(challenge_id: @challenge.id)
-    @dataset_folders = policy_scope(DatasetFolder).where(challenge_id: @challenge.id)
+    @dataset_files = policy_scope(DatasetFile).where(challenge_id: @challenge.id)
+    @dataset_files = @dataset_files.map do |dataset_file|
+      next dataset_file if dataset_file.hosting_location != 'Own S3'
 
+      result = Rails.cache.fetch(dataset_file_cache_key(dataset_file), expires_in: 5.minutes) do
+        Aws::FetchDatasetFileService.new(dataset_file: dataset_file).call
+      end
+
+      if result.success?
+        dataset_file.external_url       = result.value[:url]
+        dataset_file.external_file_size = result.value[:size]
+      else
+        dataset_file.error_message = result.value
+      end
+
+      dataset_file
+    end
+
+    @dataset_folders = policy_scope(DatasetFolder).where(challenge_id: @challenge.id)
     @dataset_folders.each do |dataset_folder|
       result = Rails.cache.fetch(dataset_folder_cache_key(dataset_folder), expires_in: 5.minutes) do
-        Aws::FetchDatasetFilesService.new(dataset_folder: dataset_folder).call
+        Aws::FetchDatasetFolderService.new(dataset_folder: dataset_folder).call
       end
 
       if result.success?
@@ -121,7 +137,12 @@ class DatasetFilesController < ApplicationController
         :title,
         :file_size,
         :dataset_file_s3_key,
-        :hosting_location
+        :hosting_location,
+        :file_path,
+        :aws_access_key,
+        :aws_secret_key,
+        :bucket_name,
+        :region
       )
   end
 
@@ -135,5 +156,9 @@ class DatasetFilesController < ApplicationController
 
   def dataset_folder_cache_key(dataset_folder)
     "aws-dataset-folder/#{dataset_folder.id}-#{dataset_folder.updated_at.to_i}"
+  end
+
+  def dataset_file_cache_key(dataset_file)
+    "aws-dataset-file/#{dataset_file.id}-#{dataset_file.updated_at.to_i}"
   end
 end
