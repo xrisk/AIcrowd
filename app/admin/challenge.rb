@@ -29,6 +29,7 @@ ActiveAdmin.register Challenge do
     column :participant_count
     column :submissions_count
     column :weight
+    column :practice_flag
 
     actions default: true do |resource|
       a 'Edit', href: resource.class.eql?(Challenge) ? edit_challenge_path(resource) : edit_challenge_problem_path(resource.challenge, resource), class: "edit_link member_link"
@@ -66,12 +67,18 @@ ActiveAdmin.register Challenge do
     link_to 'Edit', resource.class.eql?(Challenge) ? edit_challenge_path(resource) : edit_challenge_problem_path(resource.challenge, resource)
   end
 
-  batch_action "Recalculate the Leaderboard for ", priority: 1 do |ids|
+  batch_action "Recalculate the Leaderboard for ", priority: 2 do |ids|
     Challenge.find(ids).each do |challenge|
       challenge.challenge_rounds.each do |challenge_round|
         CalculateLeaderboardJob.perform_now(challenge_round_id: challenge_round.id)
       end
     end
     redirect_to admin_challenges_path, alert: "The Leaderboards for the selected challenges are being recalculated!."
+  end
+
+  batch_action "Editors Selection", priority: 1 do |ids|
+    Challenge.find(ids).each do |challenge|
+      challenge.update!(editors_selection: true)
+    end
   end
 end

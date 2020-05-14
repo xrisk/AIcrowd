@@ -225,6 +225,7 @@ Rails.application.routes.draw do
   end
 
   resources :team_members, path: "our_team", only: [:index]
+  resources :practices, only: [:index]
 
   match '/contact', to: 'pages#contact', via: :get
   match '/privacy', to: 'pages#privacy', via: :get

@@ -14,7 +14,7 @@ class ChallengesController < ApplicationController
 
   def index
     @challenge_filter = params[:challenge_filter] ||= 'all'
-    @all_challenges   = policy_scope(Challenge)
+    @all_challenges   = policy_scope(Challenge).not_practice
     @challenges       = case @challenge_filter
                         when 'active'
                           @all_challenges.where(status_cd: ['running', 'starting_soon'])
@@ -307,6 +307,7 @@ class ChallengesController < ApplicationController
       :banner_mobile_file,
       :banner_color,
       :big_challenge_card_image,
+      :practice_flag,
       image_attributes: [
         :id,
         :image,

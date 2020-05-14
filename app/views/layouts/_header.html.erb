@@ -32,6 +32,9 @@
 					<li class="nav-item">
 						<%= link_to 'Challenges', challenges_path, {:class => "nav-link"} %>
 					</li>
+					<li class="nav-item">
+						<%= link_to 'Practice', practices_path, {:class => "nav-link"} %>
+					</li>
 					<% if !SuccessStory.where(:published => true).first.nil? %>
 						<li class="nav-item">
 							<%= link_to 'Success Stories', success_stories_path, {:class => "nav-link"} %>
@@ -104,6 +107,9 @@
 				<ul class="nav">
 					<li class="nav-item">
 						<%= link_to 'Challenges', challenges_path, {:class => "nav-link"} %>
+					</li>
+					<li class="nav-item">
+						<%= link_to 'Practice', practices_path, {:class => "nav-link"} %>
 					</li>
           <li class="nav-item">
             <%= link_to 'User Rankings', leaderboard_path, {:class => "nav-link"} %>

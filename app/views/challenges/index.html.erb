@@ -12,7 +12,7 @@
 <!-- filter -->
 <div class="filter-bar">
   <div class="container-fluid">
-    <%= render partial: 'shared/challenges/filter', locals: { status: @status, categories: @categories, prize_hash: @prize_hash } %>
+    <%= render partial: 'shared/challenges/filter', locals: { status: @status, categories: @categories, prize_hash: @prize_hash, path: challenges_path, is_practice: false } %>
   </div>
 </div>
 <!-- /filter -->

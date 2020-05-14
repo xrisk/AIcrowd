@@ -1,0 +1,51 @@
+<!-- masthead -->
+<div class="masthead">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h1>Practice</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /masthead -->
+<!-- filter -->
+<div class="filter-bar">
+  <div class="container-fluid">
+    <%= render partial: 'shared/challenges/filter', locals: { categories: @categories, path: practices_path, is_practice: true } %>
+  </div>
+</div>
+<!-- /filter -->
+
+<!-- filtered text -->
+<div class="container-fluid">
+  <% if params[:status].present? || params[:categories].present? || params[:prizes].present? %>
+    <p class='card-text'>
+      <%= filter_message(params[:status], params[:categories], params[:prizes]) %>
+      <%= link_to 'Clear Filter', practices_path, class: 'btn btn-sm apply-filter-btn none-underline'  %>
+    </p>
+  <% end %>
+</div>
+<!-- /filtered text -->
+
+<!-- practice challenge cards -->
+<% if @editor_challenges.present? %>
+  <div class="section-pt-sm-pb-md">
+    <div class="container-fluid">
+      <div class="row practice_bg" id="challenges-div">
+        <%= render partial: 'shared/challenges/listing_compact', locals: { challenges: @editor_challenges, is_practice: true } %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!-- /practice challenge cards -->
+
+<!-- challenge cards -->
+<div class="section-pt-sm-pb-md">
+  <div class="container-fluid">
+    <div class="row" id="challenges-div">
+      <%= render partial: 'shared/challenges/listing_compact', locals: { challenges: @practice_challenges, is_practice: true } %>
+    </div>
+  </div>
+</div>
+<!-- /challenge cards -->

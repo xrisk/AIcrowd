@@ -447,6 +447,8 @@ ActiveRecord::Schema.define(version: 2020_05_10_182517) do
     t.boolean "big_challenge_card_image"
     t.string "banner_mobile_file"
     t.float "weight", default: 0.0, null: false
+    t.boolean "practice_flag", default: false, null: false
+    t.boolean "editors_selection", default: false, null: false
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
   end

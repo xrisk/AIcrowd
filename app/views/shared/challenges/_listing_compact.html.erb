@@ -1,12 +1,16 @@
 <% challenges.each do |challenge| %>
-  <div class="col-md-4">
+  <div class="<%= is_practice ? 'col-md-3' : 'col-md-4' %>">
     <div class="card card-challenge">
       <div class="image-wrapper" style="padding-bottom: 56.2%;position: relative;">
         <%= link_to challenge_path(challenge) do %>
           <%= image_tag(challenge.image_file_url, class: 'card-img image_16x9') %>
         <% end %>
         <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
-          <% if !is_current_page_meta_challenge_child(challenge) %>
+          <% if challenge.practice_flag %>
+            <%= link_to practices_path, class: "card-img-overlay" do  %>
+              <span class="badge badge-light">Practice</span>
+            <% end %>
+          <% elsif !is_current_page_meta_challenge_child(challenge) %>
             <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>">
               <img src="/assets/img/icon-time.svg">
               <%= challenge_remaining_text(challenge, challenge.active_round) %>
