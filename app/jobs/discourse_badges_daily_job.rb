@@ -8,7 +8,8 @@ class DiscourseBadgesDailyJob < ApplicationJob
       user_badges.each do |user_badge|
         participant = Participant.find_by(name: user_badge['username'])
         if participant
-          participant.add_badge(discourse_initial_id.to_i + user_badge['badge_id'].to_i)
+          badge = AicrowdBadge.find_by(id: discourse_initial_id.to_i + user_badge['badge_id'].to_i )
+          participant.add_badge(badge.name)
         end
       end
       last_id = user_badges.last['id']

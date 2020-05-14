@@ -1,6 +1,6 @@
 <div class="container-fluid" style="<%= style ||= '' %>">
   <ul class="list-group list-group-flush-px-0 list-group-achievements">
-    <% participant.badges_with_created_time.each do |badge| %>
+    <% participant.badges.each do |badge| %>
       <li class="list-group-item">
         <div>
         <a class="award-image" href="#">
@@ -8,15 +8,18 @@
         </a>
         <div>
             <a class="text-link" href="#">
-              <%= badge['name'] %>
+              <%= badge.aicrowd_badge['name'] %>
             </a>
             <span class="description">
-              <%= badge['description'] %>
+              <%= badge.aicrowd_badge['description'] %> <br />
+              <%= badge.custom_fields.each do |key,value| %>
+              <%= key %> : <%= value %> <br />
+              <% end %>
             </span>
           </div>
           </div>
         <span class="award-date">
-          <%= badge['created_at'].to_date.strftime("%B %d, %Y") %>
+          <%= badge.aicrowd_badge['created_at'].to_date.strftime("%B %d, %Y") %>
         </span>
       </li>
   <% end %>
