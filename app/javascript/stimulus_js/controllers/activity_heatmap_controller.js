@@ -18,13 +18,11 @@ export default class extends Controller {
 
     yScale.domain(daysOfWeek);
 
-    const xAxis = new Plottable.Axes.Category(xScale, "bottom");
-    const yAxis = new Plottable.Axes.Category(yScale, "left");
-    xAxis.formatter(monthFormatter());
-
     const colorScale = new Plottable.Scales.InterpolatedColor();
+
     colorScale.domain([0, 100]);
-    colorScale.range(["#feeeed", "#fbcbca", "#f69794", "#f37571", "#f0524d"]);
+    colorScale.range(["#FCD8D6", "#FAC2BF", "#F8ACA8", "#F59592", "#F37F7B", "#F16964", "#EF534D"])
+    colorScale.scale = activityHeatmapScale
 
     const plot = new Plottable.Plots.Rectangle()
       .addDataset(new Plottable.Dataset(data))
@@ -42,14 +40,50 @@ export default class extends Controller {
       .y(function(d) { return daysOfWeek[d.date.getDay()] }, yScale)
       .attr("fill", function(d) { return d.val; }, colorScale)
       .attr("stroke", "#fff")
-      .attr("stroke-width", 2);
+      .attr("stroke-width", 4);
 
     const table = new Plottable.Components.Table([
-      [yAxis, plot],
-      [null,  xAxis]
+      [null, plot],
+      [null,  null]
     ]);
 
     table.renderTo(`#${elementId}`);
+
+    // Initializing tooltip anchor
+    const tooltipAnchorSelection = plot.foreground().append("circle").attr({
+      r: 3,
+      opacity: 0
+    });
+
+    const tooltipAnchor = $(tooltipAnchorSelection.node());
+    tooltipAnchor.tooltip({
+      animation: false,
+      container: "body",
+      placement: "auto",
+      title: "text",
+      trigger: "manual"
+    });
+
+    // Setup Interaction.Pointer
+    const pointer = new Plottable.Interactions.Pointer();
+    pointer.onPointerMove(function(p) {
+      const closest = plot.entityNearest(p);
+
+      if (closest) {
+        tooltipAnchorSelection.attr({
+          cx: closest.position.x,
+          cy: closest.position.y,
+          "data-original-title": `${closest.datum.date.toISOString().substring(0, 10)}: ${closest.datum.val}`
+        });
+        tooltipAnchor.tooltip("show");
+      }
+    });
+
+    pointer.onPointerExit(function() {
+      tooltipAnchor.tooltip("hide");
+    });
+
+    pointer.attachTo(plot);
   }
 }
 
@@ -80,5 +114,13 @@ function monthFormatter() {
       return "";
     }
     return months[startOfWeek.getMonth()];
+  }
+}
+
+function activityHeatmapScale(value) {
+  if (value === 0) {
+    return '#F5F5F5';
+  } else {
+    return this._d3Scale(value);
   }
 }

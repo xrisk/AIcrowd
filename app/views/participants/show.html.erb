@@ -48,28 +48,25 @@
           </div>
         </header>
 
-        <div class="activity-heatmap__legend">
-          <div class="pull-right activity-heatmap__points-wrapper">
-            <div class="activity-heatmap__points"><span>Visit - 1 point</span></div>
-            <div class="activity-heatmap__points"><span>Submission - 10 points</span></div>
-          </div>
-
-          <div class="pull-left activity-heatmap__squares-wrapper">
-            <span class="activity-heatmap__square activity-heatmap__square--first"></span><span class="activity-heatmap__legend-text"> 0 - 20</span>
-            <span class="activity-heatmap__square activity-heatmap__square--second"></span><span class="activity-heatmap__legend-text"> 20 - 40</span>
-            <span class="activity-heatmap__square activity-heatmap__square--third"></span><span class="activity-heatmap__legend-text"> 40 - 60</span>
-            <span class="activity-heatmap__square activity-heatmap__square--fourth"></span><span class="activity-heatmap__legend-text"> 60 - 80</span>
-            <span class="activity-heatmap__square activity-heatmap__square--fifth"></span><span class="activity-heatmap__legend-text"> 80+</span>
-          </div>
-        </div>
-
         <div
           class="activity-heatmap-wrapper text-center"
           data-controller="activity-heatmap"
           data-activity-heatmap-element-id="activity-heatmap"
-          data-activity-heatmap-data="<%= @activity_data %>"
+          data-activity-heatmap-data="<%= @activity_data.to_json %>"
         >
-          <svg id="activity-heatmap"></svg>
+          <div class="activity-heatmap__x-labels">
+            <% months_array(@activity_data.first[:date], @activity_data.last[:date]).each do |month| %>
+              <div><%= month.first(3) %></div>
+            <% end %>
+          </div>
+          <div class="activity-heatmap__y-labels-wrapper">
+            <div class="activity-heatmap__y-labels">
+              <div>Mon</div>
+              <div>Wed</div>
+              <div>Fri</div>
+            </div>
+            <svg id="activity-heatmap"></svg>
+          </div>
         </div>
       </div>
     </section>

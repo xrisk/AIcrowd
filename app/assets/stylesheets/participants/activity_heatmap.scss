@@ -6,6 +6,41 @@
     overflow-x: scroll;
     direction: rtl;
   }
+
+  .tooltip {
+    pointer-events: none;
+  }
+}
+
+.activity-heatmap__x-labels {
+  display: flex;
+  justify-content: space-around;
+  font-size: 14px;
+  margin: 0 0 5px 50px;
+
+  @media (max-width: 1080px) {
+    display: none;
+  }
+}
+
+.activity-heatmap__y-labels-wrapper {
+  display: flex;
+
+  @media (max-width: 1080px) {
+    display: initial;
+  }
+}
+
+.activity-heatmap__y-labels {
+  flex-direction: column;
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 14px;
+  margin-right: 7px;
+
+  @media (max-width: 1080px) {
+    display: none;
+  }
 }
 
 .activity-heatmap__section {
@@ -14,69 +49,11 @@
 
 #activity-heatmap {
   width: 1264px;
-}
+  height: 150px;
 
-.activity-heatmap__square {
-  display: inline-block;
-  height: 18px;
-  width: 18px;
-  margin-top: 1px;
-}
-
-.activity-heatmap__square--first {
-  background: #feeeed;
-}
-
-.activity-heatmap__square--second {
-  background: #fbcbca;
-}
-
-.activity-heatmap__square--third {
-  background: #f69794;
-}
-
-.activity-heatmap__square--fourth {
-  background: #f37571;
-}
-
-.activity-heatmap__square--fifth {
-  background: #f0524d;
-}
-
-.activity-heatmap__legend {
-  text-align: left;
-  margin: 0 0 15px 20px;
-  overflow: hidden;
-}
-
-.activity-heatmap__legend-text {
-  vertical-align: top;
-}
-
-.activity-heatmap__points-wrapper {
-  margin-bottom: 15px;
-  float: right;
-
-  @media (max-width: 650px) {
-    display: block;
-    float: initial;
-    margin-bottom: 0;
+  @media (max-width: 1080px) {
+    margin-top: 25px;
   }
-}
-
-.activity-heatmap__squares-wrapper {
-  margin-top: 19px;
-  float: left;
-
-  @media (max-width: 650px) {
-    display: block;
-    float: initial;
-    margin-top: 5px;
-  }
-}
-
-.activity-heatmap__points {
-  text-align: left;
 }
 
 .plottable-colors-0 {
