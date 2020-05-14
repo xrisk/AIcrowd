@@ -1,4 +1,4 @@
-class PracticesController < ApplicationController
+class PracticeController < ApplicationController
   before_action :set_filters, only: [:index]
 
   respond_to :html, :js

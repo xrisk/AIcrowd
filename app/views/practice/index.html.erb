@@ -12,7 +12,7 @@
 <!-- filter -->
 <div class="filter-bar">
   <div class="container-fluid">
-    <%= render partial: 'shared/challenges/filter', locals: { categories: @categories, path: practices_path, is_practice: true } %>
+    <%= render partial: 'shared/challenges/filter', locals: { categories: @categories, path: practice_index_path, is_practice: true } %>
   </div>
 </div>
 <!-- /filter -->
@@ -22,7 +22,7 @@
   <% if params[:status].present? || params[:categories].present? || params[:prizes].present? %>
     <p class='card-text'>
       <%= filter_message(params[:status], params[:categories], params[:prizes]) %>
-      <%= link_to 'Clear Filter', practices_path, class: 'btn btn-sm apply-filter-btn none-underline'  %>
+      <%= link_to 'Clear Filter', practice_index_path, class: 'btn btn-sm apply-filter-btn none-underline'  %>
     </p>
   <% end %>
 </div>
