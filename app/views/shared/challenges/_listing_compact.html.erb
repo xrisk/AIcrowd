@@ -7,7 +7,7 @@
         <% end %>
         <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
           <% if challenge.practice_flag %>
-            <%= link_to practices_path, class: "card-img-overlay" do  %>
+            <%= link_to practice_path, class: "card-img-overlay" do  %>
               <span class="badge badge-light">Practice</span>
             <% end %>
           <% elsif !is_current_page_meta_challenge_child(challenge) %>
