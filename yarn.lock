@@ -7055,10 +7055,10 @@ pkg-dir@^3.0.0:
   dependencies:
     find-up "^3.0.0"
 
-plottable@2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/plottable/-/plottable-2.7.0.tgz#929107207514a07693ed3dbbd9dbf51d89e79797"
-  integrity sha1-kpEHIHUUoHaT7T272dv1HYnnl5c=
+plottable@2.9.1:
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/plottable/-/plottable-2.9.1.tgz#f6c833b8f380cce1bfe415550e1a5da3ca2c76c6"
+  integrity sha1-9sgzuPOAzOG/5BVVDhpdo8osdsY=
   dependencies:
     d3 "^3.5.16"
     svg-typewriter "1.0.2"
