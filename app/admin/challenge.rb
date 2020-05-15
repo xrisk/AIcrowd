@@ -32,7 +32,7 @@ ActiveAdmin.register Challenge do
     column :practice_flag
 
     actions default: true do |resource|
-      a 'Edit', href: resource.class.eql?(Challenge) ? edit_challenge_path(resource) : edit_challenge_problem_path(resource.challenge, resource), class: "edit_link member_link"
+      a 'Edit', href: edit_challenge_link(resource), class: "edit_link member_link"
     end
   end
 
@@ -64,7 +64,7 @@ ActiveAdmin.register Challenge do
   end
 
   action_item :edit, only: :show do
-    link_to 'Edit', resource.class.eql?(Challenge) ? edit_challenge_path(resource) : edit_challenge_problem_path(resource.challenge, resource)
+    link_to 'Edit', edit_challenge_link(resource)
   end
 
   batch_action "Recalculate the Leaderboard for ", priority: 2 do |ids|
