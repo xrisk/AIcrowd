@@ -252,6 +252,14 @@ class Challenge < ApplicationRecord
     TeamParticipant.where(team_id: team_ids).count
   end
 
+  def challenge_problem
+    ChallengeProblems.find_by(problem_id: id)
+  end
+
+  def is_a_problem?
+    challenge_problem.present?
+  end
+
   private
 
   def set_defaults
