@@ -3,7 +3,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
-        <h1>Practice</h1>
+        <h1>Practice Challenge</h1>
       </div>
     </div>
   </div>
@@ -33,6 +33,10 @@
   <div class="section-pt-sm-pb-md">
     <div class="container-fluid">
       <div class="row practice_bg" id="editor-challenges-div">
+        <div class="col-md-12 editor-trophy-row">
+          <%= image_tag('/assets/img/award-gold.svg', class: "practice-trophy") %>
+          <span class='price-editors'>Editor's Selection</span>
+        </div>
         <%= render partial: 'shared/challenges/listing_compact', locals: { challenges: @editor_challenges, is_practice: true } %>
       </div>
     </div>
