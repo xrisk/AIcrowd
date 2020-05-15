@@ -80,5 +80,6 @@ ActiveAdmin.register Challenge do
     Challenge.find(ids).each do |challenge|
       challenge.update!(editors_selection: true)
     end
+    redirect_to admin_challenges_path, notice: "Set Editors Selection for the selected challenges."
   end
 end

@@ -1,0 +1,7 @@
+<% if @practice_challenges.length < 16 %>
+  $('#challenges-div').attr("data-request-completed", false);
+<% else %>
+  $('#challenges-div').attr("data-request-completed", true);
+<% end %>
+$("#loader-container").hide();
+$("#challenges-div").append("<%= j render partial: 'shared/challenges/listing_compact', locals: { challenges: @practice_challenges, is_practice: true } %>");

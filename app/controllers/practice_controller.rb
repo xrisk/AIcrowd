@@ -5,10 +5,10 @@ class PracticeController < ApplicationController
 
   def index
     @all_challenges      = policy_scope(Challenge)
-    @practice_challenges = @all_challenges.practice.page
+    @practice_challenges = @all_challenges.practice
     @practice_challenges = Challenges::FilterService.new(params, @practice_challenges).call
     @editor_challenges   = @practice_challenges.editors_selections
-    @practice_challenges = @practice_challenges.not_editors_selections.page(params[:page]).per(18)
+    @practice_challenges = @practice_challenges.not_editors_selections.page(params[:page]).per(16)
   end
 
   private
