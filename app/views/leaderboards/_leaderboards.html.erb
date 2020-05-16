@@ -5,6 +5,7 @@
     truncate     = truncate.present? ? truncate : false
   %>
   <tr>
+  <% if !leaderboard.baseline? %>
     <td class="leaderboard-change">
       <%= leaderboard_ranking_change(leaderboard) %>
     </td>
@@ -33,6 +34,13 @@
         <% end %>
       <% end %>
     </td>
+  <% else %>
+    <td><span class="fa fa-thumb-tack" data-toggle="tooltip" data-placement="top" title="Baseline"></span></td>
+    <td></td>
+    <td class="participant">
+      <div>Baseline <mark><%= leaderboard.baseline_comment %></mark></div>
+    </td>
+  <% end %>
 
     <% if challenge.media_on_leaderboard %>
       <td>
@@ -68,8 +76,13 @@
       <% leaderboard_other_scores_array(leaderboard, challenge).each do |other_score| %>
         <td><strong><%= other_score %></strong></td>
       <% end %>
-      <td><%= leaderboard.entries %></td>
-      <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
+
+      <% if !leaderboard.baseline? %>
+        <td><%= leaderboard.entries %></td>
+        <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
+      <% else %>
+        <td colspan="2"></td>
+      <% end %>
       <td class="text-right">
         <% if leaderboard.try(:submitter_type) != 'OldParticipant' && leaderboard.try(:submitter).present? && leaderboard.try(:submission_id).present? %>
           <%= link_to 'View', challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm' %>
