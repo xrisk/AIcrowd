@@ -234,6 +234,9 @@ function setupTurnDownMarkdown(editable, htmlData){
       let h = setAuto(removePx(node.style['height'] || node.height));
 
       let sizePart = ` =${w}x${h}`;
+      if(w==0 && h==0) {
+        sizePart = "";
+      }
       let final = `![${alt}](${src}${titlePart}${sizePart})`;
       return src ? final : ''
     }
