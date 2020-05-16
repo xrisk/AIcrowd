@@ -13882,9 +13882,14 @@ html {
   padding-bottom: 15px;
 }
 
+.submission-edit-page fieldset label {
+  width: 20rem;
+}
+
 .width-72 {
   width: 72px;
 }
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';
