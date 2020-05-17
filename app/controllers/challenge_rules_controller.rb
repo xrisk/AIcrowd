@@ -14,6 +14,8 @@ class ChallengeRulesController < ApplicationController
                          @challenge.current_challenge_rules
                        end
 
+    raise ActionController::RoutingError, 'Not Found' if @challenge_rules.blank?
+
     if current_participant.present?
       authorize @challenge
 
