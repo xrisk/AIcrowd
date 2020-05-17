@@ -20,7 +20,7 @@ class ParticipantOrganizer < ApplicationRecord
     return if Rails.env.development? || Rails.env.test?
 
     organizer.challenges.find_each do |challenge|
-      Discourse::RemoveUsersFromGroupJob.perform_later(challenge.id, organizer.participant.name)
+      Discourse::RemoveUsersFromGroupJob.perform_later(challenge.id, participant.name)
     end
   end
 end
