@@ -48,6 +48,10 @@ module ChallengesHelper
     end
   end
 
+  def is_draft_practice(challenge)
+    "Draft" if challenge.status == :draft || challenge.status == :starting_soon
+  end
+
   def challenge_stat_count(challenge, stat_type)
     case stat_type
     when 'submission'

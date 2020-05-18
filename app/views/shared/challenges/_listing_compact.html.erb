@@ -7,7 +7,9 @@
         <% end %>
         <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
           <% if challenge.practice_flag %>
-            <span class="badge badge-light">Practice</span>
+            <span class="badge <%= "badge-primary" if is_draft_practice(challenge) == "Draft" %>">
+              <%= is_draft_practice(challenge) %>
+            </span>
           <% elsif !is_current_page_meta_challenge_child(challenge) %>
             <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>">
               <img src="/assets/img/icon-time.svg">
