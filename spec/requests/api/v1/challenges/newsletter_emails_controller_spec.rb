@@ -4,6 +4,26 @@ describe Api::V1::Challenges::NewsletterEmailsController, type: :request do
   let(:challenge)   { create(:challenge, :running) }
   let(:participant) { create(:participant, :admin) }
 
+  describe '#search' do
+    let!(:challenge_round) { create(:challenge_round, challenge: challenge) }
+
+    context 'when query provided in params' do
+      it 'returns success' do
+        get search_api_v1_challenge_newsletter_emails_path(challenge), { params: { q: 'joe' } }
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when query not provided in params' do
+      it 'returns success' do
+        get search_api_v1_challenge_newsletter_emails_path(challenge)
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+  end
+
   describe '#preview' do
     before do
       Organizers::NewsletterEmailMailer.any_instance.stub(:sendmail).and_return(true)

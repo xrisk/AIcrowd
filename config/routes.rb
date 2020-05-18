@@ -96,14 +96,9 @@ Rails.application.routes.draw do
       resources :challenges, only: [:create, :update], module: :challenges do
         get :masthead, on: :member
         resources :challenge_rounds, only: [:create, :update, :destroy]
-        resources :participants, only: [] do
-          get :search, on: :collection
-        end
         resources :newsletter_emails, only: [] do
+          get  :search, on: :collection
           post :preview, on: :collection
-        end
-        resources :teams, only: [] do
-          get :search, on: :collection
         end
         resources :dataset_files, only: [:create, :update, :destroy]
         resources :dataset_folders, only: [:create, :update, :destroy]
