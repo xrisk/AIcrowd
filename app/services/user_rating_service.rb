@@ -41,9 +41,9 @@ class UserRatingService
         else
           current_participant = Participant.find_by(id: participant_id)
           current_participant_previous_rating = current_participant.rating.to_f
-          current_participant_true_rating = new_team_ratings[i][j]
+          current_participant_true_rating = new_team_ratings[i][j].to_f
           current_participant_true_variation = current_participant.variation.to_f
-          current_participant_previous_variation = new_team_variations[i][j]
+          current_participant_previous_variation = new_team_variations[i][j].to_f
           current_participant_weighted_rating = current_participant_previous_rating + @weight * (current_participant_true_rating - current_participant_previous_rating)
           current_participant_weighted_variation = current_participant_previous_variation + (@weight **2) * (current_participant_true_variation - current_participant_previous_variation)
           new_participant_ratings << {"rating" => current_participant_weighted_rating, "fixed_rating" => current_participant_weighted_rating }
