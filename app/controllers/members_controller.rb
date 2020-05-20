@@ -13,9 +13,15 @@ class MembersController < ApplicationController
   end
 
   def create
-    participant   = Participant.where(email: strong_params[:email]).first
-    flash[:error] = "No crowdAI participant can be found with that email address" if participant.blank?
-    flash[:info]  = "Participant added as an Organizer" if participant.present? && participant.organizers << @organizer
+    participant           = Participant.where(email: strong_params[:email]).first
+    participant_organizer = ParticipantOrganizer.new(participant: participant, organizer: @organizer)
+
+    if participant_organizer.save
+      flash[:info] = "Participant added as an Organizer"
+    else
+      flash[:error] = participant_organizer.errors.full_messages.to_sentence
+    end
+
     redirect_to organizer_members_path(@organizer)
   end
 
