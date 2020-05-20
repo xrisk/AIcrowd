@@ -55,7 +55,9 @@
                 <% end %>
                 <th scope="col"><%= @current_round&.get_score_title %></th>
                 <% if @current_round&.get_score_secondary_title.present? && !@challenge.meta_challenge %>
-                  <th scope="col"><%= @current_round.get_score_secondary_title %></th>
+                  <% if !(@current_round&.secondary_sort_order.present? && @current_round&.secondary_sort_order == :hidden) %>
+                    <th scope="col"><%= @current_round.get_score_secondary_title %></th>
+                  <% end %>
                 <% end %>
                 <% if @challenge.meta_challenge %>
                   <% @challenge.challenge_problems.each do |challenge_problem| %>
