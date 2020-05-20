@@ -19,7 +19,11 @@
     <% if !@challenge.meta_challenge && challenge_round&.score_secondary_title.present? %>
       <td><%= submission_formatted_value(submission, submission.score_secondary_display) %></td>
     <% end %>
-    <td class='submission-truncate' data-toggle="tooltip" data-placement="top" title="<%= submission.grading_message %>"><%= submission.grading_message %></td>
+    <td data-toggle="tooltip" data-placement="top" title="<%= submission.grading_message %>">
+      <span class='submission-truncate'>
+        <%= submission.grading_message %>
+      </span>
+    </td>
     <% if @challenge.meta_challenge %><td><%= link_to challenge.challenge, challenge_path(challenge) %></td><% end %>
     <td class="text-right"><%= local_time(submission.created_at, "%a, %e %b %Y") %> <br>
       <%= local_time(submission.created_at, "%H:%M:%S") %></td>
