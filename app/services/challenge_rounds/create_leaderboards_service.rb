@@ -25,11 +25,13 @@ module ChallengeRounds
         previous_leaderboards = build_base_leaderboards('leaderboard', [false], window_border_dttm([false]))
 
         create_leaderboards(leaderboards, previous_leaderboards)
+        create_freeze_leaderabord(challenge_round, 'leaderboard')
 
         ongoing_leaderboards          = build_base_leaderboards('ongoing', [true, false], Time.current)
         previous_ongoing_leaderboards = build_base_leaderboards('ongoing', [true, false], window_border_dttm([true, false]))
 
         create_leaderboards(ongoing_leaderboards, previous_ongoing_leaderboards)
+        create_freeze_leaderabord(challenge_round, 'ongoing')
       end
 
       success
@@ -49,29 +51,29 @@ module ChallengeRounds
         ])
     end
 
-    def build_base_leaderboards(leaderboard_type, post_challenge, cuttoff_dttm)
+    def build_base_leaderboards(leaderboard_type, post_challenge, cuttoff_dttm, freeze_time_leaderbard=nil)
       users_leaderboards = []
 
       teams_submissions(post_challenge, cuttoff_dttm).each do |team_id, submissions|
         first_graded_submission = submissions.find { |submission| submission.grading_status_cd == 'graded' }
         next if first_graded_submission.blank?
 
-        users_leaderboards << build_leaderboard(first_graded_submission, submissions.size, 'Team', team_id, leaderboard_type)
+        users_leaderboards << build_leaderboard(first_graded_submission, submissions.size, 'Team', team_id, leaderboard_type, freeze_time_leaderbard)
       end
 
       participants_submissions(post_challenge, cuttoff_dttm).each do |participant_id, submissions|
         first_graded_submission = submissions.find { |submission| submission.grading_status_cd == 'graded' }
         next if first_graded_submission.blank?
 
-        users_leaderboards << build_leaderboard(first_graded_submission, submissions.size, 'Participant', participant_id, leaderboard_type)
+        users_leaderboards << build_leaderboard(first_graded_submission, submissions.size, 'Participant', participant_id, leaderboard_type, freeze_time_leaderbard)
       end
 
       migration_submmissions(post_challenge, cuttoff_dttm).each do |submission|
-        users_leaderboards << build_leaderboard(submission, 1, 'OldParticipant', nil, leaderboard_type)
+        users_leaderboards << build_leaderboard(submission, 1, 'OldParticipant', nil, leaderboard_type, freeze_time_leaderbard)
       end
 
       baseline_leaderboards = baseline_submissions(post_challenge, cuttoff_dttm).map do |submission|
-        build_leaderboard(submission, 0, 'Participant', submission.participant_id, leaderboard_type)
+        build_leaderboard(submission, 0, 'Participant', submission.participant_id, leaderboard_type, freeze_time_leaderbard)
       end
 
       assign_row_num(users_leaderboards)
@@ -135,34 +137,36 @@ module ChallengeRounds
         .where('submissions.created_at <= ?', cuttoff_dttm)
     end
 
-    def build_leaderboard(submission, submissions_count, submitter_type, submitter_id, leaderboard_type = 'leaderboard')
-      BaseLeaderboard.new(
-        meta_challenge_id:    meta_challenge_id,
-        challenge_id:         challenge.id,
-        challenge_round_id:   challenge_round.id,
-        submitter_type:       submitter_type,
-        submitter_id:         submitter_id,
-        submission_id:        submission.id,
-        seq:                  0,
-        row_num:              0,
-        previous_row_num:     0,
-        entries:              submissions_count,
-        score:                submission.score_display,
-        score_secondary:      submission.score_secondary_display,
-        meta:                 submission.meta,
-        media_large:          submission.media_large,
-        media_thumbnail:      submission.media_thumbnail,
-        media_content_type:   submission.media_content_type,
-        description:          submission.description,
-        description_markdown: submission.description_markdown,
-        leaderboard_type_cd:  leaderboard_type,
-        post_challenge:       submission.post_challenge,
-        baseline:             submission.baseline,
-        baseline_comment:     submission.baseline_comment,
-        refreshed_at:         Time.current,
-        created_at:           submission.created_at,
-        updated_at:           submission.updated_at
-      )
+    def build_leaderboard(submission, submissions_count, submitter_type, submitter_id, leaderboard_type = 'leaderboard', freeze_time_leaderbard=nil)
+      base_leaderboard = BaseLeaderboard.new(
+                            meta_challenge_id:    meta_challenge_id,
+                            challenge_id:         challenge.id,
+                            challenge_round_id:   challenge_round.id,
+                            submitter_type:       submitter_type,
+                            submitter_id:         submitter_id,
+                            submission_id:        submission.id,
+                            seq:                  0,
+                            row_num:              0,
+                            previous_row_num:     0,
+                            entries:              submissions_count,
+                            score:                submission.score_display,
+                            score_secondary:      submission.score_secondary_display,
+                            meta:                 submission.meta,
+                            media_large:          submission.media_large,
+                            media_thumbnail:      submission.media_thumbnail,
+                            media_content_type:   submission.media_content_type,
+                            description:          submission.description,
+                            description_markdown: submission.description_markdown,
+                            leaderboard_type_cd:  leaderboard_type,
+                            post_challenge:       submission.post_challenge,
+                            baseline:             submission.baseline,
+                            baseline_comment:     submission.baseline_comment,
+                            refreshed_at:         Time.current,
+                            created_at:           submission.created_at,
+                            updated_at:           submission.updated_at
+                          )
+      base_leaderboard.freeze_leaderboard = true if freeze_time_leaderbard
+      base_leaderboard
     end
 
     def sort_map(sort_field)
@@ -240,6 +244,18 @@ module ChallengeRounds
 
     def window_border_dttm(post_challenge)
       (submissions.find_by(post_challenge: post_challenge, meta_challenge_id: meta_challenge_id)&.created_at || Time.current) - challenge_round.ranking_window.hours
+    end
+
+    def create_freeze_leaderabord(challenge_round, leaderboard_type)
+      if challenge_round.freeze_flag && challenge_round.freeze_duration.positive?
+        freeze_time_leaderbard = true
+        freeze_beyond_time     = challenge_round.end_dttm - challenge_round.freeze_duration.to_i.hours
+        post_challenge         = leaderboard_type.eql?('leaderboard') ? [false] : [true, false]
+
+        freeze_leaderboards    = build_base_leaderboards(leaderboard_type, post_challenge, freeze_beyond_time, freeze_time_leaderbard)
+
+        BaseLeaderboard.import!(freeze_leaderboards)
+      end
     end
   end
 end

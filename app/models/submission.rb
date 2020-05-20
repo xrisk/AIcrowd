@@ -1,5 +1,6 @@
 class Submission < ApplicationRecord
   include Markdownable
+  include FreezeRecord
 
   has_paper_trail
 

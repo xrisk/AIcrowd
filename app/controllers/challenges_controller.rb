@@ -344,7 +344,9 @@ class ChallengesController < ApplicationController
         :active,
         :leaderboard_note,
         :primary_sort_order,
-        :secondary_sort_order
+        :secondary_sort_order,
+        :freeze_flag,
+        :freeze_duration
       ],
       challenge_rules_attributes: [
         :id,
