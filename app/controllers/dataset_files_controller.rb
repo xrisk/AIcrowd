@@ -138,6 +138,8 @@ class DatasetFilesController < ApplicationController
         :file_size,
         :dataset_file_s3_key,
         :hosting_location,
+        :external_url,
+        :external_file_size,
         :file_path,
         :aws_access_key,
         :aws_secret_key,
