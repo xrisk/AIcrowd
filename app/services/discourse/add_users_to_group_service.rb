@@ -16,6 +16,8 @@ module Discourse
         success(response)
       rescue Discourse::UnprocessableEntity => e
         return failure(e.message) if e.message.include?('is already a member of this group')
+        return failure(e.message) if e.message.include?('are already members of this group')
+
 
         raise e
       rescue Discourse::BadRequest => e
