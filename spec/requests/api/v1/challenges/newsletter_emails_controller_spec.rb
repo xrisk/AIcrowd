@@ -25,10 +25,7 @@ describe Api::V1::Challenges::NewsletterEmailsController, type: :request do
   end
 
   describe '#preview' do
-    before do
-      Organizers::NewsletterEmailMailer.any_instance.stub(:sendmail).and_return(true)
-      login_as participant
-    end
+    before { login_as participant }
 
     context 'when valid params sent in body' do
       let(:valid_params) { { newsletter_email: { subject: 'Test Subject', message: '<p>Test Message</p>' } } }

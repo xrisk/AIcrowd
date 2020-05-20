@@ -1,0 +1,3 @@
+<%= sanitize_html(@newsletter_email.message) %>
+
+<%= render partial: 'unsubscribe_note', locals: { challenge: @challenge } %>

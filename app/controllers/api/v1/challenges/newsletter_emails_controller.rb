@@ -31,7 +31,7 @@ module Api
           newsletter_email = NewsletterEmail.new(newsletter_email_preview_params)
 
           if newsletter_email.valid?
-            Organizers::NewsletterEmailMailer.new.sendmail(newsletter_email)
+            NewsletterEmailsMailer.organizer_email(newsletter_email).deliver_now
             head :ok
           else
             render json: { error: newsletter_email.errors.full_messages.to_sentence }, status: :unprocessable_entity
