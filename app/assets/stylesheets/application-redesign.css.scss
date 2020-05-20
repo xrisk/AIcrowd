@@ -12059,6 +12059,16 @@ body {
   height: auto;
 }
 
+.md-content img {
+  max-width: 640px;
+}
+
+.md-content .table tr th:last-of-type,
+.md-content .table tr td:last-of-type {
+  text-align: unset;
+  white-space: unset;
+}
+
 .md-content .embed-responsive {
   width: 100%;
   height: auto;
