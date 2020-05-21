@@ -11,10 +11,10 @@ class ChallengeCallResponsesController < ApplicationController
       .challenge_call_responses
       .new(challenge_call_response_params)
     if @challenge_call_response.save
-      participants = challenge_call_response.challenge_call&.organizer&.participants
+      participants = @challenge_call_response.challenge_call&.organizer&.participants
 
       participants&.each do |participant|
-        Admin::NotificationsMailer.challenge_call_response_email(participant, challenge_call_response).deliver_later
+        Admin::NotificationsMailer.challenge_call_response_email(participant, @challenge_call_response).deliver_later
       end
 
       redirect_to challenge_call_show_path(@challenge_call, @challenge_call_response)

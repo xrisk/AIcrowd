@@ -9,5 +9,25 @@ module Admin
 
       mail(to: @participant.email, subject: subject)
     end
+
+    def newsletter_email_notification_email(newsletter_email)
+      @newsletter_email = newsletter_email
+      @challenge        = newsletter_email.challenge
+      @participant      = newsletter_email.participant
+
+      subject = "[#{@challenge&.challenge}] New newsletter email is waiting for verification"
+
+      mail(to: first_admin.email, bcc: aicrowd_admins.pluck(:email), subject: subject)
+    end
+
+    private
+
+    def aicrowd_admins
+      @aicrowd_admins ||= Participant.admins
+    end
+
+    def first_admin
+      @first_admin ||= aicrowd_admins.first
+    end
   end
 end
