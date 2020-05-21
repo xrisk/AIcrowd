@@ -10293,6 +10293,14 @@ button.bg-bronze:focus {
   white-space: nowrap;
 }
 
+.submission-truncate {
+  width: 579px;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .text-left {
   text-align: left !important;
 }
