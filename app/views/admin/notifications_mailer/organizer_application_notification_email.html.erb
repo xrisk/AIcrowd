@@ -1,0 +1,15 @@
+<div>
+  <p>Hi <%= @participant.name %>,</p>
+  <br/>
+  <h3>A new Organizer Application has been made.</h3>
+  <ul>
+    <li><b>Organization:</b> <%= @organizer_application.organization %></li>
+    <li><b>Contact Name:</b> <%= @organizer_application.contact_name %></li>
+    <li><b>Phone:</b> <%= @organizer_application.phone %></li>
+    <li><b>Email:</b> <%= @organizer_application.email %></li>
+  </ul>
+  <p><%= @organizer_application.organization_description %></p>
+  <hr/>
+  <p><%= @organizer_application.challenge_description %></p>
+  <%= render partial: 'email_preferences_link', locals: { email_preferences_url: @email_preferences_url } %>
+</div>

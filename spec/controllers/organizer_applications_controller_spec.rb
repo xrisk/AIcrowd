@@ -3,6 +3,7 @@ require 'rails_helper'
 describe OrganizerApplicationsController, type: :controller do
   render_views
 
+  let!(:admin)           { create(:participant, :admin) }
   let(:valid_attributes) { FactoryBot.attributes_for(:organizer_application) }
 
   describe "POST #create" do
@@ -12,10 +13,10 @@ describe OrganizerApplicationsController, type: :controller do
       }.to change(OrganizerApplication, :count).by(1)
     end
 
-    it "queues Admin::OrganizerApplicationNotificationJob" do
+    it "queues Admin::NotificationsMailer organizer_application_notification_email email" do
       expect {
         post :create, params: { organizer_application: valid_attributes }, format: :js
-      }.to have_enqueued_job(Admin::OrganizerApplicationNotificationJob)
+      }.to have_enqueued_email(Admin::NotificationsMailer, :organizer_application_notification_email)
     end
 
     it "queues OrganizerApplicationNotificationJob" do

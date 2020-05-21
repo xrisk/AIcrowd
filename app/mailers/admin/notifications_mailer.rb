@@ -20,6 +20,16 @@ module Admin
       mail(to: first_admin.email, bcc: aicrowd_admins.pluck(:email), subject: subject)
     end
 
+    def organizer_application_notification_email(participant, organizer_application)
+      @participant           = participant
+      @organizer_application = organizer_application
+      @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url
+
+      subject = "[ADMIN:AIcrowd] Organizer Application Requested"
+
+      mail(to: participant.email, subject: subject)
+    end
+
     private
 
     def aicrowd_admins

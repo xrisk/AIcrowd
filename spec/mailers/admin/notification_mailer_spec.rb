@@ -35,4 +35,21 @@ describe Admin::NotificationsMailer, type: :mailer do
       expect(subject.body.encoded).to match 'New newsletter e-mail was submitted'
     end
   end
+
+  describe '#organizer_application_notification_email' do
+    subject { described_class.organizer_application_notification_email(participant, organizer_application) }
+
+    let(:participant)           { create(:participant, :admin, email: 'test@example.com') }
+    let(:organizer_application) { create(:organizer_application) }
+
+    it 'renders the headers' do
+      expect(subject.subject).to eq "[ADMIN:AIcrowd] Organizer Application Requested"
+      expect(subject.to).to eq ['test@example.com']
+      expect(subject.from).to eq ['no-reply@aicrowd.com']
+    end
+
+    it 'renders the body' do
+      expect(subject.body.encoded).to match 'A new Organizer Application has been made.'
+    end
+  end
 end
