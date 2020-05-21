@@ -52,4 +52,22 @@ describe Admin::NotificationsMailer, type: :mailer do
       expect(subject.body.encoded).to match 'A new Organizer Application has been made.'
     end
   end
+
+  describe '#submission_notification_email' do
+    subject { described_class.submission_notification_email(participant, submission) }
+
+    let(:participant) { create(:participant, :admin, email: 'test@example.com') }
+    let(:challenge)   { create(:challenge, :running) }
+    let(:submission)  { create(:submission, challenge: challenge) }
+
+    it 'renders the headers' do
+      expect(subject.subject).to eq "[ADMIN:AIcrowd/#{challenge.challenge}] Submission made"
+      expect(subject.to).to eq ['test@example.com']
+      expect(subject.from).to eq ['no-reply@aicrowd.com']
+    end
+
+    it 'renders the body' do
+      expect(subject.body.encoded).to match 'A new submission has been made'
+    end
+  end
 end

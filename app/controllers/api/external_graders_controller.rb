@@ -394,7 +394,9 @@ class Api::ExternalGradersController < Api::BaseController
   end
 
   def notify_admins(submission)
-    Admin::SubmissionNotificationJob.perform_later(submission)
+    Participant.admins.with_every_email_preference.each do |participant|
+      Admin::NotificationsMailer.submission_notification_email(participant, submission).deliver_later
+    end
   end
 
   def grading_params

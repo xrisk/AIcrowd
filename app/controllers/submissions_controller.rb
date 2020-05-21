@@ -305,7 +305,9 @@ class SubmissionsController < ApplicationController
   end
 
   def notify_admins
-    Admin::SubmissionNotificationJob.perform_later(@submission)
+    Participant.admins.with_every_email_preference.each do |participant|
+      Admin::NotificationsMailer.submission_notification_email(participant, @submission).deliver_later
+    end
   end
 
   def clef_primary_run_disabled?

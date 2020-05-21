@@ -26,6 +26,7 @@ class Participant < ApplicationRecord
 
   scope :rated_users_count, -> { Participant.where("ranking > 0").count }
   scope :admins, -> { where(admin: true) }
+  scope :with_every_email_preference, -> { joins(:email_preferences).where(email_preferences: { email_frequency_cd: :every }) }
 
   has_many :aicrowd_user_badges
   has_many :participant_organizers, dependent: :destroy
