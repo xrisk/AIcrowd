@@ -35,11 +35,6 @@
 					<li class="nav-item">
 						<%= link_to 'Practice', practice_index_path, {:class => "nav-link"} %>
 					</li>
-					<% if !SuccessStory.where(:published => true).first.nil? %>
-						<li class="nav-item">
-							<%= link_to 'Success Stories', success_stories_path, {:class => "nav-link"} %>
-						</li>
-					<% end %>
 					<li class="nav-item">
 						<%= link_to 'Blog', blogs_path, {:class => "nav-link"} %>
 					</li>
@@ -70,9 +65,7 @@
 					</button>
 					<div class="dropdown-menu dropdown-menu-right">
 						<%= link_to 'Challenges', challenges_path, {:class => "dropdown-item"} %>
-            <%= link_to 'User Rankings', leaderboard_path, {:class => "dropdown-item"} %>
 						<div class="dropdown-divider"></div>
-						<%= link_to 'Success Stories', success_stories_path, {:class => "dropdown-item"} %>
 						<%= link_to 'Blog', blogs_path, {:class => "dropdown-item"} %>
 						<%= link_to "Organize a challenge", landing_page_host_path, {class: "dropdown-item"} %>
 						<%= link_to "FAQ", faq_path, {class: "dropdown-item"} %>
@@ -111,12 +104,6 @@
 					<li class="nav-item">
 						<%= link_to 'Practice', practice_index_path, {:class => "nav-link"} %>
 					</li>
-          <li class="nav-item">
-            <%= link_to 'User Rankings', leaderboard_path, {:class => "nav-link"} %>
-          </li>
-					<li class="nav-item">
-						<%= link_to 'Success Stories', success_stories_path, {:class => "nav-link"} %>
-					</li>
 					<li class="nav-item">
 						<%= link_to 'Blog', blogs_path, {:class => "nav-link"} %>
 					</li>
@@ -154,8 +141,6 @@
 					<div class="dropdown-menu dropdown-menu-right">
 						<%= link_to 'Challenges', challenges_path, {:class => "dropdown-item"} %>
 						<div class="dropdown-divider"></div>
-            			<%= link_to 'User Rankings', leaderboard_path, {:class => "dropdown-item"} %>
-						<%= link_to 'Success Stories', success_stories_path, {:class => "dropdown-item"} %>
 						<%= link_to 'Blog', blogs_path, {:class => "dropdown-item"} %>
 						<%= link_to "Organize a challenge", landing_page_host_path, {class: "dropdown-item"} %>
 						<%= link_to "FAQ", faq_path, {class: "dropdown-item"} %>

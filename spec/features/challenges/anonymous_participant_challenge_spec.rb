@@ -38,14 +38,6 @@ describe "challenge", :js do
       expect(page).to have_content 'Overview'
     end
 
-    it "can follow User Rankings link" do
-      within('.app-header'){
-        click_link "User Rankings"
-      }
-
-      expect(page).to have_content 'User Rankings'
-    end
-
     it "cannot follow Resources link" do
       click_link "Resources"
       expect(page).to have_content 'You need to sign in or sign up before continuing.'
