@@ -13900,6 +13900,10 @@ html {
   width: 72px;
 }
 
+.practice-draft-badge {
+  margin-left: 8px;
+}
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';
