@@ -208,9 +208,11 @@ class Participant < ApplicationRecord
   end
 
   def awaiting_toasts
-    toasts = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').select('ab.name', 'ab.description').where(toast_shown: false)
+    badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').select('ab.name', 'ab.description').where(toast_shown: false)
+  end
+
+  def toggle_toasts
     badges.where(toast_shown: false).update_all(toast_shown: true)
-    return toasts
   end
 
   def final_temporary_rating
