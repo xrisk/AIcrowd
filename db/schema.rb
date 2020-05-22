@@ -471,12 +471,12 @@ ActiveRecord::Schema.define(version: 2020_05_22_135605) do
     t.bigint "discourse_group_id"
     t.string "discourse_group_name"
     t.boolean "meta_challenge"
-    t.boolean "practice_flag", default: false, null: false
     t.string "banner_file"
     t.string "banner_color"
     t.boolean "big_challenge_card_image"
     t.string "banner_mobile_file"
     t.float "weight", default: 0.0, null: false
+    t.boolean "practice_flag", default: false, null: false
     t.boolean "editors_selection", default: false, null: false
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
@@ -994,7 +994,6 @@ ActiveRecord::Schema.define(version: 2020_05_22_135605) do
     t.boolean "baseline", default: false
     t.string "baseline_comment"
     t.integer "meta_challenge_id"
-    t.string "submission_link"
     t.index ["challenge_id"], name: "index_submissions_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_submissions_on_challenge_round_id"
     t.index ["participant_id"], name: "index_submissions_on_participant_id"
