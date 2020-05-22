@@ -7,7 +7,7 @@ class TeamInvitations::CancellationsController < ApplicationController
 
   def create
     @invitation.update!(status: :canceled)
-    Team::InvitationCanceledNotifierJob.perform_later(@invitation.id)
+    Participants::InvitationsMailer.invitation_canceled_email(@invitation).deliver_later
     flash[:success] = t('.success_flash', invitee: @invitation.invitee_name_or_email, team: @team.name)
     redirect_to challenge_team_path(@team.challenge, @team)
   end

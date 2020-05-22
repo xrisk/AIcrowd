@@ -28,7 +28,7 @@ class Team::InvitationAcceptedNotifierJob < ApplicationJob
       # mock instances because the invitation and team no longer exist
       inv      = TeamInvitation.new(data[:invitation])
       inv.team = Team.new(data[:team])
-      Team::Invitee::InvitationCanceledNotificationMailer.new.sendmail(inv)
+      Participants::InvitationsMailer.invitation_canceled_email(inv).deliver_now
     end
   end
 end
