@@ -1,4 +1,3 @@
-
 module Organizers
   class NotificationsMailer < StandardApplicationMailer
     def eua_notification_email(organizer_participant, clef_task, participant)

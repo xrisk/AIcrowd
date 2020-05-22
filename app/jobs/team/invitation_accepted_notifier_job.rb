@@ -9,7 +9,7 @@ class Team::InvitationAcceptedNotifierJob < ApplicationJob
         inv.team.team_participants_organizer.each do |tp|
           Team::Organizer::InvitationAcceptedNotificationMailer.new.sendmail(tp.participant, inv)
         end
-        Team::Invitee::InvitationAcceptedNotificationMailer.new.sendmail(inv)
+        Participants::InvitationsMailer.invitation_accepted_email(inv).deliver_now
       end
 
     TeamInvitation\
