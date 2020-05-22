@@ -42,7 +42,7 @@ module Challenges
     end
 
     def newsletter_email_form_params
-      params.require(:newsletter_email_form).permit(:group, :cc, :bcc, :subject, :message, users: [], teams: [])
+      params.require(:newsletter_email_form).permit(:cc, :bcc, :subject, :message, multi_select: [])
     end
   end
 end

@@ -1,7 +1,7 @@
 class NewsletterEmailForm
   include ActiveModel::Model
 
-  attr_accessor :group, :users, :teams, :cc, :bcc, :subject, :message, :challenge, :participant
+  attr_accessor :cc, :bcc, :subject, :message, :challenge, :participant, :multi_select
 
   validates :subject, :message, presence: true
   validates :cc, :bcc, emails_list: true
@@ -10,7 +10,7 @@ class NewsletterEmailForm
     return false if invalid?
 
     if cc_emails.empty? && bcc_emails.empty?
-      errors.add(:base, 'Groups, Users, Teams, CC and BCC fields don\'t provide single participant e-mail')
+      errors.add(:base, 'Users, CC and BCC fields don\'t provide single participant e-mail')
 
       return false
     end
@@ -36,27 +36,29 @@ class NewsletterEmailForm
   end
 
   def bcc_emails
-    @bcc_emails ||= bcc.split(',').map(&:strip) | map_group_to_emails | users.reject(&:blank?) | teams_emails
+    @bcc_emails ||= bcc.split(',').map(&:strip) | map_multi_select_to_emails
   end
 
-  def teams_emails
-    teams.flat_map { |team| team.split(',') }
-  end
+  def map_multi_select_to_emails
+    multi_select.flat_map do |select_value|
+      case select_value
+      when 'all_participants' # All Participants
+        challenge.participants.pluck(:email)
+      when 'participants_with_submission' # Participants who made at least one submission
+        Participant.joins(:submissions)
+          .where(submissions: { challenge_id: challenge.id })
+          .distinct
+          .map(&:email)
+      when /challenge_round/ # Participants who made at least one submission in selected round
+        challenge_round_id = select_value.split('challenge_round_').second
 
-  def map_group_to_emails
-    case group
-    when 'all_participants' # All Participants
-      challenge.participants.pluck(:email)
-    when 'participants_with_submission' # Participants who made at least one submission
-      Participant.joins(:submissions)
-        .where(submissions: { challenge_id: challenge.id })
-        .distinct
-        .map(&:email)
-    else # Participants who made at least one submission in selected round
-      Participant.joins(:submissions)
-        .where(submissions: { challenge_round_id: group })
-        .distinct
-        .map(&:email)
+        Participant.joins(:submissions)
+          .where(submissions: { challenge_round_id: challenge_round_id })
+          .distinct
+          .map(&:email)
+      else
+        select_value.split(',')
+      end
     end
   end
 end

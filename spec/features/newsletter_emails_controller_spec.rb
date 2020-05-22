@@ -45,7 +45,6 @@ describe ChallengesController, feature: true do
       it 'creates newsletter_email when form submitted with valid data' do
         visit new_challenge_newsletter_emails_path(challenge)
 
-        select 'All participants', from: 'newsletter_email_form[group]'
         fill_in 'newsletter_email_form[cc]', with: 'test@example.com'
         fill_in 'newsletter_email_form[subject]', with: 'Test Subject'
         fill_in 'newsletter_email_form[message]', with: 'Test Message'
