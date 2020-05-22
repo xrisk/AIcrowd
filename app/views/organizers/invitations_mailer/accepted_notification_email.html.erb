@@ -1,0 +1,13 @@
+<div>
+  <p>Hi <%= @participant.name %>,</p>
+  <br/>
+  <p>Team <%= invitation_team_link(@team) %> has a new team member!</p>
+  <p><%= invitation_invitee_link(@invitee) %> just accepted the invitation and is the newest member of the team.</p>
+  <br/>
+  <p>
+    Best regards,
+    <br>
+    AIcrowd
+  </p>
+  <%= render partial: 'shared/mailers/email_preferences_link', locals: { email_preferences_url: @email_preferences_url } %>
+</div>

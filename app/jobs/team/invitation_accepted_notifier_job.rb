@@ -7,7 +7,7 @@ class Team::InvitationAcceptedNotifierJob < ApplicationJob
       .includes(team: { team_participants_organizer: :participant })
       .each do |inv|
         inv.team.team_participants_organizer.each do |tp|
-          Team::Organizer::InvitationAcceptedNotificationMailer.new.sendmail(tp.participant, inv)
+          Organizers::InvitationsMailer.accepted_notification_email(tp.participant, inv).deliver_now
         end
         Participants::InvitationsMailer.invitation_accepted_email(inv).deliver_now
       end

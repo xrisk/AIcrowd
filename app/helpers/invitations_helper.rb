@@ -19,6 +19,19 @@ module InvitationsHelper
     end
   end
 
+  def invitation_invitee_link(invitee)
+    case invitee
+    when Participant
+      content_tag(:span, 'Participant ') +
+      link_to(invitee.name, participant_url(invitee), target: '_blank')
+    when EmailInvitation
+      content_tag(:span, 'Participant ') +
+      mail_to(invitee.email, invitee.email.sub(/@.+\z/, ''))
+    else
+      content_tag(:span, '&lt;?&gt;')
+    end
+  end
+
   def invitation_button(text, team_invitation, invitee, primary)
     url_params = [team_invitation]
     url_params << { email_token: invitee.display_token } if invitee.is_a?(EmailInvitation)
