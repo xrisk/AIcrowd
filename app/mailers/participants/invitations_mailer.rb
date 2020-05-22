@@ -1,4 +1,3 @@
-
 module Participants
   class InvitationsMailer < StandardApplicationMailer
     add_template_helper(InvitationsHelper)
@@ -7,7 +6,7 @@ module Participants
       set_participant_from_invitee(team_invitation.invitee)
       @team                  = team_invitation.team
       @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url
-      subject                = "Welcome to Team #{@team.name}"
+      subject                = "[AIcrowd] Welcome to Team #{@team.name}"
 
       mail(to: @participant.email, subject: subject)
     end
@@ -16,7 +15,19 @@ module Participants
       set_participant_from_invitee(team_invitation.invitee)
       @team = team_invitation.team
       @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url
-      subject                = 'Your Invitation Was Canceled'
+      subject                = '[AIcrowd] Your Invitation Was Canceled'
+
+      mail(to: @participant.email, subject: subject)
+    end
+
+    def invitation_pending_email(team_invitation)
+      @team_invitation = team_invitation
+      @invitee         = @team_invitation.invitee
+      @team            = @team_invitation.team
+      @invitor         = @team_invitation.invitor
+      set_participant_from_invitee(@invitee)
+      @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url
+      subject                = '[AIcrowd] Invitation to Team'
 
       mail(to: @participant.email, subject: subject)
     end
