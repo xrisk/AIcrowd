@@ -163,7 +163,7 @@ class Participant < ApplicationRecord
     aicrowd_user_badges
   end
   def user_rating_history
-    user_rating = UserRating.joins("left outer join challenge_rounds on (challenge_rounds.id=challenge_round_id)").joins("left outer join challenges c on (c.id=challenge_rounds.challenge_id)").where(participant_id: self.id).where('rating is not null').reorder('coalesce(end_dttm, user_ratings.created_at), user_ratings.id').pluck('coalesce(end_dttm, user_ratings.created_at)', 'rating', 'concat(challenge, challenge_round)')
+    user_rating = UserRating.joins("left outer join challenge_rounds on (challenge_rounds.id=challenge_round_id)").joins("left outer join challenges c on (c.id=challenge_rounds.challenge_id)").where(participant_id: self.id).where('rating is not null').reorder('coalesce(end_dttm, user_ratings.created_at), user_ratings.id').pluck('coalesce(end_dttm, user_ratings.created_at)', 'rating - 3 * variation',  'concat(challenge, challenge_round)')
     final_ratings = []
     user_rating.each_with_index do |rating, index|
       current_rating = user_rating[index]
@@ -185,6 +185,32 @@ class Participant < ApplicationRecord
   end
   def final_rating
     self.rating.to_i - 3*self.variation.to_i
+  end
+  def badges_count
+    badges.joins('left outer join aicrowd_badges ab on ab.id=aicrowd_badge_id').joins('left outer join badge_types bt on bt.id=ab.badge_type_id').group('ab.badge_type_id').count
+  end
+  def badges_stats
+    badges_stat_count = badges.joins('left outer join aicrowd_badges ab on ab.id=aicrowd_badge_id').joins('left outer join badge_types bt on bt.id=ab.badge_type_id').group('ab.badge_type_id').count
+    bronze_badges = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where("ab.badge_type_id=#{BadgeType.find_by(name: 'Bronze')&.id.to_i}").select("ab.name, ab.created_at").limit(5)
+    silver_badges = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where("ab.badge_type_id=#{BadgeType.find_by(name: 'Silver')&.id.to_i}").select("ab.name, ab.created_at").limit(5)
+    gold_badges = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where("ab.badge_type_id=#{BadgeType.find_by(name: 'Gold')&.id.to_i}").select("ab.name, ab.created_at").limit(5)
+    other_badges = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where("ab.badge_type_id=#{BadgeType.find_by(name: 'Other')&.id.to_i}").select("ab.name, ab.created_at").limit(5)
+    badges = {Gold: gold_badges, Silver: silver_badges, Bronze: bronze_badges}
+    return badges_stat_count, badges
+  end
+  def badges_tab_stats
+    badges_summary = badges.joins('left outer join aicrowd_badges ab on ab.id=aicrowd_badge_id').joins('left outer join badge_types bt on bt.id=ab.badge_type_id').group('ab.badge_type_id').count
+    bronze_badges_stats = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where('ab.badge_type_id=1').group('aicrowd_badge_id').count
+    silver_badges_stats = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where('ab.badge_type_id=2').group('aicrowd_badge_id').count
+    gold_badges_stats = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where('ab.badge_type_id=3').group('aicrowd_badge_id').count
+    other_badges_stats = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where('ab.badge_type_id=3').group('aicrowd_badge_id').count
+    return badges_summary, bronze_badges_stats, silver_badges_stats, gold_badges_stats, other_badges_stats
+  end
+
+  def awaiting_toasts
+    toasts = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').select('ab.name', 'ab.description').where(toast_shown: false)
+    badges.where(toast_shown: false).update_all(toast_shown: true)
+    return toasts
   end
 
   def final_temporary_rating
