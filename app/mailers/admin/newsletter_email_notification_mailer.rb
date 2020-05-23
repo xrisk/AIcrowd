@@ -12,7 +12,7 @@ module Admin
         participant_id:    first_admin.id,
         subject:           "[#{newsletter_email.challenge&.challenge}] New newsletter email is waiting for verification",
         to:                first_admin.email,
-        bcc:               aicrowd_admins.pluck(:email),
+        bcc:               aicrowd_admins.pluck(:email).join(','),
         template:          'AICrowd Newsletter Email Notification Template',
         global_merge_vars: [
           {
@@ -21,7 +21,7 @@ module Admin
           },
           {
             name:    'CHALLENGE_URL',
-            content: challenge_url(id: newsletter_email&.challenge&.id.to_i)
+            content: challenge_url(id: newsletter_email&.challenge&.slug.to_i)
           },
           {
             name:    'NEWSLETTER_EMAIL_ADMIN_URL',
