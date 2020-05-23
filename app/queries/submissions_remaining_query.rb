@@ -10,7 +10,9 @@ class SubmissionsRemainingQuery
   # array of submissions already made in this period
 
   def call
-    return public_send(@challenge.active_round.submission_limit_period_cd.to_s) if @challenge.running?
+    if @challenge.running? && @challenge.active_round.present?
+      return public_send(@challenge.active_round.submission_limit_period_cd.to_s)
+    end
 
     [1, nil, []]
   end
