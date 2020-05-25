@@ -7,7 +7,7 @@ describe GdprExportsController, type: :controller do
 
   context 'unauthenticated' do
     it "asks to sign in" do
-      expect { post :create, xhr: true }.not_to have_enqueued_job(GdprExportJob)
+      expect { post :create, xhr: true }.not_to have_enqueued_mail(GdprMailer)
 
       expect(response).to have_http_status(:unauthorized)
     end
@@ -17,7 +17,7 @@ describe GdprExportsController, type: :controller do
     before { sign_in participant }
 
     it "queues the job" do
-      expect { post :create, xhr: true }.to have_enqueued_job(GdprExportJob)
+      expect { post :create, xhr: true }.to have_enqueued_mail(GdprMailer)
 
       expect(response).to have_http_status(:success)
     end

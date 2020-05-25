@@ -3,7 +3,6 @@ class GdprExportsController < ApplicationController
   respond_to :js
 
   def create
-    GdprExportJob.perform_later(
-      participant_id: current_participant.id)
+    GdprMailer.export_email(current_participant).deliver_later
   end
 end

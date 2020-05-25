@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 describe DeviseAicrowdMailer, type: :mailer do
+  let(:participant) { create(:participant, email: 'test@example.com') }
+  let(:token)       { SecureRandom.hex(3) }
+
   describe '#reset_password_instructions' do
     subject { described_class.reset_password_instructions(participant, token) }
-
-    let(:participant) { create(:participant, email: 'test@example.com') }
-    let(:token)       { SecureRandom.hex(3) }
 
     it 'renders the headers' do
       expect(subject.subject).to eq 'AIcrowd Password Reset'
@@ -21,9 +21,6 @@ describe DeviseAicrowdMailer, type: :mailer do
   describe '#confirmation_instructions' do
     subject { described_class.confirmation_instructions(participant, token) }
 
-    let(:participant) { create(:participant, email: 'test@example.com') }
-    let(:token)       { SecureRandom.hex(3) }
-
     it 'renders the headers' do
       expect(subject.subject).to eq 'AIcrowd Confirmation Instructions'
       expect(subject.to).to eq ['test@example.com']
@@ -37,9 +34,6 @@ describe DeviseAicrowdMailer, type: :mailer do
 
   describe '#unlock_instructions' do
     subject { described_class.unlock_instructions(participant, token) }
-
-    let(:participant) { create(:participant, email: 'test@example.com') }
-    let(:token)       { SecureRandom.hex(3) }
 
     it 'renders the headers' do
       expect(subject.subject).to eq 'AIcrowd Unlock Instructions'
