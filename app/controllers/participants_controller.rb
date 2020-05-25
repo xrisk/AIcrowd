@@ -1,5 +1,5 @@
 class ParticipantsController < ApplicationController
-  before_action :authenticate_participant!, except: [:show, :index]
+  before_action :authenticate_participant!, except: [:show, :index, :discourse_notifications]
   before_action :set_participant,
                 only: [:show, :edit, :update, :destroy]
 
@@ -95,6 +95,23 @@ class ParticipantsController < ApplicationController
     @participant.save
     redirect_to edit_participant_path(@participant),
                 notice: 'Image removed.'
+  end
+
+  def discourse_notifications
+    Discourse::NotificationService.new(notification: params['notification']).call
+    render json: { message: 'creating' }, status: :ok
+  end
+
+  def notifications_message
+    @notifications = current_user.notifications
+  end
+
+  def read_notification
+    @notification = current_user.notifications.find(params[:id])
+    @notification.update(is_new: false)
+
+    redirect_url = @notification.notification_url.present? ? @notification.notification_url : root_url
+    redirect_to redirect_url
   end
 
   private

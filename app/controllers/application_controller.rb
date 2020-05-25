@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   after_action :track_action
   before_action :store_user_location!, if: :storable_location?
   before_action :modify_params_for_meta_challenges
+  before_action :notifications
 
   def track_action
     properties         = { request: request.filtered_parameters }
@@ -24,6 +25,12 @@ class ApplicationController < ActionController::Base
     super
     payload[:request_id] = request.uuid
     payload[:user_id]    = current_user.id if current_user
+  end
+
+  def notifications
+    if current_user.present?
+      @notifications = current_user.notifications
+    end
   end
 
   private

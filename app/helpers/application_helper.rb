@@ -147,8 +147,46 @@ module ApplicationHelper
     raw Setting.footer_record
   end
 
+  def notification_time(time)
+    if time_in_days(time) >= 1
+      "#{pluralize(time_in_days(time), 'day')} Ago"
+    elsif time_in_hours(time) > 0
+      sanitize_html("#{pluralize(time_in_hours(time), 'hour')} Ago")
+    elsif time_in_minutes(time) > 0
+      sanitize_html("#{pluralize(time_in_minutes(time), 'minute')} Ago")
+    else
+      'Just now'
+    end
+  end
+
+  def time_in_days(time)
+    (time_in_seconds(time) / (60 * 60 * 24)).floor
+  end
+
+  def time_in_hours(time)
+    (time_in_seconds(time) / (60 * 60)).floor
+  end
+
+  def time_in_minutes(time)
+    (time_in_seconds(time) / 60).floor
+  end
+
+  def time_in_seconds(time)
+    seconds = Time.current - time
+    seconds = 0 if seconds.nil? || seconds < 0
+    return seconds
+  end
+
   def social_image_path(site)
     "/assets/img/icon-#{site}.svg"
+  end
+
+  def check_notification_status(notifications)
+    notifications&.pluck(:is_new)&.uniq&.any?(true) ? 'notification-bell-icon-active' : 'notification-bell-icon'
+  end
+
+  def is_new?(notification)
+    'dropdown-item-active' if notification.is_new
   end
 
   private

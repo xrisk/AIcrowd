@@ -1,0 +1,28 @@
+<!-- masthead -->
+<div class="masthead">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h1>Notifications</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /masthead -->
+<div class="section-pt-sm-pb-md">
+  <div class="container-fluid">
+    <% @notifications.each do |notification| %>
+    <div class="topic-comment <%= is_new?(notification) %>">
+      <div class="discussion-topic-body">
+        <%= link_to participant_read_notification_path(current_participant, id: notification.id), class: "dropdown-item" do %>
+          <div>
+            <%= image_tag notification.thumbnail_url, class: 'notification-img' if notification.thumbnail_url.present? %>
+            <span><strong><%= notification.notifiable_type %></strong> <%= notification.message %></span><br>
+            <span class="text-muted"><%= notification_time(notification.created_at) %></span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  </div>
+</div>

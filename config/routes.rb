@@ -150,9 +150,14 @@ Rails.application.routes.draw do
     get :sync_mailchimp
     get :regen_api_key
     get :remove_image
+    get :notifications_message
     patch :accept_terms
+    get '/read_notification/:id' => 'participants#read_notification', :as => :read_notification
     match '/notifications', to: 'email_preferences#edit', via: :get
     match '/notifications', to: 'email_preferences#update', via: :patch
+    collection do
+      post :discourse_notifications
+    end
   end
 
   resources :job_postings, path: "jobs", only: [:index, :show]
