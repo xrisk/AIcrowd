@@ -8,7 +8,7 @@ class OrganizerApplicationsController < ApplicationController
       Admin::NotificationsMailer.organizer_application_notification_email(participant, organizer_application).deliver_later
     end
 
-    OrganizerApplicationNotificationJob.perform_later(organizer_application)
+    Organizers::NotificationsMailer.received_application_email(organizer_application).deliver_later
   end
 
   private

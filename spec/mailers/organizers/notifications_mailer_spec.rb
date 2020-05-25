@@ -18,4 +18,20 @@ describe Organizers::NotificationsMailer, type: :mailer do
       expect(subject.body.encoded).to match 'has uploaded an End User Agreement'
     end
   end
+
+  describe '#received_application_email' do
+    subject { described_class.received_application_email(organizer_application) }
+
+    let(:organizer_application) { create(:organizer_application, email: 'test@example.com') }
+
+    it 'renders the headers' do
+      expect(subject.subject).to eq '[AIcrowd] Organizer Application Received'
+      expect(subject.to).to eq ['test@example.com']
+      expect(subject.from).to eq ['no-reply@aicrowd.com']
+    end
+
+    it 'renders the body' do
+      expect(subject.body.encoded).to match 'We have received your application to become a AIcrowd organizer. You will be contacted by a member of our team.'
+    end
+  end
 end

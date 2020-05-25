@@ -22,7 +22,7 @@ describe OrganizerApplicationsController, type: :controller do
     it "queues OrganizerApplicationNotificationJob" do
       expect {
         post :create, params: { organizer_application: valid_attributes }, format: :js
-      }.to have_enqueued_job(OrganizerApplicationNotificationJob)
+      }.to have_enqueued_mail(Organizers::NotificationsMailer, :received_application_email)
     end
   end
 end

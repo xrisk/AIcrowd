@@ -10,5 +10,12 @@ module Organizers
 
       mail(to: @organizer_participant.email, subject: subject)
     end
+
+    def received_application_email(organizer_application)
+      @organizer_application = organizer_application
+      subject                = "[AIcrowd] Organizer Application Received"
+
+      mail(to: @organizer_application.email, subject: subject)
+    end
   end
 end
