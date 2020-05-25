@@ -12,7 +12,7 @@
             </a>
             <span class="description">
               <%= badge.aicrowd_badge['description'] %> <br />
-              <%= badge.custom_fields.each do |key,value| %>
+              <% badge.custom_fields.each do |key,value| %>
               <%= key %> : <%= value %> <br />
               <% end %>
             </span>

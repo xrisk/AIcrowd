@@ -97,3 +97,9 @@ $(document).ready(function(){
     $('[data-toggle="popover"]').popover();
     hljs.initHighlightingOnLoad();
 });
+
+function hidegrowl(){
+    $('.growl').hide()
+};
+
+setInterval(hidegrowl, 15000);

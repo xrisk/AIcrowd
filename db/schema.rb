@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_13_101320) do
+ActiveRecord::Schema.define(version: 2020_05_22_135605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 2020_05_13_101320) do
     t.jsonb "custom_fields"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "toast_shown", default: false, null: false
     t.index ["aicrowd_badge_id"], name: "index_aicrowd_user_badges_on_aicrowd_badge_id"
     t.index ["participant_id"], name: "index_aicrowd_user_badges_on_participant_id"
   end

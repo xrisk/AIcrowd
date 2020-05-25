@@ -13,6 +13,21 @@ $color-grey-54:     rgba(0,0,0,0.54);
 $color-grey-80:     rgba(0,0,0,0.8);
 $color-grey-87:     rgba(0,0,0,0.87);
 $color-black:       rgba(0,0,0,1);
+$red:     #F0524D !default;
+$gray-800: #292C2D !default;
+$gray-200: #D9DCDC !default;
+$gray-300: #AAACAD !default;
+$gray-400: #909293 !default;
+$gray-500: #77797A !default;
+$gray-600: #5D5F60 !default;
+$gray-700: #434547 !default;
+$gray-800: #292C2D !default;
+$gray-900: #0F1214 !default;
+$gold:    #FFAA47 !default;
+$silver:  #C3C3C3 !default;
+$bronze:  #D88151 !default;
+$primary:       $red !default;
+$primary-text:  #DE4B46 !default;
 
 @import 'select2';
 
@@ -4833,6 +4848,33 @@ input[type="button"].btn-block {
 .badge-gold,
 .badge-silver {
   color: rgba(0, 0, 0, 0.6);
+}
+
+.badge-achievement-gold,
+.badge-achievement-silver,
+.badge-achievement-bronze {
+  background-color: lighten($gold, 32%);
+  background-image: url(../../assets/img/icon-achievement-gold.svg);
+  background-position: 6px 5px;
+  background-repeat: no-repeat;
+  border: 1px solid $gold;
+  border-radius: 2px;
+  color: $gray-800;
+  font-size: 13px;
+  font-weight: 600;
+  padding: .125rem .5rem .25rem 1.125rem;
+}
+
+.badge-achievement-silver {
+  background-color: lighten($silver, 20%);
+  background-image: url(../../assets/img/icon-achievement-silver.svg);
+  border: 1px solid $silver;
+}
+
+.badge-achievement-bronze {
+  background-color: lighten($bronze, 32%);
+  background-image: url(../../assets/img/icon-achievement-bronze.svg);
+  border: 1px solid $bronze;
 }
 
 .alert {
@@ -13910,6 +13952,94 @@ html {
 
 .practice-draft-badge {
   margin-left: 8px;
+}
+//
+// Achievements
+//
+
+.achievements-overview {
+  color: $gray-800;
+  .achievements-gold,
+  .achievements-silver,
+  .achievements-bronze {
+    background-color: lighten($gold, 32%);
+    border: 1px solid $gold;
+    border-radius: 2px;
+    margin-bottom: 8px;
+    padding: 12px 0 8px 0;
+    text-align: center;
+  }
+  .achievements-silver {
+    background-color: lighten($silver, 20%);
+    border: 1px solid $silver;
+  }
+  .achievements-bronze {
+    background-color: lighten($bronze, 32%);
+    border: 1px solid $bronze;
+  }
+  .achievements-level {
+    display: block;
+    font-size: 14px;
+  }
+  .achievements-total {
+    display: block;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  .achievements-list-item {
+    border-bottom: 1px solid $gray-200;
+    display: flex;
+    font-size: 14px;
+    padding: 10px 0;
+  }
+  .achievements-description-gold,
+  .achievements-description-silver,
+  .achievements-description-bronze {
+    background-image: url(../../assets/img/icon-achievement-gold.svg);
+    background-position: 0 5px;
+    background-repeat: no-repeat;
+    flex: 1 1 auto;
+    font-weight: 600;
+    padding-left: 16px;
+  }
+  .achievements-description-silver {
+    background-image: url(../../assets/img/icon-achievement-silver.svg);
+  }
+  .achievements-description-bronze {
+    background-image: url(../../assets/img/icon-achievement-bronze.svg);
+  }
+  .achievements-date {
+    color: $gray-500;
+    flex: 0 0 auto;
+    text-align: right;
+  }
+}
+
+.ontop, #growls-default, #growls-tl, #growls-tr, #growls-bl, #growls-br, #growls-tc, #growls-bc, #growls-cc, #growls-cl, #growls-cr {
+  z-index: 1000;
+  position: fixed;
+}
+
+.growl {
+  background-color: #FFF;
+  border-top: 2px solid $primary;
+  bottom: 28px;
+  box-shadow: 0 10px 20px 0 rgba(0,0,0,0.40);
+  color: $gray-800;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 16px 16px 16px;
+  right: 28px;
+  .badge {
+    margin-top: 6px;
+  }
+  .growl-close {
+    float: right;
+  }
+}
+
+.growl-large {
+  width: 320px;
 }
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
