@@ -16,7 +16,7 @@ Devise.setup do |config|
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::CrowdaiMailer'   # devise erb templates
-  config.mailer = 'DeviseMandrillMailer' # Mailchimp templates
+  config.mailer = 'DeviseAicrowdMailer' # Mailchimp templates
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and

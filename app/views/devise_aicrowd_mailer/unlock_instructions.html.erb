@@ -1,0 +1,27 @@
+<p>Hello <%= @record.name %>,
+  <br/>
+  <br/>
+  Your account at AICrowd has been locked due to an excessive number of unsuccessful sign in attempts.
+  <br/>
+  <br/>
+  Click the button below to unlock your account. This link can only be used once.
+</p>
+<br/>
+<br/>
+
+<table border="0" cellpadding="0" cellspacing="0" class="mcnButtonContentContainer" style="border-collapse: separate !important;border-radius: 3px;background-color: #FF4E48; margin: 0 auto;">
+  <tbody>
+    <tr>
+      <td align="center" valign="middle" class="mcnButtonContent" style="font-family: Arial; font-size: 16px; padding: 10px 15px;">
+        <%= link_to 'Unlock my account', unlock_url(@record, unlock_token: @token), target: '_blank', title: 'Unlock my account', style: 'font-weight: bold;letter-spacing: normal;line-height: 100%;text-align: center;text-decoration: none;color: #FFFFFF;' %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<br/>
+<br/>
+<br/>
+<span>
+  If you did not cause your account to be locked, please contact us at hello@aicrowd.com
+</span>
