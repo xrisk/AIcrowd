@@ -185,9 +185,7 @@ class Participant < ApplicationRecord
   def final_rating
     self.rating.to_i - 3*self.variation.to_i
   end
-  def badges_count
-    badges.joins('left outer join aicrowd_badges ab on ab.id=aicrowd_badge_id').joins('left outer join badge_types bt on bt.id=ab.badge_type_id').group('ab.badge_type_id').count
-  end
+
   def badges_stats
     badges_stat_count = badges.badges_stat_count
     bronze_badges = badges.individual_badges(BadgeType.bronze).select_display_fields.limit(5)

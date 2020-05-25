@@ -12,7 +12,7 @@
     </div>
 </div>
 <hr>
-<div class="badge badge-achievement-gold"><%= participant.badges_count[ BadgeType.gold.id].to_i %></div><div class="badge badge-achievement-silver"><%= participant.badges_count[BadgeType.find_by(name: 'Silver')&.id].to_i %></div><div class="badge badge-achievement-bronze"><%= participant.badges_count[ BadgeType.find_by(name: 'Bronze')&.id].to_i %></div>
+<div class="badge badge-achievement-gold"><%= participant.badges.badges_stat_count[BadgeType.gold.id].to_i %></div><div class="badge badge-achievement-silver"><%= participant.badges_count[BadgeType.find_by(name: 'Silver')&.id].to_i %></div><div class="badge badge-achievement-bronze"><%= participant.badges_count[ BadgeType.find_by(name: 'Bronze')&.id].to_i %></div>
 <hr>
 <div class="user-location">
     <%= render partial: 'participants/location', locals: { participant: participant } %>
