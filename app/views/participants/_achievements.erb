@@ -16,7 +16,6 @@
                     <%= badges_count[BadgeType.find_by(name: color)&.id.to_i].to_i %>
                   </span>
             </header>
-            <% puts color %>
             <% badges[color.to_sym].to_a.each do |badge| %>
               <div class="achievements-list">
                 <div class="achievements-list-item">

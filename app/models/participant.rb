@@ -148,7 +148,6 @@ class Participant < ApplicationRecord
     end
     return dates
   end
-
   def add_badge(name, custom_fields={})
     badge_id = AicrowdBadge.find_by(name: name).id
     AicrowdUserBadge.create!(aicrowd_badge_id: badge_id, participant_id: id, custom_fields: custom_fields)
@@ -190,20 +189,19 @@ class Participant < ApplicationRecord
     badges.joins('left outer join aicrowd_badges ab on ab.id=aicrowd_badge_id').joins('left outer join badge_types bt on bt.id=ab.badge_type_id').group('ab.badge_type_id').count
   end
   def badges_stats
-    badges_stat_count = badges.joins('left outer join aicrowd_badges ab on ab.id=aicrowd_badge_id').joins('left outer join badge_types bt on bt.id=ab.badge_type_id').group('ab.badge_type_id').count
-    bronze_badges = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where("ab.badge_type_id=#{BadgeType.find_by(name: 'Bronze')&.id.to_i}").select("ab.name, ab.created_at").limit(5)
-    silver_badges = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where("ab.badge_type_id=#{BadgeType.find_by(name: 'Silver')&.id.to_i}").select("ab.name, ab.created_at").limit(5)
-    gold_badges = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where("ab.badge_type_id=#{BadgeType.find_by(name: 'Gold')&.id.to_i}").select("ab.name, ab.created_at").limit(5)
-    other_badges = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where("ab.badge_type_id=#{BadgeType.find_by(name: 'Other')&.id.to_i}").select("ab.name, ab.created_at").limit(5)
+    badges_stat_count = badges.badges_stat_count
+    bronze_badges = badges.individual_badges(BadgeType.bronze).select_display_fields.limit(5)
+    silver_badges = badges.individual_badges(BadgeType.silver).select_display_fields.limit(5)
+    gold_badges = badges.individual_badges(BadgeType.gold).select_display_fields.limit(5)
     badges = {Gold: gold_badges, Silver: silver_badges, Bronze: bronze_badges}
     return badges_stat_count, badges
   end
   def badges_tab_stats
-    badges_summary = badges.joins('left outer join aicrowd_badges ab on ab.id=aicrowd_badge_id').joins('left outer join badge_types bt on bt.id=ab.badge_type_id').group('ab.badge_type_id').count
-    bronze_badges_stats = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where('ab.badge_type_id=1').group('aicrowd_badge_id').count
-    silver_badges_stats = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where('ab.badge_type_id=2').group('aicrowd_badge_id').count
-    gold_badges_stats = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where('ab.badge_type_id=3').group('aicrowd_badge_id').count
-    other_badges_stats = badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').where('ab.badge_type_id=3').group('aicrowd_badge_id').count
+    badges_summary = badges.badges_stat_count
+    bronze_badges_stats = badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
+    silver_badges_stats = badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
+    gold_badges_stats = badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
+    other_badges_stats = badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
     return badges_summary, bronze_badges_stats, silver_badges_stats, gold_badges_stats, other_badges_stats
   end
 
