@@ -192,7 +192,7 @@ module ChallengesHelper
   end
 
   def next_sequence
-    max_seq = Challenge.maximum('featured_sequence') || 0
+    max_seq = Challenge.maximum('featured_sequence') || Challenge.count
     max_seq + 1
   end
 
