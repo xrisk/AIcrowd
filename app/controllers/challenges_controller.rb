@@ -253,8 +253,12 @@ class ChallengesController < ApplicationController
   def update_challenge_categories
     @challenge.category_challenges.destroy_all if @challenge.category_challenges.present?
     params[:challenge][:category_names].reject(&:empty?).each do |category_name|
-      category = Category.find_or_create_by!(name: category_name)
-      @challenge.category_challenges.create!(category_id: category.id)
+      category = Category.find_or_create_by(name: category_name)
+      if category.save
+        @challenge.category_challenges.create!(category_id: category.id)
+      else
+        @challenge.errors.messages.merge!(category.errors.messages)
+      end
     end
   end
 
