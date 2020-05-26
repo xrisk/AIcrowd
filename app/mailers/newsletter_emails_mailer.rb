@@ -1,4 +1,4 @@
-class NewsletterEmailsMailer < StandardApplicationMailer
+class NewsletterEmailsMailer < ApplicationMailer
   add_template_helper(SanitizationHelper)
 
   def organizer_email(newsletter_email)

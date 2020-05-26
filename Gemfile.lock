@@ -541,9 +541,6 @@ GEM
     lumberjack (1.0.13)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
-    mandrill-api (1.0.53)
-      excon (>= 0.16.0, < 1.0)
-      json (>= 1.7.7, < 2.0)
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
     memory_profiler (0.9.12)
@@ -973,7 +970,6 @@ DEPENDENCIES
   lodash-rails
   lol_dba
   loofah (>= 2.2.3)
-  mandrill-api
   meta_request
   mini_magick
   mini_racer

@@ -1,5 +1,5 @@
 module Organizers
-  class NotificationsMailer < StandardApplicationMailer
+  class NotificationsMailer < ApplicationMailer
     def eua_notification_email(organizer_participant, clef_task, participant)
       @organizer_participant = organizer_participant
       @clef_task             = clef_task

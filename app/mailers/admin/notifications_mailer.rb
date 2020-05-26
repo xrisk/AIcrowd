@@ -1,5 +1,5 @@
 module Admin
-  class NotificationsMailer < StandardApplicationMailer
+  class NotificationsMailer < ApplicationMailer
     def challenge_call_response_email(participant, challenge_call_response)
       @participant             = participant
       @challenge_call_response = challenge_call_response

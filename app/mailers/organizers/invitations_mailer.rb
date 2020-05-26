@@ -1,5 +1,5 @@
 module Organizers
-  class InvitationsMailer < StandardApplicationMailer
+  class InvitationsMailer < ApplicationMailer
     add_template_helper(InvitationsHelper)
 
     def accepted_notification_email(participant, team_invitation)

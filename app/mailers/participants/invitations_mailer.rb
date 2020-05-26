@@ -1,5 +1,5 @@
 module Participants
-  class InvitationsMailer < StandardApplicationMailer
+  class InvitationsMailer < ApplicationMailer
     add_template_helper(InvitationsHelper)
 
     def invitation_accepted_email(team_invitation)
