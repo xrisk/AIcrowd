@@ -8,7 +8,7 @@ describe DeviseAicrowdMailer, type: :mailer do
     subject { described_class.reset_password_instructions(participant, token) }
 
     it 'renders the headers' do
-      expect(subject.subject).to eq 'AIcrowd Password Reset'
+      expect(subject.subject).to eq '[AIcrowd] Password Reset'
       expect(subject.to).to eq ['test@example.com']
       expect(subject.from).to eq ['no-reply@aicrowd.com']
     end
@@ -22,7 +22,7 @@ describe DeviseAicrowdMailer, type: :mailer do
     subject { described_class.confirmation_instructions(participant, token) }
 
     it 'renders the headers' do
-      expect(subject.subject).to eq 'AIcrowd Confirmation Instructions'
+      expect(subject.subject).to eq '[AIcrowd] Confirmation Instructions'
       expect(subject.to).to eq ['test@example.com']
       expect(subject.from).to eq ['no-reply@aicrowd.com']
     end
@@ -36,7 +36,7 @@ describe DeviseAicrowdMailer, type: :mailer do
     subject { described_class.unlock_instructions(participant, token) }
 
     it 'renders the headers' do
-      expect(subject.subject).to eq 'AIcrowd Unlock Instructions'
+      expect(subject.subject).to eq '[AIcrowd] Unlock Instructions'
       expect(subject.to).to eq ['test@example.com']
       expect(subject.from).to eq ['no-reply@aicrowd.com']
     end
