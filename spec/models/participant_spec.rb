@@ -132,5 +132,24 @@ describe Participant do
         expect(participant.api_key).not_to eq(old_api_key)
       end
     end
+
+    context 'Country and city' do
+      let!(:participant) { create :participant, country_cd: 'AU' }
+
+      it 'should return country name by its code' do
+        country_name = Participant.country_name('IN')
+        expect(country_name).to eq('India')
+      end
+
+      it 'should return affiliations from participant ids' do
+        affiliations = Participant.affiliations([participant.id])
+        expect(affiliations).to eq([participant.affiliation])
+      end
+
+      it 'should return countries of participants' do
+        countries = Participant.countries([participant.id])
+        expect(countries).to eq(['Australia'])
+      end
+    end
   end
 end

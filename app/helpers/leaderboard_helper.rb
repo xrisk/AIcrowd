@@ -79,4 +79,12 @@ module LeaderboardHelper
   def is_disentanglement_leaderboard?(leaderboard)
     leaderboard.class.name == 'DisentanglementLeaderboard'
   end
+
+  def is_selected_country?(country)
+    params[:country_name] == country
+  end
+
+  def is_selected_affiliation?(affiliation)
+    params[:affiliation] == affiliation
+  end
 end

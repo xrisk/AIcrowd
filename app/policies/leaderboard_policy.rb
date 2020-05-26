@@ -25,11 +25,7 @@ class LeaderboardPolicy < ApplicationPolicy
                                else
                                  ''
                      end
-      else
-        participant_id = 0
-        email          = nil
-      end
-      <<~SQL
+        <<~SQL
         (submitter_type = 'Participant' AND submitter_id = #{participant_id})
         #{team_check}
         OR leaderboards.challenge_id IN
@@ -49,6 +45,10 @@ class LeaderboardPolicy < ApplicationPolicy
             )
           )
       SQL
+      else
+        participant_id = 0
+        "leaderboards.submitter_type = 'Participant' AND leaderboards.submitter_id = #{participant_id} OR leaderboards.challenge_id IN (SELECT c.id FROM challenges c WHERE c.show_leaderboard IS TRUE AND c.private_challenge IS FALSE UNION SELECT c.id FROM challenges c WHERE c.show_leaderboard IS TRUE  AND c.private_challenge IS TRUE)"
+      end
     end
 
     def resolve
