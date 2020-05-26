@@ -6,6 +6,7 @@ module Participants
       set_participant_from_invitee(team_invitation.invitee)
       @team                  = team_invitation.team
       @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url
+      @notification_reason   = 'You joined a team.'
       subject                = "[AIcrowd] Welcome to Team #{@team.name}"
 
       mail(to: @participant.email, subject: subject)
@@ -15,6 +16,7 @@ module Participants
       set_participant_from_invitee(team_invitation.invitee)
       @team = team_invitation.team
       @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url
+      @notification_reason   = 'Someone canceled your invitation to a team.'
       subject                = '[AIcrowd] Your Invitation Was Canceled'
 
       mail(to: @participant.email, subject: subject)
@@ -27,6 +29,7 @@ module Participants
       @invitor         = @team_invitation.invitor
       set_participant_from_invitee(@invitee)
       @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url
+      @notification_reason   = 'You’ve been invited to a team.'
       subject                = '[AIcrowd] Invitation to Team'
 
       mail(to: @participant.email, subject: subject)

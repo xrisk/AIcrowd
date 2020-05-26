@@ -7,6 +7,7 @@ module Organizers
       @team                  = team_invitation.team
       @invitee               = team_invitation.invitee
       @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url
+      @notification_reason   = 'Someone accepted an invitation to a team you organize.'
       subject                = '[AIcrowd] Team Invitation Accepted'
 
       mail(to: @participant.email, subject: subject)
@@ -17,6 +18,7 @@ module Organizers
       @team                  = team_invitation.team
       @invitee               = team_invitation.invitee
       @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url
+      @notification_reason   = 'Someone declined an invitation to a team you organize.'
       subject                = '[AIcrowd] Team Invitation Declined'
 
       mail(to: @participant.email, subject: subject)

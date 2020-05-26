@@ -1,5 +1,13 @@
 <br/>
 <br/>
 <div>
-  <%= link_to 'Email Preferences', email_preferences_url, target: '_blank' %>
+  <p>
+    <small>
+      <% if notification_reason.present? %>
+        <span>You are receiving this email for the following reason: <%= notification_reason %> <%= link_to 'Email Preferences', email_preferences_url, target: '_blank' %></span>
+      <% else %>
+        <span><%= link_to 'Email Preferences', email_preferences_url, target: '_blank' %></span>
+      <% end %>
+    </small>
+  </p>
 </div>
