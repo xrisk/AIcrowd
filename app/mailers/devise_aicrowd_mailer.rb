@@ -7,7 +7,7 @@ class DeviseAicrowdMailer < Devise::Mailer
   def reset_password_instructions(record, token, opts = {})
     @record = record
     @token  = token
-    subject = 'AIcrowd Password Reset'
+    subject = '[AIcrowd] Password Reset'
 
     mail(to: @record.email, subject: subject)
   end
@@ -15,7 +15,7 @@ class DeviseAicrowdMailer < Devise::Mailer
   def confirmation_instructions(record, token, opts = {})
     @record = record
     @token  = token
-    subject = 'AIcrowd Confirmation Instructions'
+    subject = '[AIcrowd] Confirmation Instructions'
 
     mail(to: @record.email, subject: subject)
   end
@@ -23,7 +23,7 @@ class DeviseAicrowdMailer < Devise::Mailer
   def unlock_instructions(record, token, opts = {})
     @record = record
     @token  = token
-    subject = 'AIcrowd Unlock Instructions'
+    subject = '[AIcrowd] Unlock Instructions'
 
     mail(to: @record.email, subject: subject)
   end

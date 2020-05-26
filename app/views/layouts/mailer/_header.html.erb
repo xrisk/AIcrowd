@@ -16,9 +16,9 @@
                           <tbody>
                             <tr>
                               <td class="mcnImageContent" valign="top" style="padding-right: 9px; padding-left: 9px; padding-top: 0; padding-bottom: 0; text-align:center;">
-                                <a href="http://www.crowdai.org" title="" class="" target="_blank">
-                                <img align="center" alt="" src="https://gallery.mailchimp.com/405a36027e36c436b4bacab09/images/d2642c5a-6fb5-4b46-945d-4f082113f66e.png" width="564" style="max-width:2492px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" class="mcnRetinaImage">
-                                </a>
+                                <%= link_to root_url, title: 'AICrowd logo', target: '_blank' do %>
+                                  <%= image_tag asset_url('img/email_logo.png', host: ENV["DOMAIN_NAME"]), align: 'center', width: '564', style: 'max-width:2492px; padding-bottom: 0; display: inline !important; vertical-align: bottom;', class: 'mcnRetinaImage' %>
+                                <% end %>
                               </td>
                             </tr>
                           </tbody>

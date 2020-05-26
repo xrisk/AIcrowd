@@ -40,7 +40,7 @@ Rails.application.configure do
 
   config.action_mailer.smtp_settings = {
     address: ENV["SMTP_ADDRESS"],
-    authentication: :plain
+    authentication: :plain,
     domain: ENV["SMTP_DOMAIN"],
     enable_starttls_auto: true,
     password: ENV["SMTP_PASSWORD"],
