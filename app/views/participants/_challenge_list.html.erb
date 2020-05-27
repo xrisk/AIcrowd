@@ -5,10 +5,17 @@
           <%= image_tag(challenge.image_file_url, class: 'img-responsive img-fluid card-img image_16x9') %>
         <% end %>
         <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
-          <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>">
-            <img src="/assets/img/icon-time.svg">
-            <%= challenge_remaining_text(challenge, challenge.active_round) %>
-          </span>
+          <% if challenge.practice_flag %>
+            <% if is_draft_practice(challenge) == "Draft" %>
+              <span class="badge badge-primary practice-draft-badge"><%= is_draft_practice(challenge) %></span>
+            <% end %>
+            <span class="badge badge-success">Practice</span>
+          <% else %>
+            <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>">
+              <img src="/assets/img/icon-time.svg">
+              <%= challenge_remaining_text(challenge, challenge.active_round) %>
+            </span>
+          <% end %>
         <% end %>
     </div>
     <div class="col-md-4">
