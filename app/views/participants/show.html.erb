@@ -22,9 +22,6 @@
         <a class="nav-link nav-link-04<%= ' active' if active_tab == 'bio' %>" data-toggle='tab' href="#tab-bio" onclick="return false;">Bio</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link nav-link-05<%= ' active' if active_tab == 'badges' %>" data-toggle='tab' href="#tab-badges" onclick="return false;">Badges</a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link nav-link-05<%= ' active' if active_tab == 'achievements' %>" data-toggle='tab' href="#tab-achievements" onclick="return false;">Achievements</a>
       </li>
       <!-- more dropdown xs -->
@@ -115,10 +112,6 @@
         </div>
       </section>
     <% end %>
-  </div>
-
-  <div id="tab-badges" class="tab-pane fade<%= ' show active' if active_tab == 'badges' %>">
-    <%= render partial: 'badges_list', locals: { participant: @participant } %>
   </div>
 
   <div id="tab-achievements" class="tab-pane fade<%= ' show active' if active_tab == 'achievements' %>">
