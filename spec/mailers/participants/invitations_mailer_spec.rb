@@ -7,7 +7,7 @@ describe Participants::InvitationsMailer, type: :mailer do
     let(:team_invitation) { create(:team_invitation, team: team, invitee: invitee, invitor: invitor) }
     let(:invitee)         { create(:participant, email: 'test@example.com') }
     let(:invitor)         { create(:participant) }
-    let(:team)            { create(:team)}
+    let(:team)            { create(:team) }
 
     it 'renders the headers' do
       expect(subject.subject).to eq "[AIcrowd] Welcome to Team #{team.name}"
@@ -29,7 +29,7 @@ describe Participants::InvitationsMailer, type: :mailer do
     let(:team)            { create(:team)}
 
     it 'renders the headers' do
-      expect(subject.subject).to eq '[AIcrowd] Your Invitation Was Canceled'
+      expect(subject.subject).to eq "[AIcrowd] Your Invitation to Team #{team.name} Was Canceled"
       expect(subject.to).to eq ['test@example.com']
       expect(subject.from).to eq ['no-reply@aicrowd.com']
     end
@@ -48,7 +48,7 @@ describe Participants::InvitationsMailer, type: :mailer do
     let(:team)            { create(:team)}
 
     it 'renders the headers' do
-      expect(subject.subject).to eq '[AIcrowd] Invitation to Team'
+      expect(subject.subject).to eq "[AIcrowd] Invitation to Team #{team.name}"
       expect(subject.to).to eq ['test@example.com']
       expect(subject.from).to eq ['no-reply@aicrowd.com']
     end

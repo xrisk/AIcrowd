@@ -52,14 +52,14 @@ describe ChallengeCallResponsesController, type: :controller do
       end
     end
 
-    context "queues Admin::NotificationsMailer.newsletter_email_notification_email email" do
+    context "queues Organizers::ChallengeCallResponseNotificationJob job" do
       it do
         expect do
           post :create,
                params: {
                  challenge_call_id: challenge_call.id, challenge_call_response: valid_attributes
                }
-        end.to have_enqueued_mail(Admin::NotificationsMailer, :challenge_call_response_email)
+        end.to have_enqueued_job(Organizers::ChallengeCallResponseNotificationJob)
       end
     end
 

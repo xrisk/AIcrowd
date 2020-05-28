@@ -13,13 +13,13 @@ describe OrganizerApplicationsController, type: :controller do
       }.to change(OrganizerApplication, :count).by(1)
     end
 
-    it "queues Admin::NotificationsMailer organizer_application_notification_email email" do
+    it "queues Admins::OrganizerApplicationNotificationJob job" do
       expect {
         post :create, params: { organizer_application: valid_attributes }, format: :js
-      }.to have_enqueued_email(Admin::NotificationsMailer, :organizer_application_notification_email)
+      }.to have_enqueued_job(Admins::OrganizerApplicationNotificationJob)
     end
 
-    it "queues OrganizerApplicationNotificationJob" do
+    it "queues Organizers::NotificationsMailer email" do
       expect {
         post :create, params: { organizer_application: valid_attributes }, format: :js
       }.to have_enqueued_mail(Organizers::NotificationsMailer, :received_application_email)
