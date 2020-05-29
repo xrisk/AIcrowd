@@ -48,6 +48,7 @@ class UserRatingService
           current_participant_weighted_variation = current_participant_previous_variation + (@weight **2) * (current_participant_true_variation - current_participant_previous_variation)
           new_participant_ratings << {"rating" => current_participant_weighted_rating, "fixed_rating" => current_participant_weighted_rating }
           new_participant_variations << {"variation" => current_participant_weighted_variation}
+          puts current_participant_previous_variation, current_participant_true_variation, @weight
         end
       end
     end
