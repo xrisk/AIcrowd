@@ -38,6 +38,7 @@ class ParticipantsController < ApplicationController
 
   def update
     @participant = Participant.friendly.find(params[:id])
+
     if @participant.update(participant_params)
       for badge in AicrowdBadge.where(badges_event_id: BadgesEvent.where(name: "profileupdate").pluck(:id))
         eval(badge.code)
@@ -45,6 +46,7 @@ class ParticipantsController < ApplicationController
       flash[:success] = "Profile updated"
       redirect_to @participant
     else
+      flash[:error] = @participant.errors.full_messages.to_sentence
       render :edit
     end
   end
