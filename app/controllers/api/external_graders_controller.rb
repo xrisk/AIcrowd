@@ -394,7 +394,7 @@ class Api::ExternalGradersController < Api::BaseController
   end
 
   def notify_admins(submission)
-    Admin::SubmissionNotificationJob.perform_later(submission)
+    Admins::SubmissionNotificationJob.perform_later(submission.id)
   end
 
   def grading_params

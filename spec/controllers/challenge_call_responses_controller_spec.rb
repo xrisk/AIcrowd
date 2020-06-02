@@ -3,7 +3,8 @@ require 'rails_helper'
 describe ChallengeCallResponsesController, type: :controller do
   render_views
 
-  let(:challenge_call)          { create(:challenge_call) }
+  let(:organizer)               { create(:organizer, participants: [create(:participant)]) }
+  let(:challenge_call)          { create(:challenge_call, organizer: organizer) }
   let(:challenge_call_response) { create(:challenge_call_response) }
   let(:valid_attributes)        { FactoryBot.attributes_for(:challenge_call_response) }
   let(:invalid_attributes)      { FactoryBot.attributes_for(:challenge_call_response, :invalid) }
@@ -51,14 +52,14 @@ describe ChallengeCallResponsesController, type: :controller do
       end
     end
 
-    context "queues Admin::ChallengeCallResponseNotificationJob" do
+    context "queues Organizers::ChallengeCallResponseNotificationJob job" do
       it do
         expect do
           post :create,
                params: {
                  challenge_call_id: challenge_call.id, challenge_call_response: valid_attributes
                }
-        end.to have_enqueued_job(Admin::ChallengeCallResponseNotificationJob)
+        end.to have_enqueued_job(Organizers::ChallengeCallResponseNotificationJob)
       end
     end
 

@@ -7,9 +7,9 @@ class Team::InvitationAcceptedNotifierJob < ApplicationJob
       .includes(team: { team_participants_organizer: :participant })
       .each do |inv|
         inv.team.team_participants_organizer.each do |tp|
-          Team::Organizer::InvitationAcceptedNotificationMailer.new.sendmail(tp.participant, inv)
+          Organizers::InvitationsMailer.accepted_notification_email(tp.participant, inv).deliver_now
         end
-        Team::Invitee::InvitationAcceptedNotificationMailer.new.sendmail(inv)
+        Participants::InvitationsMailer.invitation_accepted_email(inv).deliver_now
       end
 
     TeamInvitation\
@@ -17,7 +17,7 @@ class Team::InvitationAcceptedNotifierJob < ApplicationJob
       .includes(team: { team_participants_organizer: :participant })
       .each do |inv|
         inv.team.team_participants_organizer.each do |tp|
-          Team::Organizer::InvitationDeclinedNotificationMailer.new.sendmail(tp.participant, inv)
+          Organizers::InvitationsMailer.declined_notification_email(tp.participant, inv).deliver_now
         end
       end
 
@@ -28,7 +28,7 @@ class Team::InvitationAcceptedNotifierJob < ApplicationJob
       # mock instances because the invitation and team no longer exist
       inv      = TeamInvitation.new(data[:invitation])
       inv.team = Team.new(data[:team])
-      Team::Invitee::InvitationCanceledNotificationMailer.new.sendmail(inv)
+      Participants::InvitationsMailer.invitation_canceled_email(inv).deliver_now
     end
   end
 end

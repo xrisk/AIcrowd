@@ -52,7 +52,7 @@ ActiveAdmin.register NewsletterEmail do
   end
 
   member_action :approve, method: :post do
-    Organizers::NewsletterEmailJob.perform_later(resource.id)
+    NewsletterEmailsMailer.organizer_email(resource).deliver_later
     resource.update!(pending: false)
 
     redirect_to admin_newsletter_emails_path, flash: { notice: 'Newsletter email has been sent to participants.' }
@@ -60,7 +60,8 @@ ActiveAdmin.register NewsletterEmail do
 
   member_action :decline, method: :post do
     resource.update!(pending: false, decline_reason: params[:decline_reason])
-    Organizers::DeclinedEmailJob.perform_later(resource.id)
+
+    NewsletterEmailsMailer.declined_email(resource).deliver_later
 
     redirect_to admin_newsletter_emails_path, flash: { notice: 'Newsletter email has been declined.' }
   end

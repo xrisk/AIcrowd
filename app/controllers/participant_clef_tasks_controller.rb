@@ -49,7 +49,8 @@ class ParticipantClefTasksController < ApplicationController
     if clef_task.eua_required?
       if participant_clef_task.eua_file.present?
         participant_clef_task.update(status_cd: 'submitted')
-        Organizer::EuaNotificationJob.perform_later(clef_task.id, current_participant.id)
+
+        Organizers::EuaNotificationJob.perform_later(clef_task.organizer_id)
       end
     else
       participant_clef_task.update(status_cd: 'registered') unless participant_clef_task.registered?

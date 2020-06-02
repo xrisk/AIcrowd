@@ -1,0 +1,14 @@
+<div>
+  <p>Hi <%= @participant.name %>,</p>
+  <br/>
+  <h3>Your requested AIcrowd data</h3>
+  <p>
+    A request was made to download your personal data stored on AIcrowd. This data is attached to this email.
+  </p>
+  <p>
+    Should you wish to delete your data, deleting your AIcrowd account will also remove all personal data contained in the attached file.
+  </p>
+  <br/>
+
+  <%= render partial: 'shared/mailers/email_preferences_link', locals: { email_preferences_url: @email_preferences_url, notification_reason: @notification_reason } %>
+</div>

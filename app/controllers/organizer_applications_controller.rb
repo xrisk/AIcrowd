@@ -3,8 +3,10 @@ class OrganizerApplicationsController < ApplicationController
 
   def create
     organizer_application = OrganizerApplication.create!(organizer_application_params)
-    Admin::OrganizerApplicationNotificationJob.perform_later(organizer_application)
-    OrganizerApplicationNotificationJob.perform_later(organizer_application)
+
+    Admins::OrganizerApplicationNotificationJob.perform_later(organizer_application.id)
+
+    Organizers::NotificationsMailer.received_application_email(organizer_application).deliver_later
   end
 
   private

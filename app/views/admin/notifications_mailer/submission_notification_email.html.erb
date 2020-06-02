@@ -1,0 +1,11 @@
+<div>
+  <p>Hi <%= @participant.name %>,</p>
+  <br/>
+  <p>A new submission has been made to the <%= link_to @challenge.challenge, challenge_url(@challenge), target: '_blank' %> challenge.</p>
+  <br/>
+  <%= @submission.description.to_s %>
+  <br/>
+  <p>Click <%= link_to 'leaderboard', challenge_leaderboards_url(@challenge), target: '_blank' %> to see the submission.</p>
+
+  <%= render partial: 'shared/mailers/email_preferences_link', locals: { email_preferences_url: @email_preferences_url, notification_reason: @notification_reason } %>
+</div>

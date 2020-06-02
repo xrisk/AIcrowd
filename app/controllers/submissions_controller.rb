@@ -305,7 +305,7 @@ class SubmissionsController < ApplicationController
   end
 
   def notify_admins
-    Admin::SubmissionNotificationJob.perform_later(@submission)
+    Admins::SubmissionNotificationJob.perform_later(@submission.id)
   end
 
   def clef_primary_run_disabled?

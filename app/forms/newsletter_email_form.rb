@@ -24,7 +24,7 @@ class NewsletterEmailForm
       challenge:   challenge
     )
 
-    Admin::NewsletterEmailNotificationJob.perform_later(newsletter_email.id)
+    Admin::NotificationsMailer.newsletter_email_notification_email(newsletter_email).deliver_later
 
     true
   end

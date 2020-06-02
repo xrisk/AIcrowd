@@ -1,0 +1,17 @@
+<div>
+  <p>Hi <%= @participant.name %>,</p>
+  <br/>
+  <p>You’ve just joined Team <%= invitation_team_link(@team) %>!</p>
+  <p>
+    You will now be collaborating with <%= invitation_amount_of_other_people(@team) %> on <%= link_to(@team.challenge.challenge, challenge_url(@team.challenge)) %>.
+    A submission by any one of you will count the same for all of you on the
+    leaderboard. Good luck on the challenge!
+  </p>
+  <br/>
+  <p>
+    Best regards,
+    <br>
+    AIcrowd
+  </p>
+  <%= render partial: 'shared/mailers/email_preferences_link', locals: { email_preferences_url: @email_preferences_url, notification_reason: @notification_reason } %>
+</div>

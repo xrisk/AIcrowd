@@ -11,10 +11,13 @@ class ChallengeCallResponsesController < ApplicationController
       .challenge_call_responses
       .new(challenge_call_response_params)
     if @challenge_call_response.save
-      Admin::ChallengeCallResponseNotificationJob
-          .perform_later(@challenge_call_response)
-      redirect_to challenge_call_show_path(
-        @challenge_call, @challenge_call_response)
+      organizer = @challenge_call_response.challenge_call&.organizer
+
+      if organizer.present?
+        Organizers::ChallengeCallResponseNotificationJob.perform_later(organizer.id, @challenge_call_response.id)
+      end
+
+      redirect_to challenge_call_show_path(@challenge_call, @challenge_call_response), notice: 'Challenge call response was created successfully.'
     else
       render :new
     end

@@ -1,0 +1,40 @@
+<div>
+  <p>Hi <%= @participant.name %>,</p>
+  <br/>
+  <p>You’ve been invited to join Team <%= invitation_team_link(@team) %>!</p>
+  <p>
+    Participant <%= link_to @invitor.name, participant_url(@invitor), target: '_blank' %> has invited you to collaborate on Challenge
+    <%= link_to @team.challenge.challenge, challenge_url(@team.challenge), target: '_blank' %>. The team currently has <%= invitation_team_members(@team) %>.
+  </p>
+  <p>Accepting this invitation will have the following effects <b>for this challenge only</b>:</p>
+  <ul>
+    <li>You will be a member of Team <%= invitation_team_link(@team) %> for the duration of the challenge</li>
+    <li>All team members will share equal leaderboard spots and prizes</li>
+    <li>You may only be a member of a single team per challenge</li>
+    <li>If you accept this invitation, then all other invitations to you from other teams for this challenge will be cancelled</li>
+    <li>If you have not already, you will need to agree to the AIcrowd Participation Terms and Challenge Rules before joining the challenge</li>
+  </ul>
+  <p style="text-align: center;">
+    <%= invitation_button('Join!', @team_invitation, @invitee, true) %>
+    <span style="margin-right: 20px"></span>
+    <%= invitation_button('Decline', @team_invitation, @invitee, false) %>
+  </p>
+  <% if @invitee.is_a?(EmailInvitation) %>
+    <p>
+      Note: To join, you'll need an AIcrowd acccount. If you already have an account with us, you'll need to link it with this invitation by claiming this email. Your unique code to do so is:
+      <br>
+      <b style="margin-left: 20px;"><%= @invitee.display_token %></b>
+      <br>
+      You can sign up <%= link_to 'here', new_participant_registration_url, target: '_blank' %>, and then link your account <%= link_to 'here', claim_emails_url(email_token: @invitee.display_token, email_confirmation: @invitee.email), target: '_blank' %>.
+      <br>
+      Declining does not require the creation of an account.
+    </p>
+  <% end %>
+  <br/>
+  <p>
+    Best regards,
+    <br>
+    AIcrowd
+  </p>
+  <%= render partial: 'shared/mailers/email_preferences_link', locals: { email_preferences_url: @email_preferences_url, notification_reason: @notification_reason } %>
+</div>

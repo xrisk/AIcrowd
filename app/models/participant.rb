@@ -1,8 +1,27 @@
 class Participant < ApplicationRecord
-
   include FriendlyId
   include ApiKey
   include Countries
+
+  GDPR_FIELDS = [
+    :id,
+    :email,
+    :created_at,
+    :updated_at,
+    :timezone,
+    :name,
+    :bio,
+    :website,
+    :github,
+    :linkedin,
+    :twitter,
+    :image_file,
+    :affiliation,
+    :country_cd,
+    :address,
+    :first_name,
+    :last_name
+  ].freeze
 
   friendly_id :name, use: [:slugged, :finders, :history]
   before_save :set_api_key
@@ -26,6 +45,7 @@ class Participant < ApplicationRecord
 
   scope :rated_users_count, -> { Participant.where("ranking > 0").count }
   scope :admins, -> { where(admin: true) }
+  scope :with_every_email_preference, -> { joins(:email_preferences).where(email_preferences: { email_frequency_cd: :every }) }
 
   has_many :aicrowd_user_badges
   has_many :participant_organizers, dependent: :destroy

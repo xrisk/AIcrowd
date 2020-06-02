@@ -13,7 +13,8 @@ class Challenges::TeamInvitationsController < ApplicationController
     )
 
     if @invitation.save
-      Team::InvitationPendingNotifierJob.perform_later(@invitation.id)
+      Participants::InvitationsMailer.invitation_pending_email(@invitation).deliver_later
+
       flash[:success] = I18n.t(:success, scope: %i[helpers teams create_invitation_flash])
     else
       flash[:error] = error_msg(:unspecified)
