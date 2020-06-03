@@ -1,4 +1,6 @@
 class TaskDatasetFilesController < ApplicationController
+  include Concerns::DatasetFiles
+
   before_action :authenticate_participant!
   before_action :set_challenge, only: :index
   before_action :set_vote, only: :index
@@ -10,7 +12,14 @@ class TaskDatasetFilesController < ApplicationController
   def index
     @challenge_rounds              = @challenge.challenge_rounds.started
     @current_participant_clef_task = @clef_task.participant_clef_tasks.where(participant_id: current_participant.id).first
-    @task_dataset_files            = @clef_task.task_dataset_files
+
+    if @clef_task.use_challenge_dataset_files?
+      set_dataset_files # from DatasetFilesConcern
+      set_dataset_folders # from DatasetFilesConcern
+    else
+      @task_dataset_files = @clef_task.task_dataset_files
+    end
+
     js challenge_id: @challenge.id
   end
 

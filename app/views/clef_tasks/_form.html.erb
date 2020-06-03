@@ -7,10 +7,15 @@
 				             html: {class: 'sgl-col'} do |f| %>
 					<div class='tab-content'>
 						<div id='tab-details' class="tab-pane fade show active">
-							<div class="form-group">
-								<span class="label-text">Task name</span>
-								<%= f.text_field :task, class: "form-control" %>
-							</div>
+              <div class="form-group">
+                <span class="label-text">Task name</span>
+                <%= f.text_field :task, class: "form-control" %>
+              </div>
+
+              <div class="form-group">
+                <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :use_challenge_dataset_files, text: "Use challenge dataset files" } %>
+              </div>
+
 							<div class="form-group">
 								<span class="label-text">EUA file</span>
 								<%= f.file_field :eua_file %>

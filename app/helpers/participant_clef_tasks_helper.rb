@@ -30,8 +30,6 @@ module ParticipantClefTasksHelper
     end
   end
 
-  private
-
   def participant_clef_task_status(participant_clef_task)
     return 'profile_incomplete' if profile_incomplete?
 
@@ -41,6 +39,8 @@ module ParticipantClefTasksHelper
       return 'unregistered'
     end
   end
+
+  private
 
   def profile_incomplete?
     if current_participant.first_name.blank?  ||

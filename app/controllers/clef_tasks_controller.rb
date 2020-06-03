@@ -57,6 +57,7 @@ class ClefTasksController < ApplicationController
     params.require(:clef_task)
           .permit(:task,
                   :eua_file,
+                  :use_challenge_dataset_files,
                   task_dataset_files_attributes: [
                     :id, :_destroy, :title, :dataset_file_s3_key
                   ])
