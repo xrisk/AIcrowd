@@ -1,8 +1,8 @@
 <span class="reputation-info <%= defined?(partial_class) ? partial_class : nil %>" style="<%= style ||= '' %>">
 <% unless participant.admin %>
-  <span class="reputation-score" data-toggle="tooltip" title="<%= participant.final_rating %> ± <%= participant.variation.to_i %>">
+  <span class="reputation-score" data-toggle="tooltip" title="<%= participant.final_rating %>">
     <% if defined?(full) && full %>
-      <%= participant.final_rating %> ± <%= participant.variation.to_i %>
+      <%= participant.final_rating %>
     <% else %>
       <%= participant.final_rating %>
     <% end %>
