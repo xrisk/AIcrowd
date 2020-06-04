@@ -2,7 +2,7 @@
   Dear AICrowd admins,
   <br/>
   <br/>
-  New newsletter e-mail was submitted for&nbsp;<%= link_to @challenge&.challenge.to_s, challenge_url(id: @challenge&.id.to_i), target: '_blank' %> and it's waiting for your
+  New newsletter e-mail was submitted for&nbsp;<%= link_to @challenge&.challenge.to_s, challenge_url(id: @challenge&.slug.to_s), target: '_blank' %> and it's waiting for your
   verification. You can verify it <%= link_to 'here', admin_newsletter_email_url(@newsletter_email), target: '_blank' %>.
   <br/>
   &nbsp;
