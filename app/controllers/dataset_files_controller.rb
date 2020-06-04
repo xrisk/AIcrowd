@@ -43,8 +43,6 @@ class DatasetFilesController < ApplicationController
     end
   end
 
-  def show; end
-
   def new
     @dataset_file = @challenge.dataset_files.new
     authorize @dataset_file
