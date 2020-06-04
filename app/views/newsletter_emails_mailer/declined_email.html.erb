@@ -5,7 +5,7 @@
   <strong><%= @newsletter_email.decline_reason %></strong>
   <br>
   <br>
-  You can submit a new newsletter e-mail <%= link_to 'here', new_challenge_newsletter_emails_url(challenge_id: @newsletter_email.challenge_id.to_i), target: '_blank' %>.
+  You can submit a new newsletter e-mail <%= link_to 'here', new_challenge_newsletter_emails_url(challenge_id: @newsletter_email.challenge&.slug.to_s), target: '_blank' %>.
   <br>
   &nbsp;
 </p>

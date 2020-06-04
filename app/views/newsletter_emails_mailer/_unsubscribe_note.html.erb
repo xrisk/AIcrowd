@@ -15,7 +15,7 @@
                     <tr>
                       <td valign="top" class="mcnTextContent" style="padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;">
                         <br>
-                        This email has been sent by organizers of <%= link_to challenge&.challenge, challenge_url(id: challenge&.id.to_i), target: '_blank' %> challenge because you have registered for this challenge. In case you don’t want to hear from challenge organizers, you can update your email preferences <%= link_to 'here', edit_participant_registration_url, target: '_blank' %>.
+                        This email has been sent by organizers of <%= link_to challenge&.challenge, challenge_url(id: challenge&.slug.to_s), target: '_blank' %> challenge because you have registered for this challenge. In case you don’t want to hear from challenge organizers, you can update your email preferences <%= link_to 'here', edit_participant_registration_url, target: '_blank' %>.
                         <footer>&nbsp;</footer>
                       </td>
                     </tr>
