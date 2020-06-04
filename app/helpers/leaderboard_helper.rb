@@ -64,4 +64,15 @@ module LeaderboardHelper
     end
     return other_scores
   end
+
+  def rank_wise_trophy(index)
+    case index
+    when 0
+      'gold'
+    when 1
+      'silver'
+    when 2
+      'bronze'
+    end
+  end
 end

@@ -28,6 +28,10 @@
           </div>
         <% end %>
 
+        <!-- leaderbaord winners -->
+        <%= render partial: 'winners', locals: { leaderboards: @leaderboards.first(3), current_round: @current_round }  %>
+        <!-- /leaderbaord winners -->
+
         <% if policy(@challenge).show_leaderboard? %>
           <% unless policy(@challenge).leaderboard_public? %>
             <div class="leaderboard-important-msg">
@@ -60,6 +64,7 @@
                   <% end %>
                 <% end %>
                 <% if @challenge.meta_challenge %>
+                  <th scope="col" class="text-center">Submission Trend</th>
                   <% @challenge.challenge_problems.each do |challenge_problem| %>
                     <th scope="col">
                       <%= link_to challenge_problem.problem.challenge, challenge_leaderboards_path(challenge_problem.problem), data: { toggle: 'tooltip', placement: 'top' }, title: 'Leaderboard for ' + challenge_problem.problem.challenge %><br/>
@@ -72,6 +77,7 @@
                   <% end %>
                   <th scope="col">Entries</th>
                   <th scope="col" class="text-right">Last Submission</th>
+                  <th scope="col" class="text-center">Submission Trend</th>
                   <th scope="col" class="text-right"></th>
                 <% end %>
               </tr>
