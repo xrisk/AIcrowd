@@ -32,7 +32,7 @@ module InvitationsHelper
     end
   end
 
-  def invitation_button(text, team_invitation, invitee, primary)
+  def invitation_button(text, team_invitation, invitee, primary, type)
     url_params = [team_invitation]
     url_params << { email_token: invitee.display_token } if invitee.is_a?(EmailInvitation)
 
@@ -54,8 +54,14 @@ module InvitationsHelper
       padding: 10px 30px;
     STYLE
 
-    link_to team_invitation_acceptances_url(*url_params), style: 'text-decoration: none;' do
-      content_tag(:span, text, style: span_style)
+    if type == 'invite'
+      link_to team_invitation_acceptances_url(*url_params), style: 'text-decoration: none;' do
+        content_tag(:span, text, style: span_style)
+      end
+    elsif type == 'decline'
+      link_to team_invitation_declinations_url(*url_params), style: 'text-decoration: none;' do
+        content_tag(:span, text, style: span_style)
+      end
     end
   end
 end

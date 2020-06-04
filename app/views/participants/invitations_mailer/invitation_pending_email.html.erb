@@ -15,9 +15,9 @@
     <li>If you have not already, you will need to agree to the AIcrowd Participation Terms and Challenge Rules before joining the challenge</li>
   </ul>
   <p style="text-align: center;">
-    <%= invitation_button('Join!', @team_invitation, @invitee, true) %>
+    <%= invitation_button('Join!', @team_invitation, @invitee, true, 'invite') %>
     <span style="margin-right: 20px"></span>
-    <%= invitation_button('Decline', @team_invitation, @invitee, false) %>
+    <%= invitation_button('Decline', @team_invitation, @invitee, false, 'decline') %>
   </p>
   <% if @invitee.is_a?(EmailInvitation) %>
     <p>
