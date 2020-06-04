@@ -5,7 +5,7 @@ module Participants
     def invitation_accepted_email(team_invitation)
       set_participant_from_invitee(team_invitation.invitee)
       @team                  = team_invitation.team
-      @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url
+      @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url if @participant.persisted?
       @notification_reason   = 'You joined a team.'
       subject                = "[AIcrowd] Welcome to Team #{@team.name}"
 
@@ -15,7 +15,7 @@ module Participants
     def invitation_canceled_email(team_invitation)
       set_participant_from_invitee(team_invitation.invitee)
       @team = team_invitation.team
-      @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url
+      @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url if @participant.persisted?
       @notification_reason   = 'Someone canceled your invitation to a team.'
       subject                = "[AIcrowd] Your Invitation to Team #{@team.name} Was Canceled"
 
@@ -28,7 +28,7 @@ module Participants
       @team            = @team_invitation.team
       @invitor         = @team_invitation.invitor
       set_participant_from_invitee(@invitee)
-      @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url
+      @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url if @participant.persisted?
       @notification_reason   = 'You’ve been invited to a team.'
       subject                = "[AIcrowd] Invitation to Team #{@team.name}"
 
