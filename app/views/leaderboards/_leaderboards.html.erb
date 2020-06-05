@@ -3,7 +3,6 @@
     participants = leaderboard_participants(leaderboard)
     challenge    = leaderboard.challenge
     truncate     = truncate.present? ? truncate : false
-    submitter = leaderboard.submitter
   %>
   <tr>
     <% if !leaderboard.baseline? %>
@@ -56,8 +55,9 @@
       <% end %>
     <% end %>
     <% if @challenge.meta_challenge %>
-      <td class="pull-right">
+      <td>
         <% unless @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge" %>
+          <% submitter = leaderboard.submitter %>
           <% if submitter.present? %>
             <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: challenge, width: '200px', id: submitter.id + 3 } %>
           <% end %>
@@ -91,8 +91,9 @@
       <% else %>
         <td colspan="2"></td>
       <% end %>
-      <td class="pull-right">
+      <td>
         <% unless @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge" %>
+          <% submitter = leaderboard.submitter %>
           <% if submitter.present? %>
             <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: challenge, width: '200px', id: submitter.id + 3 } %>
           <% end %>
