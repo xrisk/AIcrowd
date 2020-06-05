@@ -56,7 +56,7 @@
     <% end %>
     <% if @challenge.meta_challenge %>
       <td>
-        <% unless @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge" %>
+        <% unless is_disentanglement_leaderboard?(leaderboard) %>
           <% submitter = leaderboard.submitter %>
           <% if submitter.present? %>
             <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: challenge, width: '200px', id: submitter.id + 3 } %>
@@ -92,7 +92,7 @@
         <td colspan="2"></td>
       <% end %>
       <td>
-        <% unless @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge" %>
+        <% unless is_disentanglement_leaderboard?(leaderboard) %>
           <% submitter = leaderboard.submitter %>
           <% if submitter.present? %>
             <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: challenge, width: '200px', id: submitter.id + 3 } %>
