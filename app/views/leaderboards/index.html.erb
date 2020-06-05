@@ -1,6 +1,7 @@
 <%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
 <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 
+<% disentanglement_leaderboard = is_disentanglement_leaderboard?(@leaderboards.first)%>
 <section class="section-p-sm">
   <div class="container-fluid">
     <div class="row">
@@ -28,13 +29,13 @@
           </div>
         <% end %>
 
-        <% unless @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge" %>
-          <!-- leaderbaord winners -->
-          <%= render partial: 'winners', locals: { leaderboards: @leaderboards.first(3), current_round: @current_round }  %>
-          <!-- /leaderbaord winners -->
-        <% end %>
-
         <% if policy(@challenge).show_leaderboard? %>
+          <% unless disentanglement_leaderboard %>
+            <!-- leaderbaord winners -->
+            <%= render partial: 'winners', locals: { leaderboards: @leaderboards.first(3), current_round: @current_round }  %>
+            <!-- /leaderbaord winners -->
+          <% end %>
+
           <% unless policy(@challenge).leaderboard_public? %>
             <div class="leaderboard-important-msg">
               <p>Leaderboard is only visible to organizers</p>
@@ -79,7 +80,9 @@
                   <% end %>
                   <th scope="col">Entries</th>
                   <th scope="col" class="text-right">Last Submission</th>
-                  <th scope="col" class="text-center">Submission Trend</th>
+                  <% unless disentanglement_leaderboard %>
+                    <th scope="col" class="text-center">Submission Trend</th>
+                  <% end %>
                   <th scope="col" class="text-right"></th>
                 <% end %>
               </tr>

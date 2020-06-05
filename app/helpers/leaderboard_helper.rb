@@ -75,4 +75,8 @@ module LeaderboardHelper
       'bronze'
     end
   end
+
+  def is_disentanglement_leaderboard?(leaderboard)
+    leaderboard.class.name == 'DisentanglementLeaderboard'
+  end
 end
