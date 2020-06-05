@@ -8,6 +8,7 @@ class LeaderboardsController < ApplicationController
   respond_to :js, :html
 
   def index
+    @top_three_winners = @leaderboards.where(baseline: nil).first(3)
     if params[:country_name].present? || params[:affiliation].present?
       @leaderboards = @leaderboards.where(id: @filter.call('leaderboard_ids'))
       @leaderboards = paginate_leaderboards_by(:seq)
@@ -22,8 +23,10 @@ class LeaderboardsController < ApplicationController
     @follow           = @challenge.follows.find_by(participant_id: current_participant.id) if current_participant.present?
     @challenge_rounds = @challenge.challenge_rounds.started
     @post_challenge   = post_challenge?
-    @countries = @filter.call('participant_countries')
-    @affiliations = @filter.call('participant_affiliations')
+    unless @leaderboards.first.class.name == 'DisentanglementLeaderboard'
+      @countries = @filter.call('participant_countries')
+      @affiliations = @filter.call('participant_affiliations')
+    end
   end
 
   def export

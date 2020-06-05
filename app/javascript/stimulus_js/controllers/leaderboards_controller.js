@@ -60,4 +60,33 @@ export default class extends Controller {
       window.location.href = url
     }
   }
+
+  getAffiliations(){
+    let countryName = this.participantCountryTarget.selectedOptions[0].value
+    if(!countryName.trim())
+    {
+      $('#participant-affiliation').find('option').remove().end();
+      $('#participant-affiliation').append($("<option></option>").attr("value",'').text('All affiliations'));
+    }
+    let challengeId = this.participantCountryTarget.dataset.challengeId
+    let metaChallengeId = $('#leaderboards-div').data('meta-challenge-id');
+    let challengeRoundId = $('#challenge_round_id').val();
+    let postChallenge = $('#post_challenge').val();
+
+    var data = {
+      'country_name': countryName,
+      'challenge_round_id': challengeRoundId,
+      'post_challenge': postChallenge
+    }
+
+    if(metaChallengeId !== '')
+    {
+      data['meta_challenge_id'] = metaChallengeId
+    }
+
+    $.ajax({
+      url: "/challenges/" + challengeId + "/leaderboards/get_affiliation.js",
+      data: data
+    });
+  }
 }
