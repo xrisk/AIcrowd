@@ -44,7 +44,7 @@
         <% end %>
       <% else %> <!-- IF NO EUA REQUIRED -->
         <h3>Get Access</h3>
-        <p>By agreeing you are considered as registered for this challenge's task. The registration data will be shared with CLEF.</p>
+        <p>By agreeing you are considered as registered for this challenge's task. <% unless clef_task.use_challenge_dataset_files? %>The registration data will be shared with CLEF.<% end %></p>
 
         <%= form_for ParticipantClefTask.new(clef_task_id: clef_task.id), url: participant_clef_tasks_path, validate: true, html: { class: 'sgl-col' }, method: :post do |f| %>
           <%= f.hidden_field :clef_task_id, value: clef_task.id %>
