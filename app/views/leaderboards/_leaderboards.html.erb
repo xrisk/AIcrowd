@@ -57,7 +57,7 @@
     <% if @challenge.meta_challenge %>
       <td>
         <% unless is_disentanglement_leaderboard?(leaderboard) %>
-          <% submitter = leaderboard.submitter %>
+          <% submitter = leaderboard.submitter if leaderboard.submitter_type != 'OldParticipant'  %>
           <% if submitter.present? %>
             <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: challenge, width: '200px', id: submitter.id } %>
           <% end %>
@@ -90,7 +90,7 @@
         <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
         <td>
           <% unless is_disentanglement_leaderboard?(leaderboard) %>
-            <% submitter = leaderboard.submitter %>
+            <% submitter = leaderboard.submitter if leaderboard.submitter_type != 'OldParticipant' %>
             <% if submitter.present? %>
               <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: challenge, width: '200px', id: submitter.id } %>
             <% end %>
