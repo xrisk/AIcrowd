@@ -28,9 +28,11 @@
           </div>
         <% end %>
 
-        <!-- leaderbaord winners -->
-        <%= render partial: 'winners', locals: { leaderboards: @leaderboards.first(3), current_round: @current_round }  %>
-        <!-- /leaderbaord winners -->
+        <% unless @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge" %>
+          <!-- leaderbaord winners -->
+          <%= render partial: 'winners', locals: { leaderboards: @leaderboards.first(3), current_round: @current_round }  %>
+          <!-- /leaderbaord winners -->
+        <% end %>
 
         <% if policy(@challenge).show_leaderboard? %>
           <% unless policy(@challenge).leaderboard_public? %>
