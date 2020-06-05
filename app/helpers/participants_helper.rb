@@ -47,7 +47,7 @@ module ParticipantsHelper
 
   def location_id(participant)
     uniq_id = SecureRandom.hex(2)
-    random_class = uniq_id.to_s + '_' + participant.id.to_s
+    random_class = uniq_id.to_s + '_' + participant&.id.to_s
     "participant_#{random_class}"
   end
 end
