@@ -2,7 +2,7 @@
 <%= collection_select(
       :challenge,
       :clef_task_id,
-      ClefTask.all,
+      ClefTask.where(organizer: organizers),
       :id,
       :task,
       include_blank: false,
