@@ -23,7 +23,7 @@
       <%= link_to 'Download', file_expiring_url(dataset_file), class: 'btn btn-secondary', target: '_blank', data: { :'dataset-file-id' => dataset_file.id.to_i } %>
     <% end %>
 
-    <% if !folder_item && Pundit.policy(current_participant, dataset_file).destroy? && dataset_file.persisted? %>
+    <% if (!defined?(folder_item) || !folder_item) && Pundit.policy(current_participant, dataset_file).destroy? && dataset_file.persisted? %>
       <%= link_to 'Edit', edit_challenge_dataset_file_path(challenge, dataset_file), class: 'btn btn-secondary' %>
       <%= link_to 'Delete',
                   challenge_dataset_file_path(challenge,dataset_file),

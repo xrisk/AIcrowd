@@ -1,4 +1,8 @@
 class DatasetFolderPolicy < ApplicationPolicy
+  def index?
+    participant
+  end
+
   def new?
     participant && (participant.admin? || (participant.organizer_ids & @record.challenge.organizer_ids).any?)
   end
@@ -28,7 +32,7 @@ class DatasetFolderPolicy < ApplicationPolicy
     end
 
     def resolve
-      if participant && (participant.admin? || participant.organizers.present?)
+      if participant && (participant.admin? || (participant.organizer_ids & @record.challenge.organizer_ids).any?)
         scope.all
       else
         scope.where(visible: true, evaluation: false)

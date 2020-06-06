@@ -32,7 +32,7 @@ class DatasetFilePolicy < ApplicationPolicy
     end
 
     def resolve
-      if participant && (participant.admin? || participant.organizers.present?)
+      if participant && (participant.admin? || (participant.organizer_ids & @record.challenge.organizer_ids).any?)
         scope.all
       else
         scope.where("visible is true and evaluation is false")

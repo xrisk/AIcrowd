@@ -92,7 +92,9 @@ class DatasetFoldersController < ApplicationController
         :aws_secret_key,
         :bucket_name,
         :region,
-        :aws_endpoint
+        :aws_endpoint,
+        :visible,
+        :evaluation
       )
   end
 end
