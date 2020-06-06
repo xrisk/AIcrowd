@@ -8,5 +8,4 @@ class DatasetFolder < ApplicationRecord
   validates :aws_access_key, presence: true
   validates :aws_secret_key, presence: true
   validates :bucket_name, presence: true
-  validates :region, presence: true
 end
