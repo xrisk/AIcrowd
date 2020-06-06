@@ -59,7 +59,7 @@
         <% unless is_disentanglement_leaderboard?(leaderboard) %>
           <% submitter = leaderboard.submitter %>
           <% if submitter.present? %>
-            <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: challenge, width: '200px', id: submitter.id + 3 } %>
+            <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: challenge, width: '200px', id: submitter.id } %>
           <% end %>
         <% end %>
       </td>
@@ -88,17 +88,17 @@
       <% if !leaderboard.baseline? %>
         <td><%= leaderboard.entries %></td>
         <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
-      <% else %>
-        <td colspan="2"></td>
-      <% end %>
-      <td>
-        <% unless is_disentanglement_leaderboard?(leaderboard) %>
-          <% submitter = leaderboard.submitter %>
-          <% if submitter.present? %>
-            <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: challenge, width: '200px', id: submitter.id + 3 } %>
+        <td>
+          <% unless is_disentanglement_leaderboard?(leaderboard) %>
+            <% submitter = leaderboard.submitter %>
+            <% if submitter.present? %>
+              <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: challenge, width: '200px', id: submitter.id } %>
+            <% end %>
           <% end %>
-        <% end %>
-      </td>
+        </td>
+      <% else %>
+        <td colspan="3"></td>
+      <% end %>
       <td class="text-right">
         <% if leaderboard.try(:submitter_type) != 'OldParticipant' && leaderboard.try(:submitter).present? && leaderboard.try(:submission_id).present? %>
           <%= link_to 'View', challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm' %>
