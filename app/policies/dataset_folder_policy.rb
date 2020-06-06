@@ -32,10 +32,14 @@ class DatasetFolderPolicy < ApplicationPolicy
     end
 
     def resolve
-      if participant && (participant.admin? || (participant.organizer_ids & @record.challenge.organizer_ids).any?)
+      if participant && participant.admin?
         scope.all
+      elsif participant && participant.organizer_ids.any?
+        scope.where("visible is true and evaluation is false").or(
+          scope.where(challenge_id: Challenge.joins(:organizers).where(organizers: {id: participant.organizer_ids}).ids)
+        )
       else
-        scope.where(visible: true, evaluation: false)
+        scope.where("visible is true and evaluation is false")
       end
     end
   end
