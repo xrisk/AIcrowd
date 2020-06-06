@@ -42,7 +42,7 @@
           </div>
 
           <div class="leaderboard-position-graph">
-            <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: @challenge, width: nil, id: index } %>
+            <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: @challenge, width: nil, id: index, current_round: @current_round } %>
           </div>
         </div>
       </div>
