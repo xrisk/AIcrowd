@@ -48,6 +48,11 @@
             <%= f.text_field :region, class: 'form-control' %>
           </div>
 
+          <div class="form-group">
+            <label>Endpoint</label>
+            <%= f.text_field :aws_endpoint, class: 'form-control' %>
+          </div>
+
           <div class="btn-set">
             <%= f.button (f.object.new_record? ? "Add Folder" : "Update Folder"), class: 'btn btn-primary', id: 'submitS3', data: { disable_with: 'Saving...' } %>
             <%= link_to 'Cancel', challenge_dataset_files_path(@challenge), class: "btn btn-secondary" %>

@@ -1,6 +1,6 @@
 <!-- item -->
 <li class="list-group-item">
-  <div class="dataset-file__info <%= defined?(list_item_class) ? list_item_class : '' %>">
+  <div class="dataset-file__info <%= defined?(folder_item) && folder_item ? 'dataset_file__from-folder' : '' %>">
     <div>
       <%= link_to file_expiring_url(dataset_file), class: 'text-link', data: { :'dataset-file-id' => dataset_file.id } do %>
         <%= file_title(dataset_file) %> (<%= file_size(dataset_file) %>)
@@ -23,7 +23,7 @@
       <%= link_to 'Download', file_expiring_url(dataset_file), class: 'btn btn-secondary', target: '_blank', data: { :'dataset-file-id' => dataset_file.id.to_i } %>
     <% end %>
 
-    <% if Pundit.policy(current_participant, dataset_file).destroy? && dataset_file.persisted? %>
+    <% if !folder_item && Pundit.policy(current_participant, dataset_file).destroy? && dataset_file.persisted? %>
       <%= link_to 'Edit', edit_challenge_dataset_file_path(challenge, dataset_file), class: 'btn btn-secondary' %>
       <%= link_to 'Delete',
                   challenge_dataset_file_path(challenge,dataset_file),

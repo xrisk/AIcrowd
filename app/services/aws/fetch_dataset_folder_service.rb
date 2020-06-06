@@ -22,11 +22,12 @@ module Aws
 
     def build_aws_s3_client
       Aws::S3::Resource.new(
-        region:      dataset_folder.region,
+        region:      dataset_folder.region.presence || ENV['AWS_REGION'],
         credentials: Aws::Credentials.new(
           dataset_folder.aws_access_key,
           dataset_folder.aws_secret_key
-        )
+        ),
+        endpoint: dataset_folder.aws_endpoint.presence || ENV['AWS_ENDPOINT']
       )
     end
 
