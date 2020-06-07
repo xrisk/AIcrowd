@@ -2,7 +2,7 @@
   <% leaderboards.each_with_index do |leaderboard, index| %>
     <%
       participants = leaderboard_participants(leaderboard)
-      submitter    = leaderboard.submitter
+      submitter    = leaderboard.submitter if leaderboard.submitter_type != 'OldParticipant'
     %>
     <% if submitter.present? %>
       <!-- leaderboard-position -->
