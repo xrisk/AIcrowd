@@ -27,6 +27,7 @@ class LeaderboardsController < ApplicationController
       @countries = @filter.call('participant_countries')
       @affiliations = @filter.call('participant_affiliations')
     end
+    @top_three_winners = @leaderboards.where(baseline: nil).first(3)
   end
 
   def export
