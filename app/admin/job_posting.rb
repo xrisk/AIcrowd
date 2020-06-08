@@ -47,7 +47,7 @@ ActiveAdmin.register JobPosting do
       f.input :country
       f.input :remote
       f.label 'Description', class: 'ckeditor_label job_posting'
-      f.text_area :description, class: 'ckeditor'
+      f.cktext_area :description
       f.input :job_url
     end
     f.actions

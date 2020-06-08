@@ -38,7 +38,8 @@ ActiveAdmin.register NewsletterEmail do
       f.input :bcc
       f.input :cc
       f.input :subject
-      f.input :message, as: :ckeditor
+      f.label 'Message*', class: 'ckeditor_label email'
+      f.cktext_area :message
     end
 
     div class: 'actions newsletter-emails__actions' do
