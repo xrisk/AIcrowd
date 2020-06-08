@@ -3164,6 +3164,11 @@ input[type="button"].btn-block {
   margin: 0 1.25rem .5rem 1.25rem;
 }
 
+.filter-dropdown-form {
+  display: flex;
+  align-items: center;
+}
+
 .dropdown form hr {
   margin: 1rem 0 .75rem 0 !important;
 }
@@ -14128,6 +14133,61 @@ html {
   border: 1px solid #D88151;
 }
 
+.leaderboard-filters-btn {
+  background: url(../../assets/img/icon-filter.svg);
+  background-position: 0 21px;
+  background-repeat: no-repeat;
+  border-top: 1px solid #D9DCDC;
+  padding: 1rem 0 1rem 1.5rem;
+}
+
+.leaderboard-filters {
+  font-size: 14px;
+  padding-bottom: 1rem;
+}
+
+@media (max-width: 767.98px) {
+  .leaderboard-filters {
+    padding-bottom: .75rem;
+  }
+}
+
+.leaderboard-filters form {
+  align-items: flex-start;
+  display: flex;
+  flex: 1 0 auto;
+}
+
+.leaderboard-filters form .form-group {
+  margin: 0 .5rem 0 0;
+}
+
+@media (max-width: 767.98px) {
+  .leaderboard-filters form .form-group {
+    display: block;
+    margin: 0 .5rem .75rem 0;
+  }
+}
+
+.leaderboard-filters form select {
+  font-size: 14px;
+  width: 160px;
+}
+
+@media (max-width: 575.98px) {
+  .leaderboard-filters form select {
+    width: auto;
+  }
+}
+
+.leaderboard-filters form .btn {
+  font-size: 14px;
+}
+
+.leaderboard-filters .toggle-switch {
+  display: block;
+  margin-top: 1rem;
+}
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';

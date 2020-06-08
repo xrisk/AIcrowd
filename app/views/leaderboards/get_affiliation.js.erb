@@ -1,0 +1,5 @@
+$('#participant-affiliation').find('option').remove().end();
+$('#participant-affiliation').append($("<option></option>").attr("value",'').text('All affiliations'));
+<% @affiliations&.each do |affiliation| %>
+  $('#participant-affiliation').append($("<option></option>").attr("value",'<%= affiliation %>').text('<%= affiliation %>'));
+<% end %>

@@ -35,6 +35,7 @@ def challenge_routes
   resources :dynamic_contents, only: [:index]
   resources :leaderboards, only: :index do
     get :export, on: :collection
+    get :get_affiliation, on: :collection
   end
   resources :votes, only: [:create, :destroy]
   resources :follows, only: [:create, :destroy]

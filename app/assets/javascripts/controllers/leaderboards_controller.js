@@ -78,3 +78,4 @@ Paloma.controller('Leaderboards', {
     pauseAndPlay();
   }
 });
+

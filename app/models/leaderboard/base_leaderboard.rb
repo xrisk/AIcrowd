@@ -1,11 +1,15 @@
 class BaseLeaderboard < ApplicationRecord
   include PolymorphicSubmitter
+
   belongs_to :challenge
   belongs_to :challenge_round
 
   as_enum :leaderboard_type,
           [:leaderboard, :ongoing, :previous, :previous_ongoing],
           map: :string
+
+  scope :by_country, ->(country_name) { where(participants: { country_cd: Participant.country_cd(country_name) }) }
+  scope :by_affiliation, ->(affiliation) { where(participants: { affiliation: affiliation }) }
 
   def self.morph_submitter!(from:, to:, challenge_id:)
     raise ArgumentError unless challenge_id && from && to
