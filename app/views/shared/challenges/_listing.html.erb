@@ -18,7 +18,7 @@
             <% end %>
             <span class="badge badge-success">Practice</span>
           <% else %>
-            <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>">
+            <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>" data-toggle="tooltip" data-placement="top" title="<%= challenge_end_time(challenge , challenge.active_round) %>">
               <img src="/assets/img/icon-time.svg">
               <%= challenge_remaining_text(challenge, challenge.active_round) %>
             </span>
