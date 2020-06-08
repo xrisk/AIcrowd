@@ -35,7 +35,19 @@ class OngoingLeaderboardPolicy < LeaderboardPolicy
         SQL
       else
         participant_id = 0
-        "ongoing_leaderboards.submitter_type = 'Participant' AND ongoing_leaderboards.submitter_id = #{participant_id} OR ongoing_leaderboards.challenge_id IN (SELECT c.id FROM challenges c WHERE c.show_leaderboard IS TRUE AND c.private_challenge IS FALSE UNION SELECT c.id FROM challenges c WHERE c.show_leaderboard IS TRUE  AND c.private_challenge IS TRUE)"
+        <<~SQL
+          (ongoing_leaderboards.submitter_type = 'Participant' AND
+          ongoing_leaderboards.submitter_id = #{participant_id}
+          OR
+          ongoing_leaderboards.challenge_id IN
+            (SELECT c.id FROM challenges c WHERE
+              c.show_leaderboard IS TRUE AND
+              c.private_challenge IS FALSE UNION
+                SELECT c.id FROM challenges c WHERE
+                c.show_leaderboard IS TRUE AND c.private_challenge IS TRUE
+             )
+            )
+        SQL
       end
     end
 

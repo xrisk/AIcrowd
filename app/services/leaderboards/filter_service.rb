@@ -64,16 +64,16 @@ module Leaderboards
     # set country array
     def participant_countries
       countries = []
-      countries += Participant.countries(team_participant_ids) if leaderboard_having_submitter?('Team')
-      countries += Participant.countries(participant_ids) if leaderboard_having_submitter?('Participant')
+      countries += Country.countries(team_participant_ids) if leaderboard_having_submitter?('Team')
+      countries += Country.countries(participant_ids) if leaderboard_having_submitter?('Participant')
       countries.uniq
     end
 
     # set affiliation array
     def participant_affiliations
       affiliations = []
-      affiliations += Participant.affiliations(team_participant_ids) if leaderboard_having_submitter?('Team')
-      affiliations += Participant.affiliations(participant_ids) if leaderboard_having_submitter?('Participant')
+      affiliations += Country.affiliations(team_participant_ids) if leaderboard_having_submitter?('Team')
+      affiliations += Country.affiliations(participant_ids) if leaderboard_having_submitter?('Participant')
       affiliations.uniq
     end
 
