@@ -26,7 +26,7 @@ function chartOptions(chart){
 }
 function addPointRadius(j, data_array, chart) {
     challenge_round_name = chart.dataSource[indexOfArray(data_array[j], chart.dataSource)][2]
-    if(challenge_round_name != '') {
+    if(challenge_round_name != '' && (data_array[j]!== data_array[j+1])) {
         pointarray[j] = 4
     }
 }
