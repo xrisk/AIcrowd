@@ -11069,11 +11069,11 @@ body {
   align-items: center;
 }
 
-.avatar-group a {
+.avatar-group a, .avatar-group span {
   margin-left: -4px;
 }
 
-.avatar-group a:first-of-type {
+.avatar-group a:first-of-type, .avatar-group span:first-of-type {
   margin-left: 0;
 }
 
