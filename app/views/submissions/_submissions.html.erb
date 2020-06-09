@@ -27,11 +27,13 @@
     <% if @challenge.meta_challenge %><td><%= link_to challenge.challenge, challenge_path(challenge) %></td><% end %>
     <td class="text-right"><%= local_time(submission.created_at, "%a, %e %b %Y") %> <br>
       <%= local_time(submission.created_at, "%H:%M:%S") %></td>
-    <% if challenge.submissions_page %>
-      <td class="text-right"><%= link_to "View", challenge_submission_path(challenge, submission.id), class: "btn btn-secondary btn-sm" %></td>
-    <% end %>
-    <% if submission.submission_link.present? %>
-      <td><%= link_to image_tag('/assets/img/code_snippet.svg'), submission.submission_link, target: "_blank" %></td>
-    <% end %>
+    <td>
+      <% if challenge.submissions_page %>
+        <%= link_to 'View', challenge_submission_path(challenge, submission), class: 'table-fancy-links mr-1' %>
+      <% end %>
+      <% if submission_code_link(submission).present? %>
+        <%= link_to "Code", submission_code_link(submission), class: 'table-fancy-links mr-1', target: "_blank", data: { toggle: 'tooltip', placement: 'top' }, title: "Browse codebase (based on your access permissions)" %>
+      <% end %>
+    </td>
   </tr>
 <% end %>

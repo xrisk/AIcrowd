@@ -2832,6 +2832,16 @@ fieldset:disabled a.btn {
   border-radius: 1.5rem;
 }
 
+.table-leaderboard .btn-sm {
+  border-radius: 0rem;
+  padding: 0px 2px;
+  border-radius: 5px;
+}
+
+.leaderboard-filters-btn .social-icons {
+  float: right;
+}
+
 .btn-block {
   display: block;
   width: 100%;
@@ -14186,6 +14196,11 @@ html {
 .leaderboard-filters .toggle-switch {
   display: block;
   margin-top: 1rem;
+}
+
+a.table-fancy-links {
+  border-bottom: dashed 1px #c5c3c3;
+  color: #565656;
 }
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
