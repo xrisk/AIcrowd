@@ -3,7 +3,7 @@
 
   <div class="form-group">
     <% if challenge.organizers.any?(&:clef_organizer?) %>
-      <%= render partial: 'challenges/fields/clef_fields', locals: {f: f} %>
+      <%= render partial: 'challenges/fields/clef_fields', locals: {f: f, organizers: challenge.organizers} %>
     <% end %>
 
     <%= render partial: 'challenges/fields/fancy_radio', locals: {

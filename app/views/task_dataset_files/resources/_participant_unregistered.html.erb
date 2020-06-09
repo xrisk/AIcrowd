@@ -11,7 +11,12 @@
           <li>Fill in the required information in the EUA document and sign it</li>
           <li>Scan and re-upload the EUA document</li>
         </ul>
-        <p>Upon the approval of your completed EUA document by an ImageCLEF organizer, you will obtain access to the dataset. You will also be automatically registered with CLEF, the main organizer of all CLEF labs.</p>
+        <p>
+          <span>Upon the approval of your completed EUA document by an <%= clef_task.organizer&.organizer %> organizer, you will obtain access to the dataset.</span>
+          <% unless clef_task.use_challenge_dataset_files? %>
+            <span>You will also be automatically registered with CLEF, the main organizer of all CLEF labs.</span>
+          <% end %>
+        </p>
 
         <%= form_for ParticipantClefTask.new(clef_task_id: clef_task.id), url: participant_clef_tasks_path, validate: true, html: { class: 'sgl-col' }, method: :post do |f| %>
           <%= f.hidden_field :clef_task_id, value: clef_task.id %>
@@ -39,7 +44,7 @@
         <% end %>
       <% else %> <!-- IF NO EUA REQUIRED -->
         <h3>Get Access</h3>
-        <p>By agreeing you are considered as registered for this challenge's task. The registration data will be shared with CLEF.</p>
+        <p>By agreeing you are considered as registered for this challenge's task. <% unless clef_task.use_challenge_dataset_files? %>The registration data will be shared with CLEF.<% end %></p>
 
         <%= form_for ParticipantClefTask.new(clef_task_id: clef_task.id), url: participant_clef_tasks_path, validate: true, html: { class: 'sgl-col' }, method: :post do |f| %>
           <%= f.hidden_field :clef_task_id, value: clef_task.id %>

@@ -2,36 +2,5 @@
   <%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
   <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 
-  <!-- section -->
-  <section class="section-p-sm dataset-files-list">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12">
-          <header class="section-header">
-            <div>
-              <h4>Resources</h4>
-            </div>
-            <% if policy(@challenge).edit? %>
-              <div>
-                <%= link_to "New Folder", new_challenge_dataset_folder_path(@challenge), class: 'btn btn-sm btn-secondary' %>
-                <%= link_to "New File", new_challenge_dataset_file_path(@challenge), class: 'btn btn-sm btn-secondary' %>
-              </div>
-            <% end %>
-          </header>
-          <ul class="list-group list-group-flush-px-0 list-group-dataset">
-            <hr/>
-            <% @dataset_folders.each do |dataset_folder| %>
-              <%= render partial: 'dataset_folder', locals: { dataset_folder: dataset_folder, challenge: @challenge } %>
-              <% dataset_folder.dataset_files&.each do |dataset_file| %>
-                <%= render partial: 'shared/challenges/dataset_file', locals: { dataset_file: dataset_file, challenge: @challenge, list_item_class: 'dataset_file__from-folder' } %>
-              <% end %>
-            <% end %>
-            <% @dataset_files.each do |dataset_file| %>
-              <%= render partial: 'shared/challenges/dataset_file', locals: { dataset_file: dataset_file, challenge: @challenge } %>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+  <%= render partial: 'dataset_files' %>
 </div>

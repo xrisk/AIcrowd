@@ -1,40 +1,31 @@
 class LeaderboardsController < ApplicationController
-  before_action :authenticate_participant!, except: :index
-  before_action :set_challenge, only: [:index, :export]
-  before_action :set_current_round, only: [:index, :export]
+  before_action :authenticate_participant!, except: [:index, :get_affiliation]
+  before_action :set_challenge, only: [:index, :export, :get_affiliation]
+  before_action :set_current_round, only: [:index, :export, :get_affiliation]
+  before_action :set_leaderboards, only: [:index, :get_affiliation]
+  before_action :set_filter_service, only: [:index, :get_affiliation]
 
   respond_to :js, :html
 
   def index
-    @vote             = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
-    @follow           = @challenge.follows.where(participant_id: current_participant.id).first if current_participant.present?
-    @challenge_rounds = @challenge.challenge_rounds.started
-    @post_challenge = true if @challenge.completed? && params[:post_challenge] == "true"
-    @post_challenge = false if @challenge.meta_challenge?
-
-    filter = {challenge_round_id: @current_round&.id.to_i, meta_challenge_id: nil}
-    if @meta_challenge.present?
-      filter[:meta_challenge_id] = @meta_challenge.id
-    end
-
-    @leaderboards = if @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
-      DisentanglementLeaderboard
-        .where(challenge_round_id: @current_round)
-        .page(params[:page])
-        .per(10)
-        .order(:row_num)
-    elsif @post_challenge
-      policy_scope(OngoingLeaderboard)
-        .where(filter)
-        .page(params[:page])
-        .per(10)
-        .order(:seq)
+    @top_three_winners = @leaderboards.where(baseline: nil).first(3)
+    if params[:country_name].present? || params[:affiliation].present?
+      @leaderboards = @leaderboards.where(id: @filter.call('leaderboard_ids'))
+      @leaderboards = paginate_leaderboards_by(:seq)
     else
-      policy_scope(Leaderboard)
-        .where(filter)
-        .page(params[:page])
-        .per(10)
-        .order(:seq)
+      @leaderboards     = if @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
+                            paginate_leaderboards_by(:row_num)
+                          else
+                            paginate_leaderboards_by(:seq)
+                          end
+    end
+    @vote             = @challenge.votes.find_by(participant_id: current_participant.id) if current_participant.present?
+    @follow           = @challenge.follows.find_by(participant_id: current_participant.id) if current_participant.present?
+    @challenge_rounds = @challenge.challenge_rounds.started
+    @post_challenge   = post_challenge?
+    unless @leaderboards.first.class.name == 'DisentanglementLeaderboard'
+      @countries = @filter.call('participant_countries')
+      @affiliations = @filter.call('participant_affiliations')
     end
   end
 
@@ -52,6 +43,10 @@ class LeaderboardsController < ApplicationController
               filename: "#{@challenge.challenge.to_s.parameterize.underscore}_leaderboard_export.csv"
   end
 
+  def get_affiliation
+    @affiliations = @filter.call('participant_affiliations')
+  end
+
   private
 
   def set_challenge
@@ -64,7 +59,7 @@ class LeaderboardsController < ApplicationController
 
     if !params.has_key?('meta_challenge_id')
       cp = ChallengeProblems.find_by(problem_id: @challenge.id)
-      if cp.present?
+      if cp.present? && params[:action] != 'get_affiliation'
         params[:meta_challenge_id] = Challenge.find(cp.challenge_id).slug
         redirect_to helpers.challenge_leaderboards_path(@challenge)
       end
@@ -77,5 +72,34 @@ class LeaderboardsController < ApplicationController
     else
       @challenge.active_round
     end
+  end
+
+  def post_challenge?
+    @challenge.completed? && params[:post_challenge] == "true" && !@challenge.meta_challenge?
+  end
+
+  def set_leaderboards
+    filter = {challenge_round_id: @current_round&.id.to_i, meta_challenge_id: nil}
+    if @meta_challenge.present?
+      filter[:meta_challenge_id] = @meta_challenge.id
+    end
+    @leaderboards = if @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
+      DisentanglementLeaderboard
+        .where(challenge_round_id: @current_round)
+    elsif post_challenge?
+      policy_scope(OngoingLeaderboard)
+        .where(filter)
+    else
+      policy_scope(Leaderboard)
+        .where(filter)
+    end
+  end
+
+  def paginate_leaderboards_by(order)
+    @leaderboards.page(params[:page]).per(10).order(order)
+  end
+
+  def set_filter_service
+    @filter = Leaderboards::FilterService.new(leaderboards: @leaderboards, params: params)
   end
 end

@@ -4,8 +4,10 @@
     <div class="md-content">
       <h3>EUA approval pending</h3>
       <p>The approval of <%= link_to 'your completed End User Agreement (EUA)', asset_path(participant_clef_task.eua_file.url.to_s), target: :_blank, style: 'display:inline;' %>
-          document is pending. As soon as an ImageCLEF organizer approves the document, you will get access to the dataset.</p>
-      <p>You will also be automatically registered with CLEF, the main organizer of all CLEF labs.</p>
+          document is pending. As soon as an <%= clef_task.organizer&.organizer %> organizer approves the document, you will get access to the dataset.</p>
+      <% unless clef_task.use_challenge_dataset_files? %>
+        <p>You will also be automatically registered with CLEF, the main organizer of all CLEF labs.</p>
+      <% end %>
       <p>You can redownload the task's EUA <%= link_to 'here', asset_path(clef_task.eua_file.url), target: :_blank, style: 'display:inline;', id: 'eua-file', data: { :'clef-task-id' => clef_task.id } %>.
       <p>In case you wish to replace your EUA, you can upload a new file:</p>
 

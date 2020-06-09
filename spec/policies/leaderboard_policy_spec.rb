@@ -168,11 +168,6 @@ describe LeaderboardPolicy do
       let(:participant) { nil }
 
       it { is_expected.to permit_action(:index) }
-
-      it {
-        expect(Pundit.policy_scope(participant, Leaderboard))
-        .to be_empty
-      }
     end
 
     context 'for a participant' do

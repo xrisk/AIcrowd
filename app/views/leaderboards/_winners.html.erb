@@ -1,0 +1,52 @@
+<div class="row mt-2 mb-2">
+  <% leaderboards.each_with_index do |leaderboard, index| %>
+    <%
+      participants = leaderboard_participants(leaderboard)
+      submitter    = leaderboard.submitter if leaderboard.submitter_type != 'OldParticipant'
+    %>
+    <% if submitter.present? %>
+      <!-- leaderboard-position -->
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="leaderboard-position-<%= rank_wise_trophy(index) %>">
+          <div class="leaderboard-position-user">
+            <% if leaderboard.submitter_type == 'Participant' %>
+              <%= link_to participant_path(submitter), class: "leaderboard-position-avatar" do %>
+                <%= image_tag submitter.image_url, class: "avatar #{rating_tier_class(submitter)}" %>
+              <% end %>
+              <div class="leaderboard-position-user-details">
+                <%= link_to submitter.name, participant_path(submitter), class: "text-link" %>
+                <span class="leaderboard-position-user-score">
+                  <%= leaderboard.score %>
+                </span>
+              </div>
+            <% else %>
+              <div class="avatar-group">
+                <% submitter.participants.each do |participant| %>
+                  <%= link_to participant_path(participant) do %>
+                    <%= image_tag participant.image_url, class: "avatar #{rating_tier_class(participant)}" %>
+                  <% end %>
+                <% end %>
+              </div>
+              <div class="leaderboard-position-user">
+                <div class="leaderboard-position-user-details">
+                  <a class="text-link" href="#">
+                    <%= link_to submitter.name, challenge_team_path(@challenge, submitter) %>
+                    <img src="/assets/img/icon-teams.svg" alt="Team icon">
+                  </a>
+                  <span class="leaderboard-position-user-score">
+                    <%= leaderboard.score %>
+                  </span>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <div class="leaderboard-position-graph">
+            <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: @challenge, width: nil, id: index, current_round: @current_round } %>
+          </div>
+        </div>
+      </div>
+      <!-- /leaderboard-position -->
+    <% end %>
+  <% end %>
+</div>

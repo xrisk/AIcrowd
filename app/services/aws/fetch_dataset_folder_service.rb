@@ -21,13 +21,24 @@ module Aws
     attr_reader :dataset_folder, :client
 
     def build_aws_s3_client
-      Aws::S3::Resource.new(
-        region:      dataset_folder.region,
-        credentials: Aws::Credentials.new(
-          dataset_folder.aws_access_key,
-          dataset_folder.aws_secret_key
+      if dataset_folder.aws_endpoint.present?
+        client = Aws::S3::Resource.new(
+          region:      dataset_folder.region.presence || ENV['AWS_REGION'],
+          credentials: Aws::Credentials.new(
+            dataset_folder.aws_access_key,
+            dataset_folder.aws_secret_key
+          ),
+          endpoint: dataset_folder.aws_endpoint
         )
-      )
+      else
+        client = Aws::S3::Resource.new(
+          region:      dataset_folder.region.presence || ENV['AWS_REGION'],
+          credentials: Aws::Credentials.new(
+            dataset_folder.aws_access_key,
+            dataset_folder.aws_secret_key
+          )
+        )
+      end
     end
 
     def build_dataset_file(aws_file)

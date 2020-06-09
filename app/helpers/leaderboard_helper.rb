@@ -64,4 +64,27 @@ module LeaderboardHelper
     end
     return other_scores
   end
+
+  def rank_wise_trophy(index)
+    case index
+    when 0
+      'gold'
+    when 1
+      'silver'
+    when 2
+      'bronze'
+    end
+  end
+
+  def is_disentanglement_leaderboard?(leaderboard)
+    leaderboard.class.name == 'DisentanglementLeaderboard'
+  end
+
+  def is_selected_country?(country)
+    params[:country_name] == country
+  end
+
+  def is_selected_affiliation?(affiliation)
+    params[:affiliation] == affiliation
+  end
 end

@@ -20,7 +20,7 @@ def challenge_routes
   resources :teams, only: [:create, :show], param: :name, constraints: { name: %r{[^?/]+} }, format: false, controller: 'challenges/teams' do
     resources :invitations, only: [:create], controller: 'challenges/team_invitations'
   end
-  resources :dataset_files
+  resources :dataset_files, except: [:show]
   resources :dataset_folders, only: [:new, :create, :edit, :update, :destroy]
   resources :participant_challenges, only: [:index] do
     get :approve, on: :collection
@@ -35,6 +35,7 @@ def challenge_routes
   resources :dynamic_contents, only: [:index]
   resources :leaderboards, only: :index do
     get :export, on: :collection
+    get :get_affiliation, on: :collection
   end
   resources :votes, only: [:create, :destroy]
   resources :follows, only: [:create, :destroy]

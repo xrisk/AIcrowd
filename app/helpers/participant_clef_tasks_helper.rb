@@ -16,7 +16,7 @@ module ParticipantClefTasksHelper
   end
 
   def render_challenge_resources(participant_clef_task, clef_task, challenge)
-    participant_clef_task_status = participant_clef_task_status(participant_clef_task)
+    participant_clef_task_status = participant_clef_task_status(participant_clef_task, clef_task)
 
     case participant_clef_task_status
     when 'profile_incomplete'
@@ -30,10 +30,8 @@ module ParticipantClefTasksHelper
     end
   end
 
-  private
-
-  def participant_clef_task_status(participant_clef_task)
-    return 'profile_incomplete' if profile_incomplete?
+  def participant_clef_task_status(participant_clef_task, clef_task = nil)
+    return 'profile_incomplete' if profile_incomplete? && clef_task && !clef_task.use_challenge_dataset_files?
 
     if participant_clef_task.present?
       return participant_clef_task.status_cd
@@ -41,6 +39,8 @@ module ParticipantClefTasksHelper
       return 'unregistered'
     end
   end
+
+  private
 
   def profile_incomplete?
     if current_participant.first_name.blank?  ||

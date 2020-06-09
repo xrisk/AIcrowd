@@ -5,7 +5,6 @@
     <% if participant.present? %>
       <div>
         <%= render partial: 'participants/get_user_profile', locals: { participant: participant } %>
-        <span class="description"><%= participant.email %></span>
       </div>
     <% else %>
       <div>

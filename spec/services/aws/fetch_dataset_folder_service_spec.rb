@@ -18,7 +18,8 @@ describe Aws::FetchDatasetFolderService do
           aws_access_key: 'REDACTED',
           aws_secret_key: 'REDACTED',
           bucket_name:    'test-s3-integratioon',
-          region:         'eu-north-1'
+          region:         'eu-north-1',
+          aws_endpoint:   ''
         )
       end
 
@@ -39,7 +40,8 @@ describe Aws::FetchDatasetFolderService do
           aws_access_key: 'REDACTED',
           aws_secret_key: 'REDACTED',
           bucket_name:    'test-s3-integratioon',
-          region:         'eu-north-1'
+          region:         'eu-north-1',
+          aws_endpoint:   ''
         )
       end
 

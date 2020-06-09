@@ -1,15 +1,14 @@
 <div class="row mobile-mt-100">
   <div class="col-12 d-flex align-items-center flex-wrap">
     <div class="organizer-attribution">
-      <% challenge.organizers.each do |organizer| %>
+      <% challenge.organizers.each_with_index do |organizer, index| %>
+        <span><%= index == 0 ? 'By' : '&' %>&nbsp;</span>
         <%= link_to organizer_path(organizer) do %>
           <%= image_tag organizer.image_file_url %>
         <% end %>
-        <span>By&nbsp;
-          <%= link_to organizer_path(organizer) do %>
-            <%= organizer.organizer %>&nbsp;
-          <% end %>
-        </span>
+        <%= link_to organizer_path(organizer) do %>
+          <span><%= organizer.organizer %>&nbsp;</span>
+        <% end %>
       <% end %>
     </div>
 

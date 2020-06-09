@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_22_135605) do
+ActiveRecord::Schema.define(version: 2020_06_03_151708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -508,6 +508,7 @@ ActiveRecord::Schema.define(version: 2020_05_22_135605) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "eua_file"
+    t.boolean "use_challenge_dataset_files", default: false, null: false
     t.index ["organizer_id"], name: "index_clef_tasks_on_organizer_id"
   end
 
