@@ -34,9 +34,9 @@ module SubmissionsHelper
     # Try to parse if not an hash
     return JSON.parse(meta) if meta.is_a? String
 
-    return []
+    return {}
   rescue JSON::ParserError
-    []
+    {}
   end
 
   def submission_view_description(submission)
