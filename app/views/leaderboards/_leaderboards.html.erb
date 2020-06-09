@@ -101,23 +101,19 @@
       <% end %>
       <td class="text-right">
         <% if leaderboard.try(:submitter_type) != 'OldParticipant' && leaderboard.try(:submitter).present? && leaderboard.try(:submission_id).present? %>
-          <%= link_to 'View', challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm' %>
+          <%= link_to 'View', challenge_submission_path(challenge, leaderboard.submission_id), class: 'table-fancy-links mr-2' %>
         <% else %>
-          <%= link_to 'View', '#', class: 'btn btn-secondary btn-sm disabled disabled--with-pointer-events', title: 'Submitter or Submission was deleted' %>
+          <%= link_to 'View', '#', class: 'table-fancy-links disabled disabled--with-pointer-events mr-2', title: 'Submitter or Submission was deleted' %>
+        <% end %>
+        <% submission = leaderboard.try(:submission) %>
+        <% if submission_code_link(submission).present? %>
+          <%= link_to "Code", submission_code_link(submission), class: 'table-fancy-links mr-1', target: "_blank" %>
+        <% end %>
+        <% if submission.present? && policy(submission).show? %>
+          <% text = 'Submission %s by %s have rank #%s on %s leaderboard!! 🎉 #AIcrowd' % [submission.id, leaderboard.submitter.name, leaderboard.row_num, challenge.challenge] %>
+          <%= social_share('twitter', challenge, leaderboard, text) %>
         <% end %>
       </td>
-      <% submission = leaderboard.try(:submission) %>
-      <td>
-        <% if submission.present? && submission&.submission_link.present? %>
-          <%= link_to image_tag('/assets/img/code_snippet.svg'), leaderboard&.submission&.submission_link, title: 'View Code', target: "_blank" %>
-        <% end %>
-      </td>
-      <% if submission.present? && policy(submission).show? %>
-        <td>
-          <%= social_share('facebook', challenge, leaderboard) %>
-          <%= social_share('twitter', challenge, leaderboard) %>
-        </td>
-      <% end %>
     <% end %>
   </tr>
 <% end %>

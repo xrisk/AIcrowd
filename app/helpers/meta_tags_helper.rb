@@ -57,6 +57,16 @@ module MetaTagsHelper
     end
   end
 
+  def meta_video
+    if show_action? && controller_name == 'submissions'
+      if @challenge.media_on_leaderboard
+        if ['video','image','youtube'].include?(media_content_type(@submission))
+          return s3_public_url(@submission, :large)
+        end
+      end
+    end
+  end
+
   private
 
   def title_from_controller_name

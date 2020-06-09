@@ -97,14 +97,19 @@ module ApplicationHelper
     content_tag(:span, outer) { content_tag(inner_type, inner) { title } }
   end
 
-  def social_share(site, challenge, mediable)
+  def social_share(site, challenge, mediable, text=nil)
+    title = challenge.challenge
+    if text.present?
+      title = text
+    end
     data_img_and_url = data_image_and_url(challenge, mediable)
     content_tag(:span,
                 data: {
-                        title: challenge.challenge,
+                        title: title,
                         desc: challenge.tagline,
                         img: data_img_and_url[:img],
-                        url: data_img_and_url[:url] + "?utm_source=AIcrowd&utm_medium=#{site.humanize}"
+                        url: data_img_and_url[:url] + "?utm_source=AIcrowd&utm_medium=#{site.humanize}",
+                        href: data_img_and_url[:url] + "?utm_source=AIcrowd&utm_medium=#{site.humanize}"
                       }) do
       social_share_link(site, data_img_and_url[:url]) do
         image_tag(social_image_path(site))
@@ -161,8 +166,10 @@ module ApplicationHelper
       data_img_and_url.merge!(img: having_media_thumbnail_image?(challenge, mediable) ? s3_public_url(mediable, :thumb) : content_for_meta_image)
       data_img_and_url.merge!(url: challenge_submission_url(challenge, mediable.submission))
     elsif mediable.class.name == 'Submission'
-      data_img_and_url.merge!(img: having_media_large_image?(challenge, mediable) ? s3_public_url(mediable, :large) : content_for_meta_image)
-      data_img_and_url.merge!(url: "#{request.base_url}/#{mediable.short_url}")
+      data_img_and_url.merge!(img: having_media_thumbnail_image?(challenge, mediable) ? s3_public_url(mediable, :thumb) : content_for_meta_image)
+      data_img_and_url.merge!(url: challenge_submission_url(challenge, mediable))
+    elsif mediable.class.name == 'String'
+      data_img_and_url.merge!(url: url_for(mediable))
     end
     data_img_and_url
   end

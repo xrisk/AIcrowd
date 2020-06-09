@@ -44,4 +44,19 @@ module SubmissionsHelper
     return true if current_participant&.admin? || current_participant&.id == submission.participant&.id
     return true if (current_participant&.organizer_ids & submission.challenge.organizer_ids).any?
   end
+
+  def submission_code_link(submission)
+    submission_link = nil
+    if submission.present?
+      meta_hash = submission_meta_hash(submission)
+      if meta_hash.key?("repo_url") && meta_hash.key?("repo_ref")
+        tag_name = meta_hash["repo_ref"].split('/').last
+        submission_link = meta_hash["repo_url"] + '/tree/' + tag_name
+      end
+      if submission.submission_link.present?
+        submission_link = submission.submission_link
+      end
+    end
+    submission_link
+  end
 end
