@@ -33,7 +33,7 @@ The leaderboard displays a ranking change against each entry which indicates the
 
 For each user, the current ranking on the leaderboard is compared against their ranking at the end of the ranking window. The movement and the previous ranking are then displayed on the leaderboard.
 
-This is calculated on each submission, via the **CalculateLeaderboardService**.
+This is calculated on each submission, via the **ChallengeRounds::CreateLeaderboardsService**.
 
 ### Post Challenge Submission
 

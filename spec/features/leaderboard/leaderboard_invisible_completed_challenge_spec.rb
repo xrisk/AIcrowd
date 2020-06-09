@@ -31,7 +31,7 @@
 #         participant: participant,
 #         grading_status_cd: 'graded',
 #         score: 98 }
-#   let!(:leaderboard) { CalculateLeaderboardService
+#   let!(:leaderboard) { ChallengeRounds::CreateLeaderboardsService
 #     .new(
 #       challenge_round_id: challenge.challenge_rounds.first.id)
 #     .call }
