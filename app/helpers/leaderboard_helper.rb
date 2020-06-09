@@ -38,14 +38,24 @@ module LeaderboardHelper
   end
 
   def leaderboard_formatted_value(challenge_round, value)
-    format("%.#{challenge_round.score_precision}f", value || 0)
+    if value.to_i.to_s == value || value.to_f.to_s == value
+      if challenge_round.present?
+        return format("%.#{challenge_round.score_precision}f", value || 0)
+      else
+        return format("%.3f", value || 0)
+      end
+    elsif value.present?
+      return value
+    else
+      return 0
+    end
   end
 
   def leaderboard_other_scores_array(leaderboard, challenge)
     other_scores = []
     challenge.other_scores_fieldnames_array.map(&:to_s).each do |fname|
       other_scores << if leaderboard.meta && (leaderboard.meta.key? fname)
-                        (leaderboard.meta[fname].nil? ? "-" : format("%.3f", leaderboard.meta[fname].to_f))
+                        (leaderboard.meta[fname].nil? ? "-" : leaderboard_formatted_value(challenge.active_round, leaderboard.meta[fname]))
                       else
                         '-'
                       end
