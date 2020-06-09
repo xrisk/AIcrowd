@@ -5,7 +5,7 @@ class BaseLeaderboard < ApplicationRecord
   belongs_to :challenge_round
 
   as_enum :leaderboard_type,
-          [:leaderboard, :ongoing, :previous, :previous_ongoing],
+          [:leaderboard, :ongoing],
           map: :string
 
   def self.morph_submitter!(from:, to:, challenge_id:)

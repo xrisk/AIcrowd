@@ -176,22 +176,19 @@ module ChallengeRounds
       end
     end
 
-    def submissions_order(use_display: false)
+    def submissions_order
       return 'updated_at desc' if challenge.latest_submission == true
 
-      score_sort_order ||= sort_map(challenge_round.primary_sort_order_cd)
-      score_sort_col     = use_display ? 'score_display' : 'score'
+      score_sort_order = sort_map(challenge_round.primary_sort_order_cd)
 
-      return "#{score_sort_col} #{score_sort_order} NULLS LAST" if challenge_round.secondary_sort_order_cd.blank? || challenge_round.secondary_sort_order_cd == 'not_used'
+      return "score_display #{score_sort_order} NULLS LAST" if challenge_round.secondary_sort_order_cd.blank? || challenge_round.secondary_sort_order_cd == 'not_used'
 
-      secondary_sort_order ||= sort_map(challenge_round.secondary_sort_order_cd)
-      secondary_sort_col     = use_display ? 'score_secondary_display' : 'score_secondary'
-      "#{score_sort_col} #{score_sort_order} NULLS LAST, #{secondary_sort_col} #{secondary_sort_order} NULLS LAST"
+      secondary_sort_order = sort_map(challenge_round.secondary_sort_order_cd)
+
+      "score_display #{score_sort_order} NULLS LAST, score_secondary_display #{secondary_sort_order} NULLS LAST"
     end
 
     def sort_leaderboards(all_leaderboards)
-      return all_leaderboards.sort_by { |leaderboard| leaderboard.updated_at }.reverse if challenge.latest_submission == true
-
       score_sort_order = sort_map(challenge_round.primary_sort_order_cd)
 
       if challenge_round.secondary_sort_order_cd.blank? || challenge_round.secondary_sort_order_cd == 'not_used'
@@ -204,7 +201,7 @@ module ChallengeRounds
       secondary_sort_order = sort_map(challenge_round.secondary_sort_order_cd)
 
       all_leaderboards.sort_by do |leaderboard|
-        first_column     = score_sort_order == 'asc' && leaderboard.score >= 1.0 ? leaderboard.score : leaderboard.score * -1
+        first_column     = score_sort_order == 'asc' ? leaderboard.score : leaderboard.score * -1
         secondary_column = secondary_sort_order == 'asc' ? leaderboard.score_secondary : leaderboard.score_secondary * -1
 
         [first_column, secondary_column]
