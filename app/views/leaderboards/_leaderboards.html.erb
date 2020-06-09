@@ -107,7 +107,7 @@
         <% end %>
         <% submission = leaderboard.try(:submission) %>
         <% if submission_code_link(submission).present? %>
-          <%= link_to "Code", submission_code_link(submission), class: 'table-fancy-links mr-1', target: "_blank" %>
+          <%= link_to "Code", submission_code_link(submission), class: 'table-fancy-links mr-1', target: "_blank", data: { toggle: 'tooltip', placement: 'top' }, title: "Browse codebase (based on your access permissions)" %>
         <% end %>
         <% if submission.present? && policy(submission).show? %>
           <% text = 'Submission %s by %s have rank #%s on %s leaderboard!! 🎉 #AIcrowd' % [submission.id, leaderboard.submitter.name, leaderboard.row_num, challenge.challenge] %>

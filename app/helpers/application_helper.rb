@@ -98,10 +98,7 @@ module ApplicationHelper
   end
 
   def social_share(site, challenge, mediable, text=nil)
-    title = challenge.challenge
-    if text.present?
-      title = text
-    end
+    title = text.presence || challenge.challenge
     data_img_and_url = data_image_and_url(challenge, mediable)
     content_tag(:span,
                 data: {
@@ -148,10 +145,6 @@ module ApplicationHelper
 
   def footer_text
     raw Setting.footer_record
-  end
-
-  def challenge_submission_url(challenge, submission)
-    "#{request.base_url}/challenges/#{challenge.friendly_id}/submissions/#{submission.id}"
   end
 
   def social_image_path(site)
