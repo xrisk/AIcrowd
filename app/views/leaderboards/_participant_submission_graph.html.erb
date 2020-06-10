@@ -1,3 +1,4 @@
 <% submissions = challenge.meta_challenge? ? submitter.meta_challenge_submissions(challenge) : submitter.challenge_submissions(challenge) %>
+<% uniform_submissions = uniform_submissions(submissions, @current_round) %>
 
-<%= line_chart uniform_submissions(submissions, @current_round), submission_trend_attributes(id, @current_round, width) %>
+<%= line_chart uniform_submissions, submission_trend_attributes(id, @current_round, width, max_submissions_in_a_day(uniform_submissions)) %>
