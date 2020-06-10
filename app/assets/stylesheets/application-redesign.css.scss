@@ -11288,7 +11288,7 @@ body {
 .maintenance-mode .logomark,
 .polar-question .logomark {
   display: block;
-  background: url("../../assets/img/logomark-aicrowd.svg") no-repeat left center;
+  background: url("../../assets/img/logo.png") no-repeat left center;
   background-size: 256px 238px;
   width: 256px;
   height: 238px;
@@ -11352,7 +11352,7 @@ body {
 
 .maintenance-mode .logomark {
   display: block;
-  background: url("../../assets/img/logomark-aicrowd.svg") no-repeat left center;
+  background: url("../../assets/img/logo.png") no-repeat left center;
   background-size: contain;
   width: 120px;
   height: 113px;
@@ -14201,6 +14201,27 @@ html {
 a.table-fancy-links {
   border-bottom: dashed 1px #c5c3c3;
   color: #565656;
+}
+
+.maintenance-mode {
+  //max-width: 720px;
+  .logomark {
+    display: block;
+    background: url('../../assets/img/logo.png') no-repeat left center;
+    background-size: contain;
+    width: 120px;
+    height: 113px;
+    margin-bottom: 48px;
+  }
+  h1 {
+    max-width: 720px;
+    margin-bottom: .5em;
+  }
+  p {
+    font-size: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
 }
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
