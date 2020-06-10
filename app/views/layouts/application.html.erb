@@ -73,9 +73,12 @@
     <%= render partial: 'layouts/loader' %>
     <div class='content'>
       <%= render partial: 'layouts/header' %>
+
       <div id="flash-messages-wrapper">
+        <%= content_for :flash_messages %>
         <%= render 'layouts/flash_messages' %>
       </div>
+
       <%= yield %>
       <%= insert_paloma_hook %>
     </div>
