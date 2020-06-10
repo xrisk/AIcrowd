@@ -98,13 +98,12 @@ module LeaderboardHelper
     params[:affiliation] == affiliation
   end
 
-  def uniform_submissions(submissions, current_round)
-    submissions_group_by_day = submissions.group_by_created_at
+  def uniform_submissions(submissions_by_day, current_round)
     graph_date_range = current_round.start_dttm.to_date..graph_end_date(current_round)
     graph_date_range.each do |day|
-      submissions_group_by_day[day] = 0 if !submissions_group_by_day.include?(day)
+      submissions_by_day[day] = 0 if !submissions_by_day.include?(day)
     end
-    submissions_group_by_day
+    submissions_by_day
   end
 
   def submission_trend_attributes(id, current_round, width, max)
