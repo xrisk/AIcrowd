@@ -6,7 +6,7 @@ module Organizers
       @participant           = participant
       @challenge             = clef_task.challenges.first
       @email_preferences_url = EmailPreferencesTokenService.new(@organizer_participant).preferences_token_url
-      subject                = "[ImageCLEF AICrowd] - New EUA uploaded for #{@clef_task.task}"
+      subject                = "[#{@challenge&.challenge}] - New EUA uploaded for #{@clef_task.task}"
 
       mail(to: @organizer_participant.email, subject: subject)
     end
