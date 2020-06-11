@@ -97,4 +97,34 @@ module LeaderboardHelper
   def is_selected_affiliation?(affiliation)
     params[:affiliation] == affiliation
   end
+
+  def uniform_submissions(submissions_by_day, current_round)
+    graph_date_range = current_round.start_dttm.to_date..graph_end_date(current_round)
+    graph_date_range.each do |day|
+      submissions_by_day[day] = 0 if !submissions_by_day.include?(day)
+    end
+    submissions_by_day
+  end
+
+  def submission_trend_attributes(id, current_round, width, max)
+    {
+      xmin: current_round.start_dttm.to_date,
+      xmax: graph_end_date(current_round), min: 0, max: max,
+      curve: true, width: width, height: "50px",
+      points: false, id: "chart-#{id}",
+      library: {  scales: {
+                            yAxes: [{ gridLines: { display: false }, ticks: { display: false } }],
+                            xAxes: [{ gridLines: { display: false }, ticks: { display: false } }]
+                  }
+      }
+    }
+  end
+
+  def graph_end_date(current_round)
+    [Time.now.to_date, current_round.end_dttm.to_date].min
+  end
+
+  def max_submissions_in_a_day(uniform_submissions)
+    uniform_submissions.values.max
+  end
 end

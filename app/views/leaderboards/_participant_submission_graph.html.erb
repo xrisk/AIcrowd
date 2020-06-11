@@ -1,13 +1,3 @@
-<% submissions = challenge.meta_challenge? ? submitter.meta_challenge_submissions(challenge) : submitter.challenge_submissions(challenge) %>
-<%
-submissions_group_by_day = submissions.group_by_created_at
-graph_end_date = [Time.now.to_date, @current_round.end_dttm.to_date].min
-(@current_round.start_dttm.to_date..graph_end_date).each do |day|
-  if !submissions_group_by_day.include?(day)
-    submissions_group_by_day[day] = 0
-  end
-end
-%>
-<%= line_chart submissions_group_by_day, xmin: @current_round.start_dttm.to_date, xmax: graph_end_date, min: 0, max: 5,
-    curve: true, width: width, height: "50px", points: false, id: "chart-#{id}",
-    library: { scales: { yAxes: [{gridLines: { display: false }, ticks: { display: false } }], xAxes: [{ gridLines: { display: false }, ticks: { display: false } }]} } %>
+<% uniform_submissions = uniform_submissions(@submitter_submissions[:"submitter#{submitter.id}_submissions_by_day"], @current_round) %>
+
+<%= line_chart uniform_submissions, submission_trend_attributes(id, @current_round, width, max_submissions_in_a_day(uniform_submissions)) %>

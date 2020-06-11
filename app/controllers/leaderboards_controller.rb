@@ -8,12 +8,19 @@ class LeaderboardsController < ApplicationController
   respond_to :js, :html
 
   def index
+    unless is_disentanglement_leaderboard?(@leaderboards.first)
+      @submitter_submissions = {}
+      @leaderboards.each do |leaderboard|
+        submitter = leaderboard.submitter
+        @submitter_submissions.merge!("submitter#{submitter.id}_submissions_by_day": submitter_submissions(submitter).group_by_created_at) if submitter.present?
+      end
+    end
     @top_three_winners = @leaderboards.where(baseline: nil).first(3)
     if params[:country_name].present? || params[:affiliation].present?
       @leaderboards = @leaderboards.where(id: @filter.call('leaderboard_ids'))
       @leaderboards = paginate_leaderboards_by(:seq)
     else
-      @leaderboards     = if @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
+      @leaderboards     = if is_disentanglement_leaderboard?(@leaderboards.first)
                             paginate_leaderboards_by(:row_num)
                           else
                             paginate_leaderboards_by(:seq)
@@ -23,7 +30,7 @@ class LeaderboardsController < ApplicationController
     @follow           = @challenge.follows.find_by(participant_id: current_participant.id) if current_participant.present?
     @challenge_rounds = @challenge.challenge_rounds.started
     @post_challenge   = post_challenge?
-    unless @leaderboards.first.class.name == 'DisentanglementLeaderboard'
+    unless is_disentanglement_leaderboard?(@leaderboards.first)
       @countries = @filter.call('participant_countries')
       @affiliations = @filter.call('participant_affiliations')
     end
@@ -101,5 +108,13 @@ class LeaderboardsController < ApplicationController
 
   def set_filter_service
     @filter = Leaderboards::FilterService.new(leaderboards: @leaderboards, params: params)
+  end
+
+  def submitter_submissions(submitter)
+    @challenge.meta_challenge? ? submitter.meta_challenge_submissions(@challenge) : submitter.challenge_submissions(@challenge)
+  end
+
+  def is_disentanglement_leaderboard?(leaderboard)
+    leaderboard.class.name == 'DisentanglementLeaderboard'
   end
 end
