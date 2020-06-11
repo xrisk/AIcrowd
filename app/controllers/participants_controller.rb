@@ -22,7 +22,7 @@ class ParticipantsController < ApplicationController
                              end
     @discourse_posts = @discourse_posts_fetch.value
 
-    @activity_data = Participants::ActivityQuery.new(participant: @participant).call
+    @activity_data = Participants::ActivityHeatmapService.new(participant: @participant).call.value
 
     @categories = @participant.challenges.joins(:categories).group('categories.name').reorder('categories.name').count
     if @categories.count == 0

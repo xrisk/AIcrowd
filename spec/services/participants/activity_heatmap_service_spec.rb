@@ -1,23 +1,26 @@
 require 'rails_helper'
 
-describe Gitlab::FetchCalendarActivityService do
+describe Participants::ActivityHeatmapService do
   subject { described_class.new(participant: participant) }
+
+  let!(:submission)       { create(:submission, participant: participant, created_at: Time.current) }
+  let!(:ahoy_visits)      { create_list(:ahoy_visit, 3, user: participant, started_at: Time.current) }
+  let!(:other_ahoy_visit) { create(:ahoy_visit, started_at: Time.current) }
 
   describe '#call' do
     context 'when participant exists in Gitlab' do
       let(:participant) { create(:participant, name: 'test') }
 
-      it 'returns success with activity data' do
+      it 'returns collection of dates and values' do
         result = VCR.use_cassette('gitlab_api/fetch_calendar_activity/success') do
           subject.call
         end
 
         expect(result).to be_success
 
-        activity_data = result.value
+        activity = result.value.find { |activity| activity[:date] == Time.current.to_date }
 
-        expect(activity_data.size).to eq 32
-        expect(activity_data.first).to eq [Date.parse('2020-06-09'), 7]
+        expect(activity[:val]).to eq 13
       end
     end
 
@@ -29,8 +32,11 @@ describe Gitlab::FetchCalendarActivityService do
           subject.call
         end
 
-        expect(result).to be_failure
-        expect(result.value).to eq 'You need to sign in or sign up before continuing.'
+        expect(result).to be_success
+
+        activity = result.value.find { |activity| activity[:date] == Time.current.to_date }
+
+        expect(activity[:val]).to eq 13
       end
     end
   end

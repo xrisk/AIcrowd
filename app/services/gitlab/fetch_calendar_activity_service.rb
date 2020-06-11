@@ -11,14 +11,17 @@ module Gitlab
       response = client.get(endpoint_path)
 
       if response.status == 200
-        success(JSON.parse(response.body))
+        parsed_data   = JSON.parse(response.body)
+        activity_data = parsed_data.transform_keys { |key| Date.parse(key) }
+
+        success(activity_data)
       else
         error_message = JSON.parse(response.body)['error']
 
         gitlab_logger.error(error_message)
         failure(error_message)
       end
-    rescue Faraday::Error::ConnectionFailed => e
+    rescue ::Faraday::Error => e
       gitlab_logger.error(e.message)
       failure(e.message)
     end
