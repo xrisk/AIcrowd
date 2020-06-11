@@ -106,13 +106,16 @@ module LeaderboardHelper
     submissions_by_day
   end
 
-  def submission_trend_attributes(id, current_round, width, max)
+  def submission_trend_attributes(id, current_round, width, uniform_submissions)
     {
       xmin: current_round.start_dttm.to_date,
-      xmax: graph_end_date(current_round), min: 0, max: max,
+      xmax: graph_end_date(current_round), min: 0, max: max_submissions_in_a_day(uniform_submissions),
       curve: true, width: width, height: "50px",
-      points: false, id: "chart-#{id}",
-      library: {  scales: {
+      points: uniform_submissions.count == 1, id: "chart-#{id}",
+      library: {  tooltips: { caretSize: 0, titleFontSize: 9, bodyFontSize: 9,
+                              bodySpacing: 0, titleSpacing: 0, xPadding: 2, yPadding: 2
+                  },
+                  scales: {
                             yAxes: [{ gridLines: { display: false }, ticks: { display: false } }],
                             xAxes: [{ gridLines: { display: false }, ticks: { display: false } }]
                   }
