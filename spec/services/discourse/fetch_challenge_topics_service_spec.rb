@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe Discourse::FetchChallengeTopicsService, :requests_allowed do
-  subject { described_class.new(challenge: challenge) }
+  subject { described_class.new(challenge: challenge, page: 0) }
 
   let(:challenge) { create(:challenge, :running, discourse_category_id: 2) }
 

@@ -1,4 +1,5 @@
 <% discourse_topics.each do |discourse_topic| %>
+  <% next if discourse_topic['visible'] == false %>
   <% author = discourse_original_poster(discourse_topic) %>
 
   <ul class="list-group list-group-flush-px-0 list-group-discussion">
