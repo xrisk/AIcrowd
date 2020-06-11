@@ -29,10 +29,10 @@
       <%= local_time(submission.created_at, "%H:%M:%S") %></td>
     <td>
       <% if challenge.submissions_page %>
-        <%= link_to 'View', challenge_submission_path(challenge, submission), class: 'table-fancy-links mr-1' %>
+        <%= link_to 'View', challenge_submission_path(challenge, submission), class: 'btn btn-secondary btn-sm mr-1' %>
       <% end %>
       <% if submission_code_link(submission).present? %>
-        <%= link_to "Code", submission_code_link(submission), class: 'table-fancy-links mr-1', target: "_blank", data: { toggle: 'tooltip', placement: 'top' }, title: "Browse codebase (based on your access permissions)" %>
+        <%= link_to "Code", submission_code_link(submission), class: 'btn btn-secondary btn-sm mr-1', target: "_blank", data: { toggle: 'tooltip', placement: 'top' }, title: "Browse codebase (based on your access permissions)" %>
       <% end %>
     </td>
   </tr>
