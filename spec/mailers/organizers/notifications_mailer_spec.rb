@@ -6,10 +6,11 @@ describe Organizers::NotificationsMailer, type: :mailer do
 
     let(:organizer_participant) { create(:participant, email: 'test@example.com') }
     let(:participant)           { create(:participant) }
-    let(:clef_task)             { create(:clef_task, challenges: [create(:challenge, :running)]) }
+    let(:challenge)             { create(:challenge, :running) }
+    let(:clef_task)             { create(:clef_task, challenges: [challenge]) }
 
     it 'renders the headers' do
-      expect(subject.subject).to eq "[ImageCLEF AICrowd] - New EUA uploaded for #{clef_task.task}"
+      expect(subject.subject).to eq "[#{challenge&.challenge}] - New EUA uploaded for #{clef_task.task}"
       expect(subject.to).to eq ['test@example.com']
       expect(subject.from).to eq ['no-reply@aicrowd.com']
     end
