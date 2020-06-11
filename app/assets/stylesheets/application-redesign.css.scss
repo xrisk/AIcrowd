@@ -4365,7 +4365,7 @@ input[type="button"].btn-block {
 }
 
 .card-challenge .card-intro {
-  height: 120px;
+  min-height: 120px;
 
   @media (max-width: 767.98px) {
     min-height: 115px;
