@@ -650,7 +650,7 @@ Submission.create!([
 
   # Calculate Leaderboards
   [52,32,42].each do |id|
-    CalculateLeaderboardService.new(challenge_round_id: id).call
+    ChallengeRounds::CreateLeaderboardsService.new(challenge_round_id: id).call
   end
 
   Blog.create!(
