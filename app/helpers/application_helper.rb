@@ -185,7 +185,7 @@ module ApplicationHelper
     notifications&.pluck(:is_new)&.uniq&.any?(true) ? 'notification-bell-icon-active' : 'notification-bell-icon'
   end
 
-  def is_new?(notification)
+  def unread?(notification)
     'dropdown-item-active' if notification.is_new
   end
 

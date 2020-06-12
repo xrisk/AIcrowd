@@ -34,9 +34,11 @@ module Discourse
 
       discourse_image  = ENV['DOMAIN_NAME'] + '/assets/img/discourse.png'
       notification_url = ENV['DISCOURSE_DOMAIN_NAME'] + '/t' + "/#{notification['slug']}/#{notification['topic_id']}"
+      notification_message_text = notification_message
 
+      return if notification_message_text.nil?
       notification_record            = participant.notifications.find_or_create_by!(
-                                         message: notification_message,
+                                         message: notification_message_text,
                                          notification_type: notification['notification_type'],
                                          thumbnail_url: discourse_image,
                                          notification_url: notification_url

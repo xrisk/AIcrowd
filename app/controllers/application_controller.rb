@@ -28,9 +28,7 @@ class ApplicationController < ActionController::Base
   end
 
   def notifications
-    if current_user.present?
-      @notifications = current_user.notifications
-    end
+    @notifications = current_user&.notifications
   end
 
   private

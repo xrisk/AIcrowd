@@ -9,10 +9,8 @@ class NotificationService
   end
 
   def call
-    send(@notification_type) if ['graded', 'failed', 'leaderboard'].include?(@notification_type) && @participant.present?
+    public_send(@notification_type) if ['graded', 'failed', 'leaderboard'].include?(@notification_type)
   end
-
-  private
 
   def graded
     score   = @notifiable.score || 0.0

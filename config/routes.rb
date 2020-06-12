@@ -106,6 +106,7 @@ Rails.application.routes.draw do
       end
       resources :participants, only: [] do
         get :user_profile, on: :member
+        post :discourse_notifications, on: :collection
       end
       resources :newsletter_emails, only: [] do
         post :decline, on: :member
@@ -155,9 +156,6 @@ Rails.application.routes.draw do
     get '/read_notification/:id' => 'participants#read_notification', :as => :read_notification
     match '/notifications', to: 'email_preferences#edit', via: :get
     match '/notifications', to: 'email_preferences#update', via: :patch
-    collection do
-      post :discourse_notifications
-    end
   end
 
   resources :job_postings, path: "jobs", only: [:index, :show]

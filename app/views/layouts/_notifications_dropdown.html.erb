@@ -6,7 +6,7 @@
       <!-- notification -->
       <% if @notifications.present? %>
         <% @notifications&.first(5).each do |notification| %>
-          <%= link_to participant_read_notification_path(current_participant, id: notification.id), class: "dropdown-item #{is_new?(notification)}" do %>
+          <%= link_to participant_read_notification_path(current_participant, id: notification.id), class: "dropdown-item #{unread?(notification)}" do %>
             <div class="dropdown-item-img">
               <%= image_tag notification.thumbnail_url if notification.thumbnail_url.present? %>
             </div>
