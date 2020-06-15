@@ -48,8 +48,9 @@ class NotificationService
   end
 
   def leaderboard
-    message               = "You have moved from #{@notifiable.previous_row_num} to #{@notifiable.row_num} place in the #{@notifiable.
-    challenge.challenge} leaderboard"
+    return if @participant.nil?
+
+    message               = "You have moved from #{@notifiable.previous_row_num} to #{@notifiable.row_num} place in the #{@notifiable.challenge.challenge} leaderboard"
     existing_notification = @participant.notifications.where(notification_type: 'leaderboard').first
 
     return if message == existing_notification&.message
