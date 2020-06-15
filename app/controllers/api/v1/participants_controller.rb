@@ -12,6 +12,11 @@ module Api
 
         render partial: 'participants/user_link', locals: { participant: participant, username: username, avatar: avatar, truncate: truncate }, layout: false
       end
+
+      def discourse_notifications
+        Discourse::NotificationService.new(notification: params['notification']).call
+        render json: { message: 'creating' }, status: :ok
+      end
     end
   end
 end

@@ -59,6 +59,7 @@ class Submission < ApplicationRecord
     for badge in AicrowdBadge.where(badges_event_id: BadgesEvent.where(name: "onsubmission").pluck(:id))
       eval(badge.code)
     end
+    Notification::SubmissionNotificationJob.perform_later(id)
   end
 
   after_destroy do

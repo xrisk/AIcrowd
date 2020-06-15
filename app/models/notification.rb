@@ -1,6 +1,8 @@
 class Notification < ApplicationRecord
   belongs_to :participant
-  belongs_to :notifiable, polymorphic: true
+  belongs_to :notifiable, polymorphic: true, optional: true
+
+  default_scope { order(created_at: :desc) }
 
   scope :pristine, -> { where(is_new: true) }
   scope :recent, -> { order(created_at: :desc) }
@@ -13,7 +15,8 @@ class Notification < ApplicationRecord
     'Graded'         => :graded,
     'Grading Failed' => :grading_failed,
     'Leaderboard'    => :leaderboard,
-    'Article'        => :article
+    'Article'        => :article,
+    'Discourse'      => :discourse
   }.freeze
 
   def read?

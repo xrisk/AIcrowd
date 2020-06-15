@@ -75,7 +75,7 @@
 						<%= link_to "Contact", contact_path, {class: "dropdown-item"} %>
 					</div>
 				</div>
-
+				<%= render partial: 'layouts/notifications_dropdown' %>
 				<div class="member-options">
 					<div class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= participant_avatar current_participant %></a>

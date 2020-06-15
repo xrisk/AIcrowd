@@ -14,5 +14,6 @@ class CalculateLeaderboardJob < ApplicationJob
         CalculateMetaLeaderboardService.new(challenge_id: challenge_problem.challenge_id).call
       end
     end
+    Notification::LeaderboardNotificationJob.perform_now(challenge_round_id)
   end
 end

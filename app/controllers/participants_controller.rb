@@ -97,6 +97,17 @@ class ParticipantsController < ApplicationController
                 notice: 'Image removed.'
   end
 
+  def notifications_message
+    @notifications = current_user.notifications
+  end
+
+  def read_notification
+    @notification = current_user.notifications.find(params[:id])
+    @notification.update(is_new: false)
+
+    redirect_to @notification.notification_url || root_url
+  end
+
   private
 
   def set_participant
