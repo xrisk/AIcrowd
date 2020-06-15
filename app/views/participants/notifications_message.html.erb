@@ -12,7 +12,7 @@
 <div class="section-pt-sm-pb-md">
   <div class="container-fluid">
     <% @notifications.each do |notification| %>
-    <div class="topic-comment <%= unread?(notification) %>">
+    <div class="topic-comment <%= unread_notification?(notification) %>">
       <div class="discussion-topic-body">
         <%= link_to participant_read_notification_path(current_participant, id: notification.id), class: "dropdown-item" do %>
           <div>
