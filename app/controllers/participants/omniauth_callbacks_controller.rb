@@ -4,9 +4,8 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
   end
 
   def oauth2_generic
-    puts 'OAUTH:'
-    puts request.env['omniauth.auth']
-    @user = Participant.from_omniauth(request.env['omniauth.auth'])
+    @user = from_omniauth(request.env['omniauth.auth'])
+
     if @user.persisted?
       if !@user.confirmed?
         @user.confirm
@@ -24,5 +23,39 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
 
   def failure
     redirect_to root_path
+  end
+
+  private
+
+  def from_omniauth(auth)
+    email     = auth.info.email
+    username  = auth.info.name
+    username  = username.gsub(/\s+/, '_').downcase
+    username  = sanitize_userhandle(username)
+    image_url = auth.info.image
+    provider  = auth.provider
+    provider  = 'crowdai' if provider == 'oauth2_generic'
+
+    Participant.where(email: email).first_or_create do |user|
+      user.email    = email
+      user.password = Devise.friendly_token[0, 20]
+      user.name     = username
+      user.provider = provider
+      user.remote_image_file_url = image_url if image_url
+      ### NATE: we want to skip the notification but leave the user unconfirmed
+      ### which will allow us to force a password reset on first login
+      user.skip_confirmation_notification!
+    end
+  end
+
+  def sanitize_userhandle(userhandle)
+    userhandle.to_ascii
+      .tr("@", "a")
+      .gsub("&", "and")
+      .delete('#')
+      .delete('*')
+      .gsub(/[\,\.\'\;\-\=]/, "")
+      .gsub(/[\(\)]/, "_")
+      .tr(' ', "_")
   end
 end

@@ -314,41 +314,6 @@ class Participant < ApplicationRecord
     Prometheus::ParticipantCounterService.new.call
   end
 
-  def self.sanitize_userhandle(userhandle)
-    userhandle.to_ascii
-      .tr("@", "a")
-      .gsub("&", "and")
-      .delete('#')
-      .delete('*')
-      .gsub(/[\,\.\'\;\-\=]/, "")
-      .gsub(/[\(\)]/, "_")
-      .tr(' ', "_")
-  end
-
-  def self.from_omniauth(auth)
-    raw_info  = auth.raw_info || (auth.extra&.raw_info&.participant)
-    email     = auth.info.email || raw_info.email
-    username  = auth.info.name || raw_info.name
-    username  = username.gsub(/\s+/, '_').downcase
-    username  = sanitize_userhandle(username)
-    image_url = auth.info.image ||
-      raw_info.image ||
-      (raw_info.image_file&.url)
-    provider = auth.provider
-    provider = 'crowdai' if provider == 'oauth2_generic'
-    where(email: email).first_or_create do |user|
-      user.email    = email
-      user.password = Devise.friendly_token[0, 20]
-      user.name     = username
-      user.provider = provider
-      puts "EMAIL: #{email} name: #{username} provider: #{provider}"
-      user.remote_image_file_url = image_url if image_url
-      ### NATE: we want to skip the notification but leave the user unconfirmed
-      ### which will allow us to force a password reset on first login
-      user.skip_confirmation_notification!
-    end
-  end
-
   def detect_country
     return if country_cd.present?
 
