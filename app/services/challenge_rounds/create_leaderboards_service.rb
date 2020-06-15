@@ -201,8 +201,8 @@ module ChallengeRounds
       secondary_sort_order = sort_map(challenge_round.secondary_sort_order_cd)
 
       all_leaderboards.sort_by do |leaderboard|
-        first_column     = score_sort_order == 'asc' ? leaderboard.score : leaderboard.score * -1
-        secondary_column = secondary_sort_order == 'asc' ? leaderboard.score_secondary : leaderboard.score_secondary * -1
+        first_column     = score_sort_order == 'asc' ? leaderboard.score.to_f : leaderboard.score.to_f * -1
+        secondary_column = secondary_sort_order == 'asc' ? leaderboard.score_secondary.to_f : leaderboard.score_secondary.to_f * -1
 
         [first_column, secondary_column]
       end
