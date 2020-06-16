@@ -1,19 +1,23 @@
 require "rails_helper"
 
 describe 'API key visibility' do
-  let(:participant) { create :participant }
+  let(:participant) { create :participant, name: 'test' }
   let(:admin) { create :participant, :admin }
 
   it "API key visible on participant's own profile" do
     log_in(participant)
-    visit participant_path(participant.slug)
+    VCR.use_cassette('gitlab_api/fetch_calendar_activity/success') do
+      visit participant_path(participant.slug)
+    end
     expect(participant.api_key).not_to be_nil
     expect(page).to have_content participant.api_key
   end
 
   it "API key visible to admin users" do
     log_in(admin)
-    visit participant_path(participant.slug)
+    VCR.use_cassette('gitlab_api/fetch_calendar_activity/success') do
+      visit participant_path(participant.slug)
+    end
     expect(participant.api_key).not_to be_nil
     expect(page).to have_content participant.api_key
   end
