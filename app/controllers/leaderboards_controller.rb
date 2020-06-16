@@ -11,6 +11,8 @@ class LeaderboardsController < ApplicationController
     unless is_disentanglement_leaderboard?(@leaderboards.first)
       @submitter_submissions = {}
       @leaderboards.each do |leaderboard|
+        next if leaderboard.submitter_type == 'OldParticipant'
+
         submitter = leaderboard.submitter
         @submitter_submissions.merge!("submitter#{submitter.id}_submissions_by_day": submitter_submissions(submitter).group_by_created_at) if submitter.present?
       end
