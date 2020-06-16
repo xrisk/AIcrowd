@@ -51,9 +51,6 @@ class NotificationService
     return if @participant.nil?
 
     message               = "You have moved from #{@notifiable.previous_row_num} to #{@notifiable.row_num} place in the #{@notifiable.challenge.challenge} leaderboard"
-    # existing_notification = @participant.notifications.where(notification_type: 'leaderboard').first
-
-    # return if message == existing_notification&.message
 
     thumb   = @notifiable.challenge.image_file.url
     link    = challenge_leaderboards_url(@notifiable.challenge)
