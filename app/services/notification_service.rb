@@ -28,6 +28,7 @@ class NotificationService
         message:           message,
         thumbnail_url:     thumb,
         notification_url:  link,
+        challenge_id:      @notifiable.challenge.id,
         is_new:            true)
   end
 
@@ -44,19 +45,21 @@ class NotificationService
         message:           message,
         thumbnail_url:     thumb,
         notification_url:  link,
+        challenge_id:      @notifiable.challenge.id,
         is_new:            true)
   end
 
   def leaderboard
     return if @participant.nil?
+    # get similar unread notification of challenge
+    existing_notification = @participant.notifications.where(notification_type: 'leaderboard', challenge_id: @notifiable.challenge.id, is_new: true)
+    existing_notification.delete_all # delete old unread notification of this challenge
 
-    message               = "You have moved from #{@notifiable.previous_row_num} to #{@notifiable.row_num} place in the #{@notifiable.challenge.challenge} leaderboard"
-    existing_notification = @participant.notifications.where(notification_type: 'leaderboard').first
-
-    return if message == existing_notification&.message
-
+    message = "You have moved from #{@notifiable.previous_row_num} to #{@notifiable.row_num} place in the #{@notifiable.challenge.challenge} leaderboard"
     thumb   = @notifiable.challenge.image_file.url
     link    = challenge_leaderboards_url(@notifiable.challenge)
+
+    # create new notification for this challenge
     Notification
       .create!(
         participant:       @participant,
@@ -65,6 +68,7 @@ class NotificationService
         message:           message,
         thumbnail_url:     thumb,
         notification_url:  link,
+        challenge_id:      @notifiable.challenge.id,
         is_new:            true)
   end
 end
