@@ -1,6 +1,7 @@
 class Notification < ApplicationRecord
   belongs_to :participant
   belongs_to :notifiable, polymorphic: true, optional: true
+  belongs_to :challenge, optional: true
 
   default_scope { order(created_at: :desc) }
 
