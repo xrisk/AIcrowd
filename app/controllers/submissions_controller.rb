@@ -60,7 +60,7 @@ class SubmissionsController < ApplicationController
 
     @search = filter.search(search_params)
     @search.sorts = 'created_at desc' if @search.sorts.empty?
-    @submissions  = @search.result.includes(:participant).page(params[:page]).per(10)
+    @submissions  = @search.result.where(visible: true).includes(:participant).page(params[:page]).per(10)
   end
 
   def filter
@@ -69,6 +69,7 @@ class SubmissionsController < ApplicationController
     @search      = policy_scope(Submission).ransack(params[:q])
     @submissions = @search.result
                        .where(challenge_id: @challenge.id)
+                       .where(visible: true)
                        .page(1).per(10)
     render @submissions
   end
@@ -255,6 +256,7 @@ class SubmissionsController < ApplicationController
           :baseline,
           :baseline_comment,
           :submission_link,
+          :visible,
           submission_files_attributes: [
             :id,
             :seq,
@@ -316,6 +318,7 @@ class SubmissionsController < ApplicationController
         FROM submissions s
         WHERE s.challenge_id = #{@challenge.id}
         AND s.participant_id = #{current_participant.id}
+        AND s.visible IS TRUE
         AND ((s.clef_primary_run IS TRUE
               AND s.grading_status_cd = 'graded')
               OR s.grading_status_cd IN ('ready', 'submitted', 'initiated'))

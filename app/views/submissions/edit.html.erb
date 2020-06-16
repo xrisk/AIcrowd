@@ -56,7 +56,7 @@
             <% end %>
           </div>
         </div>
-      
+
         <div class="col-12 mt-5">
           <%= form_for [@challenge, @submission],
                        html: {
@@ -124,6 +124,11 @@
           </div>
         </fieldset>
       <% end %>
+      <fieldset>
+      <div class="form-group">
+          <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :visible, text: "Visible" } %>
+      </div>
+    </fieldset>
 
       <div class="button-group mt-5">
         <%= f.button "Update Submission", class: 'btn btn-primary' %> <%= link_to 'Cancel', challenge_submissions_path(@challenge), class: "btn" %>

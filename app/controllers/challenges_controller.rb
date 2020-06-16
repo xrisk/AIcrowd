@@ -47,11 +47,11 @@ class ChallengesController < ApplicationController
     @challenge_baseline_discussion = @challenge.baseline_discussion
     if @challenge.active_round
       @top_five_leaderboards = @challenge.active_round.leaderboards.where(meta_challenge_id: @meta_challenge, baseline: false).limit(5)
-      @latest_five_submissions = @challenge.active_round.submissions.where(meta_challenge_id: @meta_challenge).order(created_at: :desc).limit(5)
+      @latest_five_submissions = @challenge.active_round.submissions.where(meta_challenge_id: @meta_challenge, visible: true).order(created_at: :desc).limit(5)
     end
 
     if @challenge.meta_challenge
-      @latest_five_submissions = Submission.where(meta_challenge_id: @challenge).order(created_at: :desc).limit(5)
+      @latest_five_submissions = Submission.where(meta_challenge_id: @challenge , visible: true).order(created_at: :desc).limit(5)
       params[:meta_challenge_id] = params[:id]
       render template: "challenges/show_meta_challenge"
     end

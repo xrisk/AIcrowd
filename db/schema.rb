@@ -995,6 +995,7 @@ ActiveRecord::Schema.define(version: 2020_06_15_135036) do
     t.boolean "baseline", default: false
     t.string "baseline_comment"
     t.integer "meta_challenge_id"
+    t.boolean "visible", default: true, null: false
     t.index ["challenge_id"], name: "index_submissions_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_submissions_on_challenge_round_id"
     t.index ["participant_id"], name: "index_submissions_on_participant_id"

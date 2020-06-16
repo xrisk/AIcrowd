@@ -3,7 +3,7 @@ module ChallengeRounds
     def initialize(challenge_round:, meta_challenge_id: nil)
       @challenge_round       = challenge_round
       @challenge             = @challenge_round.challenge
-      @submissions           = @challenge_round.submissions.reorder(created_at: :desc)
+      @submissions           = @challenge_round.submissions.where(visible: true).reorder(created_at: :desc)
       @meta_challenge_id     = meta_challenge_id
 
       if @meta_challenge_id.blank?
