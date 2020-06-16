@@ -36,16 +36,16 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
     provider  = auth.provider
     provider  = 'crowdai' if provider == 'oauth2_generic'
 
-    Participant.where(email: email).first_or_create do |user|
-      user.email    = email
-      user.password = Devise.friendly_token[0, 20]
-      user.name     = username
-      user.provider = provider
-      user.remote_image_file_url = image_url if image_url
-      ### NATE: we want to skip the notification but leave the user unconfirmed
-      ### which will allow us to force a password reset on first login
-      user.skip_confirmation_notification!
-    end
+    participant                       = Participant.where(email: email).first_or_initialize
+    participant.password              = Devise.friendly_token[0, 20]
+    participant.name                  = username
+    participant.provider              = provider
+    participant.remote_image_file_url = image_url if image_url.present?
+    ### We want to skip the notification but leave the user unconfirmed which will allow us to force a password reset on first login
+    participant.skip_confirmation_notification!
+    participant.save!
+
+    participant
   end
 
   def sanitize_userhandle(userhandle)
