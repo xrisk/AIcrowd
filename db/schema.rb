@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_09_091902) do
+ActiveRecord::Schema.define(version: 2020_06_15_135036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -426,7 +426,7 @@ ActiveRecord::Schema.define(version: 2020_06_09_091902) do
     t.text "dataset_description_markdown"
     t.text "dataset_description"
     t.string "image_file"
-    t.integer "featured_sequence", default: 1
+    t.integer "featured_sequence"
     t.boolean "dynamic_content_flag", default: false
     t.text "dynamic_content"
     t.string "dynamic_content_tab"
