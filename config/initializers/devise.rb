@@ -243,7 +243,8 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  config.omniauth :github, ENV['GITHUB_OAUTH_KEY'], ENV['GITHUB_OAUTH_SECRET'], scope: 'user,public_repo'
+
+  config.omniauth :github, ENV['GITHUB_OAUTH_KEY'], ENV['GITHUB_OAUTH_SECRET'], scope: 'user:email'
   config.omniauth :oauth2_generic, ENV['CROWDAI_OAUTH_KEY'], ENV['CROWDAI_OAUTH_SECRET'], {
     "client_options" => {
       "site"          => "https://www.crowdai.org",
