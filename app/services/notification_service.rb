@@ -20,6 +20,10 @@ class NotificationService
     thumb   = @notifiable.challenge.image_file.url
     link    = challenge_submission_url(@notifiable.challenge, @notifiable.id)
 
+    existing_notification = @participant.notifications.where(notification_type: "graded", notifiable_type: "Submission", message: message, is_new: true).first
+
+    return if existing_notification.present?
+
     Notification
       .create!(
         participant:       @participant,
@@ -36,6 +40,10 @@ class NotificationService
     message = "Your #{@notifiable.challenge.challenge} Challenge submission ##{@notifiable.id} failed to evaluate."
     thumb   = @notifiable.challenge.image_file.url
     link    = challenge_submission_url(@notifiable.challenge, @notifiable.id)
+
+    existing_notification = @participant.notifications.where(notification_type: "failed", notifiable_type: "Submission", message: message, is_new: true).first
+
+    return if existing_notification.present?
 
     Notification
       .create!(
