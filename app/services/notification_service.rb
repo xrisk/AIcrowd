@@ -50,7 +50,8 @@ class NotificationService
   end
 
   def leaderboard
-    return if @participant.nil?
+    return if @participant.nil? || @notifiable.previous_row_num == @notifiable.row_num
+
     # get similar unread notification of challenge
     existing_notification = @participant.notifications.where(notification_type: 'leaderboard', challenge_id: @notifiable.challenge.id, is_new: true)
     existing_notification.delete_all # delete old unread notification of this challenge

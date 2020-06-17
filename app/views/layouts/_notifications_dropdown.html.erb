@@ -5,7 +5,7 @@
        data-toggle="dropdown"
        data-controller="notifications"
        data-notifications-participant-id="<%= current_participant.id %>"
-       data-notifications-notification-id="<%= @notifications&.first(5).pluck(:id) %>"
+       data-notifications-notification-id="<%= @notifications&.first(5)&.pluck(:id) %>"
        data-action="click->notifications#readNotifications"
        href="#"
        role="button"
