@@ -31,7 +31,7 @@ describe Leaderboards::FilterService do
     context 'filter by participant countries' do
       it 'return filtered participant countries' do
         result = subject.call('participant_countries')
-        expect(result.first).to eq(Participant.country_name(participant1.country_cd))
+        expect(result.first).to eq(Country.country_name(participant1.country_cd))
       end
     end
   end
