@@ -43,7 +43,7 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
     participant.remote_image_file_url = image_url if image_url.present?
     ### We want to skip the notification but leave the user unconfirmed which will allow us to force a password reset on first login
     participant.skip_confirmation_notification!
-    participant.save!
+    participant.save
 
     participant
   end
