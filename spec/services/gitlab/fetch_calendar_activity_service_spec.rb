@@ -21,16 +21,29 @@ describe Gitlab::FetchCalendarActivityService do
       end
     end
 
-    context 'when participant does not exist in Gitlab' do
+    context 'when participant Gitlab page returns unauthorized error' do
       let(:participant) { create(:participant, name: 'not_existing_name') }
 
       it 'returns failure with error message' do
-        result = VCR.use_cassette('gitlab_api/fetch_calendar_activity/failure') do
+        result = VCR.use_cassette('gitlab_api/fetch_calendar_activity/unauthorized') do
           subject.call
         end
 
         expect(result).to be_failure
         expect(result.value).to eq 'You need to sign in or sign up before continuing.'
+      end
+    end
+
+    context 'when participant Gitlab page returns not_found error' do
+      let(:participant) { create(:participant, name: 'not_found') }
+
+      it 'returns failure with error message' do
+        result = VCR.use_cassette('gitlab_api/fetch_calendar_activity/not_found') do
+          subject.call
+        end
+
+        expect(result).to be_failure
+        expect(result.value).to eq 'A JSON text must at least contain two octets!'
       end
     end
   end

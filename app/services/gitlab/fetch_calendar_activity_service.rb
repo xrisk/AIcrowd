@@ -21,7 +21,7 @@ module Gitlab
         gitlab_logger.error(error_message)
         failure(error_message)
       end
-    rescue ::Faraday::Error => e
+    rescue ::Faraday::Error, ::JSON::ParserError => e
       gitlab_logger.error(e.message)
       failure(e.message)
     end
