@@ -36,6 +36,7 @@ module Gitlab
 
     def prepare_http_client
       Faraday.new(http_client_options) do |http_client|
+        http_client.use FaradayMiddleware::FollowRedirects, limit: 5
         http_client.request :url_encoded
         http_client.adapter Faraday.default_adapter
       end

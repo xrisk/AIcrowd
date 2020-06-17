@@ -236,6 +236,8 @@ GEM
       unicode-display_width (~> 1.1)
     faraday (1.0.0)
       multipart-post (>= 1.2, < 3)
+    faraday_middleware (1.0.0)
+      faraday (~> 1.0)
     ffaker (2.10.0)
     ffi (1.9.25)
     ffi-compiler (1.0.1)
@@ -943,6 +945,7 @@ DEPENDENCIES
   doorkeeper (~> 5.0.3)
   factory_bot_rails
   faraday (~> 1.0)
+  faraday_middleware (~> 1.0)
   ffaker
   figaro
   file_validators

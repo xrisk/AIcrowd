@@ -21,6 +21,18 @@ describe Gitlab::FetchCalendarActivityService do
       end
     end
 
+    context 'when Gitlab redirects request to correct username' do
+      let(:participant) { create(:participant, name: 'Parilo') }
+
+      it 'returns failure with error message' do
+        result = VCR.use_cassette('gitlab_api/fetch_calendar_activity/redirect') do
+          subject.call
+        end
+
+        expect(result).to be_success
+      end
+    end
+
     context 'when participant Gitlab page returns unauthorized error' do
       let(:participant) { create(:participant, name: 'not_existing_name') }
 

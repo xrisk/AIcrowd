@@ -98,6 +98,7 @@ gem "select2-rails"
 
 # HTTP clients
 gem 'faraday', '~> 1.0'
+gem 'faraday_middleware', '~> 1.0'
 gem 'http'
 gem 'httparty'
 
