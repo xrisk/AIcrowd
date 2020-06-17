@@ -33,6 +33,35 @@
             <!-- sub-nav pills -->
           <% end %>
 
+          <div class="submission-filters-btn">
+            <a class="" data-toggle="collapse" href="#submissionFilters" role="button" aria-expanded="false" aria-controls="submissionFilters">
+              Submission filters
+            </a>
+          </div>
+          <div id='submissionFilters' class="collapse <%= current_participant && @my_submissions || @baselines ? 'show' : '' %>">
+            <!-- toggle switch -->
+            <% if current_participant %>
+              <div class="my-2">
+                <label class="toggle-switch">
+                  <%= link_to challenge_submissions_path(@challenge, my_submissions: @my_submissions.blank?, current_round_id: @current_round_id) do %>
+                    <input id="my-submissions-switch" type="checkbox" <%= "checked" if @my_submissions %> >
+                    <span class="switcher mr-2"></span>
+                    <span class="label">My Submissions</span>
+                  <% end %>
+                </label>
+              </div>
+            <% end %>
+            <div class="my-2">
+              <label class="toggle-switch">
+                <%= link_to challenge_submissions_path(@challenge, baselines: @baselines.blank?, current_round_id: @current_round_id) do %>
+                  <input id="baselines-switch" type="checkbox" <%= "checked" if @baselines %> >
+                  <span class="switcher mr-2"></span>
+                  <span class="label">Baselines</span>
+                <% end %>
+              </label>
+            </div>
+            <!-- /toggle switch -->
+          </div>
 
           <!-- challenge submissions -->
           <div class="table-responsive-lg">
@@ -63,25 +92,6 @@
             </table>
           </div>
           <!-- /challenge submissions -->
-
-          <div class="my-2">
-            <label class="toggle-switch toggle-switch-large">
-              <%= link_to challenge_submissions_path(@challenge, my_submissions: @my_submissions.blank?, current_round_id: @current_round_id) do %>
-                <input id="my-submissions-switch" type="checkbox" <%= "checked" if @my_submissions %> >
-                <span class="switcher mr-2"></span>
-                <span class="label">My Submissions</span>
-              <% end %>
-            </label>
-          </div>
-          <div class="my-2">
-            <label class="toggle-switch toggle-switch-large">
-              <%= link_to challenge_submissions_path(@challenge, baselines: @baselines.blank?, current_round_id: @current_round_id) do %>
-                <input id="baselines-switch" type="checkbox" <%= "checked" if @baselines %> >
-                <span class="switcher mr-2"></span>
-                <span class="label">Baselines</span>
-              <% end %>
-            </label>
-          </div>
         </div>
       </div>
     </div>
