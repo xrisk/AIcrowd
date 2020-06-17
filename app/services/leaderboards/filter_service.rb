@@ -1,7 +1,7 @@
 module Leaderboards
   class FilterService
     def initialize(leaderboards: leaderboards, params: params)
-      @leaderboards = leaderboards
+      @leaderboards = leaderboards.first&.class&.where(id: leaderboards.ids)
       @params = params
     end
 
@@ -58,7 +58,7 @@ module Leaderboards
 
     # check submitter type
     def leaderboard_having_submitter?(submitter_type)
-      @leaderboards.pluck(:submitter_type).include?(submitter_type)
+      @leaderboards&.pluck(:submitter_type)&.include?(submitter_type)
     end
 
     # set country array
