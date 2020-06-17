@@ -102,8 +102,15 @@ class ParticipantsController < ApplicationController
   end
 
   def read_notification
-    @notification = current_user.notifications.find(params[:id])
-    @notification.update(is_new: false)
+    if params[:ids].present?
+      @notifications = current_user.notifications.find(JSON.parse(params[:ids]))
+      @notifications.each do |notification|
+        notification.update(is_new: false)
+      end
+    else
+      @notification = current_user.notifications.find(params[:id])
+      @notification.update(is_new: false)
+    end
 
     redirect_to @notification.notification_url || root_url
   end
