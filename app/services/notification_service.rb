@@ -18,7 +18,11 @@ class NotificationService
     score   = @notifiable.score || 0.0
     message = "Your #{@notifiable.challenge.challenge} Challenge submission ##{@notifiable.id} has been graded with a score of #{score}"
     thumb   = @notifiable.challenge.image_file.url
-    link    = challenge_submissions_url(@notifiable.challenge, my_submissions: true)
+    link    = challenge_submission_url(@notifiable.challenge, @notifiable.id)
+
+    existing_notification = @participant.notifications.where(notifiable: @notifiable, is_new: true).first
+
+    return if existing_notification.present?
 
     Notification
       .create!(
@@ -28,13 +32,18 @@ class NotificationService
         message:           message,
         thumbnail_url:     thumb,
         notification_url:  link,
+        challenge_id:      @notifiable.challenge.id,
         is_new:            true)
   end
 
   def failed
     message = "Your #{@notifiable.challenge.challenge} Challenge submission ##{@notifiable.id} failed to evaluate."
     thumb   = @notifiable.challenge.image_file.url
-    link    = challenge_submissions_url(@notifiable.challenge, my_submissions: true)
+    link    = challenge_submission_url(@notifiable.challenge, @notifiable.id)
+
+    existing_notification = @participant.notifications.where(notifiable: @notifiable, is_new: true).first
+
+    return if existing_notification.present?
 
     Notification
       .create!(
@@ -44,19 +53,22 @@ class NotificationService
         message:           message,
         thumbnail_url:     thumb,
         notification_url:  link,
+        challenge_id:      @notifiable.challenge.id,
         is_new:            true)
   end
 
   def leaderboard
-    return if @participant.nil?
+    return if @participant.nil? || @notifiable.previous_row_num == @notifiable.row_num
 
-    message               = "You have moved from #{@notifiable.previous_row_num} to #{@notifiable.row_num} place in the #{@notifiable.challenge.challenge} leaderboard"
-    existing_notification = @participant.notifications.where(notification_type: 'leaderboard').first
+    # get similar unread notification of challenge
+    existing_notification = @participant.notifications.where(notification_type: 'leaderboard', challenge_id: @notifiable.challenge.id, is_new: true)
+    existing_notification.delete_all # delete old unread notification of this challenge
 
-    return if message == existing_notification&.message
-
+    message = "You have moved from #{@notifiable.previous_row_num} to #{@notifiable.row_num} place in the #{@notifiable.challenge.challenge} leaderboard"
     thumb   = @notifiable.challenge.image_file.url
     link    = challenge_leaderboards_url(@notifiable.challenge)
+
+    # create new notification for this challenge
     Notification
       .create!(
         participant:       @participant,
@@ -65,6 +77,7 @@ class NotificationService
         message:           message,
         thumbnail_url:     thumb,
         notification_url:  link,
+        challenge_id:      @notifiable.challenge.id,
         is_new:            true)
   end
 end

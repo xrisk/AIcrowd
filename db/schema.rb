@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_15_135036) do
+ActiveRecord::Schema.define(version: 2020_06_16_142418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -734,6 +734,8 @@ ActiveRecord::Schema.define(version: 2020_06_15_135036) do
     t.string "message"
     t.string "thumbnail_url"
     t.string "notification_url"
+    t.bigint "challenge_id"
+    t.index ["challenge_id"], name: "index_notifications_on_challenge_id"
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable_type_and_notifiable_id"
     t.index ["participant_id"], name: "index_notifications_on_participant_id"
   end
@@ -1143,6 +1145,7 @@ ActiveRecord::Schema.define(version: 2020_06_15_135036) do
   add_foreign_key "invitations", "participants"
   add_foreign_key "newsletter_emails", "challenges"
   add_foreign_key "newsletter_emails", "participants"
+  add_foreign_key "notifications", "challenges"
   add_foreign_key "notifications", "participants"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
