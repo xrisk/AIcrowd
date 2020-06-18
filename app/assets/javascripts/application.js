@@ -46,7 +46,6 @@
 // -------------------- Controllers ------------------- //
 //= require controllers/challenges_controller
 //= require controllers/leaderboards_controller
-//= require controllers/task_dataset_files_controller
 //= require ahoy
 
 // ------------------------ STARTUP -------------------------- //
