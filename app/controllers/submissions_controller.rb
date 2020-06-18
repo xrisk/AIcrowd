@@ -44,7 +44,6 @@ class SubmissionsController < ApplicationController
                         challenge_id:       @challenge.id)
       end
     end
-
     if @meta_challenge.present?
       filter = filter.where(meta_challenge_id: @meta_challenge.id)
     else
@@ -56,8 +55,8 @@ class SubmissionsController < ApplicationController
       filter = policy_scope(Submission)
                       .where(challenge_round_id: @challenge.meta_active_round_ids,
                              meta_challenge_id: @challenge.id)
+      filter = filter.where(participant_id: current_participant.id) if @my_submissions
     end
-
     @search = filter.search(search_params)
     @search.sorts = 'created_at desc' if @search.sorts.empty?
     @submissions  = @search.result.includes(:participant).page(params[:page]).per(10)
