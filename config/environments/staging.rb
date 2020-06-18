@@ -28,5 +28,16 @@ Rails.application.configure do
                                         end
 
   config.active_record.dump_schema_after_migration = false
+
+  config.cache_store = :mem_cache_store,
+                       (ENV['MEMCACHEDCLOUD_SERVERS'].to_s).split(','),
+                       {
+                         username: ENV['MEMCACHEDCLOUD_USERNAME'],
+                         password: ENV['MEMCACHEDCLOUD_PASSWORD'],
+                         failover: true,
+                         socket_timeout: 1.5,
+                         socket_failure_delay: 0.2,
+                         down_retry_delay: 60
+                       }
 end
 Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']
