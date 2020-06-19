@@ -39,13 +39,13 @@
 //= require modules/direct_s3_upload
 //= require modules/mentions
 //= require modules/modals
+//= require modules/social_share
 
 // ---------------------- Pages ---------------------- //
 // require pages/participants_edit
 
 // -------------------- Controllers ------------------- //
 //= require controllers/challenges_controller
-//= require controllers/leaderboards_controller
 //= require ahoy
 
 // ------------------------ STARTUP -------------------------- //

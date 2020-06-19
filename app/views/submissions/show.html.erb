@@ -71,7 +71,14 @@
           <h4>Share</h4>
           <div class="d-flex">
             <input id="shortUrl" type="text" style="display:none; position: relative; left: -10000px;" value='<%= "#{request.base_url}/#{@submission.short_url}" %>' >
-            <button id="copyurlbutton" onclick="copyLink()" class="btn btn-secondary btn-sm mr-2">Copy URL</button>
+            <button
+              id="copyurlbutton"
+              data-controller="copy-link"
+              data-action="click->copy-link#copyLink"
+              class="btn btn-secondary btn-sm mr-2"
+            >
+              Copy URL
+            </button>
             <%= social_share('facebook', @challenge, @submission) %>
             <%= social_share('twitter', @challenge, @submission) %>
           </div>

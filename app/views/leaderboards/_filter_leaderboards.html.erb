@@ -43,9 +43,9 @@
     </div>
   <% end %>
   <% if @challenge.meta_challenge %>
-    <div class="mb-2" id="geek-view-toogle" style="width: max-content;">
+    <div class="mb-2" style="width: max-content;" data-action="click->leaderboards#toggleGeekView" >
       <label class="toggle-switch" data-toggle="tooltip" data-placement="top" title="Geek view show scores">
-        <input type="checkbox">
+        <input id="geek-view-checkbox" type="checkbox">
         <span class="switcher"></span>
         <span class="label">🤓 Geek View</span>
       </label>
