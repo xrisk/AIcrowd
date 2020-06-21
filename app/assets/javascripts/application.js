@@ -7,7 +7,6 @@
 //= require cocoon
 //= require isInViewport
 //= require turbolinks
-//= require paloma
 //= require jquery.atwho
 //= require social-share-button
 //= require codemirror
@@ -56,7 +55,6 @@ let loaderTimer;
 document.addEventListener("turbolinks:load", function () {
     clearTimeout(loaderTimer);
     $("[data-remodal-id=modal]").remodal();
-    Paloma.start();
     $("#page-content").show();
     $("#loader-container").hide();
 

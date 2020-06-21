@@ -4,6 +4,15 @@ $(document).on('click', '.challenge-invite-participant', function(){
 });
 
 $(document).ready(function() {
+  const currentUrl  = new URL(window.location);
+  const currentStep = currentUrl.searchParams.get('step');
+  const currentTab  = $(`#challenge-edit-${currentStep}-tab`);
+
+  if (currentTab) {
+    currentTab.tab('show');
+    setTimeout(function() { $('#challenges-form').enableClientSideValidations(); }, 1000);
+  }
+
   $('.select2').select2();
   $('.category_select2').select2({
     tags: true

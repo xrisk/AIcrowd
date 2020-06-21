@@ -11,10 +11,6 @@ export default class extends Controller {
       });
     });
 
-    const currentUrl  = new URL(window.location);
-    const currentStep = currentUrl.searchParams.get('step');
-    const currentTab  = $(`#challenge-edit-${currentStep}-tab`);
-
     let switch_handler = function () {
       $('.active-switch').each((event, checkbox) => {
         if (checkbox !== this) {
@@ -114,11 +110,6 @@ export default class extends Controller {
       submissionsExportUrl.searchParams.set('submissions_export_challenge_round_id', submissionsExportChallengeRoundId);
       $('#submissions-export-link').attr('href', submissionsExportUrl.toString());
     });
-
-    if (currentTab) {
-      currentTab.tab('show');
-      that.resetChallengesFormClientValidations();
-    }
 
     // Change here need to be copied to update.js.erb as well!
     $('.challenge-edit-submit').on('click', function (event) {

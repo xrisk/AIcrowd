@@ -22,7 +22,7 @@ function handleChallengeUpdate() {
       }
     });
 
-    // Change here need to be copied to Paloma Edit Controller as well!
+    // Change here need to be copied to StimulusJS ChallengesEditController as well!
     $('#preview-modal').on('show.bs.modal', function (event) {
       let editor = CKEDITOR.instances["challenge_description"];
       let modal = $(this);
@@ -151,4 +151,3 @@ function runScripts ($container) {
   // to preserve execution order
   seq(runList, scriptsDone)
 }
-
