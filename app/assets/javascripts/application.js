@@ -40,12 +40,9 @@
 //= require modules/mentions
 //= require modules/modals
 //= require modules/social_share
+//= require modules/challenges
 
-// ---------------------- Pages ---------------------- //
-// require pages/participants_edit
-
-// -------------------- Controllers ------------------- //
-//= require controllers/challenges_controller
+// ---------------------- Others --------------------- //
 //= require ahoy
 
 // ------------------------ STARTUP -------------------------- //
