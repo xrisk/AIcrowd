@@ -2,15 +2,13 @@ class DatasetFilesController < ApplicationController
   include Concerns::DatasetFiles
 
   before_action :authenticate_participant!
-  before_action :set_dataset_file,
-                only: [:destroy, :edit, :update]
+  before_action :set_dataset_file, only: [:destroy, :edit, :update]
   before_action :set_challenge
   before_action :set_challenge_rounds, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   before_action :set_vote, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   before_action :set_follow, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   before_action :check_participation_terms
-  before_action :set_s3_direct_post,
-                only: [:new, :create, :edit]
+  before_action :set_s3_direct_post, only: [:new, :create, :edit, :update]
   before_action :set_dataset_files, only: :index # from DatasetFilesConcern
   before_action :set_dataset_folders, only: :index # from DatasetFilesConcern
 
@@ -27,10 +25,14 @@ class DatasetFilesController < ApplicationController
 
   def create
     @dataset_file = @challenge.dataset_files.new(dataset_file_params)
-    if @dataset_file.save
+
+    validate_aws_credentials
+
+    if @dataset_file.errors.none? && @dataset_file.save
       redirect_to helpers.challenge_dataset_files_path(@challenge),
                   notice: 'Dataset file was successfully created.'
     else
+      flash[:error] = @dataset_file.errors.full_messages.to_sentence
       render :new
     end
   end
@@ -38,9 +40,14 @@ class DatasetFilesController < ApplicationController
   def edit; end
 
   def update
-    if @dataset_file.update(dataset_file_params)
+    @dataset_file.assign_attributes(dataset_file_params)
+
+    validate_aws_credentials
+
+    if @dataset_file.errors.none? && @dataset_file.save
       redirect_to helpers.challenge_dataset_files_path(@challenge), notice: 'Dataset file was successfully updated.'
     else
+      flash[:error] = @dataset_file.errors.full_messages.to_sentence
       render :edit
     end
   end
@@ -129,5 +136,13 @@ class DatasetFilesController < ApplicationController
         key:                   "dataset_files/challenge_#{@challenge.id}/#{SecureRandom.uuid}_${filename}",
         success_action_status: '201',
         acl:                   'private')
+  end
+
+  def validate_aws_credentials
+    return if @dataset_file.hosting_location != 'Own S3'
+
+    result = Aws::FetchDatasetFileService.new(dataset_file: @dataset_file).call
+
+    @dataset_file.errors.add(:base, result.value) if result.failure?
   end
 end

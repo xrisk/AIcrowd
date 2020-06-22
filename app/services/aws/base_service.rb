@@ -4,7 +4,9 @@ module Aws
       Aws::S3::Errors::InvalidAccessKeyId,
       Aws::S3::Errors::SignatureDoesNotMatch,
       Aws::Errors::NoSuchEndpointError,
+      Aws::Errors::MissingRegionError,
       Aws::Errors::MissingCredentialsError,
+      Aws::S3::Errors::Forbidden,
       Aws::S3::Errors::NoSuchBucket,
       Aws::S3::Errors::BadRequest,
       Aws::S3::Errors::ServiceError

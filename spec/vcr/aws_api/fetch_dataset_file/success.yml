@@ -52,4 +52,56 @@ http_interactions:
       string: ''
     http_version:
   recorded_at: Wed, 13 May 2020 18:17:38 GMT
+- request:
+    method: head
+    uri: https://test-s3-integratioon.s3.eu-north-1.amazonaws.com/other_dataset/8d8183c9-4705-48d7-add1-22653634477f_archived-datasets.txt
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Content-Type:
+      - ''
+      Accept-Encoding:
+      - ''
+      User-Agent:
+      - aws-sdk-ruby2/2.11.190 ruby/2.5.5 x86_64-darwin18 resources
+      X-Amz-Date:
+      - 20200623T123123Z
+      X-Amz-Content-Sha256:
+      - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=AKIAJGAYK5FHJCDTTHYA/20200623/eu-north-1/s3/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=183570f1a0bf963e1c1a0a6e255fea925233163e707dfe4f71b49c683ddaf6ae
+      Content-Length:
+      - '0'
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Amz-Id-2:
+      - WAB7GbG6/j6nkuLl3ZjPloPaT8xiCx9QQJw6jGUTnCyBVQlctesdUky3zmTlud36wAus0sAyLq8=
+      X-Amz-Request-Id:
+      - 2287806C0E9734B7
+      Date:
+      - Wed, 13 May 2020 18:17:39 GMT
+      Last-Modified:
+      - Sun, 10 May 2020 21:52:02 GMT
+      Etag:
+      - '"c8cc77ba1104396ed18dde45a002f752"'
+      Accept-Ranges:
+      - bytes
+      Content-Type:
+      - text/plain
+      Content-Length:
+      - '1084'
+      Server:
+      - AmazonS3
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version:
+  recorded_at: Tue, 23 Jun 2020 12:31:24 GMT
 recorded_with: VCR 5.0.0

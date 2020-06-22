@@ -1,0 +1,49 @@
+---
+http_interactions:
+- request:
+    method: head
+    uri: https://s3.eu-north-1.amazonaws.com/INVALID/INVALID
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Content-Type:
+      - ''
+      Accept-Encoding:
+      - ''
+      User-Agent:
+      - aws-sdk-ruby2/2.11.190 ruby/2.5.5 x86_64-darwin18 resources
+      X-Amz-Date:
+      - 20200624T120202Z
+      X-Amz-Content-Sha256:
+      - e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+      Authorization:
+      - AWS4-HMAC-SHA256 Credential=INVALID_KEY/20200624/eu-north-1/s3/aws4_request,
+        SignedHeaders=host;x-amz-content-sha256;x-amz-date, Signature=e62749f27e38cbfab3bce09f2b51c6e92b377aa282ca56abbdd2c8b360418267
+      Content-Length:
+      - '0'
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      X-Amz-Request-Id:
+      - 9C9F188D2661FF9F
+      X-Amz-Id-2:
+      - M6x6Gi8/Jmqmfg7WBmWsEedeFgvpGULwSMarJV1+lvUCXdtK25Io9nUwYokEwfoZOvs4JIF1ZD4=
+      Content-Type:
+      - application/xml
+      Transfer-Encoding:
+      - chunked
+      Date:
+      - Wed, 24 Jun 2020 12:02:03 GMT
+      Server:
+      - AmazonS3
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Wed, 24 Jun 2020 12:02:04 GMT
+recorded_with: VCR 5.0.0
