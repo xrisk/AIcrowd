@@ -10,6 +10,7 @@ class ChallengeCallResponsesController < ApplicationController
     @challenge_call_response = @challenge_call
       .challenge_call_responses
       .new(challenge_call_response_params)
+
     if @challenge_call_response.save
       organizer = @challenge_call_response.challenge_call&.organizer
 
@@ -19,6 +20,7 @@ class ChallengeCallResponsesController < ApplicationController
 
       redirect_to challenge_call_show_path(@challenge_call, @challenge_call_response), notice: 'Challenge call response was created successfully.'
     else
+      flash[:error] = @challenge_call_response.errors.full_messages.to_sentence
       render :new
     end
   end
