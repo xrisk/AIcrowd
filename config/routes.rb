@@ -164,7 +164,7 @@ Rails.application.routes.draw do
   match '/landing_page/host', to: 'landing_page#host', via: :get
 
   resources :organizer_applications, only: [:create]
-  resources :organizers, except: [:new, :index] do
+  resources :organizers, except: [:new, :create, :index] do
     get :remove_image
     get :regen_api_key
     get :clef_email
