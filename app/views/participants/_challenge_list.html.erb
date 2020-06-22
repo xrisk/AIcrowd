@@ -2,7 +2,7 @@
 <div class="row mt-3 pb-3 border-bottom">
     <div class="col-md-3" style="height: 180px;">
         <%= link_to challenge_path(challenge) do %>
-          <%= image_tag(challenge.image_file_url, class: 'img-responsive img-fluid card-img image_16x9') %>
+          <%= image_tag(challenge.image_url, class: 'img-responsive img-fluid card-img image_16x9') %>
         <% end %>
         <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
           <% if challenge.practice_flag %>
