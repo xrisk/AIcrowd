@@ -13,6 +13,7 @@
                  'form-data' => (@s3_direct_post.fields),
                  'url' => @s3_direct_post.url,
                  'host' => URI.parse(@s3_direct_post.url).host} do |f| %>
+  <%= render partial: 'shared/error_messages', locals: { target: @submission } %>
 
   <% if @challenge.submission_instructions %>
     <p>
