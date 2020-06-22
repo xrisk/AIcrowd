@@ -6,9 +6,9 @@ class EuaUploader < CarrierWave::Uploader::Base
   end
 
   def filename
-    full_name = original_filename.to_s
-
-    "#{File.basename(full_name, File.extname(full_name))}_#{SecureRandom.uuid}.#{file&.extension}"
+    if original_filename.present?
+      @unique_filename ||= "#{File.basename(original_filename.to_s, File.extname(original_filename.to_s))}_#{SecureRandom.uuid}.#{file&.extension}"
+    end
   end
 
   def extension_whitelist
