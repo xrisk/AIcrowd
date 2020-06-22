@@ -4,9 +4,7 @@
         <div class="row">
             <div class="col-12">
                 <%= form_for [@challenge_call,@challenge_call_response], validate: true, html: { class: "form-rg" } do |f| %>
-                  <% if @challenge_call_response.errors.any? %>
-                    <%= render partial: 'shared/error_messages', locals: { target: @challenge_call_response } %>
-                  <% end %>
+                  <%= render partial: 'shared/error_messages', locals: { target: @challenge_call_response } %>
 
                   <div class="form-group">
                       <label>Organization/company name</label>

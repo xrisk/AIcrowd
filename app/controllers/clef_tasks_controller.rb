@@ -26,6 +26,7 @@ class ClefTasksController < ApplicationController
     if @clef_task.save
       redirect_to organizer_clef_tasks_path(@organizer)
     else
+      flash[:error] = @clef_task.errors.full_messages.to_sentence
       render :new
     end
   end
@@ -34,6 +35,7 @@ class ClefTasksController < ApplicationController
     if @clef_task.update(clef_task_params)
       redirect_to organizer_clef_tasks_path(@organizer)
     else
+      flash[:error] = @clef_task.errors.full_messages.to_sentence
       render :edit
     end
   end
