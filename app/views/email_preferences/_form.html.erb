@@ -7,11 +7,8 @@
       <div class="col-12">
 
         <%= form_for @participant,
-                     url: {action: :update, controller: :email_preferences},
-                     html: {
-                         class: 'form-rg',
-                         data: {controller: 'email-preferences'}
-                     } do |f| %>
+                     url:  { action: :update, controller: :email_preferences },
+                     html: { class: 'form-rg' } do |f| %>
           <%= render "shared/error_messages", target: @participant %>
 
           <div class="form-group">

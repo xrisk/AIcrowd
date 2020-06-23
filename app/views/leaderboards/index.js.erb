@@ -6,4 +6,7 @@
 $("#loader-container").hide();
 $(".table-leaderboard").append("<%= j render partial: 'leaderboards', locals: { leaderboards: @leaderboards, current_round: @current_round } %>");
 
-enableGeekView();
+if (localStorage.getItem('leaderboard-geek-view') === "true") {
+  $('.geek-view-normal').addClass('d-none', 100);
+  $('.geek-view-advanced').removeClass('d-none', 100);
+}

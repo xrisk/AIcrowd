@@ -2,7 +2,10 @@
 <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 
 <% disentanglement_leaderboard = is_disentanglement_leaderboard?(@leaderboards.first)%>
-<section class="section-p-sm">
+<section
+  class="section-p-sm"
+  data-controller="leaderboards"
+>
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
