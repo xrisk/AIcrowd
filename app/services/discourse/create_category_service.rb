@@ -1,8 +1,9 @@
 module Discourse
   class CreateCategoryService < ::Discourse::BaseService
     def initialize(challenge:)
-      @client    = prepare_http_client
-      @challenge = challenge
+      api_username = challenge.organizers.first&.participants&.first&.name
+      @client      = prepare_http_client(api_username: api_username)
+      @challenge   = challenge
     end
 
     def call

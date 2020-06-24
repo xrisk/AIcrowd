@@ -22,6 +22,21 @@ describe Discourse::CreateCategoryService do
         end
       end
 
+      context 'when challenge organizer has participant' do
+        let(:challenge)   { create(:challenge, organizers: [organizer]) }
+        let(:organizer)   { create(:organizer, participants: [participant]) }
+        let(:participant) { create(:participant, name: 'piotrekpasciakaaa') }
+
+        it 'uses participant username as Discourse API username' do
+          result = VCR.use_cassette('discourse_api/create/success_participant_username') do
+            subject.call
+          end
+
+          expect(result.success?).to eq true
+          expect(challenge.reload.discourse_category_id).to eq 290
+        end
+      end
+
       context 'when challenge name is to long' do
         let(:challenge) do
           create(
