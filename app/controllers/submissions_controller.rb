@@ -114,7 +114,9 @@ class SubmissionsController < ApplicationController
     @submission = @challenge.submissions.new(submission_params.merge(session_info))
     authorize @submission
 
-    if @submission.save
+    validate_submission_file_presence
+
+    if @submission.errors.none? && @submission.save
       SubmissionGraderJob.perform_later(@submission.id)
       redirect_to helpers.challenge_submissions_path(@challenge), notice: 'Submission accepted.'
     else
@@ -328,5 +330,9 @@ class SubmissionsController < ApplicationController
 
   def set_layout
     return 'application'
+  end
+
+  def validate_submission_file_presence
+    @submission.errors.add(:base, 'Submission file is required.') if @form == 'artifact' && @submission.submission_files.none?
   end
 end
