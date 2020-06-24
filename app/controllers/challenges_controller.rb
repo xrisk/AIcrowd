@@ -77,6 +77,7 @@ class ChallengesController < ApplicationController
       update_challenge_categories if params[:challenge][:category_names].present?
       redirect_to helpers.edit_challenge_path(@challenge, step: :overview), notice: 'Challenge created.'
     else
+      flash[:error] = @challenge.errors.full_messages.to_sentence
       render :new
     end
   end

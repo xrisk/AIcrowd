@@ -36,9 +36,7 @@
 
             <h4 class="mb-4">Or sign up with email</h4>
 
-            <% if resource.errors.any? %>
-              <%= render partial: 'shared/error_messages', locals: { target: resource } %>
-            <% end %>
+            <%= render partial: 'shared/error_messages', locals: { target: resource } %>
 
             <div class="form-group">
               <label for="username">Choose a username</label>

@@ -6,9 +6,7 @@
   <div class="container-fluid">
     <div class="row">
       <%= form_with model: @newsletter_email_form, url: challenge_newsletter_emails_path(@challenge), class: 'newsletter-email-form', validate: true, local: true do |f| %>
-        <% if @newsletter_email_form.errors.any? %>
-          <%= render partial: 'shared/error_messages', locals: { target: @newsletter_email_form } %>
-        <% end %>
+        <%= render partial: 'shared/error_messages', locals: { target: @newsletter_email_form } %>
 
         <div class="form-group">
           <span class="label-text">Users</span>

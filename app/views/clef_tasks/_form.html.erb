@@ -2,9 +2,8 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-12">
-				<%= form_for [@organizer, @clef_task],
-				             validate: true,
-				             html: {class: 'sgl-col'} do |f| %>
+        <%= form_for [@organizer, @clef_task], validate: true, html: {class: 'sgl-col'} do |f| %>
+          <%= render partial: 'shared/error_messages', locals: { target: @clef_task } %>
 					<div class='tab-content'>
 						<div id='tab-details' class="tab-pane fade show active">
               <div class="form-group">

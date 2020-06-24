@@ -2,14 +2,14 @@ class SubmissionsController < ApplicationController
   before_action :authenticate_participant!, except: [:index, :show]
   before_action :set_submission, only: [:show, :edit, :update]
   before_action :set_challenge
-  before_action :set_challenge_rounds, only: [:index, :new, :show]
-  before_action :set_vote, only: [:index, :new, :show]
-  before_action :set_follow, only: [:index, :new, :show]
+  before_action :set_challenge_rounds, only: [:index, :new, :create, :show]
+  before_action :set_vote, only: [:index, :new, :create, :show]
+  before_action :set_follow, only: [:index, :new, :create, :show]
   before_action :check_participation_terms, except: [:show, :index, :export]
   before_action :set_s3_direct_post, only: [:new, :edit, :create, :update]
   before_action :set_submissions_remaining, except: [:show, :index]
   before_action :set_current_round, only: :index
-  before_action :set_form_type, only: :new
+  before_action :set_form_type, only: [:new, :create]
   before_action :handle_code_based_submissions, only: [:create]
   before_action :handle_artifact_based_submissions, only: [:create]
 
@@ -113,11 +113,13 @@ class SubmissionsController < ApplicationController
     end
     @submission = @challenge.submissions.new(submission_params.merge(session_info))
     authorize @submission
+
     if @submission.save
       SubmissionGraderJob.perform_later(@submission.id)
       redirect_to helpers.challenge_submissions_path(@challenge), notice: 'Submission accepted.'
     else
-      @errors = @submission.errors
+      @submission.submission_files.build
+      flash[:error] = @submission.errors.full_messages.to_sentence
       render :new
     end
   end
@@ -132,6 +134,7 @@ class SubmissionsController < ApplicationController
       redirect_to @challenge,
                   notice: 'Submission updated.'
     else
+      flash[:error] = @submission.errors.full_messages.to_sentence
       render :edit
     end
   end
