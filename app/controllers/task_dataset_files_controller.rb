@@ -20,7 +20,7 @@ class TaskDatasetFilesController < ApplicationController
       @task_dataset_files = @clef_task.task_dataset_files
     end
 
-    js challenge_id: @challenge.id
+    j challenge_id: @challenge.id
   end
 
   def show; end
