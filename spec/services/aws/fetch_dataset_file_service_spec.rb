@@ -32,7 +32,7 @@ describe Aws::FetchDatasetFileService do
       end
     end
 
-    context 'when invalid dataset_file provided' do
+    context 'when invalid api keys provided' do
       let(:dataset_file) do
         create(:dataset_file,
           file_path:      'other_dataset/8d8183c9-4705-48d7-add1-22653634477f_archived-datasets.txt',
@@ -44,12 +44,33 @@ describe Aws::FetchDatasetFileService do
       end
 
       it 'returns failure with error message' do
-        result = VCR.use_cassette('aws_api/fetch_dataset_file/failure') do
+        result = VCR.use_cassette('aws_api/fetch_dataset_file/invalid_api_keys') do
           subject.call
         end
 
         expect(result).to be_failure
-        expect(result.value).to eq 'AWS credentials or bucket name are incorrect.'
+        expect(result.value).to eq 'AWS credentials, bucket name or region are incorrect.'
+      end
+    end
+
+    context 'when invalid parameters provided' do
+      let(:dataset_file) do
+        create(:dataset_file,
+          file_path:      'INVALID',
+          aws_access_key: 'INVALID_KEY',
+          aws_secret_key: 'INVALID_KEY',
+          bucket_name:    'INVALID',
+          region:         'eu-north-1'
+        )
+      end
+
+      it 'returns failure with error message' do
+        result = VCR.use_cassette('aws_api/fetch_dataset_file/invalid_parameters') do
+          subject.call
+        end
+
+        expect(result).to be_failure
+        expect(result.value).to eq 'AWS credentials, bucket name or region are incorrect.'
       end
     end
   end

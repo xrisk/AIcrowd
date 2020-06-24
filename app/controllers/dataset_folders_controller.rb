@@ -15,10 +15,13 @@ class DatasetFoldersController < ApplicationController
   def create
     @dataset_folder = @challenge.dataset_folders.new(dataset_folder_params)
 
-    if @dataset_folder.save
+    validate_aws_credentials
+
+    if @dataset_folder.errors.none? && @dataset_folder.save
       redirect_to helpers.challenge_dataset_files_path(@challenge),
                   notice: 'Dataset folder was successfully created.'
     else
+      flash[:error] = @dataset_folder.errors.full_messages.to_sentence
       render :new
     end
   end
@@ -26,9 +29,14 @@ class DatasetFoldersController < ApplicationController
   def edit; end
 
   def update
-    if @dataset_folder.update(dataset_folder_params)
+    @dataset_folder.assign_attributes(dataset_folder_params)
+
+    validate_aws_credentials
+
+    if @dataset_folder.errors.none? && @dataset_folder.save
       redirect_to helpers.challenge_dataset_files_path(@challenge), notice: 'Dataset folder was successfully updated.'
     else
+      flash[:error] = @dataset_folder.errors.full_messages.to_sentence
       render :edit
     end
   end
@@ -96,5 +104,11 @@ class DatasetFoldersController < ApplicationController
         :visible,
         :evaluation
       )
+  end
+
+  def validate_aws_credentials
+    result = Aws::FetchDatasetFolderService.new(dataset_folder: @dataset_folder).call
+
+    @dataset_folder.errors.add(:base, result.value) if result.failure?
   end
 end

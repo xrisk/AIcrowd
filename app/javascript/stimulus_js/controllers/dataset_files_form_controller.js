@@ -1,7 +1,7 @@
 import { Controller } from 'stimulus';
 
 export default class extends Controller {
-  initialize() {
+  connect() {
     this.fileFieldVisibility();
     $("input[name='dataset_file[hosting_location]']").on('click', this.fileFieldVisibility);
   }
