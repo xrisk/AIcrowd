@@ -182,7 +182,7 @@ module ApplicationHelper
   end
 
   def check_notification_status(notifications)
-    notifications&.pluck(:is_new)&.uniq&.any?(true) ? 'notification-bell-icon-active' : 'notification-bell-icon'
+    notifications.first(5)&.pluck(:is_new)&.uniq&.any?(true) ? 'notification-bell-icon-active' : 'notification-bell-icon'
   end
 
   def unread_notification?(notification)

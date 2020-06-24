@@ -1,11 +1,11 @@
 <!-- notifications -->
 <div class="app-header-notifications">
   <div class="dropdown">
-    <a class="dropdown-toggle <%= check_notification_status(@notifications) %>"
+    <a class="dropdown-toggle <%= check_notification_status(@notifications) if @notifications %>"
        data-toggle="dropdown"
        data-controller="notifications"
        data-notifications-participant-id="<%= current_participant.id %>"
-       data-notifications-notification-id="<%= @notifications&.first(5)&.pluck(:id) %>"
+       data-notifications-notification-id="<%= @notifications&.pluck(:id) %>"
        data-action="click->notifications#readNotifications"
        href="#"
        role="button"
