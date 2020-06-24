@@ -265,6 +265,15 @@ class Challenge < ApplicationRecord
     challenge_problem.present?
   end
 
+  def image_url
+    image_file_url.present? ?  image_file_url : get_default_image
+  end
+
+  def get_default_image
+    num = id % 2
+    "challenges/AIcrowd-ProblemStatements-#{num}.jpg"
+  end
+
   private
 
   def set_defaults

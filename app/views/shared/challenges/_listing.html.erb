@@ -5,11 +5,11 @@
         <div class="card card-challenge">
       <% end %>
     <% else %>
-      <div class="card card-challenge" style="background-image: url('<%= challenge.image_file_url %>');background-size: 100% auto;">
+      <div class="card card-challenge" style="background-image: url('<%= challenge.image_url %>');background-size: 100% auto;">
     <% end %>
       <div class="image-wrapper" style="padding-bottom: 56.2%;position: relative;">
         <% if !challenge.big_challenge_card_image? %>
-          <%= image_tag(challenge.image_file_url, class: 'card-img image_16x9') %>
+          <%= image_tag(challenge.image_url, class: 'card-img image_16x9') %>
         <% end %>
         <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
           <% if challenge.practice_flag %>

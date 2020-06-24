@@ -12,7 +12,7 @@ describe ChallengesController, type: :request do
   end
 
   describe "#export" do
-    let!(:challenge) { create(:challenge, challenge: 'Challenge Title') }
+    let!(:challenge) { create(:challenge, challenge: 'Challenge Title', id: 3) }
 
     context 'when user is logged in as participant' do
       let(:participant) { create(:participant) }
@@ -36,7 +36,7 @@ describe ChallengesController, type: :request do
       before { login_as admin }
 
       it 'sends json file in response' do
-        VCR.use_cassette('images/base64_encode_service/default_image_success') do
+        VCR.use_cassette('images/base64_encode_service/default_challenge_image_success') do
           get export_challenge_path(challenge)
         end
 
