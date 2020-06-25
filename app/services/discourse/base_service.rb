@@ -9,7 +9,7 @@ module Discourse
     protected
 
     def prepare_http_client(api_username: nil)
-      @http_client ||= Discourse::ApiClient.new(api_username: api_username).call
+      Discourse::ApiClient.new(api_username: api_username).call
     end
 
     def truncated_string(string, ensure_uniqueness, string_length = 50)
