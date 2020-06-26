@@ -1,4 +1,4 @@
-$('.app-header-notifications').replaceWith("<%= j render partial: 'layouts/notifications_dropdown', locals: { :@notifications => @notifications } %>");
+$('.app-header-notifications').replaceWith("<%= j render partial: 'layouts/notifications_dropdown', locals: { notifications: @notifications } %>");
 $('.dropdown-menu-notifications').addClass('show');
 $('.notification-bell-icon').attr('aria-expanded', true);
 $('.dropdown').addClass('show');
