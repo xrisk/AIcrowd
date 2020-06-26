@@ -27,7 +27,7 @@ module Discourse
 
     def request_payload
       encoded_response_query = Base64.strict_encode64(participant_params.to_query)
-      request_signature      = OpenSSL::HMAC.hexdigest('sha256', ENV['SSO_SECRET'], encoded_response_query)
+      request_signature      = OpenSSL::HMAC.hexdigest('sha256', ENV['SSO_SECRET'].to_s, encoded_response_query)
 
       {
         sso: CGI.escape(encoded_response_query),
