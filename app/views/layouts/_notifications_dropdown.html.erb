@@ -1,11 +1,11 @@
 <!-- notifications -->
 <div class="app-header-notifications">
   <div class="dropdown">
-    <a class="dropdown-toggle <%= check_notification_status(@notifications) %>"
+    <a class="dropdown-toggle <%= check_notification_status(notifications) if notifications %>"
        data-toggle="dropdown"
        data-controller="notifications"
        data-notifications-participant-id="<%= current_participant.id %>"
-       data-notifications-notification-id="<%= @notifications&.first(5)&.pluck(:id) %>"
+       data-notifications-notification-id="<%= notifications&.pluck(:id) %>"
        data-action="click->notifications#readNotifications"
        href="#"
        role="button"
@@ -13,8 +13,8 @@
        aria-expanded="false"></a>
     <div class="dropdown-menu dropdown-menu-notifications dropdown-menu-right">
       <!-- notification -->
-      <% if @notifications.present? %>
-        <% @notifications&.first(5).each do |notification| %>
+      <% if notifications.present? %>
+        <% notifications&.first(5).each do |notification| %>
           <%= link_to participant_read_notification_path(current_participant, id: notification.id), class: "dropdown-item #{unread_notification?(notification)}" do %>
             <div class="dropdown-item-img">
               <%= image_tag notification.thumbnail_url if notification.thumbnail_url.present? %>
@@ -26,7 +26,7 @@
           <% end %>
           <div class="dropdown-divider"></div>
         <% end %>
-        <% if @notifications.count > 5 %>
+        <% if notifications.count > 5 %>
           <div class="dropdown-divider"></div>
           <%= link_to 'See all', participant_notifications_message_path(current_participant), class: "dropdown-item" %>
         <% end %>
