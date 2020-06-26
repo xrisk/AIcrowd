@@ -11,6 +11,11 @@ export default class extends Controller {
       return false;
     }
 
+    $(document).click(function(){
+      $('.dropdown-menu-notifications').removeClass('show');
+      $(".dropdown-menu-notifications").hide();
+    });
+
     $.ajax({
       url: "/participants/"+ participant_id + "/read_notification/" + notification_ids + ".js",
       data: { participant_id: participant_id, ids: notification_ids }
