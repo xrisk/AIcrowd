@@ -34,6 +34,10 @@ class LeaderboardsController < ApplicationController
     @post_challenge   = post_challenge?
     @following        = following?
 
+    if freeze_leaderbaord_participant?
+      @my_leaderboard = get_my_leaderboard
+    end
+
     unless is_disentanglement_leaderboard?(@leaderboards.first)
       @countries = @filter.call('participant_countries')
       @affiliations = @filter.call('participant_affiliations')
@@ -150,6 +154,21 @@ class LeaderboardsController < ApplicationController
     return false if ch_round.end_dttm.nil? || (ch_round.end_dttm - Time.now.utc).negative?
 
     ch_round.end_dttm - Time.now.utc < ch_round.freeze_duration * 60 * 60
+  end
+
+  def get_my_leaderboard
+    filter = { challenge_round_id: @current_round&.id.to_i, meta_challenge_id: nil, freeze_leaderboard: false, submitter_type: "Participant", submitter_id: current_participant.id }
+    @get_my_leaderboard ||=  if post_challenge?
+                              policy_scope(OngoingLeaderboard)
+                                .where(filter)
+                            else
+                              policy_scope(Leaderboard)
+                                .where(filter)
+                            end
+  end
+
+  def freeze_leaderbaord_participant?
+    freeze_condition? && get_my_leaderboard.pluck(:submitter_id).include?(current_participant.id)
   end
 end
 

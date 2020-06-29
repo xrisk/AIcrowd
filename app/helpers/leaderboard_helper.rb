@@ -130,4 +130,12 @@ module LeaderboardHelper
   def max_submissions_in_a_day(uniform_submissions)
     uniform_submissions.values.max
   end
+
+  def  leaderboard_rank(leaderboard, hidden_rank)
+    if defined?(hidden_rank) && hidden_rank
+      '**'
+    else
+      "%02d" % (leaderboard.row_num)
+    end
+  end
 end
