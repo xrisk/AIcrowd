@@ -11921,6 +11921,9 @@ body {
   display: block;
 }
 
+.masthead-info-item.follow-participant {
+  padding: 5px 0 0 10px;
+}
 .masthead-user .masthead-info .api-key {
   width: 40%;
 }
@@ -14244,6 +14247,16 @@ a.table-fancy-links {
 
 .dropdown-item-active{
   background-color: #F8F9F9;
+}
+
+.badge-tab-count {
+  background-color: #ef514d;
+  border-radius: 2px;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  padding: .125rem .25rem .25rem .25rem;
+  margin-left: 5px;
 }
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';

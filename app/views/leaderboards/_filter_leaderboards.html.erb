@@ -51,5 +51,16 @@
       </label>
     </div>
   <% end %>
+  <% if current_participant.present? %>
+    <div class="my-2">
+      <label class="toggle-switch" style="width: max-content;">
+        <%= link_to challenge_leaderboards_path(challenge_round_id: @current_round, post_challenge: @post_challenge.blank?, country_name: params[:country_name], affiliation: params[:affiliation], challenge_id: @challenge.friendly_id, following: @following.blank?) do %>
+          <input id="post-challenge-switch" type="checkbox" <%= "checked" if @following.present? %> >
+          <span class="switcher mr-2"></span>
+          <span class="label">Show Friends</span>
+        <% end %>
+      </label>
+    </div>
+  <% end %>
   <!-- /toggle switch -->
 </div>
