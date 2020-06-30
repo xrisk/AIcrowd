@@ -1,3 +1,5 @@
+require 'csv'
+
 namespace :challenges do
   desc "Migrate challenges score titles to rounds score titles"
   task migrate_score_titles_to_rounds: :environment do
@@ -36,5 +38,13 @@ namespace :challenges do
       input_text.gsub!("</h#{x}>", "</h#{x + 1}>")
     end
     input_text
+  end
+
+  desc "Take weights from a weights.csv file and add weights to the corresponding challenge"
+  task update_challenge_weights: :environment do
+    CSV.foreach("weights.csv", :headers => true) do |row|
+      row = row.to_hash
+      Challenge.find_by(id: row["id"]).update_attribute(:weight, row["weight"])
+    end
   end
 end
