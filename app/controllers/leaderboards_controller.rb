@@ -168,7 +168,7 @@ class LeaderboardsController < ApplicationController
   end
 
   def freeze_leaderbaord_participant?
-    freeze_condition? && get_my_leaderboard.pluck(:submitter_id).include?(current_participant.id)
+    current_participant.present? && freeze_condition? && get_my_leaderboard.pluck(:submitter_id).include?(current_participant.id)
   end
 end
 
