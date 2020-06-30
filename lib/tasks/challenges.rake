@@ -44,7 +44,12 @@ namespace :challenges do
   task update_challenge_weights: :environment do
     CSV.foreach("weights.csv", :headers => true) do |row|
       row = row.to_hash
-      Challenge.find_by(id: row["id"]).update_attribute(:weight, row["weight"])
+      challenge_id = row["id"]
+      challenge_weight = row["weight"]
+      if challenge_weight.nil?
+        challenge_weight = 0
+      end
+      Challenge.find_by(id: challenge_id).update_attribute(:weight, challenge_weight)
     end
   end
 end
