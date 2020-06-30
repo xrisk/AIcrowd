@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_16_142418) do
+ActiveRecord::Schema.define(version: 2020_06_30_120822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -156,7 +156,7 @@ ActiveRecord::Schema.define(version: 2020_06_16_142418) do
     t.integer "submission_id"
     t.boolean "post_challenge", default: false
     t.integer "seq"
-    t.boolean "baseline"
+    t.boolean "baseline", default: false
     t.string "baseline_comment"
     t.json "meta"
     t.string "submitter_type"
@@ -589,7 +589,7 @@ ActiveRecord::Schema.define(version: 2020_06_16_142418) do
     t.integer "submission_id"
     t.boolean "post_challenge", default: false
     t.integer "seq"
-    t.boolean "baseline"
+    t.boolean "baseline", default: false
     t.string "baseline_comment"
     t.json "meta"
     t.float "extra_score1"
