@@ -38,7 +38,7 @@
       <%= link_to 'Participate', required_terms_or_rules_path(challenge), class: "btn btn-primary btn-sm pull-right" %>
     <% else %>
       <%= my_team_view_or_create_button(challenge) %>
-      <% if !challenge.meta_challenge %>
+      <% if !challenge.meta_challenge && !challenge.ml_challenge %>
         <% if !policy(challenge).starting_soon_mode? && policy(challenge).submissions_allowed? %>
           <%= link_to 'Create Submission', new_challenge_submission_path(challenge), class: "btn btn-primary btn-sm pull-right" %>
         <% end %>

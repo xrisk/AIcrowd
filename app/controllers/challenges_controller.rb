@@ -39,7 +39,6 @@ class ChallengesController < ApplicationController
         participant_id:                   current_participant.id,
         challenge_rules_accepted_version: @challenge.current_challenge_rules&.version)
     end
-
     @challenge.record_page_view unless params[:version] # dont' record page views on history pages
     @challenge_rules  = @challenge.current_challenge_rules
     @challenge_rounds = @challenge.challenge_rounds.started
@@ -54,6 +53,12 @@ class ChallengesController < ApplicationController
       @latest_five_submissions = Submission.where(meta_challenge_id: @challenge).order(created_at: :desc).limit(5)
       params[:meta_challenge_id] = params[:id]
       render template: "challenges/show_meta_challenge"
+    end
+
+    if @challenge.ml_challenge
+      params[:ml_challenge_id] = params[:id]
+      @date_wise_challenge = get_date_wise_challenge_problem
+      render template: "challenges/show_ml_challenge"
     end
   end
 
@@ -178,6 +183,8 @@ class ChallengesController < ApplicationController
     @challenge = Challenge.includes(:organizers).friendly.find(params[:id])
     @challenge = @challenge.versions[params[:version].to_i].reify if params[:version]
     authorize @challenge
+
+
     if params.has_key?('meta_challenge_id')
       @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id])
       if !@meta_challenge.meta_challenge || !@meta_challenge.problems.include?(@challenge)
@@ -185,7 +192,16 @@ class ChallengesController < ApplicationController
       end
     end
 
-    if !params.has_key?('meta_challenge_id')
+    if params.has_key?('ml_challenge_id')
+      @ml_challenge = Challenge.includes(:organizers).friendly.find(params[:ml_challenge_id])
+      if !@ml_challenge.ml_challenge || !@ml_challenge.problems.include?(@challenge)
+        raise ActionController::RoutingError.new('Not Found')
+      end
+    end
+
+    params[:challenge_type] = challenge_type
+
+    unless challenge_type.present?
       cp = ChallengeProblems.find_by(problem_id: @challenge.id)
       if cp.present?
         params[:meta_challenge_id] = Challenge.find(cp.challenge_id).slug
@@ -263,6 +279,24 @@ class ChallengesController < ApplicationController
     end
   end
 
+  def challenge_type
+    if @challenge.meta_challenge
+      'meta_challenge_id'
+    elsif @challenge.ml_challenge
+      'ml_challenge_id'
+    end
+  end
+
+  def get_date_wise_challenge_problem
+    return @challenge.problems unless current_participant.present?
+
+    challenge_participant = current_participant.challenge_participants.where(challenge: @challenge).first
+    day_num               = (Time.now.to_date - challenge_participant.challenge_rules_accepted_date.to_date) + 1
+    problem_ids           = @challenge.challenge_problems.where("occur_day > ?", day_num).pluck(:problem_id)
+
+    @challenge.problems.where(id: problem_ids)
+  end
+
   def challenge_params
     params.require(:challenge).permit(
       :challenge,
@@ -313,6 +347,7 @@ class ChallengesController < ApplicationController
       :banner_color,
       :big_challenge_card_image,
       :practice_flag,
+      :ml_challenge,
       image_attributes: [
         :id,
         :image,
