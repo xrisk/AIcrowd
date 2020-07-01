@@ -65,6 +65,7 @@ class Challenge < ApplicationRecord
   has_many :categories, through: :category_challenges
   has_many :newsletter_emails, class_name: 'NewsletterEmail'
   has_many :notifications, class_name: 'Notification'
+  has_many :participant_ml_challenge_goals
 
   as_enum :status,
           %i[draft running completed starting_soon],

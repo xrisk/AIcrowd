@@ -291,6 +291,9 @@ class ChallengesController < ApplicationController
     return @challenge.problems unless current_participant.present?
 
     challenge_participant = current_participant.challenge_participants.where(challenge: @challenge).first
+
+    return @challenge.problems unless challenge_participant.present?
+
     day_num               = (Time.now.to_date - challenge_participant.challenge_rules_accepted_date.to_date) + 1
     problem_ids           = @challenge.challenge_problems.where("occur_day > ?", day_num).pluck(:problem_id)
 
