@@ -16,8 +16,9 @@ module ChallengesHelper
   end
 
   def required_terms_or_rules_path(challenge)
-    if params.has_key?('meta_challenge_id')
-      challenge = Challenge.friendly.find(params[:meta_challenge_id])
+    if params.has_key?('meta_challenge_id') || params.has_key?('ml_challenge_id')
+      challenge_id = params[:meta_challenge_id].present? ? params[:meta_challenge_id] : params[:ml_challenge_id]
+      challenge    = Challenge.friendly.find(challenge_id)
     end
 
     if !policy(challenge).has_accepted_participation_terms?
@@ -180,9 +181,29 @@ module ChallengesHelper
     return false
   end
 
+  def is_current_page_ml_challenge_child(challenge)
+    if params.has_key?('ml_challenge_id')
+      if challenge.is_a?(String)
+        if challenge != params['ml_challenge_id']
+          return true
+        end
+      elsif challenge.is_a?(Hash)
+        if challenge.has_key?(:challenge_id) && (challenge[:challenge_id] != params['ml_challenge_id'])
+          return true
+        end
+      elsif challenge.slug != params['ml_challenge_id']
+        return true
+      end
+    end
+    return false
+  end
+
   def meta_challenge(link, challenge)
-    if is_current_page_meta_challenge_child(challenge)
-      return challenge_path(params['meta_challenge_id']) + link.gsub(/^\/challenges/, "/problems")
+    params_sub_challenge_id = params['meta_challenge_id'] || params['ml_challenge_id']
+
+    challenge_child_action = params['meta_challenge_id'].present? ? is_current_page_meta_challenge_child(challenge) : is_current_page_ml_challenge_child(challenge)
+    if challenge_child_action
+      return challenge_path(params_sub_challenge_id) + link.gsub(/^\/challenges/, "/problems")
     end
     return link
   end
