@@ -104,6 +104,7 @@ class Participant < ApplicationRecord
   has_many :claimant_email_invitations, class_name: 'EmailInvitation', foreign_key: :claimant_id, inverse_of: :claimant
   has_many :newsletter_emails, class_name: 'NewsletterEmail', dependent: :destroy
   has_many :notifications
+  has_many :participant_ml_challenge_goals
 
   validates :email,
             presence:              true,

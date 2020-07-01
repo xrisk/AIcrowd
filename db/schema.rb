@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_30_120822) do
+ActiveRecord::Schema.define(version: 2020_07_01_124812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -514,6 +514,14 @@ ActiveRecord::Schema.define(version: 2020_06_30_120822) do
     t.index ["organizer_id"], name: "index_clef_tasks_on_organizer_id"
   end
 
+  create_table "daily_practice_goals", force: :cascade do |t|
+    t.string "title"
+    t.integer "points"
+    t.string "duration_text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "dataset_file_downloads", id: :serial, force: :cascade do |t|
     t.integer "participant_id"
     t.integer "dataset_file_id"
@@ -821,6 +829,17 @@ ActiveRecord::Schema.define(version: 2020_06_30_120822) do
     t.string "status_cd"
     t.index ["clef_task_id"], name: "index_participant_clef_tasks_on_clef_task_id"
     t.index ["participant_id"], name: "index_participant_clef_tasks_on_participant_id"
+  end
+
+  create_table "participant_ml_challenge_goals", force: :cascade do |t|
+    t.bigint "participant_id"
+    t.bigint "challenge_id"
+    t.bigint "daily_practice_goal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_participant_ml_challenge_goals_on_challenge_id"
+    t.index ["daily_practice_goal_id"], name: "index_participant_ml_challenge_goals_on_daily_practice_goal_id"
+    t.index ["participant_id"], name: "index_participant_ml_challenge_goals_on_participant_id"
   end
 
   create_table "participant_organizers", force: :cascade do |t|
@@ -1155,6 +1174,9 @@ ActiveRecord::Schema.define(version: 2020_06_30_120822) do
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "participant_clef_tasks", "clef_tasks"
   add_foreign_key "participant_clef_tasks", "participants"
+  add_foreign_key "participant_ml_challenge_goals", "challenges"
+  add_foreign_key "participant_ml_challenge_goals", "daily_practice_goals"
+  add_foreign_key "participant_ml_challenge_goals", "participants"
   add_foreign_key "participant_organizers", "organizers"
   add_foreign_key "participant_organizers", "participants"
   add_foreign_key "partners", "organizers"
