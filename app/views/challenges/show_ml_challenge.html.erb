@@ -1,0 +1,68 @@
+<%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
+<%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
+
+<!-- section -->
+<section class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="row col-lg-9">
+        <header class="section-header">
+          <div>
+            <h4>ML Challenges</h4>
+          </div>
+        </header>
+        <div class="row col-md-12">
+          <% if policy(@challenge).edit? || !(@challenge.starting_soon? || @challenge.draft?) %>
+            <%= render partial: 'shared/challenges/listing_compact', locals: { challenges: @date_wise_challenge, is_practice: false } %>
+          <% else %>
+            <div class="col-md-12 mb-5">
+              <div class="empty-card-compact">
+                <div class="text text-small mt-8">
+                  <img src="/assets/img/icon-lock-grey.png"><br/>
+                  <span>Problems will be visible after challenge starts</span>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          <% if policy(@challenge).edit? %>
+              <div class="col-md-4 pb-4">
+                <div class="empty-card-compact">
+                  <%= link_to challenge_path(@challenge) + "/problems" do %>
+                  <div class="text">
+                    <img src="/assets/img/icon-plus-grey.png"><br/>
+                    <span>Add/Remove Problems</span>
+                  </div>
+                  <% end %>
+                </div>
+              </div>
+          <% end %>
+        </div>
+        <div class="row">
+          <!-- md content -->
+          <div class="col-md-12" id="description-wrapper">
+            <div class="markdown-wrap">
+              <div class="md-content ck-content" data-controller="challenge-overview" data-action="resize@window->challenge-overview#showTOC">
+                <%= sanitize_html(@challenge.description) %>
+                <% if controller_name == 'challenges' && show_action? && @partners.present? %>
+                <h2>Sponsors and Partners</h2>
+                  <% @partners.each do |partner| %>
+                    <% if partner.image_file.present?  %>
+                      <figure class="image">
+                        <%= image_tag partner.image_file.url %>
+                      </figure>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="top-contributors-container col-sm-12 col-md-4 col-lg-3">
+        <%= render 'challenges/show/sidenav', challenge: @challenge, top_leaderboards: @top_five_leaderboards, latest_submissions: @latest_five_submissions, challenge_baseline_discussion: @challenge_baseline_discussion %>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /section -->

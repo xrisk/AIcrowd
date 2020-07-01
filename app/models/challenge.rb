@@ -238,7 +238,7 @@ class Challenge < ApplicationRecord
   end
 
   def problems
-    if meta_challenge?
+    if meta_challenge? || ml_challenge
       return Challenge.where(id: challenge_problems.pluck('problem_id'))
     end
   end
