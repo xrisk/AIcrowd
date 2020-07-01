@@ -4,6 +4,7 @@ class BaseLeaderboard < ApplicationRecord
 
   belongs_to :challenge
   belongs_to :meta_challenge, optional: true, class_name: 'Challenge'
+  belongs_to :ml_challenge, optional: true, class_name: 'Challenge'
   belongs_to :challenge_round
   belongs_to :submission, optional: true
 

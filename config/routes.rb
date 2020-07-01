@@ -244,6 +244,8 @@ Rails.application.routes.draw do
     resources :challenge_call_responses, only: [:create]
   end
   resource :search, only: :show
+  resources :daily_practice_goals, only: [:index]
+  resources :participant_ml_challenge_goals, only: [:create, :update]
 
   get '/call-for-challenges/:challenge_call_id/apply' => 'challenge_call_responses#new', :as => 'challenge_call_apply'
   get '/call-for-challenges/:challenge_call_id/applications/:id' => 'challenge_call_responses#show', :as => 'challenge_call_show'

@@ -49,12 +49,12 @@
     <% end %>
 
     <td class="text-right"><strong><%= leaderboard_formatted_value(current_round, leaderboard.score) %></strong></td>
-    <% if @current_round&.get_score_secondary_title.present? && !@challenge.meta_challenge %>
+    <% if @current_round&.get_score_secondary_title.present? && !@challenge.meta_challenge && !@challenge.ml_challenge %>
       <% if !(@current_round&.secondary_sort_order.present? && @current_round&.secondary_sort_order == :hidden) %>
         <td class="text-right"><strong><%= leaderboard_formatted_value(current_round, leaderboard.score_secondary) %></strong></td>
       <% end %>
     <% end %>
-    <% if @challenge.meta_challenge %>
+    <% if @challenge.meta_challenge || @challenge.ml_challenge %>
       <td>
         <% unless leaderboard.disentanglement? %>
           <% submitter = leaderboard.submitter if leaderboard.submitter_type != 'OldParticipant'  %>
@@ -63,7 +63,7 @@
           <% end %>
         <% end %>
       </td>
-      <% leaderboard_meta_challenge_other_scores_array(leaderboard, challenge).each do |problem_score| %>
+      <% leaderboard_meta_challenge_other_scores_array(leaderboard, challenge, current_participant&.id).each do |problem_score| %>
         <td class="text-right">
           <% if problem_score['position'].present? %>
             <span class="geek-view-normal" data-toggle="tooltip" data-placement="top" title="Rank in problem"><strong>

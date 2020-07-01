@@ -55,4 +55,10 @@ module ParticipantsHelper
     follow_participant = followers_or_following == 'followers' ? follow.participant : follow.followable
     return { followable: follow_participant, follow: current_participant.following_participant?(follow_participant.id) ? follow : nil }
   end
+
+  def get_award_point_on_day(participant)
+    return if participant.nil?
+
+    participant.ml_activity_points.group_by_day(:created_at, format: "%Y-%m-%d").sum_points_by_day
+  end
 end

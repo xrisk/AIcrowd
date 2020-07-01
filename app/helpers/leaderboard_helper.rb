@@ -54,7 +54,7 @@ module LeaderboardHelper
   def leaderboard_other_scores_array(leaderboard, challenge)
     other_scores = []
     challenge.other_scores_fieldnames_array.map(&:to_s).each do |fname|
-      other_scores << if leaderboard.meta && (leaderboard.meta.key? fname)
+      other_scores << if (leaderboard.meta || leaderboard.ml) && (leaderboard.meta.key? fname)
                         (leaderboard.meta[fname].nil? ? "-" : leaderboard_formatted_value(challenge.active_round, leaderboard.meta[fname]))
                       else
                         '-'
@@ -63,10 +63,10 @@ module LeaderboardHelper
     return other_scores
   end
 
-  def leaderboard_meta_challenge_other_scores_array(leaderboard, challenge)
+  def leaderboard_meta_challenge_other_scores_array(leaderboard, challenge, participant_id)
     other_scores = []
-    challenge.other_scores_fieldnames_array.map(&:to_s).each do |fname|
-      if leaderboard.meta && (leaderboard.meta.key? fname) && (leaderboard.meta[fname]) && (leaderboard.meta[fname].key? 'position')
+    challenge.other_scores_fieldnames_array(participant_id).map(&:to_s).each do |fname|
+      if (leaderboard.meta || leaderboard.ml) && (leaderboard.meta.key? fname) && (leaderboard.meta[fname]) && (leaderboard.meta[fname].key? 'position')
         other_scores << leaderboard.meta[fname]
       else
         other_scores << {'position': '-', 'score': '-'}
@@ -130,5 +130,11 @@ module LeaderboardHelper
   def freeze_time(ch_round)
     time = ch_round.end_dttm - ch_round.freeze_duration.to_i.hours
     time.strftime("%B %d, %Y, %H:%M %Z")
+  end
+
+  def participate_challenge_problems(challenge, participant)
+    challenge_participant = participant.challenge_participants.find_by(challenge_id: challenge.id)
+    day_num = (Time.now.to_date - challenge_participant.challenge_rules_accepted_date.to_date).to_i + 1
+    challenge.challenge_problems.where("occur_day <= ?", day_num)
   end
 end

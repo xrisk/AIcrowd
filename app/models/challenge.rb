@@ -65,6 +65,8 @@ class Challenge < ApplicationRecord
   has_many :categories, through: :category_challenges
   has_many :newsletter_emails, class_name: 'NewsletterEmail'
   has_many :notifications, class_name: 'Notification'
+  has_many :participant_ml_challenge_goals, dependent: :destroy
+  has_many :ml_activity_points
 
   as_enum :status,
           %i[draft running completed starting_soon],
@@ -153,6 +155,8 @@ class Challenge < ApplicationRecord
   def submissions
     if meta_challenge?
       return Submission.where(meta_challenge_id: id)
+    elsif ml_challenge?
+      return Submission.where(ml_challenge_id: id)
     end
     return super
   end
@@ -227,8 +231,24 @@ class Challenge < ApplicationRecord
     end
   end
 
-  def other_scores_fieldnames_array
-    if meta_challenge
+  def other_scores_fieldnames_array(participant_id=nil)
+    participant = Participant.find(participant_id)
+
+    challenge_problems = if participant.present?
+                           return self.challenge_problems if participant&.admin?
+                           return self.challenge_problems unless participant.present?
+
+                           challenge_participant = participant.challenge_participants.where(challenge_id: id).first
+
+                           return self.challenge_problems unless challenge_participant.present?
+
+                           day_num               = (Time.now.to_date - challenge_participant.challenge_rules_accepted_date.to_date).to_i + 1
+                           self.challenge_problems.where("occur_day <= ?", day_num)
+                         else
+                           self.challenge_problems
+                         end
+
+    if meta_challenge || ml_challenge
       return challenge_problems.pluck('challenge_round_id')
     end
     arr = other_scores_fieldnames
@@ -240,7 +260,7 @@ class Challenge < ApplicationRecord
   end
 
   def problems
-    if meta_challenge?
+    if meta_challenge? || ml_challenge
       return Challenge.where(id: challenge_problems.pluck('problem_id'))
     end
   end
@@ -270,6 +290,14 @@ class Challenge < ApplicationRecord
   def get_default_image
     num = id % 2
     "challenges/AIcrowd-ProblemStatements-#{num}.jpg"
+  end
+
+  def challenge_type
+    if ml_challenge
+      'ml_challenge'
+    elsif meta_challenge
+      'meta_challenge'
+    end
   end
 
   private

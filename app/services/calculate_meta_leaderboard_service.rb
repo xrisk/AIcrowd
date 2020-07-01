@@ -1,17 +1,23 @@
 class CalculateMetaLeaderboardService
 
   def initialize(challenge_id:)
-    @challenge   = Challenge.find(challenge_id)
-    if !@challenge.meta_challenge
-      raise Exception.new('This service should only be called for meta challenges')
+    @challenge = Challenge.find(challenge_id)
+
+    if !@challenge.meta_challenge && !@challenge.ml_challenge
+      raise Exception.new('This service should only be called for meta or ml challenges')
     end
     @round = @challenge.active_round
 
     @child_leaderboards = []
     @weight_hash = {}
+
     @challenge.challenge_problems.each do |challenge_problem|
       @weight_hash[challenge_problem.challenge_round_id] = challenge_problem.weight
-      child_leaderboard = ChallengeRound.find(challenge_problem.challenge_round_id).leaderboards.where(meta_challenge_id: challenge_id)
+      child_leaderboard = if @challenge.ml_challenge
+                            ChallengeRound.find(challenge_problem.challenge_round_id).leaderboards.where(ml_challenge_id: challenge_id)
+                          else
+                            ChallengeRound.find(challenge_problem.challenge_round_id).leaderboards.where(meta_challenge_id: challenge_id)
+                          end
       if child_leaderboard.present?
         @child_leaderboards.append(child_leaderboard)
       end
@@ -30,8 +36,12 @@ class CalculateMetaLeaderboardService
 
   private
 
-  def ranking_formula(rank, challenge_round_id)
-    rank * @weight_hash[challenge_round_id]
+  def ranking_formula(rank, challenge_round_id, submitter_id=nil)
+    if @challenge.ml_challenge
+      @challenge.challenge_problems.find_by(challenge_round_id: challenge_round_id).problem.ml_activity_points.where(participant_id: submitter_id).sum_points
+    else
+      rank * @weight_hash[challenge_round_id]
+    end
   end
 
   def common_values
@@ -71,7 +81,7 @@ class CalculateMetaLeaderboardService
           people[key]['submission_id'] = entry['submission_id']
         end
         people[key]['rank'][entry['challenge_round_id']] = {position: entry['row_num'], score: entry['score']}
-        people[key]['score'] += ranking_formula(entry['row_num'], entry['challenge_round_id'])
+        people[key]['score'] += ranking_formula(entry['row_num'], entry['challenge_round_id'], entry['submitter_id'])
         people[key]['entries'] += entry['entries']
       end
     end
@@ -86,12 +96,12 @@ class CalculateMetaLeaderboardService
     end
 
     BaseLeaderboard.where(challenge_id: @challenge.id, challenge_round_id: @round.id).delete_all
-    rank = 0
+    rank       = @challenge.ml_challenge ? people.size : 0
     last_score = -1
 
-    people.sort_by{|k, v| v['score']}.each do |key, value|
+    people.sort_by { |k, v| v['score'] }.each do |key, value|
       if value['score'] > last_score
-        rank += 1
+        rank       = @challenge.ml_challenge ? rank -= 1 : rank += 1
         last_score = value['score']
       end
       obj = BaseLeaderboard.new(common_values.merge(participant_values(rank, key, value)))

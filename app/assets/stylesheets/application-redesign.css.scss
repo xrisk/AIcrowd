@@ -4898,6 +4898,31 @@ input[type="button"].btn-block {
   border: 1px solid $bronze;
 }
 
+.badge-point {
+  display: inline-block;
+  height: 50px;
+  padding: .25rem .5rem .125rem .5rem;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 10rem;
+  padding-top: 11px;
+}
+
+.badge-circle {
+  background: #44B174;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  padding: 15px;
+  font-size: 25px;
+  font-weight: 700;
+  font: #fff;
+}
+
 .alert {
   position: relative;
   font-size: 1rem;
@@ -14251,6 +14276,10 @@ a.table-fancy-links {
   font-weight: 600;
   padding: .125rem .25rem .25rem .25rem;
   margin-left: 5px;
+}
+
+input.width-185 {
+  width: 185px;
 }
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';

@@ -8,6 +8,7 @@ class Submission < ApplicationRecord
 
   belongs_to :challenge, counter_cache: true
   belongs_to :meta_challenge, optional: true, class_name: 'Challenge'
+  belongs_to :ml_challenge, optional: true, class_name: 'Challenge'
   belongs_to :participant, optional: true
   belongs_to :challenge_round, optional: true
 
@@ -62,6 +63,8 @@ class Submission < ApplicationRecord
     end
     Notification::SubmissionNotificationJob.perform_later(id)
   end
+
+  after_save :give_awarding_point
 
   after_destroy do
     CalculateLeaderboardJob
@@ -133,6 +136,24 @@ class Submission < ApplicationRecord
       end while (Submission.exists?(short_url: short_url))
       self.short_url = short_url
     end
+  end
+
+  def give_awarding_point
+    return unless ml_challenge.present?
+
+    MlChallenge::AwardPointJob.perform_now(self, 'first_submission') if first_submission?
+    MlChallenge::AwardPointJob.perform_now(self, 'submission_points')
+    MlChallenge::AwardPointJob.perform_now(self, 'new_challenge_signup_participation') if graded?
+    MlChallenge::AwardPointJob.perform_now(self, 'participated_into_editors_selected_challenge') if editors_challenge?
+    MlChallenge::AwardScoreImprovedPointJob.perform_now(id, self.class.name, 'score_improved_over_5_times')
+  end
+
+  def first_submission?
+    participant.submissions.where(challenge_id: challenge.id, challenge_round_id: challenge_round.id).count == 1
+  end
+
+  def editors_challenge?
+    challenge.practice_flag && challenge.editors_selection
   end
 
   class ChallengeRoundIDMissing < StandardError

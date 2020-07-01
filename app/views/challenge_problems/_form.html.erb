@@ -18,6 +18,13 @@
         <%= f.text_field :weight, class: "form-control" %>
       </div>
 
+      <% if @challenge.ml_challenge %>
+        <div class="form-group">
+          <label>Occur Day No</label>
+          <%= f.text_field :occur_day, class: "form-control" %>
+        </div>
+      <% end %>
+
       <%= f.button 'Submit', type: 'submit', class: "btn btn-primary" %>
     <% end %>
   </div>

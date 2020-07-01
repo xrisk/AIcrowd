@@ -7,6 +7,12 @@ class InsightsController < ApplicationController
   before_action :set_collection, except: [:index, :challenge_participants_country]
 
   def index
+    if current_participant&.ml_activity_points.present?
+      @gained_points = current_participant.ml_activity_points.sum_points
+      challenge_id   = @ml_challenge.present? ? @ml_challenge.id : @challenge.id
+      @goal_points   = current_participant.participant_ml_challenge_goals.find_by(challenge_id: challenge_id)&.daily_practice_goal&.points
+      @streak_record = get_streak_record if @goal_points.present?
+    end
   end
 
   def submissions_vs_time
@@ -69,8 +75,11 @@ class InsightsController < ApplicationController
     @challenge = Challenge.friendly.find(params[:challenge_id])
     if params.has_key?('meta_challenge_id')
       @meta_challenge = Challenge.friendly.find(params[:meta_challenge_id])
-    elsif @challenge.meta_challenge
-      params[:meta_challenge_id] = params[:challenge_id]
+    elsif params.has_key?('ml_challenge_id')
+      @ml_challenge = Challenge.friendly.find(params[:ml_challenge_id])
+    elsif @challenge.challenge_type.present?
+      challenge_type_id                = "#{@challenge.challenge_type}_id"
+      params[challenge_type_id.to_sym] = params[:challenge_id]
     end
   end
 
@@ -101,6 +110,28 @@ class InsightsController < ApplicationController
       @collection = @challenge.submissions
     elsif @meta_challenge
       @collection = @collection.where(meta_challenge_id: @meta_challenge.id)
+    end
+  end
+
+  def get_streak_record
+    hash_record   = current_participant.ml_activity_points.group_by_day(:created_at, format: "%Y-%m-%d").sum_points_by_day
+    @values       = hash_record.values
+    @streak_array = []
+
+    @values.each_with_index do |value, index|
+      check_hit_goal_points(value, index, 0)
+    end
+    @streak_array.max || 0
+  end
+
+  def check_hit_goal_points(value, index, num)
+    return if value.nil?
+
+    if value > @goal_points
+      num += 1
+      @streak_array << num
+
+      check_hit_goal_points(@values[index+1], index+1, num)
     end
   end
 end

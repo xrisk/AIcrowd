@@ -12,9 +12,19 @@
       <li class="list-group-item">
         <div>
           <a class="text-link" href="<%= challenge_path(cp.problem) %>"><%= cp.problem.challenge %></a>
-          <span><%= cp.problem.slug %>
-          <span class="ml-5">Weight&nbsp;</span><input value="<%= cp.weight %>" name="data[<%=cp.problem_id%>][weight]"></span>
-          <span class="ml-5">Challenge Round ID&nbsp;</span><input value="<%= cp.challenge_round_id %>" name="data[<%=cp.problem_id%>][challenge_round_id]"></span>
+          <span><%= cp.problem.slug %></span>
+
+          <span class="ml-3">Weight&nbsp;
+            <input class='width-185' value="<%= cp.weight %>" name="data[<%=cp.problem_id%>][weight]">
+          </span>
+
+          <span class="ml-3">Challenge Round ID&nbsp;
+            <input class='width-185' value="<%= cp.challenge_round_id %>" name="data[<%=cp.problem_id%>][challenge_round_id]">
+          </span>
+
+          <span class="ml-3">Occur Day&nbsp;
+            <input class='width-185' value="<%= cp.occur_day %>" name="data[<%=cp.problem_id%>][occur_day]">
+          </span>
         </div>
         <button name="delete[<%=cp.problem_id%>]" type="submit" class="btn btn-secondary">Remove</button>
       </li>
