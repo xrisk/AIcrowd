@@ -77,7 +77,10 @@ class Participant < ApplicationRecord
            dependent: :destroy
   has_many :email_preferences_tokens,
            dependent: :destroy
-  has_many :follows,
+  has_many :follows, as: :followable
+  has_many :following,
+           foreign_key: :participant_id,
+           class_name: "Follow",
            dependent: :destroy
   has_many :participant_clef_tasks,
            dependent: :destroy
@@ -352,6 +355,18 @@ class Participant < ApplicationRecord
 
   def meta_challenge_submissions(challenge)
     Submission.participant_meta_challenge_submissions(challenge.id, id)
+  end
+
+  def followers_participant_count
+    follows.participant_type.count
+  end
+
+  def following_participant_count
+    following.participant_type.count
+  end
+
+  def following_participant?(p_id)
+    following.participant_type.pluck(:followable_id).include?(p_id.to_i)
   end
 
   private

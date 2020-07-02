@@ -1,0 +1,40 @@
+<section class="section-p-sm followers-body %>">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="table-responsive-md">
+          <table class="table table-leaderboard">
+            <thead>
+            <tr>
+              <th scope="col" class="sticky-header">Participant</th>
+              <th scope="col" class="sticky-header">Rating</th>
+              <% if current_participant %>
+                <th scope="col" class="sticky-header">Follow/Unfollow</th>
+              <% end %>
+            </tr>
+            </thead>
+            <tbody>
+              <% participant.follows.participant_type.each do |follow| %>
+                <tr>
+                  <td class="<%= cls ||= '' %>">
+                    <%= render partial: 'participants/get_user_profile', locals: { participant: follow.participant } %>
+                  </td>
+                  <td class="<%= cls ||= '' %>">
+                    <%= render partial: 'participants/show_reputation', locals: { participant: follow.participant, style: 'top: 0px;' } %>
+                  </td>
+                  <% if current_participant.present? && current_participant != follow.participant %>
+                    <td class="<%= cls ||= '' %>">
+                      <div class="masthead-info-item follow-participant">
+                        <%= render partial: 'shared/challenges/follow_button', locals: { followable: followable_and_follow(follow, 'followers')[:followable], follow: followable_and_follow(follow, 'followers')[:follow], other_participant: other_participant, active_tab: 'followers' } %>
+                      </div>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

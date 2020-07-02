@@ -1,8 +1,29 @@
 function handleFollowButtonRefresh() {
   const followLinkId     = "#<%= "#{follow_link_id(@followable)}" %>";
-  const refreshedContent = "<%= j render 'shared/challenges/follow_button', followable: @followable, follow: @follow %>";
+  const refreshedContent = "<%= j render 'shared/challenges/follow_button', followable: @followable, follow: @follow, other_participant: @participant, active_tab: params[:active_tab] %>";
 
   $(followLinkId).replaceWith(refreshedContent);
 }
 
 handleFollowButtonRefresh();
+
+<% if @participant.present? && !params[:challenge_id].present? %>
+  followers_count = $('.followers-count');
+  following_count = $('.following-count');
+  <% followers_participant_count = @participant.followers_participant_count %>
+  <% unless followers_participant_count.zero? %>
+    followers_count.removeClass('d-none');
+    followers_count.html("<%= followers_participant_count %>");
+  <% else %>
+    followers_count.addClass('d-none');
+  <% end %>
+  <% following_participant_count = @participant.following_participant_count %>
+  <% unless following_participant_count.zero? %>
+    following_count.removeClass('d-none');
+    following_count.html("<%= following_participant_count %>");
+  <% else %>
+    following_count.addClass('d-none');
+  <% end %>
+  $(".followers-body").replaceWith("<%= j render 'participants/followers', other_participant: @participant, participant: @participant %>");
+  $(".following-body").replaceWith("<%= j render 'participants/following', other_participant: @participant, participant: @participant %>");
+<% end %>

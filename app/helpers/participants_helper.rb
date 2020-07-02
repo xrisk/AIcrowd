@@ -50,4 +50,9 @@ module ParticipantsHelper
     random_class = uniq_id.to_s + '_' + participant&.id.to_s
     "participant_#{random_class}"
   end
+
+  def followable_and_follow(follow, followers_or_following)
+    follow_participant = followers_or_following == 'followers' ? follow.participant : follow.followable
+    return { followable: follow_participant, follow: current_participant.following_participant?(follow_participant.id) ? follow : nil }
+  end
 end
