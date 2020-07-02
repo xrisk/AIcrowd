@@ -1,0 +1,69 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://discourse-staging.aicrowd.com/admin/users/sync_sso
+    body:
+      encoding: UTF-8
+      string: sig=94717d146f18cbfacd0f12635bcf953c69fbfa4fb5309de22ab7963695f16984&sso=ZW1haWw9cmFuZG9tMTIzJTQwZXhhbXBsZS5jb20mZXh0ZXJuYWxfaWQ9NTImbmFtZT1yYW5kb20xMjMmdXNlcm5hbWU9cmFuZG9tMTIz
+    headers:
+      Accept:
+      - application/json
+      Api-Key:
+      - REDACTED
+      Api-Username:
+      - REDACTED
+      User-Agent:
+      - Faraday v1.0.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 26 Jun 2020 09:58:51 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Discourse-Username:
+      - REDACTED
+      X-Discourse-Route:
+      - users/sync_sso
+      Cache-Control:
+      - no-cache, no-store
+      X-Request-Id:
+      - 7ae4bb7a-0aa9-44bf-a4b4-b10a6d28c6d3
+      Set-Cookie:
+      - __profilin=p%3Dt%2Ca%3Dd43f942d7b64a7252d1a8bad6b0c3df3%7C129f6d5b4e245a257d644f1eea9b70bb;
+        path=/; secure; HttpOnly
+      X-Runtime:
+      - '0.147275'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":1406,"username":"random123","name":"random123","avatar_template":"http://www.aicrowd.com/assets/users/avatar-default.png","active":true,"admin":false,"moderator":false,"last_seen_at":null,"last_emailed_at":null,"created_at":"2020-06-26T09:58:51.649Z","last_seen_age":null,"last_emailed_age":null,"created_at_age":0.10157459,"username_lower":"random123","trust_level":0,"manual_locked_trust_level":null,"flag_level":0,"title":null,"time_read":0,"staged":false,"days_visited":0,"posts_read_count":0,"topics_entered":0,"post_count":0,"can_send_activation_email":true,"can_activate":false,"can_deactivate":true,"ip_address":null,"registration_ip_address":null,"can_grant_admin":true,"can_revoke_admin":false,"can_grant_moderation":true,"can_revoke_moderation":false,"can_impersonate":true,"like_count":0,"like_given_count":0,"topic_count":0,"flags_given_count":0,"flags_received_count":0,"private_topics_count":0,"can_delete_all_posts":true,"can_be_deleted":true,"can_be_anonymized":true,"full_suspend_reason":null,"silence_reason":null,"primary_group_id":null,"badge_count":0,"warnings_received_count":0,"bounce_score":0.0,"reset_bounce_score_after":null,"can_view_action_logs":true,"can_disable_second_factor":true,"api_key_count":0,"single_sign_on_record":{"user_id":1406,"external_id":"52","last_payload":"email=random123%40example.com&external_id=52&name=random123&username=random123","created_at":"2020-06-26T09:58:51.717Z","updated_at":"2020-06-26T09:58:51.717Z","external_username":"random123","external_email":"random123@example.com","external_name":"random123","external_avatar_url":null,"external_profile_background_url":null,"external_card_background_url":null},"approved_by":null,"suspended_by":null,"silenced_by":null,"groups":[{"id":10,"automatic":true,"name":"trust_level_0","display_name":"trust_level_0","user_count":1400,"mentionable_level":0,"messageable_level":0,"visibility_level":1,"automatic_membership_email_domains":null,"automatic_membership_retroactive":false,"primary_group":false,"title":null,"grant_trust_level":null,"incoming_email":null,"has_messages":false,"flair_url":null,"flair_bg_color":null,"flair_color":null,"bio_raw":null,"bio_cooked":null,"bio_excerpt":null,"public_admission":false,"public_exit":false,"allow_membership_requests":false,"full_name":null,"default_notification_level":3,"membership_request_template":null,"members_visibility_level":0,"can_see_members":true,"publish_read_state":false}]}'
+    http_version: 
+  recorded_at: Fri, 26 Jun 2020 09:58:51 GMT
+recorded_with: VCR 5.0.0

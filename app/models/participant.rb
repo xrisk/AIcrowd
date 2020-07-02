@@ -24,11 +24,14 @@ class Participant < ApplicationRecord
   ].freeze
 
   friendly_id :name, use: [:slugged, :finders, :history]
+
   before_save :set_api_key
   before_save { self.email = email.downcase }
   before_save :process_urls
   after_create :set_email_preferences
   after_save :publish_to_prometheus
+  after_commit :upsert_discourse_user, on: [:create, :update]
+
   mount_uploader :image_file, ImageUploader
   validates :image_file, file_size: { less_than: 5.megabytes }
 
@@ -364,5 +367,14 @@ class Participant < ApplicationRecord
 
   def following_participant?(p_id)
     following.participant_type.pluck(:followable_id).include?(p_id.to_i)
+  end
+
+  private
+
+  def upsert_discourse_user
+    return if Rails.env.development? || Rails.env.test?
+    return unless saved_change_to_attribute?(:name) || saved_change_to_attribute?(:email)
+
+    Discourse::UpsertUserJob.perform_later(self.id)
   end
 end
