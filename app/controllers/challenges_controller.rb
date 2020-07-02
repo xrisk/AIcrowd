@@ -57,7 +57,7 @@ class ChallengesController < ApplicationController
 
     if @challenge.ml_challenge
       params[:ml_challenge_id] = params[:id]
-      @date_wise_challenge = get_date_wise_challenge_problem
+      @date_wise_challenge     = get_date_wise_challenge_problem
       render template: "challenges/show_ml_challenge"
     end
   end
@@ -184,7 +184,6 @@ class ChallengesController < ApplicationController
     @challenge = @challenge.versions[params[:version].to_i].reify if params[:version]
     authorize @challenge
 
-
     if params.has_key?('meta_challenge_id')
       @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id])
       if !@meta_challenge.meta_challenge || !@meta_challenge.problems.include?(@challenge)
@@ -199,12 +198,11 @@ class ChallengesController < ApplicationController
       end
     end
 
-    params[:challenge_type] = challenge_type
-
-    unless challenge_type.present?
+    if !params.has_key?('meta_challenge_id') && !params.has_key?('ml_challenge_id')
       cp = ChallengeProblems.find_by(problem_id: @challenge.id)
       if cp.present?
-        params[:meta_challenge_id] = Challenge.find(cp.challenge_id).slug
+        type = cp.meta_challenge ? 'meta_challenge_id' : 'ml_challenge_id'
+        params[type.to_sym] = Challenge.find(cp.challenge_id).slug
         redirect_to helpers.challenge_path(@challenge)
       end
     end
@@ -294,7 +292,7 @@ class ChallengesController < ApplicationController
 
     return @challenge.problems unless challenge_participant.present?
 
-    day_num               = (Time.now.to_date - challenge_participant.challenge_rules_accepted_date.to_date) + 1
+    day_num               = (Time.now.to_date - challenge_participant.challenge_rules_accepted_date.to_date).to_i + 1
     problem_ids           = @challenge.challenge_problems.where("occur_day > ?", day_num).pluck(:problem_id)
 
     @challenge.problems.where(id: problem_ids)
