@@ -17,7 +17,7 @@ class LeaderboardsController < ApplicationController
         @submitter_submissions.merge!("submitter#{submitter.id}_submissions_by_day": submitter_submissions(submitter).group_by_created_at) if submitter.present?
       end
     end
-    @top_three_winners = @leaderboards.where(baseline: nil).first(3)
+    @top_three_winners = @leaderboards.where(baseline: false).first(3)
     if params[:country_name].present? || params[:affiliation].present?
       @leaderboards = @leaderboards.where(id: @filter.call('leaderboard_ids'))
       @leaderboards = paginate_leaderboards_by(:seq)
