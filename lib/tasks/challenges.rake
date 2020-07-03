@@ -1,5 +1,3 @@
-require 'csv'
-
 namespace :challenges do
   desc "Migrate challenges score titles to rounds score titles"
   task migrate_score_titles_to_rounds: :environment do
