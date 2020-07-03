@@ -140,14 +140,9 @@ class LeaderboardsController < ApplicationController
   end
 
   def freeze_condition?
-    return false if current_participant&.admin? || participant_is_organizer
+    return false if current_participant&.admin? || policy(@challenge).edit?
 
     @current_round.freeze_flag && freeze_time(@current_round)
-  end
-
-  def participant_is_organizer
-    organizers_email = @challenge.organizers.flat_map { |organizer| organizer.participants }.pluck(:email)
-    organizers_email.include?(current_participant&.email)
   end
 
   def freeze_time(ch_round)
