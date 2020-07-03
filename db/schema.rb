@@ -10,13 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_01_124812) do
+ActiveRecord::Schema.define(version: 2020_07_03_110354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_stat_statements"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "achievements", force: :cascade do |t|
+    t.bigint "participant_id"
+    t.bigint "challenge_round_id"
+    t.integer "achieved_points"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_round_id"], name: "index_achievements_on_challenge_round_id"
+    t.index ["participant_id"], name: "index_achievements_on_participant_id"
+  end
 
   create_table "active_admin_comments", id: :serial, force: :cascade do |t|
     t.string "namespace"
