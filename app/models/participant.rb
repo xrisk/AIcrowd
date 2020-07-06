@@ -103,7 +103,8 @@ class Participant < ApplicationRecord
   has_many :invitor_email_invitations, class_name: 'EmailInvitation', foreign_key: :invitor_id, inverse_of: :invitor
   has_many :claimant_email_invitations, class_name: 'EmailInvitation', foreign_key: :claimant_id, inverse_of: :claimant
   has_many :newsletter_emails, class_name: 'NewsletterEmail', dependent: :destroy
-  has_many :notifications
+  has_many :notifications, dependent: :destroy
+  has_many :team_members, dependent: :destroy
 
   validates :email,
             presence:              true,
