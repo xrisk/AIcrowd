@@ -5,23 +5,32 @@ export default class extends Controller {
   connect() {
     const calendarData = JSON.parse(this.data.get('data'));
 
+    $('.activity-heatmap__square').tooltip();
     this.drawCalendar(calendarData);
   }
 
   drawCalendar(calendarData) {
     const elementId  = this.data.get('element-id');
-    const data       = calendarData.map(activity => { return { date: new Date(activity['date'].split('-')), val: activity['val'] } });
     const startYear  = calendarData[0]['date'].split('-')[0];
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const xScale     = new Plottable.Scales.Category();
     const yScale     = new Plottable.Scales.Category();
+    const data       = calendarData.map(activity => {
+      return {
+        date:                 new Date(activity['date'].split('-')),
+        val:                  activity['val'],
+        visits:               activity['visits'],
+        submissions:          activity['submissions'],
+        gitlab_contributions: activity['gitlab_contributions']
+      }
+    });
 
     yScale.domain(daysOfWeek);
 
     const colorScale = new Plottable.Scales.InterpolatedColor();
 
     colorScale.domain([0, 100]);
-    colorScale.range(["#FCD8D6", "#FAC2BF", "#F59592", "#F37F7B", "#EF534D"])
+    colorScale.range(["#FCD8D6", "#FAC2BF", "#F8ACA8", "#F59592", "#F37F7B", "#EF534D"])
     colorScale.scale = activityHeatmapScale
 
     const plot = new Plottable.Plots.Rectangle()
@@ -51,17 +60,19 @@ export default class extends Controller {
 
     // Initializing tooltip anchor
     const tooltipAnchorSelection = plot.foreground().append("circle").attr({
-      r: 3,
+      r: 15,
       opacity: 0
     });
 
     const tooltipAnchor = $(tooltipAnchorSelection.node());
+
     tooltipAnchor.tooltip({
       animation: false,
       container: "body",
       placement: "auto",
       title: "text",
-      trigger: "manual"
+      trigger: "manual",
+      html: true
     });
 
     // Setup Interaction.Pointer
@@ -73,7 +84,7 @@ export default class extends Controller {
         tooltipAnchorSelection.attr({
           cx: closest.position.x,
           cy: closest.position.y,
-          "data-original-title": `${closest.datum.date.toISOString().substring(0, 10)}: ${closest.datum.val}`
+          "data-original-title": activityTooltipText(closest.datum)
         });
         tooltipAnchor.tooltip("show");
       }
@@ -123,4 +134,17 @@ function activityHeatmapScale(value) {
   } else {
     return this._d3Scale(value);
   }
+}
+
+function activityTooltipText(datum) {
+  const visitsString      = pluralizeString(datum.visits, 'Visit', 'Visits');
+  const submissionsString = pluralizeString(datum.submissions, 'Submission', 'Submissions');
+  const gitlabString      = pluralizeString(datum.gitlab_contributions, 'Gitlab Contribution', 'Gitlab Contributions');
+  const dateString        = datum.date.toDateString();
+
+  return `${visitsString}<br/>${submissionsString}<br/>${gitlabString}<br/>${dateString}`;
+}
+
+function pluralizeString(value, singular, plurar) {
+  return value === 1 ? `${value} ${singular}` : `${value} ${plurar}`;
 }

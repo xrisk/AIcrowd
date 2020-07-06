@@ -283,12 +283,19 @@ svg.plottable {
 .activity-heatmap__squares-wrapper {
   margin: -9px 0 0 38px;
   float: left;
+  display: flex;
+  width: 158px;
+  justify-content: space-between;
+
+  @media (max-width: 1080px) {
+    margin-left: 0px;
+  }
 }
 
 .activity-heatmap__square {
   display: inline-block;
-  height: 18px;
-  width: 18px;
+  height: 19px;
+  width: 19px;
 }
 
 .activity-heatmap__square--first {
@@ -304,13 +311,17 @@ svg.plottable {
 }
 
 .activity-heatmap__square--fourth {
-  background: #F59592;
+  background: #F8ACA8;
 }
 
 .activity-heatmap__square--fifth {
-  background: #F37F7B;
+  background: #F59592;
 }
 
 .activity-heatmap__square--sixth {
+  background: #F37F7B;
+}
+
+.activity-heatmap__square--seventh {
   background: #EF534D;
 }

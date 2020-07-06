@@ -1,0 +1,42 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://gitlab.aicrowd.com/users/not_existing_name/calendar.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Faraday v1.0.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 401
+      message: Unauthorized
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 06 Jul 2020 13:03:58 GMT
+      Server:
+      - nginx
+      X-Request-Id:
+      - P7RGcoHtfL1
+      X-Runtime:
+      - '0.015650'
+      Content-Length:
+      - '61'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"error":"You need to sign in or sign up before continuing."}'
+    http_version: 
+  recorded_at: Mon, 06 Jul 2020 13:03:58 GMT
+recorded_with: VCR 5.0.0
