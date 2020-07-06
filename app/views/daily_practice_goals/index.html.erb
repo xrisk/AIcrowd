@@ -29,7 +29,7 @@
                 <div class="form-check">
                   <%= label_tag do %>
                     <%= f.radio_button :daily_practice_goal_id, goal.id, class: 'form-check-input' %>
-                    <%= goal.title.humanize %>
+                    <b><%= goal.title.humanize %></b> - <%= goal.points %> Points Each Day ( Course Completion : <%= goal.duration_text %> )
                   <% end %>
                 </div>
               <% end %>
