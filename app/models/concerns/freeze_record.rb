@@ -26,10 +26,10 @@ module FreezeRecord
       return if count.zero?
 
       ch_round = first.challenge_round
-      first.is_freeze?(ch_round, participant)
+      first.is_freeze?(ch_round)
     end
 
-    def is_freeze?(challenge_round, participant)
+    def is_freeze?(challenge_round)
       challenge_round.freeze_flag && freeze_time(challenge_round)
     end
 

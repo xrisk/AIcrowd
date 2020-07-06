@@ -43,6 +43,7 @@ class ChallengeRound < ApplicationRecord
 
   after_initialize :set_defaults
 
+  after_save :recalculate_leaderboard, if: :saved_change_to_freeze_flag
 
   def rollback_rating
     RollbackRatingJob.perform_later(end_dttm_was.to_s)
@@ -61,5 +62,9 @@ class ChallengeRound < ApplicationRecord
       self.start_dttm      ||= Time.now.utc
       self.end_dttm        ||= self.start_dttm + 3.months
     end
+  end
+
+  def recalculate_leaderboard
+    CalculateLeaderboardJob.perform_now(challenge_round_id: id) unless freeze_flag
   end
 end

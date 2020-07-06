@@ -5,6 +5,7 @@ module ChallengeRounds
       @challenge             = @challenge_round.challenge
       @submissions           = @challenge_round.submissions.reorder(created_at: :desc)
       @meta_challenge_id     = meta_challenge_id
+      @is_freeze             = @challenge_round.freeze_flag
 
       if @meta_challenge_id.blank?
         @team_participants_ids = @challenge.team_participants.pluck(:participant_id)
@@ -21,17 +22,17 @@ module ChallengeRounds
 
         BaseLeaderboard.where(challenge_round: challenge_round, meta_challenge_id: meta_challenge_id).delete_all
 
-        leaderboards          = build_base_leaderboards('leaderboard', [false], Time.current)
+        leaderboards          = build_base_leaderboards('leaderboard', [false], freeze_time)
         previous_leaderboards = build_base_leaderboards('leaderboard', [false], window_border_dttm([false]))
 
         create_leaderboards(leaderboards, previous_leaderboards)
-        create_freeze_leaderboard(challenge_round, 'leaderboard')
+        # create_freeze_leaderboard(challenge_round, 'leaderboard')
 
         ongoing_leaderboards          = build_base_leaderboards('ongoing', [true, false], Time.current)
         previous_ongoing_leaderboards = build_base_leaderboards('ongoing', [true, false], window_border_dttm([true, false]))
 
         create_leaderboards(ongoing_leaderboards, previous_ongoing_leaderboards)
-        create_freeze_leaderboard(challenge_round, 'ongoing')
+        # create_freeze_leaderboard(challenge_round, 'ongoing')
       end
 
       success
@@ -257,6 +258,16 @@ module ChallengeRounds
 
         BaseLeaderboard.import!(freeze_leaderboards)
       end
+    end
+
+    def freeze_time
+      @is_freeze ? freeze_dttm : Time.current
+    end
+
+    def freeze_dttm
+      return Time.current if @challenge_round.end_dttm.nil?
+
+      @challenge_round.end_dttm - @challenge_round.freeze_duration.hours
     end
   end
 end
