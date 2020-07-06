@@ -279,3 +279,38 @@ svg.plottable {
 .plottable .pie-plot .arc.outline {
   stroke-linejoin: round;
 }
+
+.activity-heatmap__squares-wrapper {
+  margin: -9px 0 0 38px;
+  float: left;
+}
+
+.activity-heatmap__square {
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+}
+
+.activity-heatmap__square--first {
+  background: #F5F5F5;
+}
+
+.activity-heatmap__square--second {
+  background: #FCD8D6;
+}
+
+.activity-heatmap__square--third {
+  background: #FAC2BF;
+}
+
+.activity-heatmap__square--fourth {
+  background: #F59592;
+}
+
+.activity-heatmap__square--fifth {
+  background: #F37F7B;
+}
+
+.activity-heatmap__square--sixth {
+  background: #EF534D;
+}

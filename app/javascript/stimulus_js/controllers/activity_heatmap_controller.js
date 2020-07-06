@@ -21,7 +21,7 @@ export default class extends Controller {
     const colorScale = new Plottable.Scales.InterpolatedColor();
 
     colorScale.domain([0, 100]);
-    colorScale.range(["#FCD8D6", "#FAC2BF", "#F8ACA8", "#F59592", "#F37F7B", "#F16964", "#EF534D"])
+    colorScale.range(["#FCD8D6", "#FAC2BF", "#F59592", "#F37F7B", "#EF534D"])
     colorScale.scale = activityHeatmapScale
 
     const plot = new Plottable.Plots.Rectangle()
