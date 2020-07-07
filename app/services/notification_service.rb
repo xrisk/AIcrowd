@@ -66,7 +66,11 @@ class NotificationService
     existing_notification = @participant.notifications.where(notification_type: 'leaderboard', challenge_id: @notifiable.challenge.id, is_new: true)
     existing_notification.delete_all # delete old unread notification of this challenge
 
-    message = "You have moved from #{@notifiable.previous_row_num} to #{@notifiable.row_num} place in the #{@notifiable.challenge.challenge} leaderboard"
+    message = if @notifiable.previous_row_num == 0
+                "You have secured #{@notifiable.row_num&.ordinalize.to_s} place in the #{@notifiable.challenge.challenge} leaderboard."
+              else
+                "You have moved from #{@notifiable.previous_row_num&.ordinalize.to_s} to #{@notifiable.row_num&.ordinalize.to_s} place in the #{@notifiable.challenge.challenge} leaderboard."
+              end
 
     return if @participant.notifications.exists?(notification_type: 'leaderboard', challenge_id: @notifiable.challenge.id, message: message)
 
