@@ -103,7 +103,7 @@ class LeaderboardsController < ApplicationController
       DisentanglementLeaderboard
         .where(challenge_round_id: @current_round)
         .freeze_record(current_participant)
-    elsif post_challenge? || policy(@challenge).edit? || current_participant.admin
+    elsif post_challenge? || policy(@challenge).edit? || current_participant&.admin
       policy_scope(OngoingLeaderboard)
         .where(filter)
     else
