@@ -1,10 +1,9 @@
 class TaskDatasetFilesController < ApplicationController
   include Concerns::DatasetFiles
+  include Concerns::ChallengeMasthead
+  challenge_masthead_actions [:index]
 
   before_action :authenticate_participant!
-  before_action :set_challenge, only: :index
-  before_action :set_vote, only: :index
-  before_action :set_follow, only: :index
   before_action :set_task_dataset_file, only: [:destroy, :edit, :update]
   before_action :set_clef_task
   before_action :set_s3_direct_post, only: [:new, :create, :edit, :update]
@@ -63,18 +62,6 @@ class TaskDatasetFilesController < ApplicationController
   end
 
   private
-
-  def set_challenge
-    @challenge = Challenge.find(params[:challenge_id])
-  end
-
-  def set_vote
-    @vote = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
-  end
-
-  def set_follow
-    @follow = @challenge.follows.where(participant_id: current_participant.id).first if current_participant.present?
-  end
 
   def set_task_dataset_file
     @task_dataset_file = TaskDatasetFile.find(params[:id])

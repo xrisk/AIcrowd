@@ -1,5 +1,8 @@
 module Challenges
-  class NewsletterEmailsController < Challenges::BaseController
+  class NewsletterEmailsController < ApplicationController
+    include Concerns::ChallengeMasthead
+    challenge_masthead_actions [:new, :create]
+
     before_action :set_newsletter_email_groups, only: [:new, :create]
 
     def new

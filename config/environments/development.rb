@@ -29,7 +29,7 @@ Rails.application.configure do
   config.assets.unknown_asset_fallback     = true
   config.assets.quiet                      = false
   config.assets.raise_runtime_errors       = true
-  # config.file_watcher                      = ActiveSupport::EventedFileUpdateChecker
+  config.file_watcher                      = ActiveSupport::EventedFileUpdateChecker
   config.web_console.whiny_requests        = false
   config.active_storage.service            = :local
   config.action_mailer.default_url_options = { host: ENV["DOMAIN_NAME"] }

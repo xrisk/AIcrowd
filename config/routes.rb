@@ -22,10 +22,7 @@ def challenge_routes
   end
   resources :dataset_files, except: [:show]
   resources :dataset_folders, only: [:new, :create, :edit, :update, :destroy]
-  resources :participant_challenges, only: [:index] do
-    get :approve, on: :collection
-    get :deny, on: :collection
-  end
+  resources :participant_challenges, only: [:index]
   resources :events
   resources :winners, only: [:index]
   resources :submissions do
@@ -246,9 +243,9 @@ Rails.application.routes.draw do
   get '/call-for-challenges/:challenge_call_id/applications/:id' => 'challenge_call_responses#show', :as => 'challenge_call_show'
   get 'SDSC' => 'challenge_call_responses#new', :challenge_call_id => 3
 
-  # ['400', '403', '404', '422', '500'].each do |code|
-  #   get code, controller: :errors, action: :show, code: code
-  # end
+  ['400', '403', '404', '422', '500'].each do |code|
+    get code, controller: :errors, action: :show, code: code
+  end
 
   root 'landing_page#index'
 

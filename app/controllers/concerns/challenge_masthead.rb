@@ -1,16 +1,14 @@
 module Concerns
   module ChallengeMasthead
-    module ClassMethods
-      attr_accessor :challenge_masthead_actions
-    end
-
     extend ActiveSupport::Concern
 
-    included do
-      before_action :set_challenge, only: challenge_masthead_actions
-      before_action :set_challenge_rounds, only: challenge_masthead_actions
-      before_action :set_vote, only: challenge_masthead_actions
-      before_action :set_follow, only: challenge_masthead_actions
+    module ClassMethods
+      def challenge_masthead_actions(actions)
+        before_action :set_challenge, only: actions
+        before_action :set_challenge_rounds, only: actions
+        before_action :set_vote, only: actions
+        before_action :set_follow, only: actions
+      end
     end
 
     private
