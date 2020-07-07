@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://gitlab.aicrowd.com/api/v4/users?extern_uid=7126&provider=oauth2_generic
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Private-Token:
+      - yozDkPH66Y_zaB8TRu9j
+      User-Agent:
+      - Faraday v1.0.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Jul 2020 14:45:19 GMT
+      Etag:
+      - W/"67f8381e10e23fe6df6b3329fc51e788"
+      Link:
+      - <https://gitlab.aicrowd.com/api/v4/users?active=false&blocked=false&extern_uid=7126&external=false&order_by=id&page=1&per_page=20&provider=oauth2_generic&sort=desc&with_custom_attributes=false>;
+        rel="first", <https://gitlab.aicrowd.com/api/v4/users?active=false&blocked=false&extern_uid=7126&external=false&order_by=id&page=1&per_page=20&provider=oauth2_generic&sort=desc&with_custom_attributes=false>;
+        rel="last"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Next-Page:
+      - ''
+      X-Page:
+      - '1'
+      X-Per-Page:
+      - '20'
+      X-Prev-Page:
+      - ''
+      X-Request-Id:
+      - H2ueykSLrW2
+      X-Runtime:
+      - '0.029615'
+      X-Total:
+      - '1'
+      X-Total-Pages:
+      - '1'
+      Content-Length:
+      - '857'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '[{"id":2679,"name":"piotrekpasciakaaa","username":"piotrekpasciakaaa","state":"active","avatar_url":"https://www.gravatar.com/avatar/4ee4b688f84887cd68ac006e619d62e9?s=80\u0026d=identicon","web_url":"http://gitlab.aicrowd.com/piotrekpasciakaaa","created_at":"2020-04-22T15:59:05.859Z","bio":null,"location":null,"public_email":"","skype":"","linkedin":"","twitter":"","website_url":"","organization":null,"last_sign_in_at":"2020-06-26T00:29:15.868Z","confirmed_at":"2020-04-22T15:59:05.833Z","last_activity_on":null,"email":"piotrek.pasciak@gmail.com","theme_id":3,"color_scheme_id":1,"projects_limit":100000,"current_sign_in_at":"2020-07-08T08:36:08.596Z","identities":[{"provider":"oauth2_generic","extern_uid":"7126"}],"can_create_group":false,"can_create_project":true,"two_factor_enabled":false,"external":false,"private_profile":null,"is_admin":true}]'
+    http_version: 
+  recorded_at: Wed, 08 Jul 2020 14:45:19 GMT
+recorded_with: VCR 5.0.0
