@@ -3,14 +3,13 @@
     participants = leaderboard_participants(leaderboard)
     challenge    = leaderboard.challenge
     truncate     = truncate.present? ? truncate : false
-    hidden_rank  = hidden_rank||=nil
   %>
   <tr>
     <% if !leaderboard.baseline? %>
       <td class="leaderboard-change">
         <%= leaderboard_ranking_change(leaderboard) %>
       </td>
-      <td><strong><%= leaderboard_rank(leaderboard, hidden_rank) %></strong></td>
+      <td><strong><%= "%02d" % (leaderboard.row_num) %></strong></td>
       <td>
         <% if participants.empty? %>
           <%= image_tag default_image_url, class: 'avatar' %>
@@ -92,7 +91,7 @@
         <td>
           <% unless is_disentanglement_leaderboard?(leaderboard) %>
             <% submitter = leaderboard.submitter if leaderboard.submitter_type != 'OldParticipant' %>
-            <% if submitter.present? && !hidden_rank %>
+            <% if submitter.present? %>
               <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: challenge, width: '200px', id: submitter.id } %>
             <% end %>
           <% end %>
