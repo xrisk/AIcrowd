@@ -162,7 +162,6 @@ ActiveRecord::Schema.define(version: 2020_06_30_120822) do
     t.string "submitter_type"
     t.bigint "submitter_id"
     t.integer "meta_challenge_id"
-    t.boolean "freeze_leaderboard", default: false, null: false
     t.index ["challenge_id"], name: "index_base_leaderboards_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_base_leaderboards_on_challenge_round_id"
     t.index ["leaderboard_type_cd"], name: "index_base_leaderboards_on_leaderboard_type_cd"
@@ -601,7 +600,6 @@ ActiveRecord::Schema.define(version: 2020_06_30_120822) do
     t.float "extra_score4"
     t.float "extra_score5"
     t.float "avg_rank"
-    t.boolean "freeze_leaderboard", default: false, null: false
     t.index ["challenge_id"], name: "index_disentanglement_leaderboards_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_disentanglement_leaderboards_on_challenge_round_id"
     t.index ["leaderboard_type_cd"], name: "index_disentanglement_leaderboards_on_leaderboard_type_cd"
@@ -1411,8 +1409,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_120822) do
       base_leaderboards.meta,
       base_leaderboards.submitter_type,
       base_leaderboards.submitter_id,
-      base_leaderboards.meta_challenge_id,
-      base_leaderboards.freeze_leaderboard
+      base_leaderboards.meta_challenge_id
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
   SQL
@@ -1445,8 +1442,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_120822) do
       base_leaderboards.meta,
       base_leaderboards.submitter_type,
       base_leaderboards.submitter_id,
-      base_leaderboards.meta_challenge_id,
-      base_leaderboards.freeze_leaderboard
+      base_leaderboards.meta_challenge_id
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'leaderboard'::text);
   SQL
