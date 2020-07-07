@@ -57,6 +57,10 @@ module Discourse
     rescue Discourse::Error, Discourse::UnauthenticatedError, Discourse::NotFoundError => e
       discourse_logger.error(e.message)
       failure(e.message)
+    rescue Discourse::TooManyRequests => e
+      discourse_logger.error(e.message)
+      Rollbar.warning(e)
+      failure(e.message)
     end
 
     def discourse_logger
