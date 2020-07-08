@@ -336,4 +336,12 @@ module ChallengesHelper
     path = super(*args)
     meta_challenge(path, args[0])
   end
+  
+  def challenge_end_time(challenge , active_round)
+    return((challenge_remaining_text(challenge, active_round) == "Completed") || challenge_remaining_text(challenge, active_round) == "Starting soon") ? "" : challenge.end_dttm
+  end
+
+  def challenge_round_end_time(challenge, challenge_round)
+    return (challenge_remaining_text(challenge, challenge_round) == "Completed") ? "" : challenge_round.end_dttm 
+  end
 end
