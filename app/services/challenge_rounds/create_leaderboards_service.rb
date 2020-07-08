@@ -5,6 +5,7 @@ module ChallengeRounds
       @challenge             = @challenge_round.challenge
       @submissions           = @challenge_round.submissions.reorder(created_at: :desc)
       @meta_challenge_id     = meta_challenge_id
+      @is_freeze             = @challenge_round.freeze_flag
 
       if @meta_challenge_id.blank?
         @team_participants_ids = @challenge.team_participants.pluck(:participant_id)
@@ -21,7 +22,7 @@ module ChallengeRounds
 
         BaseLeaderboard.where(challenge_round: challenge_round, meta_challenge_id: meta_challenge_id).delete_all
 
-        leaderboards          = build_base_leaderboards('leaderboard', [false], Time.current)
+        leaderboards          = build_base_leaderboards('leaderboard', [false], freeze_time)
         previous_leaderboards = build_base_leaderboards('leaderboard', [false], window_border_dttm([false]))
 
         create_leaderboards(leaderboards, previous_leaderboards)
@@ -58,6 +59,7 @@ module ChallengeRounds
 
         users_leaderboards << build_leaderboard(first_graded_submission, submissions.size, 'Team', team_id, leaderboard_type)
       end
+
 
       participants_submissions(post_challenge, cuttoff_dttm).each do |participant_id, submissions|
         first_graded_submission = submissions.find { |submission| submission.grading_status_cd == 'graded' }
@@ -240,6 +242,16 @@ module ChallengeRounds
 
     def window_border_dttm(post_challenge)
       (submissions.find_by(post_challenge: post_challenge, meta_challenge_id: meta_challenge_id)&.created_at || Time.current) - challenge_round.ranking_window.hours
+    end
+
+    def freeze_time
+      @is_freeze ? freeze_dttm : Time.current
+    end
+
+    def freeze_dttm
+      return Time.current if @challenge_round.end_dttm.nil?
+
+      @challenge_round.end_dttm - @challenge_round.freeze_duration.hours
     end
   end
 end

@@ -42,6 +42,8 @@ class SubmissionsController < ApplicationController
                       .where(
                         challenge_round_id: @current_round&.id,
                         challenge_id:       @challenge.id)
+                      .freeze_record(current_participant)
+
       end
     end
     if @meta_challenge.present?

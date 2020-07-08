@@ -33,6 +33,7 @@ class LeaderboardsController < ApplicationController
     @challenge_rounds = @challenge.challenge_rounds.started
     @post_challenge   = post_challenge?
     @following        = following?
+
     unless is_disentanglement_leaderboard?(@leaderboards.first)
       @countries = @filter.call('participant_countries')
       @affiliations = @filter.call('participant_affiliations')
@@ -93,14 +94,16 @@ class LeaderboardsController < ApplicationController
   end
 
   def set_leaderboards
-    filter = {challenge_round_id: @current_round&.id.to_i, meta_challenge_id: nil}
+    filter = { challenge_round_id: @current_round&.id.to_i, meta_challenge_id: nil }
+
     if @meta_challenge.present?
       filter[:meta_challenge_id] = @meta_challenge.id
     end
     @leaderboards = if @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
       DisentanglementLeaderboard
         .where(challenge_round_id: @current_round)
-    elsif post_challenge?
+        .freeze_record(current_participant)
+    elsif post_challenge? || policy(@challenge).edit? || current_participant&.admin
       policy_scope(OngoingLeaderboard)
         .where(filter)
     else
