@@ -21,6 +21,9 @@ describe Participants::ActivityHeatmapService do
         activity = result.value.find { |activity| activity[:date] == Time.current.to_date }
 
         expect(activity[:val]).to eq 13
+        expect(activity[:visits]).to eq 3
+        expect(activity[:submissions]).to eq 1
+        expect(activity[:gitlab_contributions]).to eq 0
       end
     end
 
@@ -37,6 +40,9 @@ describe Participants::ActivityHeatmapService do
         activity = result.value.find { |activity| activity[:date] == Time.current.to_date }
 
         expect(activity[:val]).to eq 13
+        expect(activity[:visits]).to eq 3
+        expect(activity[:submissions]).to eq 1
+        expect(activity[:gitlab_contributions]).to eq 0
       end
     end
   end

@@ -8,8 +8,17 @@ module Participants
     end
 
     def call
-      activity      = gitlab_activity.merge(aicrowd_activity) { |key, gitlab_activity, aicrowd_activity| gitlab_activity + aicrowd_activity }
-      activity_data = activity.sort_by { |key, value| key }.map { |key, value| { date: key, val: value} }
+      activity = aicrowd_visits.map do |key, value|
+        {
+          date:                 key,
+          val:                  activity_value(aicrowd_visits[key].to_i, aicrowd_submissions[key].to_i, gitlab_contributions[key].to_i),
+          visits:               aicrowd_visits[key].to_i,
+          submissions:          aicrowd_submissions[key].to_i,
+          gitlab_contributions: gitlab_contributions[key].to_i
+        }
+      end
+
+      activity_data = activity.sort_by { |entry| entry[:date] }
 
       success(activity_data)
     end
@@ -18,11 +27,20 @@ module Participants
 
     attr_reader :participant
 
-    def aicrowd_activity
-      visits      = participant.visits.group_by_day(:started_at, range: time_range).count
-      submissions = participant.submissions.group_by_day(:created_at, range: time_range).count
+    def activity_value(visits_count, submissions_count, gitlab_contributions)
+      visits_count * VALUE_OF_VISIT + submissions_count * VALUE_OF_SUBMISSION + gitlab_contributions
+    end
 
-      visits.merge(submissions) { |key, visit_count, submission_count| visit_count * VALUE_OF_VISIT + submission_count * VALUE_OF_SUBMISSION }
+    def aicrowd_visits
+      @aicrowd_visits ||= participant.visits.group_by_day(:started_at, range: time_range).count
+    end
+
+    def aicrowd_submissions
+      @aicrowd_submissions ||= participant.submissions.group_by_day(:created_at, range: time_range).count
+    end
+
+    def gitlab_contributions
+      @gitlab_contributions ||= gitlab_activity
     end
 
     def gitlab_activity
