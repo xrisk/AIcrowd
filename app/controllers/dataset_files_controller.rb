@@ -1,12 +1,10 @@
 class DatasetFilesController < ApplicationController
   include Concerns::DatasetFiles
+  include Concerns::ChallengeMasthead
+  challenge_masthead_actions [:index, :new, :create, :edit, :update, :destroy]
 
   before_action :authenticate_participant!
   before_action :set_dataset_file, only: [:destroy, :edit, :update]
-  before_action :set_challenge
-  before_action :set_challenge_rounds, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-  before_action :set_vote, only: [:index, :show, :new, :create, :edit, :update, :destroy]
-  before_action :set_follow, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   before_action :check_participation_terms
   before_action :set_s3_direct_post, only: [:new, :create, :edit, :update]
   before_action :set_dataset_files, only: :index # from DatasetFilesConcern
@@ -66,29 +64,6 @@ class DatasetFilesController < ApplicationController
   def set_dataset_file
     @dataset_file = DatasetFile.find(params[:id])
     authorize @dataset_file
-  end
-
-  def set_challenge
-    @challenge = Challenge.friendly.find(params[:challenge_id])
-    if params.has_key?('meta_challenge_id')
-      @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id])
-    end
-  end
-
-  def set_challenge_rounds
-    @challenge_rounds = @challenge.challenge_rounds.started
-  end
-
-  def set_challenge_rounds
-    @challenge_rounds = @challenge.challenge_rounds.started
-  end
-
-  def set_vote
-    @vote = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
-  end
-
-  def set_follow
-    @follow = @challenge.follows.where(participant_id: current_participant.id).first if current_participant.present?
   end
 
   def check_participation_terms
