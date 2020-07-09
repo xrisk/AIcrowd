@@ -374,7 +374,6 @@ ActiveRecord::Schema.define(version: 2020_07_09_104910) do
     t.string "secondary_sort_order_cd", default: "not_used", null: false
     t.boolean "calculated_permanent", default: false, null: false
     t.boolean "assigned_permanent_badge", default: false, null: false
-    t.string "challenge_client_name"
     t.boolean "freeze_flag", default: false, null: false
     t.integer "freeze_duration"
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
