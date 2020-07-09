@@ -1,11 +1,12 @@
 module Api
   module V1
     class OrganizersController < ::Api::V1::BaseController
-      before_action :auth_by_participant_api_key
+      before_action :auth_by_admin_api_key
+      before_action :set_organizer, only: :update
 
       def create
         organizer            = Organizer.new(organizer_params)
-        organizer.image_file = decode_base64_data(organizer_params[:image_file])
+        organizer.image_file = decode_base64_data(params[:image_file])
 
         if organizer.save
           render json: Api::V1::OrganizerSerializer.new(organizer: organizer).serialize, status: :created
@@ -14,7 +15,22 @@ module Api
         end
       end
 
+      def update
+        @organizer.assign_attributes(organizer_params)
+        @organizer.image_file = decode_base64_data(params[:image_file])
+
+        if @organizer.save
+          render json: Api::V1::OrganizerSerializer.new(organizer: @organizer).serialize, status: :ok
+        else
+          render json: { error: @organizer.errors.full_messages.to_sentence }, status: :unprocessable_entity
+        end
+      end
+
       private
+
+      def set_organizer
+        @organizer = Organizer.friendly.find(params[:id])
+      end
 
       def organizer_params
         params.permit(
@@ -25,6 +41,7 @@ module Api
           :slug,
           :tagline,
           :challenge_proposal,
+          :api_key,
           :clef_organizer
         )
       end

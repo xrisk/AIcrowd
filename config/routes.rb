@@ -101,7 +101,7 @@ Rails.application.routes.draw do
         resources :dataset_files, only: [:create, :update, :destroy]
         resources :dataset_folders, only: [:create, :update, :destroy]
       end
-      resources :organizers, only: :create
+      resources :organizers, only: [:create, :update]
       resources :participants, only: [] do
         get :user_profile, on: :member
         post :discourse_notifications, on: :collection
