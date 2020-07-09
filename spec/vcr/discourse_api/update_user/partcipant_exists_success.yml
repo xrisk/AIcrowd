@@ -1,0 +1,69 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://discourse-staging.aicrowd.com/admin/users/sync_sso
+    body:
+      encoding: UTF-8
+      string: sig=62d5b7c671163f14579fcbf2f2449f285e35926e98629d0a25e4a744850a0a1a&sso=ZW1haWw9dGVzdCU0MGV4YW1wbGUuY29tJmV4dGVybmFsX2lkPTcxMjYmbmFtZT10ZXN0JnVzZXJuYW1lPXRlc3Q%253D
+    headers:
+      Accept:
+      - application/json
+      Api-Key:
+      - REDACTED
+      Api-Username:
+      - REDACTED
+      User-Agent:
+      - Faraday v1.0.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 26 Jun 2020 10:00:08 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Discourse-Username:
+      - REDACTED
+      X-Discourse-Route:
+      - users/sync_sso
+      Cache-Control:
+      - no-cache, no-store
+      X-Request-Id:
+      - 8d5fff3c-e197-41ea-8e37-59853f3f89b9
+      Set-Cookie:
+      - __profilin=p%3Dt%2Ca%3Dd43f942d7b64a7252d1a8bad6b0c3df3%7C129f6d5b4e245a257d644f1eea9b70bb;
+        path=/; secure; HttpOnly
+      X-Runtime:
+      - '0.101468'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"id":1339,"username":"piotrekpasciakaaa","name":"test","avatar_template":"/user_avatar/discourse-staging.aicrowd.com/piotrekpasciakaaa/{size}/1062_2.png","active":true,"admin":true,"moderator":false,"last_seen_at":"2020-06-26T09:59:11.552Z","last_emailed_at":"2020-02-24T16:01:45.925Z","created_at":"2020-01-30T12:06:29.274Z","last_seen_age":56.511471084,"last_emailed_age":10605502.13932919,"created_at_age":12779618.79002564,"username_lower":"piotrekpasciakaaa","trust_level":1,"manual_locked_trust_level":null,"flag_level":0,"title":null,"time_read":1428,"staged":false,"days_visited":27,"posts_read_count":46,"topics_entered":22,"post_count":4,"can_send_activation_email":true,"can_activate":false,"can_deactivate":false,"ip_address":null,"registration_ip_address":null,"can_grant_admin":false,"can_revoke_admin":true,"can_grant_moderation":true,"can_revoke_moderation":false,"can_impersonate":true,"like_count":0,"like_given_count":1,"topic_count":2,"flags_given_count":0,"flags_received_count":0,"private_topics_count":2,"can_delete_all_posts":false,"can_be_deleted":false,"can_be_anonymized":false,"full_suspend_reason":null,"silence_reason":null,"primary_group_id":null,"badge_count":2,"warnings_received_count":0,"bounce_score":0.0,"reset_bounce_score_after":null,"can_view_action_logs":true,"can_disable_second_factor":true,"api_key_count":0,"single_sign_on_record":{"user_id":1339,"external_id":"7126","last_payload":"email=test%40example.com&external_id=7126&name=test&username=test","created_at":"2020-01-30T12:06:29.313Z","updated_at":"2020-06-26T08:26:16.682Z","external_username":"test","external_email":"test@example.com","external_name":"test","external_avatar_url":null,"external_profile_background_url":null,"external_card_background_url":null},"approved_by":null,"suspended_by":null,"silenced_by":null,"tl3_requirements":{"time_period":100,"requirements_met":false,"requirements_lost":true,"trust_level_locked":false,"on_grace_period":false,"days_visited":8,"min_days_visited":50,"num_topics_replied_to":2,"min_topics_replied_to":10,"topics_viewed":15,"min_topics_viewed":41,"posts_read":32,"min_posts_read":54,"topics_viewed_all_time":22,"min_topics_viewed_all_time":200,"posts_read_all_time":44,"min_posts_read_all_time":500,"num_flagged_posts":0,"max_flagged_posts":5,"num_flagged_by_users":0,"max_flagged_by_users":5,"num_likes_given":1,"min_likes_given":30,"num_likes_received":0,"min_likes_received":20,"num_likes_received_days":0,"min_likes_received_days":7,"num_likes_received_users":0,"min_likes_received_users":5,"penalty_counts":{"silenced":0,"suspended":0,"total":0}},"groups":[{"id":50,"automatic":false,"name":"way-to-long-chalenge","user_count":1,"mentionable_level":0,"messageable_level":0,"visibility_level":0,"automatic_membership_email_domains":null,"automatic_membership_retroactive":false,"primary_group":false,"title":null,"grant_trust_level":null,"incoming_email":null,"has_messages":false,"flair_url":null,"flair_bg_color":null,"flair_color":null,"bio_raw":null,"bio_cooked":null,"bio_excerpt":null,"public_admission":false,"public_exit":false,"allow_membership_requests":false,"full_name":null,"default_notification_level":3,"membership_request_template":null,"members_visibility_level":0,"can_see_members":true,"publish_read_state":false},{"id":69,"automatic":false,"name":"dssfdsfsd","user_count":10,"mentionable_level":0,"messageable_level":0,"visibility_level":0,"automatic_membership_email_domains":null,"automatic_membership_retroactive":false,"primary_group":false,"title":null,"grant_trust_level":null,"incoming_email":null,"has_messages":false,"flair_url":null,"flair_bg_color":null,"flair_color":null,"bio_raw":null,"bio_cooked":null,"bio_excerpt":null,"public_admission":false,"public_exit":false,"allow_membership_requests":false,"full_name":null,"default_notification_level":3,"membership_request_template":null,"members_visibility_level":0,"can_see_members":true,"publish_read_state":false},{"id":10,"automatic":true,"name":"trust_level_0","display_name":"trust_level_0","user_count":1400,"mentionable_level":0,"messageable_level":0,"visibility_level":1,"automatic_membership_email_domains":null,"automatic_membership_retroactive":false,"primary_group":false,"title":null,"grant_trust_level":null,"incoming_email":null,"has_messages":false,"flair_url":null,"flair_bg_color":null,"flair_color":null,"bio_raw":null,"bio_cooked":null,"bio_excerpt":null,"public_admission":false,"public_exit":false,"allow_membership_requests":false,"full_name":null,"default_notification_level":3,"membership_request_template":null,"members_visibility_level":0,"can_see_members":true,"publish_read_state":false},{"id":11,"automatic":true,"name":"trust_level_1","display_name":"trust_level_1","user_count":525,"mentionable_level":0,"messageable_level":0,"visibility_level":1,"automatic_membership_email_domains":null,"automatic_membership_retroactive":false,"primary_group":false,"title":null,"grant_trust_level":null,"incoming_email":null,"has_messages":false,"flair_url":null,"flair_bg_color":null,"flair_color":null,"bio_raw":null,"bio_cooked":null,"bio_excerpt":null,"public_admission":false,"public_exit":false,"allow_membership_requests":false,"full_name":null,"default_notification_level":3,"membership_request_template":null,"members_visibility_level":0,"can_see_members":true,"publish_read_state":false},{"id":1,"automatic":true,"name":"admins","display_name":"admins","user_count":12,"mentionable_level":0,"messageable_level":0,"visibility_level":1,"automatic_membership_email_domains":null,"automatic_membership_retroactive":false,"primary_group":false,"title":null,"grant_trust_level":null,"incoming_email":null,"has_messages":true,"flair_url":null,"flair_bg_color":null,"flair_color":null,"bio_raw":null,"bio_cooked":null,"bio_excerpt":null,"public_admission":false,"public_exit":false,"allow_membership_requests":false,"full_name":null,"default_notification_level":3,"membership_request_template":null,"members_visibility_level":0,"can_see_members":true,"publish_read_state":false},{"id":3,"automatic":true,"name":"staff","display_name":"staff","user_count":12,"mentionable_level":0,"messageable_level":0,"visibility_level":1,"automatic_membership_email_domains":null,"automatic_membership_retroactive":false,"primary_group":false,"title":null,"grant_trust_level":null,"incoming_email":null,"has_messages":false,"flair_url":null,"flair_bg_color":null,"flair_color":null,"bio_raw":null,"bio_cooked":null,"bio_excerpt":null,"public_admission":false,"public_exit":false,"allow_membership_requests":false,"full_name":null,"default_notification_level":3,"membership_request_template":null,"members_visibility_level":0,"can_see_members":true,"publish_read_state":false}]}'
+    http_version: 
+  recorded_at: Fri, 26 Jun 2020 10:00:08 GMT
+recorded_with: VCR 5.0.0

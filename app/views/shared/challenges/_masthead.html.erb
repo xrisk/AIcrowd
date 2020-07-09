@@ -18,15 +18,6 @@
     background-image: url('<%= challenge.banner_file.url %>');
     background-color: #<%= challenge.banner_color.presence || "F8F9F9" %>
   }
-  .stat-item img {
-    filter: brightness(0);
-  }
-  <% if challenge.banner_color.present? %>
-  .masthead-challenge .stat-item, .organizer-attribution span {
-    color: #<%= challenge.banner_color %> !important;
-    filter: invert(1);
-  }
-  <% end %>
   @media (max-width: 768px) {
     .masthead-banner {
       background-image: url('<%= challenge.banner_mobile_file.url %>');

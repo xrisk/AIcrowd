@@ -22,10 +22,7 @@ def challenge_routes
   end
   resources :dataset_files, except: [:show]
   resources :dataset_folders, only: [:new, :create, :edit, :update, :destroy]
-  resources :participant_challenges, only: [:index] do
-    get :approve, on: :collection
-    get :deny, on: :collection
-  end
+  resources :participant_challenges, only: [:index]
   resources :events
   resources :winners, only: [:index]
   resources :submissions do
@@ -148,6 +145,7 @@ Rails.application.routes.draw do
   }
 
   resources :participants, only: [:show, :edit, :update, :destroy, :index] do
+    resources :follows, only: [:create, :destroy]
     get :sync_mailchimp
     get :regen_api_key
     get :remove_image

@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 2020_07_09_104910) do
 
   # These are extensions that must be enabled in order to support this database
@@ -156,7 +157,7 @@ ActiveRecord::Schema.define(version: 2020_07_09_104910) do
     t.integer "submission_id"
     t.boolean "post_challenge", default: false
     t.integer "seq"
-    t.boolean "baseline"
+    t.boolean "baseline", default: false
     t.string "baseline_comment"
     t.json "meta"
     t.string "submitter_type"
@@ -374,6 +375,8 @@ ActiveRecord::Schema.define(version: 2020_07_09_104910) do
     t.boolean "calculated_permanent", default: false, null: false
     t.boolean "assigned_permanent_badge", default: false, null: false
     t.string "challenge_client_name"
+    t.boolean "freeze_flag", default: false, null: false
+    t.integer "freeze_duration"
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
   end
 
@@ -472,11 +475,11 @@ ActiveRecord::Schema.define(version: 2020_07_09_104910) do
     t.string "evaluator_type_cd"
     t.string "discourse_group_name"
     t.boolean "meta_challenge"
+    t.boolean "practice_flag", default: false, null: false
     t.string "banner_file"
     t.string "banner_color"
     t.boolean "big_challenge_card_image"
     t.string "banner_mobile_file"
-    t.boolean "practice_flag", default: false, null: false
     t.float "weight", default: 0.0, null: false
     t.boolean "editors_selection", default: false, null: false
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
@@ -590,7 +593,7 @@ ActiveRecord::Schema.define(version: 2020_07_09_104910) do
     t.integer "submission_id"
     t.boolean "post_challenge", default: false
     t.integer "seq"
-    t.boolean "baseline"
+    t.boolean "baseline", default: false
     t.string "baseline_comment"
     t.json "meta"
     t.float "extra_score1"
@@ -736,6 +739,8 @@ ActiveRecord::Schema.define(version: 2020_07_09_104910) do
     t.string "message"
     t.string "thumbnail_url"
     t.string "notification_url"
+    t.bigint "challenge_id"
+    t.index ["challenge_id"], name: "index_notifications_on_challenge_id"
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable_type_and_notifiable_id"
     t.index ["participant_id"], name: "index_notifications_on_participant_id"
   end
@@ -998,7 +1003,6 @@ ActiveRecord::Schema.define(version: 2020_07_09_104910) do
     t.string "baseline_comment"
     t.integer "meta_challenge_id"
     t.string "submission_link"
-    t.boolean "visible", default: true
     t.index ["challenge_id"], name: "index_submissions_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_submissions_on_challenge_round_id"
     t.index ["participant_id"], name: "index_submissions_on_participant_id"
@@ -1147,6 +1151,7 @@ ActiveRecord::Schema.define(version: 2020_07_09_104910) do
   add_foreign_key "invitations", "participants"
   add_foreign_key "newsletter_emails", "challenges"
   add_foreign_key "newsletter_emails", "participants"
+  add_foreign_key "notifications", "challenges"
   add_foreign_key "notifications", "participants"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"

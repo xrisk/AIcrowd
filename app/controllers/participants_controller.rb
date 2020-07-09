@@ -1,7 +1,8 @@
 class ParticipantsController < ApplicationController
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :set_participant,
-                only: [:show, :edit, :update, :destroy]
+                only: [:show, :edit, :update, :destroy, :set_follow]
+  before_action :set_follow, only: [:show]
 
   respond_to :html, :js
 
@@ -28,6 +29,8 @@ class ParticipantsController < ApplicationController
     if @categories.count == 0
       @categories = {'No category information' => 1}
     end
+    @achievements_count = 0
+    @participant.badges.badges_stat_count.map { |badge_type_id, badge_type_count| @achievements_count += badge_type_count if [1,2,3].include?(badge_type_id) }
   end
 
   def edit; end
@@ -99,10 +102,14 @@ class ParticipantsController < ApplicationController
   end
 
   def read_notification
-    @notification = current_user.notifications.find(params[:id])
-    @notification.update(is_new: false)
-
-    redirect_to @notification.notification_url || root_url
+    if params[:ids].present? # Its a JS request
+      @notifications = current_user.notifications.where(id: JSON.parse(params[:ids]))
+      @notifications.update_all(is_new: false)
+    else
+      @notification = current_user.notifications.find(params[:id])
+      @notification.update!(is_new: false)
+      redirect_to @notification.notification_url || root_url
+    end
   end
 
   private
@@ -110,6 +117,10 @@ class ParticipantsController < ApplicationController
   def set_participant
     @participant = Participant.friendly.find_by_friendly_id(params[:id].downcase)
     authorize @participant
+  end
+
+  def set_follow
+    @follow = @participant.follows.where(participant_id: current_participant.id).first if current_participant.present?
   end
 
   def accept_terms_params

@@ -41,7 +41,7 @@
     </div>
     <div class="btn-set" aria-hidden="true">
       <%= render partial: 'shared/votes/button', locals: { votable: challenge, vote: vote } %>
-      <%= render partial: 'shared/challenges/follow_button', locals: { followable: challenge, follow: follow } %>
+      <%= render partial: 'shared/challenges/follow_button', locals: { followable: challenge, follow: follow, other_participant: current_participant, active_tab: false } %>
     </div>
 
     <% if policy(challenge).edit? %>

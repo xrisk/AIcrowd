@@ -21,6 +21,9 @@ class LogoImageUploader < CarrierWave::Uploader::Base
     if model.class.name == 'Participant'
       num = model.id % 8
       "/assets/users/AIcrowd-DarkerBG (#{num}).png"
+    elsif model.class.name == 'Challenge' && model.id
+      num = model.id % 2
+      "challenges/AIcrowd-ProblemStatements-#{num}.jpg"
     else
       '/assets/users/user-avatar-default.svg'
     end

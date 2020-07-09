@@ -13,7 +13,14 @@
                 <%= render partial: 'participants/show_reputation', locals: { participant: participant } %>
                 <%= render partial: 'participants/show_temporary_reputation', locals: { participant: participant } %>
               </h1>
+
+              <% if current_participant.present? && current_participant != participant %>
+                <div class="masthead-info-item follow-participant">
+                  <%= render partial: 'shared/challenges/follow_button', locals: { followable: participant, follow: @follow, other_participant: participant, active_tab: false } %>
+                </div>
+              <% end %>
             </div>
+
             <div class="masthead-info">
               <% if participant.first_name.present? || participant.last_name.present? %>
                 <div class="masthead-info-item">
@@ -41,7 +48,7 @@
                   </header>
                   <span>
                     <%= render partial: 'shared/utility/flag', locals: { country_cd: participant.country_cd } %>
-                    <%= render partial: 'location', locals: { participant: participant } %>
+                    <%= render partial: 'participants/location', locals: { participant: participant } %>
                   </span>
                 </div>
               <% end %>
@@ -59,6 +66,13 @@
                   <span><%= participant.api_key %></span>
                 </div>
               <% end %>
+
+              <div class="masthead-info-item">
+                <header>
+                  <h4>Badges</h4>
+                </header>
+                <div class="badge badge-achievement-gold" style = "margin-right: 5px;"><%= participant.badges.badges_stat_count[BadgeType.gold&.id].to_i %></div><div class="badge badge-achievement-silver" style = "margin-right: 5px;"><%= participant.badges.badges_stat_count[BadgeType.silver&.id].to_i %></div><div class="badge badge-achievement-bronze" style = "margin-right: 5px;"><%= participant.badges.badges_stat_count[ BadgeType.bronze&.id].to_i %></div>
+              </div>
 
               <% if participant.twitter.present? || participant.github.present? || participant.linkedin.present? || participant.website.present? %>
                 <div class="masthead-info-item">

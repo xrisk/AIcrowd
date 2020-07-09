@@ -1,24 +1,24 @@
 <!-- section -->
 <div class="row">
-    <div class="col-12">
-        <%= form_for @challenge.challenge_problems.new, :url => "#" do |f| %>
+  <div class="col-12">
+    <%= form_for @challenge.challenge_problems.new, :url => "#" do |f| %>
+      <!-- Can't show errors here as controller is incorrectly created -->
+      <div class="form-group">
+        <label>Challenge (ID of the challenge)</label>
+        <%= f.text_field :problem_id, class: "form-control" %>
+      </div>
 
-        <div class="form-group">
-            <label>Challenge (ID of the challenge)</label>
-            <%= f.text_field :problem_id, class: "form-control" %>
-        </div>
+      <div class="form-group">
+        <label>Challenge Round ID</label>
+        <%= f.text_field :challenge_round_id, class: "form-control" %>
+      </div>
 
-        <div class="form-group">
-            <label>Challenge Round ID</label>
-            <%= f.text_field :challenge_round_id, class: "form-control" %>
-        </div>
+      <div class="form-group">
+        <label>Weight</label>
+        <%= f.text_field :weight, class: "form-control" %>
+      </div>
 
-        <div class="form-group">
-            <label>Weight</label>
-            <%= f.text_field :weight, class: "form-control" %>
-        </div>
-
-        <%= f.button 'Submit', type: 'submit', class: "btn btn-primary" %>
-        <% end %>
-    </div>
+      <%= f.button 'Submit', type: 'submit', class: "btn btn-primary" %>
+    <% end %>
+  </div>
 </div>

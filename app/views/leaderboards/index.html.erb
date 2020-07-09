@@ -2,7 +2,10 @@
 <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 
 <% disentanglement_leaderboard = is_disentanglement_leaderboard?(@leaderboards.first)%>
-<section class="section-p-sm">
+<section
+  class="section-p-sm"
+  data-controller="leaderboards"
+>
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
@@ -27,6 +30,14 @@
               <%= sanitize_html(@current_round.leaderboard_note) %>
             </div>
           </div>
+        <% end %>
+
+        <% if @current_round.freeze_flag %>
+        <div class="md-content">
+          <blockquote><p>ℹ️
+            This leaderboard has been frozen on <%= freeze_time(@current_round) %>
+          </p></blockquote>
+        </div>
         <% end %>
 
         <% if policy(@challenge).show_leaderboard? %>

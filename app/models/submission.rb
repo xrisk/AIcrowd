@@ -1,5 +1,6 @@
 class Submission < ApplicationRecord
   include Markdownable
+  include FreezeRecord
 
   has_paper_trail
 
@@ -56,8 +57,8 @@ class Submission < ApplicationRecord
         .perform_later(challenge_round_id: challenge_round_id)
     end
     Prometheus::SubmissionCounterService.new(submission_id: id).call
-    if grading_status_cd != 'ready'
-      ParticipantBadgeJob.perform_later(name: "onsubmission", participant_id: participant&.id, grading_status_cd: grading_status_cd)
+    if grading_status_cd == 'graded'
+      ParticipantBadgeJob.perform_later(name: "onsubmission", submission_id: id, grading_status_cd: grading_status_cd)
     end
     Notification::SubmissionNotificationJob.perform_later(id)
   end

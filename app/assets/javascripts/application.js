@@ -7,7 +7,6 @@
 //= require cocoon
 //= require isInViewport
 //= require turbolinks
-//= require paloma
 //= require jquery.atwho
 //= require social-share-button
 //= require codemirror
@@ -39,18 +38,10 @@
 //= require modules/direct_s3_upload
 //= require modules/mentions
 //= require modules/modals
+//= require modules/social_share
+//= require modules/challenges
 
-// ---------------------- Pages ---------------------- //
-// require pages/participants_edit
-// require pages/email_preferences_edit
-
-// -------------------- Controllers ------------------- //
-//= require controllers/challenges_controller
-//= require controllers/leaderboards_controller
-//= require controllers/dataset_files_controller
-//= require controllers/task_dataset_files_controller
-//= require controllers/participants_controller
-// require controllers/email_preferences_controller
+// ---------------------- Others --------------------- //
 //= require ahoy
 
 // ------------------------ STARTUP -------------------------- //
@@ -64,7 +55,6 @@ let loaderTimer;
 document.addEventListener("turbolinks:load", function () {
     clearTimeout(loaderTimer);
     $("[data-remodal-id=modal]").remodal();
-    Paloma.start();
     $("#page-content").show();
     $("#loader-container").hide();
 

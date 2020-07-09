@@ -69,7 +69,8 @@ module Challenges
       :scrollable_overview_tabs,
       :meta_challenge,
       :banner_color,
-      :big_challenge_card_image
+      :big_challenge_card_image,
+      :practice_flag
     ].freeze
 
     IMPORTABLE_ASSOCIATIONS = {

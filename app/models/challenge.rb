@@ -64,6 +64,7 @@ class Challenge < ApplicationRecord
 
   has_many :categories, through: :category_challenges
   has_many :newsletter_emails, class_name: 'NewsletterEmail'
+  has_many :notifications, class_name: 'Notification'
 
   as_enum :status,
           %i[draft running completed starting_soon],
@@ -262,6 +263,15 @@ class Challenge < ApplicationRecord
 
   def is_a_problem?
     challenge_problem.present?
+  end
+
+  def image_url
+    image_file_url.present? ?  image_file_url : get_default_image
+  end
+
+  def get_default_image
+    num = id % 2
+    "challenges/AIcrowd-ProblemStatements-#{num}.jpg"
   end
 
   private

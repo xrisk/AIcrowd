@@ -19,10 +19,8 @@
       <div class="col-12">
 
         <%= form_for @participant, validate: true, html: { class: "form-rg" } do |f| %>
-          <% if @participant.errors.any? %>
-            <%= render partial: 'shared/error_messages', locals: { target: @participant } %>
-            <br/>
-          <% end %>
+          <%= render partial: 'shared/error_messages', locals: { target: @participant } %>
+          <br/>
 
           <div class="form-group">
             <label for="username">Username</label>

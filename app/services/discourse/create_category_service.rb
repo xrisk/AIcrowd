@@ -1,8 +1,9 @@
 module Discourse
   class CreateCategoryService < ::Discourse::BaseService
     def initialize(challenge:)
-      @client    = prepare_http_client
-      @challenge = challenge
+      api_username = challenge.organizers.first&.participants&.first&.name
+      @client      = prepare_http_client(api_username: api_username)
+      @challenge   = challenge
     end
 
     def call
@@ -10,17 +11,27 @@ module Discourse
 
       with_discourse_errors_handling do
         response = create_category_request(ensure_uniqueness: retry_count.positive?)
-
         challenge.update!(discourse_category_id: response.body['category']['id'])
 
         success
       rescue Discourse::UnprocessableEntity => e
-        raise e if retry_count.positive?
+        raise e if retry_count >= 2
 
         retry_count += 1
 
         retry if e.message.include?('Category Name has already been taken')
         retry if e.message.include?('Slug is already in use')
+      rescue Discourse::UnauthenticatedError => e
+        raise e if retry_count >= 2
+
+        retry_count += 1
+
+        @client = prepare_http_client
+
+        response = create_category_request(ensure_uniqueness: retry_count.positive?)
+        challenge.update!(discourse_category_id: response.body['category']['id'])
+
+        success
       end
     end
 

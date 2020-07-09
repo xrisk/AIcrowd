@@ -34,10 +34,14 @@ module Discourse
   end
 
   class ApiClient
+    def initialize(api_username: nil)
+      @api_username = api_username || ENV['DISCOURSE_API_USERNAME']
+    end
+
     def call
       return if ENV['DISCOURSE_DOMAIN_NAME'].blank? ||
         ENV['DISCOURSE_API_KEY'].blank? ||
-        ENV['DISCOURSE_API_USERNAME'].blank?
+        api_username.blank?
 
       Faraday.new(http_client_options) do |http_client|
         http_client.request :url_encoded
@@ -49,13 +53,15 @@ module Discourse
 
     private
 
+    attr_reader :api_username
+
     def http_client_options
       {
         url: ENV['DISCOURSE_DOMAIN_NAME'],
         headers: {
           accept: 'application/json',
           'Api-Key'      => ENV['DISCOURSE_API_KEY'],
-          'Api-Username' => ENV['DISCOURSE_API_USERNAME']
+          'Api-Username' => api_username
         }
       }
     end

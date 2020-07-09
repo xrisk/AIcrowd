@@ -23,13 +23,13 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Thu, 11 Jun 2020 21:30:09 GMT
+      - Mon, 06 Jul 2020 13:03:58 GMT
       Server:
       - nginx
       X-Request-Id:
-      - eHKziCOA5ha
+      - P7RGcoHtfL1
       X-Runtime:
-      - '0.017701'
+      - '0.015650'
       Content-Length:
       - '61'
       Connection:
@@ -38,5 +38,5 @@ http_interactions:
       encoding: UTF-8
       string: '{"error":"You need to sign in or sign up before continuing."}'
     http_version: 
-  recorded_at: Thu, 11 Jun 2020 21:30:09 GMT
+  recorded_at: Mon, 06 Jul 2020 13:03:58 GMT
 recorded_with: VCR 5.0.0

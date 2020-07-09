@@ -17,7 +17,7 @@ class LeaderboardsController < ApplicationController
         @submitter_submissions.merge!("submitter#{submitter.id}_submissions_by_day": submitter_submissions(submitter).group_by_created_at) if submitter.present?
       end
     end
-    @top_three_winners = @leaderboards.where(baseline: nil).first(3)
+    @top_three_winners = @leaderboards.where(baseline: false).first(3)
     if params[:country_name].present? || params[:affiliation].present?
       @leaderboards = @leaderboards.where(id: @filter.call('leaderboard_ids'))
       @leaderboards = paginate_leaderboards_by(:seq)
@@ -32,6 +32,8 @@ class LeaderboardsController < ApplicationController
     @follow           = @challenge.follows.find_by(participant_id: current_participant.id) if current_participant.present?
     @challenge_rounds = @challenge.challenge_rounds.started
     @post_challenge   = post_challenge?
+    @following        = following?
+
     unless is_disentanglement_leaderboard?(@leaderboards.first)
       @countries = @filter.call('participant_countries')
       @affiliations = @filter.call('participant_affiliations')
@@ -87,20 +89,31 @@ class LeaderboardsController < ApplicationController
     @challenge.completed? && params[:post_challenge] == "true" && !@challenge.meta_challenge?
   end
 
+  def following?
+    params[:following] == 'true'
+  end
+
   def set_leaderboards
-    filter = {challenge_round_id: @current_round&.id.to_i, meta_challenge_id: nil}
+    filter = { challenge_round_id: @current_round&.id.to_i, meta_challenge_id: nil }
+
     if @meta_challenge.present?
       filter[:meta_challenge_id] = @meta_challenge.id
     end
     @leaderboards = if @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
       DisentanglementLeaderboard
         .where(challenge_round_id: @current_round)
-    elsif post_challenge?
+        .freeze_record(current_participant)
+    elsif post_challenge? || policy(@challenge).edit? || current_participant&.admin
       policy_scope(OngoingLeaderboard)
         .where(filter)
     else
       policy_scope(Leaderboard)
         .where(filter)
+    end
+    if following?
+      following_ids = current_participant.following.pluck(:followable_id)
+      @leaderboards = @leaderboards.where(submitter_id: following_ids)
+      @following    = true
     end
   end
 

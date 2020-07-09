@@ -24,6 +24,8 @@
                               'data-url' => @s3_direct_post.url,
                               'data-host' => URI.parse(@s3_direct_post.url).host} do |f| %>
 
+            <%= render partial: 'shared/error_messages', locals: { target: @task_dataset_file } %>
+
             <div class="form-group">
               <label for="fileTitle">File title</label>
               <%= f.text_field :title, class: "form-control", id: "fileTitle" %>

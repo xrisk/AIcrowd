@@ -130,4 +130,9 @@ module LeaderboardHelper
   def max_submissions_in_a_day(uniform_submissions)
     uniform_submissions.values.max
   end
+
+  def freeze_time(ch_round)
+    time = ch_round.end_dttm - ch_round.freeze_duration.to_i.hours
+    time.strftime("%B %d, %Y, %H:%M %Z")
+  end
 end

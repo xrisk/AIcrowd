@@ -1,4 +1,5 @@
 class AicrowdBadge < ApplicationRecord
+  has_paper_trail
   has_many :aicrowd_user_badges
   belongs_to :badge_type
   belongs_to :badges_event

@@ -1,9 +1,41 @@
 import { Controller } from "stimulus"
+import { pauseAndPlay } from '../helpers/videos_helper'
 
 export default class extends Controller {
   static targets = ['participantCountry', 'participantAffiliation']
 
-  filterURL(event){
+  connect() {
+    pauseAndPlay()
+    this.initializeGeekView()
+  }
+
+  initializeGeekView() {
+    let geekViewCheckbox = document.getElementById('geek-view-checkbox')
+
+    if (geekViewCheckbox && localStorage.getItem('leaderboard-geek-view') === "true") {
+      $('.geek-view-normal').addClass('d-none', 100);
+      $('.geek-view-advanced').removeClass('d-none', 100);
+      geekViewCheckbox.checked = true;
+    }
+  }
+
+  toggleGeekView() {
+    let currentCheckbox = document.getElementById('geek-view-checkbox')
+    let currentValue    = currentCheckbox.checked;
+
+    if (!currentValue) {
+      $('.geek-view-normal').addClass('d-none', 100);
+      $('.geek-view-advanced').removeClass('d-none', 100);
+    } else {
+      $('.geek-view-normal').removeClass('d-none', 100);
+      $('.geek-view-advanced').addClass('d-none', 100);
+    }
+
+    currentCheckbox.checked = !currentValue;
+    localStorage.setItem('leaderboard-geek-view', !currentValue);
+  }
+
+  filterURL(event) {
     event.preventDefault();
 
     let url = window.location.origin + window.location.pathname
@@ -17,8 +49,6 @@ export default class extends Controller {
     let affiliationPresent = affiliation !== ''
     let challengeRoundIDPresent = challengeRoundID !== ''
     let postChallengePresent = postChallenge !== 'false'
-
-
 
     if(affiliationPresent){
       if(countryPresent){
