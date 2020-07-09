@@ -158,15 +158,6 @@ organizers.each do |org|
         ).first&.source_id
       end
 
-      # create a new challenge
-      Challenge.skip_callback(:create, :after, :init_discourse)
-      begin
-        loop_challenge = Challenge.create!(chal)
-      rescue ActiveRecord::RecordInvalid
-        chal["challenge_client_name"] = "challenge_#{SecureRandom.hex}"
-        loop_challenge = Challenge.create!(chal)
-      end
-
       ChallengeRules.create!({challenge_id: loop_challenge.id, terms_markdown: chal['rules_markdown']})
 
       if chal["image_file"].present?
@@ -191,7 +182,7 @@ organizers.each do |org|
         chal_round["challenge_id"] = loop_challenge.id
         chal_round["submission_limit"] = 5
         chal_round["submission_limit_period"] = "day"
-
+        chal_round["challenge_client_name"] = "challenge_#{SecureRandom.hex}"
         if chal_round["secondary_sort_order_cd"].blank?
           chal_round["secondary_sort_order_cd"] = "ascending"
         end

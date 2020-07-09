@@ -25,8 +25,10 @@ class Api::BaseController < ApplicationController
   private
 
   def validate_client_name_and_api_key(challenge_client_name, api_key)
+    challenge = ChallengeRound.where(challenge_client_name: challenge_client_name).first&.challenge
+    challenge_id = challenge.id
     Challenge.joins(:organizers)
-             .find_by(challenge_client_name: challenge_client_name, organizers: { api_key: api_key })
+             .find_by(id: challenge_id , organizers: { api_key: api_key })
              .present?
   end
 end

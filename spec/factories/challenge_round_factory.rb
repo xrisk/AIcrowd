@@ -13,6 +13,7 @@ FactoryBot.define do
     parallel_submissions      { 0 }
     score_title               { 'Score Title'}
     score_secondary_title     { 'Secondary Score Title' }
+    challenge_client_name     { FFaker::Internet.unique.user_name }
 
     association(:challenge)
 

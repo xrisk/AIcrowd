@@ -281,7 +281,6 @@ class ChallengesController < ApplicationController
       :status,
       :featured_sequence,
       :image_file,
-      :challenge_client_name,
       :grader_identifier,
       :other_scores_fieldname,
       :discourse_category_id,
@@ -343,7 +342,8 @@ class ChallengesController < ApplicationController
         :active,
         :leaderboard_note,
         :primary_sort_order,
-        :secondary_sort_order
+        :secondary_sort_order,
+        :challenge_client_name
       ],
       challenge_rules_attributes: [
         :id,

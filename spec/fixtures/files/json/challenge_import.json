@@ -8,7 +8,6 @@
   "submission_license":"Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC).",
   "api_required":false,
   "media_on_leaderboard":true,
-  "challenge_client_name":"challenge_49d4263de143dc5523449a51d0795ab8",
   "online_grading":true,
   "description_markdown":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac libero eget diam luctus ultrices. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.",
   "description":"\u003cp\u003e\u003cstrong\u003eLALLAadolor si\u003c/strong\u003e\u003ci\u003e\u003cstrong\u003et amet, consectetur adipiscing elit. Aenean vel malesuada leo, in efficitur erat. Nam id purus nulla. Cras ac lib\u003c/strong\u003eero eget diam luctus ultrices. Odsadsarci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris tempor aliquet malesuada. Interdum et malesuada fames ac ant\u003c/i\u003ee ipsum primis in faucibus. Phasellus at quam ac enim elementum placerat luctus euismod dui. Suspendisse ligula lacus, luctus vel placerat vitae, varius ac sem. Quisque venenatis lectus eu nulla commodo molestie. Vestibulum consectetur elit dictum risus consequat, at laoreet risus euismod.dsadasd \u0026nbsp;dsadasdasdasdsadd\u003c/p\u003e",
@@ -159,7 +158,8 @@
         "score_title":"adasd",
         "score_secondary_title":"",
         "primary_sort_order_cd":"ascending",
-        "secondary_sort_order_cd":"descending"
+        "secondary_sort_order_cd":"descending",
+        "challenge_client_name":"challenge_49d4263de143dc5523449a51d0795ab8"
      },
      {
         "id":12,

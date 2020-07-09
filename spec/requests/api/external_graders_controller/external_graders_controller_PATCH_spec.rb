@@ -137,7 +137,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     end
 
     def valid_attributes_grading_submitted_with_message
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'submitted',
         grading_message:       'in progress' }

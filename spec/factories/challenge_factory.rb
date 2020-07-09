@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :challenge, class: 'Challenge' do
     challenge { FFaker::Lorem.unique.sentence(3) }
-    challenge_client_name { FFaker::Internet.unique.user_name }
     tagline { FFaker::Lorem.unique.sentence(3) }
     status { :draft }
     description_markdown { "### The description" }

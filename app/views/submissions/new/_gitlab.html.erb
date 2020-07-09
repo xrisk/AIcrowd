@@ -44,7 +44,7 @@
       "challenge_id" : "<%= @challenge.slug %>",
       "grader_id": "<%= @challenge.slug %>",
 <% else %>
-      "challenge_id" : "<%= @challenge.challenge_client_name %>",
+      "challenge_id" : "<%= @challenge.active_round.challenge_client_name %>",
       "grader_id": "<%= @challenge.challenge_client_name %>",
 <% end %>
       "authors" : ["<%= current_participant.name %>"],
@@ -93,7 +93,7 @@ git tag -am "submission-v0.1" submission-v0.1
 git push aicrowd master
 git push aicrowd submission-v0.1
 
-# Note : If the contents of your repository (latest commit hash) does not change, 
+# Note : If the contents of your repository (latest commit hash) does not change,
 # then pushing a new tag will not trigger a new evaluation.
       </code>
     </pre>

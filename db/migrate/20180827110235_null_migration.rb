@@ -212,6 +212,7 @@ class NullMigration < ActiveRecord::Migration[5.2]
         t.integer "score_secondary_precision"
         t.text "leaderboard_note_markdown"
         t.text "leaderboard_note"
+        t.string "challenge_client_name"
         t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
       end
 
@@ -235,7 +236,6 @@ class NullMigration < ActiveRecord::Migration[5.2]
         t.string "submission_license"
         t.boolean "api_required", default: false
         t.boolean "media_on_leaderboard", default: false
-        t.string "challenge_client_name"
         t.boolean "online_grading", default: true
         t.integer "vote_count", default: 0
         t.text "description_markdown"

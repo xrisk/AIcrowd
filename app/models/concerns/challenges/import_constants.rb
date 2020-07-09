@@ -2,7 +2,6 @@ module Challenges
   module ImportConstants
     IMPORTABLE_FIELDS = [
       :challenge,
-      :challenge_client_name,
       :status_cd,
       :tagline,
       :perpetual_challenge,

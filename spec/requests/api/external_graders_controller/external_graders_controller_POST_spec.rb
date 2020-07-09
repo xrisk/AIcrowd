@@ -21,20 +21,20 @@ RSpec.describe Api::ExternalGradersController, type: :request do
 
   describe "POST /api/external_graders/ : create submission" do
     def valid_attributes
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763 }
     end
 
     def valid_attributes_initiated
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'initiated' }
     end
 
     def valid_attributes_failed_grading
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'failed',
         grading_message:       'grading failed',
@@ -42,20 +42,20 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     end
 
     def valid_attributes_grading_submitted
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'submitted' }
     end
 
     def valid_attributes_grading_submitted_with_message
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'submitted',
         grading_message:       'in progress' }
     end
 
     def valid_attributes_with_secondary_score
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763,
@@ -63,7 +63,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     end
 
     def valid_attributes_with_description_markdown
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763,
@@ -71,7 +71,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     end
 
     def valid_attributes_with_media
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763,
@@ -82,7 +82,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
 
     def valid_attributes_with_meta
       {
-        challenge_client_name: challenge.challenge_client_name,
+        challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763,
@@ -97,7 +97,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
 
     def valid_attributes_with_meta_as_json
       {
-        challenge_client_name: challenge.challenge_client_name,
+        challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763,
@@ -112,7 +112,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
 
     def invalid_attributes_with_meta
       {
-        challenge_client_name: challenge.challenge_client_name,
+        challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763,
@@ -121,7 +121,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     end
 
     def invalid_api_key_attributes
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               '264358f071908c5762b9423a01f72662',
         grading_status:        'graded',
         score:                 0.9763 }
@@ -135,21 +135,21 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     end
 
     def invalid_grading_status_attributes
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'pending',
         score:                 0.9763 }
     end
 
     def invalid_missing_score_attributes
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 nil }
     end
 
     def invalid_attributes_failed_grading
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'failed',
         grading_message:       nil,
@@ -157,7 +157,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     end
 
     def invalid_incomplete_with_media_attributes
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763,
@@ -167,7 +167,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     end
 
     def valid_challenge_round_attributes
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763,
@@ -175,7 +175,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     end
 
     def invalid_challenge_round_attributes
-      { challenge_client_name: challenge.challenge_client_name,
+      { challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763,
@@ -184,7 +184,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
 
     def valid_youtube_attributes
       {
-        challenge_client_name: challenge.challenge_client_name,
+        challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763,
@@ -196,7 +196,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
 
     def invalid_youtube_attributes
       {
-        challenge_client_name: challenge.challenge_client_name,
+        challenge_client_name: challenge_round.challenge_client_name,
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763,
