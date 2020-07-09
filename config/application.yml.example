@@ -33,6 +33,7 @@ development: &development
   FOG_LOCAL_ROOT: '~/fog'
   RECAPTCHA_SITE_KEY: "REDACTED"
   RECAPTCHA_SECRET_KEY: "REDACTED"
+  GITLAB_API_KEY: 'REDACTED'
 test:
   <<: *development
   MANDRILL_KEY: "G_rHM-BQ9DF6IG2wKa3-Pw"

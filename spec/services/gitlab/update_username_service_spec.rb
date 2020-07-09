@@ -4,7 +4,7 @@ describe Gitlab::UpdateUsernameService do
   subject { described_class.new(participant: participant) }
 
   describe '#call' do
-    let(:participant) { create(:participant) }
+    let(:participant) { create(:participant, gitlab_id: 2679) }
 
     it_behaves_like 'Gitlab ServiceObject class'
 
@@ -35,7 +35,7 @@ describe Gitlab::UpdateUsernameService do
         end
 
         expect(result).to be_failure
-        expect(result.value).to eq "{\"message\"=>\"403 Forbidden\"}"
+        expect(result.value).to eq "{\"message\"=>\"404 User Not Found\"}"
       end
     end
   end
