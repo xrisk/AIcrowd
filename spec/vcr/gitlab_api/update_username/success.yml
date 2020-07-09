@@ -1,0 +1,52 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://gitlab.aicrowd.com/api/v4/users/2679
+    body:
+      encoding: UTF-8
+      string: admin=false&email=test%40gmail.com&name=test&username=test
+    headers:
+      Accept:
+      - application/json
+      Private-Token:
+      - yozDkPH66Y_zaB8TRu9j
+      User-Agent:
+      - Faraday v1.0.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 403
+      message: Forbidden
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 09 Jul 2020 10:49:25 GMT
+      Server:
+      - nginx
+      Vary:
+      - Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - YznOc1f12s2
+      X-Runtime:
+      - '0.011883'
+      Content-Length:
+      - '27'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"message":"403 Forbidden"}'
+    http_version: 
+  recorded_at: Thu, 09 Jul 2020 10:49:25 GMT
+recorded_with: VCR 5.0.0

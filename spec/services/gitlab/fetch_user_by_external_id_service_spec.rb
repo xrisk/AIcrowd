@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Gitlab::FetchUserByExternalIdService, focus: true do
+describe Gitlab::FetchUserByExternalIdService do
   subject { described_class.new(participant: participant) }
 
   describe '#call' do
