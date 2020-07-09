@@ -29,6 +29,9 @@ $bronze:  #D88151 !default;
 $primary:       $red !default;
 $primary-text:  #DE4B46 !default;
 
+.test {
+  color: red;
+}
 @import 'select2';
 
 :root {
