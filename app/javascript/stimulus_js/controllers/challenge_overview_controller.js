@@ -1,4 +1,5 @@
 import { Controller } from 'stimulus';
+import linkifyHtml from 'linkifyjs/html';
 
 function setupOembed(){
     document.querySelectorAll( 'oembed[url]' ).forEach(element => {
@@ -42,7 +43,7 @@ export default class extends Controller {
     fullContent;
     scrollableTabs;
 
-    initialize() {
+    connect() {
       this.element['controller'] = this;
       this.el = $(this.element);
       // Convert strikeouts!
@@ -50,6 +51,8 @@ export default class extends Controller {
       this.scrollableTabs = this.data.get('scrollable-tabs') === 'true'
 
       this.showTOC();
+      // Linkify links inside challenge description
+      this.el.html(linkifyHtml(this.el.html()));
     }
 
     updateContent(content) {
@@ -122,7 +125,7 @@ export default class extends Controller {
     }
 
     createTabularTOC() {
-      $.each(this.headings, (index, heading) => {        
+      $.each(this.headings, (index, heading) => {
         // URL friendly id
         var urlFriendly = $(heading).text().replace(/(^\W*)|(\W*$)/g, '').replace(' ', '-').toLowerCase();
         // Add id
@@ -136,8 +139,8 @@ export default class extends Controller {
 
         // Create a link tag to trigger content change
         let link = $('<a/>', {
-            class: 'nav-link text-capitalize cursor-pointer', 
-            href: `#` + urlFriendly, 
+            class: 'nav-link text-capitalize cursor-pointer',
+            href: `#` + urlFriendly,
             text:  _.capitalize($(heading).text()) }).appendTo(li);
 
         // Calculate Content
