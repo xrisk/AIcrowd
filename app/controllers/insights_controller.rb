@@ -1,9 +1,8 @@
 class InsightsController < ApplicationController
   before_action :set_challenge
-
-  include Concerns::ChallengeMasthead
-  challenge_masthead_actions [:index]
-
+  before_action :set_challenge_rounds, only: :index
+  before_action :set_vote, only: :index
+  before_action :set_follow, only: :index
   before_action :set_current_round, except: :challenge_participants_country
   before_action :set_collection, except: [:index, :challenge_participants_country]
 
@@ -73,6 +72,18 @@ class InsightsController < ApplicationController
     elsif @challenge.meta_challenge
       params[:meta_challenge_id] = params[:challenge_id]
     end
+  end
+
+  def set_challenge_rounds
+    @challenge_rounds = @challenge.challenge_rounds.started
+  end
+
+  def set_vote
+    @vote = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
+  end
+
+  def set_follow
+    @follow = @challenge.follows.where(participant_id: current_participant.id).first if current_participant.present?
   end
 
   def set_current_round
