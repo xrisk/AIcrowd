@@ -32,7 +32,7 @@ class Api::ExternalGradersController < Api::BaseController
       raise DeveloperAPIKeyInvalid if participant.nil?
       raise ParticipantDidNotAcceptParticipationTerms unless participant.has_accepted_participation_terms?
 
-      challenge = ChallengeRound.where(‘challenge_client_name = ? ’, params[:challenge_client_name]).first&.challenge
+      challenge = ChallengeRound.where(challenge_client_name = params[:challenge_client_name]).first&.challenge
       raise ChallengeClientNameInvalid if challenge.nil?
       raise ParticipantDidNotAcceptChallengeRules unless challenge.has_accepted_challenge_rules?(participant)
 
