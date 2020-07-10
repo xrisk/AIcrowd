@@ -3,7 +3,7 @@ module FreezeRecord
 
   included do
     def self.freeze_record(participant)
-      return all if participant_is_organizer(participant&.email) || participant&.admin?
+      return all if first.nil? || participant_is_organizer(participant&.email) || participant&.admin?
 
       ch_round = first.challenge_round
       if freeze_duration?(participant)
