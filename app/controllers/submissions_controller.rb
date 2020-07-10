@@ -2,14 +2,14 @@ class SubmissionsController < ApplicationController
   before_action :authenticate_participant!, except: [:index, :show]
   before_action :set_submission, only: [:show, :edit, :update]
   before_action :set_challenge
-  before_action :set_challenge_rounds, only: [:index, :new, :show]
-  before_action :set_vote, only: [:index, :new, :show]
-  before_action :set_follow, only: [:index, :new, :show]
+  before_action :set_challenge_rounds, only: [:index, :new, :create, :show]
+  before_action :set_vote, only: [:index, :new, :create, :show]
+  before_action :set_follow, only: [:index, :new, :create, :show]
   before_action :check_participation_terms, except: [:show, :index, :export]
   before_action :set_s3_direct_post, only: [:new, :edit, :create, :update]
   before_action :set_submissions_remaining, except: [:show, :index]
   before_action :set_current_round, only: :index
-  before_action :set_form_type, only: :new
+  before_action :set_form_type, only: [:new, :create]
   before_action :handle_code_based_submissions, only: [:create]
   before_action :handle_artifact_based_submissions, only: [:create]
 
@@ -42,9 +42,10 @@ class SubmissionsController < ApplicationController
                       .where(
                         challenge_round_id: @current_round&.id,
                         challenge_id:       @challenge.id)
+                      .freeze_record(current_participant)
+
       end
     end
-
     if @meta_challenge.present?
       filter = filter.where(meta_challenge_id: @meta_challenge.id)
     else
@@ -56,8 +57,8 @@ class SubmissionsController < ApplicationController
       filter = policy_scope(Submission)
                       .where(challenge_round_id: @challenge.meta_active_round_ids,
                              meta_challenge_id: @challenge.id)
+      filter = filter.where(participant_id: current_participant.id) if @my_submissions
     end
-
     @search = filter.search(search_params)
     @search.sorts = 'created_at desc' if @search.sorts.empty?
     @submissions  = @search.result.includes(:participant).page(params[:page]).per(10)
@@ -114,11 +115,15 @@ class SubmissionsController < ApplicationController
     end
     @submission = @challenge.submissions.new(submission_params.merge(session_info))
     authorize @submission
-    if @submission.save
+
+    validate_submission_file_presence
+
+    if @submission.errors.none? && @submission.save
       SubmissionGraderJob.perform_later(@submission.id)
       redirect_to helpers.challenge_submissions_path(@challenge), notice: 'Submission accepted.'
     else
-      @errors = @submission.errors
+      @submission.submission_files.build
+      flash[:error] = @submission.errors.full_messages.to_sentence
       render :new
     end
   end
@@ -133,6 +138,7 @@ class SubmissionsController < ApplicationController
       redirect_to @challenge,
                   notice: 'Submission updated.'
     else
+      flash[:error] = @submission.errors.full_messages.to_sentence
       render :edit
     end
   end
@@ -326,5 +332,9 @@ class SubmissionsController < ApplicationController
 
   def set_layout
     return 'application'
+  end
+
+  def validate_submission_file_presence
+    @submission.errors.add(:base, 'Submission file is required.') if @form == 'artifact' && @submission.submission_files.none?
   end
 end

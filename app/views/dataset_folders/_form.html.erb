@@ -4,7 +4,9 @@
       <div class="col-12">
         <h2><%= @dataset_folder.persisted? ? "Update Folder" : "Add Folder" %></h2>
 
-        <%= form_with model: @dataset_folder, url: form_url, validate: true, html: { class: "form-rg sgl-col" } do |f| %>
+        <%= form_with model: @dataset_folder, url: form_url, validate: true, local: true, html: { class: "form-rg sgl-col" } do |f| %>
+          <%= render partial: 'shared/error_messages', locals: { target: @dataset_folder } %>
+
           <div class="form-group">
             <label>Folder Title</label>
             <%= f.text_field :title, class: 'form-control' %>

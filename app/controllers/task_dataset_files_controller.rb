@@ -1,13 +1,12 @@
 class TaskDatasetFilesController < ApplicationController
   include Concerns::DatasetFiles
+  include Concerns::ChallengeMasthead
+  challenge_masthead_actions [:index]
 
   before_action :authenticate_participant!
-  before_action :set_challenge, only: :index
-  before_action :set_vote, only: :index
-  before_action :set_follow, only: :index
   before_action :set_task_dataset_file, only: [:destroy, :edit, :update]
   before_action :set_clef_task
-  before_action :set_s3_direct_post, only: [:new, :create, :edit]
+  before_action :set_s3_direct_post, only: [:new, :create, :edit, :update]
 
   def index
     @challenge_rounds              = @challenge.challenge_rounds.started
@@ -20,7 +19,7 @@ class TaskDatasetFilesController < ApplicationController
       @task_dataset_files = @clef_task.task_dataset_files
     end
 
-    js challenge_id: @challenge.id
+    j challenge_id: @challenge.id
   end
 
   def show; end
@@ -36,6 +35,7 @@ class TaskDatasetFilesController < ApplicationController
       redirect_to organizer_clef_tasks_path(@clef_task.organizer),
                   notice: 'Dataset file was successfully created.'
     else
+      flash[:error] = @task_dataset_file.errors.full_messages.to_sentence
       render :new
     end
   end
@@ -47,6 +47,7 @@ class TaskDatasetFilesController < ApplicationController
       redirect_to organizer_clef_tasks_path(@clef_task.organizer),
                   notice: 'Dataset file was successfully updated.'
     else
+      flash[:error] = @task_dataset_file.errors.full_messages.to_sentence
       render :edit
     end
   end
@@ -61,18 +62,6 @@ class TaskDatasetFilesController < ApplicationController
   end
 
   private
-
-  def set_challenge
-    @challenge = Challenge.find(params[:challenge_id])
-  end
-
-  def set_vote
-    @vote = @challenge.votes.where(participant_id: current_participant.id).first if current_participant.present?
-  end
-
-  def set_follow
-    @follow = @challenge.follows.where(participant_id: current_participant.id).first if current_participant.present?
-  end
 
   def set_task_dataset_file
     @task_dataset_file = TaskDatasetFile.find(params[:id])

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'Email Preferences' do
   let!(:challenge) { create :challenge, :running }
-  let!(:participant) { create :participant }
+  let!(:participant) { create :participant, name: 'test' }
   let!(:participant2) { create :participant }
   let!(:admin) { create :participant, :admin }
 
@@ -22,7 +22,11 @@ describe 'Email Preferences' do
 
     it "Participant cannot access email preferences link for other participant" do
       log_in(participant)
-      visit participant_path(participant2.slug)
+
+      VCR.use_cassette('gitlab_api/fetch_calendar_activity/success') do
+        visit participant_path(participant2.slug)
+      end
+
       expect(page).not_to have_content 'Email Preferences'
     end
 

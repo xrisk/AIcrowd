@@ -1,11 +1,13 @@
 class Submission < ApplicationRecord
   include Markdownable
+  include FreezeRecord
 
   has_paper_trail
 
   before_validation :generate_short_url
 
   belongs_to :challenge, counter_cache: true
+  belongs_to :meta_challenge, optional: true, class_name: 'Challenge'
   belongs_to :participant, optional: true
   belongs_to :challenge_round, optional: true
 
@@ -55,9 +57,10 @@ class Submission < ApplicationRecord
         .perform_later(challenge_round_id: challenge_round_id)
     end
     Prometheus::SubmissionCounterService.new(submission_id: id).call
-    for badge in AicrowdBadge.where(badges_event_id: BadgesEvent.where(name: "onsubmission").pluck(:id))
-      eval(badge.code)
+    if grading_status_cd == 'graded'
+      ParticipantBadgeJob.perform_later(name: "onsubmission", submission_id: id, grading_status_cd: grading_status_cd)
     end
+    Notification::SubmissionNotificationJob.perform_later(id)
   end
 
   after_destroy do

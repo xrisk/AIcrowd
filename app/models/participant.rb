@@ -24,11 +24,14 @@ class Participant < ApplicationRecord
   ].freeze
 
   friendly_id :name, use: [:slugged, :finders, :history]
+
   before_save :set_api_key
   before_save { self.email = email.downcase }
   before_save :process_urls
   after_create :set_email_preferences
   after_save :publish_to_prometheus
+  after_commit :upsert_discourse_user, on: [:create, :update]
+
   mount_uploader :image_file, ImageUploader
   validates :image_file, file_size: { less_than: 5.megabytes }
 
@@ -47,7 +50,7 @@ class Participant < ApplicationRecord
   scope :admins, -> { where(admin: true) }
   scope :with_every_email_preference, -> { joins(:email_preferences).where(email_preferences: { email_frequency_cd: :every }) }
 
-  has_many :aicrowd_user_badges
+  has_many :aicrowd_user_badges, dependent: :destroy
   has_many :participant_organizers, dependent: :destroy
   has_many :organizers, through: :participant_organizers
   has_many :submissions, dependent: :nullify
@@ -74,7 +77,10 @@ class Participant < ApplicationRecord
            dependent: :destroy
   has_many :email_preferences_tokens,
            dependent: :destroy
-  has_many :follows,
+  has_many :follows, as: :followable
+  has_many :following,
+           foreign_key: :participant_id,
+           class_name: "Follow",
            dependent: :destroy
   has_many :participant_clef_tasks,
            dependent: :destroy
@@ -89,14 +95,16 @@ class Participant < ApplicationRecord
            dependent:   :destroy
 
   has_many :visits, class_name: "Ahoy::Visit", foreign_key: :user_id
-  has_many :team_participants, inverse_of: :participant
+  has_many :team_participants, inverse_of: :participant, dependent: :destroy
   has_many :teams, through: :team_participants, inverse_of: :participants
   has_many :concrete_teams, -> { concrete }, through: :team_participants, source: :team, inverse_of: :participants
-  has_many :invitor_team_invitations, class_name: 'TeamInvitation', foreign_key: :invitor_id, inverse_of: :invitor
-  has_many :invitee_team_invitations, class_name: 'TeamInvitation', foreign_key: :invitee_id, inverse_of: :invitee_participant, foreign_type: 'Participant'
+  has_many :invitor_team_invitations, class_name: 'TeamInvitation', foreign_key: :invitor_id, inverse_of: :invitor, dependent: :destroy
+  has_many :invitee_team_invitations, class_name: 'TeamInvitation', foreign_key: :invitee_id, inverse_of: :invitee_participant, foreign_type: 'Participant', dependent: :destroy
   has_many :invitor_email_invitations, class_name: 'EmailInvitation', foreign_key: :invitor_id, inverse_of: :invitor
   has_many :claimant_email_invitations, class_name: 'EmailInvitation', foreign_key: :claimant_id, inverse_of: :claimant
   has_many :newsletter_emails, class_name: 'NewsletterEmail', dependent: :destroy
+  has_many :notifications, dependent: :destroy
+  has_many :team_members, dependent: :destroy
 
   validates :email,
             presence:              true,
@@ -128,6 +136,10 @@ class Participant < ApplicationRecord
   validates :last_name,
             length:      { in: 2...100 },
             allow_blank: true
+
+  after_update do
+    ParticipantBadgeJob.perform_later(name: "profileupdate", participant_id: id)
+  end
 
   def self.api_admin
     @@api_admin ||= find_by(email: ENV['AICROWD_API_EMAIL'])
@@ -313,41 +325,6 @@ class Participant < ApplicationRecord
     Prometheus::ParticipantCounterService.new.call
   end
 
-  def self.sanitize_userhandle(userhandle)
-    userhandle.to_ascii
-      .tr("@", "a")
-      .gsub("&", "and")
-      .delete('#')
-      .delete('*')
-      .gsub(/[\,\.\'\;\-\=]/, "")
-      .gsub(/[\(\)]/, "_")
-      .tr(' ', "_")
-  end
-
-  def self.from_omniauth(auth)
-    raw_info  = auth.raw_info || (auth.extra&.raw_info&.participant)
-    email     = auth.info.email || raw_info.email
-    username  = auth.info.name || raw_info.name
-    username  = username.gsub(/\s+/, '_').downcase
-    username  = sanitize_userhandle(username)
-    image_url = auth.info.image ||
-      raw_info.image ||
-      (raw_info.image_file&.url)
-    provider = auth.provider
-    provider = 'crowdai' if provider == 'oauth2_generic'
-    where(email: email).first_or_create do |user|
-      user.email    = email
-      user.password = Devise.friendly_token[0, 20]
-      user.name     = username
-      user.provider = provider
-      puts "EMAIL: #{email} name: #{username} provider: #{provider}"
-      user.remote_image_file_url = image_url if image_url
-      ### NATE: we want to skip the notification but leave the user unconfirmed
-      ### which will allow us to force a password reset on first login
-      user.skip_confirmation_notification!
-    end
-  end
-
   def detect_country
     return if country_cd.present?
 
@@ -379,5 +356,26 @@ class Participant < ApplicationRecord
 
   def meta_challenge_submissions(challenge)
     Submission.participant_meta_challenge_submissions(challenge.id, id)
+  end
+
+  def followers_participant_count
+    follows.participant_type.count
+  end
+
+  def following_participant_count
+    following.participant_type.count
+  end
+
+  def following_participant?(p_id)
+    following.participant_type.pluck(:followable_id).include?(p_id.to_i)
+  end
+
+  private
+
+  def upsert_discourse_user
+    return if Rails.env.development? || Rails.env.test?
+    return unless saved_change_to_attribute?(:name) || saved_change_to_attribute?(:email)
+
+    Discourse::UpsertUserJob.perform_later(self.id)
   end
 end

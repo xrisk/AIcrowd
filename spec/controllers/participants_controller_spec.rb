@@ -3,7 +3,7 @@ require 'rails_helper'
 describe ParticipantsController, type: :controller do
   render_views
 
-  let(:valid_attributes)   { FactoryBot.attributes_for(:participant) }
+  let(:valid_attributes)   { FactoryBot.attributes_for(:participant, name: 'test') }
   let(:invalid_attributes) { FactoryBot.attributes_for(:participant, :invalid) }
 
   context 'as a participant' do
@@ -13,7 +13,9 @@ describe ParticipantsController, type: :controller do
 
     describe "GET #show" do
       it "assigns the requested participant as @participant" do
-        get :show, params: { id: participant.slug }
+        VCR.use_cassette('gitlab_api/fetch_calendar_activity/success') do
+          get :show, params: { id: participant.slug }
+        end
 
         expect(assigns(:participant)).to eq(participant)
       end

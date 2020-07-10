@@ -55,7 +55,7 @@ module TeamHelper
     i18n_params    = { scope: %i[helpers teams my_team_button] }
     opts[:title]   = t(:title, **i18n_params)
     opts[:tooltip] = t(:tooltip, team_name: team.name.to_s, **i18n_params)
-    opts[:link]    = team_path(team)
+    opts[:link]    = challenge_team_path(team.challenge, team)
   end
 
   def setup_opts_for_member_invite_button(opts, team)

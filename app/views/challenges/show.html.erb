@@ -18,16 +18,6 @@
         <div class="markdown-wrap">
           <div class="md-content ck-content" data-controller="challenge-overview" data-action="resize@window->challenge-overview#showTOC" data-challenge-overview-scrollable-tabs="<%= @challenge.scrollable_overview_tabs %>">
             <%= sanitize_html(@challenge.description) %>
-            <% if controller_name == 'challenges' && show_action? && @partners.present? %>
-              <h2>Sponsors and Partners</h2>
-              <% @partners.each do |partner| %>
-                <% if partner.image_file.present?  %>
-                  <figure class="image">
-                    <%= image_tag partner.image_file.url %>
-                  </figure>
-                <% end %>
-              <% end %>
-            <% end %>
           </div>
         </div>
       </div>

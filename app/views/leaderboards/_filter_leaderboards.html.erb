@@ -31,7 +31,7 @@
   <% end %>
 
   <!-- toggle switch -->
-  <% if @challenge.status == :completed && @current_round.present? && !@challenge.meta_challenge? %>
+  <% if @challenge.status == :completed && @current_round.present? && !@challenge.meta_challenge? && !@current_round.freeze_flag %>
     <div class="my-2">
       <label class="toggle-switch" style="width: max-content;">
         <%= link_to challenge_leaderboards_path(challenge_round_id: @current_round, post_challenge: @post_challenge.blank?, country_name: params[:country_name], affiliation: params[:affiliation], challenge_id: @challenge.friendly_id) do %>
@@ -43,11 +43,22 @@
     </div>
   <% end %>
   <% if @challenge.meta_challenge %>
-    <div class="mb-2" id="geek-view-toogle" style="width: max-content;">
+    <div class="mb-2" style="width: max-content;" data-action="click->leaderboards#toggleGeekView" >
       <label class="toggle-switch" data-toggle="tooltip" data-placement="top" title="Geek view show scores">
-        <input type="checkbox">
+        <input id="geek-view-checkbox" type="checkbox">
         <span class="switcher"></span>
         <span class="label">🤓 Geek View</span>
+      </label>
+    </div>
+  <% end %>
+  <% if current_participant.present? %>
+    <div class="my-2">
+      <label class="toggle-switch" style="width: max-content;">
+        <%= link_to challenge_leaderboards_path(challenge_round_id: @current_round, post_challenge: @post_challenge.blank?, country_name: params[:country_name], affiliation: params[:affiliation], challenge_id: @challenge.friendly_id, following: @following.blank?) do %>
+          <input id="post-challenge-switch" type="checkbox" <%= "checked" if @following.present? %> >
+          <span class="switcher mr-2"></span>
+          <span class="label">Show Friends</span>
+        <% end %>
       </label>
     </div>
   <% end %>

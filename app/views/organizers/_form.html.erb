@@ -12,6 +12,8 @@
     <div class="row">
       <div class="col-12">
         <%= form_for organizer, validate: true, html: { class: "form-rg", multipart: true  } do |f| %>
+          <%= render partial: 'shared/error_messages', locals: { target: organizer } %>
+
           <div class="form-group">
             <%= f.label :organizer, 'Organizer name' %>
             <%= f.text_field :organizer, class: 'form-control' %>

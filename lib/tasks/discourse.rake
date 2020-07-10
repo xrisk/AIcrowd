@@ -14,4 +14,13 @@ namespace :discourse do
       Discourse::AddUsersToGroupJob.perform_later(challenge.id, challenge.participants_and_organizers.map(&:id))
     end
   end
+
+  desc "Synchronize participants with Discourse"
+  task synchronize_participants_with_discourse: :environment do
+    Participant.find_each.with_index do |participant, index|
+      puts "##{participant.id} #{participant.name} | Discourse synchronization"
+
+      Discourse::UpsertUserJob.set(wait: index.seconds).perform_later(participant.id)
+    end
+  end
 end

@@ -1,6 +1,9 @@
 shared_examples 'Discourse ServiceObject class' do
   context 'when discourse ENV variables are missing' do
-    before { ENV.stub(:[]).with('DISCOURSE_DOMAIN_NAME').and_return('') }
+    before do
+      ENV.stub(:[]).with('DISCOURSE_DOMAIN_NAME').and_return('')
+      ENV.stub(:[]).with('DISCOURSE_API_USERNAME').and_return('')
+    end
 
     it 'returns failure' do
       result = subject.call

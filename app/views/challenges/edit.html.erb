@@ -12,7 +12,10 @@
 </div>
 
 <%= render partial: 'challenges/navigation', locals: { challenge: @challenge } %>
-<div id="challenges-form__wrapper">
+<div
+  id="challenges-form__wrapper"
+  data-controller="challenges-edit"
+>
   <%= render partial: 'challenges/form', locals: {
     challenge:        @challenge,
     challenge_rounds: @challenge_rounds,

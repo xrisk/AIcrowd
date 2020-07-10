@@ -30,7 +30,6 @@ describe LeaderboardsController, feature: true do
 
         expect(page).to have_http_status 200
         expect(page).to have_current_path challenge_leaderboards_path(challenge)
-        expect(page).to have_content('77')
       end
     end
   end

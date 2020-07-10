@@ -46,7 +46,7 @@ module MetaTagsHelper
       if controller_name == 'submissions'
         having_media_large_image?(@challenge, @submission) ? s3_public_url(@submission, :large) : content_for_meta_image
       elsif controller_name == 'challenges'
-        @challenge.image_file? ? @challenge.image_file.url : challenge_default_image_url
+        @challenge.image_url
       elsif controller_name == 'organizers' && @organizer.image_file?
         @organizer.image_file.url
       elsif controller_name == 'participants' && @participant.image_file?
@@ -54,6 +54,16 @@ module MetaTagsHelper
       end
     else
       content_for_meta_image
+    end
+  end
+
+  def meta_video
+    if show_action? && controller_name == 'submissions'
+      if @challenge.media_on_leaderboard
+        if ['video','image','youtube'].include?(media_content_type(@submission))
+          return s3_public_url(@submission, :large)
+        end
+      end
     end
   end
 

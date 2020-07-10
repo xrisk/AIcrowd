@@ -5,7 +5,11 @@
   <%= render partial: 'dataset_files/dataset_files' %>
 <% else %>
   <!-- section -->
-  <section class="section-p-sm">
+  <section
+    class="section-p-sm"
+    data-controller="task-dataset-files"
+    data-task-dataset-files-challenge-id="<%= @challenge.id %>"
+  >
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">

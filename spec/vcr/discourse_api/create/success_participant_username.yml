@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://discourse-staging.aicrowd.com/categories.json
+    body:
+      encoding: UTF-8
+      string: color=49d9e9&name=Dolores+commodi+voluptatem+possimus+enim+repudiand&text_color=f0fcfd
+    headers:
+      Accept:
+      - application/json
+      Api-Key:
+      - REDACTED
+      Api-Username:
+      - piotrekpasciakaaa
+      User-Agent:
+      - Faraday v1.0.0
+      Content-Type:
+      - application/x-www-form-urlencoded
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 24 Jun 2020 22:32:22 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - nginx
+      Vary:
+      - Accept-Encoding
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Discourse-Username:
+      - piotrekpasciakaaa
+      X-Discourse-Route:
+      - categories/create
+      Cache-Control:
+      - no-cache, no-store
+      X-Request-Id:
+      - 436a7f38-9cd5-4694-9f01-c70ab8e8a415
+      X-Runtime:
+      - '0.149967'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"category":{"id":290,"name":"Dolores commodi voluptatem possimus enim
+        repudiand","color":"49d9e9","text_color":"f0fcfd","slug":"dolores-commodi-voluptatem-possimus-enim-repudiand","topic_count":0,"post_count":0,"position":201,"description":null,"description_text":null,"description_excerpt":null,"topic_url":"/t/about-the-dolores-commodi-voluptatem-possimus-enim-repudiand-category/2917","read_restricted":false,"permission":null,"notification_level":null,"can_edit":true,"topic_template":null,"has_children":null,"sort_order":null,"sort_ascending":null,"show_subcategory_list":false,"num_featured_topics":3,"default_view":null,"subcategory_list_style":"rows_with_featured_topics","default_top_period":"all","minimum_required_tags":0,"navigate_to_first_post_after_read":false,"custom_fields":{},"allowed_tags":[],"allowed_tag_groups":[],"allow_global_tags":false,"min_tags_from_required_group":1,"required_tag_group_name":null,"available_groups":["admins","cyog-challenge-1","cyog-challenge-1-060","cyog-challenge-2018","cyog-challenge-2019","cyog-challenge-2020","dfsdsfdsfds","discourse-cat-098b7a","discourse-category-n","dsaadasdasdsa","dsfdsfsdfs","dsfdsfsdfsd","dssfdsfsd","dszcxzcxz","ewdfwefwef","moderators","novartis-hackathon","poker-ai-chal-164352","poker-ai-challenge","sdadasdsa","short-challenge-nam","short-challenge-name","spcrt_cgog_2","spcrt-test-1","spcrt_test_1","sprct_test_3","staff","test-11","test-15-spcrt","test-16","test-1-meta-ch","testando4","test-another-discour","test-discourse-permi","testing-discourse-pe","test-permissi-a7b2f0","test-permissions","test-permissions-111","test-permissions-2","test-permissions-23","test-permissions-aga","test-permissions-for","test-removing-names","test_spcrt","test_spcrt-1","test_spcrt-2","test_spcrt-4","test_spcrt-5","test_spcrt-7","trust_level_0","trust_level_1","trust_level_2","trust_level_3","trust_level_4","uber-2019-internal","way-to-long-chalenge"],"auto_close_hours":null,"auto_close_based_on_last_post":false,"group_permissions":[{"permission_type":1,"group_name":"everyone"}],"email_in":null,"email_in_allow_strangers":false,"mailinglist_mirror":false,"all_topics_wiki":false,"can_delete":true,"cannot_delete_reason":null,"allow_badges":true,"topic_featured_link_allowed":true,"search_priority":0,"uploaded_logo":null,"uploaded_background":null}}'
+    http_version:
+  recorded_at: Wed, 24 Jun 2020 22:32:22 GMT
+recorded_with: VCR 5.0.0

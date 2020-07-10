@@ -2,10 +2,11 @@ class BaseLeaderboard < ApplicationRecord
   include PolymorphicSubmitter
 
   belongs_to :challenge
+  belongs_to :meta_challenge, optional: true, class_name: 'Challenge'
   belongs_to :challenge_round
 
   as_enum :leaderboard_type,
-          [:leaderboard, :ongoing, :previous, :previous_ongoing],
+          [:leaderboard, :ongoing],
           map: :string
 
   scope :by_country, ->(country_name) { where(participants: { country_cd: Participant.country_cd(country_name) }) }

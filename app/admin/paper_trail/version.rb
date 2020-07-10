@@ -3,7 +3,7 @@ ActiveAdmin.register PaperTrail::Version do
 
   show do
     columns do
-      link_to 'Back to Submission', admin_challenge_submission_path(paper_trail_version.item.challenge, paper_trail_version.item)
+      link_to "Back to #{paper_trail_version.item_type}", request.referer
     end
 
     h3 "#{paper_trail_version.item_type} changes:"

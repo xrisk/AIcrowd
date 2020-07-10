@@ -1,6 +1,6 @@
 module Images
   class Base64EncodeService < ::BaseService
-    SUPPORTED_CONTENT_TYPES = /gif|jpeg|png/.freeze
+    SUPPORTED_CONTENT_TYPES = /gif|jpeg|png|svg/.freeze
 
     def initialize(image_url:)
       @image_url = image_url
@@ -8,7 +8,6 @@ module Images
 
     def call
       return failure('URL is invalid') unless valid_url?
-
       image_file = open(@image_url)
 
       return failure('Not supported content type') if image_file.content_type.match(SUPPORTED_CONTENT_TYPES).blank?

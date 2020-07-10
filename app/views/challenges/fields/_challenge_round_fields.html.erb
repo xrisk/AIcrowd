@@ -1,16 +1,27 @@
 <div id="challenge-round-wrapper-<%= f.object.id %>" class="round nested-fields">
   <div class="bg-light border p-3 text-left mb-3">
     <div class="row d-flex align-items-end">
-      <div class="form-group col-sm-12 col-md-6">
+      <div class="form-group col-sm-12 col-md-4">
         <%= f.label :challenge_round, "Round Name:" %>
         <%= f.text_field :challenge_round, class: "form-control" %>
       </div>
-      <div class="form-group col-xs-6 col-md-4">
+      <div class="form-group col-xs-6 col-md-2">
         <%= f.label :active, class: "toggle-switch toggle-switch-large" do %>
           <%= f.check_box :active, class: "active-switch" %>
           <span class="switcher"></span>
           <span class="label">Active round</span>
         <% end %>
+      </div>
+      <div class="form-group col-xs-6 col-md-2">
+        <%= f.label :freeze_flag, class: "toggle-switch toggle-switch-large" do %>
+          <%= f.check_box :freeze_flag %>
+          <span class="switcher"></span>
+          <span class="label">Freeze Flag</span>
+        <% end %>
+      </div>
+      <div class="form-group col-xs-6 col-md-2">
+        <%= f.label :freeze_duration, "Round Name:" %>
+        <%= f.text_field :freeze_duration, class: "form-control", placeholder: 'Value in Hour, like 1 or 3' %>
       </div>
       <div class="form-group col-xs-6 col-md-2 text-right">
         <a data-toggle="collapse" href="#collapse-_<%= f.index %>_" class="btn btn-secondary challenges-form__toggle-expand">

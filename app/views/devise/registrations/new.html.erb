@@ -1,3 +1,9 @@
+<% if resource.errors.any? %>
+  <% content_for :flash_messages do %>
+    <%= render partial: 'layouts/flash_message', locals: { type: 'error', message: resource.errors.full_messages.to_sentence } %>
+  <% end %>
+<% end %>
+
 <div class="bg-graph">
   <!-- masthead -->
   <div class="masthead masthead-open">
@@ -29,6 +35,8 @@
             <!-- /social log in buttons -->
 
             <h4 class="mb-4">Or sign up with email</h4>
+
+            <%= render partial: 'shared/error_messages', locals: { target: resource } %>
 
             <div class="form-group">
               <label for="username">Choose a username</label>

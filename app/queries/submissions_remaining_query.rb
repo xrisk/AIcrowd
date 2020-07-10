@@ -30,7 +30,7 @@ class SubmissionsRemainingQuery
                                            @participant_id,
                                            Time.zone.now - 24.hours)
                                     .count
-      failed_adj = [failed_submission_count, @challenge.active_round.failed_submissions].min
+      failed_adj = [failed_submission_count, @challenge.active_round.failed_submissions.to_i].min
 
       [(@challenge.active_round.submission_limit - submissions.count + failed_adj),
        (submissions.first.created_at + 1.day).to_s,
@@ -51,7 +51,7 @@ class SubmissionsRemainingQuery
                                            @participant_id,
                                            Time.zone.now - 7.days)
                                     .count
-      failed_adj = [failed_submission_count, @challenge.active_round.failed_submissions].min
+      failed_adj = [failed_submission_count, @challenge.active_round.failed_submissions.to_i].min
       [(@challenge.active_round.submission_limit - submissions.count + failed_adj),
        (submissions.first.created_at + 1.week).to_s,
        previous_submissions(submissions: submissions)
@@ -74,7 +74,7 @@ class SubmissionsRemainingQuery
                                            @challenge.active_round.id)
                                     .count
 
-      failed_adj = [failed_submission_count, @challenge.active_round.failed_submissions].min
+      failed_adj = [failed_submission_count, @challenge.active_round.failed_submissions.to_i].min
       [(@challenge.active_round.submission_limit - submissions.count + failed_adj),
        nil,
        previous_submissions(submissions: submissions)]

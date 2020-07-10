@@ -12,7 +12,7 @@
         <ul class="list-group list-group-flush-px-0 list-group-organizers">
           <% @members.each do |member| %>
             <!-- team member -->
-            <li class="list-group-item">
+            <li class="list-group-item" style="z-index: auto;">
               <%= render partial: 'participants/get_user_profile', locals: { participant: member } %>
               <% if @organizer.clef_tasks.any? && @organizer.clef_tasks.first.eua_required? %>
                 <% if member.clef_email %>

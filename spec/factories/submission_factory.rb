@@ -16,8 +16,13 @@ FactoryBot.define do
         }
       end
     end
+
     trait :with_file do
       submission_files { [build(:submission_file, submission_file_s3_key: 'submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c')] }
+    end
+
+    trait :graded do
+      grading_status { :graded }
     end
   end
 end

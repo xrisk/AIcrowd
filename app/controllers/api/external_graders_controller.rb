@@ -383,7 +383,7 @@ class Api::ExternalGradersController < Api::BaseController
 
     participant_leaderboard = challenge
                           .leaderboards
-                          .where(participant_id:     participant.id,
+                          .where(submitter_id:     participant.id,
                                  challenge_round_id: challenge.previous_round.id).first
     return false if participant_leaderboard.nil?
     if participant_leaderboard.score >= min_score

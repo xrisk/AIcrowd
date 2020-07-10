@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_03_151708) do
+ActiveRecord::Schema.define(version: 2020_06_30_120822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -156,7 +156,7 @@ ActiveRecord::Schema.define(version: 2020_06_03_151708) do
     t.integer "submission_id"
     t.boolean "post_challenge", default: false
     t.integer "seq"
-    t.boolean "baseline"
+    t.boolean "baseline", default: false
     t.string "baseline_comment"
     t.json "meta"
     t.string "submitter_type"
@@ -373,6 +373,8 @@ ActiveRecord::Schema.define(version: 2020_06_03_151708) do
     t.string "secondary_sort_order_cd", default: "not_used", null: false
     t.boolean "calculated_permanent", default: false, null: false
     t.boolean "assigned_permanent_badge", default: false, null: false
+    t.boolean "freeze_flag", default: false, null: false
+    t.integer "freeze_duration"
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
   end
 
@@ -426,7 +428,7 @@ ActiveRecord::Schema.define(version: 2020_06_03_151708) do
     t.text "dataset_description_markdown"
     t.text "dataset_description"
     t.string "image_file"
-    t.integer "featured_sequence", default: 1
+    t.integer "featured_sequence"
     t.boolean "dynamic_content_flag", default: false
     t.text "dynamic_content"
     t.string "dynamic_content_tab"
@@ -471,12 +473,12 @@ ActiveRecord::Schema.define(version: 2020_06_03_151708) do
     t.bigint "discourse_group_id"
     t.string "discourse_group_name"
     t.boolean "meta_challenge"
+    t.boolean "practice_flag", default: false, null: false
     t.string "banner_file"
     t.string "banner_color"
     t.boolean "big_challenge_card_image"
     t.string "banner_mobile_file"
     t.float "weight", default: 0.0, null: false
-    t.boolean "practice_flag", default: false, null: false
     t.boolean "editors_selection", default: false, null: false
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
@@ -556,6 +558,7 @@ ActiveRecord::Schema.define(version: 2020_06_03_151708) do
     t.bigint "challenge_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "aws_endpoint", default: "https://s3.amazonaws.com/"
     t.index ["challenge_id"], name: "index_dataset_folders_on_challenge_id"
   end
 
@@ -588,7 +591,7 @@ ActiveRecord::Schema.define(version: 2020_06_03_151708) do
     t.integer "submission_id"
     t.boolean "post_challenge", default: false
     t.integer "seq"
-    t.boolean "baseline"
+    t.boolean "baseline", default: false
     t.string "baseline_comment"
     t.json "meta"
     t.float "extra_score1"
@@ -734,6 +737,8 @@ ActiveRecord::Schema.define(version: 2020_06_03_151708) do
     t.string "message"
     t.string "thumbnail_url"
     t.string "notification_url"
+    t.bigint "challenge_id"
+    t.index ["challenge_id"], name: "index_notifications_on_challenge_id"
     t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable_type_and_notifiable_id"
     t.index ["participant_id"], name: "index_notifications_on_participant_id"
   end
@@ -995,6 +1000,7 @@ ActiveRecord::Schema.define(version: 2020_06_03_151708) do
     t.boolean "baseline", default: false
     t.string "baseline_comment"
     t.integer "meta_challenge_id"
+    t.string "submission_link"
     t.index ["challenge_id"], name: "index_submissions_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_submissions_on_challenge_round_id"
     t.index ["participant_id"], name: "index_submissions_on_participant_id"
@@ -1143,6 +1149,7 @@ ActiveRecord::Schema.define(version: 2020_06_03_151708) do
   add_foreign_key "invitations", "participants"
   add_foreign_key "newsletter_emails", "challenges"
   add_foreign_key "newsletter_emails", "participants"
+  add_foreign_key "notifications", "challenges"
   add_foreign_key "notifications", "participants"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
@@ -1407,39 +1414,6 @@ ActiveRecord::Schema.define(version: 2020_06_03_151708) do
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
   SQL
 
-  create_view "previous_leaderboards",  sql_definition: <<-SQL
-      SELECT base_leaderboards.id,
-      base_leaderboards.challenge_id,
-      base_leaderboards.challenge_round_id,
-      base_leaderboards.row_num,
-      base_leaderboards.previous_row_num,
-      base_leaderboards.slug,
-      base_leaderboards.name,
-      base_leaderboards.entries,
-      base_leaderboards.score,
-      base_leaderboards.score_secondary,
-      base_leaderboards.media_large,
-      base_leaderboards.media_thumbnail,
-      base_leaderboards.media_content_type,
-      base_leaderboards.description,
-      base_leaderboards.description_markdown,
-      base_leaderboards.leaderboard_type_cd,
-      base_leaderboards.refreshed_at,
-      base_leaderboards.created_at,
-      base_leaderboards.updated_at,
-      base_leaderboards.submission_id,
-      base_leaderboards.post_challenge,
-      base_leaderboards.seq,
-      base_leaderboards.baseline,
-      base_leaderboards.baseline_comment,
-      base_leaderboards.meta,
-      base_leaderboards.submitter_type,
-      base_leaderboards.submitter_id,
-      base_leaderboards.meta_challenge_id
-     FROM base_leaderboards
-    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'previous'::text);
-  SQL
-
   create_view "leaderboards",  sql_definition: <<-SQL
       SELECT base_leaderboards.id,
       base_leaderboards.challenge_id,
@@ -1471,39 +1445,6 @@ ActiveRecord::Schema.define(version: 2020_06_03_151708) do
       base_leaderboards.meta_challenge_id
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'leaderboard'::text);
-  SQL
-
-  create_view "previous_ongoing_leaderboards",  sql_definition: <<-SQL
-      SELECT base_leaderboards.id,
-      base_leaderboards.challenge_id,
-      base_leaderboards.challenge_round_id,
-      base_leaderboards.row_num,
-      base_leaderboards.previous_row_num,
-      base_leaderboards.slug,
-      base_leaderboards.name,
-      base_leaderboards.entries,
-      base_leaderboards.score,
-      base_leaderboards.score_secondary,
-      base_leaderboards.media_large,
-      base_leaderboards.media_thumbnail,
-      base_leaderboards.media_content_type,
-      base_leaderboards.description,
-      base_leaderboards.description_markdown,
-      base_leaderboards.leaderboard_type_cd,
-      base_leaderboards.refreshed_at,
-      base_leaderboards.created_at,
-      base_leaderboards.updated_at,
-      base_leaderboards.submission_id,
-      base_leaderboards.post_challenge,
-      base_leaderboards.seq,
-      base_leaderboards.baseline,
-      base_leaderboards.baseline_comment,
-      base_leaderboards.meta,
-      base_leaderboards.submitter_type,
-      base_leaderboards.submitter_id,
-      base_leaderboards.meta_challenge_id
-     FROM base_leaderboards
-    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'previous_ongoing'::text);
   SQL
 
 end

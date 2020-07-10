@@ -2832,6 +2832,16 @@ fieldset:disabled a.btn {
   border-radius: 1.5rem;
 }
 
+.table-leaderboard .btn-sm {
+  border-radius: 0rem;
+  padding: 0px 2px;
+  border-radius: 5px;
+}
+
+.leaderboard-filters-btn .social-icons {
+  float: right;
+}
+
 .btn-block {
   display: block;
   width: 100%;
@@ -4355,7 +4365,7 @@ input[type="button"].btn-block {
 }
 
 .card-challenge .card-intro {
-  height: 120px;
+  min-height: 120px;
 
   @media (max-width: 767.98px) {
     min-height: 115px;
@@ -4404,6 +4414,8 @@ input[type="button"].btn-block {
 
 .card-challenge .card-footer a {
   color: #292C2D;
+  display: flex;
+  align-items: center;
   width: 100%;
 }
 
@@ -11069,11 +11081,11 @@ body {
   align-items: center;
 }
 
-.avatar-group a {
+.avatar-group a, .avatar-group span {
   margin-left: -4px;
 }
 
-.avatar-group a:first-of-type {
+.avatar-group a:first-of-type, .avatar-group span:first-of-type {
   margin-left: 0;
 }
 
@@ -11278,7 +11290,7 @@ body {
 .maintenance-mode .logomark,
 .polar-question .logomark {
   display: block;
-  background: url("../../assets/img/logomark-aicrowd.svg") no-repeat left center;
+  background: url("../../assets/img/logo.png") no-repeat left center;
   background-size: 256px 238px;
   width: 256px;
   height: 238px;
@@ -11342,7 +11354,7 @@ body {
 
 .maintenance-mode .logomark {
   display: block;
-  background: url("../../assets/img/logomark-aicrowd.svg") no-repeat left center;
+  background: url("../../assets/img/logo.png") no-repeat left center;
   background-size: contain;
   width: 120px;
   height: 113px;
@@ -11909,6 +11921,9 @@ body {
   display: block;
 }
 
+.masthead-info-item.follow-participant {
+  padding: 5px 0 0 10px;
+}
 .masthead-user .masthead-info .api-key {
   width: 40%;
 }
@@ -14132,7 +14147,7 @@ html {
   border: 1px solid #D88151;
 }
 
-.leaderboard-filters-btn {
+.leaderboard-filters-btn, .submission-filters-btn {
   background: url(../../assets/img/icon-filter.svg);
   background-position: 0 21px;
   background-repeat: no-repeat;
@@ -14186,6 +14201,62 @@ html {
 .leaderboard-filters .toggle-switch {
   display: block;
   margin-top: 1rem;
+}
+
+a.table-fancy-links {
+  border-bottom: dashed 1px #c5c3c3;
+  color: #565656;
+}
+
+.maintenance-mode {
+  //max-width: 720px;
+  .logomark {
+    display: block;
+    background: url('../../assets/img/logo.png') no-repeat left center;
+    background-size: contain;
+    width: 120px;
+    height: 113px;
+    margin-bottom: 48px;
+  }
+  h1 {
+    max-width: 720px;
+    margin-bottom: .5em;
+  }
+  p {
+    font-size: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+.notification-bell-icon {
+  background: url("../../assets/img/icon-notifications.svg") no-repeat 0;
+  width: 30px !important;
+}
+
+.notification-bell-icon-active {
+  background: url("../../assets/img/icon-notifications-active.svg") no-repeat 0;
+  width: 30px !important;
+}
+
+.notification-img {
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
+}
+
+.dropdown-item-active{
+  background-color: #F8F9F9;
+}
+
+.badge-tab-count {
+  background-color: #ef514d;
+  border-radius: 2px;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  padding: .125rem .25rem .25rem .25rem;
+  margin-left: 5px;
 }
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';

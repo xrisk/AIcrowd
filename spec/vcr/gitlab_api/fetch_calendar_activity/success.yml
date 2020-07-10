@@ -1,0 +1,56 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://gitlab.aicrowd.com/users/test/calendar.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - Faraday v1.0.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Thu, 11 Jun 2020 21:17:35 GMT
+      Etag:
+      - W/"0473a7178e1a4383baeb5c1896c9a5f5"
+      Page-Title:
+      - GitLab
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      X-Request-Id:
+      - jPNGYUjqSAa
+      X-Runtime:
+      - '0.057002'
+      X-Ua-Compatible:
+      - IE=edge
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '481'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"2020-06-09":7,"2019-11-17":1,"2020-05-14":3,"2019-11-27":2,"2019-12-01":2,"2020-02-11":5,"2020-02-24":1,"2019-11-26":5,"2019-11-15":2,"2020-05-12":2,"2019-11-21":3,"2020-06-03":2,"2019-12-23":1,"2019-12-19":4,"2020-02-06":1,"2019-11-29":3,"2019-11-10":1,"2020-02-19":1,"2019-12-04":1,"2020-02-21":5,"2019-11-16":2,"2020-04-20":1,"2019-11-19":3,"2020-06-10":1,"2019-11-07":1,"2020-04-03":2,"2019-11-22":5,"2020-01-14":1,"2019-12-25":1,"2019-12-30":2,"2020-02-20":2,"2020-01-09":2}'
+    http_version:
+  recorded_at: Thu, 11 Jun 2020 21:17:35 GMT
+recorded_with: VCR 5.0.0

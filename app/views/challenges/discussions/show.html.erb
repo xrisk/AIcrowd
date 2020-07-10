@@ -8,13 +8,15 @@
         <% if @discourse_topics_fetch.success? %>
           <header class="section-header">
             <div>
-              <h4><%= pluralize(@discourse_topics.size, 'topic') %></h4>
+              <h4>Topics</h4>
             </div>
             <%= link_to 'New topic', discourse_new_topic_url(@challenge.slug), class: 'btn btn-secondary' %>
           </header>
 
           <% if @discourse_topics.any? %>
-            <%= render partial: 'discussion_list', locals: { discourse_topics: @discourse_topics } %>
+            <div id="discourse-topics-listing" data-page='0' data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data">
+              <%= render partial: 'discussion_list', locals: { discourse_topics: @discourse_topics } %>
+            </div>
           <% else %>
             <div class="md-content">
               <span>Nobody have posted anything on Discourse yet...</span>

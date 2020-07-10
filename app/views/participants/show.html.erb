@@ -4,7 +4,6 @@
 %>
 
 <%= render partial: 'masthead', locals: { participant: @participant } %>
-
 <!-- sub-nav bar -->
 <div class="sub-nav-bar sticky-top">
   <div class="container-fluid">
@@ -22,7 +21,26 @@
         <a class="nav-link nav-link-04<%= ' active' if active_tab == 'bio' %>" data-toggle='tab' href="#tab-bio" onclick="return false;">Bio</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link nav-link-05<%= ' active' if active_tab == 'achievements' %>" data-toggle='tab' href="#tab-achievements" onclick="return false;">Achievements</a>
+        <a class="nav-link nav-link-05<%= ' active' if active_tab == 'achievements' %>" data-toggle='tab' href="#tab-achievements" onclick="return false;">Achievements
+          <div class="badge badge-tab-count <%= @achievements_count.zero? ? 'd-none' : '' %>" style="margin-right: 5px;"><%= @achievements_count.zero? ? '' : @achievements_count %>
+          </div>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link nav-link-05 <%= ' active' if active_tab == 'followers' %>" data-toggle="tab" href="#tab-followers" onclick="return false;">Followers
+          <% participant_followers_count = @participant.followers_participant_count %>
+          <% no_followers = participant_followers_count.zero? %>
+          <div class="badge badge-tab-count followers-count <%= no_followers ? 'd-none' : '' %>" style="margin-right: 5px;"><%= no_followers ? '' : participant_followers_count %>
+          </div>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link nav-link-05 <%= ' active' if active_tab == 'following' %>" data-toggle="tab" href="#tab-following" onclick="return false;">Following
+          <% participant_following_count = @participant.following_participant_count %>
+          <% no_following = participant_following_count.zero? %>
+          <div class="badge badge-tab-count following-count <%= no_following ? 'd-none' : '' %>" style="margin-right: 5px;"><%= no_following ? '' : participant_following_count %>
+          </div>
+        </a>
       </li>
       <!-- more dropdown xs -->
       <li class="nav-item dropdown more-xs">
@@ -70,6 +88,16 @@
             <svg id="activity-heatmap"></svg>
           </div>
         </div>
+
+        <div class="pull-left activity-heatmap__squares-wrapper">
+          <span title="No contributions" class="activity-heatmap__square activity-heatmap__square--first"></span>
+          <span title="1-19 contributions" class="activity-heatmap__square activity-heatmap__square--second"></span>
+          <span title="20-39 contributions" class="activity-heatmap__square activity-heatmap__square--third"></span>
+          <span title="40-59 contributions" class="activity-heatmap__square activity-heatmap__square--fourth"></span>
+          <span title="60-79 contributions" class="activity-heatmap__square activity-heatmap__square--fifth"></span>
+          <span title="80-99 contributions" class="activity-heatmap__square activity-heatmap__square--sixth"></span>
+          <span title="100+ contributions" class="activity-heatmap__square activity-heatmap__square--seventh"></span>
+        </div>
       </div>
     </section>
     <!-- /section -->
@@ -78,7 +106,10 @@
     <section class="section-p-md">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-8">
+          <div
+            class="col-8"
+            data-controller="rating-progression"
+          >
             <header class="section-header">
               <div>
                 <h4>Ratings Progression</h4>
@@ -118,6 +149,14 @@
 
   <div id="tab-achievements" class="tab-pane fade<%= ' show active' if active_tab == 'achievements' %>">
     <%= render partial: 'achievements', locals: { participant: @participant } %>
+  </div>
+
+  <div id="tab-followers" class="tab-pane fade<%= ' show active' if active_tab == 'followers' %>">
+    <%= render partial: 'followers', locals: { participant: @participant, other_participant: @participant } %>
+  </div>
+
+  <div id="tab-following" class="tab-pane fade<%= ' show active' if active_tab == 'following' %>">
+    <%= render partial: 'following', locals: { participant: @participant, other_participant: @participant } %>
   </div>
 
   <div id="tab-teams" class="tab-pane fade<%= ' show active' if active_tab == 'teams' %>">

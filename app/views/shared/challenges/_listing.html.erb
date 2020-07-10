@@ -5,11 +5,11 @@
         <div class="card card-challenge">
       <% end %>
     <% else %>
-      <div class="card card-challenge" style="background-image: url('<%= challenge.image_file_url %>');background-size: 100% auto;">
+      <div class="card card-challenge" style="background-image: url('<%= challenge.image_url %>');background-size: 100% auto;">
     <% end %>
       <div class="image-wrapper" style="padding-bottom: 56.2%;position: relative;">
         <% if !challenge.big_challenge_card_image? %>
-          <%= image_tag(challenge.image_file_url, class: 'card-img image_16x9') %>
+          <%= image_tag(challenge.image_url, class: 'card-img image_16x9') %>
         <% end %>
         <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
           <% if challenge.practice_flag %>
@@ -18,9 +18,9 @@
             <% end %>
             <span class="badge badge-success">Practice</span>
           <% else %>
-            <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>">
+            <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>" data-toggle="tooltip" data-placement="top" title="<%= challenge_end_time(challenge , challenge.active_round) %>">
               <img src="/assets/img/icon-time.svg">
-              <%= challenge_remaining_text(challenge, challenge.active_round) %>
+              <%= challenge.active_round&.challenge_round %>: <%= challenge_remaining_text(challenge, challenge.active_round) %>
             </span>
             <% if challenge_weight(challenge) %>
               <span class="badge badge-gold">Weight: <%= challenge_weight(challenge) %></span>

@@ -33,7 +33,9 @@ class Challenge < ApplicationRecord
 
   has_many :challenge_participants, dependent: :destroy
   has_many :participants, through: :challenge_participants
+
   has_many :submissions, dependent: :destroy
+  has_many :base_leaderboards, class_name: 'BaseLeaderboard'
   has_many :leaderboards, class_name: 'Leaderboard'
   has_many :ongoing_leaderboards, class_name: 'OngoingLeaderboard'
 
@@ -47,19 +49,22 @@ class Challenge < ApplicationRecord
   has_many :participant_challenge_counts, class_name: 'ParticipantChallengeCount'
   has_many :challenge_registrations, class_name: 'ChallengeRegistration'
 
-  has_many :challenge_rounds, dependent:  :destroy, inverse_of: :challenge
+  has_many :challenge_rounds, dependent: :destroy, inverse_of: :challenge
   accepts_nested_attributes_for :challenge_rounds, reject_if: :all_blank
 
   has_many :challenge_round_summaries
   has_many :invitations, dependent: :destroy
   accepts_nested_attributes_for :invitations, reject_if: :all_blank, allow_destroy: true
 
-  has_many :teams, inverse_of: :challenge
+  has_many :teams, inverse_of: :challenge, class_name: 'Team'
+  has_many :team_participants, through: :teams, class_name: 'TeamParticipant'
+
   has_many :category_challenges, dependent: :destroy
   accepts_nested_attributes_for :category_challenges, reject_if: :all_blank
 
   has_many :categories, through: :category_challenges
   has_many :newsletter_emails, class_name: 'NewsletterEmail'
+  has_many :notifications, class_name: 'Notification'
 
   as_enum :status,
           %i[draft running completed starting_soon],
@@ -258,6 +263,15 @@ class Challenge < ApplicationRecord
 
   def is_a_problem?
     challenge_problem.present?
+  end
+
+  def image_url
+    image_file_url.present? ?  image_file_url : get_default_image
+  end
+
+  def get_default_image
+    num = id % 2
+    "challenges/AIcrowd-ProblemStatements-#{num}.jpg"
   end
 
   private

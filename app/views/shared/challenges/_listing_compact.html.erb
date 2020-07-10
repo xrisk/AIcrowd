@@ -3,7 +3,7 @@
     <div class="card card-challenge">
       <div class="image-wrapper" style="padding-bottom: 56.2%;position: relative;">
         <%= link_to challenge_path(challenge) do %>
-          <%= image_tag(challenge.image_file_url, class: 'card-img image_16x9') %>
+          <%= image_tag(challenge.image_url, class: 'card-img image_16x9') %>
         <% end %>
         <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
           <% if challenge.practice_flag %>
