@@ -201,7 +201,7 @@ class ChallengesController < ApplicationController
     if !params.has_key?('meta_challenge_id') && !params.has_key?('ml_challenge_id')
       cp = ChallengeProblems.find_by(problem_id: @challenge.id)
       if cp.present?
-        type = cp.meta_challenge ? 'meta_challenge_id' : 'ml_challenge_id'
+        type = cp.challenge.meta_challenge ? 'meta_challenge_id' : 'ml_challenge_id'
         params[type.to_sym] = Challenge.find(cp.challenge_id).slug
         redirect_to helpers.challenge_path(@challenge)
       end
@@ -286,6 +286,7 @@ class ChallengesController < ApplicationController
   end
 
   def get_date_wise_challenge_problem
+    return @challenge.problems if current_participant&.admin? && policy(@challenge).edit?
     return @challenge.problems unless current_participant.present?
 
     challenge_participant = current_participant.challenge_participants.where(challenge: @challenge).first

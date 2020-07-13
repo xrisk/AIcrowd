@@ -26,13 +26,14 @@ module ChallengeRounds
         previous_leaderboards = build_base_leaderboards('leaderboard', [false], window_border_dttm([false]))
 
         create_leaderboards(leaderboards, previous_leaderboards)
+        award_point_for_legendary_submission(leaderboards.first(3))
+        award_point_for_rank_change(leaderboards)
 
         ongoing_leaderboards          = build_base_leaderboards('ongoing', [true, false], Time.current)
         previous_ongoing_leaderboards = build_base_leaderboards('ongoing', [true, false], window_border_dttm([true, false]))
 
         create_leaderboards(ongoing_leaderboards, previous_ongoing_leaderboards)
       end
-
       success
     end
 
@@ -252,6 +253,20 @@ module ChallengeRounds
       return Time.current if @challenge_round.end_dttm.nil?
 
       @challenge_round.end_dttm - @challenge_round.freeze_duration.hours
+    end
+
+    def award_point_for_legendary_submission(top_3_leaderboards)
+      top_3_leaderboards.each do |leaderboard|
+        MlChallenge::AwardPointJob.perform_now(leaderboard, 'legendary_submission')
+      end
+    end
+
+    def award_point_for_rank_change(leaderboards)
+      leaderboards.find do |leaderboard|
+        next if leaderboard.previous_row_num.zero?
+
+        MlChallenge::AwardPointJob.perform_now(leaderboard, 'leaderboard_rank_change') if leaderboard.previous_row_num < leaderboard.row_num
+      end
     end
   end
 end

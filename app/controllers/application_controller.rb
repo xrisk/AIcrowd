@@ -46,12 +46,16 @@ class ApplicationController < ActionController::Base
 
     if controller_name == "challenges"
       if params.has_key?('challenge_id')
+        challenge = Challenge.find(params[:challenge_id])
+        challenge_type = challenge.ml_challenge ? 'ml_challenge_id' : 'meta_challenge_id'
         params[challenge_type.to_sym] = params['challenge_id']
         params.delete('challenge_id')
       end
     end
     if params.has_key?('problem_id')
       if params.has_key?('challenge_id')
+        challenge = Challenge.find(params[:challenge_id])
+        challenge_type = challenge.ml_challenge ? 'ml_challenge_id' : 'meta_challenge_id'
         if !params.has_key?(challenge_type)
           params[challenge_type.to_sym] = params[:challenge_id]
           params[:challenge_id] = params[:problem_id]

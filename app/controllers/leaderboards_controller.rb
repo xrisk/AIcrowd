@@ -62,18 +62,20 @@ class LeaderboardsController < ApplicationController
 
   def set_challenge
     @challenge = Challenge.friendly.find(params[:challenge_id])
-    if params.has_key?('meta_challenge_id') and params[:meta_challenge_id] != params[:challenge_id]
-      @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id])
+    challenge_type = params['ml_challenge_id'].present? ? 'ml_challenge_id' : 'meta_challenge_id'
+
+    if params.has_key?(challenge_type) and params[challenge_type.to_sym] != params[:challenge_id]
+      @meta_challenge = Challenge.includes(:organizers).friendly.find(params[challenge_type.to_sym])
     elsif @challenge.meta_challenge
-      params[:meta_challenge_id] = params[:challenge_id]
+      params[challenge_type.to_sym] = params[:challenge_id]
     elsif @challenge.ml_challenge
-      params[:ml_challenge_id] = params[:challenge_id]
+      params[challenge_type.to_sym] = params[:challenge_id]
     end
 
-    if !params.has_key?('meta_challenge_id')
+    if !params.has_key?(challenge_type)
       cp = ChallengeProblems.find_by(problem_id: @challenge.id)
       if cp.present? && params[:action] != 'get_affiliation'
-        params[:meta_challenge_id] = Challenge.find(cp.challenge_id).slug
+        params[challenge_type.to_sym] = Challenge.find(cp.challenge_id).slug
         redirect_to helpers.challenge_leaderboards_path(@challenge)
       end
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_15_185739) do
+ActiveRecord::Schema.define(version: 2020_07_17_081421) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -51,6 +51,14 @@ ActiveRecord::Schema.define(version: 2020_07_15_185739) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "activity_points", force: :cascade do |t|
+    t.string "activity_key", null: false
+    t.string "description"
+    t.integer "point", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "ahoy_events", force: :cascade do |t|
@@ -720,6 +728,15 @@ ActiveRecord::Schema.define(version: 2020_07_15_185739) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "ml_activity_points", force: :cascade do |t|
+    t.integer "participant_id"
+    t.integer "challenge_id"
+    t.integer "activity_point_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "point", default: 0, null: false
+  end
+
   create_table "newsletter_emails", force: :cascade do |t|
     t.text "bcc", default: "", null: false
     t.text "cc", default: "", null: false
@@ -1177,6 +1194,9 @@ ActiveRecord::Schema.define(version: 2020_07_15_185739) do
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "participant_clef_tasks", "clef_tasks"
   add_foreign_key "participant_clef_tasks", "participants"
+  add_foreign_key "participant_ml_challenge_goals", "challenges"
+  add_foreign_key "participant_ml_challenge_goals", "daily_practice_goals"
+  add_foreign_key "participant_ml_challenge_goals", "participants"
   add_foreign_key "participant_organizers", "organizers"
   add_foreign_key "participant_organizers", "participants"
   add_foreign_key "partners", "organizers"

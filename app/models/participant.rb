@@ -110,6 +110,7 @@ class Participant < ApplicationRecord
   has_many :notifications, dependent: :destroy
   has_many :team_members, dependent: :destroy
   has_many :participant_ml_challenge_goals
+  has_many :ml_activity_points
 
   validates :email,
             presence:              true,
