@@ -26,7 +26,7 @@ class EvaluationsApiService
         participant_id: @submission.participant.id,
         round_id: @submission.challenge_round_id,
         submission_id: @submission.id,
-        challenge_client_name: ChallengeRound.find_by(id: @submission.challenge_round_id).challenge_client_name,
+        challenge_client_name: @submission.challenge_round.challenge_client_name,
         domain_name: ENV['DOMAIN_NAME'],
         aicrowd_token: ENV['AICROWD_API_KEY']
       }.to_json,
