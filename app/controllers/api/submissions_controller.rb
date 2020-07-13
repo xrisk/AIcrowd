@@ -27,7 +27,7 @@ class Api::SubmissionsController < Api::BaseController
     #
     # Only `challenge_client_name` is a required parameter
     @challenge_client_name = params[:challenge_client_name]
-    challenge_round = ChallengeRound.where(challenge_client_name: params[:challenge_client_name]).first&.challenge
+    challenge = ChallengeRound.where(challenge_client_name: params[:challenge_client_name]).first&.challenge
     if challenge.nil?
       message = "challenge_client_name #{@challenge_client_name} not found"
       render json: { message: message }, status: :not_found
