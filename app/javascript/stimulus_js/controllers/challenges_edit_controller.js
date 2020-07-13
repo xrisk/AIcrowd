@@ -58,6 +58,7 @@ export default class extends Controller {
 
     $('.challenges-form-tab-link').click(function(event) {
       const tabLink = $(event.target).tab('show');
+      const currentUrl = new URL(window.location);
 
       event.preventDefault();
 
