@@ -37,6 +37,7 @@ module Api
         def challenge_round_params
           params.require(:challenge_round).permit(
             :challenge_round,
+            :challenge_client_name,
             :active,
             :submission_limit,
             :submission_limit_period_cd,
