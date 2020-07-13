@@ -48,4 +48,27 @@ describe Api::V1::Organizers::ParticipantOrganizersController, type: :request do
       end
     end
   end
+
+  describe '#destroy' do
+    let(:request)                { delete api_v1_organizer_participant_organizer_path(organizer, participant_organizer), headers: headers }
+    let(:admin)                  { create(:participant, :admin) }
+    let(:organizer)              { create(:organizer) }
+    let!(:participant_organizer) { create(:participant_organizer, organizer: organizer) }
+
+    it_behaves_like 'Api::V1 endpoint with Authentication'
+
+    context 'when authenticity token provided' do
+      let(:headers) do
+        {
+          'Authorization': auth_header(admin.api_key)
+        }
+      end
+
+      it 'removes participant_organizer' do
+        expect { request }.to change { ParticipantOrganizer.count }.by(-1)
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+  end
 end

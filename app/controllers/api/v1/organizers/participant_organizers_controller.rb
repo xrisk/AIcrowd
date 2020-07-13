@@ -4,6 +4,7 @@ module Api
       class ParticipantOrganizersController < ::Api::V1::BaseController
         before_action :auth_by_admin_api_key
         before_action :set_organizer, only: [:create, :destroy]
+        before_action :set_participant_organizer, only: :destroy
 
         def create
           participant_organizer = @organizer.participant_organizers.new(participant_organizer_params)
@@ -15,10 +16,20 @@ module Api
           end
         end
 
+        def destroy
+          @participant_organizer.destroy!
+
+          head :ok
+        end
+
         private
 
         def set_organizer
           @organizer = Organizer.friendly.find(params[:organizer_id])
+        end
+
+        def set_participant_organizer
+          @participant_organizer = @organizer.participant_organizers.find(params[:id])
         end
 
         def participant_organizer_params

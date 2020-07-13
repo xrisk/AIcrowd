@@ -102,7 +102,7 @@ Rails.application.routes.draw do
         resources :dataset_folders, only: [:create, :update, :destroy]
       end
       resources :organizers, only: [:create, :update], module: :organizers do
-        resources :participant_organizers, only: [:create]
+        resources :participant_organizers, only: [:create, :destroy]
       end
       resources :participants, only: [] do
         get :user_profile, on: :member
