@@ -103,7 +103,7 @@ class LeaderboardsController < ApplicationController
       DisentanglementLeaderboard
         .where(challenge_round_id: @current_round)
         .freeze_record(current_participant)
-    elsif post_challenge? || policy(@challenge).edit? || current_participant&.admin
+    elsif post_challenge? || freeze_record_for_organizer
       policy_scope(OngoingLeaderboard)
         .where(filter)
     else
@@ -131,5 +131,11 @@ class LeaderboardsController < ApplicationController
 
   def is_disentanglement_leaderboard?(leaderboard)
     leaderboard.class.name == 'DisentanglementLeaderboard'
+  end
+
+  def freeze_record_for_organizer
+    return false unless @current_round&.freeze_flag
+
+    (policy(@challenge).edit? || current_participant&.admin)
   end
 end

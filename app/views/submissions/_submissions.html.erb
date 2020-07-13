@@ -19,8 +19,8 @@
     <% if !@challenge.meta_challenge && challenge_round&.score_secondary_title.present? %>
       <td><%= submission_formatted_value(submission, submission.score_secondary_display) %></td>
     <% end %>
-    <td data-toggle="tooltip" data-placement="top" title="<%= submission.grading_message %>">
-      <span class='submission-truncate'>
+    <td>
+      <span data-controller="linkify-content">
         <%= submission.grading_message %>
       </span>
     </td>

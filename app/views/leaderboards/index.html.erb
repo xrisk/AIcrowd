@@ -32,7 +32,7 @@
           </div>
         <% end %>
 
-        <% if @current_round.freeze_flag %>
+        <% if @current_round&.freeze_flag %>
         <div class="md-content">
           <blockquote><p>ℹ️
             This leaderboard has been frozen on <%= freeze_time(@current_round) %>

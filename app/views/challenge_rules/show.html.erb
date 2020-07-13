@@ -16,7 +16,7 @@
       <div class="row">
         <div class="col-12">
           <!-- Challenge Rules -->
-          <div class="md-content">
+          <div data-controller="linkify-content" class="md-content">
             <%= sanitize_html(@challenge_rules.terms) %>
           </div>
           <% if current_participant.present? && required_terms_or_rules_path(@challenge).present? %>

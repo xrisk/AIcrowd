@@ -35,7 +35,7 @@
 
           <div>
             <h4>Message</h4>
-            <span><%= @submission.grading_message %></span>
+            <span data-controller="linkify-content"><%= @submission.grading_message %></span>
           </div>
         </div><br>
         <% if submission_code_link(@submission).present? %>

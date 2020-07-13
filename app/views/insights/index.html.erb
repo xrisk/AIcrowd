@@ -19,9 +19,13 @@
       </div>
       <% if @challenge.meta_challenge? %>
         <% @challenge.problems.each_with_index do |problem, i| %>
-          <div class="col-6">
-            <%= render partial: 'insights/_charts/top_score_vs_time', locals: {challenge: problem, challenge_rounds: problem.challenge_rounds, show_challenge_name: true, index: i+3} %>
-          </div>
+          <% if problem.active_round.present? %>
+            <div class="col-6">
+              <%= render partial: 'insights/_charts/top_score_vs_time', locals: { challenge: problem, challenge_rounds: problem.challenge_rounds, show_challenge_name: true, index: i+3 } %>
+            </div>
+          <% else %>
+            <p class="text-center">There is no active round for this challenge.</p>
+          <% end %>
         <% end %>
       <% end %>
     </div>
