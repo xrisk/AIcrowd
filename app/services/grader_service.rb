@@ -32,7 +32,7 @@ class GraderService
   end
 
   def preflight_checked?(challenge, participant, submission_key)
-    if participant.api_key.present? && challenge.grader_identifier.present? && challenge.active_round.challenge_client_name.present? &&
+    if participant.api_key.present? && challenge.grader_identifier.present? && challenge.active_round&.challenge_client_name.present? &&
         submission_key.present?
       return true
     else
