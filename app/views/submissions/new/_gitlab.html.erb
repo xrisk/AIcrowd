@@ -44,7 +44,7 @@
       "challenge_id" : "<%= @challenge.slug %>",
       "grader_id": "<%= @challenge.slug %>",
 <% else %>
-      "challenge_id" : "<%= @challenge.active_round.challenge_client_name %>",
+      "challenge_id" : "<%= @challenge.active_round&.challenge_client_name %>",
       "grader_id": "<%= @challenge.challenge_client_name %>",
 <% end %>
       "authors" : ["<%= current_participant.name %>"],
