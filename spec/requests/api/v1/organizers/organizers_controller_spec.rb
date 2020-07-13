@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::OrganizersController, type: :request do
+describe Api::V1::Organizers::OrganizersController, type: :request do
   describe '#create' do
     let(:request)     { post api_v1_organizers_path, headers: headers, params: params }
     let(:participant) { create(:participant, :admin) }
