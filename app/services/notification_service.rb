@@ -67,7 +67,7 @@ class NotificationService
     existing_notification.delete_all # delete old unread notification of this challenge
 
     message = if @notifiable.previous_row_num == 0
-                "You have secured #{@notifiable.row_num&.ordinalize.to_s} place in the #{@notifiable.challenge.challenge} leaderboard."
+                "Congratulations! You made your first submission and secured #{@notifiable.row_num&.ordinalize.to_s} place in the #{@notifiable.challenge.challenge} leaderboard."
               else
                 "You have moved from #{@notifiable.previous_row_num&.ordinalize.to_s} to #{@notifiable.row_num&.ordinalize.to_s} place in the #{@notifiable.challenge.challenge} leaderboard."
               end
