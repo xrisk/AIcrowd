@@ -51,7 +51,7 @@ class Participant < ApplicationRecord
   scope :admins, -> { where(admin: true) }
   scope :with_every_email_preference, -> { joins(:email_preferences).where(email_preferences: { email_frequency_cd: :every }) }
 
-  belongs_to :referred_by, class_name: 'Participant'
+  belongs_to :referred_by, class_name: 'Participant', optional: true
 
   has_many :referrals, class_name: 'Participant', foreign_key: :referred_by_id, dependent: :nullify
   has_many :aicrowd_user_badges, dependent: :destroy

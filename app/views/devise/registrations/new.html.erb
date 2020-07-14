@@ -23,7 +23,7 @@
   <div class="section-p-sm">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12">
+        <div data-controller="registration-form" class="col-12">
 
           <%= form_for resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form-rg'}, validate: true do |f| %>
             <!-- social log in buttons -->
@@ -71,10 +71,12 @@
               activities (this can be turned off in your settings).
             </div>
 
+            <%= hidden_field_tag :referred_by_uuid, value: '' %>
+
             <% if Rails.env.production? %>
-            <div class="form-group form-check mb-4">
-              <%= recaptcha_tags %>
-            </div>
+              <div class="form-group form-check mb-4">
+                <%= recaptcha_tags %>
+              </div>
             <% end %>
 
             <%= f.button 'Create account', type: 'submit', class: 'btn btn-primary btn-block', id: "sign-up-button"%>
