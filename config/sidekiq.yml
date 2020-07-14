@@ -6,5 +6,6 @@
   - ahoy
   - notifications
   - discourse
+  - gitlab
   - mailers
   - [high_priority, 2]

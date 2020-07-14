@@ -31,6 +31,7 @@ class Participant < ApplicationRecord
   after_create :set_email_preferences
   after_save :publish_to_prometheus
   after_commit :upsert_discourse_user, on: [:create, :update]
+  after_commit :update_gitlab_user, on: [:update]
 
   mount_uploader :image_file, ImageUploader
   validates :image_file, file_size: { less_than: 5.megabytes }
@@ -377,5 +378,12 @@ class Participant < ApplicationRecord
     return unless saved_change_to_attribute?(:name) || saved_change_to_attribute?(:email)
 
     Discourse::UpsertUserJob.perform_later(self.id)
+  end
+
+  def update_gitlab_user
+    return if Rails.env.development? || Rails.env.test?
+    return unless saved_change_to_attribute?(:name)
+
+    Gitlab::UpdateUsernameJob.perform_later(self.id)
   end
 end

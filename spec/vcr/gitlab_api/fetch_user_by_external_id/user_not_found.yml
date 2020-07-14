@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://gitlab.aicrowd.com/api/v4/users?extern_uid=123456&provider=oauth2_generic
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Private-Token:
+      - REDACTED
+      User-Agent:
+      - Faraday v1.0.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 08 Jul 2020 14:57:39 GMT
+      Etag:
+      - W/"4f53cda18c2baa0c0354bb5f9a3ecbe5"
+      Link:
+      - <https://gitlab.aicrowd.com/api/v4/users?active=false&blocked=false&extern_uid=123456&external=false&order_by=id&page=1&per_page=20&provider=oauth2_generic&sort=desc&with_custom_attributes=false>;
+        rel="first", <https://gitlab.aicrowd.com/api/v4/users?active=false&blocked=false&extern_uid=123456&external=false&order_by=id&page=1&per_page=20&provider=oauth2_generic&sort=desc&with_custom_attributes=false>;
+        rel="last"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Origin
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Next-Page:
+      - ''
+      X-Page:
+      - '1'
+      X-Per-Page:
+      - '20'
+      X-Prev-Page:
+      - ''
+      X-Request-Id:
+      - ZzuBhPcdE53
+      X-Runtime:
+      - '0.031650'
+      X-Total:
+      - '0'
+      X-Total-Pages:
+      - '1'
+      Content-Length:
+      - '2'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version:
+  recorded_at: Wed, 08 Jul 2020 14:57:39 GMT
+recorded_with: VCR 5.0.0

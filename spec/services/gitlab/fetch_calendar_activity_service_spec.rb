@@ -4,6 +4,10 @@ describe Gitlab::FetchCalendarActivityService do
   subject { described_class.new(participant: participant) }
 
   describe '#call' do
+    let(:participant) { create(:participant) }
+
+    it_behaves_like 'Gitlab ServiceObject class'
+
     context 'when participant exists in Gitlab' do
       let(:participant) { create(:participant, name: 'test') }
 
@@ -42,7 +46,7 @@ describe Gitlab::FetchCalendarActivityService do
         end
 
         expect(result).to be_failure
-        expect(result.value).to eq 'You need to sign in or sign up before continuing.'
+        expect(result.value).to eq "{\"error\"=>\"You need to sign in or sign up before continuing.\"}"
       end
     end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_30_120822) do
+ActiveRecord::Schema.define(version: 2020_07_08_225717) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -886,6 +886,7 @@ ActiveRecord::Schema.define(version: 2020_06_30_120822) do
     t.integer "ranking_change", default: 0, null: false
     t.boolean "agreed_to_organizers_newsletter", default: true, null: false
     t.float "fixed_rating"
+    t.bigint "gitlab_id"
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["reset_password_token"], name: "index_participants_on_reset_password_token", unique: true
