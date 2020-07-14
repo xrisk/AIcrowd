@@ -1,6 +1,30 @@
 require 'rails_helper'
 
 describe Api::V1::Organizers::OrganizersController, type: :request do
+  describe '#show' do
+    let(:request)     { get api_v1_organizer_path(organizer), headers: headers }
+    let(:participant) { create(:participant, :admin) }
+    let(:organizer)   { create(:organizer, organizer: 'Organizer Name') }
+
+
+    it_behaves_like 'Api::V1 endpoint with Authentication'
+
+    context 'when authenticity token provided' do
+      let(:headers) do
+        {
+          'Authorization': auth_header(participant.api_key)
+        }
+      end
+
+      it 'renders organizer object' do
+        request
+
+        expect(response).to have_http_status(:ok)
+        expect(JSON.parse(response.body)['organizer']).to eq 'Organizer Name'
+      end
+    end
+  end
+
   describe '#create' do
     let(:request)     { post api_v1_organizers_path, headers: headers, params: params }
     let(:participant) { create(:participant, :admin) }
