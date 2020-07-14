@@ -1,7 +1,7 @@
 class ParticipantOrganizer < ApplicationRecord
   belongs_to :participant
   belongs_to :organizer
-  validates :organizer_id, uniqueness: { scope: :participant_id }
+  validates :participant_id, uniqueness: { scope: :organizer_id }
 
   after_commit :add_participant_to_discourse_groups, on: :create
   after_commit :remove_participant_from_discourse_group, on: :destroy
