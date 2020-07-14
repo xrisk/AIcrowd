@@ -51,6 +51,9 @@ class Participant < ApplicationRecord
   scope :admins, -> { where(admin: true) }
   scope :with_every_email_preference, -> { joins(:email_preferences).where(email_preferences: { email_frequency_cd: :every }) }
 
+  belongs_to :referred_by, class_name: 'Participant'
+
+  has_many :referrals, class_name: 'Participant', foreign_key: :referred_by_id, dependent: :nullify
   has_many :aicrowd_user_badges, dependent: :destroy
   has_many :participant_organizers, dependent: :destroy
   has_many :organizers, through: :participant_organizers
@@ -137,6 +140,7 @@ class Participant < ApplicationRecord
   validates :last_name,
             length:      { in: 2...100 },
             allow_blank: true
+  validates :uuid, uniqueness: true
 
   after_update do
     ParticipantBadgeJob.perform_later(name: "profileupdate", participant_id: id)
