@@ -18,7 +18,6 @@ export default class extends Controller {
       }
       if (challenge_round_name != '' && (new Date(data_array[j]).getTime()/1000!== new Date(data_array[j+1]).getTime()/1000)) {
         pointarray[j] = 4
-        console.log(challenge_round_name)
       }
     }
 
@@ -43,7 +42,6 @@ function chartOptions(chart){
       tooltips: {
         callbacks: {
           label: function(tooltipItem, data) {
-            console.log(tooltipItem)
             const challenge_round_name = chart.dataSource[indexOfArray(tooltipItem.xLabel, chart.dataSource)][2]
 
             if (challenge_round_name == '') {
