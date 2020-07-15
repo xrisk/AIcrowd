@@ -109,7 +109,7 @@ class Participant < ApplicationRecord
   has_many :newsletter_emails, class_name: 'NewsletterEmail', dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :team_members, dependent: :destroy
-  has_many :participant_ml_challenge_goals, dependent: :destroy
+  has_many :participant_ml_challenge_goals
 
   validates :email,
             presence:              true,
