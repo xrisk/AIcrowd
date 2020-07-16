@@ -46,17 +46,22 @@
     <% participant.badges.each do |badge| %>
       <li class="list-group-item">
         <div>
-          <a class="award-image" href="#">
+          <div class="award-image">
             <img src="/assets/awards/award-<%= badge.aicrowd_badge.badge_type&.name&.downcase %>.svg" class="country-flag" />
-          </a>
+          </div>
           <div>
-            <a class="text-link" href="#">
+            <div class="text-link">
               <%= badge.aicrowd_badge['name'] %>
-            </a>
+            </div>
             <span class="description">
               <%= badge.aicrowd_badge['description'] %> <br />
               <% badge.custom_fields.each do |key,value| %>
-              <%= key %> : <%= value %> <br />
+                <% if key == 'challenge_round' %>
+                  <% challenge = ChallengeRound.find_by(id: value).challenge %>
+                  <%= link_to "Challenge: #{challenge.challenge}", challenge_path(challenge), class: 'red-link' %>
+                <% else %>
+                  <%= key %> : <%= value %> <br />
+                <% end %>
               <% end %>
             </span>
           </div>
