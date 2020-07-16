@@ -3,6 +3,7 @@ module Api
     module Organizers
       class ParticipantOrganizersController < ::Api::V1::BaseController
         before_action :auth_by_admin_api_key
+        before_action :set_participant_id_by_name, only: :create
         before_action :set_organizer, only: [:create, :destroy]
         before_action :set_participant_organizer, only: :destroy
 
@@ -23,6 +24,12 @@ module Api
         end
 
         private
+
+        def set_participant_id_by_name
+          if params[:name].present?
+            params[:participant_id] = Participant.find_by(name: params[:name])&.id
+          end
+        end
 
         def set_organizer
           @organizer = Organizer.friendly.find(params[:organizer_id])

@@ -101,7 +101,7 @@ Rails.application.routes.draw do
         resources :dataset_files, only: [:create, :update, :destroy]
         resources :dataset_folders, only: [:create, :update, :destroy]
       end
-      resources :organizers, only: [:create, :update], module: :organizers do
+      resources :organizers, only: [:show, :create, :update], module: :organizers do
         resources :participant_organizers, only: [:create, :destroy]
       end
       resources :participants, only: [] do

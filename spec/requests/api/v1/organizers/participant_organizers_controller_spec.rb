@@ -6,7 +6,7 @@ describe Api::V1::Organizers::ParticipantOrganizersController, type: :request do
     let(:admin)           { create(:participant, :admin) }
     let(:organizer)       { create(:organizer, participants: [old_participant]) }
     let(:old_participant) { create(:participant) }
-    let(:new_participant) { create(:participant, id: 10) }
+    let(:new_participant) { create(:participant, id: 10, name: 'test_participant') }
 
     let(:params) do
       {
@@ -25,6 +25,21 @@ describe Api::V1::Organizers::ParticipantOrganizersController, type: :request do
 
       context 'when params are valid' do
         it 'creates new participant_organzer' do
+          request
+
+          expect(response).to have_http_status(:created)
+          expect(JSON.parse(response.body)['participant_id']).to eq 10
+        end
+      end
+
+      context 'when participant name provided in params' do
+        let(:params) do
+          {
+            name: new_participant.name,
+          }
+        end
+
+        it 'creates new participant based on name parameter' do
           request
 
           expect(response).to have_http_status(:created)

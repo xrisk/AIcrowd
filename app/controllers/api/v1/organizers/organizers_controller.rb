@@ -3,7 +3,11 @@ module Api
     module Organizers
       class OrganizersController < ::Api::V1::BaseController
         before_action :auth_by_admin_api_key
-        before_action :set_organizer, only: :update
+        before_action :set_organizer, only: [:show, :update]
+
+        def show
+          render json: Api::V1::OrganizerSerializer.new(organizer: @organizer).serialize, status: :ok
+        end
 
         def create
           organizer            = Organizer.new(organizer_params)
