@@ -29,6 +29,7 @@ RSpec.configure do |config|
     Discourse::FetchUserPostsService.any_instance.stub(:call).and_return(BaseService::Result.new(true, []))
     Discourse::FetchTopContributorsService.any_instance.stub(:call).and_return(BaseService::Result.new(true, []))
     Discourse::FetchBaselineTagService.any_instance.stub(:call).and_return(BaseService::Result.new(true, []))
+    Discourse::FetchSearchResultsService.any_instance.stub(:call).and_return(BaseService::Result.new(true, []))
   end
 
   config.infer_spec_type_from_file_location!

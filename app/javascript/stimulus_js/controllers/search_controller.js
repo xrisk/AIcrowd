@@ -3,38 +3,37 @@ import { Controller } from "stimulus"
 export default class extends Controller {
   connect() {}
 
-  showAllResults(event) {
+  showSelectedResults(event) {
     event.preventDefault();
 
-    const challengesResults = document.getElementById('search-challenges-results');
-    const usersResults      = document.getElementById('search-users-results');
+    const pillType           = event.target.dataset.searchPillType;
+    const challengesResults  = document.getElementById('search-challenges-results');
+    const usersResults       = document.getElementById('search-users-results');
+    const discussionsResults = document.getElementById('search-discussions-results');
 
-    challengesResults.style.display = 'block';
-    usersResults.style.display = 'block';
-    removeSearchPillsActiveClass();
-    event.target.classList.add('active');
-  }
+    switch (pillType) {
+      case 'all':
+        challengesResults.style.display = 'block';
+        usersResults.style.display = 'block';
+        discussionsResults.style.display = 'block';
+        break;
+      case 'challenges':
+        challengesResults.style.display = 'block';
+        usersResults.style.display = 'none';
+        discussionsResults.style.display = 'none';
+        break;
+      case 'users':
+        challengesResults.style.display = 'none';
+        usersResults.style.display = 'block';
+        discussionsResults.style.display = 'none';
+        break;
+      case 'discussions':
+        challengesResults.style.display = 'none';
+        usersResults.style.display = 'none';
+        discussionsResults.style.display = 'block';
+        break;
+    }
 
-  showChallengesResults(event) {
-    event.preventDefault();
-
-    const challengesResults = document.getElementById('search-challenges-results');
-    const usersResults      = document.getElementById('search-users-results');
-
-    challengesResults.style.display = 'block';
-    usersResults.style.display = 'none';
-    removeSearchPillsActiveClass();
-    event.target.classList.add('active');
-  }
-
-  showUsersResults(event) {
-    event.preventDefault();
-
-    const challengesResults = document.getElementById('search-challenges-results');
-    const usersResults      = document.getElementById('search-users-results');
-
-    challengesResults.style.display = 'none';
-    usersResults.style.display = 'block';
     removeSearchPillsActiveClass();
     event.target.classList.add('active');
   }
