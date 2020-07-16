@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_14_101759) do
+ActiveRecord::Schema.define(version: 2020_07_15_185739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -516,6 +516,14 @@ ActiveRecord::Schema.define(version: 2020_07_14_101759) do
     t.index ["organizer_id"], name: "index_clef_tasks_on_organizer_id"
   end
 
+  create_table "daily_practice_goals", force: :cascade do |t|
+    t.string "title"
+    t.integer "points"
+    t.string "duration_text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "dataset_file_downloads", id: :serial, force: :cascade do |t|
     t.integer "participant_id"
     t.integer "dataset_file_id"
@@ -823,6 +831,14 @@ ActiveRecord::Schema.define(version: 2020_07_14_101759) do
     t.string "status_cd"
     t.index ["clef_task_id"], name: "index_participant_clef_tasks_on_clef_task_id"
     t.index ["participant_id"], name: "index_participant_clef_tasks_on_participant_id"
+  end
+
+  create_table "participant_ml_challenge_goals", force: :cascade do |t|
+    t.integer "participant_id"
+    t.integer "challenge_id"
+    t.integer "daily_practice_goal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "participant_organizers", force: :cascade do |t|
