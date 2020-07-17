@@ -108,12 +108,12 @@ class ChallengePolicy < ApplicationPolicy
     return participant.has_accepted_participation_terms?
   end
 
-  def submissions_allowed?
+  def submissions_allowed?(round = nil)
     return false unless @record.online_submissions
     return true if edit?
     return false if @record.starting_soon? || @record.draft?
 
-    return false if @record.completed? && !@record.post_challenge_submissions?
+    return false if @record.completed? && !@record.round.post_challenge_submissions?
 
     # Return false if the challenge is set to "running" but there is no active round
     # or the active round start time is in the future

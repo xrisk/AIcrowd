@@ -44,7 +44,6 @@ module Challenges
       :grader_logs,
       :require_registration,
       :grading_history,
-      :post_challenge_submissions,
       :submissions_downloadable,
       :dataset_note_markdown,
       :dataset_note,

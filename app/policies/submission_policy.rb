@@ -19,7 +19,7 @@ class SubmissionPolicy < ApplicationPolicy
   def new?
     ChallengePolicy
       .new(participant, @record.challenge)
-      .submissions_allowed?
+      .submissions_allowed?(@record.challenge_round)
   end
 
   def create?

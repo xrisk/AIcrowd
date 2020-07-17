@@ -7,8 +7,8 @@ describe 'submissions not allowed' do
   let!(:running) { create :challenge, :running, online_submissions: true }
   let!(:draft) { create :challenge }
   let!(:starting_soon) { create :challenge, :starting_soon }
-  let!(:completed_closed) { create :challenge, :completed, online_submissions: true, post_challenge_submissions: false }
-
+  let!(:completed_closed) { create :challenge, :completed, online_submissions: true}
+  let!(:challenge_round) { create :challenge_round, challenge_id: completed_closed.id , post_challenge_submissions: false, start_dttm: 5.weeks.ago, end_dttm: 4.weeks.ago }
   let(:participant) { create :participant }
 
   # Create Challenge Participants
@@ -54,8 +54,8 @@ end
 
 describe 'challenge ended' do
   let!(:participation_terms) { create :participation_terms }
-  let!(:challenge) { create :challenge, :completed, online_submissions: true, post_challenge_submissions: true }
-
+  let!(:challenge) { create :challenge, :completed, online_submissions: true}
+  let!(:challenge_round) { create :challenge_round, challenge_id: challenge.id , post_challenge_submissions: false, start_dttm: 5.weeks.ago, end_dttm: 4.weeks.ago }
   let!(:participant) { create :participant }
   let!(:challenge_participant) { create :challenge_participant, challenge: challenge, participant: participant }
 
@@ -67,7 +67,7 @@ describe 'challenge ended' do
   end
 
   it do
-    challenge.update(post_challenge_submissions: false)
+    challenge_round.update(post_challenge_submissions: false)
     log_in participant
     visit new_challenge_submission_path(challenge)
     expect_unauthorized

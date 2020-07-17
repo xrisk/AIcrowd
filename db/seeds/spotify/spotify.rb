@@ -25,7 +25,6 @@ Challenge.create!([
     page_views: 30800,
     participant_count: 6300,
     perpetual_challenge: false,
-    post_challenge_submissions: false,
     prize_cash: "$1 Million USD",
     prize_academic: "8",
     prize_misc: "Some other things",
@@ -64,7 +63,8 @@ ChallengeRound.create!([
     score_precision: 3,
     score_secondary_precision: 3,
     leaderboard_note_markdown: "",
-    leaderboard_note: "\n"},
+    leaderboard_note: "\n"
+    post_challenge_submissions: false},
   {id: 102,
     challenge_id: 100,
     challenge_round: "Round 1",
@@ -80,7 +80,8 @@ ChallengeRound.create!([
     score_precision: 3,
     score_secondary_precision: 3,
     leaderboard_note_markdown: "",
-    leaderboard_note: "\n"},
+    leaderboard_note: "\n"
+    post_challenge_submissions: false},
   {id: 103,
     challenge_id: 100,
     challenge_round: "Final Evaluation",
@@ -96,7 +97,8 @@ ChallengeRound.create!([
     score_precision: 3,
     score_secondary_precision: 3,
     leaderboard_note_markdown: "",
-    leaderboard_note: "\n"}
+    leaderboard_note: "\n",
+    post_challenge_submissions: false}
 ])
 
 ChallengePartner.create!([

@@ -143,7 +143,6 @@ if Rails.env == 'development' || Rails.env == 'staging'
       grader_logs: true,
       require_registration: false,
       grading_history: true,
-      post_challenge_submissions: false,
       latest_submission: false},
     {id: 370,
       challenge: "TEST: Train Schedule Optimisation Challenge",
@@ -187,7 +186,6 @@ if Rails.env == 'development' || Rails.env == 'staging'
       grader_logs: true,
       require_registration: false,
       grading_history: true,
-      post_challenge_submissions: false,
     latest_submission: false},
     {id: 371,
       challenge: "TEST:2 Programmer Schedule Optimisation Challenge",
@@ -231,7 +229,6 @@ if Rails.env == 'development' || Rails.env == 'staging'
       grader_logs: true,
       require_registration: false,
       grading_history: true,
-      post_challenge_submissions: false,
     latest_submission: false},
     {id: 373,
       challenge: "TEST:3 Programmer Schedule Optimisation Challenge",
@@ -275,7 +272,6 @@ if Rails.env == 'development' || Rails.env == 'staging'
       grader_logs: true,
       require_registration: false,
       grading_history: true,
-      post_challenge_submissions: false,
     latest_submission: false},
     {id: 372,
       challenge: "TEST:4 Programmer Schedule Optimisation Challenge",
@@ -319,7 +315,6 @@ if Rails.env == 'development' || Rails.env == 'staging'
       grader_logs: true,
       require_registration: false,
       grading_history: true,
-      post_challenge_submissions: false,
     latest_submission: false},
     {id: 30,
       challenge: "Visual Doom AI Competition 2018 - Singleplayer Track (1)",
@@ -362,7 +357,6 @@ if Rails.env == 'development' || Rails.env == 'staging'
       grader_logs: true,
       require_registration: false,
       grading_history: false,
-      post_challenge_submissions: false,
     latest_submission: false}
   ])
 
@@ -382,7 +376,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       score_precision: 3,
       score_secondary_precision: 3,
       leaderboard_note_markdown: "",
-      leaderboard_note: "\n"},
+      leaderboard_note: "\n",
+      post_challenge_submissions: false},
     {id: 52,
       challenge_id: 37,
       challenge_round: "Round 1",
@@ -398,7 +393,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       score_precision: 3,
       score_secondary_precision: 3,
       leaderboard_note_markdown: "",
-      leaderboard_note: "\n"},
+      leaderboard_note: "\n",
+      post_challenge_submissions: false},
     {id: 42,
       challenge_id: 30,
       challenge_round: "Final Evaluation",
@@ -414,7 +410,8 @@ if Rails.env == 'development' || Rails.env == 'staging'
       score_precision: 3,
       score_secondary_precision: 3,
       leaderboard_note_markdown: "",
-      leaderboard_note: "\n"}
+      leaderboard_note: "\n",
+      post_challenge_submissions: false}
   ])
 
 # Submissions

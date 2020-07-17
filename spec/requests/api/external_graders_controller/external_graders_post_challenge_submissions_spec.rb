@@ -11,8 +11,8 @@ RSpec.describe Api::ExternalGradersController, type: :request do
 
   let!(:organizer)             { create :organizer, api_key: '3d1efc2332200314c86d2921dd33434c' }
   let!(:participation_terms)   { create :participation_terms }
-  let!(:challenge)             { create :challenge, :running, organizers: [organizer], post_challenge_submissions: true }
-  let!(:challenge_round)       { create :challenge_round, challenge_id: challenge.id, active: true, start_dttm: 5.weeks.ago, end_dttm: 4.weeks.ago }
+  let!(:challenge)             { create :challenge, :running, organizers: [organizer]}
+  let!(:challenge_round)       { create :challenge_round, challenge_id: challenge.id, active: true, start_dttm: 5.weeks.ago, end_dttm: 4.weeks.ago, post_challenge_submissions: true }
   let!(:participant)           { create :participant, api_key: '5762b9423a01f72662264358f071908c' }
   let!(:challenge_participant) { create :challenge_participant, challenge: challenge, participant: participant }
 
@@ -44,7 +44,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(Submission.last.participant_id).to eq(participant.id) }
       it { expect(Submission.last.score).to eq(valid_attributes[:score]) }
       it { expect(Submission.last.grading_status_cd).to eq('graded') }
-      it { expect(Submission.last.challenge.post_challenge_submissions).to eq(true) }
+      it { expect(Submission.last.challenge_round.post_challenge_submissions).to eq(true) }
       it { puts Submission.last.created_at }
       it { puts ChallengeRound.last.end_dttm }
       # it { expect(Submission.last.post_challenge).to be true }

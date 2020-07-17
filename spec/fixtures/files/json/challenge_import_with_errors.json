@@ -45,7 +45,6 @@
   "grader_logs":true,
   "require_registration":false,
   "grading_history":false,
-  "post_challenge_submissions":false,
   "submissions_downloadable":false,
   "dataset_note_markdown":null,
   "dataset_note":null,
@@ -159,7 +158,8 @@
         "score_title":"adasd",
         "score_secondary_title":"",
         "primary_sort_order_cd":"ascending",
-        "secondary_sort_order_cd":"descending"
+        "secondary_sort_order_cd":"descending",
+        "post_challenge_submissions":false
      },
      {
         "id":12,

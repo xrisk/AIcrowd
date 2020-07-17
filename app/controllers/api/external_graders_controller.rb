@@ -70,7 +70,7 @@ class Api::ExternalGradersController < Api::BaseController
       # Post challenge submissions
       # messy hack - to be refactored
       if submission.post_challenge.present?
-        if submission.challenge.post_challenge_submissions.blank?
+        if submission.challenge_round.post_challenge_submissions.blank?
           submission.update(
             grading_status_cd: 'failed',
             grading_message:   'Submission made after end of round.')

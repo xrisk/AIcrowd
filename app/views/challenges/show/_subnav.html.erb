@@ -39,7 +39,7 @@
     <% else %>
       <%= my_team_view_or_create_button(challenge) %>
       <% if !challenge.meta_challenge %>
-        <% if !policy(challenge).starting_soon_mode? && policy(challenge).submissions_allowed? %>
+        <% if !policy(challenge).starting_soon_mode? && policy(challenge).submissions_allowed?(challenge.active_round) %>
           <%= link_to 'Create Submission', new_challenge_submission_path(challenge), class: "btn btn-primary btn-sm pull-right" %>
         <% end %>
       <% end %>
