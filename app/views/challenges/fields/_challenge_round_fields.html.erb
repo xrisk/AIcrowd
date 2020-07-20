@@ -124,13 +124,12 @@
         </div>
 
         <div class="form-group col-12">
-        <%= render partial: 'challenges/fields/fancy_radio', locals: {
-            f: f,
-            name: :post_challenge_submissions,
-            text: "Post Challenge Submissions Permitted",
-            p: {data: {target: 'challenge-submission.post'}}} %>
-        <div class="form-group col-12">
-
+          <%= render partial: 'challenges/fields/fancy_radio', locals: {
+              f: f,
+              name: :post_challenge_submissions,
+              text: "Post Challenge Submissions Permitted",
+              p: {data: {target: 'challenge-submission.post'}}} %>
+        </div>
 
         <% if f.object.persisted? %>
           <div class="form-group col-4 text-center"
