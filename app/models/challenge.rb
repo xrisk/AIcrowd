@@ -179,7 +179,7 @@ class Challenge < ApplicationRecord
   end
 
   def post_challenge_submissions?
-    return challenge.active_round.post_challenge_submissions
+    post_challenge_submissions
   end
 
   def current_challenge_rules
