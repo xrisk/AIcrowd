@@ -113,7 +113,7 @@ class ChallengePolicy < ApplicationPolicy
     return true if edit?
     return false if @record.starting_soon? || @record.draft?
 
-    return false if @record.completed? && !round.post_challenge_submissions?
+    return false if @record.completed? && round.present? && !round.post_challenge_submissions?
 
     # Return false if the challenge is set to "running" but there is no active round
     # or the active round start time is in the future
