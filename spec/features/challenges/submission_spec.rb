@@ -55,7 +55,7 @@ end
 describe 'challenge ended' do
   let!(:participation_terms) { create :participation_terms }
   let!(:challenge) { create :challenge, :completed, online_submissions: true}
-  let!(:challenge_round) { create :challenge_round, challenge_id: challenge.id , post_challenge_submissions: false, start_dttm: 5.weeks.ago, end_dttm: 4.weeks.ago }
+  let!(:challenge_round) { create :challenge_round, challenge_id: challenge.id , post_challenge_submissions: true, start_dttm: 5.weeks.ago, end_dttm: 4.weeks.ago }
   let!(:participant) { create :participant }
   let!(:challenge_participant) { create :challenge_participant, challenge: challenge, participant: participant }
 
