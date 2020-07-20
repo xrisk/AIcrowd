@@ -41,8 +41,11 @@ class ParticipantsController < ApplicationController
 
   def update
     @participant = Participant.friendly.find(params[:id])
+    @participant.assign_attributes(participant_params)
 
-    if @participant.update(participant_params)
+    validate_name_length
+
+    if @participant.errors.none? && @participant.save
       flash[:success] = "Profile updated"
       redirect_to @participant
     else
@@ -190,5 +193,9 @@ class ParticipantsController < ApplicationController
   def get_default_image
     num = current_user.id % 8
     "/assets/users/AIcrowd-DarkerBG (#{num}).png"
+  end
+
+  def validate_name_length
+    @participant.errors.add(:name, 'is too long (maxium is 20 characters)') if @participant.name.to_s.length > 20
   end
 end
