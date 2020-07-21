@@ -51,6 +51,9 @@ $(document).on('turbolinks:load', function() {
 
       fail: function (e, data) {
         submitButton.prop('disabled', false);
+
+        elem.value = '';
+
         progressBar
           .css("background", "red")
           .text("Upload failed");
