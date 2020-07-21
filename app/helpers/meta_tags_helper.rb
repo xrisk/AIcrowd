@@ -3,15 +3,7 @@ module MetaTagsHelper
     if @challenge.present? && controller_name.present? && !show_action? && controller_name != 'challenges'
       "AIcrowd | #{@challenge.challenge} | #{controller_name.capitalize}"
     elsif show_action?
-      if controller_name == 'challenges' || controller_name == 'discussions' || controller_name == 'challenge_rules'
-        "AIcrowd | " + @challenge.challenge + " | #{controller_name.capitalize}"
-      elsif controller_name == 'participants'
-        "AIcrowd | " + @participant.slug + " | #{controller_name.capitalize}"
-      elsif controller_name == 'organizers'
-        "AIcrowd | " + @organizer.slug + " | #{controller_name.capitalize}"
-      elsif controller_name == 'submissions'
-        "AIcrowd | " + @challenge.challenge + " | #{controller_name.capitalize} ##{@submission.id}"
-      end
+      get_title_for_show
     elsif content_for?(:meta_title)
       content_for(:meta_title)
     elsif !@page_title.blank?
@@ -106,5 +98,24 @@ module MetaTagsHelper
     meta_image = (content_for?(:meta_image) ? content_for(:meta_image) : DEFAULT_META["meta_image"])
     # little twist to make it work equally with an asset or a url
     meta_image.starts_with?("http") ? meta_image : url_to_image(meta_image)
+  end
+
+  def get_title_for_show
+    case controller_name
+    when 'challenges', 'discussions', 'challenge_rules'
+      get_title(@challenge.challenge)
+    when 'participants'
+      get_title(@participant.slug)
+    when 'organizers'
+      get_title(@organizer.slug)
+    when 'blogs'
+      get_title(@blog.title)
+    when 'submissions'
+      get_title(@challenge.challenge) + " #" + @submission.id.to_s
+    end
+  end
+
+  def get_title(title_text)
+    "AIcrowd | " + title_text + " | #{controller_name.capitalize}"
   end
 end
