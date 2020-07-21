@@ -124,7 +124,7 @@ class Participant < ApplicationRecord
               with:    /\A(?=.*[a-zA-Z])[a-zA-Z0-9.\-_{}\[\]]+\z/,
               message: 'username can contain numbers and these characters -_.{}[] and atleast one letter'
             },
-            length:     { in: 2...256 },
+            length:     { in: 2...50 },
             uniqueness: { case_sensitive: false }
   validates :affiliation,
             length:      { in: 2...100 },

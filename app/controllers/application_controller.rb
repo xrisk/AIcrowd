@@ -76,6 +76,10 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
+    if resource.name.length > 20
+      flash[:alert] = "Maximum length for username is reduced to 20 characters, please change your username #{helpers.link_to '[here]', edit_participant_path(resource), target: '_blank'}"
+    end
+
     unless current_participant.agreed_to_terms_of_use_and_privacy?
       flash[:notice] = 'We have changed the way we save email and notification preferences, please review them below'
       current_participant.update(agreed_to_terms_of_use_and_privacy: true)
