@@ -118,5 +118,9 @@ FactoryBot.define do
       status { :starting_soon }
       challenge { FFaker::Lorem.sentence(3) }
     end
+
+    trait :meta_challenge do
+      meta_challenge { true }
+    end
   end
 end

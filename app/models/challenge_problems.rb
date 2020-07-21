@@ -1,5 +1,7 @@
 class ChallengeProblems < ApplicationRecord
-  belongs_to :challenge
+  belongs_to :challenge, class_name: 'Challenge'
+  belongs_to :problem, class_name: 'Challenge'
+  belongs_to :challenge_round, optional: true, class_name: 'ChallengeRound'
   has_many :problems, foreign_key: "problem_id", class_name: "ChallengeProblems"
 
   validates :problem_id, presence: true
