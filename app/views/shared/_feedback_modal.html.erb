@@ -8,8 +8,10 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <%= form_with url: '#', class: 'form-rg feedback-form', html: { 'data-controller': 'feedback-form', 'data-action': "submit->feedback-form#handleFormSubmit" } do |f| %>
+      <%= form_with url: '#', class: 'form-rg feedback-form', html: { 'data-controller': 'feedback-form', 'data-feedback-form-create-feedback-url': api_v1_feedbacks_url, 'data-action': "submit->feedback-form#handleFormSubmit" } do |f| %>
         <div class="modal-body">
+          <div id="feedback-form-alert-wrapper"></div>
+
           <div class="form-group">
             <%= f.cktext_area :message, class: 'feedback-message-textarea' %>
           </div>
