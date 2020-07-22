@@ -1,0 +1,25 @@
+<!-- modal: feedback -->
+<div class="modal feedback-modal" id="feedbackModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog feedback-modal-dialog" role="document">
+    <div class="modal-content feedback-modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Send Feedback</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_with url: '#', class: 'form-rg feedback-form', html: { 'data-controller': 'feedback-form', 'data-action': "submit->feedback-form#handleFormSubmit" } do |f| %>
+        <div class="modal-body">
+          <div class="form-group">
+            <%= f.cktext_area :message, class: 'feedback-message-textarea' %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <%= f.button 'Send Feedback', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!-- /modal: feedback -->

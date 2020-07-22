@@ -1,0 +1,36 @@
+.feedback-button {
+  height: 40px;
+  width: 120px;
+  line-height: 42px;
+  font-weight: 600;
+  font-size: 20px;
+  color: white;
+  background: $color-accent;
+  text-align: center;
+  position: fixed;
+  right: -40px;
+  top: 45%;
+  z-index: 9999;
+  cursor: pointer;
+  transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+}
+
+.feedback-form {
+  max-width: 100%;
+
+  #cke-message {
+    max-width: 100%;
+  }
+
+  .cke_wysiwyg_div {
+    min-height: 250px;
+  }
+}
+
+.feedback-modal-dialog {
+  width: 800px;
+  max-width: 800px;
+}
