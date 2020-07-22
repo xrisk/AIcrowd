@@ -70,8 +70,8 @@ class CalculateMetaLeaderboardService
           people[key]['entries'] = 0
           people[key]['submission_id'] = entry['submission_id']
         end
-        people[key]['rank'][entry['challenge_round_id']] = {position: entry['seq'], score: entry['score']}
-        people[key]['score'] += ranking_formula(entry['seq'], entry['challenge_round_id'])
+        people[key]['rank'][entry['challenge_round_id']] = {position: entry['row_num'], score: entry['score']}
+        people[key]['score'] += ranking_formula(entry['row_num'], entry['challenge_round_id'])
         people[key]['entries'] += entry['entries']
       end
     end
