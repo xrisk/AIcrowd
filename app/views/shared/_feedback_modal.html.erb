@@ -12,9 +12,8 @@
         <div class="modal-body">
           <div id="feedback-form-alert-wrapper"></div>
 
-          <div class="form-group">
-            <%= f.cktext_area :message, class: 'feedback-message-textarea' %>
-          </div>
+          <p>👋  Hi, we are the team behind AIcrowd. We are building it for you, please share any feedback you may have.</p>
+          <%= f.text_area :message, id: 'feedback-form-message', class: 'form-control feedback-message-textarea' %>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

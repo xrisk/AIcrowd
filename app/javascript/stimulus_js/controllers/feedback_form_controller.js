@@ -5,21 +5,21 @@ export default class extends Controller {
   handleFormSubmit(event) {
     event.preventDefault();
 
-    const requestURL           = this.data.get('create-feedback-url');
-    const feedbackMessageField = document.querySelectorAll('#feedbackModal .cke_wysiwyg_div')[0];
-    const feedbackMessageHTML  = feedbackMessageField.innerHTML;
-    const feedbackMessageText  = feedbackMessageField.textContent;
+    const requestURL       = this.data.get('create-feedback-url');
+    const feedbackTextarea = document.getElementById('feedback-form-message');
+    const feedbackMessage  = feedbackTextarea.value;
 
-    if (feedbackMessageText && feedbackMessageText.length) {
+    if (feedbackMessage && feedbackMessage.length) {
       fetch(requestURL, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ message: feedbackMessageHTML })
+        body: JSON.stringify({ message: feedbackMessage })
       }).then(response => {
         if (response.ok) {
+          feedbackTextarea.value = '';
           $('#feedbackModal').modal('hide');
           showAlert('success', 'Thank you for your feedback!');
         }
