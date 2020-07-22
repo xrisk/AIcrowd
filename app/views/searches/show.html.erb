@@ -1,0 +1,56 @@
+<section data-controller="search" class="section-p-sm">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <ul class="nav nav-pills">
+          <li class="nav-item">
+            <%= link_to 'All', '#', class: "search-nav-link nav-link active", 'data-action': "click->search#showAllResults" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Challenges', '#', class: "search-nav-link nav-link", 'data-action': "click->search#showChallengesResults" %>
+          </li>
+          <li class="nav nav-pills">
+            <%= link_to 'Users', '#', class: "search-nav-link nav-link", 'data-action': "click->search#showUsersResults" %>
+          </li>
+        </ul>
+
+        <div id="search-challenges-results">
+          <header class="section-header">
+            <div>
+              <h4>Challenges</h4>
+            </div>
+          </header>
+
+          <% if @challenges.any? %>
+            <div class="row">
+              <%= render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>
+            </div>
+          <% else %>
+            <h3 class="text-center">There are no challenges for selected search phrase...</h3>
+          <% end %>
+        </div>
+
+        <div id="search-users-results">
+          <header class="section-header">
+            <div>
+              <h4>Users</h4>
+            </div>
+          </header>
+
+          <% if @participants.any? %>
+            <ul class="list-group list-group-flush-px-0 list-group-organizers">
+              <% @participants.each do |participant| %>
+                <li class="list-group-item" style="z-index: auto;">
+                  <%= render partial: 'participants/get_user_profile', locals: { participant: participant } %>
+                  <%= render partial: 'shared/challenges/follow_button', locals: { followable: participant, follow: follow_find_by_participant(participant, @follows), other_participant: current_participant, active_tab: nil } %>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <h3 class="text-center">There are no users for selected search phrase...</h3>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
