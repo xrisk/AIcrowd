@@ -110,7 +110,8 @@
           <%= link_to "Code", submission_code_link(submission), class: 'btn btn-secondary btn-sm mr-1', target: "_blank", data: { toggle: 'tooltip', placement: 'top' }, title: "Browse codebase (based on your access permissions)" %>
         <% end %>
         <% if submission.present? && policy(submission).show? %>
-          <% text = 'Submission %s by %s have rank #%s on %s leaderboard!! 🎉 #AIcrowd' % [submission.id, leaderboard.submitter&.name, leaderboard.row_num, challenge.challenge] %>
+          <% submitter = leaderboard.submitter if leaderboard.submitter_type != 'OldParticipant' %>
+          <% text = 'Submission %s by %s have rank #%s on %s leaderboard!! 🎉 #AIcrowd' % [submission.id, submitter&.name, leaderboard.row_num, challenge.challenge] %>
           <%= social_share('twitter', challenge, leaderboard, text) %>
         <% end %>
       </td>
