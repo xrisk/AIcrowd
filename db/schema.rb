@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_14_101759) do
+ActiveRecord::Schema.define(version: 2020_07_22_115821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -640,6 +640,14 @@ ActiveRecord::Schema.define(version: 2020_07_14_101759) do
     t.index ["participant_id"], name: "index_email_preferences_tokens_on_participant_id"
   end
 
+  create_table "feedbacks", force: :cascade do |t|
+    t.text "message", null: false
+    t.bigint "participant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["participant_id"], name: "index_feedbacks_on_participant_id"
+  end
+
   create_table "follows", id: :serial, force: :cascade do |t|
     t.integer "followable_id", null: false
     t.string "followable_type", null: false
@@ -1148,6 +1156,7 @@ ActiveRecord::Schema.define(version: 2020_07_14_101759) do
   add_foreign_key "email_invitations", "participants", column: "claimant_id"
   add_foreign_key "email_invitations", "participants", column: "invitor_id"
   add_foreign_key "email_preferences", "participants"
+  add_foreign_key "feedbacks", "participants"
   add_foreign_key "follows", "participants"
   add_foreign_key "invitations", "challenges"
   add_foreign_key "invitations", "participants"
