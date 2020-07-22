@@ -23,6 +23,10 @@ module DiscourseHelper
     end
   end
 
+  def discourse_search_url(q)
+    "#{ENV['DISCOURSE_DOMAIN_NAME']}/search?q=#{q}"
+  end
+
   def discourse_time_ago(datetime)
     time_ago_in_words = time_ago_in_words(datetime)
 

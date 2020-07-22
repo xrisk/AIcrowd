@@ -11,26 +11,7 @@
                 </div>
               </header>
 
-              <% discourse_posts.each do |discourse_post| %>
-                <!-- topic – comment -->
-                <div class="topic-comment">
-                  <%= render partial: 'participants/get_user_profile', locals: { participant: participant, username: 'false' } %>
-                  <div class="discussion-topic-body">
-                    <h3><%= link_to discourse_post['topic_title'], discourse_topic_url(discourse_post['topic_slug']) %></h3>
-                    <span class="discussion-details"><%= discourse_time_ago(discourse_post['created_at']) %></span>
-
-                    <p><%= sanitize_html(discourse_post['cooked']) %></p>
-                    <div class="btn-set" aria-hidden="true">
-                      <%= link_to 'View post', discourse_post_url(discourse_post['topic_slug'], discourse_post['topic_id'], discourse_post['post_number']), class: 'btn btn-secondary btn-sm' %>
-                      <button type="button" class="btn btn-secondary btn-sm disabled"data-toggle="tooltip" data-placement="top" title="Like topic">
-                        <%= image_tag image_path('img/icon-like.svg'), alt: 'Like icon' %>
-                        <%= discourse_post['like_count'] %>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <!-- topic – comment -->
-              <% end %>
+              <%= render partial: 'shared/discourse/posts_list', locals: { discourse_posts: discourse_posts, single_participant: participant } %>
             <% end %>
           <% else %>
             <div class="md-content">

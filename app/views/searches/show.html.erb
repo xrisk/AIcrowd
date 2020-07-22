@@ -4,13 +4,16 @@
       <div class="col-12">
         <ul class="nav nav-pills">
           <li class="nav-item">
-            <%= link_to 'All', '#', class: "search-nav-link nav-link active", 'data-action': "click->search#showAllResults" %>
+            <%= link_to 'All', '#', class: "search-nav-link nav-link active", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "all" %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Challenges', '#', class: "search-nav-link nav-link", 'data-action': "click->search#showChallengesResults" %>
+            <%= link_to 'Challenges', '#', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "challenges" %>
           </li>
           <li class="nav nav-pills">
-            <%= link_to 'Users', '#', class: "search-nav-link nav-link", 'data-action': "click->search#showUsersResults" %>
+            <%= link_to 'Users', '#', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "users" %>
+          </li>
+          <li class="nav nav-pills">
+            <%= link_to 'Discussions', '#', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "discussions" %>
           </li>
         </ul>
 
@@ -46,8 +49,32 @@
                 </li>
               <% end %>
             </ul>
+            <br/>
+            <br/>
           <% else %>
             <h3 class="text-center">There are no users for selected search phrase...</h3>
+          <% end %>
+        </div>
+
+        <div id="search-discussions-results">
+          <header class="section-header">
+            <div>
+              <h4>Discussions</h4>
+            </div>
+
+            <%= link_to 'See all', discourse_search_url(params[:q]), class: "btn btn-secondary btn-sm" %>
+          </header>
+
+          <% if @discussions_fetch.success? %>
+            <% if @discussions.any? %>
+              <%= render partial: 'shared/discourse/posts_list', locals: { discourse_posts: @discussions.take(10), single_participant: current_participant } %>
+            <% else %>
+              <h3 class="text-center">There are no discussions for selected search phrase...</h3>
+            <% end %>
+          <% else %>
+            <div class="md-content">
+              <span><%= @discussions_fetch.value %></span>
+            </div>
           <% end %>
         </div>
       </div>
