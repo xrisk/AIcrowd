@@ -11,7 +11,7 @@
         <% if @challenge.organizers.any? { |organizer| organizer.clef? } %>
           <%= render partial: 'submissions/new/clef_form' %>
         <% else %>
-          <%= render partial: 'submissions/new/' + @form %>
+          <%= render partial: "submissions/new/#{@form_type}" %>
         <% end %>
       <% end %>
     </div>

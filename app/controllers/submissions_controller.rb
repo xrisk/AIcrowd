@@ -8,7 +8,7 @@ class SubmissionsController < ApplicationController
   before_action :check_participation_terms, except: [:show, :index, :export]
   before_action :set_s3_direct_post, only: [:new, :edit, :create, :update]
   before_action :set_submissions_remaining, except: [:show, :index]
-  before_action :set_current_round, only: :index
+  before_action :set_current_round, only: [:index, :new, :create]
   before_action :set_form_type, only: [:new, :create]
   before_action :handle_code_based_submissions, only: [:create]
   before_action :handle_artifact_based_submissions, only: [:create]
@@ -81,20 +81,6 @@ class SubmissionsController < ApplicationController
       view_context: view_context
     )
     render :show
-  end
-
-  def set_form_type
-    if @challenge.evaluator_type_cd == "evaluations_api"
-      # TODO: Implement "choose" properly with boolean flag before enabling back
-      @form = "artifact"
-      if params[:type].in?(['code', 'artifact', 'gitlab'])
-        @form = params[:type]
-      end
-    elsif @challenge.evaluator_type_cd == "gitlab"
-      @form = "gitlab"
-    else
-      @form = "artifact"
-    end
   end
 
   def new
@@ -205,6 +191,10 @@ class SubmissionsController < ApplicationController
                      else
                        @challenge.active_round || @challenge.challenge_rounds.first
                      end
+  end
+
+  def set_form_type
+    @form_type = @current_round&.submissions_type || 'artifact'
   end
 
   def check_participation_terms
@@ -335,6 +325,6 @@ class SubmissionsController < ApplicationController
   end
 
   def validate_submission_file_presence
-    @submission.errors.add(:base, 'Submission file is required.') if @form == 'artifact' && @submission.submission_files.none?
+    @submission.errors.add(:base, 'Submission file is required.') if @form_type == 'artifact' && @submission.submission_files.none?
   end
 end
