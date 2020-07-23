@@ -4,4 +4,4 @@
   $('#discourse-topics-listing').attr("data-request-completed", true);
 <% end %>
 $("#loader-container").hide();
-$("#discourse-topics-listing").append("<%= j render partial: 'discussion_list', locals: { discourse_topics: @discourse_topics } %>");
+$("#discourse-topics-listing").append("<%= j render partial: 'shared/discourse/discussions_list', locals: { discourse_topics: @discourse_topics } %>");
