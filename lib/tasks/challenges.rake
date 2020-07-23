@@ -51,7 +51,6 @@ namespace :challenges do
     end
   end
 
-
   desc 'Migrate disentanglement_leaderboards to base_leadearboards table'
   task migrate_disentanglement_leaderboards_to_base_leaderboards_table: :environment do
     DisentanglementLeaderboard.find_each do |disentanglement_leaderboard|
@@ -85,6 +84,15 @@ namespace :challenges do
       )
 
       puts "##{disentanglement_leaderboard.id} DisentanglementLeaderboard - migrated to base_leaderboards table"
+    end
+  end
+
+  desc "Update gitlab evaluator type challenge_rounds to use gitlab submissions_type"
+  task update_challenge_rounds_submissions_type: :environment do
+    Challenge.includes(:challenge_rounds).where(evaluator_type_cd: 'gitlab').find_each do |challenge|
+      challenge.challenge_rounds.update_all(submissions_type_cd: 'gitlab')
+
+      puts "##{challenge.id} Challenge - finished update of challenge rounds submissions_type"
     end
   end
 end
