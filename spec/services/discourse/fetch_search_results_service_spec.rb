@@ -22,9 +22,9 @@ describe Discourse::FetchSearchResultsService, :requests_allowed do
 
         discourse_post = response.first
 
-        expect(response['cooked']).to eq 'text for check update user name'
-        expect(response['topic_title']).to eq 'Wednessday test for test user name'
-        expect(response['topic_slug']).to eq 'wednessday-test-for-test-user-name'
+        expect(discourse_post['cooked']).to eq 'text for check update user name'
+        expect(discourse_post['topic_title']).to eq 'Wednessday test for test user name'
+        expect(discourse_post['topic_slug']).to eq 'wednessday-test-for-test-user-name'
       end
     end
   end
