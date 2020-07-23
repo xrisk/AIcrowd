@@ -53,7 +53,8 @@ module Api
             :score_title,
             :score_secondary_title,
             :primary_sort_order_cd,
-            :secondary_sort_order_cd
+            :secondary_sort_order_cd,
+            :submissions_type
           )
         end
 

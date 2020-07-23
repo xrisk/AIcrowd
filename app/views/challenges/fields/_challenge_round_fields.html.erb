@@ -66,6 +66,11 @@
         </div>
 
         <div class="form-group col-sm-12 col-md-6">
+          <%= f.label :submissions_type, "Submissions Type" %>
+          <%= f.select :submissions_type, enum_option_pairs(ChallengeRound, :submissions_type), {}, { class: "form-control" } %>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6">
           <%= f.label :submission_limit, "Submission Limit" %>
           <%= f.text_field :submission_limit, class: "form-control", placeholder: 'Enter maximum submissions' %>
         </div>

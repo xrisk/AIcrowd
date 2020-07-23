@@ -6,6 +6,10 @@ class ChallengeRound < ApplicationRecord
   has_many :submissions, dependent: :restrict_with_error
   has_many :leaderboards
   has_many :user_ratings
+
+  as_enum :submissions_type, [:artifact, :code, :gitlab], map: :string
+
+  validates :submissions_type, presence: true
   validates :challenge_round, presence: true
   validates :submission_limit,
             numericality: { only_integer:             true,
