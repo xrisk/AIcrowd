@@ -1,0 +1,26 @@
+<!-- modal: feedback -->
+<div class="modal feedback-modal" id="feedbackModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog feedback-modal-dialog" role="document">
+    <div class="modal-content feedback-modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Send Feedback</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= form_with url: '#', class: 'form-rg feedback-form', html: { 'data-controller': 'feedback-form', 'data-feedback-form-create-feedback-url': api_v1_feedbacks_url, 'data-action': "submit->feedback-form#handleFormSubmit" } do |f| %>
+        <div class="modal-body">
+          <div id="feedback-form-alert-wrapper"></div>
+
+          <p>👋  Hi, we are the team behind AIcrowd. We are building it for you, please share any feedback you may have.</p>
+          <%= f.text_area :message, id: 'feedback-form-message', class: 'form-control feedback-message-textarea' %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <%= f.button 'Send Feedback', class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!-- /modal: feedback -->

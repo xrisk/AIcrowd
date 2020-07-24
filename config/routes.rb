@@ -111,6 +111,7 @@ Rails.application.routes.draw do
       resources :newsletter_emails, only: [] do
         post :decline, on: :member
       end
+      resources :feedbacks, only: :create
       resource :api_user, only: :show
 
       get 'check_login' => 'sessions/helpers#check_login', :as => :check_login

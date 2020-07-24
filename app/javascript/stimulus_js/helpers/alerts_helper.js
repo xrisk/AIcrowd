@@ -1,5 +1,5 @@
-export function showAlert(alertType, alertMessage) {
-  const alertWrapper = document.getElementById('flash-messages-wrapper');
+export function showAlert(alertType, alertMessage, alertWrapperId = 'flash-messages-wrapper') {
+  const alertWrapper = document.getElementById(alertWrapperId);
 
   alertWrapper.innerHTML = alertTemplate(alertType, alertMessage);
   window.scrollTo(0, 0);

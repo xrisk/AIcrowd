@@ -71,6 +71,14 @@
 
   <body id='<%= body_id %>' data-turbolinks="false">
     <%= render partial: 'layouts/loader' %>
+
+    <% if current_participant.present? %>
+      <%= render partial: 'shared/feedback_modal' %>
+      <div data-toggle="modal" data-target="#feedbackModal" class="feedback-button">Feedback</div>
+    <% else %>
+      <%= link_to "Feedback", new_participant_session_path, class: 'feedback-button' %>
+    <% end %>
+
     <div class='content'>
       <%= render partial: 'layouts/header' %>
 
