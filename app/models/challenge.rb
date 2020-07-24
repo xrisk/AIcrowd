@@ -117,10 +117,12 @@ class Challenge < ApplicationRecord
   after_commit :update_discourse_category, on: :update
   after_commit :update_discourse_permissions, on: :update
 
-  def record_page_view
-    self.page_views ||= 0
-    self.page_views  += 1
-    save
+  def record_page_view(parent_meta_challenge)
+    if parent_meta_challenge.present?
+      parent_meta_challenge.update!(page_views: parent_meta_challenge.page_views.to_i + 1)
+    else
+      update!(page_views: page_views.to_i + 1)
+    end
   end
 
   def participants_and_organizers
@@ -247,10 +249,6 @@ class Challenge < ApplicationRecord
     if meta_challenge?
       return challenge_problems.pluck('challenge_round_id')
     end
-  end
-
-  def teams_count
-    teams.count + (participants.count - teams_participant_count)
   end
 
   def teams_participant_count
