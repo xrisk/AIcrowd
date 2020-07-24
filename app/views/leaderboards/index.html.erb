@@ -1,7 +1,7 @@
 <%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
 <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 
-<% disentanglement_leaderboard = is_disentanglement_leaderboard?(@leaderboards.first)%>
+<% disentanglement_leaderboard = @leaderboards.first&.disentanglement? %>
 <section
   class="section-p-sm"
   data-controller="leaderboards"

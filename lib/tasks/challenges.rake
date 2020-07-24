@@ -50,4 +50,41 @@ namespace :challenges do
       Challenge.find_by(id: challenge_id).update_attribute(:weight, challenge_weight)
     end
   end
+
+
+  desc 'Migrate disentanglement_leaderboards to base_leadearboards table'
+  task migrate_disentanglement_leaderboards_to_base_leaderboards_table: :environment do
+    DisentanglementLeaderboard.find_each do |disentanglement_leaderboard|
+      BaseLeaderboard.create!(
+        challenge_id:         disentanglement_leaderboard.challenge_id,
+        challenge_round_id:   disentanglement_leaderboard.challenge_round_id,
+        previous_row_num:     disentanglement_leaderboard.previous_row_num,
+        row_num:              disentanglement_leaderboard.row_num,
+        slug:                 disentanglement_leaderboard.slug,
+        name:                 disentanglement_leaderboard.name,
+        entries:              disentanglement_leaderboard.entries,
+        score:                disentanglement_leaderboard.score,
+        score_secondary:      disentanglement_leaderboard.score_secondary,
+        media_large:          disentanglement_leaderboard.media_large,
+        media_thumbnail:      disentanglement_leaderboard.media_thumbnail,
+        media_content_type:   disentanglement_leaderboard.media_content_type,
+        description:          disentanglement_leaderboard.description,
+        description_markdown: disentanglement_leaderboard.description_markdown,
+        leaderboard_type_cd:  'disentanglement',
+        refreshed_at:         disentanglement_leaderboard.refreshed_at,
+        created_at:           disentanglement_leaderboard.created_at,
+        updated_at:           disentanglement_leaderboard.updated_at,
+        submission_id:        disentanglement_leaderboard.id,
+        post_challenge:       disentanglement_leaderboard.post_challenge,
+        seq:                  disentanglement_leaderboard.seq,
+        baseline:             disentanglement_leaderboard.baseline,
+        baseline_comment:     disentanglement_leaderboard.baseline_comment,
+        meta:                 disentanglement_leaderboard.meta,
+        submitter_type:       'Participant',
+        submitter_id:         disentanglement_leaderboard.participant_id
+      )
+
+      puts "##{disentanglement_leaderboard.id} DisentanglementLeaderboard - migrated to base_leaderboards table"
+    end
+  end
 end
