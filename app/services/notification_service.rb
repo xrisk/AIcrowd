@@ -60,7 +60,7 @@ class NotificationService
   def leaderboard
     return unless @notifiable.show_leaderboard?
 
-    return if @participant.nil? || @notifiable.previous_row_num == @notifiable.row_num
+    return if @participant.nil?
 
     # get similar unread notification of challenge
     existing_notification = @participant.notifications.where(notification_type: 'leaderboard', challenge_id: @notifiable.challenge.id, is_new: true)
@@ -74,6 +74,8 @@ class NotificationService
         @notifiable.previous_row_num = last_notification.message.match(/secured (.*) place/).captures[0]
       end
     end
+
+    return if last_notification.present? && @notifiable.previous_row_num == @notifiable.row_num
 
     message = if @notifiable.previous_row_num == 0
                 "Congratulations! You made your first submission and secured #{@notifiable.row_num&.ordinalize.to_s} place in the #{@notifiable.challenge.challenge} leaderboard."
