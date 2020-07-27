@@ -48,10 +48,10 @@
       </td>
     <% end %>
 
-    <td><strong><%= leaderboard_formatted_value(current_round, leaderboard.score) %></strong></td>
+    <td class="text-right"><strong><%= leaderboard_formatted_value(current_round, leaderboard.score) %></strong></td>
     <% if @current_round&.get_score_secondary_title.present? && !@challenge.meta_challenge %>
       <% if !(@current_round&.secondary_sort_order.present? && @current_round&.secondary_sort_order == :hidden) %>
-        <td><strong><%= leaderboard_formatted_value(current_round, leaderboard.score_secondary) %></strong></td>
+        <td class="text-right"><strong><%= leaderboard_formatted_value(current_round, leaderboard.score_secondary) %></strong></td>
       <% end %>
     <% end %>
     <% if @challenge.meta_challenge %>
@@ -64,7 +64,7 @@
         <% end %>
       </td>
       <% leaderboard_meta_challenge_other_scores_array(leaderboard, challenge).each do |problem_score| %>
-        <td>
+        <td class="text-right">
           <% if problem_score['position'].present? %>
             <span class="geek-view-normal" data-toggle="tooltip" data-placement="top" title="Rank in problem"><strong>
               <% if problem_score['position'] == 1 %>
@@ -83,10 +83,10 @@
       <% end %>
     <% else %>
       <% leaderboard_other_scores_array(leaderboard, challenge).each do |other_score| %>
-        <td><strong><%= other_score %></strong></td>
+        <td class="text-right"><strong><%= other_score %></strong></td>
       <% end %>
       <% if !leaderboard.baseline? %>
-        <td><%= leaderboard.entries %></td>
+        <td class="text-right"><%= leaderboard.entries %></td>
         <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
         <td>
           <% unless is_disentanglement_leaderboard?(leaderboard) %>
