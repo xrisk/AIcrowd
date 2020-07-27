@@ -8,6 +8,9 @@ module Discourse
     def call
       with_discourse_errors_handling do
         response           = client.get(search_path)
+
+        return success([]) if response.body['posts'].blank?
+
         posts_with_topics  = merge_topics_to_posts(response.body['posts'], response.body['topics'])
         posts_with_avatars = merge_participant_to_response(posts_with_topics)
 
