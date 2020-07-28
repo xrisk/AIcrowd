@@ -11,10 +11,9 @@ class LeaderboardsController < ApplicationController
     unless @leaderboards.first&.disentanglement?
       @submitter_submissions = {}
       @leaderboards.each do |leaderboard|
-        next if leaderboard.submitter_type == 'OldParticipant'
+        next if leaderboard.submitter.blank?
 
-        submitter = leaderboard.submitter
-        @submitter_submissions.merge!("submitter#{submitter.id}_submissions_by_day": submitter_submissions(submitter).group_by_created_at) if submitter.present?
+        @submitter_submissions.merge!("submitter#{leaderboard.submitter.id}_submissions_by_day": submitter_submissions(leaderboard.submitter).group_by_created_at)
       end
     end
     @top_three_winners = @leaderboards.where(baseline: false).first(3)

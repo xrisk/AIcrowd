@@ -69,7 +69,7 @@ module ChallengeRounds
       end
 
       migration_submmissions(post_challenge, cuttoff_dttm).each do |submission|
-        users_leaderboards << build_leaderboard(submission, 1, 'OldParticipant', nil, leaderboard_type)
+        users_leaderboards << build_leaderboard(submission, 1, nil, nil, leaderboard_type)
       end
 
       baseline_leaderboards = baseline_submissions(post_challenge, cuttoff_dttm).map do |submission|

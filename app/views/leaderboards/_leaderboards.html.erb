@@ -57,9 +57,8 @@
     <% if @challenge.meta_challenge %>
       <td>
         <% unless leaderboard.disentanglement? %>
-          <% submitter = leaderboard.submitter if leaderboard.submitter_type != 'OldParticipant'  %>
-          <% if submitter.present? %>
-            <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: challenge, width: '200px', id: submitter.id } %>
+          <% if leaderboard.submitter.present? %>
+            <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: leaderboard.submitter, challenge: challenge, width: '200px', id: leaderboard.submitter.id } %>
           <% end %>
         <% end %>
       </td>
@@ -90,9 +89,8 @@
         <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
         <td>
           <% unless leaderboard.disentanglement? %>
-            <% submitter = leaderboard.submitter if leaderboard.submitter_type != 'OldParticipant' %>
-            <% if submitter.present? %>
-              <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: submitter, challenge: challenge, width: '200px', id: submitter.id } %>
+            <% if leaderboard.submitter.present? %>
+              <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: leaderboard.submitter, challenge: challenge, width: '200px', id: leaderboard.submitter.id } %>
             <% end %>
           <% end %>
         </td>
@@ -100,7 +98,7 @@
         <td colspan="3"></td>
       <% end %>
       <td class="text-right">
-        <% if leaderboard.try(:submitter_type) != 'OldParticipant' && leaderboard.try(:submitter).present? && leaderboard.try(:submission_id).present? %>
+        <% if leaderboard.submitter.present? && leaderboard.submission_id.present? %>
           <%= link_to 'View', challenge_submission_path(challenge, leaderboard.submission_id), class: 'btn btn-secondary btn-sm mr-1' %>
         <% else %>
           <%= link_to 'View', '#', class: 'btn btn-secondary btn-sm disabled disabled--with-pointer-events mr-1', title: 'Submitter or Submission was deleted' %>
@@ -110,8 +108,7 @@
           <%= link_to "Code", submission_code_link(submission), class: 'btn btn-secondary btn-sm mr-1', target: "_blank", data: { toggle: 'tooltip', placement: 'top' }, title: "Browse codebase (based on your access permissions)" %>
         <% end %>
         <% if submission.present? && policy(submission).show? %>
-          <% submitter = leaderboard.submitter if leaderboard.submitter_type != 'OldParticipant' %>
-          <% text = 'Submission %s by %s have rank #%s on %s leaderboard!! 🎉 #AIcrowd' % [submission.id, submitter&.name, leaderboard.row_num, challenge.challenge] %>
+          <% text = 'Submission %s by %s have rank #%s on %s leaderboard!! 🎉 #AIcrowd' % [submission.id, leaderboard.submitter&.name, leaderboard.row_num, challenge.challenge] %>
           <%= social_share('twitter', challenge, leaderboard, text) %>
         <% end %>
       </td>
