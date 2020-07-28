@@ -170,11 +170,8 @@ ActiveRecord::Schema.define(version: 2020_07_29_153925) do
     t.string "submitter_type"
     t.bigint "submitter_id"
     t.integer "meta_challenge_id"
-<<<<<<< HEAD
     t.integer "ml_challenge_id"
-=======
     t.bigint "old_participant_id"
->>>>>>> Add old_participant_id field to base_leaderboards table
     t.index ["challenge_id"], name: "index_base_leaderboards_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_base_leaderboards_on_challenge_round_id"
     t.index ["leaderboard_type_cd"], name: "index_base_leaderboards_on_leaderboard_type_cd"
