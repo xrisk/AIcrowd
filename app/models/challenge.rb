@@ -120,9 +120,9 @@ class Challenge < ApplicationRecord
   def record_page_view(parent_meta_challenge)
     if parent_meta_challenge.present?
       parent_meta_challenge.update!(page_views: parent_meta_challenge.page_views.to_i + 1)
-    else
-      update!(page_views: page_views.to_i + 1)
     end
+
+    update!(page_views: page_views.to_i + 1)
   end
 
   def participants_and_organizers
