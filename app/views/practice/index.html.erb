@@ -37,7 +37,7 @@
           <%= image_tag('/assets/img/award-gold.svg', class: "practice-trophy") %>
           <span class='price-editors'>Editor's Selection</span>
         </div>
-        <%= render partial: 'shared/challenges/listing_compact', locals: { challenges: @editor_challenges, is_practice: true } %>
+        <%= render partial: 'shared/challenges/listing_compact', locals: { challenges: @editor_challenges, meta_challenge: nil, is_practice: true } %>
       </div>
     </div>
   </div>
@@ -48,7 +48,7 @@
 <div class="section-pt-sm-pb-md">
   <div class="container-fluid">
     <div class="row" id="challenges-div" data-page='1' data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data">
-      <%= render partial: 'shared/challenges/listing_compact', locals: { challenges: @practice_challenges, is_practice: true } %>
+      <%= render partial: 'shared/challenges/listing_compact', locals: { challenges: @practice_challenges, meta_challenge: nil, is_practice: true } %>
     </div>
   </div>
 </div>

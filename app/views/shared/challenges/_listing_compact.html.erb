@@ -33,20 +33,23 @@
           <div class="stat-item">
             <span data-toggle="tooltip" data-placement="top" title="No. of views">
               <img src="/assets/img/icon-views.svg">
-              <%= challenge_stat_count(challenge, 'view') %>
+              <%= challenge_stat_count(challenge, 'view', meta_challenge) %>
             </span>
           </div>
-          <div class="stat-item">
-            <span data-toggle="tooltip" data-placement="top" title="No. of users">
-              <img src="/assets/img/icon-users.svg">
-              <%= challenge_stat_count(challenge, 'participant') %>
-            </span>
-          </div>
+
+          <% if meta_challenge.nil? %>
+            <div class="stat-item">
+              <span data-toggle="tooltip" data-placement="top" title="No. of users">
+                <img src="/assets/img/icon-users.svg">
+                <%= challenge_stat_count(challenge, 'participant', nil) %>
+              </span>
+            </div>
+          <% end %>
 
           <div class="stat-item">
             <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
               <img src="/assets/img/icon-submissions.svg">
-              <%= challenge_stat_count(challenge, 'submission') %>
+              <%= challenge_stat_count(challenge, 'submission', meta_challenge) %>
             </span>
           </div>
         </div>
