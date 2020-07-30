@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_22_115821) do
+ActiveRecord::Schema.define(version: 2020_07_23_090532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -375,6 +375,7 @@ ActiveRecord::Schema.define(version: 2020_07_22_115821) do
     t.boolean "assigned_permanent_badge", default: false, null: false
     t.boolean "freeze_flag", default: false, null: false
     t.integer "freeze_duration"
+    t.string "submissions_type_cd", default: "artifact", null: false
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
   end
 

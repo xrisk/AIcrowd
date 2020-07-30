@@ -42,7 +42,7 @@
         </div>
       </div>
       <textarea id='ace-editor'></textarea>
-      <%= f.hidden_field :submission_data, id: 'ace-editor-value', value: @form %>
+      <%= f.hidden_field :submission_data, id: 'ace-editor-value', value: @form_type %>
       <div class="ace-editor-pad"></div>
     </div>
     <small class="form-text">The code should generate all the artifacts, see example codes for more idea.</small>
@@ -55,7 +55,7 @@
     <% end %>
 
     <div class="form-content">
-      <%= f.hidden_field :submission_type, value: @form %>
+      <%= f.hidden_field :submission_type, value: @form_type %>
       <div class='btn-set'>
         <%= f.submit 'Submit Submission', class: 'btn btn-primary btn-sm' %>
       </div>
