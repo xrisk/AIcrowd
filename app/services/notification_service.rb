@@ -77,7 +77,7 @@ class NotificationService
 
     return if last_notification.present? && @notifiable.previous_row_num == @notifiable.row_num
 
-    message = if @notifiable.previous_row_num == 0
+    message = unless last_notification.present?
                 "Congratulations! You made your first submission and secured #{@notifiable.row_num&.ordinalize.to_s} place in the #{@notifiable.challenge.challenge} leaderboard."
               else
                 "You have moved from #{@notifiable.previous_row_num&.ordinalize.to_s} to #{@notifiable.row_num&.ordinalize.to_s} place in the #{@notifiable.challenge.challenge} leaderboard."
