@@ -57,11 +57,9 @@ module ChallengesHelper
     when 'submission'
       challenge_submissions_count(challenge, parent_meta_challenge)
     when 'view'
-      challenge_page_views_count(challenge, parent_meta_challenge)
+      challenge_page_views_count(challenge)
     when 'participant'
       challenge_participants_count(challenge, parent_meta_challenge)
-    when 'vote'
-      challenge_votes_count(challenge, parent_meta_challenge)
     when 'team'
       challenge_teams_count(challenge, parent_meta_challenge)
     end
@@ -349,59 +347,33 @@ module ChallengesHelper
 
   def challenge_submissions_count(challenge, parent_meta_challenge)
     if challenge.meta_challenge?
-      all_challenge_ids = [challenge.id] + challenge.challenge_problems.pluck(:problem_id)
+      all_challenge_ids = challenge.challenge_problems.pluck(:problem_id)
 
-      formatted_count(Submission.where(challenge_id: all_challenge_ids).count)
+      formatted_count(Submission.where(challenge_id: all_challenge_ids, meta_challenge_id: challenge.id).count)
     elsif parent_meta_challenge.present?
-      all_challenge_ids = [parent_meta_challenge.id] + parent_meta_challenge.challenge_problems.pluck(:problem_id)
-
-      formatted_count(Submission.where(challenge_id: all_challenge_ids).count)
+      formatted_count(challenge.submissions.where(meta_challenge_id: parent_meta_challenge.id).count)
     else
-      formatted_count(challenge.submissions.count)
+      formatted_count(challenge.submissions.where(meta_challenge_id: nil).count)
     end
   end
 
   def challenge_participants_count(challenge, parent_meta_challenge)
-    if challenge.meta_challenge?
-      all_challenge_ids = [challenge.id] + challenge.challenge_problems.pluck(:problem_id)
-
-      formatted_count(ChallengeParticipant.where(challenge_id: all_challenge_ids).count)
-    elsif parent_meta_challenge.present?
-      all_challenge_ids = [parent_meta_challenge.id] + parent_meta_challenge.challenge_problems.pluck(:problem_id)
-
-      formatted_count(ChallengeParticipant.where(challenge_id: all_challenge_ids).count)
+    if parent_meta_challenge.present?
+      formatted_count(parent_meta_challenge.challenge_participants.count)
     else
-      formatted_count(challenge.challenge_participants.size)
+      formatted_count(challenge.challenge_participants.count)
     end
   end
 
   def challenge_teams_count(challenge, parent_meta_challenge)
-    if challenge.meta_challenge?
-      all_challenge_ids = [challenge.id] + challenge.challenge_problems.pluck(:problem_id)
-
-      formatted_count(Team.where(challenge_id: all_challenge_ids).count)
-    elsif parent_meta_challenge.present?
-      all_challenge_ids = [parent_meta_challenge.id] + parent_meta_challenge.challenge_problems.pluck(:problem_id)
-
-      formatted_count(Team.where(challenge_id: all_challenge_ids).count)
+    if parent_meta_challenge.present?
+      formatted_count(parent_meta_challenge.teams.count)
     else
       formatted_count(challenge.teams.count)
     end
   end
 
-  def challenge_votes_count(challenge, parent_meta_challenge)
-    if parent_meta_challenge.present?
-      formatted_count(parent_meta_challenge.vote_count)
-    else
-      formatted_count(challenge.vote_count)
-    end
-  end
-
-  def challenge_page_views_count(challenge, parent_meta_challenge)
-    if parent_meta_challenge.present?
-      formatted_count(parent_meta_challenge.page_views)
-    else
-      formatted_count(challenge.page_views)
-    end
+  def challenge_page_views_count(challenge)
+    formatted_count(challenge.page_views)
   end
 end

@@ -1,42 +1,44 @@
-<header class="section-header mb-0">
-  <div>
-    <h4>Participants</h4>
-  </div>
-</header>
-<div>
-  <%
-    users = challenge.challenge_participants.sample(50)
-    users_remaining_count = challenge.challenge_participants.count - 50
-  %>
-  <% if required_terms_or_rules_path(challenge).present? %>
-    <div class="participants floating-button">
-      <%= link_to required_terms_or_rules_path(challenge) do %>
-        <button type="button" class="btn btn-primary btn-block" data-toggle="Click to register for challenge">🔓 Participate</button>
-      <% end %>
+<% if @meta_challenge.nil? %>
+  <header class="section-header mb-0">
+    <div>
+      <h4>Participants</h4>
     </div>
-    <div class="row avatar-group p-3 participants floating-base">
-  <% else %>
-    <div class="row avatar-group p-3">
-  <% end %>
-  <% if current_participant && !required_terms_or_rules_path(challenge).present? %>
-    <span>
-      <%= render partial: 'participants/get_user_profile', locals: { participant: current_participant, username: 'false' } %>
-    </span>
-  <% end %>
-  <% users.each do |user| %>
-    <% if !(current_participant && user.participant_id==current_participant.id) %>
+  </header>
+  <div>
+    <%
+      users = challenge.challenge_participants.sample(50)
+      users_remaining_count = challenge.challenge_participants.count - 50
+    %>
+    <% if required_terms_or_rules_path(challenge).present? %>
+      <div class="participants floating-button">
+        <%= link_to required_terms_or_rules_path(challenge) do %>
+          <button type="button" class="btn btn-primary btn-block" data-toggle="Click to register for challenge">🔓 Participate</button>
+        <% end %>
+      </div>
+      <div class="row avatar-group p-3 participants floating-base">
+    <% else %>
+      <div class="row avatar-group p-3">
+    <% end %>
+    <% if current_participant && !required_terms_or_rules_path(challenge).present? %>
       <span>
-        <%= render partial: 'participants/get_user_profile', locals: { participant: user.participant, username: 'false' } %>
+        <%= render partial: 'participants/get_user_profile', locals: { participant: current_participant, username: 'false' } %>
       </span>
     <% end %>
-  <% end %>
-  <% if users_remaining_count > 0 %>
-    <span class="avatar user-rating-0 text-center" data-toggle="tooltip" title="<%= users_remaining_count %> more participants">
-      <span class="fa fa-ellipsis-h align-bottom"></span>
-    </span>
-  <% end %>
+    <% users.each do |user| %>
+      <% if !(current_participant && user.participant_id==current_participant.id) %>
+        <span>
+          <%= render partial: 'participants/get_user_profile', locals: { participant: user.participant, username: 'false' } %>
+        </span>
+      <% end %>
+    <% end %>
+    <% if users_remaining_count > 0 %>
+      <span class="avatar user-rating-0 text-center" data-toggle="tooltip" title="<%= users_remaining_count %> more participants">
+        <span class="fa fa-ellipsis-h align-bottom"></span>
+      </span>
+    <% end %>
+    </div>
   </div>
-</div>
+<% end %>
 <% if challenge_baseline_discussion.present? %>
   <%= render 'challenges/show/baseline_discussions', challenge_baseline_discussion: challenge_baseline_discussion, challenge: challenge %>
 <% end %>
