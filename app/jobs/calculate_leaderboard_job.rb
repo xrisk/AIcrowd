@@ -2,9 +2,11 @@ class CalculateLeaderboardJob < ApplicationJob
   queue_as :default
 
   def perform(challenge_round_id:)
-    if ChallengeRound.find(challenge_round_id).challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
-      NewCalculateLeaderboardService.new(challenge_round_id: challenge_round_id).call
-    elsif ChallengeRound.find(challenge_round_id).challenge.meta_challenge
+    # This challenge has custom logic that takes 5 different scores and calculates average of them, thus we cannot recalculate
+    # leaderboards records with ChallengeRounds::CreateLeaderboardsService class.
+    return if ChallengeRound.find(challenge_round_id).challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
+
+    if ChallengeRound.find(challenge_round_id).challenge.meta_challenge
       CalculateMetaLeaderboardService.new(challenge_id: ChallengeRound.find(challenge_round_id).challenge.id).call
     else
       ChallengeRounds::CreateLeaderboardsService.new(challenge_round: ChallengeRound.find(challenge_round_id)).call

@@ -8,7 +8,7 @@ class LeaderboardsController < ApplicationController
   respond_to :js, :html
 
   def index
-    unless is_disentanglement_leaderboard?(@leaderboards.first)
+    unless @leaderboards.first&.disentanglement?
       @submitter_submissions = {}
       @leaderboards.each do |leaderboard|
         next if leaderboard.submitter_type == 'OldParticipant'
@@ -22,7 +22,7 @@ class LeaderboardsController < ApplicationController
       @leaderboards = @leaderboards.where(id: @filter.call('leaderboard_ids'))
       @leaderboards = paginate_leaderboards_by(:seq)
     else
-      @leaderboards     = if is_disentanglement_leaderboard?(@leaderboards.first)
+      @leaderboards     = if @leaderboards.first&.disentanglement?
                             paginate_leaderboards_by(:row_num)
                           else
                             paginate_leaderboards_by(:seq)
@@ -34,7 +34,7 @@ class LeaderboardsController < ApplicationController
     @post_challenge   = post_challenge?
     @following        = following?
 
-    unless is_disentanglement_leaderboard?(@leaderboards.first)
+    unless @leaderboards.first&.disentanglement?
       @countries = @filter.call('participant_countries')
       @affiliations = @filter.call('participant_affiliations')
     end
@@ -100,7 +100,7 @@ class LeaderboardsController < ApplicationController
       filter[:meta_challenge_id] = @meta_challenge.id
     end
     @leaderboards = if @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
-      DisentanglementLeaderboard
+      BaseLeaderboard
         .where(challenge_round_id: @current_round)
         .freeze_record(current_participant)
     elsif post_challenge? || freeze_record_for_organizer
@@ -127,10 +127,6 @@ class LeaderboardsController < ApplicationController
 
   def submitter_submissions(submitter)
     @challenge.meta_challenge? ? submitter.meta_challenge_submissions(@challenge) : submitter.challenge_submissions(@challenge)
-  end
-
-  def is_disentanglement_leaderboard?(leaderboard)
-    leaderboard.class.name == 'DisentanglementLeaderboard'
   end
 
   def freeze_record_for_organizer

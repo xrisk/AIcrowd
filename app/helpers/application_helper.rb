@@ -103,10 +103,10 @@ module ApplicationHelper
     content_tag(:span,
                 data: {
                         title: title,
-                        desc: challenge.tagline,
-                        img: data_img_and_url[:img],
-                        url: data_img_and_url[:url] + "?utm_source=AIcrowd&utm_medium=#{site.humanize}",
-                        href: data_img_and_url[:url] + "?utm_source=AIcrowd&utm_medium=#{site.humanize}"
+                        desc:  challenge.tagline,
+                        img:   data_img_and_url[:img],
+                        url:   "#{data_img_and_url[:url]}?utm_source=AIcrowd&utm_medium=#{site.humanize}",
+                        href:  "#{data_img_and_url[:url]}?utm_source=AIcrowd&utm_medium=#{site.humanize}"
                       }) do
       social_share_link(site, data_img_and_url[:url]) do
         image_tag(social_image_path(site))
@@ -120,9 +120,9 @@ module ApplicationHelper
       {
         class: "btn btn-#{site} btn-sm mr-2 social-share",
         data: {
-                url: data_url.concat("?utm_source=AIcrowd&utm_medium=#{site.humanize}"),
-                site: site,
-                toggle: 'tooltip',
+                url:       "#{data_url}?utm_source=AIcrowd&utm_medium=#{site.humanize}",
+                site:      site,
+                toggle:    'tooltip',
                 placement: 'top'
                },
         onclick: "return SocialShareButton.share(this)",

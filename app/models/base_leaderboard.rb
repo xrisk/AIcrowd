@@ -1,12 +1,14 @@
 class BaseLeaderboard < ApplicationRecord
   include PolymorphicSubmitter
+  include FreezeRecord
 
   belongs_to :challenge
   belongs_to :meta_challenge, optional: true, class_name: 'Challenge'
   belongs_to :challenge_round
+  belongs_to :submission, optional: true
 
   as_enum :leaderboard_type,
-          [:leaderboard, :ongoing],
+          [:leaderboard, :ongoing, :disentanglement],
           map: :string
 
   scope :by_country, ->(country_name) { where(participants: { country_cd: Participant.country_cd(country_name) }) }
