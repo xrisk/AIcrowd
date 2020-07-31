@@ -1,0 +1,10 @@
+version: '2'
+plugins:
+  rubocop:
+    enabled: true
+  config:
+    file: 'rubocop.yml'
+  esslint:
+    enabled: true
+  csslint:
+    enabled: true

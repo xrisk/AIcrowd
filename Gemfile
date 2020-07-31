@@ -28,7 +28,7 @@ gem 'cocoon'
 gem 'country_select'
 gem 'codemirror-rails'
 gem 'crowdai_admin'
-gem 'client_side_validations', '~> 16.1'
+gem 'client_side_validations', '~> 17.0'
 gem 'coffee-rails'
 gem 'devise', '~> 4.7', '>= 4.7.1'
 gem 'doorkeeper', '~> 5.0.3'
@@ -122,7 +122,7 @@ group :development do
   gem 'sdoc', '~> 0.4.0'
   gem 'scss_lint', require: false
   gem 'web-console'
-  gem 'gitlab-styles', '~> 2.8'
+  gem 'rubocop', '~> 0.88.0'
 end
 
 group :development, :test do
@@ -140,7 +140,7 @@ end
 group :test do
   gem 'factory_bot_rails'
   gem 'webdrivers'
-  gem 'capybara'
+  gem 'capybara', '~> 3.33'
   gem 'capybara-screenshot'
   gem 'launchy'
   gem 'nokogiri' # , '~> 1.8'

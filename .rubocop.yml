@@ -1,13 +1,9 @@
-inherit_gem:
-  gitlab-styles:
-    - rubocop-default.yml
-
 AllCops:
   DisplayCopNames: true
   TargetRubyVersion: 2.5
-  TargetRailsVersion: 5.2
   UseCache: true
   CacheRootDirectory: tmp
+  NewCops: disable
   Exclude:
     - 'vendor/**/*'
     - 'node_modules/**/*'
@@ -19,13 +15,7 @@ AllCops:
     - 'bin/*'
     - 'Rakefile'
 
-Rails:
-  Enabled: true
-
 # == Metrics == #
-Metrics/LineLength:
-  Max: 150
-
 Metrics/MethodLength:
   Max: 10
 
@@ -39,7 +29,10 @@ Metrics/ParameterLists:
   Max: 5
 
 # == Layout == #
-Layout/AlignHash:
+Layout/LineLength:
+  Max: 150
+
+Layout/HashAlignment:
   EnforcedHashRocketStyle: table
   EnforcedColonStyle:      table
 
@@ -49,7 +42,7 @@ Layout/EmptyLineAfterGuardClause:
 Layout/ExtraSpacing:
   ForceEqualSignAlignment: true
 
-Layout/Tab:
+Layout/IndentationStyle:
   IndentationWidth: 2
 
 # == Style == #
@@ -65,22 +58,7 @@ Style/HashSyntax:
 Style/CollectionMethods:
   Enabled: true
 
-Style/StringLiterals:
-  EnforcedStyle: single_quotes
-
-Style/RedundantReturn:
-  Enabled: false
-
 # == Disabled Cops == #
-RSpec/ContextWording:
-  Enabled: false
-
-Rails/SkipsModelValidations:
-  Enabled: false
-
-Rails/ApplicationRecord:
-  Enabled: false
-
 Style/Documentation:
   Enabled: false
 
@@ -88,4 +66,7 @@ Gemspec/RequiredRubyVersion:
   Enabled: false
 
 Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
   Enabled: false
