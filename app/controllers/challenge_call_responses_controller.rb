@@ -3,20 +3,18 @@ class ChallengeCallResponsesController < ApplicationController
 
   def new
     @challenge_call_response = @challenge_call
-      .challenge_call_responses.new
+                               .challenge_call_responses.new
   end
 
   def create
     @challenge_call_response = @challenge_call
-      .challenge_call_responses
-      .new(challenge_call_response_params)
+                               .challenge_call_responses
+                               .new(challenge_call_response_params)
 
     if @challenge_call_response.save
       organizer = @challenge_call_response.challenge_call&.organizer
 
-      if organizer.present?
-        Organizers::ChallengeCallResponseNotificationJob.perform_later(organizer.id, @challenge_call_response.id)
-      end
+      Organizers::ChallengeCallResponseNotificationJob.perform_later(organizer.id, @challenge_call_response.id) if organizer.present?
 
       redirect_to challenge_call_show_path(@challenge_call, @challenge_call_response), notice: 'Challenge call response was created successfully.'
     else
@@ -45,7 +43,8 @@ class ChallengeCallResponsesController < ApplicationController
         :organizers_bio,
         :timeline,
         :other,
-        :evaluation_criteria)
+        :evaluation_criteria
+      )
   end
 
   def set_challenge_call

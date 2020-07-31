@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe ChallengePolicy do
-  context "for a published Challenge" do
+  context 'for a published Challenge' do
     subject { described_class.new(participant, challenge) }
 
     let(:challenge)             { create(:challenge, organizers: [organizer]) }

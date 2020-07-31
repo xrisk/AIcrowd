@@ -9,7 +9,7 @@ module Api
       protected
 
       def auth_by_participant_api_key
-        authenticate_or_request_with_http_token do |token, options|
+        authenticate_or_request_with_http_token do |token, _options|
           if token == ENV['AICROWD_API_KEY']
             @api_user = Participant.api_admin
 
@@ -23,7 +23,7 @@ module Api
       end
 
       def auth_by_admin_api_key
-        authenticate_or_request_with_http_token do |token, options|
+        authenticate_or_request_with_http_token do |token, _options|
           token == ENV['AICROWD_API_KEY'] || Participant.admins.exists?(api_key: token)
         end
       end
@@ -32,9 +32,7 @@ module Api
         render json: { error: 'You are not authorized to perform this action' }, status: :unauthorized
       end
 
-      def api_user
-        @api_user
-      end
+      attr_reader :api_user
 
       def current_participant
         api_user || super

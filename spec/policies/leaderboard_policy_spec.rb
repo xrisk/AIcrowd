@@ -28,7 +28,7 @@ describe LeaderboardPolicy do
       it {
         expect(Pundit.policy_scope(participant, Leaderboard)
         .pluck(:submitter_type, :submitter_id))
-        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
+          .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
       }
     end
 
@@ -40,7 +40,7 @@ describe LeaderboardPolicy do
       it {
         expect(Pundit.policy_scope(participant, Leaderboard)
         .pluck(:submitter_type, :submitter_id))
-        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
+          .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
       }
     end
 
@@ -52,7 +52,7 @@ describe LeaderboardPolicy do
       it {
         expect(Pundit.policy_scope(participant, Leaderboard)
         .pluck(:submitter_type, :submitter_id))
-        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
+          .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
       }
     end
 
@@ -64,7 +64,7 @@ describe LeaderboardPolicy do
       it {
         expect(Pundit.policy_scope(participant, Leaderboard)
         .pluck(:submitter_type, :submitter_id))
-        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
+          .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
       }
     end
 
@@ -77,7 +77,7 @@ describe LeaderboardPolicy do
       it {
         expect(Pundit.policy_scope(participant, Leaderboard)
         .pluck(:submitter_type, :submitter_id))
-        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
+          .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
       }
     end
   end
@@ -87,7 +87,7 @@ describe LeaderboardPolicy do
       create(:challenge, :running, show_leaderboard: false)
     end
     let!(:round) { challenge.challenge_rounds.first }
-    let!(:participant1)         { create(:participant, organizers: [round.challenge.organizers.first]) }
+    let!(:participant1) { create(:participant, organizers: [round.challenge.organizers.first]) }
 
     2.times do |i|
       let!("base_#{i + 1}") do
@@ -107,7 +107,7 @@ describe LeaderboardPolicy do
 
       it {
         expect(Pundit.policy_scope(participant, Leaderboard))
-        .to be_empty
+          .to be_empty
       }
     end
 
@@ -118,7 +118,7 @@ describe LeaderboardPolicy do
 
       it {
         expect(Pundit.policy_scope(participant, Leaderboard))
-        .to be_empty
+          .to be_empty
       }
     end
 
@@ -128,7 +128,7 @@ describe LeaderboardPolicy do
       it {
         expect(Pundit.policy_scope(participant, Leaderboard)
         .pluck(:submitter_type, :submitter_id))
-        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
+          .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
       }
     end
 
@@ -138,7 +138,7 @@ describe LeaderboardPolicy do
       it {
         expect(Pundit.policy_scope(participant, Leaderboard)
         .pluck(:submitter_type, :submitter_id))
-        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
+          .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
       }
     end
   end
@@ -151,7 +151,7 @@ describe LeaderboardPolicy do
     end
     let!(:round)                { challenge.challenge_rounds.first }
     let!(:participant1)         { create(:participant) }
-    let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizer, participant: participant1)}
+    let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizer, participant: participant1) }
 
     2.times do |i|
       let!("base_#{i + 1}") do
@@ -177,7 +177,7 @@ describe LeaderboardPolicy do
 
       it {
         expect(Pundit.policy_scope(participant, Leaderboard))
-        .to be_empty
+          .to be_empty
       }
     end
 
@@ -195,7 +195,7 @@ describe LeaderboardPolicy do
       it {
         expect(Pundit.policy_scope(participant, Leaderboard)
         .pluck(:submitter_type, :submitter_id))
-        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
+          .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
       }
     end
 
@@ -205,7 +205,7 @@ describe LeaderboardPolicy do
       it {
         expect(Pundit.policy_scope(participant, Leaderboard)
         .pluck(:submitter_type, :submitter_id))
-        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
+          .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
       }
     end
 
@@ -215,7 +215,7 @@ describe LeaderboardPolicy do
       it {
         expect(Pundit.policy_scope(participant, Leaderboard)
         .pluck(:submitter_type, :submitter_id))
-        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
+          .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
       }
     end
   end
@@ -229,7 +229,7 @@ describe LeaderboardPolicy do
     end
     let!(:round) { challenge.challenge_rounds.first }
     let!(:participant1)         { create(:participant) }
-    let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizer, participant: participant1)}
+    let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizer, participant: participant1) }
 
     2.times do |i|
       let!("base_#{i + 1}") do
@@ -275,7 +275,7 @@ describe LeaderboardPolicy do
       it {
         expect(Pundit.policy_scope(participant, Leaderboard)
         .pluck(:submitter_type, :submitter_id))
-        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
+          .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
       }
     end
 
@@ -285,7 +285,7 @@ describe LeaderboardPolicy do
       it {
         expect(Pundit.policy_scope(participant, Leaderboard)
         .pluck(:submitter_type, :submitter_id))
-        .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
+          .to eq(Leaderboard.all.pluck(:submitter_type, :submitter_id))
       }
     end
   end

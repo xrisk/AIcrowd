@@ -6,7 +6,6 @@ describe MlChallenge::AwardPointService do
   let!(:challenge_round) { create(:challenge_round) }
 
   describe 'create MlActivityPoint' do
-
     context 'Award point for new_challenge_signup_participation' do
       let!(:activity_point)  { create(:activity_point, activity_key: 'new_challenge_signup_participation') }
       let!(:submission)      { create(:submission, challenge: challenge, participant: participant, grading_status_cd: 'graded') }

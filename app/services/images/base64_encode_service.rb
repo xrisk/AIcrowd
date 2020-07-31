@@ -8,6 +8,7 @@ module Images
 
     def call
       return failure('URL is invalid') unless valid_url?
+
       image_file = open(@image_url)
 
       return failure('Not supported content type') if image_file.content_type.match(SUPPORTED_CONTENT_TYPES).blank?
@@ -27,8 +28,12 @@ module Images
     attr_reader :image_url
 
     def valid_url?
-      url = URI.parse(image_url) rescue false
-      url.kind_of?(URI::HTTP) || url.kind_of?(URI::HTTPS)
+      url = begin
+              URI.parse(image_url)
+            rescue StandardError
+              false
+            end
+      url.is_a?(URI::HTTP) || url.is_a?(URI::HTTPS)
     end
   end
 end

@@ -4,8 +4,8 @@ class Api::ClefTasksController < Api::BaseController
   def show # GET :id
     clef_task = ClefTask.find(params[:id])
     # get clef participants with optional paramater status
-    message = clef_participants(clef_task, params[:status])
-    status  = :ok
+    message   = clef_participants(clef_task, params[:status])
+    status    = :ok
   rescue ActiveRecord::RecordNotFound
     status  = :not_found
     message = "clef_task_id #{params[:id]} not found"
@@ -23,6 +23,6 @@ class Api::ClefTasksController < Api::BaseController
     participant_clef_tasks = clef_task.participant_clef_tasks.includes(:participant)
     return participant_clef_tasks.where({ status_cd: status_cd }) if status_cd.present?
 
-    return participant_clef_tasks
+    participant_clef_tasks
   end
 end

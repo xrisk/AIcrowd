@@ -1,5 +1,5 @@
 Rails.application.configure do
-  figaro_file = File.join(Rails.root, 'config', 'application.yml')
+  figaro_file                              = File.join(Rails.root, 'config', 'application.yml')
   YAML.load_file(figaro_file).symbolize_keys[:development].each do |key, value|
     ENV[key.to_s] = value
   end
@@ -32,8 +32,8 @@ Rails.application.configure do
   config.file_watcher                      = ActiveSupport::EventedFileUpdateChecker
   config.web_console.whiny_requests        = false
   config.active_storage.service            = :local
-  config.action_mailer.default_url_options = { host: ENV["DOMAIN_NAME"] }
-  config.action_controller.asset_host      = ENV["DOMAIN_NAME"]
+  config.action_mailer.default_url_options = { host: ENV['DOMAIN_NAME'] }
+  config.action_controller.asset_host      = ENV['DOMAIN_NAME']
 end
 
 Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']

@@ -7,11 +7,11 @@ module MetaTagsHelper
     elsif content_for?(:meta_title)
       content_for(:meta_title)
     elsif !@page_title.blank?
-      "AIcrowd | " + @page_title
+      'AIcrowd | ' + @page_title
     elsif !title_from_controller_name.nil?
-      "AIcrowd | " + title_from_controller_name
+      'AIcrowd | ' + title_from_controller_name
     else
-      DEFAULT_META["meta_title"]
+      DEFAULT_META['meta_title']
     end
   end
 
@@ -30,7 +30,7 @@ module MetaTagsHelper
         return @participant.bio
       end
     end
-    content_for?(:meta_description) ? content_for(:meta_description) : DEFAULT_META["meta_description"]
+    content_for?(:meta_description) ? content_for(:meta_description) : DEFAULT_META['meta_description']
   end
 
   def meta_image
@@ -52,9 +52,7 @@ module MetaTagsHelper
   def meta_video
     if show_action? && controller_name == 'submissions'
       if @challenge.media_on_leaderboard
-        if ['video','image','youtube'].include?(media_content_type(@submission))
-          return s3_public_url(@submission, :large)
-        end
+        s3_public_url(@submission, :large) if ['video', 'image', 'youtube'].include?(media_content_type(@submission))
       end
     end
   end
@@ -95,9 +93,9 @@ module MetaTagsHelper
   end
 
   def content_for_meta_image
-    meta_image = (content_for?(:meta_image) ? content_for(:meta_image) : DEFAULT_META["meta_image"])
+    meta_image = (content_for?(:meta_image) ? content_for(:meta_image) : DEFAULT_META['meta_image'])
     # little twist to make it work equally with an asset or a url
-    meta_image.starts_with?("http") ? meta_image : url_to_image(meta_image)
+    meta_image.starts_with?('http') ? meta_image : url_to_image(meta_image)
   end
 
   def get_title_for_show
@@ -111,11 +109,11 @@ module MetaTagsHelper
     when 'blogs'
       get_title(@blog.title)
     when 'submissions'
-      get_title(@challenge.challenge) + " #" + @submission.id.to_s
+      get_title(@challenge.challenge) + ' #' + @submission.id.to_s
     end
   end
 
   def get_title(title_text)
-    "AIcrowd | " + title_text + " | #{controller_name.capitalize}"
+    'AIcrowd | ' + title_text + " | #{controller_name.capitalize}"
   end
 end

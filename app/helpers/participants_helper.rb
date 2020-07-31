@@ -18,8 +18,8 @@ module ParticipantsHelper
   end
 
   def rating_tier_class(participant)
-    tier = 1
-    percentile = (1 - ((participant.ranking - 1).to_f/Participant.rated_users_count))*100
+    tier       = 1
+    percentile = (1 - ((participant.ranking - 1).to_f/ Participant.rated_users_count))* 100
     case percentile
     when 99..100
       tier = 5
@@ -30,15 +30,13 @@ module ParticipantsHelper
     when 60..80
       tier = 2
     end
-    if participant.admin?
-      tier = 0
-    end
-    return "user-rating-" + tier.to_s
+    tier       = 0 if participant.admin?
+    'user-rating-' + tier.to_s
   end
 
-  def participant_avatar(participant, base_class='avatar')
+  def participant_avatar(participant, base_class = 'avatar')
     classes = base_class + ' ' + rating_tier_class(participant)
-    return image_tag participant.image_url, class: classes
+    image_tag participant.image_url, class: classes
   end
 
   def avatar
@@ -46,19 +44,19 @@ module ParticipantsHelper
   end
 
   def location_id(participant)
-    uniq_id = SecureRandom.hex(2)
+    uniq_id      = SecureRandom.hex(2)
     random_class = uniq_id.to_s + '_' + participant&.id.to_s
     "participant_#{random_class}"
   end
 
   def followable_and_follow(follow, followers_or_following)
     follow_participant = followers_or_following == 'followers' ? follow.participant : follow.followable
-    return { followable: follow_participant, follow: current_participant.following_participant?(follow_participant.id) ? follow : nil }
+    { followable: follow_participant, follow: current_participant.following_participant?(follow_participant.id) ? follow : nil }
   end
 
   def get_award_point_on_day(participant)
     return if participant.nil?
 
-    participant.ml_activity_points.group_by_day(:created_at, format: "%Y-%m-%d").sum_points_by_day
+    participant.ml_activity_points.group_by_day(:created_at, format: '%Y-%m-%d').sum_points_by_day
   end
 end

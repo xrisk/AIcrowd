@@ -1,8 +1,8 @@
 module MlChallenge
   class AwardScoreImprovedPointService < ::BaseService
     def initialize(obj_record, key)
-      @obj_record         = obj_record #Submission object
-      @key                = key #score_improved_over_5_times
+      @obj_record         = obj_record # Submission object
+      @key                = key # score_improved_over_5_times
       @participant        = @obj_record.participant
       @challenge_id       = @obj_record.challenge_id
       @challenge_round_id = @obj_record.challenge_round_id
@@ -18,7 +18,7 @@ module MlChallenge
     private
 
     def get_score
-      participant_submissions = @participant.submissions.where("challenge_id = ? AND challenge_round_id = ? AND created_at > ?", @challenge_id, @challenge_round_id, Time.now.beginning_of_day).order(:created_at)
+      participant_submissions = @participant.submissions.where('challenge_id = ? AND challenge_round_id = ? AND created_at > ?', @challenge_id, @challenge_round_id, Time.now.beginning_of_day).order(:created_at)
 
       return 0 if participant_submissions.count < 2
 

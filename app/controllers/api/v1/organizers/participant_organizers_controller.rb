@@ -26,9 +26,7 @@ module Api
         private
 
         def set_participant_id_by_name
-          if params[:name].present?
-            params[:participant_id] = Participant.find_by(name: params[:name])&.id
-          end
+          params[:participant_id] = Participant.find_by(name: params[:name])&.id if params[:name].present?
         end
 
         def set_organizer

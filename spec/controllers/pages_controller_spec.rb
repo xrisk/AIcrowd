@@ -3,19 +3,19 @@ require 'rails_helper'
 describe PagesController, type: :controller do
   render_views
 
-  describe "pages#contact" do
+  describe 'pages#contact' do
     before { get :contact }
 
     it { expect(response).to render_template(:contact) }
   end
 
-  describe "pages#privacy" do
+  describe 'pages#privacy' do
     before { get :privacy }
 
     it { expect(response).to render_template(:privacy) }
   end
 
-  describe "pages#terms" do
+  describe 'pages#terms' do
     before { get :terms }
 
     it { expect(response).to render_template(:terms) }

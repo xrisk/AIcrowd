@@ -10,15 +10,15 @@ describe 'Challenge Teams' do
   let!(:challenge_participant) { create :challenge_participant, challenge: challenge_no_teams, participant: participant }
   let!(:challenge_participant) { create :challenge_participant, challenge: challenge_with_max_5_members, participant: participant }
 
-  describe "Challenge should allow teams" do
-    it "Challenge does not allow teams" do
+  describe 'Challenge should allow teams' do
+    it 'Challenge does not allow teams' do
       log_in(participant)
       visit challenge_path(challenge_no_teams)
       expect(page).to have_no_content 'My Team'
       expect(page).to have_no_content 'Create Team'
     end
 
-    it "Challenge does allow teams" do
+    it 'Challenge does allow teams' do
       log_in(participant)
       visit challenge_path(challenge_with_max_5_members)
       expect(page).to have_content 'Create Team'

@@ -36,10 +36,11 @@ class Submission < ApplicationRecord
   after_create do
     if challenge_round_id.blank?
       rnd = challenge
-        .challenge_rounds
-        .where(
-          'start_dttm <= ? and end_dttm >= ?',
-          created_at, created_at).first
+            .challenge_rounds
+            .where(
+              'start_dttm <= ? and end_dttm >= ?',
+              created_at, created_at
+            ).first
       rnd = challenge.challenge_rounds.last if rnd.blank?
       if rnd.present? && rnd.end_dttm.present?
         update(challenge_round_id: rnd.id)
@@ -53,14 +54,12 @@ class Submission < ApplicationRecord
   after_save do
     # !self.meta&.dig('final_avg') is added to prevent infinite loops in New Leaderboard Calculation
     if grading_status_cd == 'graded' && !meta&.dig('private_ignore-leaderboard-job-computation')
-      Rails.logger.info "[Submission Model] Starting the Leaderboard Update Job! (onsave)"
+      Rails.logger.info '[Submission Model] Starting the Leaderboard Update Job! (onsave)'
       CalculateLeaderboardJob
         .perform_later(challenge_round_id: challenge_round_id)
     end
     Prometheus::SubmissionCounterService.new(submission_id: id).call
-    if grading_status_cd == 'graded'
-      ParticipantBadgeJob.perform_later(name: "onsubmission", submission_id: id, grading_status_cd: grading_status_cd)
-    end
+    ParticipantBadgeJob.perform_later(name: 'onsubmission', submission_id: id, grading_status_cd: grading_status_cd) if grading_status_cd == 'graded'
     Notification::SubmissionNotificationJob.perform_later(id)
   end
 
@@ -119,7 +118,7 @@ class Submission < ApplicationRecord
     'Manual'                             => :manual
   }.freeze
 
-  def as_json(options = {})
+  def as_json(_options = {})
     super(
       only:    [:id, :participant_id, :score, :score_secondary, :grading_status_cd, :grading_message, :post_challenge, :media_content_type, :created_at, :updated_at, :meta],
       include: { participant: { only: [:name] } }
@@ -130,7 +129,7 @@ class Submission < ApplicationRecord
 
   def generate_short_url
     if short_url.blank?
-      short_url = nil
+      short_url      = nil
       begin
         short_url = SecureRandom.hex(6)
       end while (Submission.exists?(short_url: short_url))

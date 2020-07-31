@@ -10,17 +10,17 @@ module Gitlab
     def on_complete(env)
       case env[:status]
       when 400
-        raise Gitlab::BadRequest.new(env.body)
+        raise Gitlab::BadRequest, env.body
       when 401, 403
-        raise Gitlab::UnauthenticatedError.new(env.body)
+        raise Gitlab::UnauthenticatedError, env.body
       when 404, 410
-        raise Gitlab::NotFoundError.new(env.body)
+        raise Gitlab::NotFoundError, env.body
       when 422
-        raise Gitlab::UnprocessableEntity.new(env.body)
+        raise Gitlab::UnprocessableEntity, env.body
       when 429
-        raise Gitlab::TooManyRequests.new(env.body)
+        raise Gitlab::TooManyRequests, env.body
       when 500...600
-        raise Gitlab::Error.new(env.body)
+        raise Gitlab::Error, env.body
       end
     end
   end
@@ -29,7 +29,7 @@ module Gitlab
     def on_complete(env)
       env[:body] = ::JSON.parse(env.body)
     rescue JSON::ParserError => e
-      raise Gitlab::Error.new(e.message)
+      raise Gitlab::Error, e.message
     end
   end
 
@@ -50,10 +50,10 @@ module Gitlab
 
     def http_client_options
       {
-        url: 'https://gitlab.aicrowd.com/',
+        url:     'https://gitlab.aicrowd.com/',
         headers: {
-          accept: 'application/json',
-          'Private-Token' => ENV['GITLAB_API_KEY'],
+          :accept         => 'application/json',
+          'Private-Token' => ENV['GITLAB_API_KEY']
         }
       }
     end

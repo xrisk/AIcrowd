@@ -75,10 +75,10 @@ module Challenges
     ].freeze
 
     IMPORTABLE_ASSOCIATIONS = {
-      challenges_organizers_attributes: [
+      challenges_organizers_attributes:       [
         :organizer_id
       ],
-      category_challenges_attributes: [
+      category_challenges_attributes:         [
         :category_id
       ],
       submission_file_definitions_attributes: [
@@ -88,10 +88,10 @@ module Challenges
         :file_required,
         :submission_file_help_text
       ],
-      challenge_partners_attributes: [
+      challenge_partners_attributes:          [
         :partner_url
       ],
-      challenge_rules_attributes: [
+      challenge_rules_attributes:             [
         :terms,
         :terms_markdown,
         :instructions,
@@ -101,7 +101,7 @@ module Challenges
         :additional_checkbox_text_markdown,
         :version
       ],
-      dataset_files_attributes: [
+      dataset_files_attributes:               [
         :id,
         :seq,
         :description,
@@ -125,13 +125,13 @@ module Challenges
       :category_challenges,
       :submission_file_definitions,
       :challenge_partners,
-      :challenge_rules,
+      :challenge_rules
     ].freeze
 
     IMPORTABLE_IMAGES = [
       :image_file,
       :banner_file,
       challenge_partners: :image_file
-    ]
+    ].freeze
   end
 end

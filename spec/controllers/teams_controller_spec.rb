@@ -29,7 +29,6 @@ describe TeamsController, type: :controller do
       it { expect(response).to redirect_to(challenge_team_url(team.challenge, team)) }
     end
 
-
     context 'with dotted names' do
       let!(:participant) { create(:participant, name: 'participant.withdot') }
       let!(:team)        { create(:team, challenge: challenge, participants: [participant], name: 'team.withdot') }

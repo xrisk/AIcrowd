@@ -10,17 +10,17 @@ module Discourse
     def on_complete(env)
       case env[:status]
       when 400
-        raise Discourse::BadRequest.new(env.body)
+        raise Discourse::BadRequest, env.body
       when 403
-        raise Discourse::UnauthenticatedError.new(env.body)
+        raise Discourse::UnauthenticatedError, env.body
       when 404, 410
-        raise Discourse::NotFoundError.new(env.body)
+        raise Discourse::NotFoundError, env.body
       when 422
-        raise Discourse::UnprocessableEntity.new(env.body)
+        raise Discourse::UnprocessableEntity, env.body
       when 429
-        raise Discourse::TooManyRequests.new(env.body)
+        raise Discourse::TooManyRequests, env.body
       when 500...600
-        raise Discourse::Error.new(env.body)
+        raise Discourse::Error, env.body
       end
     end
   end
@@ -29,7 +29,7 @@ module Discourse
     def on_complete(env)
       env[:body] = ::JSON.parse(env.body)
     rescue JSON::ParserError => e
-      raise Discourse::Error.new(e.message)
+      raise Discourse::Error, e.message
     end
   end
 
@@ -40,8 +40,8 @@ module Discourse
 
     def call
       return if ENV['DISCOURSE_DOMAIN_NAME'].blank? ||
-        ENV['DISCOURSE_API_KEY'].blank? ||
-        api_username.blank?
+                ENV['DISCOURSE_API_KEY'].blank? ||
+                api_username.blank?
 
       Faraday.new(http_client_options) do |http_client|
         http_client.request :url_encoded
@@ -57,9 +57,9 @@ module Discourse
 
     def http_client_options
       {
-        url: ENV['DISCOURSE_DOMAIN_NAME'],
+        url:     ENV['DISCOURSE_DOMAIN_NAME'],
         headers: {
-          accept: 'application/json',
+          :accept        => 'application/json',
           'Api-Key'      => ENV['DISCOURSE_API_KEY'],
           'Api-Username' => api_username
         }

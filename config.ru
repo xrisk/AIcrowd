@@ -2,7 +2,7 @@
 
 # This file is used by Rack-based servers to start the application.
 
-require ::File.expand_path('../config/environment', __FILE__)
+require ::File.expand_path('config/environment', __dir__)
 require 'prometheus/middleware/collector'
 require 'prometheus/middleware/exporter'
 
@@ -10,7 +10,7 @@ rackapp = Rack::Builder.app do
   use Prometheus::Middleware::Collector
 
   map '/metrics' do
-    use Rack::Auth::Basic, 'Prometheus Metrics' do |username, password|
+    use Rack::Auth::Basic, 'Prometheus Metrics' do |_username, password|
       Rack::Utils.secure_compare(ENV['AICROWD_API_KEY'], password)
     end
     use Rack::Deflater

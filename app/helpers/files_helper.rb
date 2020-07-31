@@ -1,12 +1,12 @@
 module FilesHelper
   def file_expiring_url(file)
     if file.try(:hosting_location) == 'External' || file.try(:hosting_location) == 'Own S3' || file.new_record?
-      return file.external_url
+      file.external_url
     else
       if get_s3_file_obj(file)
-        return get_s3_file_obj(file).presigned_url(:get, expires_in: 1.day.to_i)
+        get_s3_file_obj(file).presigned_url(:get, expires_in: 1.day.to_i)
       else
-        return '#'
+        '#'
       end
     end
   end
@@ -34,10 +34,6 @@ module FilesHelper
     return nil if s3_key.nil?
 
     s3_file_obj = Aws::S3::Object.new(bucket_name: ENV['AWS_S3_BUCKET'], key: s3_key)
-    if s3_file_obj&.key && !s3_file_obj.key.blank?
-      return s3_file_obj
-    else
-      return nil
-    end
+    s3_file_obj if s3_file_obj&.key && !s3_file_obj.key.blank?
   end
 end

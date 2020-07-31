@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe ParticipantPolicy do
@@ -8,10 +9,10 @@ describe ParticipantPolicy do
   let(:admin)                       { create(:participant, :admin) }
   let(:organizer_participant)       { create(:participant) }
   let(:organizer)                   { create(:organizer) }
-  let(:participant_organizer)       { create(:participant_organizer, participant: organizer_participant, organizer: organizer)}
+  let(:participant_organizer)       { create(:participant_organizer, participant: organizer_participant, organizer: organizer) }
   let(:clef_participant)            { create(:participant) }
   let(:clef_organizer)              { create(:organizer, :clef) }
-  let(:participant_clef_organizer)  { create(:participant_organizer, participant: clef_participant, organizer: clef_organizer)}
+  let(:participant_clef_organizer)  { create(:participant_organizer, participant: clef_participant, organizer: clef_organizer) }
 
   context 'for a public participant' do
     let(:user) { nil }

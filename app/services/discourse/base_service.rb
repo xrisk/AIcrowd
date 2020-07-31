@@ -3,7 +3,7 @@ module Discourse
     LOGGER_URL                  = 'log/discourse_api.log'.freeze
     CATEGORY_DEFAULT_COLOR      = '49d9e9'.freeze
     CATEGORY_DEFAULT_TEXT_COLOR = 'f0fcfd'.freeze
-    DEFAULT_GROUP_PERMISSIONS   = 1.freeze
+    DEFAULT_GROUP_PERMISSIONS   = 1
     DEFAULT_GROUP_NAME          = 'everyone'.freeze
 
     protected
@@ -33,7 +33,6 @@ module Discourse
     def participant_by_username(participants, username)
       participants.find { |participant| participant.name == username }
     end
-
 
     def get_participants(discourse_users)
       usernames = discourse_users.map { |discourse_user| discourse_user['username'] }.uniq

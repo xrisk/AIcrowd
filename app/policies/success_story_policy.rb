@@ -4,7 +4,7 @@ class SuccessStoryPolicy < ApplicationPolicy
   end
 
   def show?
-    @record.published || (participant&.admin?)
+    @record.published || participant&.admin?
   end
 
   def edit?

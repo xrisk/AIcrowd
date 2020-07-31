@@ -4,13 +4,13 @@ FactoryBot.define do
     challenge_client_name { FFaker::Internet.unique.user_name }
     tagline { FFaker::Lorem.unique.sentence(3) }
     status { :draft }
-    description_markdown { "### The description" }
-    evaluation_markdown { "# An evaluation" }
-    rules_markdown { "Some *rules*" }
-    prizes_markdown { "# Prizes are described here." }
-    resources_markdown { "# Helpful resources" }
-    dataset_description_markdown { "# Dataset description" }
-    submission_instructions_markdown { "## Submission instructions" }
+    description_markdown { '### The description' }
+    evaluation_markdown { '# An evaluation' }
+    rules_markdown { 'Some *rules*' }
+    prizes_markdown { '# Prizes are described here.' }
+    resources_markdown { '# Helpful resources' }
+    dataset_description_markdown { '# Dataset description' }
+    submission_instructions_markdown { '## Submission instructions' }
     license_markdown { '## This is a license' }
     submissions_page { true }
     show_leaderboard { true }
@@ -46,7 +46,8 @@ FactoryBot.define do
           challenge:               challenge,
           start_dttm:              challenge.created_at - 2.weeks,
           end_dttm:                challenge.created_at + 3.weeks,
-          submission_limit_period: :day)
+          submission_limit_period: :day
+        )
       end
     end
 
@@ -59,7 +60,8 @@ FactoryBot.define do
           challenge:               challenge,
           start_dttm:              challenge.created_at - 2.weeks,
           end_dttm:                challenge.created_at + 3.weeks,
-          submission_limit_period: :week)
+          submission_limit_period: :week
+        )
       end
     end
 
@@ -72,7 +74,8 @@ FactoryBot.define do
           challenge:               challenge,
           start_dttm:              challenge.created_at - 2.weeks,
           end_dttm:                challenge.created_at + 3.weeks,
-          submission_limit_period: :round)
+          submission_limit_period: :round
+        )
       end
     end
 
@@ -88,7 +91,8 @@ FactoryBot.define do
           submission_limit:        5,
           submission_limit_period: :round,
           start_dttm:              challenge.created_at - 5.weeks,
-          end_dttm:                challenge.created_at - 3.weeks)
+          end_dttm:                challenge.created_at - 3.weeks
+        )
         FactoryBot.create(
           :challenge_round,
           challenge:               challenge,
@@ -96,7 +100,8 @@ FactoryBot.define do
           submission_limit:        5,
           submission_limit_period: :round,
           start_dttm:              challenge.created_at - 2.weeks,
-          end_dttm:                challenge.created_at + 3.weeks)
+          end_dttm:                challenge.created_at + 3.weeks
+        )
       end
     end
 

@@ -1,7 +1,7 @@
 ActiveAdmin.register ChallengeCall do
-  sidebar "Details", only: [:show, :edit] do
+  sidebar 'Details', only: [:show, :edit] do
     ul do
-      li link_to "Responses", admin_challenge_call_challenge_call_responses_path(challenge_call)
+      li link_to 'Responses', admin_challenge_call_challenge_call_responses_path(challenge_call)
     end
   end
 
@@ -9,7 +9,7 @@ ActiveAdmin.register ChallengeCall do
     batch_action_collection.find(ids).each do |challenge_call|
       challenge_call.update!(acknowledged: true)
     end
-    redirect_to admin_challenge_calls_path, notice: "The challenge calls are acknowledged successfully"
+    redirect_to admin_challenge_calls_path, notice: 'The challenge calls are acknowledged successfully'
   end
 
   controller do
@@ -46,7 +46,7 @@ ActiveAdmin.register ChallengeCall do
   end
 
   form do |f|
-    f.inputs "Challenge Call" do
+    f.inputs 'Challenge Call' do
       f.input :title
       f.input :organizer, as: :select, member_label: :organizer
       f.input :headline

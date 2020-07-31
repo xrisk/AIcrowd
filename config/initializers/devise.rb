@@ -246,11 +246,11 @@ Devise.setup do |config|
 
   config.omniauth :github, ENV['GITHUB_OAUTH_KEY'], ENV['GITHUB_OAUTH_SECRET'], scope: 'user:email'
   config.omniauth :oauth2_generic, ENV['CROWDAI_OAUTH_KEY'], ENV['CROWDAI_OAUTH_SECRET'], {
-    "client_options" => {
-      "site"          => "https://www.crowdai.org",
-      "user_info_url" => "/api/user"
+    'client_options' => {
+      'site'          => 'https://www.crowdai.org',
+      'user_info_url' => '/api/user'
     },
-    "redirect_url"   => File.join(ENV["DOMAIN_NAME"], "participants/auth/oauth2_generic/callback")
+    'redirect_url'   => File.join(ENV['DOMAIN_NAME'], 'participants/auth/oauth2_generic/callback')
   }
 
   # ==> Warden configuration

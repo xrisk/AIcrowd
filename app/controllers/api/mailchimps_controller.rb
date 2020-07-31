@@ -22,7 +22,7 @@ class Api::MailchimpsController < ApplicationController
       end
       head :ok
     else
-      msg = "[Api::MailchimpsController#webhook] Webhook call made with invalid API key"
+      msg = '[Api::MailchimpsController#webhook] Webhook call made with invalid API key'
       Rails.logger.error(msg)
       Rollbar.error(msg) if Rails.env.production?
       head :unauthorized

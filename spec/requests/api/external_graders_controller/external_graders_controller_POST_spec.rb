@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::ExternalGradersController, type: :request do
   before do
-    Timecop.freeze(DateTime.new(2017, 10, 30, 2, 2, 2, "+02:00"))
+    Timecop.freeze(DateTime.new(2017, 10, 30, 2, 2, 2, '+02:00'))
   end
 
   after do
@@ -19,7 +19,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
   let!(:submission2)           { create :submission, challenge: challenge, participant: participant, created_at: 18.hours.ago }
   let!(:submission3)           { create :submission, challenge: challenge, participant: participant, created_at: 2.days.ago }
 
-  describe "POST /api/external_graders/ : create submission" do
+  describe 'POST /api/external_graders/ : create submission' do
     def valid_attributes
       { challenge_client_name: challenge.challenge_client_name,
         api_key:               participant.api_key,
@@ -87,10 +87,10 @@ RSpec.describe Api::ExternalGradersController, type: :request do
         grading_status:        'graded',
         score:                 0.9763,
         meta:                  {
-          impwt_std: "0.020956583416961033",
-          ips_std:   "2.0898337641716487",
-          snips:     "45.69345202998776",
-          file_key:  "submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c"
+          impwt_std: '0.020956583416961033',
+          ips_std:   '2.0898337641716487',
+          snips:     '45.69345202998776',
+          file_key:  'submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c'
         }
       }
     end
@@ -102,10 +102,10 @@ RSpec.describe Api::ExternalGradersController, type: :request do
         grading_status:        'graded',
         score:                 0.9763,
         meta:                  JSON.dump({
-                                           impwt_std: "0.020956583416961033",
-                                           ips_std:   "2.0898337641716487",
-                                           snips:     "45.69345202998776",
-                                           file_key:  "submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c"
+                                           impwt_std: '0.020956583416961033',
+                                           ips_std:   '2.0898337641716487',
+                                           snips:     '45.69345202998776',
+                                           file_key:  'submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c'
                                          })
       }
     end
@@ -116,7 +116,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763,
-        meta:                  "THIS IS A BAD META PARAM"
+        meta:                  'THIS IS A BAD META PARAM'
       }
     end
 
@@ -188,9 +188,9 @@ RSpec.describe Api::ExternalGradersController, type: :request do
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763,
-        media_large:           "94EPSjQH38Y",
-        media_thumbnail:       "94EPSjQH38Y",
-        media_content_type:    "video/youtube"
+        media_large:           '94EPSjQH38Y',
+        media_thumbnail:       '94EPSjQH38Y',
+        media_content_type:    'video/youtube'
       }
     end
 
@@ -200,13 +200,13 @@ RSpec.describe Api::ExternalGradersController, type: :request do
         api_key:               participant.api_key,
         grading_status:        'graded',
         score:                 0.9763,
-        media_large:           "94EPSjQH38Y",
-        media_content_type:    "video/youtube"
+        media_large:           '94EPSjQH38Y',
+        media_content_type:    'video/youtube'
       }
     end
 
     # ---------------------- RETURNING 200 ------------------ #
-    context "with valid_attributes" do
+    context 'with valid_attributes' do
       before do
         post '/api/external_graders/',
              params:  valid_attributes,
@@ -218,7 +218,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(json(response.body)[:submission_id]).to be_a Integer }
       it { expect(json(response.body)[:submissions_remaining]).to eq(2) }
 
-      it { expect(json(response.body)[:reset_dttm]).to eq("2017-10-30 06:02:02 UTC") } unless ENV['TRAVIS']
+      it { expect(json(response.body)[:reset_dttm]).to eq('2017-10-30 06:02:02 UTC') } unless ENV['TRAVIS']
       it { expect(Submission.count).to eq(4) }
       it { expect(Submission.last.participant_id).to eq(participant.id) }
       it { expect(Submission.last.score).to eq(valid_attributes_with_secondary_score[:score]) }
@@ -226,7 +226,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(Submission.last.post_challenge).to be false }
     end
 
-    context "with valid_attributes_initiated" do
+    context 'with valid_attributes_initiated' do
       before do
         post '/api/external_graders/',
              params:  valid_attributes_initiated,
@@ -238,7 +238,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(json(response.body)[:submission_id]).to be_a Integer }
       it { expect(json(response.body)[:submissions_remaining]).to eq(2) }
 
-      it { expect(json(response.body)[:reset_dttm]).to eq("2017-10-30 06:02:02 UTC") } unless ENV['TRAVIS']
+      it { expect(json(response.body)[:reset_dttm]).to eq('2017-10-30 06:02:02 UTC') } unless ENV['TRAVIS']
       it { expect(Submission.count).to eq(4) }
       it { expect(Submission.last.participant_id).to eq(participant.id) }
       it { expect(Submission.last.score).to be_nil }
@@ -246,7 +246,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(Submission.last.post_challenge).to be false }
     end
 
-    context "with valid_attributes_failed_grading" do
+    context 'with valid_attributes_failed_grading' do
       before do
         post '/api/external_graders/',
              params:  valid_attributes_failed_grading,
@@ -262,7 +262,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(Submission.last.grading_message).to eq(valid_attributes_failed_grading[:grading_message]) }
     end
 
-    context "with valid_attributes_grading_submitted" do
+    context 'with valid_attributes_grading_submitted' do
       before do
         post '/api/external_graders/',
              params:  valid_attributes_grading_submitted,
@@ -277,7 +277,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(Submission.last.grading_status_cd).to eq('submitted') }
     end
 
-    context "with valid_attributes_grading_submitted_with_message" do
+    context 'with valid_attributes_grading_submitted_with_message' do
       before do
         post '/api/external_graders/',
              params:  valid_attributes_grading_submitted_with_message,
@@ -293,7 +293,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(Submission.last.grading_message).to eq('in progress') }
     end
 
-    context "with valid_attributes_with_secondary_score" do
+    context 'with valid_attributes_with_secondary_score' do
       before do
         post '/api/external_graders/',
              params:  valid_attributes_with_secondary_score,
@@ -307,7 +307,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(Submission.last.post_challenge).to be false }
     end
 
-    context "with valid_attributes_with_description_markdown" do
+    context 'with valid_attributes_with_description_markdown' do
       before do
         post '/api/external_graders/',
              params:  valid_attributes_with_description_markdown,
@@ -321,7 +321,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(Submission.last.post_challenge).to be false }
     end
 
-    context "with valid_attributes_with_media" do
+    context 'with valid_attributes_with_media' do
       before do
         post '/api/external_graders/',
              params:  valid_attributes_with_media,
@@ -337,7 +337,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(Submission.last.post_challenge).to be false }
     end
 
-    context "with valid_attributes_with_meta" do
+    context 'with valid_attributes_with_meta' do
       before do
         post '/api/external_graders/',
              params:  valid_attributes_with_meta,
@@ -350,15 +350,15 @@ RSpec.describe Api::ExternalGradersController, type: :request do
 
       it {
         expect(Submission.last.meta).to eq({
-                                             "impwt_std" => "0.020956583416961033", "ips_std" => "2.0898337641716487",
-        "snips" => "45.69345202998776", "file_key" => "submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c"
+                                             'impwt_std' => '0.020956583416961033', 'ips_std' => '2.0898337641716487',
+        'snips' => '45.69345202998776', 'file_key' => 'submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c'
                                            })
       }
 
       it { expect(Submission.last.post_challenge).to be false }
     end
 
-    context "with valid_attributes_with_meta (as JSON)" do
+    context 'with valid_attributes_with_meta (as JSON)' do
       before do
         post '/api/external_graders/',
              params:  valid_attributes_with_meta_as_json,
@@ -371,8 +371,8 @@ RSpec.describe Api::ExternalGradersController, type: :request do
 
       it {
         expect(Submission.last.meta).to eq({
-                                             "impwt_std" => "0.020956583416961033", "ips_std" => "2.0898337641716487",
-        "snips" => "45.69345202998776", "file_key" => "submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c"
+                                             'impwt_std' => '0.020956583416961033', 'ips_std' => '2.0898337641716487',
+        'snips' => '45.69345202998776', 'file_key' => 'submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c'
                                            })
       }
 
@@ -390,26 +390,26 @@ RSpec.describe Api::ExternalGradersController, type: :request do
 
       it {
         expect(json(response.body)[:message])
-        .to eq("Participant #{participant.name} scored")
+          .to eq("Participant #{participant.name} scored")
       }
 
       it { expect(json(response.body)[:submission_id]).to be_a Integer }
       it { expect(json(response.body)[:submissions_remaining]).to eq(2) }
 
-      it { expect(json(response.body)[:reset_dttm]).to eq("2017-10-30 06:02:02 UTC") } unless ENV['TRAVIS']
+      it { expect(json(response.body)[:reset_dttm]).to eq('2017-10-30 06:02:02 UTC') } unless ENV['TRAVIS']
       it { expect(Submission.count).to eq(4) }
       it { expect(Submission.last.participant_id).to eq(participant.id) }
 
       it {
         expect(Submission.last.score)
-        .to eq(valid_attributes_with_secondary_score[:score])
+          .to eq(valid_attributes_with_secondary_score[:score])
       }
 
       it { expect(Submission.last.grading_status_cd).to eq('graded') }
       # it { expect(Submission.last.post_challenge).to be true }
     end
 
-    context "with invalid_attributes_with_meta" do
+    context 'with invalid_attributes_with_meta' do
       before do
         post '/api/external_graders/',
              params:  invalid_attributes_with_meta,
@@ -449,17 +449,17 @@ RSpec.describe Api::ExternalGradersController, type: :request do
 
       it {
         expect(Submission.last.media_large)
-        .to eq(valid_youtube_attributes[:media_large])
+          .to eq(valid_youtube_attributes[:media_large])
       }
 
       it {
         expect(Submission.last.media_thumbnail)
-        .to eq(valid_youtube_attributes[:media_thumbnail])
+          .to eq(valid_youtube_attributes[:media_thumbnail])
       }
 
       it {
         expect(Submission.last.media_content_type)
-        .to eq("video/youtube")
+          .to eq('video/youtube')
       }
     end
 
@@ -477,7 +477,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(Submission.last.challenge_round_id).to eq(valid_challenge_round_attributes[:challenge_round_id]) }
     end
 
-    context "with invalid grading status" do
+    context 'with invalid grading status' do
       before do
         post '/api/external_graders/',
              params:  invalid_grading_status_attributes,
@@ -485,11 +485,11 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       end
 
       it { expect(response).to have_http_status(:bad_request) }
-      it { expect(json(response.body)[:message]).to eq("Grading status must be one of (graded|failed|initiated)") }
+      it { expect(json(response.body)[:message]).to eq('Grading status must be one of (graded|failed|initiated)') }
       it { expect(json(response.body)[:submission_id]).to be_nil }
       it { expect(json(response.body)[:submissions_remaining]).to eq(3) }
 
-      it { expect(json(response.body)[:reset_dttm]).to eq("2017-10-30 06:02:02 UTC") } unless ENV['TRAVIS']
+      it { expect(json(response.body)[:reset_dttm]).to eq('2017-10-30 06:02:02 UTC') } unless ENV['TRAVIS']
     end
 
     context 'participant has made their daily limit of submissions' do
@@ -502,14 +502,14 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       end
 
       it { expect(response).to have_http_status(:bad_request) }
-      it { expect(json(response.body)[:message]).to eq("The participant has no submission slots remaining for today. Please wait until 2017-10-30 06:02:02 UTC to make your next submission.") }
+      it { expect(json(response.body)[:message]).to eq('The participant has no submission slots remaining for today. Please wait until 2017-10-30 06:02:02 UTC to make your next submission.') }
       it { expect(json(response.body)[:submission_id]).to be_nil }
       it { expect(json(response.body)[:submissions_remaining]).to eq(0) }
 
-      it { expect(json(response.body)[:reset_dttm]).to eq("2017-10-30 06:02:02 UTC") } unless ENV['TRAVIS']
+      it { expect(json(response.body)[:reset_dttm]).to eq('2017-10-30 06:02:02 UTC') } unless ENV['TRAVIS']
     end
 
-    context "with incomplete Media fields" do
+    context 'with incomplete Media fields' do
       before do
         post '/api/external_graders/',
              params:  invalid_incomplete_with_media_attributes,
@@ -517,10 +517,10 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       end
 
       it { expect(response).to have_http_status(:bad_request) }
-      it { expect(json(response.body)[:message]).to eq("Either all or none of media_large, media_thumbnail and media_content_type must be provided.") }
+      it { expect(json(response.body)[:message]).to eq('Either all or none of media_large, media_thumbnail and media_content_type must be provided.') }
     end
 
-    context "with invalid Challenge Client Name" do
+    context 'with invalid Challenge Client Name' do
       before do
         post '/api/external_graders/',
              params:  invalid_challenge_client_name_attributes,
@@ -531,7 +531,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(response.body).to eq("HTTP Token: Access denied.\n") }
     end
 
-    context "with invalid developer API key" do
+    context 'with invalid developer API key' do
       before do
         post '/api/external_graders/',
              params:  invalid_api_key_attributes,
@@ -539,7 +539,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       end
 
       it { expect(response).to have_http_status(:bad_request) }
-      it { expect(json(response.body)[:message]).to eq("The API key did not match any participant record.") }
+      it { expect(json(response.body)[:message]).to eq('The API key did not match any participant record.') }
       it { expect(json(response.body)[:submission_id]).to be_nil }
     end
 
@@ -553,7 +553,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       end
 
       it { expect(response).to have_http_status(:bad_request) }
-      it { expect(json(response.body)[:message]).to eq("Either all or none of media_large, media_thumbnail and media_content_type must be provided.") }
+      it { expect(json(response.body)[:message]).to eq('Either all or none of media_large, media_thumbnail and media_content_type must be provided.') }
     end
 
     #     context 'participant has made their weekly limit of submissions' do

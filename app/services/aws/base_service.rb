@@ -1,6 +1,6 @@
 module Aws
   class BaseService < ::BaseService
-    HANDLED_AWS_ERRORS = [
+    HANDLED_AWS_ERRORS  = [
       Aws::S3::Errors::InvalidAccessKeyId,
       Aws::S3::Errors::SignatureDoesNotMatch,
       Aws::Errors::NoSuchEndpointError,

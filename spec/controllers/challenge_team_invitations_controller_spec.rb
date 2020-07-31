@@ -46,7 +46,7 @@ describe Challenges::TeamInvitationsController, '#create', type: :controller do
     end
 
     it 'reports success' do
-      msg = I18n.t(:success, scope: %i[helpers teams create_invitation_flash])
+      msg = I18n.t(:success, scope: [:helpers, :teams, :create_invitation_flash])
       expect(flash[:success]).to eq(msg)
     end
 
@@ -74,7 +74,7 @@ describe Challenges::TeamInvitationsController, '#create', type: :controller do
 
     it 'reports error to user' do
       if error_flash_symbol
-        msg = I18n.t(error_flash_symbol, scope: %i[helpers teams create_invitation_flash])
+        msg = I18n.t(error_flash_symbol, scope: [:helpers, :teams, :create_invitation_flash])
         expect(flash[:error]).to match(msg)
       else
         expect(flash[:error]).to be

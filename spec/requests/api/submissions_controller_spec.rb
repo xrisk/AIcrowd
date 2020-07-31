@@ -27,7 +27,7 @@ RSpec.describe Api::SubmissionsController, type: :request do
   # end
 
   describe 'GET #show' do
-    context "with admin auth key" do
+    context 'with admin auth key' do
       before do
         get "/api/submissions/#{submission_1.id}",
             headers: {

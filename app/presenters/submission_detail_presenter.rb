@@ -21,7 +21,7 @@ class SubmissionDetailPresenter
       s3          = S3Service.new(s3_key)
       grader_logs = s3.filestream
     end
-    return grader_logs
+    grader_logs
   end
 
   def h

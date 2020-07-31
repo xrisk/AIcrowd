@@ -26,7 +26,7 @@ ActiveAdmin.register NewsletterEmail do
     column :updated_at
     actions default: true do |resource|
       if resource.pending?
-        a 'Approve', href: approve_admin_newsletter_email_path(resource), 'data-method': :post, 'data-confirm':  'Are you sure you want to send this e-mail to participants?', class: 'member_link'
+        a 'Approve', href: approve_admin_newsletter_email_path(resource), 'data-method': :post, 'data-confirm': 'Are you sure you want to send this e-mail to participants?', class: 'member_link'
         a 'Decline', href: '#', 'data-request-url': decline_admin_newsletter_email_url(resource), class: 'member_link newsletter-emails__decline-button'
       end
     end
@@ -43,7 +43,7 @@ ActiveAdmin.register NewsletterEmail do
 
     div class: 'actions newsletter-emails__actions' do
       if resource.pending?
-        a 'Approve', href: approve_admin_newsletter_email_path(resource), 'data-method': :post, 'data-confirm':  'Are you sure you want to send this e-mail to participants?', class: 'member_link newsletter-emails__button'
+        a 'Approve', href: approve_admin_newsletter_email_path(resource), 'data-method': :post, 'data-confirm': 'Are you sure you want to send this e-mail to participants?', class: 'member_link newsletter-emails__button'
         a 'Decline', href: '#', 'data-request-url': decline_admin_newsletter_email_url(resource), class: 'member_link newsletter-emails__decline-button'
       end
     end
@@ -67,7 +67,7 @@ ActiveAdmin.register NewsletterEmail do
   end
 
   action_item :approve_newsletter_email, only: :show do
-    a 'Approve', href: approve_admin_newsletter_email_path(resource), 'data-method': :post, 'data-confirm':  'Are you sure you want to send this e-mail to participants?', class: 'member_link'
+    a 'Approve', href: approve_admin_newsletter_email_path(resource), 'data-method': :post, 'data-confirm': 'Are you sure you want to send this e-mail to participants?', class: 'member_link'
   end
 
   action_item :decline_newsletter_email, only: :show do

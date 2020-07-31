@@ -7,17 +7,13 @@ class MailchimpService
     return false if member.nil?
 
     status = member['status']
-    if status == 'subscribed'
-      return true
-    else
-      return false
-    end
+    status == 'subscribed'
   end
 
   def member
-    return gibbon.lists(ENV['MAILCHIMP_LIST_ID']).members(lower_case_md5_hashed_email_address).retrieve.body
+    gibbon.lists(ENV['MAILCHIMP_LIST_ID']).members(lower_case_md5_hashed_email_address).retrieve.body
   rescue StandardError
-    return nil
+    nil
   end
 
   def subscribe
@@ -25,19 +21,21 @@ class MailchimpService
     begin
       gibbon = Gibbon::Request.new(api_key: ENV['MAILCHIMP_API_KEY'])
       resp   = gibbon.lists(ENV['MAILCHIMP_LIST_ID'])
-                   .members(lower_case_md5_hashed_email_address)
-                   .upsert(body:
-                                 { email_address: @participant.email,
-                                   status:        'subscribed',
-                                   merge_fields:  { FNAME: @participant.name } })
+                     .members(lower_case_md5_hashed_email_address)
+                     .upsert(body:
+                                   { email_address: @participant.email,
+                                     status:        'subscribed',
+                                     merge_fields:  { FNAME: @participant.name } })
       Rails.logger.info("[MailchimpService] #subscribe API response: #{resp.inspect}")
     rescue Exception => e
-      participant.disable_account('MailChimp rejected email as a fake address') if e.message =~ /ooks fake or invalid, please enter a real email address/
+      if e.message =~ /ooks fake or invalid, please enter a real email address/
+        participant.disable_account('MailChimp rejected email as a fake address')
+      end
     end
   end
 
   def unsubscribe
-    resp = gibbon.lists(ENV['MAILCHIMP_LIST_ID']).members(lower_case_md5_hashed_email_address).update(body: { status: "unsubscribed" })
+    resp = gibbon.lists(ENV['MAILCHIMP_LIST_ID']).members(lower_case_md5_hashed_email_address).update(body: { status: 'unsubscribed' })
     Rails.logger.info("[MailchimpService] #unsubscribe API response: #{resp.inspect}")
   rescue Exception => e
     Rails.logger.info("[MailchimpService] #unsubscribe API exception: #{e.message}")

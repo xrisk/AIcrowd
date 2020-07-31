@@ -8,6 +8,6 @@ module ApiKey
     begin
       api_key = SecureRandom.hex
     end while (Participant.exists?(api_key: api_key) || Organizer.exists?(api_key: api_key))
-    return api_key
+    api_key
   end
 end

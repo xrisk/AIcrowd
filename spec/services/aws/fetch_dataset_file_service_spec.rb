@@ -14,12 +14,11 @@ describe Aws::FetchDatasetFileService do
     context 'when valid dataset_file provided' do
       let(:dataset_file) do
         create(:dataset_file,
-          file_path:      'other_dataset/8d8183c9-4705-48d7-add1-22653634477f_archived-datasets.txt',
-          aws_access_key: 'REDACTED',
-          aws_secret_key: 'REDACTED',
-          bucket_name:    'test-s3-integratioon',
-          region:         'eu-north-1'
-        )
+               file_path:      'other_dataset/8d8183c9-4705-48d7-add1-22653634477f_archived-datasets.txt',
+               aws_access_key: 'REDACTED',
+               aws_secret_key: 'REDACTED',
+               bucket_name:    'test-s3-integratioon',
+               region:         'eu-north-1')
       end
 
       it 'returns success with dataset_file url' do
@@ -35,12 +34,11 @@ describe Aws::FetchDatasetFileService do
     context 'when invalid api keys provided' do
       let(:dataset_file) do
         create(:dataset_file,
-          file_path:      'other_dataset/8d8183c9-4705-48d7-add1-22653634477f_archived-datasets.txt',
-          aws_access_key: 'INVALID_KEY',
-          aws_secret_key: 'INVALID_KEY',
-          bucket_name:    'test-s3-integratioon',
-          region:         'eu-north-1'
-        )
+               file_path:      'other_dataset/8d8183c9-4705-48d7-add1-22653634477f_archived-datasets.txt',
+               aws_access_key: 'INVALID_KEY',
+               aws_secret_key: 'INVALID_KEY',
+               bucket_name:    'test-s3-integratioon',
+               region:         'eu-north-1')
       end
 
       it 'returns failure with error message' do
@@ -56,12 +54,11 @@ describe Aws::FetchDatasetFileService do
     context 'when invalid parameters provided' do
       let(:dataset_file) do
         create(:dataset_file,
-          file_path:      'INVALID',
-          aws_access_key: 'INVALID_KEY',
-          aws_secret_key: 'INVALID_KEY',
-          bucket_name:    'INVALID',
-          region:         'eu-north-1'
-        )
+               file_path:      'INVALID',
+               aws_access_key: 'INVALID_KEY',
+               aws_secret_key: 'INVALID_KEY',
+               bucket_name:    'INVALID',
+               region:         'eu-north-1')
       end
 
       it 'returns failure with error message' do

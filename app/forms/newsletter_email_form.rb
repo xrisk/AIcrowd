@@ -46,16 +46,16 @@ class NewsletterEmailForm
         challenge.participants.pluck(:email)
       when 'participants_with_submission' # Participants who made at least one submission
         Participant.joins(:submissions)
-          .where(submissions: { challenge_id: challenge.id })
-          .distinct
-          .map(&:email)
+                   .where(submissions: { challenge_id: challenge.id })
+                   .distinct
+                   .map(&:email)
       when /challenge_round/ # Participants who made at least one submission in selected round
         challenge_round_id = select_value.split('challenge_round_').second
 
         Participant.joins(:submissions)
-          .where(submissions: { challenge_round_id: challenge_round_id })
-          .distinct
-          .map(&:email)
+                   .where(submissions: { challenge_round_id: challenge_round_id })
+                   .distinct
+                   .map(&:email)
       else
         select_value.split(',')
       end

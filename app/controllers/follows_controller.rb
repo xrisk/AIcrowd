@@ -40,7 +40,7 @@ class FollowsController < ApplicationController
 
   def set_participant
     participant_id = params[:other_participant].present? ? params[:other_participant] : params[:participant_id]
-    @participant = Participant.friendly.find_by_friendly_id(participant_id.downcase)
+    @participant   = Participant.friendly.find_by_friendly_id(participant_id.downcase)
   end
 
   def followable_is_participant?

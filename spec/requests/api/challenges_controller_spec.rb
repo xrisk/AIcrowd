@@ -7,10 +7,10 @@ RSpec.describe Api::ChallengesController, type: :request do
   let!(:valid_key) { ENV['AICROWD_API_KEY'] }
   let!(:invalid_key) { '123dfdfobdsfnkbndskndsraslv' }
 
-  describe "GET #index" do
+  describe 'GET #index' do
     context 'invalid API key' do
       before do
-        get "/api/challenges",
+        get '/api/challenges',
             headers: {
               'Accept':        'application/vnd.api+json',
               'Content-Type':  'application/vnd.api+json',
@@ -23,7 +23,7 @@ RSpec.describe Api::ChallengesController, type: :request do
     end
   end
 
-  describe "GET #show" do
+  describe 'GET #show' do
     context 'invalid API key' do
       before do
         get "/api/challenges/#{day.id}",

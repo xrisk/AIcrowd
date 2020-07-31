@@ -31,26 +31,26 @@ class Api::SubmissionSerializer < ActiveModel::Serializer
 
   def participant_email
     @participant ||= object&.participant
-    return @participant&.email
+    @participant&.email
   end
 
   def participant_name
     @participant ||= object&.participant
-    return @participant&.name
+    @participant&.name
   end
 
   def participant_firstname
     @participant ||= object&.participant
-    return @participant&.first_name
+    @participant&.first_name
   end
 
   def participant_lastname
     @participant ||= object&.participant
-    return @participant&.last_name
+    @participant&.last_name
   end
 
   def participant_affiliation
     @participant ||= object&.participant
-    return @participant&.affiliation
+    @participant&.affiliation
   end
 end

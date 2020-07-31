@@ -7,13 +7,13 @@ class SubmissionPolicy < ApplicationPolicy
     challenge = @record.challenge
     return true if challenge.show_leaderboard.present? && challenge.submissions_page.present? && challenge.private_challenge.blank?
 
-    @record.challenge.submissions_page.present? && ( edit? ||
+    @record.challenge.submissions_page.present? && (edit? ||
       (@record.challenge.submissions_page.present? && @record.challenge.show_leaderboard.present? &&
         SubmissionPolicy::Scope
           .new(participant, Submission)
           .resolve
           .include?(@record))
-    )
+                                                   )
   end
 
   def new?

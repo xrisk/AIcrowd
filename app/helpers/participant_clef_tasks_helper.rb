@@ -4,14 +4,14 @@ module ParticipantClefTasksHelper
 
     case participant_clef_task.status_cd
     when 'requested'
-      return "<button class='btn btn-small btn-default'>EUA downloaded</button>".html_safe
+      "<button class='btn btn-small btn-default'>EUA downloaded</button>".html_safe
     when 'submitted'
       return "<button class='btn btn-small btn-default'>Submitted [Cant approve for unknown user]</button>".html_safe if participant.nil?
       return "<button class='btn btn-small btn-default'>Missing</button>".html_safe if participant_clef_task.eua_file.blank?
 
-      return (link_to 'Approve', participant_clef_task_path(participant_clef_task.clef_task, participant_id: participant.id, challenge_id: challenge_id), method: :patch, remote: true, class: 'btn btn-small btn-primary').to_s
+      (link_to 'Approve', participant_clef_task_path(participant_clef_task.clef_task, participant_id: participant.id, challenge_id: challenge_id), method: :patch, remote: true, class: 'btn btn-small btn-primary').to_s
     when 'registered'
-      return "<button class='btn btn-small btn-default'>Approved</button>".html_safe
+      "<button class='btn btn-small btn-default'>Approved</button>".html_safe
     end
   end
 
@@ -34,9 +34,9 @@ module ParticipantClefTasksHelper
     return 'profile_incomplete' if profile_incomplete? && clef_task && !clef_task.use_challenge_dataset_files?
 
     if participant_clef_task.present?
-      return participant_clef_task.status_cd
+      participant_clef_task.status_cd
     else
-      return 'unregistered'
+      'unregistered'
     end
   end
 

@@ -23,8 +23,8 @@ RSpec.describe Api::ParticipantsController, type: :request do
     it { expect(response).to have_http_status(:ok) }
 
     it {
-      expect(JSON.parse(response.body)["api_key"])
-      .to eq(participant.api_key)
+      expect(JSON.parse(response.body)['api_key'])
+        .to eq(participant.api_key)
     }
   end
 

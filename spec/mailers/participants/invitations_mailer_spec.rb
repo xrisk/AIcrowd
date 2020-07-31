@@ -26,7 +26,7 @@ describe Participants::InvitationsMailer, type: :mailer do
     let(:team_invitation) { create(:team_invitation, team: team, invitee: invitee, invitor: invitor) }
     let(:invitee)         { create(:participant, email: 'test@example.com') }
     let(:invitor)         { create(:participant) }
-    let(:team)            { create(:team)}
+    let(:team)            { create(:team) }
 
     it 'renders the headers' do
       expect(subject.subject).to eq "[AIcrowd] Your Invitation to Team #{team.name} Was Canceled"
@@ -45,7 +45,7 @@ describe Participants::InvitationsMailer, type: :mailer do
     let(:team_invitation) { create(:team_invitation, team: team, invitee: invitee, invitor: invitor) }
     let(:invitee)         { create(:participant, email: 'test@example.com') }
     let(:invitor)         { create(:participant) }
-    let(:team)            { create(:team)}
+    let(:team)            { create(:team) }
 
     it 'renders the headers' do
       expect(subject.subject).to eq "[AIcrowd] Invitation to Team #{team.name}"

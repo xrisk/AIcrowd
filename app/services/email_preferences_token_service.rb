@@ -4,9 +4,9 @@ class EmailPreferencesTokenService
   end
 
   def email_preferences_link
-    "<div>" +
+    '<div>' +
       "<a href='#{preferences_token_url}'>Email Preferences</a>" +
-      "</div>"
+      '</div>'
   end
 
   def validate_token(token)
@@ -17,13 +17,13 @@ class EmailPreferencesTokenService
 
       if pref_token.token_expiration_dttm > DateTime.current
         pref_token.destroy!
-        return 'valid_token'
+        'valid_token'
       else
         pref_token.destroy!
-        return 'token_expired'
+        'token_expired'
       end
     else
-      return 'invalid_token'
+      'invalid_token'
     end
   end
 
@@ -37,6 +37,6 @@ class EmailPreferencesTokenService
   private def generate_token
     token = SecureRandom.urlsafe_base64(24)
     @participant.email_preferences_tokens.create!(email_preferences_token: token, token_expiration_dttm: DateTime.current + 30.days)
-    return token
+    token
   end
 end

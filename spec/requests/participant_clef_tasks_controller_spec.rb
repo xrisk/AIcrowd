@@ -9,7 +9,7 @@ describe ParticipantClefTasksController, type: :request do
       {
         participant_clef_task: {
           clef_task_id: clef_task.id,
-          eua_file: 'test_pdf_file.pdf',
+          eua_file:     'test_pdf_file.pdf',
           challenge_id: challenge.id
         }
       }
@@ -28,7 +28,7 @@ describe ParticipantClefTasksController, type: :request do
       before { login_as(participant) }
 
       it 'creates new participant_clef_task record' do
-        expect { post participant_clef_tasks_path, params: params }.to change{ParticipantClefTask.count}.by(1)
+        expect { post participant_clef_tasks_path, params: params }.to change { ParticipantClefTask.count }.by(1)
 
         expect(response).to have_http_status :redirect
         expect(response).to redirect_to(clef_task_task_dataset_files_path(clef_task, challenge_id: challenge.id))

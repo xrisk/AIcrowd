@@ -6,21 +6,21 @@ describe 'Email Preferences' do
   let!(:participant2) { create :participant }
   let!(:admin) { create :participant, :admin }
 
-  describe "Accessing email preferences" do
-    it "Participant can see their own Account Settings" do
+  describe 'Accessing email preferences' do
+    it 'Participant can see their own Account Settings' do
       log_in(participant)
       visit '/participants/edit'
       expect(page).to have_content 'Account Settings'
     end
 
-    it "Participant access their Email Notifications preferences" do
+    it 'Participant access their Email Notifications preferences' do
       log_in(participant)
       visit '/participants/edit'
       click_link 'Notifications'
       expect(page).to have_content 'Receive the AIcrowd Newsletter'
     end
 
-    it "Participant cannot access email preferences link for other participant" do
+    it 'Participant cannot access email preferences link for other participant' do
       log_in(participant)
 
       VCR.use_cassette('gitlab_api/fetch_calendar_activity/success') do
@@ -30,11 +30,11 @@ describe 'Email Preferences' do
       expect(page).not_to have_content 'Email Preferences'
     end
 
-    it "Participant cannot directly access email preferences for other participant" do
+    it 'Participant cannot directly access email preferences for other participant' do
       log_in(participant)
       other_url = "/participants/#{participant2.name}/notifications?id=#{participant2.email_preferences.first.id}"
       visit other_url
-      expect(page).to have_content "The page you are looking for doesn’t seem to exist"
+      expect(page).to have_content 'The page you are looking for doesn’t seem to exist'
     end
 
     # scenario "Admin can access email preferences link for other participant" do

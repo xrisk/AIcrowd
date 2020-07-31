@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::ExternalGradersController, type: :request do
   before do
-    Timecop.freeze(DateTime.new(2017, 10, 30, 2, 2, 2, "+02:00"))
+    Timecop.freeze(DateTime.new(2017, 10, 30, 2, 2, 2, '+02:00'))
   end
 
   after do
@@ -18,8 +18,8 @@ RSpec.describe Api::ExternalGradersController, type: :request do
   let!(:submission3)     { create :submission, challenge: challenge, participant: participant, created_at: 2.days.ago }
 
   # SUBMISSION INFO
-  describe "GET /api/external_graders/:submission_id/submission_info : Submission Info" do
-    context "with valid organizer auth key" do
+  describe 'GET /api/external_graders/:submission_id/submission_info : Submission Info' do
+    context 'with valid organizer auth key' do
       before do
         get "/api/external_graders/#{submission1.id}/submission_info",
             headers: {
@@ -34,7 +34,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(json(response.body)[:score]).to eq(submission1.score) }
     end
 
-    context "with invalid developer API key" do
+    context 'with invalid developer API key' do
       before do
         get "/api/external_graders/#{SecureRandom.uuid}/presign/",
             headers: {

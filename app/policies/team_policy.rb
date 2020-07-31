@@ -1,5 +1,5 @@
 class TeamPolicy < ApplicationPolicy
-  alias_method :team, :record
+  alias team record
 
   def show?
     true
@@ -15,8 +15,8 @@ class TeamPolicy < ApplicationPolicy
       {
         participant_not_logged_in: participant.nil?,
         participant_not_organizer: !team.team_participants_organizer.exists?(participant_id: participant&.id),
-        team_full: team.invitations_left <= 0,
-        challenge_teams_frozen: team.challenge.teams_frozen?
+        team_full:                 team.invitations_left <= 0,
+        challenge_teams_frozen:    team.challenge.teams_frozen?
       }
     end
   end

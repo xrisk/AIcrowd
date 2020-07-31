@@ -1,15 +1,15 @@
 module SubmissionsHelper
   def submission_grade_class(submission)
     if submission.grading_status_cd == 'graded'
-      return 'badge-success'
+      'badge-success'
     elsif submission.grading_status_cd == 'initiated'
-      return 'badge-gold'
+      'badge-gold'
     elsif submission.grading_status_cd == 'submitted'
-      return 'badge-gold'
+      'badge-gold'
     elsif submission.grading_status_cd == 'ready'
-      return 'badge-silver'
+      'badge-silver'
     else
-      return 'badge-warning'
+      'badge-warning'
     end
   end
 
@@ -24,7 +24,7 @@ module SubmissionsHelper
 
     return '-' if value.nil?
 
-    return value
+    value
   end
 
   def submission_meta_hash(submission)
@@ -34,7 +34,7 @@ module SubmissionsHelper
     # Try to parse if not an hash
     return JSON.parse(meta) if meta.is_a? String
 
-    return {}
+    {}
   rescue JSON::ParserError
     {}
   end
@@ -48,14 +48,12 @@ module SubmissionsHelper
   def submission_code_link(submission)
     submission_link = nil
     if submission.present?
-      meta_hash = submission_meta_hash(submission)
-      if meta_hash.key?("repo_url") && meta_hash.key?("repo_ref")
-        tag_name = meta_hash["repo_ref"].split('/').last
-        submission_link = meta_hash["repo_url"] + '/tree/' + tag_name
+      meta_hash       = submission_meta_hash(submission)
+      if meta_hash.key?('repo_url') && meta_hash.key?('repo_ref')
+        tag_name        = meta_hash['repo_ref'].split('/').last
+        submission_link = meta_hash['repo_url'] + '/tree/' + tag_name
       end
-      if submission.submission_link.present?
-        submission_link = submission.submission_link
-      end
+      submission_link = submission.submission_link if submission.submission_link.present?
     end
     submission_link
   end

@@ -28,7 +28,7 @@ describe Images::Base64EncodeService do
     end
 
     context 'when valid image_url is provided and image does not exist' do
-      let(:image_url) { 'http://localhost:3000/assets/images/not_existing_image_url.jpeg'}
+      let(:image_url) { 'http://localhost:3000/assets/images/not_existing_image_url.jpeg' }
 
       it 'returns failure and error message' do
         result = VCR.use_cassette('images/base64_encode_service/failure_missing_image') do

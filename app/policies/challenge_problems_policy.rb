@@ -1,15 +1,13 @@
 class ChallengeProblemsPolicy < ApplicationPolicy
-
   def show?
-    (participant && (participant.admin?))
+    participant&.admin?
   end
 
   def update?
-    (participant && (participant.admin?))
+    participant&.admin?
   end
 
   def create?
-    (participant && (participant.admin?))
+    participant&.admin?
   end
-
 end

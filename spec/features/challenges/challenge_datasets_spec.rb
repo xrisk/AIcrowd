@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-
 describe 'download dataset links' do
   let!(:challenge)                       { create :challenge, :running }
   let!(:participation_terms)             { create :participation_terms }

@@ -23,7 +23,9 @@ module MlChallenge
       participant_id = @obj_record.participant_id
       challenge_id   = @obj_record.challenge_id
 
-      return if @activity_point.ml_activity_points.exists?(participant_id: participant_id, challenge_id: challenge_id) && activity_is_once_per_challenge
+      if @activity_point.ml_activity_points.exists?(participant_id: participant_id, challenge_id: challenge_id) && activity_is_once_per_challenge
+        return
+      end
 
       @activity_point.ml_activity_points.create!(participant_id: participant_id, challenge_id: challenge_id)
     end
@@ -35,7 +37,9 @@ module MlChallenge
 
       return unless @activity_point.present?
 
-      return if @activity_point.ml_activity_points.exists?(participant_id: participant_id, challenge_id: challenge_id) && activity_is_once_per_challenge
+      if @activity_point.ml_activity_points.exists?(participant_id: participant_id, challenge_id: challenge_id) && activity_is_once_per_challenge
+        return
+      end
 
       @activity_point.ml_activity_points.create!(participant_id: participant_id, challenge_id: challenge_id)
     end

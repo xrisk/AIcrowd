@@ -21,20 +21,21 @@ class InsightsController < ApplicationController
 
   def top_score_vs_time
     return render json: {} if @current_round.blank?
+
     # Calculate running maximum hash for dates
 
     score              = params[:score].presence || 'score'
     precision          = @current_round["#{score}_precision"]
 
     sort_order         = if score == 'score'
-                           @current_round["primary_sort_order_cd"]
+                           @current_round['primary_sort_order_cd']
                          else
-                           @current_round["secondary_sort_order_cd"]
+                           @current_round['secondary_sort_order_cd']
                          end
 
     grouped_collection = @collection.group_by_day(:created_at)
 
-    return_hash = if sort_order == "descending"
+    return_hash = if sort_order == 'descending'
                     get_running_agg('max', grouped_collection.maximum(score), precision)
                   else
                     # sort_order == "ascending" or "not_used"
@@ -114,7 +115,7 @@ class InsightsController < ApplicationController
   end
 
   def get_streak_record
-    hash_record   = current_participant.ml_activity_points.group_by_day(:created_at, format: "%Y-%m-%d").sum_points_by_day
+    hash_record   = current_participant.ml_activity_points.group_by_day(:created_at, format: '%Y-%m-%d').sum_points_by_day
     @values       = hash_record.values
     @streak_array = []
 
@@ -131,7 +132,7 @@ class InsightsController < ApplicationController
       num += 1
       @streak_array << num
 
-      check_hit_goal_points(@values[index+1], index+1, num)
+      check_hit_goal_points(@values[index+ 1], index+ 1, num)
     end
   end
 end

@@ -37,29 +37,30 @@ class ChallengesController < ApplicationController
     if current_participant
       @challenge_participant = @challenge.challenge_participants.where(
         participant_id:                   current_participant.id,
-        challenge_rules_accepted_version: @challenge.current_challenge_rules&.version)
+        challenge_rules_accepted_version: @challenge.current_challenge_rules&.version
+      )
     end
 
     @challenge.record_page_view(@meta_challenge) unless params[:version] # dont' record page views on history pages
-    @challenge_rules  = @challenge.current_challenge_rules
-    @challenge_rounds = @challenge.challenge_rounds.started
-    @partners = Partner.where(organizer_id: @challenge.organizer_ids) if @challenge.organizers.any?
+    @challenge_rules               = @challenge.current_challenge_rules
+    @challenge_rounds              = @challenge.challenge_rounds.started
+    @partners                      = Partner.where(organizer_id: @challenge.organizer_ids) if @challenge.organizers.any?
     @challenge_baseline_discussion = @challenge.baseline_discussion
     if @challenge.active_round
-      @top_five_leaderboards = @challenge.active_round.leaderboards.where(meta_challenge_id: @meta_challenge, baseline: false).limit(5)
+      @top_five_leaderboards   = @challenge.active_round.leaderboards.where(meta_challenge_id: @meta_challenge, baseline: false).limit(5)
       @latest_five_submissions = @challenge.active_round.submissions.where(meta_challenge_id: @meta_challenge).order(created_at: :desc).limit(5)
     end
 
     if @challenge.meta_challenge
-      @latest_five_submissions = Submission.where(meta_challenge_id: @challenge).order(created_at: :desc).limit(5)
+      @latest_five_submissions   = Submission.where(meta_challenge_id: @challenge).order(created_at: :desc).limit(5)
       params[:meta_challenge_id] = params[:id]
-      render template: "challenges/show_meta_challenge"
+      render template: 'challenges/show_meta_challenge'
     end
 
     if @challenge.ml_challenge
       params[:ml_challenge_id] = params[:id]
       @date_wise_challenge     = get_date_wise_challenge_problem
-      render template: "challenges/show_ml_challenge"
+      render template: 'challenges/show_ml_challenge'
     end
   end
 
@@ -117,7 +118,7 @@ class ChallengesController < ApplicationController
     authorize Challenge
     @final_order = params[:order].split(',')
     @final_order.each_with_index do |ch, idx|
-      Challenge.friendly.find(ch).update(featured_sequence: idx+1)
+      Challenge.friendly.find(ch).update(featured_sequence: idx+ 1)
     end
 
     redirect_to helpers.reorder_challenges_path
@@ -187,16 +188,12 @@ class ChallengesController < ApplicationController
 
     if params.has_key?('meta_challenge_id')
       @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id])
-      if !@meta_challenge.meta_challenge || !@meta_challenge.problems.include?(@challenge)
-        raise ActionController::RoutingError.new('Not Found')
-      end
+      raise ActionController::RoutingError, 'Not Found' if !@meta_challenge.meta_challenge || !@meta_challenge.problems.include?(@challenge)
     end
 
     if params.has_key?('ml_challenge_id')
       @ml_challenge = Challenge.includes(:organizers).friendly.find(params[:ml_challenge_id])
-      if !@ml_challenge.ml_challenge || !@ml_challenge.problems.include?(@challenge)
-        raise ActionController::RoutingError.new('Not Found')
-      end
+      raise ActionController::RoutingError, 'Not Found' if !@ml_challenge.ml_challenge || !@ml_challenge.problems.include?(@challenge)
     end
 
     if !params.has_key?('meta_challenge_id') && !params.has_key?('ml_challenge_id')
@@ -225,14 +222,15 @@ class ChallengesController < ApplicationController
 
   def set_s3_direct_post
     @s3_direct_post = S3_BUCKET
-                          .presigned_post(
-                            key:                   "answer_files/#{@challenge.slug}_#{SecureRandom.uuid}/${filename}",
-                            success_action_status: '201',
-                            acl:                   'private')
+                      .presigned_post(
+                        key:                   "answer_files/#{@challenge.slug}_#{SecureRandom.uuid}/${filename}",
+                        success_action_status: '201',
+                        acl:                   'private'
+                      )
   end
 
   def set_challenge_rounds
-    @challenge_rounds = @challenge.challenge_rounds.where("start_dttm < ?", Time.current)
+    @challenge_rounds = @challenge.challenge_rounds.where('start_dttm < ?', Time.current)
   end
 
   def set_filters
@@ -245,7 +243,7 @@ class ChallengesController < ApplicationController
   end
 
   def challenge_status
-    params[:controller] == "landing_page" ? Challenge.statuses.keys - ['draft'] : Challenge.statuses.keys
+    params[:controller] == 'landing_page' ? Challenge.statuses.keys - ['draft'] : Challenge.statuses.keys
   end
 
   def create_invitations
@@ -288,7 +286,7 @@ class ChallengesController < ApplicationController
     return @challenge.problems unless challenge_participant.present?
 
     day_num               = (Time.now.to_date - challenge_participant.challenge_rules_accepted_date.to_date).to_i + 1
-    problem_ids           = @challenge.challenge_problems.where("occur_day <= ?", day_num).pluck(:problem_id)
+    problem_ids           = @challenge.challenge_problems.where('occur_day <= ?', day_num).pluck(:problem_id)
 
     @challenge.problems.where(id: problem_ids)
   end
@@ -344,7 +342,7 @@ class ChallengesController < ApplicationController
       :big_challenge_card_image,
       :practice_flag,
       :ml_challenge,
-      image_attributes: [
+      image_attributes:              [
         :id,
         :image,
         :_destroy
@@ -355,7 +353,7 @@ class ChallengesController < ApplicationController
         :partner_url,
         :_destroy
       ],
-      challenge_rounds_attributes: [
+      challenge_rounds_attributes:   [
         :id,
         :score_title,
         :score_secondary_title,
@@ -380,7 +378,7 @@ class ChallengesController < ApplicationController
         :freeze_duration,
         :submissions_type
       ],
-      challenge_rules_attributes: [
+      challenge_rules_attributes:    [
         :id,
         :terms,
         :has_additional_checkbox,

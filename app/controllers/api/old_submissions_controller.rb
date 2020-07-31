@@ -10,7 +10,7 @@ class Api::OldSubmissionsController < Api::BaseController
     if @submission.present?
       payload = Api::SubmissionSerializer.new(@submission).as_json
       payload.merge(message: 'Submission found.')
-      status = :ok
+      status  = :ok
     else
       payload = { message: 'No submission could be found for this id' }
       status  = :not_found
@@ -19,14 +19,13 @@ class Api::OldSubmissionsController < Api::BaseController
   end
 
   def index
-    challenge_id = params[:challenge_id]
+    challenge_id            = params[:challenge_id]
     # allow only own organizer to access this challenge's submissions
     permitted_challenge_ids = @organizer.challenges.pluck(:id).map(&:to_s)
     raise OrganizerNotAuthorized unless permitted_challenge_ids.include?(challenge_id)
 
     set_submissions(challenge_id, params[:grading_status], params[:after], params[:challenge_round_id])
     render json: @submissions, each_serializer: Api::SubmissionSerializer, status: :ok
-
   rescue ActiveRecord::RecordNotFound
     message = "challenge_id #{challenge_id} not found"
     render json: { message: message }, status: :not_found

@@ -27,7 +27,7 @@ describe Gitlab::FetchUserByExternalIdService do
     end
 
     context 'when participant does not exist in Gitlab' do
-      let(:participant) { create(:participant, id: 123456) }
+      let(:participant) { create(:participant, id: 123_456) }
 
       it 'returns failure with error message' do
         result = VCR.use_cassette('gitlab_api/fetch_user_by_external_id/user_not_found') do

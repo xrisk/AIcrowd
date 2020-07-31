@@ -14,6 +14,7 @@ class SubmissionGrade < ApplicationRecord
       grading_status:  grading_status,
       grading_message: grading_message,
       score:           score,
-      score_secondary: score_secondary)
+      score_secondary: score_secondary
+    )
   end
 end

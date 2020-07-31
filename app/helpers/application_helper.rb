@@ -19,20 +19,16 @@ module ApplicationHelper
   def body_id
     if (controller.controller_name == 'landing_page' && controller.action_name == 'index') ||
        (controller.controller_name == 'blogs' && controller.action_name == 'index')
-      return 'home'
-    else
-      return nil
+      'home'
     end
   end
 
   def footer_class
     if controller.controller_name == 'registrations' ||
-        (controller.controller_name == 'challenges' && controller.action_name == 'edit') ||
-        (controller.controller_name == 'organizers' && controller.action_name == 'edit') ||
-        (controller.controller_name == 'sessions')
-      return "class='no-margin-top'"
-    else
-      return nil
+       (controller.controller_name == 'challenges' && controller.action_name == 'edit') ||
+       (controller.controller_name == 'organizers' && controller.action_name == 'edit') ||
+       (controller.controller_name == 'sessions')
+      "class='no-margin-top'"
     end
   end
 
@@ -68,10 +64,10 @@ module ApplicationHelper
                         })
     end
 
-    inner_type = :button
-    inner      = {
+    inner_type     = :button
+    inner          = {
       disabled: opts[:disabled],
-      class:    "btn btn-secondary"
+      class:    'btn btn-secondary'
     }
     inner[:class] += ' disabled' if opts[:disabled]
     inner[:class] += ' btn-sm' if opts[:small]
@@ -97,38 +93,37 @@ module ApplicationHelper
     content_tag(:span, outer) { content_tag(inner_type, inner) { title } }
   end
 
-  def social_share(site, challenge, mediable, text=nil)
-    title = text.presence || challenge.challenge
+  def social_share(site, challenge, mediable, text = nil)
+    title            = text.presence || challenge.challenge
     data_img_and_url = data_image_and_url(challenge, mediable)
     content_tag(:span,
                 data: {
-                        title: title,
-                        desc:  challenge.tagline,
-                        img:   data_img_and_url[:img],
-                        url:   "#{data_img_and_url[:url]}?utm_source=AIcrowd&utm_medium=#{site.humanize}",
-                        href:  "#{data_img_and_url[:url]}?utm_source=AIcrowd&utm_medium=#{site.humanize}"
-                      }) do
+                  title: title,
+                  desc:  challenge.tagline,
+                  img:   data_img_and_url[:img],
+                  url:   "#{data_img_and_url[:url]}?utm_source=AIcrowd&utm_medium=#{site.humanize}",
+                  href:  "#{data_img_and_url[:url]}?utm_source=AIcrowd&utm_medium=#{site.humanize}"
+                }) do
       social_share_link(site, data_img_and_url[:url]) do
         image_tag(social_image_path(site))
       end
     end
   end
 
-
   def social_share_link(site, data_url)
     link_to image_tag(social_image_path(site)), '#',
-      {
-        class: "btn btn-#{site} btn-sm mr-2 social-share",
-        data: {
+            {
+              class:   "btn btn-#{site} btn-sm mr-2 social-share",
+              data:    {
                 url:       "#{data_url}?utm_source=AIcrowd&utm_medium=#{site.humanize}",
                 site:      site,
                 toggle:    'tooltip',
                 placement: 'top'
-               },
-        onclick: "return SocialShareButton.share(this)",
-        title: "Share to #{site.humanize}",
-        rel: 'nofollow'
-      }
+              },
+              onclick: 'return SocialShareButton.share(this)',
+              title:   "Share to #{site.humanize}",
+              rel:     'nofollow'
+            }
   end
 
   def social_image_url(site)
@@ -174,7 +169,7 @@ module ApplicationHelper
   def time_in_seconds(time)
     seconds = Time.current - time
     seconds = 0 if seconds.nil? || seconds < 0
-    return seconds
+    seconds
   end
 
   def social_image_path(site)

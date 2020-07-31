@@ -3,7 +3,7 @@ Doorkeeper.configure do
   orm :active_record
 
   # This block will be called to check whether the resource owner is authenticated or not.
-  resource_owner_authenticator do |routes|
+  resource_owner_authenticator do |_routes|
     # Put your resource owner authentication logic here.
     # If you want to use named routes from your app you need
     # to call them on routes object eg.

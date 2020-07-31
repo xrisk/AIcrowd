@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::ExternalGradersController, type: :request do
   before do
-    Timecop.freeze(DateTime.new(2017, 10, 30, 2, 2, 2, "+02:00"))
+    Timecop.freeze(DateTime.new(2017, 10, 30, 2, 2, 2, '+02:00'))
   end
 
   after do
@@ -17,9 +17,9 @@ RSpec.describe Api::ExternalGradersController, type: :request do
   let!(:submission2)     { create :submission, challenge: challenge, participant: participant, created_at: 18.hours.ago }
   let!(:submission3)     { create :submission, challenge: challenge, participant: participant, created_at: 2.days.ago }
 
-  describe "GET /api/external_graders/:api_key : validate user API key" do
+  describe 'GET /api/external_graders/:api_key : validate user API key' do
     context 'individual developer API key validation' do
-      describe "with valid organizer auth key" do
+      describe 'with valid organizer auth key' do
         before do
           get "/api/external_graders/#{participant.api_key}",
               headers: {
@@ -33,7 +33,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
         it { expect(response.body).to eq('{"message":"Developer API key is valid","participant_id":' + participant.id.to_s + '}') }
       end
 
-      describe "with crowdAI auth key" do
+      describe 'with crowdAI auth key' do
         before do
           get "/api/external_graders/#{participant.api_key}",
               headers: {
@@ -47,7 +47,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
         it { expect(response.body).to eq('{"message":"Developer API key is valid","participant_id":' + participant.id.to_s + '}') }
       end
 
-      describe "with invalid auth key" do
+      describe 'with invalid auth key' do
         before do
           get "/api/external_graders/#{participant.api_key}",
               headers: {
@@ -61,9 +61,9 @@ RSpec.describe Api::ExternalGradersController, type: :request do
         it { expect(response.body).to eq("HTTP Token: Access denied.\n") }
       end
 
-      describe "with invalid developer key" do
+      describe 'with invalid developer key' do
         before do
-          get "/api/external_graders/264358f071908c5762b9423a01f72662",
+          get '/api/external_graders/264358f071908c5762b9423a01f72662',
               headers: {
                 'Accept':        'application/vnd.api+json',
                 'Content-Type':  'application/vnd.api+json',

@@ -10,7 +10,7 @@ describe Api::V1::Organizers::ParticipantOrganizersController, type: :request do
 
     let(:params) do
       {
-        participant_id: new_participant.id,
+        participant_id: new_participant.id
       }
     end
 
@@ -35,7 +35,7 @@ describe Api::V1::Organizers::ParticipantOrganizersController, type: :request do
       context 'when participant name provided in params' do
         let(:params) do
           {
-            name: new_participant.name,
+            name: new_participant.name
           }
         end
 
@@ -50,7 +50,7 @@ describe Api::V1::Organizers::ParticipantOrganizersController, type: :request do
       context 'when params are invalid' do
         let(:params) do
           {
-            participant_id: old_participant.id,
+            participant_id: old_participant.id
           }
         end
 

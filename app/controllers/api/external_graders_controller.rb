@@ -3,15 +3,15 @@ class Api::ExternalGradersController < Api::BaseController
   before_action :auth_by_api_key_and_client_id, only: [:create]
 
   def show # GET
-    Rails.logger.info "[api] Api::ExternalGradersController#get"
+    Rails.logger.info '[api] Api::ExternalGradersController#get'
     Rails.logger.info "[api] params: #{params}"
     participant = Participant.where(api_key: params[:id]).first
     if participant.present?
-      message        = "Developer API key is valid"
+      message        = 'Developer API key is valid'
       participant_id = participant.id
       status         = :ok
     else
-      message        = "No participant could be found for this API key"
+      message        = 'No participant could be found for this API key'
       participant_id = nil
       status         = :not_found
     end
@@ -20,7 +20,7 @@ class Api::ExternalGradersController < Api::BaseController
   end
 
   def create # POST
-    Rails.logger.info "[api] Api::ExternalGradersController#create"
+    Rails.logger.info '[api] Api::ExternalGradersController#create'
     Rails.logger.info "[api] params: #{params}"
     message               = nil
     status                = nil
@@ -43,8 +43,8 @@ class Api::ExternalGradersController < Api::BaseController
       raise ParallelSubmissionLimitExceeded unless parallel_submissions_allowed?(challenge, participant)
 
       challenge_participant = challenge
-        .challenge_participants
-        .find_by(participant_id: participant.id)
+                              .challenge_participants
+                              .find_by(participant_id: participant.id)
 
       raise TermsNotAcceptedByParticipant if challenge_participant.blank?
 
@@ -53,18 +53,20 @@ class Api::ExternalGradersController < Api::BaseController
 
       params[:meta] = clean_meta(params[:meta]) if params[:meta].present?
       submission    = Submission
-        .create!(
-          participant_id:       participant.id,
-          challenge_id:         challenge.id,
-          challenge_round_id:   challenge_round_id,
-          description:          params[:description],
-          post_challenge:       post_challenge(challenge, params),
-          meta:                 params[:meta])
+                      .create!(
+                        participant_id:     participant.id,
+                        challenge_id:       challenge.id,
+                        challenge_round_id: challenge_round_id,
+                        description:        params[:description],
+                        post_challenge:     post_challenge(challenge, params),
+                        meta:               params[:meta]
+                      )
       if media_fields_present?
         submission.update(
           media_large:        params[:media_large],
           media_thumbnail:    params[:media_thumbnail],
-          media_content_type: params[:media_content_type])
+          media_content_type: params[:media_content_type]
+        )
       end
 
       # Post challenge submissions
@@ -73,7 +75,8 @@ class Api::ExternalGradersController < Api::BaseController
         if submission.challenge.post_challenge_submissions.blank?
           submission.update(
             grading_status_cd: 'failed',
-            grading_message:   'Submission made after end of round.')
+            grading_message:   'Submission made after end of round.'
+          )
         else
           submission.submission_grades.create!(grading_params)
         end
@@ -100,7 +103,7 @@ class Api::ExternalGradersController < Api::BaseController
   end
 
   def update # PATCH
-    Rails.logger.info "[api] Api::ExternalGradersController#update"
+    Rails.logger.info '[api] Api::ExternalGradersController#update'
     Rails.logger.info "[api] params: #{params}"
     message               = nil
     status                = nil
@@ -118,7 +121,8 @@ class Api::ExternalGradersController < Api::BaseController
         submission.update(
           media_large:        params[:media_large],
           media_thumbnail:    params[:media_thumbnail],
-          media_content_type: params[:media_content_type])
+          media_content_type: params[:media_content_type]
+        )
         unless params[:media_content_type] == 'video/youtube' || Rails.env.test?
           S3Service.new(params[:media_large]).make_public_read
           S3Service.new(params[:media_thumbnail]).make_public_read
@@ -156,8 +160,8 @@ class Api::ExternalGradersController < Api::BaseController
 
       submission.post_challenge = post_challenge
       submission.save
-      message = "Submission #{submission.id} updated"
-      status  = :accepted
+      message                   = "Submission #{submission.id} updated"
+      status                    = :accepted
     rescue StandardError => e
       status  = :bad_request
       message = e
@@ -196,11 +200,11 @@ class Api::ExternalGradersController < Api::BaseController
       s3_key         = "submissions/#{SecureRandom.uuid}"
       signer         = Aws::S3::Presigner.new
       presigned_url  = signer.presigned_url(:put_object, bucket: ENV['AWS_S3_SHARED_BUCKET'], key: s3_key)
-      message        = "Presigned url generated"
+      message        = 'Presigned url generated'
       participant_id = participant.id
       status         = :ok
     else
-      message        = "No participant could be found for this API key"
+      message        = 'No participant could be found for this API key'
       participant_id = nil
       presigned_url  = nil
       status         = :not_found
@@ -209,41 +213,38 @@ class Api::ExternalGradersController < Api::BaseController
   end
 
   def post_challenge(challenge, params)
-    return true if params[:post_challenge] == "true"
-    return false if params[:post_challenge] == "false"
-    if DateTime.now > challenge.end_dttm
-      return true
-    else
-      return false
-    end
+    return true if params[:post_challenge] == 'true'
+    return false if params[:post_challenge] == 'false'
+
+    DateTime.now > challenge.end_dttm
   end
 
   class DeveloperAPIKeyInvalid < StandardError
-    def initialize(msg = "The API key did not match any participant record.")
+    def initialize(msg = 'The API key did not match any participant record.')
       super
     end
   end
 
   class ChallengeClientNameInvalid < StandardError
-    def initialize(msg = "The Challenge Client Name string did not match any challenge.")
+    def initialize(msg = 'The Challenge Client Name string did not match any challenge.')
       super
     end
   end
 
   class GradingStatusInvalid < StandardError
-    def initialize(msg = "Grading status must be one of (graded|failed|initiated)")
+    def initialize(msg = 'Grading status must be one of (graded|failed|initiated)')
       super
     end
   end
 
   class GradingMessageMissing < StandardError
-    def initialize(msg = "Grading message must be provided if grading = failed")
+    def initialize(msg = 'Grading message must be provided if grading = failed')
       super
     end
   end
 
   class SubmissionIdInvalid < StandardError
-    def initialize(msg = "Submission ID is invalid.")
+    def initialize(msg = 'Submission ID is invalid.')
       super
     end
   end
@@ -258,7 +259,7 @@ class Api::ExternalGradersController < Api::BaseController
       if @reset_time
         "The participant has no submission slots remaining for today. Please wait until #{@reset_time} to make your next submission."
       else
-        "The participant has no submission slots remaining for today."
+        'The participant has no submission slots remaining for today.'
       end
     end
   end
@@ -321,11 +322,11 @@ class Api::ExternalGradersController < Api::BaseController
     # meta field depending of if its a string, serrialized json or a hash.
     #
     if params_meta.respond_to?(:keys)
-      return params_meta
+      params_meta
     else
       begin
         # Try to parse it as a JSON
-        return JSON.parse(params_meta)
+        JSON.parse(params_meta)
       rescue Exception => e
         # If its a string which is not a valid JSON
         # Then this is from the corrupted data
@@ -335,7 +336,7 @@ class Api::ExternalGradersController < Api::BaseController
         Rails.logger.warn "Found invalid meta key: #{params_meta}.
         Assuming the user meant an empty Hash, or it is corrupt data.
         Reference : https://github.com/crowdAI/crowdai/issues/737 "
-        return {}
+        {}
       end
     end
   end
@@ -344,7 +345,9 @@ class Api::ExternalGradersController < Api::BaseController
     media_large        = params[:media_large]
     media_thumbnail    = params[:media_thumbnail]
     media_content_type = params[:media_content_type]
-    raise MediaFieldsIncomplete unless (media_large.present? && media_thumbnail.present? && media_content_type.present?) || (media_large.blank? && media_thumbnail.blank? && media_content_type.blank?)
+    unless (media_large.present? && media_thumbnail.present? && media_content_type.present?) || (media_large.blank? && media_thumbnail.blank? && media_content_type.blank?)
+      raise MediaFieldsIncomplete
+    end
     return true if media_large.present? && media_thumbnail.present? && media_content_type.present?
     return false if media_large.blank? && media_thumbnail.blank? && media_content_type.blank?
   end
@@ -353,7 +356,8 @@ class Api::ExternalGradersController < Api::BaseController
     if params[:challenge_round_id].present?
       round = ChallengeRound.where(
         challenge_id: challenge.id,
-        id:           params[:challenge_round_id]).first
+        id:           params[:challenge_round_id]
+      ).first
       if round.present?
         return round.id
       else
@@ -362,7 +366,7 @@ class Api::ExternalGradersController < Api::BaseController
     end
     round = challenge.active_round
     if round.present?
-      return round.id
+      round.id
     else
       raise ChallengeRoundNotOpen
     end
@@ -371,7 +375,7 @@ class Api::ExternalGradersController < Api::BaseController
   def challenge_round_open?(challenge)
     return true if challenge.active_round.present?
 
-    round = challenge.challenge_rounds.where("current_timestamp between start_dttm and end_dttm")
+    round = challenge.challenge_rounds.where('current_timestamp between start_dttm and end_dttm')
     return false if round.blank?
   end
 
@@ -382,15 +386,12 @@ class Api::ExternalGradersController < Api::BaseController
     return true if min_score.nil?
 
     participant_leaderboard = challenge
-                          .leaderboards
-                          .where(submitter_id:     participant.id,
-                                 challenge_round_id: challenge.previous_round.id).first
+                              .leaderboards
+                              .where(submitter_id:       participant.id,
+                                     challenge_round_id: challenge.previous_round.id).first
     return false if participant_leaderboard.nil?
-    if participant_leaderboard.score >= min_score
-      return true
-    else
-      return false
-    end
+
+    participant_leaderboard.score >= min_score
   end
 
   def notify_admins(submission)

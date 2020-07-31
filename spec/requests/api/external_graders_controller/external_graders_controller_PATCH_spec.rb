@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::ExternalGradersController, type: :request do
   before do
-    Timecop.freeze(DateTime.new(2017, 10, 30, 2, 2, 2, "+02:00"))
+    Timecop.freeze(DateTime.new(2017, 10, 30, 2, 2, 2, '+02:00'))
   end
 
   after do
@@ -17,7 +17,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
   let!(:submission2)     { create :submission, challenge: challenge, participant: participant, created_at: 18.hours.ago }
   let!(:submission3)     { create :submission, challenge: challenge, participant: participant, created_at: 2.days.ago }
 
-  describe "PATCH /api/external_graders/:submission_id : update submission score or media" do
+  describe 'PATCH /api/external_graders/:submission_id : update submission score or media' do
     def valid_media_attributes
       {
         media_large:        '/s3 url',
@@ -37,10 +37,10 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     def valid_meta_attributes_update
       {
         meta: {
-          impwt_std: "0.01",
-          ips_std:   "3.5",
-          snips:     "45.69345202998776",
-          file_key:  "submissions/eeeeee-a525-4e5e-97a8-8ff7199be43c"
+          impwt_std: '0.01',
+          ips_std:   '3.5',
+          snips:     '45.69345202998776',
+          file_key:  'submissions/eeeeee-a525-4e5e-97a8-8ff7199be43c'
         }
       }
     end
@@ -48,10 +48,10 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     def valid_meta_attributes_update_as_json
       {
         meta: JSON.dump({
-                          impwt_std: "0.01",
-                          ips_std:   "3.5",
-                          snips:     "45.69345202998776",
-                          file_key:  "submissions/eeeeee-a525-4e5e-97a8-8ff7199be43c"
+                          impwt_std: '0.01',
+                          ips_std:   '3.5',
+                          snips:     '45.69345202998776',
+                          file_key:  'submissions/eeeeee-a525-4e5e-97a8-8ff7199be43c'
                         })
       }
     end
@@ -59,10 +59,10 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     def valid_meta_attributes_partial_update
       {
         meta: {
-          impwt_std: "0.01",
-          ips_std:   "3.5",
-          snips:     "45.69345202998776",
-          file_key:  "submissions/eeeeee-a525-4e5e-97a8-8ff7199be43c"
+          impwt_std: '0.01',
+          ips_std:   '3.5',
+          snips:     '45.69345202998776',
+          file_key:  'submissions/eeeeee-a525-4e5e-97a8-8ff7199be43c'
         }
       }
     end
@@ -70,10 +70,10 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     def valid_meta_attributes_partial_update_as_json
       {
         meta: JSON.dump({
-                          impwt_std: "0.01",
-                          ips_std:   "3.5",
-                          snips:     "45.69345202998776",
-                          file_key:  "submissions/eeeeee-a525-4e5e-97a8-8ff7199be43c"
+                          impwt_std: '0.01',
+                          ips_std:   '3.5',
+                          snips:     '45.69345202998776',
+                          file_key:  'submissions/eeeeee-a525-4e5e-97a8-8ff7199be43c'
                         })
       }
     end
@@ -81,10 +81,10 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     def valid_meta_attributes_add
       {
         meta: {
-          impwt_std: "0.020956583416961033",
-          ips_std:   "2.0898337641716487",
-          new_key:   "hello",
-          file_key:  "submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c"
+          impwt_std: '0.020956583416961033',
+          ips_std:   '2.0898337641716487',
+          new_key:   'hello',
+          file_key:  'submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c'
         }
       }
     end
@@ -92,27 +92,27 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     def valid_meta_attributes_add_as_json
       {
         meta: JSON.dump({
-                          impwt_std: "0.020956583416961033",
-                          ips_std:   "2.0898337641716487",
-                          new_key:   "hello",
-                          file_key:  "submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c"
+                          impwt_std: '0.020956583416961033',
+                          ips_std:   '2.0898337641716487',
+                          new_key:   'hello',
+                          file_key:  'submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c'
                         })
       }
     end
 
     def invalid_meta_attributes
       {
-        meta: "THIS_IS_AN_INVALID_META_ATTRIBUTE"
+        meta: 'THIS_IS_AN_INVALID_META_ATTRIBUTE'
       }
     end
 
     def valid_meta_attributes_multi
       {
         meta: {
-          impwt_std: "0.020956583416961033",
-          ips_std:   "2.0898337641716487",
-          snips:     "45.69345202998776",
-          file_key:  "submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c"
+          impwt_std: '0.020956583416961033',
+          ips_std:   '2.0898337641716487',
+          snips:     '45.69345202998776',
+          file_key:  'submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c'
         }
       }
     end
@@ -120,10 +120,10 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     def valid_meta_attributes_multi_as_json
       {
         meta: JSON.dump({
-                          impwt_std: "0.020956583416961033",
-                          ips_std:   "2.0898337641716487",
-                          snips:     "45.69345202998776",
-                          file_key:  "submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c"
+                          impwt_std: '0.020956583416961033',
+                          ips_std:   '2.0898337641716487',
+                          snips:     '45.69345202998776',
+                          file_key:  'submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c'
                         })
       }
     end
@@ -145,16 +145,16 @@ RSpec.describe Api::ExternalGradersController, type: :request do
 
     def valid_youtube_attributes
       {
-        media_large:        "94EPSjQH38Y",
-        media_thumbnail:    "94EPSjQH38Y",
-        media_content_type: "video/youtube"
+        media_large:        '94EPSjQH38Y',
+        media_thumbnail:    '94EPSjQH38Y',
+        media_content_type: 'video/youtube'
       }
     end
 
     def invalid_youtube_attributes
       {
-        media_large:        "94EPSjQH38Y",
-        media_content_type: "video/youtube"
+        media_large:        '94EPSjQH38Y',
+        media_content_type: 'video/youtube'
       }
     end
 
@@ -274,7 +274,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
     #       #  :impwt_std=>"0.020956583416961033", :ips_std=>"2.0898337641716487",
     #       #  :new_key=>"hello", :file_key=>"submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c"}) }
     #     end
-    context "valid_attributes_grading_submitted_with_message" do
+    context 'valid_attributes_grading_submitted_with_message' do
       before do
         patch "/api/external_graders/#{submission1.id}",
               params:  valid_attributes_grading_submitted_with_message,
@@ -289,9 +289,9 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(submission1.grading_message).to eq('in progress') }
     end
 
-    context "with invalid submission id" do
+    context 'with invalid submission id' do
       before do
-        patch "/api/external_graders/999999",
+        patch '/api/external_graders/999999',
               params:  valid_media_attributes,
               headers: { 'Authorization': auth_header(organizer.api_key) }
       end
@@ -300,7 +300,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(json(response.body)[:message]).to eq("Couldn't find Submission with 'id'=999999") }
     end
 
-    context "with valid_youtube_attributes" do
+    context 'with valid_youtube_attributes' do
       before do
         patch "/api/external_graders/#{submission1.id}",
               params:  valid_youtube_attributes,

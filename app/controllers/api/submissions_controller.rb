@@ -8,7 +8,7 @@ class Api::SubmissionsController < Api::BaseController
     if @submission.present?
       payload = Api::SubmissionSerializer.new(@submission).as_json
       payload.merge(message: 'Submission found.')
-      status = :ok
+      status  = :ok
     else
       payload = { message: 'No submission could be found for this id' }
       status  = :not_found
@@ -32,7 +32,7 @@ class Api::SubmissionsController < Api::BaseController
       message = "challenge_client_name #{@challenge_client_name} not found"
       render json: { message: message }, status: :not_found
     else
-      challenge_id = challenge.id
+      challenge_id    = challenge.id
       set_submissions(challenge_id, params[:grading_status], params[:after], params[:challenge_round_id])
       @submission_ids = @submissions.map(&:id)
       render json: @submission_ids, status: :ok

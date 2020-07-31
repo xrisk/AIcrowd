@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "partner visibility" do
+describe 'partner visibility' do
   let!(:p1) { create :partner, seq: 1 }
   let!(:p2) { create :partner, seq: 2 }
   let!(:p3) { create :partner, seq: 3 }
@@ -12,8 +12,8 @@ describe "partner visibility" do
   let!(:p9) { create :partner, seq: 9 }
 
   it 'partners visible' do
-    visit "/"
+    visit '/'
     # expect(page).to have_css(".users-group-1", count: 4)
-    expect(page).to have_css(".logos-organizers", count: 1)
+    expect(page).to have_css('.logos-organizers', count: 1)
   end
 end

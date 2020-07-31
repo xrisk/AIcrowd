@@ -5,7 +5,6 @@ module Api
         @participant = participant
       end
 
-
       def serialize
         {
           id:          participant.id,

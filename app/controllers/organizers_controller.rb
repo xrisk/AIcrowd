@@ -19,7 +19,7 @@ class OrganizersController < ApplicationController
 
     if @organizer.save
       if current_participant.admin?
-        redirect_to @organizer, notice: "Organizer has been created."
+        redirect_to @organizer, notice: 'Organizer has been created.'
       else
         current_participant.organizers << @organizer
         current_participant.save!
@@ -46,7 +46,7 @@ class OrganizersController < ApplicationController
   end
 
   def clef_email
-    @organizer = Organizer.friendly.find(params[:organizer_id])
+    @organizer   = Organizer.friendly.find(params[:organizer_id])
     authorize @organizer
     @participant = Participant.friendly.find(params[:participant_id])
     if @participant.clef_email
@@ -65,7 +65,7 @@ class OrganizersController < ApplicationController
   end
 
   def regen_api_key
-    @organizer = Organizer.friendly.find(params[:organizer_id])
+    @organizer         = Organizer.friendly.find(params[:organizer_id])
     authorize @organizer
     @organizer.api_key = @organizer.generate_api_key
     @organizer.save!
@@ -81,21 +81,22 @@ class OrganizersController < ApplicationController
 
   def organizer_params
     params
-        .require(:organizer)
-        .permit(
-          :organizer,
-          :address,
-          :description,
-          :approved,
-          :organizer_id,
-          :status,
-          :tagline,
-          :image_file,
-          :clef_organizer,
-          clef_tasks_attributes: [
-            :id,
-            :_delete,
-            :task
-          ])
+      .require(:organizer)
+      .permit(
+        :organizer,
+        :address,
+        :description,
+        :approved,
+        :organizer_id,
+        :status,
+        :tagline,
+        :image_file,
+        :clef_organizer,
+        clef_tasks_attributes: [
+          :id,
+          :_delete,
+          :task
+        ]
+      )
   end
 end

@@ -78,7 +78,7 @@ RSpec.describe EmailPreferencesTokenService, api: true do
       context 'invalid_token' do
         let!(:participant) { create :participant }
         let!(:email_preference) { create :email_preference, participant: participant }
-        let!(:token) { "4UBVoJhVdhEZCmOZW4G3AMbQgHPXoz8D" }
+        let!(:token) { '4UBVoJhVdhEZCmOZW4G3AMbQgHPXoz8D' }
 
         subject { described_class.new(participant) }
 

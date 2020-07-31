@@ -7,7 +7,7 @@ module Api
         def check_login
           if params[:aicrowd_cookie].present?
             result      = SessionService.new(params[:aicrowd_cookie]).call
-            participant = Participant.find_by(id: result[:value]["warden.user.participant.key"][0]) if result.success
+            participant = Participant.find_by(id: result[:value]['warden.user.participant.key'][0]) if result.success
 
             if participant.present?
               render json: { logged_in: true, user_name: participant.name, user_email: participant.email }, status: :ok

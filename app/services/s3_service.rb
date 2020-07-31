@@ -7,7 +7,7 @@ class S3Service
                      ENV['AWS_S3_BUCKET']
                    end
     Aws.config.update({ region: ENV['AWS_REGION'] })
-    @bucket = Aws::S3::Resource.new.bucket(@bucket_name)
+    @bucket      = Aws::S3::Resource.new.bucket(@bucket_name)
   end
 
   def valid_key?
@@ -15,22 +15,14 @@ class S3Service
   end
 
   def expiring_url
-    if s3_file_obj&.key.present?
-      return s3_file_obj.presigned_url(:get, expires_in: 7.days.to_i)
-    else
-      return nil
-    end
+    s3_file_obj.presigned_url(:get, expires_in: 7.days.to_i) if s3_file_obj&.key.present?
   end
 
   def public_url
-    if s3_file_obj&.key.present?
-      return s3_file_obj.public_url
-    else
-      return nil
-    end
+    s3_file_obj.public_url if s3_file_obj&.key.present?
   end
 
-  def s3_filename(s3_key)
+  def s3_filename(_s3_key)
     return nil if @s3_key.nil?
 
     @s3_key.split('/')[-1]
@@ -40,7 +32,7 @@ class S3Service
     @s3_file_obj ||= Aws::S3::Object.new(bucket_name: @bucket_name, key: @s3_key)
   end
 
-  def s3_filesize(s3_key)
+  def s3_filesize(_s3_key)
     return 0 if @s3_key.blank? || @s3_file_obj.blank?
 
     filesize = number_to_human_size(s3_file_obj.content_length)
@@ -52,7 +44,7 @@ class S3Service
 
   def make_public_read
     resp = Aws::S3::Client.new.put_object_acl({
-                                                acl:    "public-read",
+                                                acl:    'public-read',
                                                 bucket: @bucket_name,
                                                 key:    @s3_key
                                               })
@@ -60,13 +52,14 @@ class S3Service
 
   def filestream
     begin
-      resp = Aws::S3::Client.new.get_object(
+      resp       = Aws::S3::Client.new.get_object(
         bucket: @bucket_name,
-        key:    @s3_key)
+        key:    @s3_key
+      )
       filestream = resp.body.read
     rescue Aws::S3::Errors::NoSuchKey
       filestream = nil
     end
-    return filestream
+    filestream
   end
 end

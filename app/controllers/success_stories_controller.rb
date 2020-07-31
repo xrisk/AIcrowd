@@ -5,8 +5,8 @@ class SuccessStoriesController < ApplicationController
 
   def index
     @success_stories = policy_scope(SuccessStory)
-    .page(params[:page])
-    .per(20)
+                       .page(params[:page])
+                       .per(20)
   end
 
   def show; end

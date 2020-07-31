@@ -6,7 +6,6 @@ describe Api::V1::Organizers::OrganizersController, type: :request do
     let(:participant) { create(:participant, :admin) }
     let(:organizer)   { create(:organizer, organizer: 'Organizer Name') }
 
-
     it_behaves_like 'Api::V1 endpoint with Authentication'
 
     context 'when authenticity token provided' do
@@ -104,7 +103,7 @@ describe Api::V1::Organizers::OrganizersController, type: :request do
         let(:params) do
           {
             organizer: 'Organizer Name',
-            tagline: nil
+            tagline:   nil
           }
         end
 

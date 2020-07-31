@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe "unauthorized" do
+describe 'unauthorized' do
   let!(:organizer) { create :organizer }
   let(:participant) { create :participant }
 

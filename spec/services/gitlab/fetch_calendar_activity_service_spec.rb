@@ -46,7 +46,7 @@ describe Gitlab::FetchCalendarActivityService do
         end
 
         expect(result).to be_failure
-        expect(result.value).to eq "{\"error\"=>\"You need to sign in or sign up before continuing.\"}"
+        expect(result.value).to eq '{"error"=>"You need to sign in or sign up before continuing."}'
       end
     end
 

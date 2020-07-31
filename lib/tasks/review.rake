@@ -1,5 +1,5 @@
 namespace :review do
-  desc "Bootstrap a review app when it is provisioned"
+  desc 'Bootstrap a review app when it is provisioned'
   task bootstrap: :environment do
     # TODO
     # Seed database

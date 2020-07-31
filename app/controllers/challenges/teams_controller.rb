@@ -24,17 +24,15 @@ class Challenges::TeamsController < ApplicationController
 
   def show
     @pending_invitations = @team.team_invitations
-      .status_pendings
-      .includes(:invitee)
+                                .status_pendings
+                                .includes(:invitee)
   end
 
   private
 
   def set_challenge
     @challenge = Challenge.friendly.find(params[:challenge_id])
-    if params.has_key?(:meta_challenge_id)
-      @challenge = Challenge.friendly.find(params[:meta_challenge_id])
-    end
+    @challenge = Challenge.friendly.find(params[:meta_challenge_id]) if params.has_key?(:meta_challenge_id)
   end
 
   def set_team

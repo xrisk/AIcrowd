@@ -27,8 +27,8 @@ module Gitlab
 
     def request_payload
       {
-        name:        participant.name,
-        username:    participant.name
+        name:     participant.name,
+        username: participant.name
       }
     end
 

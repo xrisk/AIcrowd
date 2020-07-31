@@ -1,13 +1,12 @@
 ActiveAdmin.register Challenge do
-
-  sidebar "Challenge Configuration", only: [:show, :edit] do
+  sidebar 'Challenge Configuration', only: [:show, :edit] do
     ul do
-      li link_to "Dataset Files", admin_challenge_dataset_files_path(challenge)
-      li link_to "Submission File Definition", admin_challenge_submission_file_definitions_path(challenge)
+      li link_to 'Dataset Files', admin_challenge_dataset_files_path(challenge)
+      li link_to 'Submission File Definition', admin_challenge_submission_file_definitions_path(challenge)
     end
   end
 
-  sidebar "Challenge Details", only: [:show, :edit] do
+  sidebar 'Challenge Details', only: [:show, :edit] do
     ul do
       li link_to "Leaderboard (#{challenge.leaderboards.size} rows)", admin_challenge_leaderboards_path(challenge)
       li link_to "Submissions (#{challenge.submissions.length})", admin_challenge_submissions_path(challenge)
@@ -32,7 +31,7 @@ ActiveAdmin.register Challenge do
     column :practice_flag
 
     actions default: true do |resource|
-      a 'Edit', href: edit_challenge_link(resource), class: "edit_link member_link"
+      a 'Edit', href: edit_challenge_link(resource), class: 'edit_link member_link'
     end
   end
 
@@ -67,19 +66,19 @@ ActiveAdmin.register Challenge do
     link_to 'Edit', edit_challenge_link(resource)
   end
 
-  batch_action "Recalculate the Leaderboard for ", priority: 2 do |ids|
+  batch_action 'Recalculate the Leaderboard for ', priority: 2 do |ids|
     Challenge.find(ids).each do |challenge|
       challenge.challenge_rounds.each do |challenge_round|
         CalculateLeaderboardJob.perform_now(challenge_round_id: challenge_round.id)
       end
     end
-    redirect_to admin_challenges_path, alert: "The Leaderboards for the selected challenges are being recalculated!."
+    redirect_to admin_challenges_path, alert: 'The Leaderboards for the selected challenges are being recalculated!.'
   end
 
-  batch_action "Editors Selection", priority: 1 do |ids|
+  batch_action 'Editors Selection', priority: 1 do |ids|
     Challenge.find(ids).each do |challenge|
       challenge.update!(editors_selection: true)
     end
-    redirect_to admin_challenges_path, notice: "Set Editors Selection for the selected challenges."
+    redirect_to admin_challenges_path, notice: 'Set Editors Selection for the selected challenges.'
   end
 end

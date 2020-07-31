@@ -1,5 +1,5 @@
 namespace :discourse do
-  desc "Hide Discourse categories for hidden challenges"
+  desc 'Hide Discourse categories for hidden challenges'
   task hide_discourse_categories_for_hidden_challenges: :environment do
     Challenge.draft_or_private.find_each do |challenge|
       puts "##{challenge.id} #{challenge.challenge} | Discourse category update"
@@ -7,7 +7,7 @@ namespace :discourse do
     end
   end
 
-  desc "Add challenges participants to custom Discourse groups"
+  desc 'Add challenges participants to custom Discourse groups'
   task add_challenge_participants_to_discourse_groups: :environment do
     Challenge.where('discourse_group_name IS NOT NULL').find_each do |challenge|
       puts "##{challenge.id} #{challenge.challenge} | Discourse group update"
@@ -15,7 +15,7 @@ namespace :discourse do
     end
   end
 
-  desc "Synchronize participants with Discourse"
+  desc 'Synchronize participants with Discourse'
   task synchronize_participants_with_discourse: :environment do
     Participant.find_each.with_index do |participant, index|
       puts "##{participant.id} #{participant.name} | Discourse synchronization"

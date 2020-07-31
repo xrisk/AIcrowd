@@ -22,8 +22,8 @@ ActiveAdmin.register TeamMember do
   end
 
   form do |f|
-    f.object.section     ||= "Main"
-    f.object.description ||= "This field is unused right now!"
+    f.object.section     ||= 'Main'
+    f.object.description ||= 'This field is unused right now!'
     f.object.seq         ||= (TeamMember.maximum(:seq) || 0) + 1
     f.inputs do
       f.input :name

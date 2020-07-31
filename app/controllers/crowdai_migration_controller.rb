@@ -3,7 +3,7 @@ class CrowdaiMigrationController < ApplicationController
   after_action :track_action
 
   def new
-    @data = params[:data]
+    @data                            = params[:data]
     session['participant_return_to'] = request.original_fullpath unless @current_participant
     redirect_to(root_path, flash: { error: 'Invalid link, contact help@aicrowd.com' }) if @data.nil?
   end
@@ -13,9 +13,13 @@ class CrowdaiMigrationController < ApplicationController
 
     @migrate_service = MigrateUserService.new(crowdai_id: @cid, aicrowd_id: current_participant.id)
 
-    return redirect_to(root_path, flash: { error: 'CrowdAI account associated with this link is already migrated' }) if @migrate_service.check_migrated
+    if @migrate_service.check_migrated
+      return redirect_to(root_path, flash: { error: 'CrowdAI account associated with this link is already migrated' })
+    end
 
-    return redirect_to(root_path, flash: { error: 'No data found for your CrowdAI account, please contact help@aicrowd.com' }) unless MigrationMapping.exists?(crowdai_participant_id: @cid)
+    unless MigrationMapping.exists?(crowdai_participant_id: @cid)
+      return redirect_to(root_path, flash: { error: 'No data found for your CrowdAI account, please contact help@aicrowd.com' })
+    end
 
     MigrateUserJob.perform_later(crowdai_id: @cid, aicrowd_id: current_participant.id)
 
@@ -33,11 +37,11 @@ class CrowdaiMigrationController < ApplicationController
       cipherkey, iv, ciphertext = data.split('~').map { |x| Base64.urlsafe_decode64(x) }
       cipher                    = OpenSSL::Cipher.new('AES-256-CBC')
       cipher.decrypt
-      cipher.key = rsa_key.public_decrypt(cipherkey)
-      cipher.iv  = iv
-      plaintext  = cipher.update(ciphertext) + cipher.final
-      data_hash  = JSON.parse(plaintext).symbolize_keys
-      @cid       = data_hash[:id]
+      cipher.key                = rsa_key.public_decrypt(cipherkey)
+      cipher.iv                 = iv
+      plaintext                 = cipher.update(ciphertext) + cipher.final
+      data_hash                 = JSON.parse(plaintext).symbolize_keys
+      @cid                      = data_hash[:id]
     end
   end
 end

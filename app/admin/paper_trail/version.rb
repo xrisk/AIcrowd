@@ -9,9 +9,9 @@ ActiveAdmin.register PaperTrail::Version do
     h3 "#{paper_trail_version.item_type} changes:"
 
     table_for changes_hashmap(paper_trail_version.changeset), class: 'papertrail-versions__table' do
-      column "Field Name", :field_name
-      column "Previous Value", :previous_value, class: 'papertrail-versions__previous-column'
-      column "Current Value", :current_value, class: 'papertrail-versions__current-column'
+      column 'Field Name', :field_name
+      column 'Previous Value', :previous_value, class: 'papertrail-versions__previous-column'
+      column 'Current Value', :current_value, class: 'papertrail-versions__current-column'
     end
   end
 end

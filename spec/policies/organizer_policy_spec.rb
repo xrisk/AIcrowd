@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'rails_helper'
 
 describe OrganizerPolicy do
@@ -7,7 +8,7 @@ describe OrganizerPolicy do
   let(:organizer)             { create(:organizer) }
   let(:participant)           { create(:participant) }
   let(:organizer_person)      { create(:participant) }
-  let(:participant_organizer) { create(:participant_organizer, organizer: organizer, participant: organizer_person)}
+  let(:participant_organizer) { create(:participant_organizer, organizer: organizer, participant: organizer_person) }
 
   context 'for a public participant' do
     let(:participant) { nil }

@@ -54,10 +54,8 @@ class DatasetFoldersController < ApplicationController
   end
 
   def set_challenge
-    @challenge = Challenge.friendly.find(params[:challenge_id])
-    if params.has_key?('meta_challenge_id')
-      @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id])
-    end
+    @challenge      = Challenge.friendly.find(params[:challenge_id])
+    @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id]) if params.has_key?('meta_challenge_id')
   end
 
   def set_challenge_rounds
@@ -74,9 +72,7 @@ class DatasetFoldersController < ApplicationController
 
   def check_participation_terms
     challenge = @challenge
-    if @meta_challenge.present?
-      challenge = @meta_challenge
-    end
+    challenge = @meta_challenge if @meta_challenge.present?
 
     unless policy(challenge).has_accepted_participation_terms?
       redirect_to [challenge, ParticipationTerms.current_terms]
@@ -85,7 +81,7 @@ class DatasetFoldersController < ApplicationController
 
     unless policy(challenge).has_accepted_challenge_rules?
       redirect_to [challenge, challenge.current_challenge_rules]
-      return
+      nil
     end
   end
 

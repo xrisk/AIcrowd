@@ -1,26 +1,26 @@
 require 'rails_helper'
 
 describe Notification, type: :model do
-  describe "scopes" do
+  describe 'scopes' do
     let!(:new_notification1) { create(:notification, created_at: 2.days.ago) }
     let!(:new_notification2) { create(:notification, created_at: 3.hours.ago) }
     let!(:touched_notification) { create(:notification, :touched, created_at: 5.days.ago) }
     let!(:read_notification) { create(:notification, :read, created_at: 10.days.ago) }
 
-    describe "#pristine" do
+    describe '#pristine' do
       it "returns the notifications that user hasn't touched" do
         expect(described_class.pristine).to match_array([new_notification1, new_notification2])
       end
     end
 
-    describe "#recent" do
-      it "returns notifications in order based on created_at field" do
+    describe '#recent' do
+      it 'returns notifications in order based on created_at field' do
         expect(described_class.recent).to eq([new_notification2, new_notification1, touched_notification, read_notification])
       end
     end
 
-    describe "#unread" do
-      it "returns only unread notifications" do
+    describe '#unread' do
+      it 'returns only unread notifications' do
         expect(described_class.unread).not_to include(read_notification)
         expect(described_class.unread.count).to eq(3)
       end

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class TeamInvitations::DeclinationsController < ApplicationController
   before_action :set_invitation
   before_action :set_team

@@ -4,7 +4,7 @@ module Admin
       @participant             = participant
       @challenge_call_response = challenge_call_response
       @email_preferences_url   = EmailPreferencesTokenService.new(@participant).preferences_token_url
-      subject                  = "[ADMIN:AIcrowd] Challenge Call response"
+      subject                  = '[ADMIN:AIcrowd] Challenge Call response'
 
       mail(to: @participant.email, subject: subject)
     end
@@ -22,7 +22,7 @@ module Admin
       @participant           = participant
       @organizer_application = organizer_application
       @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url
-      subject                = "[ADMIN:AIcrowd] Organizer Application Requested"
+      subject                = '[ADMIN:AIcrowd] Organizer Application Requested'
 
       mail(to: participant.email, subject: subject)
     end

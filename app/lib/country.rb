@@ -7,11 +7,13 @@ class Country
 
   def self.country_name(country_cd)
     return unless country_cd
+
     ISO3166::Country[country_cd]&.name
   end
 
   def self.country_cd(country_name)
-    return if !country_name.present?
+    return unless country_name.present?
+
     ISO3166::Country.find_country_by_name(country_name).alpha2
   end
 

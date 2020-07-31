@@ -1,7 +1,7 @@
 require_relative 'boot'
 
 require 'rails/all'
-require "active_storage/engine"
+require 'active_storage/engine'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -17,16 +17,16 @@ module Crowdai
 
     config.assets.version = '2.0'
 
-    config.exceptions_app           = routes
-    config.active_job.queue_adapter = :sidekiq
-    config.secret_key_base          = ENV["SECRET_KEY_BASE"]
+    config.exceptions_app                      = routes
+    config.active_job.queue_adapter            = :sidekiq
+    config.secret_key_base                     = ENV['SECRET_KEY_BASE']
     config.autoload_paths << Rails.root.join('lib')
     config.autoload_paths                     += Dir["#{Rails.root}/app/models/**/"]
     config.autoload_paths                     += Dir["#{Rails.root}/app/queries/**/"]
     config.active_record.time_zone_aware_types = [:datetime]
     config.ssl_options                         = { hsts: { subdomains: false } }
     config.assets.precompile                  += ['application.scss']
-    config.assets.paths << Rails.root.join("app", "assets", "fonts")
+    config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
     Rails.env.development? && config.assets.paths << File.join(ENV['FOG_LOCAL_ROOT'], ENV['AWS_S3_BUCKET'])
 
     config.i18n.load_path        += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
@@ -47,9 +47,9 @@ module Crowdai
     end
 
     config.to_prepare do
-      Doorkeeper::ApplicationsController.layout "application"
-      Doorkeeper::AuthorizationsController.layout "application"
-      Doorkeeper::AuthorizedApplicationsController.layout "application"
+      Doorkeeper::ApplicationsController.layout 'application'
+      Doorkeeper::AuthorizationsController.layout 'application'
+      Doorkeeper::AuthorizedApplicationsController.layout 'application'
     end
 
     # from https://stackoverflow.com/questions/49265645/rails-cloudfront-no-access-control-allow-origin-header-is-present
@@ -61,7 +61,7 @@ module Crowdai
     end
 
     console do
-      ARGV.push "-r", root.join("lib/console.rb")
+      ARGV.push '-r', root.join('lib/console.rb')
     end
   end
 end

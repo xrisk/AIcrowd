@@ -1,7 +1,7 @@
 require 'sidekiq/testing'
 
 Rails.application.configure do
-  figaro_file = File.join(Rails.root, 'config', 'application.yml')
+  figaro_file                                       = File.join(Rails.root, 'config', 'application.yml')
   YAML.load_file(figaro_file).symbolize_keys[:test].each do |key, value|
     ENV[key.to_s] = value
   end

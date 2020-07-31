@@ -12,7 +12,7 @@ FactoryBot.define do
           impwt_std: 0.020956583416961033,
           ips_std:   2.0898337641716487,
           snips:     45.69345202998776,
-          file_key:  "submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c"
+          file_key:  'submissions/07b2ccb7-a525-4e5e-97a8-8ff7199be43c'
         }
       end
     end

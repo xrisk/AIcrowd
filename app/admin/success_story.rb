@@ -32,7 +32,7 @@ ActiveAdmin.register SuccessStory do
     f.actions
   end
 
-  show do |success_story|
+  show do |_success_story|
     attributes_table do
       row :title
       row :slug

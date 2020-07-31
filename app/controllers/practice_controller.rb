@@ -23,6 +23,6 @@ class PracticeController < ApplicationController
   end
 
   def challenge_status
-    params[:controller] == "landing_page" ? Challenge.statuses.keys - ['draft'] : Challenge.statuses.keys
+    params[:controller] == 'landing_page' ? Challenge.statuses.keys - ['draft'] : Challenge.statuses.keys
   end
 end

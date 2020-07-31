@@ -8,7 +8,7 @@ describe LeaderboardsController, feature: true do
     let!(:leaderboard)                     { create(:base_leaderboard, challenge: challenge, challenge_round: challenge_round, score: 77) }
     let!(:leaderboard_without_participant) { create(:base_leaderboard, challenge: challenge, challenge_round: challenge_round, participant: nil) }
     let!(:team)                            { create(:team, participants: participants) }
-    let!(:leaderboard_with_team)           { create(:base_leaderboard, submitter: team, challenge: challenge, challenge_round: challenge_round ) }
+    let!(:leaderboard_with_team)           { create(:base_leaderboard, submitter: team, challenge: challenge, challenge_round: challenge_round) }
 
     context 'when user is not logged in' do
       it 'renders leaderboards listing' do

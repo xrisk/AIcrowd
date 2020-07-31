@@ -43,7 +43,7 @@ describe Admin::NotificationsMailer, type: :mailer do
     let(:organizer_application) { create(:organizer_application) }
 
     it 'renders the headers' do
-      expect(subject.subject).to eq "[ADMIN:AIcrowd] Organizer Application Requested"
+      expect(subject.subject).to eq '[ADMIN:AIcrowd] Organizer Application Requested'
       expect(subject.to).to eq ['test@example.com']
       expect(subject.from).to eq ['no-reply@aicrowd.com']
     end

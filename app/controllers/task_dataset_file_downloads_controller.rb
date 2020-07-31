@@ -6,7 +6,8 @@ class TaskDatasetFileDownloadsController < InheritedResources::Base
       .task_dataset_file_downloads
       .create!(
         participant_id: current_participant.id,
-        ip_address:     request.remote_ip)
+        ip_address:     request.remote_ip
+      )
     head :ok
   end
 

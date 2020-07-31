@@ -6,7 +6,7 @@ describe FeedbackMailer, type: :mailer do
     subject { described_class.feedback_email(feedback) }
 
     it 'renders the headers' do
-      expect(subject.subject).to eq "[test_participant] Feedback about AICrowd"
+      expect(subject.subject).to eq '[test_participant] Feedback about AICrowd'
       expect(subject.to).to eq ['feedback@aicrowd.com']
       expect(subject.from).to eq ['no-reply@aicrowd.com']
     end

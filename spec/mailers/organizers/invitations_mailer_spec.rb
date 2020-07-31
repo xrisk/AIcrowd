@@ -4,7 +4,7 @@ describe Organizers::InvitationsMailer, type: :mailer do
   let(:participant)     { create(:participant, email: 'test@example.com') }
   let(:team_invitation) { create(:team_invitation, team: team, invitee: invitee) }
   let(:invitee)         { create(:participant) }
-  let(:team)            { create(:team)}
+  let(:team)            { create(:team) }
 
   describe '#accepted_notification_email' do
     subject { described_class.accepted_notification_email(participant, team_invitation) }

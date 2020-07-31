@@ -17,7 +17,7 @@ class ChallengeParticipantsController < ApplicationController
   end
 
   def update
-    @challenge_participant = ChallengeParticipant.find(params[:id])
+    @challenge_participant                                  = ChallengeParticipant.find(params[:id])
     authorize @challenge_participant
     @challenge_participant.challenge_rules_accepted_date    = Time.now
     @challenge_participant.challenge_rules_accepted_version = @challenge_participant.challenge.current_challenge_rules&.version

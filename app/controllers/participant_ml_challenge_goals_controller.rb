@@ -20,6 +20,6 @@ class ParticipantMlChallengeGoalsController < ApplicationController
   end
 
   def set_challenge
-    @challenge = Challenge.friendly.find(params[:participant_ml_challenge_goal]["challenge_id"])
+    @challenge = Challenge.friendly.find(params[:participant_ml_challenge_goal]['challenge_id'])
   end
 end

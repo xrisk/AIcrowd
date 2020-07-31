@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'rails_helper'
 
 describe 'submissions not allowed' do
   let!(:participation_terms) { create :participation_terms }

@@ -59,7 +59,7 @@ describe ChallengeRounds::CreateLeaderboardsService do
       end
 
       context 'when challenge_round has submissions from previous ranking window' do
-        let(:challenge_round) { create(:challenge_round, ranking_window: 6, score_precision: 3,  score_secondary_precision: 3) }
+        let(:challenge_round) { create(:challenge_round, ranking_window: 6, score_precision: 3, score_secondary_precision: 3) }
         let(:participant_1)   { create(:participant) }
         let(:participant_2)   { create(:participant) }
         let(:participant_3)   { create(:participant) }
@@ -217,7 +217,6 @@ describe ChallengeRounds::CreateLeaderboardsService do
         let!(:participant_2_submission) { create(:submission, :graded, score: 2.0, score_display: 2.0, score_secondary: nil, score_secondary_display: nil, created_at: Time.current, updated_at: Time.current, participant: participant_2, challenge: challenge, challenge_round: challenge_round) }
         let!(:participant_3_submission) { create(:submission, :graded, score: nil, score_display: nil, score_secondary: nil, score_secondary_display: nil, created_at: Time.current - 6.hours, updated_at: Time.current - 6.hours, participant: participant_3, challenge: challenge, challenge_round: challenge_round) }
 
-
         it 'creates leadearboards records with correct row_num and seq based on latest submission' do
           result = subject.call
 
@@ -233,7 +232,7 @@ describe ChallengeRounds::CreateLeaderboardsService do
 
     context 'when meta_challenge_id is provided' do
       let(:meta_challenge)    { create(:challenge, :running, meta_challenge: true) }
-      let(:challenge_round)   { create(:challenge_round, challenge: meta_challenge, score_precision: 3, score_secondary_precision: 3)}
+      let(:challenge_round)   { create(:challenge_round, challenge: meta_challenge, score_precision: 3, score_secondary_precision: 3) }
       let(:meta_challenge_id) { meta_challenge.id }
 
       context 'when challenge_round doesn\'t have submissions' do

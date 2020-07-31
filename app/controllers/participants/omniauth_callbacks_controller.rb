@@ -50,12 +50,12 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
 
   def sanitize_userhandle(userhandle)
     userhandle.to_ascii
-      .tr("@", "a")
-      .gsub("&", "and")
-      .delete('#')
-      .delete('*')
-      .gsub(/[\,\.\'\;\-\=]/, "")
-      .gsub(/[\(\)]/, "_")
-      .tr(' ', "_")
+              .tr('@', 'a')
+              .gsub('&', 'and')
+              .delete('#')
+              .delete('*')
+              .gsub(/[\,\.\'\;\-\=]/, '')
+              .gsub(/[\(\)]/, '_')
+              .tr(' ', '_')
   end
 end

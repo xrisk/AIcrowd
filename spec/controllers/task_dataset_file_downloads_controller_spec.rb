@@ -9,9 +9,9 @@ describe TaskDatasetFileDownloadsController, type: :controller do
 
     context 'with valid params' do
       it 'creates a new TaskDatasetFileDownload' do
-        expect {
+        expect do
           post :create, params: { task_dataset_file_id: task_dataset_file.id }
-        }.to change(TaskDatasetFileDownload, :count).by(1)
+        end.to change(TaskDatasetFileDownload, :count).by(1)
 
         expect(response).to have_http_status(:ok)
       end
@@ -19,9 +19,9 @@ describe TaskDatasetFileDownloadsController, type: :controller do
 
     context 'with invalid params' do
       it 'raises ActiveRecord::RecordNotFound error' do
-        expect {
+        expect do
           post :create, params: { task_dataset_file_id: 0 }
-        }.to raise_error(ActiveRecord::RecordNotFound)
+        end.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

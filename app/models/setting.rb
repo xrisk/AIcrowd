@@ -1,5 +1,4 @@
 class Setting < ApplicationRecord
-
   def self.banner_record
     first&.banner_text if first&.enable_banner
   end

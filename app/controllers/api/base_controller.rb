@@ -4,20 +4,20 @@ class Api::BaseController < ApplicationController
   respond_to :json
 
   def auth_by_admin_api_key
-    authenticate_or_request_with_http_token do |token, options|
+    authenticate_or_request_with_http_token do |token, _options|
       (token == ENV['AICROWD_API_KEY'])
     end
   end
 
   def auth_by_api_key
-    authenticate_or_request_with_http_token do |token, options|
+    authenticate_or_request_with_http_token do |token, _options|
       organizer = Organizer.where(api_key: token).first
       (token == ENV['AICROWD_API_KEY'] || organizer.present?)
     end
   end
 
   def auth_by_api_key_and_client_id
-    authenticate_or_request_with_http_token do |token, options|
+    authenticate_or_request_with_http_token do |token, _options|
       (token == ENV['AICROWD_API_KEY'] || validate_client_name_and_api_key(request.params['challenge_client_name'], token))
     end
   end

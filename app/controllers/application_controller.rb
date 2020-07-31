@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   end
 
   def modify_params_for_meta_challenges
-    if controller_name == "challenges"
+    if controller_name == 'challenges'
       if params.has_key?('challenge_id')
         challenge         = Challenge.find(params[:challenge_id])
         challenge_type_id = "#{challenge.challenge_type}_id"
@@ -56,7 +56,7 @@ class ApplicationController < ActionController::Base
         challenge         = Challenge.find(params[:challenge_id])
         challenge_type_id = "#{challenge.challenge_type}_id"
 
-        if !params.has_key?(challenge_type_id)
+        unless params.has_key?(challenge_type_id)
           params[challenge_type_id.to_sym] = params[:challenge_id]
           params[:challenge_id]            = params[:problem_id]
           params.delete('problem_id')
@@ -93,12 +93,10 @@ class ApplicationController < ActionController::Base
     end
 
     # Prioritise return path set by application logic
-    if session.has_key?(:participant_return_to)
-      return session['participant_return_to']
-    end
+    return session['participant_return_to'] if session.has_key?(:participant_return_to)
 
     # Redirect based on available browsing history
-    return stored_location_for(:user) || root_path
+    stored_location_for(:user) || root_path
   end
 
   def participant_activity

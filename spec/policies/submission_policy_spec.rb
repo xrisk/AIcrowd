@@ -11,7 +11,7 @@ describe SubmissionPolicy do
     end
     let!(:round) { challenge.challenge_rounds.first }
     let!(:p1) { create :participant }
-    let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizers.first, participant: p1)}
+    let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizers.first, participant: p1) }
 
     let!(:s1) do
       create :submission,
@@ -93,7 +93,7 @@ describe SubmissionPolicy do
 
       it {
         expect(Pundit.policy_scope(participant, Submission))
-        .to be_empty
+          .to be_empty
       }
     end
 
@@ -102,7 +102,7 @@ describe SubmissionPolicy do
 
       it {
         expect(Pundit.policy_scope(participant, Submission))
-        .to be_empty
+          .to be_empty
       }
     end
 
@@ -163,7 +163,7 @@ describe SubmissionPolicy do
 
       it {
         expect(Pundit.policy_scope(participant, Submission).sort)
-        .to eq(Submission.all.sort)
+          .to eq(Submission.all.sort)
       }
     end
 
@@ -172,7 +172,7 @@ describe SubmissionPolicy do
 
       it {
         expect(Pundit.policy_scope(participant, Submission).sort)
-        .to eq(Submission.all.sort)
+          .to eq(Submission.all.sort)
       }
     end
 
@@ -181,7 +181,7 @@ describe SubmissionPolicy do
 
       it {
         expect(Pundit.policy_scope(participant, Submission).sort)
-        .to eq(Submission.all.sort)
+          .to eq(Submission.all.sort)
       }
     end
 
@@ -190,7 +190,7 @@ describe SubmissionPolicy do
 
       it {
         expect(Pundit.policy_scope(participant, Submission).sort)
-        .to eq(Submission.all.sort)
+          .to eq(Submission.all.sort)
       }
     end
 
@@ -199,7 +199,7 @@ describe SubmissionPolicy do
 
       it {
         expect(Pundit.policy_scope(participant, Submission).sort)
-        .to eq(Submission.all.sort)
+          .to eq(Submission.all.sort)
       }
     end
 
@@ -209,7 +209,7 @@ describe SubmissionPolicy do
 
       it {
         expect(Pundit.policy_scope(participant, Submission).sort)
-        .to eq(Submission.all.sort)
+          .to eq(Submission.all.sort)
       }
     end
   end
@@ -644,7 +644,7 @@ describe SubmissionPolicy do
       end
       let!(:round) { challenge.challenge_rounds.first }
       let!(:p1) { create :participant }
-      let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizers.first, participant: p1)}
+      let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizers.first, participant: p1) }
       let!(:i1) do
         create(:invitation,
                challenge_id:   challenge.id,
@@ -758,7 +758,7 @@ describe SubmissionPolicy do
       end
       let!(:round) { challenge.challenge_rounds.first }
       let!(:p1) { create :participant }
-      let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizers.first, participant: p1)}
+      let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizers.first, participant: p1) }
       let!(:s1) do
         create :submission,
                challenge_id:       challenge.id,
@@ -826,7 +826,7 @@ describe SubmissionPolicy do
       end
       let!(:round) { challenge.challenge_rounds.first }
       let!(:p1) { create :participant }
-      let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizers.first, participant: p1)}
+      let(:participant_organizer) { create(:participant_organizer, organizer: round.challenge.organizers.first, participant: p1) }
       let!(:s1) do
         create :submission,
                challenge_id:       challenge.id,

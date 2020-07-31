@@ -29,8 +29,8 @@ class DefaultScopeByRoleQuery
 
   def organizers_challenges_ids
     @challenges_ids ||= Challenge.left_joins(:organizers)
-                          .where("organizers.id IN (#{participant.organizers.pluck(:id).join(',')})")
-                          .group('challenges.id')
-                          .pluck('challenges.id')
+                                 .where("organizers.id IN (#{participant.organizers.pluck(:id).join(',')})")
+                                 .group('challenges.id')
+                                 .pluck('challenges.id')
   end
 end

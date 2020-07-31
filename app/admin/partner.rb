@@ -9,19 +9,19 @@ ActiveAdmin.register Partner do
     batch_action_collection.find(ids).each do |partner|
       partner.update(visible: true)
     end
-    redirect_to collection_path, alert: "Updated."
+    redirect_to collection_path, alert: 'Updated.'
   end
 
   batch_action :deactivate do |ids|
     batch_action_collection.find(ids).each do |partner|
       partner.update(visible: false)
     end
-    redirect_to collection_path, alert: "Updated."
+    redirect_to collection_path, alert: 'Updated.'
   end
 
   index do
     selectable_column
-    column "Image" do |partner|
+    column 'Image' do |partner|
       image_tag(partner.image_file.url, width: 50) if partner.image_file.present?
     end
     column :name
@@ -44,14 +44,14 @@ ActiveAdmin.register Partner do
   end
 
   form do |f|
-    f.inputs "Organizer" do
+    f.inputs 'Organizer' do
       f.input :organizer,
               as:         :select,
               collection: Organizer.all.sort.map { |organizer| [organizer.organizer, organizer.id] }
       f.input :name
       f.input :image_file,
               as:   :file,
-              hint: f.object.image_file.present? ? image_tag(f.object.image_file.url) : content_tag(:span, "no portrait yet")
+              hint: f.object.image_file.present? ? image_tag(f.object.image_file.url) : content_tag(:span, 'no portrait yet')
       f.input :visible
       f.input :seq
     end

@@ -1,5 +1,5 @@
-require "rails_helper"
+require 'rails_helper'
 
-describe "participant deletes account" do
+describe 'participant deletes account' do
   # TODO
 end

@@ -3,9 +3,9 @@ require 'rails_helper'
 describe DefaultScopeByRoleQuery, type: :query do
   subject do
     described_class.new(
-      participant: participant,
+      participant:     participant,
       participant_sql: participant_sql,
-      relation: BaseLeaderboard
+      relation:        BaseLeaderboard
     ).call
   end
 

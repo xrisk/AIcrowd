@@ -33,7 +33,8 @@ class NotificationService
         thumbnail_url:     thumb,
         notification_url:  link,
         challenge_id:      @notifiable.challenge.id,
-        is_new:            true)
+        is_new:            true
+      )
   end
 
   def failed
@@ -54,7 +55,8 @@ class NotificationService
         thumbnail_url:     thumb,
         notification_url:  link,
         challenge_id:      @notifiable.challenge.id,
-        is_new:            true)
+        is_new:            true
+      )
   end
 
   def leaderboard
@@ -77,10 +79,10 @@ class NotificationService
 
     return if last_notification.present? && @notifiable.previous_row_num == @notifiable.row_num
 
-    message = unless last_notification.present?
-                "Congratulations! You made your first submission and secured #{@notifiable.row_num&.ordinalize.to_s} place in the #{@notifiable.challenge.challenge} leaderboard."
+    message = if last_notification.present?
+                "You have moved from #{@notifiable.previous_row_num&.ordinalize} to #{@notifiable.row_num&.ordinalize} place in the #{@notifiable.challenge.challenge} leaderboard."
               else
-                "You have moved from #{@notifiable.previous_row_num&.ordinalize.to_s} to #{@notifiable.row_num&.ordinalize.to_s} place in the #{@notifiable.challenge.challenge} leaderboard."
+                "Congratulations! You made your first submission and secured #{@notifiable.row_num&.ordinalize} place in the #{@notifiable.challenge.challenge} leaderboard."
               end
 
     return if @participant.notifications.exists?(notification_type: 'leaderboard', challenge_id: @notifiable.challenge.id, message: message)
@@ -98,6 +100,7 @@ class NotificationService
         thumbnail_url:     thumb,
         notification_url:  link,
         challenge_id:      @notifiable.challenge.id,
-        is_new:            true)
+        is_new:            true
+      )
   end
 end

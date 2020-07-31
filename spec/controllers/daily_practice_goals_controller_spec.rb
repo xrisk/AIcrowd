@@ -6,7 +6,7 @@ describe DailyPracticeGoalsController, type: :controller do
   let!(:participant) { create(:participant) }
   let!(:challenge) { create(:challenge) }
   let!(:daily_practice_goal_1) { create(:daily_practice_goal) }
-  let!(:daily_practice_goal_2) { create(:daily_practice_goal, title: "Regular", points: 200, duration_text: "3 Months approx") }
+  let!(:daily_practice_goal_2) { create(:daily_practice_goal, title: 'Regular', points: 200, duration_text: '3 Months approx') }
 
   context 'participant' do
     before do

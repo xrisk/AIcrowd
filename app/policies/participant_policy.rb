@@ -56,7 +56,7 @@ class ParticipantPolicy < ApplicationPolicy
         scope.all
       else
         if participant&.id
-          scope.where("id = ?", participant.id)
+          scope.where('id = ?', participant.id)
         else
           scope.none
         end

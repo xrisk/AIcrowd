@@ -18,8 +18,8 @@ describe Discourse::FetchBaselineTagService, :requests_allowed do
         response = result.value
 
         expect(response.size).to eq 1
-        expect(response.first["tags"]).to eq ['baseline']
-        expect(response.first["title"]).to eq 'Test regarding baseline in sidebar'
+        expect(response.first['tags']).to eq ['baseline']
+        expect(response.first['title']).to eq 'Test regarding baseline in sidebar'
       end
     end
   end

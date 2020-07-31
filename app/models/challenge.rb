@@ -4,7 +4,7 @@ class Challenge < ApplicationRecord
   include Markdownable
 
   friendly_id :challenge,
-              use: %i[slugged finders history]
+              use: [:slugged, :finders, :history]
 
   mount_uploader :image_file, ImageUploader
   mount_uploader :banner_file, RawImageUploader
@@ -22,7 +22,7 @@ class Challenge < ApplicationRecord
 
   has_many :dataset_folders, dependent: :destroy, class_name: 'DatasetFolder'
 
-  has_many :submission_file_definitions, dependent:  :destroy, inverse_of: :challenge
+  has_many :submission_file_definitions, dependent: :destroy, inverse_of: :challenge
   accepts_nested_attributes_for :submission_file_definitions, reject_if: :all_blank, allow_destroy: true
 
   has_many :challenge_partners, dependent: :destroy
@@ -39,7 +39,7 @@ class Challenge < ApplicationRecord
   has_many :leaderboards, class_name: 'Leaderboard'
   has_many :ongoing_leaderboards, class_name: 'OngoingLeaderboard'
 
-  has_many :challenge_problems, foreign_key: "challenge_id", class_name: "ChallengeProblems"
+  has_many :challenge_problems, foreign_key: 'challenge_id', class_name: 'ChallengeProblems'
 
   has_many :votes, as: :votable
   has_many :follows, as: :followable
@@ -69,7 +69,7 @@ class Challenge < ApplicationRecord
   has_many :ml_activity_points
 
   as_enum :status,
-          %i[draft running completed starting_soon],
+          [:draft, :running, :completed, :starting_soon],
           map: :string
 
   validates :status, presence: true
@@ -81,16 +81,16 @@ class Challenge < ApplicationRecord
   validates :slug, uniqueness: true
   validate :other_scores_fieldnames_max
   validate :greater_than_zero
-  #validate :banner_color, format: { with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i }
+  # validate :banner_color, format: { with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i }
 
   EVALUATOR_TYPES = {
-    'Not Configured' => :not_configured,
+    'Not Configured'                => :not_configured,
     'CSV Submissions (v1, Default)' => :broker,
-    'GitLab Submissions (v1)' => :gitlab,
-    'Evaluations API (v2, Beta)' => :evaluations_api
+    'GitLab Submissions (v1)'       => :gitlab,
+    'Evaluations API (v2, Beta)'    => :evaluations_api
   }.freeze
 
-  as_enum :evaluator_type, EVALUATOR_TYPES.keys(), map: :string
+  as_enum :evaluator_type, EVALUATOR_TYPES.keys, map: :string
 
   default_scope do
     order("challenges.featured_sequence,
@@ -102,10 +102,10 @@ class Challenge < ApplicationRecord
               ELSE 5
             END, challenges.participant_count DESC")
   end
-  scope :prize_cash, -> { where.not(prize_cash: [nil, ""]) }
-  scope :prize_travel, -> { where.not(prize_travel: [nil, ""]) }
-  scope :prize_academic, -> { where.not(prize_academic: [nil, ""]) }
-  scope :prize_misc, -> { where.not(prize_misc: [nil, ""]) }
+  scope :prize_cash, -> { where.not(prize_cash: [nil, '']) }
+  scope :prize_travel, -> { where.not(prize_travel: [nil, '']) }
+  scope :prize_academic, -> { where.not(prize_academic: [nil, '']) }
+  scope :prize_misc, -> { where.not(prize_misc: [nil, '']) }
   scope :practice, -> { where(practice_flag: true) }
   scope :not_practice, -> { where(practice_flag: false) }
   scope :editors_selections, -> { where(editors_selection: true) }
@@ -120,9 +120,7 @@ class Challenge < ApplicationRecord
   after_commit :update_discourse_permissions, on: :update
 
   def record_page_view(parent_meta_challenge)
-    if parent_meta_challenge.present?
-      parent_meta_challenge.update!(page_views: parent_meta_challenge.page_views.to_i + 1)
-    end
+    parent_meta_challenge.update!(page_views: parent_meta_challenge.page_views.to_i + 1) if parent_meta_challenge.present?
 
     update!(page_views: page_views.to_i + 1)
   end
@@ -158,7 +156,8 @@ class Challenge < ApplicationRecord
     elsif ml_challenge?
       return Submission.where(ml_challenge_id: id)
     end
-    return super
+
+    super
   end
 
   def submissions_remaining(participant_id)
@@ -170,7 +169,7 @@ class Challenge < ApplicationRecord
   end
 
   def previous_round
-    previous_rounds = challenge_rounds.where("start_dttm < ?", active_round.start_dttm)
+    previous_rounds = challenge_rounds.where('start_dttm < ?', active_round.start_dttm)
     return nil if previous_rounds.count == 0
 
     previous_rounds.last
@@ -209,7 +208,9 @@ class Challenge < ApplicationRecord
   end
 
   def other_scores_fieldnames_max
-    errors.add(:other_scores_fieldnames, 'A max of 5 other scores Fieldnames are allowed') if other_scores_fieldnames && (other_scores_fieldnames.count(',') > 4)
+    if other_scores_fieldnames && (other_scores_fieldnames.count(',') > 4)
+      errors.add(:other_scores_fieldnames, 'A max of 5 other scores Fieldnames are allowed')
+    end
   end
 
   def greater_than_zero
@@ -231,7 +232,7 @@ class Challenge < ApplicationRecord
     end
   end
 
-  def other_scores_fieldnames_array(participant_id=nil)
+  def other_scores_fieldnames_array(participant_id = nil)
     participant = Participant.find(participant_id)
 
     challenge_problems = if participant.present?
@@ -243,14 +244,13 @@ class Challenge < ApplicationRecord
                            return self.challenge_problems unless challenge_participant.present?
 
                            day_num               = (Time.now.to_date - challenge_participant.challenge_rules_accepted_date.to_date).to_i + 1
-                           self.challenge_problems.where("occur_day <= ?", day_num)
+                           self.challenge_problems.where('occur_day <= ?', day_num)
                          else
                            self.challenge_problems
                          end
 
-    if meta_challenge || ml_challenge
-      return challenge_problems.pluck('challenge_round_id')
-    end
+    return challenge_problems.pluck('challenge_round_id') if meta_challenge || ml_challenge
+
     arr = other_scores_fieldnames
     arr&.split(',')&.map(&:strip) || []
   end
@@ -260,15 +260,11 @@ class Challenge < ApplicationRecord
   end
 
   def problems
-    if meta_challenge? || ml_challenge
-      return Challenge.where(id: challenge_problems.pluck('problem_id'))
-    end
+    return Challenge.where(id: challenge_problems.pluck('problem_id')) if meta_challenge? || ml_challenge
   end
 
   def meta_active_round_ids
-    if meta_challenge?
-      return challenge_problems.pluck('challenge_round_id')
-    end
+    return challenge_problems.pluck('challenge_round_id') if meta_challenge?
   end
 
   def teams_participant_count
@@ -284,7 +280,7 @@ class Challenge < ApplicationRecord
   end
 
   def image_url
-    image_file_url.present? ?  image_file_url : get_default_image
+    image_file_url.present? ? image_file_url : get_default_image
   end
 
   def get_default_image

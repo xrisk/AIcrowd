@@ -13,11 +13,11 @@ class MembersController < ApplicationController
   end
 
   def create
-    participant           = Participant.find_by("lower(email) = ?", strong_params[:email].to_s.downcase)
+    participant           = Participant.find_by('lower(email) = ?', strong_params[:email].to_s.downcase)
     participant_organizer = ParticipantOrganizer.new(participant: participant, organizer: @organizer)
 
     if participant_organizer.save
-      flash[:info] = "Participant added as an Organizer"
+      flash[:info] = 'Participant added as an Organizer'
     else
       flash[:error] = participant_organizer.errors.full_messages.to_sentence
     end

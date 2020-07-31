@@ -18,48 +18,52 @@ class SubmissionsController < ApplicationController
 
   def index
     if params[:baselines] == 'true'
-      filter = policy_scope(Submission)
-                    .where(
-                      challenge_round_id: @current_round&.id,
-                      challenge_id:       @challenge.id,
-                      baseline:           true)
-                    .where.not(participant_id: nil)
+      filter     = policy_scope(Submission)
+                   .where(
+                     challenge_round_id: @current_round&.id,
+                     challenge_id:       @challenge.id,
+                     baseline:           true
+                   )
+                   .where.not(participant_id: nil)
       @baselines = true
     else
       @baselines      = false
       @my_submissions = true if params[:my_submissions] == 'true' && current_participant
       if @my_submissions
-        filter = policy_scope(Submission)
-                      .where(
-                        challenge_round_id: @current_round&.id,
-                        challenge_id:       @challenge.id,
-                        participant_id:     current_participant.id)
+        filter                 = policy_scope(Submission)
+                                 .where(
+                                   challenge_round_id: @current_round&.id,
+                                   challenge_id:       @challenge.id,
+                                   participant_id:     current_participant.id
+                                 )
         @submissions_remaining = SubmissionsRemainingQuery.new(
           challenge:      @challenge,
-          participant_id: current_participant.id).call
+          participant_id: current_participant.id
+        ).call
       else
         filter = policy_scope(Submission)
-                      .where(
-                        challenge_round_id: @current_round&.id,
-                        challenge_id:       @challenge.id)
-                      .freeze_record(current_participant)
+                 .where(
+                   challenge_round_id: @current_round&.id,
+                   challenge_id:       @challenge.id
+                 )
+                 .freeze_record(current_participant)
 
       end
     end
-    if @meta_challenge.present?
-      filter = filter.where(meta_challenge_id: @meta_challenge.id)
-    else
-      filter = filter.where(meta_challenge_id: nil)
-    end
+    filter = if @meta_challenge.present?
+               filter.where(meta_challenge_id: @meta_challenge.id)
+             else
+               filter.where(meta_challenge_id: nil)
+             end
 
     if @challenge.meta_challenge
       params[:meta_challenge_id] = @challenge.slug
-      filter = policy_scope(Submission)
-                      .where(challenge_round_id: @challenge.meta_active_round_ids,
-                             meta_challenge_id: @challenge.id)
-      filter = filter.where(participant_id: current_participant.id) if @my_submissions
+      filter                     = policy_scope(Submission)
+                                   .where(challenge_round_id: @challenge.meta_active_round_ids,
+                                          meta_challenge_id:  @challenge.id)
+      filter                     = filter.where(participant_id: current_participant.id) if @my_submissions
     end
-    @search = filter.search(search_params)
+    @search       = filter.search(search_params)
     @search.sorts = 'created_at desc' if @search.sorts.empty?
     @submissions  = @search.result.includes(:participant).page(params[:page]).per(10)
   end
@@ -69,8 +73,8 @@ class SubmissionsController < ApplicationController
     Rails.logger.debug(params[:q])
     @search      = policy_scope(Submission).ransack(params[:q])
     @submissions = @search.result
-                       .where(challenge_id: @challenge.id)
-                       .page(1).per(10)
+                          .where(challenge_id: @challenge.id)
+                          .page(1).per(10)
     render @submissions
   end
 
@@ -89,20 +93,16 @@ class SubmissionsController < ApplicationController
       challenge:      @challenge,
       participant_id: current_participant.id
     ).call
-    @submission = @challenge.submissions.new
+    @submission                         = @challenge.submissions.new
     @submission.submission_files.build
     authorize @submission
   end
 
   def create
-    session_info = {participant_id: current_participant.id, online_submission: true}
-    if @meta_challenge.present?
-      session_info[:meta_challenge_id] = @meta_challenge.id
-    end
-    if @ml_challenge.present?
-      session_info[:ml_challenge_id] = @ml_challenge.id
-    end
-    @submission = @challenge.submissions.new(submission_params.merge(session_info))
+    session_info                     = { participant_id: current_participant.id, online_submission: true }
+    session_info[:meta_challenge_id] = @meta_challenge.id if @meta_challenge.present?
+    session_info[:ml_challenge_id]   = @ml_challenge.id if @ml_challenge.present?
+    @submission                      = @challenge.submissions.new(submission_params.merge(session_info))
     authorize @submission
 
     validate_submission_file_presence
@@ -141,8 +141,8 @@ class SubmissionsController < ApplicationController
     authorize @challenge, :export?
 
     @submissions = @challenge.submissions
-      .includes(:participant, :challenge_round)
-      .where(challenge_round_id: params[:submissions_export_challenge_round_id].to_i)
+                             .includes(:participant, :challenge_round)
+                             .where(challenge_round_id: params[:submissions_export_challenge_round_id].to_i)
 
     csv_data = Submissions::CSVExportService.new(submissions: @submissions).call.value
 
@@ -164,17 +164,17 @@ class SubmissionsController < ApplicationController
 
     if params.has_key?(challenge_type) && params[challenge_type.to_sym] != params[:challenge_id]
       if params['ml_challenge_id'].present?
-        @ml_challenge = Challenge.includes(:organizers).friendly.find(params[challenge_type.
-          to_sym])
+        @ml_challenge = Challenge.includes(:organizers).friendly.find(params[challenge_type
+          .to_sym])
       else
-        @meta_challenge = Challenge.includes(:organizers).friendly.find(params[challenge_type.
-          to_sym])
+        @meta_challenge = Challenge.includes(:organizers).friendly.find(params[challenge_type
+          .to_sym])
       end
     elsif @challenge.meta_challenge || @challenge.ml_challenge
       params[challenge_type.to_sym] = params[:challenge_id]
     end
 
-    if !params.has_key?(challenge_type)
+    unless params.has_key?(challenge_type)
       cp = ChallengeProblems.find_by(problem_id: @challenge.id)
       if cp.present?
         params[challenge_type.to_sym] = Challenge.find(cp.challenge_id).slug
@@ -209,9 +209,7 @@ class SubmissionsController < ApplicationController
 
   def check_participation_terms
     challenge = @challenge
-    if @meta_challenge.present?
-      challenge = @meta_challenge
-    end
+    challenge = @meta_challenge if @meta_challenge.present?
 
     unless policy(challenge).has_accepted_participation_terms?
       redirect_to [challenge, ParticipationTerms.current_terms]
@@ -220,7 +218,7 @@ class SubmissionsController < ApplicationController
 
     unless policy(challenge).has_accepted_challenge_rules?
       redirect_to challenge_challenge_rules_path(challenge)
-      return
+      nil
     end
   end
 
@@ -230,45 +228,46 @@ class SubmissionsController < ApplicationController
       s3           = S3Service.new(s3_key)
       @grader_logs = s3.filestream
     end
-    return @grader_logs
+    @grader_logs
   end
 
   def submission_params
     params
-        .require(:submission)
-        .permit(
-          :ml_challenge_id,
-          :meta_challenge_id,
-          :challenge_id,
-          :participant_id,
-          :description_markdown,
-          :score,
-          :score_secondary,
-          :grading_status,
-          :grading_message,
-          :api,
-          :grading_status_cd,
-          :media_content_type,
-          :media_thumbnail,
-          :media_large,
-          :docker_configuration_id,
-          :clef_method_description,
-          :clef_retrieval_type,
-          :clef_run_type,
-          :clef_primary_run,
-          :clef_other_info,
-          :clef_additional,
-          :online_submission,
-          :baseline,
-          :baseline_comment,
-          :submission_link,
-          submission_files_attributes: [
-            :id,
-            :seq,
-            :submission_file_s3_key,
-            :submission_type,
-            :_delete
-          ])
+      .require(:submission)
+      .permit(
+        :ml_challenge_id,
+        :meta_challenge_id,
+        :challenge_id,
+        :participant_id,
+        :description_markdown,
+        :score,
+        :score_secondary,
+        :grading_status,
+        :grading_message,
+        :api,
+        :grading_status_cd,
+        :media_content_type,
+        :media_thumbnail,
+        :media_large,
+        :docker_configuration_id,
+        :clef_method_description,
+        :clef_retrieval_type,
+        :clef_run_type,
+        :clef_primary_run,
+        :clef_other_info,
+        :clef_additional,
+        :online_submission,
+        :baseline,
+        :baseline_comment,
+        :submission_link,
+        submission_files_attributes: [
+          :id,
+          :seq,
+          :submission_file_s3_key,
+          :submission_type,
+          :_delete
+        ]
+      )
   end
 
   def get_s3_key
@@ -280,8 +279,9 @@ class SubmissionsController < ApplicationController
   end
 
   def handle_code_based_submissions
-    return if params[:submission][:submission_type] != "code"
-    file_location = get_s3_key.gsub("${filename}", "editor_input." + params[:language])
+    return if params[:submission][:submission_type] != 'code'
+
+    file_location = get_s3_key.gsub('${filename}', 'editor_input.' + params[:language])
     begin
       S3_BUCKET.object(file_location).put(body: params[:submission][:submission_data])
     rescue Aws::S3::Errors::ServiceError
@@ -289,22 +289,21 @@ class SubmissionsController < ApplicationController
     end
 
     params[:submission].merge!({
-      submission_files_attributes: {"0": {seq: "", submission_type: params[:language], submission_file_s3_key: file_location}}
-    })
+                                 submission_files_attributes: { "0": { seq: '', submission_type: params[:language], submission_file_s3_key: file_location } }
+                               })
   end
 
   def handle_artifact_based_submissions
     return if params.dig('submission', 'submission_files_attributes', '0', 'submission_type') != 'artifact'
+
     # TODO: Make this accepted extension list dynamic via evaluations API
-    accepted_formats = [".csv", ".ipynb", ".pt", ".json", ".py", ".c", ".cpp"]
-    file_path = params[:submission][:submission_files_attributes]["0"][:submission_file_s3_key]
+    accepted_formats = ['.csv', '.ipynb', '.pt', '.json', '.py', '.c', '.cpp']
+    file_path        = params[:submission][:submission_files_attributes]['0'][:submission_file_s3_key]
 
     return if file_path.blank?
 
-    extension = File.extname(file_path)
-    if accepted_formats.include?(extension)
-      params[:submission][:submission_files_attributes]["0"][:submission_type] = extension.gsub(/^./, "")
-    end
+    extension                                                                = File.extname(file_path)
+    params[:submission][:submission_files_attributes]['0'][:submission_type] = extension.gsub(/^./, '') if accepted_formats.include?(extension)
   end
 
   def set_submissions_remaining
@@ -332,7 +331,7 @@ class SubmissionsController < ApplicationController
   end
 
   def set_layout
-    return 'application'
+    'application'
   end
 
   def validate_submission_file_presence

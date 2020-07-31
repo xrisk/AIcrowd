@@ -9,7 +9,7 @@ Sidekiq.default_worker_options = {
   'retry'     => false
 }
 
-schedule_file = "config/schedule.yml"
+schedule_file = 'config/schedule.yml'
 Sidekiq::Cron::Job.load_from_hash YAML.load_file(schedule_file) if File.exist?(schedule_file) # && Sidekiq.server?
 
 unless Rails.env.test?

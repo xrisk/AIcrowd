@@ -9,7 +9,7 @@ class MigrateUserService
   end
 
   def migrate_user
-    raise "User Already Migrated" if check_migrated
+    raise 'User Already Migrated' if check_migrated
 
     ActiveRecord::Base.transaction do
       update_migration_mappings(@new_id)
@@ -19,7 +19,7 @@ class MigrateUserService
 
   def undo_migration
     user_migration = MigrationMapping.where(crowdai_participant_id: @old_id, source_id: @new_id, source_type: 'Participant').first
-    raise "User Not Migrated" if user_migration.nil?
+    raise 'User Not Migrated' if user_migration.nil?
 
     ActiveRecord::Base.transaction do
       update_migration_mappings(nil)

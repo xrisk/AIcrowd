@@ -73,8 +73,7 @@ describe ChallengesController, feature: true do
     context 'when user is logged in as organizer' do
       let(:participant)           { create(:participant) }
       let(:organizer)             { create(:organizer) }
-      let(:participant_organizer) { create(:participant_organizer, organizer: organizer, participant: participant)}
-
+      let(:participant_organizer) { create(:participant_organizer, organizer: organizer, participant: participant) }
 
       before { log_in participant_organizer.participant }
 

@@ -2,15 +2,15 @@
 
 require 'rspec/expectations'
 
-RSpec::Matchers.define :be_a_valid_html_fragment do |expected|
+RSpec::Matchers.define :be_a_valid_html_fragment do |_expected|
   match do |actual|
     doc = Nokogiri::XML(actual) { |config| config.strict }
   rescue Nokogiri::XML::SyntaxError => e
     puts "INVALID HTML FRAGMENT exception: #{e}"
     puts actual
   end
-  failure_message do |actual|
-    # TODO pass back the Nokogiri exception as the failure message
-    "it should be a valid html fragment"
+  failure_message do |_actual|
+    # TODO: pass back the Nokogiri exception as the failure message
+    'it should be a valid html fragment'
   end
 end

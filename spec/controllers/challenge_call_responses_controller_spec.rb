@@ -21,7 +21,7 @@ describe ChallengeCallResponsesController, type: :controller do
     it { expect(response).to render_template :show }
   end
 
-  describe "GET #new" do
+  describe 'GET #new' do
     before do
       get :new, params: {
         challenge_call_id: challenge_call.id
@@ -32,27 +32,27 @@ describe ChallengeCallResponsesController, type: :controller do
     it { expect(assigns(:challenge_call_response).challenge_call_id).to eq(challenge_call.id) }
   end
 
-  describe "POST #create" do
-    context "with valid params" do
-      it "creates a new ChallengeCallResponse" do
+  describe 'POST #create' do
+    context 'with valid params' do
+      it 'creates a new ChallengeCallResponse' do
         expect do
           post :create, params: { challenge_call_id: challenge_call.id, challenge_call_response: valid_attributes }
         end.to change(ChallengeCallResponse, :count).by(1)
       end
 
-      it "assigns a newly created ChallengeCallResponse as @challenge_call_response" do
+      it 'assigns a newly created ChallengeCallResponse as @challenge_call_response' do
         post :create, params: { challenge_call_id: challenge_call.id, challenge_call_response: valid_attributes }
         expect(assigns(:challenge_call_response)).to be_a(ChallengeCallResponse)
         expect(assigns(:challenge_call_response)).to be_persisted
       end
 
-      it "redirects to the created challenge_call_response" do
+      it 'redirects to the created challenge_call_response' do
         post :create, params: { challenge_call_id: challenge_call.id, challenge_call_response: valid_attributes }
         expect(response).to redirect_to challenge_call_show_url(challenge_call, ChallengeCallResponse.last)
       end
     end
 
-    context "queues Organizers::ChallengeCallResponseNotificationJob job" do
+    context 'queues Organizers::ChallengeCallResponseNotificationJob job' do
       it do
         expect do
           post :create,
@@ -63,8 +63,8 @@ describe ChallengeCallResponsesController, type: :controller do
       end
     end
 
-    context "with invalid params" do
-      it "assigns a newly created but unsaved challenge_call_response as @challenge_call_response" do
+    context 'with invalid params' do
+      it 'assigns a newly created but unsaved challenge_call_response as @challenge_call_response' do
         post :create,
              params: {
                challenge_call_id: challenge_call.id, challenge_call_response: invalid_attributes
@@ -77,7 +77,7 @@ describe ChallengeCallResponsesController, type: :controller do
              params: {
                challenge_call_id: challenge_call.id, challenge_call_response: invalid_attributes
              }
-        expect(response).to render_template("new")
+        expect(response).to render_template('new')
       end
     end
   end

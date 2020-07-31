@@ -27,7 +27,7 @@ describe Discourse::CreateGroupService do
         let(:challenge) do
           create(
             :challenge,
-            challenge: 'Way To Long Chalenge Name - aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+            challenge:             'Way To Long Chalenge Name - aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
             discourse_category_id: nil
           )
         end

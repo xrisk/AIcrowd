@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # A number base for tokens.
 # Compact, case-insensitive, alphanumeric, no ambiguous characters (0O or 1lI)
 module Base31

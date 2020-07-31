@@ -21,8 +21,8 @@ class MlActivityPoint < ApplicationRecord
 
   def self.get_scores
     # activity_key: "score_improved_over_5_times" has own point, based on times of improvement
-    @activity_score = joins(:activity_point).where.not("activity_points.activity_key = ?", 'score_improved_over_5_times').sum('activity_points.point')
+    @activity_score = joins(:activity_point).where.not('activity_points.activity_key = ?', 'score_improved_over_5_times').sum('activity_points.point')
 
-    @improved_activity_score = joins(:activity_point).where("activity_points.activity_key = ?", 'score_improved_over_5_times').sum('point')
+    @improved_activity_score = joins(:activity_point).where('activity_points.activity_key = ?', 'score_improved_over_5_times').sum('point')
   end
 end

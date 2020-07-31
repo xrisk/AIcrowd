@@ -53,18 +53,18 @@ module ChallengeRounds
         submissions
           .where(ml_challenge_id: ml_challenge_id)
           .update_all([
-            'score_display = ROUND(score::numeric, ?), score_secondary_display = ROUND(score_secondary::numeric, ?)',
-            @challenge_round.score_precision,
-            @challenge_round.score_secondary_precision
-          ])
+                        'score_display = ROUND(score::numeric, ?), score_secondary_display = ROUND(score_secondary::numeric, ?)',
+                        @challenge_round.score_precision,
+                        @challenge_round.score_secondary_precision
+                      ])
       else
         submissions
           .where(meta_challenge_id: meta_challenge_id)
           .update_all([
-            'score_display = ROUND(score::numeric, ?), score_secondary_display = ROUND(score_secondary::numeric, ?)',
-            @challenge_round.score_precision,
-            @challenge_round.score_secondary_precision
-          ])
+                        'score_display = ROUND(score::numeric, ?), score_secondary_display = ROUND(score_secondary::numeric, ?)',
+                        @challenge_round.score_precision,
+                        @challenge_round.score_secondary_precision
+                      ])
       end
     end
 
@@ -77,7 +77,6 @@ module ChallengeRounds
 
         users_leaderboards << build_leaderboard(first_graded_submission, submissions.size, 'Team', team_id, leaderboard_type)
       end
-
 
       participants_submissions(post_challenge, cuttoff_dttm).each do |participant_id, submissions|
         first_graded_submission = submissions.find { |submission| submission.grading_status_cd == 'graded' }
@@ -111,7 +110,7 @@ module ChallengeRounds
       leaderboards.each do |leaderboard|
         previous_leaderboard = previous_leaderboards.find do |previous_leaderboard|
           previous_leaderboard.submitter_id == leaderboard.submitter_id &&
-          previous_leaderboard.submitter_type == leaderboard.submitter_type
+            previous_leaderboard.submitter_type == leaderboard.submitter_type
         end
 
         next if previous_leaderboard.blank?
@@ -125,66 +124,66 @@ module ChallengeRounds
     def teams_submissions(post_challenge, cuttoff_dttm)
       if @ml_challenge_id.present?
         submissions.joins(participant: :teams)
-          .where(teams: { challenge_id: team_challenge_id })
-          .where(challenge_round_id: challenge_round.id, ml_challenge_id: ml_challenge_id, post_challenge: post_challenge, baseline: false)
-          .where('submissions.created_at <= ?', cuttoff_dttm)
-          .select('teams.id AS team_id, submissions.*')
-          .reorder(submissions_order)
-          .group_by { |submission| submission.team_id }
+                   .where(teams: { challenge_id: team_challenge_id })
+                   .where(challenge_round_id: challenge_round.id, ml_challenge_id: ml_challenge_id, post_challenge: post_challenge, baseline: false)
+                   .where('submissions.created_at <= ?', cuttoff_dttm)
+                   .select('teams.id AS team_id, submissions.*')
+                   .reorder(submissions_order)
+                   .group_by { |submission| submission.team_id }
       else
         submissions.joins(participant: :teams)
-          .where(teams: { challenge_id: team_challenge_id })
-          .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: false)
-          .where('submissions.created_at <= ?', cuttoff_dttm)
-          .select('teams.id AS team_id, submissions.*')
-          .reorder(submissions_order)
-          .group_by { |submission| submission.team_id }
+                   .where(teams: { challenge_id: team_challenge_id })
+                   .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: false)
+                   .where('submissions.created_at <= ?', cuttoff_dttm)
+                   .select('teams.id AS team_id, submissions.*')
+                   .reorder(submissions_order)
+                   .group_by { |submission| submission.team_id }
       end
     end
 
     def participants_submissions(post_challenge, cuttoff_dttm)
       if @ml_challenge_id.present?
         submissions.joins(:participant)
-          .where.not(participant_id: team_participants_ids)
-          .where(challenge_round_id: challenge_round.id, ml_challenge_id: ml_challenge_id, post_challenge: post_challenge, baseline: false)
-          .where('submissions.created_at <= ?', cuttoff_dttm)
-          .reorder(submissions_order)
-          .group_by { |submission| submission.participant_id }
+                   .where.not(participant_id: team_participants_ids)
+                   .where(challenge_round_id: challenge_round.id, ml_challenge_id: ml_challenge_id, post_challenge: post_challenge, baseline: false)
+                   .where('submissions.created_at <= ?', cuttoff_dttm)
+                   .reorder(submissions_order)
+                   .group_by { |submission| submission.participant_id }
       else
         submissions.joins(:participant)
-          .where.not(participant_id: team_participants_ids)
-          .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: false)
-          .where('submissions.created_at <= ?', cuttoff_dttm)
-          .reorder(submissions_order)
-          .group_by { |submission| submission.participant_id }
+                   .where.not(participant_id: team_participants_ids)
+                   .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: false)
+                   .where('submissions.created_at <= ?', cuttoff_dttm)
+                   .reorder(submissions_order)
+                   .group_by { |submission| submission.participant_id }
       end
     end
 
     def migration_submmissions(post_challenge, cuttoff_dttm)
       if @ml_challenge_id.present?
         submissions.left_joins(:participant)
-          .where(challenge_round_id: challenge_round.id, ml_challenge_id: ml_challenge_id, post_challenge: post_challenge, baseline: false, grading_status_cd: 'graded')
-          .where('submissions.created_at <= ?', cuttoff_dttm)
-          .reorder(submissions_order)
-          .where('participants.id IS NULL')
+                   .where(challenge_round_id: challenge_round.id, ml_challenge_id: ml_challenge_id, post_challenge: post_challenge, baseline: false, grading_status_cd: 'graded')
+                   .where('submissions.created_at <= ?', cuttoff_dttm)
+                   .reorder(submissions_order)
+                   .where('participants.id IS NULL')
       else
         submissions.left_joins(:participant)
-          .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: false, grading_status_cd: 'graded')
-          .where('submissions.created_at <= ?', cuttoff_dttm)
-          .reorder(submissions_order)
-          .where('participants.id IS NULL')
+                   .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: false, grading_status_cd: 'graded')
+                   .where('submissions.created_at <= ?', cuttoff_dttm)
+                   .reorder(submissions_order)
+                   .where('participants.id IS NULL')
       end
     end
 
     def baseline_submissions(post_challenge, cuttoff_dttm)
       if @ml_challenge_id.present?
         challenge_round.submissions
-          .where(challenge_round_id: challenge_round.id, ml_challenge_id: ml_challenge_id, post_challenge: post_challenge, baseline: true, grading_status_cd: 'graded')
-          .where('submissions.created_at <= ?', cuttoff_dttm)
+                       .where(challenge_round_id: challenge_round.id, ml_challenge_id: ml_challenge_id, post_challenge: post_challenge, baseline: true, grading_status_cd: 'graded')
+                       .where('submissions.created_at <= ?', cuttoff_dttm)
       else
         challenge_round.submissions
-          .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: true, grading_status_cd: 'graded')
-          .where('submissions.created_at <= ?', cuttoff_dttm)
+                       .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: true, grading_status_cd: 'graded')
+                       .where('submissions.created_at <= ?', cuttoff_dttm)
       end
     end
 
@@ -222,11 +221,9 @@ module ChallengeRounds
     def sort_map(sort_field)
       case sort_field
       when 'ascending'
-        return 'asc'
+        'asc'
       when 'descending'
-        return 'desc'
-      else
-        return nil
+        'desc'
       end
     end
 
@@ -235,7 +232,9 @@ module ChallengeRounds
 
       score_sort_order = sort_map(challenge_round.primary_sort_order_cd)
 
-      return "score_display #{score_sort_order} NULLS LAST" if challenge_round.secondary_sort_order_cd.blank? || challenge_round.secondary_sort_order_cd == 'not_used'
+      if challenge_round.secondary_sort_order_cd.blank? || challenge_round.secondary_sort_order_cd == 'not_used'
+        return "score_display #{score_sort_order} NULLS LAST"
+      end
 
       secondary_sort_order = sort_map(challenge_round.secondary_sort_order_cd)
 
@@ -278,14 +277,14 @@ module ChallengeRounds
           if next_leaderboard.score == leaderboard.score
             same_score_count += 1
           else
-            current_row_num  += 1 + same_score_count
+            current_row_num += 1 + same_score_count
             same_score_count = 0
           end
         else
           if next_leaderboard.score == leaderboard.score && next_leaderboard.score_secondary == leaderboard.score_secondary
             same_score_count += 1
           else
-            current_row_num  += 1 + same_score_count
+            current_row_num += 1 + same_score_count
             same_score_count = 0
           end
         end

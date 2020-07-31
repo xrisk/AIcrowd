@@ -145,7 +145,7 @@ Rails.application.routes.draw do
 
   devise_for :participants, controllers: {
     omniauth_callbacks: 'participants/omniauth_callbacks',
-    registrations: 'participants/registrations'
+    registrations:      'participants/registrations'
   }
 
   resources :participants, only: [:show, :edit, :update, :destroy, :index] do
@@ -160,7 +160,7 @@ Rails.application.routes.draw do
     match '/notifications', to: 'email_preferences#update', via: :patch
   end
 
-  resources :job_postings, path: "jobs", only: [:index, :show]
+  resources :job_postings, path: 'jobs', only: [:index, :show]
   resources :gdpr_exports, only: [:create]
   resources :landing_page, only: [:index]
   match '/landing_page/host', to: 'landing_page#host', via: :get
@@ -204,7 +204,7 @@ Rails.application.routes.draw do
   # TODO: Move below challenge routes into Challenges module
   resources :challenges, only: [:index, :show, :new, :create, :edit, :update] do
     challenge_routes
-    resources :problems, only: [:show, :edit, :update], controller: 'challenges', key: :challenge do |problem|
+    resources :problems, only: [:show, :edit, :update], controller: 'challenges', key: :challenge do |_problem|
       challenge_routes
     end
   end
@@ -213,7 +213,7 @@ Rails.application.routes.draw do
     resource :discussion, only: :show
     resource :newsletter_emails, only: [:new, :create]
 
-    resources :problems, only: :show do |problem|
+    resources :problems, only: :show do |_problem|
       resource :discussion, only: :show
       resource :newsletter_emails, only: [:new, :create]
     end
@@ -225,7 +225,7 @@ Rails.application.routes.draw do
     resources :dataset_file_downloads, only: [:create]
   end
 
-  resources :team_members, path: "our_team", only: [:index]
+  resources :team_members, path: 'our_team', only: [:index]
   resources :practice, only: [:index]
 
   match '/contact', to: 'pages#contact', via: :get

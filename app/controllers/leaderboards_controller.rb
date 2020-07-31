@@ -36,7 +36,7 @@ class LeaderboardsController < ApplicationController
     @following        = following?
 
     unless @leaderboards.first&.disentanglement?
-      @countries = @filter.call('participant_countries')
+      @countries    = @filter.call('participant_countries')
       @affiliations = @filter.call('participant_affiliations')
     end
   end
@@ -45,8 +45,8 @@ class LeaderboardsController < ApplicationController
     authorize @challenge, :export?
 
     @leaderboards = Leaderboard
-      .where(challenge_round_id: params[:leaderboard_export_challenge_round_id].to_i)
-      .order(:seq)
+                    .where(challenge_round_id: params[:leaderboard_export_challenge_round_id].to_i)
+                    .order(:seq)
 
     csv_data = Leaderboards::CSVExportService.new(leaderboards: @leaderboards).call.value
 
@@ -62,16 +62,16 @@ class LeaderboardsController < ApplicationController
   private
 
   def set_challenge
-    @challenge = Challenge.friendly.find(params[:challenge_id])
+    @challenge     = Challenge.friendly.find(params[:challenge_id])
     challenge_type = params['ml_challenge_id'].present? ? 'ml_challenge_id' : 'meta_challenge_id'
 
-    if params.has_key?(challenge_type) and params[challenge_type.to_sym] != params[:challenge_id]
+    if params.has_key?(challenge_type) && (params[challenge_type.to_sym] != params[:challenge_id])
       if params['ml_challenge_id'].present?
-        @ml_challenge = Challenge.includes(:organizers).friendly.find(params[challenge_type.
-          to_sym])
+        @ml_challenge = Challenge.includes(:organizers).friendly.find(params[challenge_type
+          .to_sym])
       else
-        @meta_challenge = Challenge.includes(:organizers).friendly.find(params[challenge_type.
-          to_sym])
+        @meta_challenge = Challenge.includes(:organizers).friendly.find(params[challenge_type
+          .to_sym])
       end
     elsif @challenge.meta_challenge
       params[challenge_type.to_sym] = params[:challenge_id]
@@ -79,7 +79,7 @@ class LeaderboardsController < ApplicationController
       params[challenge_type.to_sym] = params[:challenge_id]
     end
 
-    if !params.has_key?(challenge_type)
+    unless params.has_key?(challenge_type)
       cp = ChallengeProblems.find_by(problem_id: @challenge.id)
       if cp.present? && params[:action] != 'get_affiliation'
         params[challenge_type.to_sym] = Challenge.find(cp.challenge_id).slug
@@ -90,14 +90,14 @@ class LeaderboardsController < ApplicationController
 
   def set_current_round
     @current_round = if params[:challenge_round_id].present?
-      @challenge.challenge_rounds.find(params[:challenge_round_id].to_i)
-    else
-      @challenge.active_round
+                       @challenge.challenge_rounds.find(params[:challenge_round_id].to_i)
+                     else
+                       @challenge.active_round
     end
   end
 
   def post_challenge?
-    @challenge.completed? && params[:post_challenge] == "true" && !@challenge.meta_challenge?
+    @challenge.completed? && params[:post_challenge] == 'true' && !@challenge.meta_challenge?
   end
 
   def following?
@@ -112,18 +112,18 @@ class LeaderboardsController < ApplicationController
     elsif @ml_challenge.present?
       filter[:ml_challenge_id] = @ml_challenge.id
     end
-    @leaderboards = if @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
-      BaseLeaderboard
-        .where(challenge_round_id: @current_round)
-        .freeze_record(current_participant)
-    elsif post_challenge? || freeze_record_for_organizer
-      policy_scope(OngoingLeaderboard)
-        .where(filter)
-    elsif @challenge.ml_challenge? && current_participant.nil?
-      Leaderboard.none
-    else
-      policy_scope(Leaderboard)
-        .where(filter)
+    @leaderboards = if @challenge.challenge == 'NeurIPS 2019 : Disentanglement Challenge'
+                      BaseLeaderboard
+                        .where(challenge_round_id: @current_round)
+                        .freeze_record(current_participant)
+                    elsif post_challenge? || freeze_record_for_organizer
+                      policy_scope(OngoingLeaderboard)
+                        .where(filter)
+                    elsif @challenge.ml_challenge? && current_participant.nil?
+                      Leaderboard.none
+                    else
+                      policy_scope(Leaderboard)
+                        .where(filter)
     end
 
     if following?

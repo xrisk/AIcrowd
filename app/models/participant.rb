@@ -43,11 +43,11 @@ class Participant < ApplicationRecord
          :registerable,
          :rememberable,
          :validatable,
-         :omniauthable, omniauth_providers: %i[github oauth2_generic]
+         :omniauthable, omniauth_providers: [:github, :oauth2_generic]
 
   default_scope { order('participants.name ASC') }
 
-  scope :rated_users_count, -> { Participant.where("ranking > 0").count }
+  scope :rated_users_count, -> { Participant.where('ranking > 0').count }
   scope :admins, -> { where(admin: true) }
   scope :with_every_email_preference, -> { joins(:email_preferences).where(email_preferences: { email_frequency_cd: :every }) }
 
@@ -84,21 +84,21 @@ class Participant < ApplicationRecord
   has_many :follows, as: :followable
   has_many :following,
            foreign_key: :participant_id,
-           class_name: "Follow",
-           dependent: :destroy
+           class_name:  'Follow',
+           dependent:   :destroy
   has_many :participant_clef_tasks,
            dependent: :destroy
   has_many :invitations, dependent: :destroy
   has_many :access_grants,
-           class_name:  "Doorkeeper::AccessGrant",
+           class_name:  'Doorkeeper::AccessGrant',
            foreign_key: :resource_owner_id,
            dependent:   :destroy
   has_many :access_tokens,
-           class_name:  "Doorkeeper::AccessToken",
+           class_name:  'Doorkeeper::AccessToken',
            foreign_key: :resource_owner_id,
            dependent:   :destroy
 
-  has_many :visits, class_name: "Ahoy::Visit", foreign_key: :user_id
+  has_many :visits, class_name: 'Ahoy::Visit', foreign_key: :user_id
   has_many :team_participants, inverse_of: :participant, dependent: :destroy
   has_many :teams, through: :team_participants, inverse_of: :participants
   has_many :concrete_teams, -> { concrete }, through: :team_participants, source: :team, inverse_of: :participants
@@ -145,7 +145,7 @@ class Participant < ApplicationRecord
   validates :uuid, uniqueness: true
 
   after_update do
-    ParticipantBadgeJob.perform_later(name: "profileupdate", participant_id: id)
+    ParticipantBadgeJob.perform_later(name: 'profileupdate', participant_id: id)
   end
 
   def self.api_admin
@@ -163,31 +163,34 @@ class Participant < ApplicationRecord
   def reserved_userhandle
     return unless name
 
-    errors.add(:name, 'is reserved for CrowdAI users.  Please log in via CrowdAI to claim this user handle.') if (provider != 'crowdai') && ReservedUserhandle.where(name: name.downcase).exists?
+    if (provider != 'crowdai') && ReservedUserhandle.where(name: name.downcase).exists?
+      errors.add(:name, 'is reserved for CrowdAI users.  Please log in via CrowdAI to claim this user handle.')
+    end
   end
 
   def disable_account(reason)
     update(
       account_disabled:        true,
       account_disabled_reason: reason,
-      account_disabled_dttm:   Time.now)
+      account_disabled_dttm:   Time.now
+    )
   end
 
   def enable_account
     update(
       account_disabled:        false,
       account_disabled_reason: nil,
-      account_disabled_dttm:   nil)
+      account_disabled_dttm:   nil
+    )
   end
 
   def datetime_sequence(start, stop, step)
     dates = [start]
-    while dates.last < (stop - step)
-      dates << (dates.last + step)
-    end
-    return dates
+    dates << (dates.last + step) while dates.last < (stop - step)
+    dates
   end
-  def add_badge(name, custom_fields={})
+
+  def add_badge(name, custom_fields = {})
     badge_id = AicrowdBadge.find_by(name: name).id
     AicrowdUserBadge.create!(aicrowd_badge_id: badge_id, participant_id: id, custom_fields: custom_fields)
   end
@@ -200,46 +203,49 @@ class Participant < ApplicationRecord
   def badges
     aicrowd_user_badges
   end
+
   def user_rating_history
-    user_rating = UserRating.joins("left outer join challenge_rounds on (challenge_rounds.id=challenge_round_id)").joins("left outer join challenges c on (c.id=challenge_rounds.challenge_id)").where(participant_id: self.id).where('rating is not null').reorder('user_ratings.created_at::date + user_ratings.updated_at::time, user_ratings.id').pluck('user_ratings.created_at::date + user_ratings.updated_at::time', 'rating - 3 * variation as final_rating',  'concat(challenge, challenge_round)')
+    user_rating   = UserRating.joins('left outer join challenge_rounds on (challenge_rounds.id=challenge_round_id)').joins('left outer join challenges c on (c.id=challenge_rounds.challenge_id)').where(participant_id: id).where('rating is not null').reorder('user_ratings.created_at::date + user_ratings.updated_at::time, user_ratings.id').pluck('user_ratings.created_at::date + user_ratings.updated_at::time', 'rating - 3 * variation as final_rating', 'concat(challenge, challenge_round)')
     final_ratings = []
-    user_rating.each_with_index do |rating, index|
+    user_rating.each_with_index do |_rating, index|
       current_rating = user_rating[index]
       final_ratings << current_rating
-      if index > 0
-        date_sequences = datetime_sequence(user_rating[index - 1][0], user_rating[index][0], 1.day)
-        date_sequences = date_sequences.slice(1, date_sequences.size - 2)
-        for day in date_sequences.to_a
-          time_difference = day.to_date - user_rating[index - 1][0].to_date
-          time_difference = time_difference.to_i
-          factor_of_decay = 4
-          total_number_of_days = factor_of_decay*365
-          updated_rating = user_rating[index - 1][1] * (Math.exp(-time_difference.to_f/total_number_of_days.to_f))
-          final_ratings << [day, updated_rating, '']
-        end
+      next unless index > 0
+
+      date_sequences = datetime_sequence(user_rating[index - 1][0], user_rating[index][0], 1.day)
+      date_sequences = date_sequences.slice(1, date_sequences.size - 2)
+      date_sequences.to_a.each do |day|
+        time_difference      = day.to_date - user_rating[index - 1][0].to_date
+        time_difference      = time_difference.to_i
+        factor_of_decay      = 4
+        total_number_of_days = factor_of_decay* 365
+        updated_rating       = user_rating[index - 1][1] * Math.exp(-time_difference.to_f/ total_number_of_days.to_f)
+        final_ratings << [day, updated_rating, '']
       end
     end
-    return final_ratings
+    final_ratings
   end
+
   def final_rating
-    self.rating.to_i - 3*self.variation.to_i
+    rating.to_i - 3* variation.to_i
   end
 
   def badges_stats
     badges_stat_count = badges.badges_stat_count
-    bronze_badges = badges.individual_badges(BadgeType.bronze).select_display_fields.limit(5)
-    silver_badges = badges.individual_badges(BadgeType.silver).select_display_fields.limit(5)
-    gold_badges = badges.individual_badges(BadgeType.gold).select_display_fields.limit(5)
-    badges = {Gold: gold_badges, Silver: silver_badges, Bronze: bronze_badges}
-    return badges_stat_count, badges
+    bronze_badges     = badges.individual_badges(BadgeType.bronze).select_display_fields.limit(5)
+    silver_badges     = badges.individual_badges(BadgeType.silver).select_display_fields.limit(5)
+    gold_badges       = badges.individual_badges(BadgeType.gold).select_display_fields.limit(5)
+    badges            = { Gold: gold_badges, Silver: silver_badges, Bronze: bronze_badges }
+    [badges_stat_count, badges]
   end
+
   def badges_tab_stats
-    badges_summary = badges.badges_stat_count
+    badges_summary      = badges.badges_stat_count
     bronze_badges_stats = badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
     silver_badges_stats = badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
-    gold_badges_stats = badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
-    other_badges_stats = badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
-    return badges_summary, bronze_badges_stats, silver_badges_stats, gold_badges_stats, other_badges_stats
+    gold_badges_stats   = badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
+    other_badges_stats  = badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
+    [badges_summary, bronze_badges_stats, silver_badges_stats, gold_badges_stats, other_badges_stats]
   end
 
   def awaiting_toasts
@@ -251,8 +257,9 @@ class Participant < ApplicationRecord
   end
 
   def final_temporary_rating
-    (self.temporary_rating || self.temporary_variation)? self.temporary_rating.to_i - 3*self.temporary_variation.to_i: self.rating.to_i - 3*self.variation.to_i
+    temporary_rating || temporary_variation ? temporary_rating.to_i - 3* temporary_variation.to_i: rating.to_i - 3* variation.to_i
   end
+
   def active_for_authentication?
     super && account_disabled == false
   end
@@ -281,7 +288,6 @@ class Participant < ApplicationRecord
     end
   end
 
-
   def image_url
     image_url = if image_file.file.present?
                   image_file.url
@@ -303,7 +309,7 @@ class Participant < ApplicationRecord
 
   def format_url(url_field)
     if send(url_field).present?
-      send("#{url_field}=", "http://#{send(url_field)}") unless send(url_field).include?("http://") || send(url_field).include?("https://")
+      send("#{url_field}=", "http://#{send(url_field)}") unless send(url_field).include?('http://') || send(url_field).include?('https://')
     end
   end
 
@@ -354,7 +360,7 @@ class Participant < ApplicationRecord
     return if participation_terms_accepted_version != current_participation_terms_version
     return unless participation_terms_accepted_date
 
-    return true
+    true
   end
 
   def challenge_submissions(challenge)
@@ -383,13 +389,13 @@ class Participant < ApplicationRecord
     return if Rails.env.development? || Rails.env.test?
     return unless saved_change_to_attribute?(:name) || saved_change_to_attribute?(:email)
 
-    Discourse::UpsertUserJob.perform_later(self.id)
+    Discourse::UpsertUserJob.perform_later(id)
   end
 
   def update_gitlab_user
     return if Rails.env.development? || Rails.env.test?
     return unless saved_change_to_attribute?(:name)
 
-    Gitlab::UpdateUsernameJob.perform_later(self.id)
+    Gitlab::UpdateUsernameJob.perform_later(id)
   end
 end

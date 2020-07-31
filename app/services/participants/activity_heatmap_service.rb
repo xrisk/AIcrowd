@@ -1,14 +1,14 @@
 module Participants
   class ActivityHeatmapService < ::BaseService
-    VALUE_OF_VISIT      = 1.freeze
-    VALUE_OF_SUBMISSION = 10.freeze
+    VALUE_OF_VISIT      = 1
+    VALUE_OF_SUBMISSION = 10
 
     def initialize(participant:)
       @participant = participant
     end
 
     def call
-      activity = aicrowd_visits.map do |key, value|
+      activity = aicrowd_visits.map do |key, _value|
         {
           date:                 key,
           val:                  activity_value(aicrowd_visits[key].to_i, aicrowd_submissions[key].to_i, gitlab_contributions[key].to_i),

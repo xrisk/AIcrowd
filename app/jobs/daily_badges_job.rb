@@ -1,8 +1,8 @@
 class DailyBadgesJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
-    for badge in AicrowdBadge.where(badges_event_id: BadgesEvent.where(name: "Daily").pluck(:id))
+  def perform(*_args)
+    AicrowdBadge.where(badges_event_id: BadgesEvent.where(name: 'Daily').pluck(:id)).each do |badge|
       eval(badge.code)
     end
   end

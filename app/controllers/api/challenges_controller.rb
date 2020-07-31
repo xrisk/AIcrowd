@@ -11,7 +11,8 @@ class Api::ChallengesController < Api::BaseController
         :status_cd,
         :perpetual_challenge,
         :grading_factor
-      ] })
+      ] }
+    )
     render json: { message: message }, status: :ok
   end
 
@@ -27,10 +28,11 @@ class Api::ChallengesController < Api::BaseController
           :perpetual_challenge,
           :grading_factor
         ],
-          include: [:challenge_rounds] })
-      status = :ok
+          include: [:challenge_rounds] }
+      )
+      status  = :ok
     else
-      message = "No challenge could be found for this ID"
+      message = 'No challenge could be found for this ID'
       status  = :not_found
     end
     render json: { message: message }, status: status

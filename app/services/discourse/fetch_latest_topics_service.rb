@@ -9,10 +9,10 @@ module Discourse
         response      = client.get(latest_topics_path)
         participants  = get_participants(response.body['users'])
         latest_topics = topics_with_participant(
-                          response.body['topic_list']['topics'],
-                          response.body['users'],
-                          participants
-                        )
+          response.body['topic_list']['topics'],
+          response.body['users'],
+          participants
+        )
 
         # Remove Welcome to Discourse topic if it gets inserted as first element
         latest_topics.shift if latest_topics.first['title'] == 'Welcome to Discourse'

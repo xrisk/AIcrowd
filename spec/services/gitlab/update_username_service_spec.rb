@@ -27,7 +27,7 @@ describe Gitlab::UpdateUsernameService do
     end
 
     context 'when participant does not exist in Gitlab' do
-      let(:participant) { create(:participant, name: 'test', email: 'test@example.com', gitlab_id: 123456) }
+      let(:participant) { create(:participant, name: 'test', email: 'test@example.com', gitlab_id: 123_456) }
 
       it 'returns failure with error message' do
         result = VCR.use_cassette('gitlab_api/update_username/user_not_found') do
@@ -35,7 +35,7 @@ describe Gitlab::UpdateUsernameService do
         end
 
         expect(result).to be_failure
-        expect(result.value).to eq "{\"message\"=>\"404 User Not Found\"}"
+        expect(result.value).to eq '{"message"=>"404 User Not Found"}'
       end
     end
   end

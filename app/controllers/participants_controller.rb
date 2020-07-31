@@ -19,18 +19,18 @@ class ParticipantsController < ApplicationController
                   end
 
     @discourse_posts_fetch = Rails.cache.fetch("discourse-user-posts/#{@participant.id}", expires_in: 5.minutes) do
-                               Discourse::FetchUserPostsService.new(participant: @participant).call
-                             end
-    @discourse_posts = @discourse_posts_fetch.value
+      Discourse::FetchUserPostsService.new(participant: @participant).call
+    end
+    @discourse_posts       = @discourse_posts_fetch.value
 
     @activity_data = Participants::ActivityHeatmapService.new(participant: @participant).call.value
 
-    @categories = @participant.challenges.joins(:categories).group('categories.name').reorder('categories.name').count
-    if @categories.count == 0
-      @categories = {'No category information' => 1}
-    end
+    @categories         = @participant.challenges.joins(:categories).group('categories.name').reorder('categories.name').count
+    @categories         = { 'No category information' => 1 } if @categories.count == 0
     @achievements_count = 0
-    @participant.badges.badges_stat_count.map { |badge_type_id, badge_type_count| @achievements_count += badge_type_count if [1,2,3].include?(badge_type_id) }
+    @participant.badges.badges_stat_count.map do |badge_type_id, badge_type_count|
+      @achievements_count += badge_type_count if [1, 2, 3].include?(badge_type_id)
+    end
   end
 
   def edit; end
@@ -46,7 +46,7 @@ class ParticipantsController < ApplicationController
     validate_name_length
 
     if @participant.errors.none? && @participant.save
-      flash[:success] = "Profile updated"
+      flash[:success] = 'Profile updated'
       redirect_to @participant
     else
       flash[:error] = @participant.errors.full_messages.to_sentence
@@ -73,7 +73,7 @@ class ParticipantsController < ApplicationController
   end
 
   def regen_api_key
-    @participant = Participant.friendly.find(params[:participant_id])
+    @participant         = Participant.friendly.find(params[:participant_id])
     authorize @participant
     @participant.api_key = @participant.generate_api_key
     @participant.save!
@@ -158,7 +158,8 @@ class ParticipantsController < ApplicationController
         # NATE: we might need to allow this if for some reason a user has been created without agreeing,
         # for example during the oauth flow
         # :agreed_to_terms_of_use_and_privacy,
-        :agreed_to_marketing)
+        :agreed_to_marketing
+      )
   end
 
   def sso_helper
@@ -167,8 +168,8 @@ class ParticipantsController < ApplicationController
     nonce          = decoded_hash['nonce']
     return_sso_url = decoded_hash['return_sso_url']
     sig            = params[:sig]
-    signed         = OpenSSL::HMAC.hexdigest("sha256", ENV['SSO_SECRET'], params[:sso])
-    raise "Incorrect SSO signature" if sig != signed
+    signed         = OpenSSL::HMAC.hexdigest('sha256', ENV['SSO_SECRET'], params[:sso])
+    raise 'Incorrect SSO signature' if sig != signed
 
     avatar_url = ENV['DOMAIN_NAME'] + get_default_image
     avatar_url = current_user.image_file.url if current_user.image_file && !current_user.image_file.url.nil?
@@ -185,7 +186,7 @@ class ParticipantsController < ApplicationController
 
     response_query         = response_params.to_query
     encoded_response_query = Base64.strict_encode64(response_query)
-    response_sig           = OpenSSL::HMAC.hexdigest("sha256", ENV['SSO_SECRET'], encoded_response_query)
+    response_sig           = OpenSSL::HMAC.hexdigest('sha256', ENV['SSO_SECRET'], encoded_response_query)
 
     url = File.join(return_sso_url, "?sso=#{CGI.escape(encoded_response_query)}&sig=#{response_sig}")
   end

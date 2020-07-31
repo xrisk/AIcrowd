@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class TeamInvitations::CancellationsController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_invitation

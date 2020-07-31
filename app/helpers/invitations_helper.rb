@@ -23,10 +23,10 @@ module InvitationsHelper
     case invitee
     when Participant
       content_tag(:span, 'Participant ') +
-      link_to(invitee.name, participant_url(invitee), target: '_blank')
+        link_to(invitee.name, participant_url(invitee), target: '_blank')
     when EmailInvitation
       content_tag(:span, 'Participant ') +
-      mail_to(invitee.email, invitee.email.sub(/@.+\z/, ''))
+        mail_to(invitee.email, invitee.email.sub(/@.+\z/, ''))
     else
       content_tag(:span, '&lt;?&gt;')
     end

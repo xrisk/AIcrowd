@@ -10,7 +10,7 @@ describe 'Participant visits migration page from email' do
 
   before { login_as(participant) }
 
-  it "renders page successfully" do
+  it 'renders page successfully' do
     get crowdai_migration_path(data: encrypted_data)
     expect(response).to render_template(:new)
   end
@@ -24,25 +24,25 @@ describe 'Participant visits migration page from email' do
           crowdai_participant_id: 1
         )
       end
-      it "redirect with success flash and migration queued" do
+      it 'redirect with success flash and migration queued' do
         post crowdai_migration_save_path(data: encrypted_data)
         follow_redirect!
-        expect(response.body).to include("We have received and processing your migration request. Welcome to AIcrowd!")
+        expect(response.body).to include('We have received and processing your migration request. Welcome to AIcrowd!')
         expect(MigrateUserJob).to have_been_enqueued.with(crowdai_id: 1, aicrowd_id: participant.id)
       end
     end
     context 'Fails unless data is present' do
-      it "redirect with error flash" do
+      it 'redirect with error flash' do
         post crowdai_migration_save_path(data: {})
         follow_redirect!
-        expect(response.body).to include("Error while processing, contact help@aicrowd.com")
+        expect(response.body).to include('Error while processing, contact help@aicrowd.com')
       end
     end
   end
 
   def setup_crowdai_migration(data_to_encrypt)
     # Setup RSA Keys
-    rsa_key = OpenSSL::PKey::RSA.generate(2048)
+    rsa_key   = OpenSSL::PKey::RSA.generate(2048)
     # Setup cipher
     cipher    = OpenSSL::Cipher.new('AES-256-CBC')
     cipherkey = cipher.random_key

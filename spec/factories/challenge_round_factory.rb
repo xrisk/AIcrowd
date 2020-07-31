@@ -11,7 +11,7 @@ FactoryBot.define do
     ranking_window            { 48 }
     ranking_highlight         { 3 }
     parallel_submissions      { 0 }
-    score_title               { 'Score Title'}
+    score_title               { 'Score Title' }
     score_secondary_title     { 'Secondary Score Title' }
 
     association(:challenge)

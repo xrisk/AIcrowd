@@ -11,7 +11,7 @@ describe ChallengesController, type: :request do
     end
   end
 
-  describe "#export" do
+  describe '#export' do
     let!(:challenge) { create(:challenge, challenge: 'Challenge Title', id: 3) }
 
     context 'when user is logged in as participant' do

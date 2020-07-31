@@ -2,7 +2,7 @@ class GdprMailer < ApplicationMailer
   def export_email(participant)
     @participant           = participant
     @email_preferences_url = EmailPreferencesTokenService.new(@participant).preferences_token_url
-    subject                = "[AIcrowd] Personal Data download"
+    subject                = '[AIcrowd] Personal Data download'
 
     attachments['aicrowd_data.csv'] = {
       mime_type: 'file/csv',

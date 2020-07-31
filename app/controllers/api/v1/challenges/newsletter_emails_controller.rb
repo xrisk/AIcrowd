@@ -2,7 +2,7 @@ module Api
   module V1
     module Challenges
       class NewsletterEmailsController < ActionController::API
-        DEFAULT_LIMIT = 100.freeze
+        DEFAULT_LIMIT = 100
 
         before_action :set_challenge, only: [:preview, :search]
 
@@ -50,8 +50,10 @@ module Api
 
         def default_groups
           [].tap do |default_groups|
-            default_groups << { id: :all_participants, text: "All participants" } if "All participants".downcase.include?(params[:q].to_s.downcase)
-            default_groups << { id: :participants_with_submission, text: "Participants with submission" } if "Participants with submission".downcase.include?(params[:q].to_s.downcase)
+            default_groups << { id: :all_participants, text: 'All participants' } if 'All participants'.downcase.include?(params[:q].to_s.downcase)
+            if 'Participants with submission'.downcase.include?(params[:q].to_s.downcase)
+              default_groups << { id: :participants_with_submission, text: 'Participants with submission' }
+            end
           end
         end
       end

@@ -5,16 +5,16 @@ describe JobPostingsController, type: :controller do
 
   let!(:job_postings) { create_list(:job_posting, 3) }
 
-  describe "GET #index" do
-    it "returns a success response" do
+  describe 'GET #index' do
+    it 'returns a success response' do
       get :index
 
       expect(response).to be_success
     end
   end
 
-  describe "GET #show" do
-    it "returns a success response" do
+  describe 'GET #show' do
+    it 'returns a success response' do
       get :show, params: { id: job_postings.first.id }
 
       expect(response).to render_template(:show)

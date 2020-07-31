@@ -5,9 +5,9 @@ module TabsHelper
 
   def round_pills_tab_classes(challenge_round, current_round)
     if challenge_round.id == current_round&.id
-      return 'nav-link active'
+      'nav-link active'
     else
-      return 'nav-link'
+      'nav-link'
     end
   end
 

@@ -16,8 +16,7 @@ class Team < ApplicationRecord
               Team.joins(:team_participants)
         .group(Team.arel_table[:id])
         .having(TeamParticipant.arel_table[:id].count.gteq(n))
-        .select(Team.arel_table[:id])
-         )
+        .select(Team.arel_table[:id]))
   }
   scope :concrete, -> { with_at_least_n_participants(2) }
 

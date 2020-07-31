@@ -9,7 +9,7 @@ module FreezeRecord
       if freeze_duration?(participant)
         freeze_beyond_time = ch_round.end_dttm - ch_round.freeze_duration.to_i.hours
 
-        participant_and_before_freeze_record  = where("participant_id = ? OR created_at < ?", participant&.id, freeze_beyond_time)
+        participant_and_before_freeze_record  = where('participant_id = ? OR created_at < ?', participant&.id, freeze_beyond_time)
 
         return participant_and_before_freeze_record
       end
@@ -22,7 +22,7 @@ module FreezeRecord
       organizers_email.include?(participant_email)
     end
 
-    def self.freeze_duration?(participant)
+    def self.freeze_duration?(_participant)
       return if count.zero?
 
       ch_round = first.challenge_round

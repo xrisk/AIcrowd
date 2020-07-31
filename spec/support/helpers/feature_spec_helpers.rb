@@ -43,7 +43,7 @@ module FeatureSpecHelpers
 
   def open_menu
     visit '/'
-    find("#toggle-user").click
+    find('#toggle-user').click
   end
 
   def visit_own_profile(participant)

@@ -49,13 +49,13 @@ module Challenges
     end
 
     def import_images_from_base64
-      challenge.image_file = decode_base64_data(import_params[:image_file])
+      challenge.image_file  = decode_base64_data(import_params[:image_file])
       challenge.banner_file = decode_base64_data(import_params[:banner_file])
 
       ::Challenge::IMPORTABLE_IMAGES.each do |element|
         if element.is_a?(Symbol) # :field_name
-           # Assign decoded image to challenge fields
-           challenge.public_send("#{element}=", decode_base64_data(import_params[element]))
+          # Assign decoded image to challenge fields
+          challenge.public_send("#{element}=", decode_base64_data(import_params[element]))
         elsif element.is_a?(Hash) # { association_name: :field_name }
           association_name = element.keys.first
           field_name       = element.values.first

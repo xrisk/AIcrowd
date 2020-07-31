@@ -4,7 +4,7 @@ describe SubmissionsRemainingQuery do
   subject { described_class.new(challenge: challenge, participant_id: participant.id) }
 
   around do |example|
-    Timecop.freeze(DateTime.new(2017, 10, 30, 10, 0, 0, "UTC"))
+    Timecop.freeze(DateTime.new(2017, 10, 30, 10, 0, 0, 'UTC'))
     example.run
     Timecop.return
   end
@@ -156,8 +156,8 @@ describe SubmissionsRemainingQuery do
       let!(:challenge) { create :challenge, :day }
 
       context 'two submissions made inside window' do
-        let!(:submission1) { create :submission, challenge: challenge, participant: participant, created_at:  4.hours.ago }
-        let!(:submission2) { create :submission, challenge: challenge, participant: second_participant, created_at:  2.hours.ago }
+        let!(:submission1) { create :submission, challenge: challenge, participant: participant, created_at: 4.hours.ago }
+        let!(:submission2) { create :submission, challenge: challenge, participant: second_participant, created_at: 2.hours.ago }
 
         it 'returns information that there are only 3 submissions left' do
           submissions_remaining, timestamp, submissions = subject.call
@@ -169,8 +169,8 @@ describe SubmissionsRemainingQuery do
       end
 
       context 'two submissions made, one outside window' do
-        let!(:submission1) { create :submission, challenge: challenge, participant: participant, created_at:  30.hours.ago }
-        let!(:submission2) { create :submission, challenge: challenge, participant: second_participant, created_at:  4.hours.ago }
+        let!(:submission1) { create :submission, challenge: challenge, participant: participant, created_at: 30.hours.ago }
+        let!(:submission2) { create :submission, challenge: challenge, participant: second_participant, created_at: 4.hours.ago }
 
         it 'returns information that there are only 4 submissions left' do
           submissions_remaining, timestamp, submissions = subject.call

@@ -19,7 +19,7 @@ ActiveAdmin.register Challenge, as: 'Editors Selection' do
     column :practice_flag
 
     actions default: true do |resource|
-      a 'Edit', href: edit_challenge_path(resource), class: "edit_link member_link"
+      a 'Edit', href: edit_challenge_path(resource), class: 'edit_link member_link'
     end
   end
 
@@ -46,10 +46,10 @@ ActiveAdmin.register Challenge, as: 'Editors Selection' do
     link_to 'Edit', edit_challenge_path(resource)
   end
 
-  batch_action "Remove Editors Selection", priority: 1 do |ids|
+  batch_action 'Remove Editors Selection', priority: 1 do |ids|
     Challenge.find(ids).each do |challenge|
       challenge.update!(editors_selection: false)
     end
-    redirect_to admin_editors_selections_path, flash: { notice: "Remove editors selection to challenge #{ids}."}
+    redirect_to admin_editors_selections_path, flash: { notice: "Remove editors selection to challenge #{ids}." }
   end
 end

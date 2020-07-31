@@ -1,14 +1,15 @@
 module Challenges
   class FilterService
-
     def initialize(params, challenges)
-      @params = params
+      @params     = params
       @challenges = challenges
     end
 
     def call
       # category filter
-      @challenges = @challenges.joins(:categories).group('challenges.id').where('categories.name IN (?)', @params['categories'].split(',')) if @params.dig('categories').present?
+      if @params.dig('categories').present?
+        @challenges = @challenges.joins(:categories).group('challenges.id').where('categories.name IN (?)', @params['categories'].split(','))
+      end
       # status filter
       @challenges = @challenges.where(status_cd: @params['status']) if @params['status'].present?
       # prize filter

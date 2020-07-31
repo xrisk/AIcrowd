@@ -4,7 +4,7 @@ class CalculateLeaderboardJob < ApplicationJob
   def perform(challenge_round_id:)
     # This challenge has custom logic that takes 5 different scores and calculates average of them, thus we cannot recalculate
     # leaderboards records with ChallengeRounds::CreateLeaderboardsService class.
-    return if ChallengeRound.find(challenge_round_id).challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
+    return if ChallengeRound.find(challenge_round_id).challenge.challenge == 'NeurIPS 2019 : Disentanglement Challenge'
 
     if ChallengeRound.find(challenge_round_id).challenge.meta_challenge || ChallengeRound.find(challenge_round_id).challenge.ml_challenge
       CalculateMetaLeaderboardService.new(challenge_id: ChallengeRound.find(challenge_round_id).challenge.id).call

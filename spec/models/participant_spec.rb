@@ -80,8 +80,8 @@ describe Participant do
           participant = create(:participant)
           participant.disable_account('A reason')
           expect(participant.account_disabled).to eq(true)
-          expect(participant.account_disabled_reason).to eq("A reason")
-          expect(participant.inactive_message).to eq("Your account has been disabled. Please contact us at help@aicrowd.com")
+          expect(participant.account_disabled_reason).to eq('A reason')
+          expect(participant.inactive_message).to eq('Your account has been disabled. Please contact us at help@aicrowd.com')
           expect(participant.active_for_authentication?).to be false
         end
       end

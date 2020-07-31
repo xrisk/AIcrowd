@@ -3,8 +3,8 @@ FactoryBot.define do
     association :challenge
     name do
       FFaker::Company.unique.name\
-      .tr(' ', '_')
-      .gsub(/[^a-zA-Z0-9.\-_{}\[\]]+/, '')
+                     .tr(' ', '_')
+                     .gsub(/[^a-zA-Z0-9.\-_{}\[\]]+/, '')
     end
 
     after :create do |team, evaluator|
@@ -19,8 +19,8 @@ FactoryBot.define do
   trait :dotted_name do # normal name with '.a' at the end
     name do
       FFaker::Company.unique.name\
-      .tr(' ', '_')
-      .gsub(/[^a-zA-Z0-9.\-_{}\[\]]+/, '')
+                     .tr(' ', '_')
+                     .gsub(/[^a-zA-Z0-9.\-_{}\[\]]+/, '')
       + '.a'
     end
   end

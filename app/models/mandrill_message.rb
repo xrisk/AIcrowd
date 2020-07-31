@@ -1,14 +1,14 @@
 class MandrillMessage < ApplicationRecord
   def status
-    res[0]["status"]
+    res[0]['status']
   end
 
   def reject_reason
-    res[0]["reject_reason"]
+    res[0]['reject_reason']
   end
 
   def merge_vars
-    message["global_merge_vars"]
+    message['global_merge_vars']
   end
 
   def merge_var(var)
@@ -16,7 +16,7 @@ class MandrillMessage < ApplicationRecord
     merge_vars.each do |pair|
       ret = pair['content'] if pair['name'] == var
     end
-    return ret
+    ret
   end
 
   def subject

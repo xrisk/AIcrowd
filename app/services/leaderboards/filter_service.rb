@@ -2,7 +2,7 @@ module Leaderboards
   class FilterService
     def initialize(leaderboards: leaderboards, params: params)
       @leaderboards = leaderboards.first&.class&.where(id: leaderboards.ids)
-      @params = params
+      @params       = params
     end
 
     def call(filter_by)
@@ -20,7 +20,7 @@ module Leaderboards
 
     # leaderboard filter
     def leaderboard_ids
-      ids_array = []
+      ids_array  = []
       ids_array += team_leaderboard_ids if leaderboard_having_submitter?('Team')
       ids_array += participant_leaderboard_ids if leaderboard_having_submitter?('Participant')
       ids_array.uniq
@@ -34,7 +34,7 @@ module Leaderboards
     end
 
     def participant_leaderboard_ids
-      leaderboards =  @leaderboards
+      leaderboards = @leaderboards
       leaderboards = participant_country_leaderboards if @params[:country_name].present?
       leaderboards = participant_affiliation_leaderboards(leaderboards) if @params[:affiliation].present?
       leaderboards.ids
@@ -63,7 +63,7 @@ module Leaderboards
 
     # set country array
     def participant_countries
-      countries = []
+      countries  = []
       countries += Country.countries(team_participant_ids) if leaderboard_having_submitter?('Team')
       countries += Country.countries(participant_ids) if leaderboard_having_submitter?('Participant')
       countries.uniq
@@ -71,13 +71,13 @@ module Leaderboards
 
     # set affiliation array
     def participant_affiliations
-      affiliations = []
+      affiliations  = []
       affiliations += Country.affiliations(team_participant_ids) if leaderboard_having_submitter?('Team')
       affiliations += Country.affiliations(participant_ids) if leaderboard_having_submitter?('Participant')
       affiliations.uniq
     end
 
-    #set participant ids
+    # set participant ids
     def participant_ids
       if @params[:action] == 'get_affiliation'
         participant_country_leaderboards.pluck(:submitter_id)
@@ -87,10 +87,10 @@ module Leaderboards
     end
 
     def team_participant_ids
-      team_ids =  if @params[:action] == 'get_affiliation'
-                    team_country_leaderboards.pluck(:submitter_id)
-                  else
-                    @leaderboards.where(submitter_type: 'Team').pluck(:submitter_id)
+      team_ids = if @params[:action] == 'get_affiliation'
+                   team_country_leaderboards.pluck(:submitter_id)
+                 else
+                   @leaderboards.where(submitter_type: 'Team').pluck(:submitter_id)
                   end
       TeamParticipant.where(team_id: team_ids).pluck(:participant_id)
     end

@@ -39,11 +39,11 @@ module Discourse
       return if notification_message_text.nil?
 
       notification_record = participant.notifications.find_or_create_by!(
-                                          message: notification_message_text,
-                                          notification_type: notification['notification_type'],
-                                          thumbnail_url: discourse_image,
-                                          notification_url: notification_url
-                                        )
+        message:           notification_message_text,
+        notification_type: notification['notification_type'],
+        thumbnail_url:     discourse_image,
+        notification_url:  notification_url
+      )
 
       notification_record.is_new     = true
       notification_record.created_at = DateTime.now.utc

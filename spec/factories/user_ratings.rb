@@ -4,8 +4,8 @@ FactoryBot.define do
     rating { 1.5 }
     temporary_rating { 1.5 }
     variation { 1.5 }
-    temporary_variation { "MyString" }
-    float { "MyString" }
+    temporary_variation { 'MyString' }
+    float { 'MyString' }
     challenge_round { nil }
   end
 end

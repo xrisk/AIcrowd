@@ -37,7 +37,6 @@ module Api
           ]
         end
 
-
         def groups_results
           groups + challenge_rounds_groups
         end
@@ -64,7 +63,7 @@ module Api
           challenge_rounds.map do |challenge_round|
             {
               id:   "challenge_round_#{challenge_round.id}",
-              text: "Participants of \"#{challenge_round.challenge_round}\"",
+              text: "Participants of \"#{challenge_round.challenge_round}\""
             }
           end
         end

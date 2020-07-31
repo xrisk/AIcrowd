@@ -6,9 +6,9 @@ class BlogsController < ApplicationController
 
   def index
     @blogs = policy_scope(Blog)
-      .order(seq: :asc, posted_at: :desc)
-      .page(params[:page])
-      .per(20)
+             .order(seq: :asc, posted_at: :desc)
+             .page(params[:page])
+             .per(20)
   end
 
   def show
@@ -18,9 +18,9 @@ class BlogsController < ApplicationController
   private
 
   def set_blog
-    @blog = Blog.friendly.find(params[:id])
+    @blog           = Blog.friendly.find(params[:id])
     # Randomly select 3 blogs
-    @selected_blogs = Blog.where.not(id: @blog.id).order("RANDOM()").sample(3)
+    @selected_blogs = Blog.where.not(id: @blog.id).order('RANDOM()').sample(3)
     authorize @blog
   end
 

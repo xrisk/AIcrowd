@@ -6,7 +6,7 @@ class ParticipantClefTasksController < ApplicationController
   def create
     clef_task             = ClefTask.find(params[:participant_clef_task][:clef_task_id])
     participant_clef_task = ParticipantClefTask.where(
-      clef_task_id: participant_clef_task_params[:clef_task_id],
+      clef_task_id:   participant_clef_task_params[:clef_task_id],
       participant_id: current_participant.id
     ).first
 
@@ -22,7 +22,8 @@ class ParticipantClefTasksController < ApplicationController
       format.html do
         redirect_to clef_task_task_dataset_files_path(
           clef_task,
-          challenge_id: params[:participant_clef_task][:challenge_id])
+          challenge_id: params[:participant_clef_task][:challenge_id]
+        )
       end
     end
   end

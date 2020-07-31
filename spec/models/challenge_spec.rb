@@ -16,43 +16,43 @@ describe Challenge do
       end
 
       it 'rules' do
-        challenge.update!(rules_markdown: "Some *rules*")
+        challenge.update!(rules_markdown: 'Some *rules*')
         expect(challenge.rules).to eq("<p>Some <em>rules</em></p>\n")
       end
 
       it 'prizes' do
-        challenge.update!(prizes_markdown: "# Prizes are described here.")
+        challenge.update!(prizes_markdown: '# Prizes are described here.')
         expect(challenge.prizes).to eq("<h1 id=\"prizes-are-described-here\">Prizes are described here.</h1>\n")
       end
 
       it 'resources' do
-        challenge.update!(resources_markdown: "# Helpful resources")
+        challenge.update!(resources_markdown: '# Helpful resources')
         expect(challenge.resources).to eq("<h1 id=\"helpful-resources\">Helpful resources</h1>\n")
       end
 
       it 'dataset_description' do
-        challenge.update!(dataset_description_markdown: "# Dataset description")
+        challenge.update!(dataset_description_markdown: '# Dataset description')
         expect(challenge.dataset_description).to eq("<h1 id=\"dataset-description\">Dataset description</h1>\n")
       end
 
       it 'submission_instructions' do
-        challenge.update!(submission_instructions_markdown: "## Submission instructions")
+        challenge.update!(submission_instructions_markdown: '## Submission instructions')
         expect(challenge.submission_instructions).to eq("<h2 id=\"submission-instructions\">Submission instructions</h2>\n")
       end
       it 'winner_description' do
-       challenge.update!(winner_description_markdown: '## A Winner!!')
-       expect(challenge.winner_description).to eq("<h2 id=\"a-winner\">A Winner!!</h2>\n")
+        challenge.update!(winner_description_markdown: '## A Winner!!')
+        expect(challenge.winner_description).to eq("<h2 id=\"a-winner\">A Winner!!</h2>\n")
       end
     end
 
     describe 'after_initialize' do
       it 'sets submission information defaults' do
         challenge = create(:challenge, :running)
-        expect(challenge.submission_license).to eq("Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC).")
+        expect(challenge.submission_license).to eq('Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC).')
       end
     end
 
-    describe "friendly_id" do
+    describe 'friendly_id' do
       it 'updates the slug when the challenge title changes' do
         challenge           = create(:challenge, :running)
         challenge.challenge = 'a new challenge title'

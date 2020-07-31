@@ -20,6 +20,7 @@ class OrganizerApplicationsController < ApplicationController
         :phone,
         :organization,
         :organization_description,
-        :challenge_description)
+        :challenge_description
+      )
   end
 end

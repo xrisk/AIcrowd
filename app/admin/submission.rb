@@ -2,10 +2,10 @@ ActiveAdmin.register Submission do
   belongs_to :challenge, parent_class: Challenge
   navigation_menu :challenge
 
-  sidebar "Submission versions", only: [:show, :edit] do
+  sidebar 'Submission versions', only: [:show, :edit] do
     ul do
       submission.versions.reverse.each do |version|
-        li link_to "#{version.created_at}", admin_paper_trail_version_path(version)
+        li link_to version.created_at.to_s, admin_paper_trail_version_path(version)
       end
     end
   end

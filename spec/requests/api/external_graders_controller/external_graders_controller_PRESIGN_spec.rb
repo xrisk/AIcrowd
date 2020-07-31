@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::ExternalGradersController, type: :request, api: true do
   before do
-    Timecop.freeze(DateTime.new(2017, 10, 30, 2, 2, 2, "+02:00"))
+    Timecop.freeze(DateTime.new(2017, 10, 30, 2, 2, 2, '+02:00'))
   end
 
   after do
@@ -18,9 +18,9 @@ RSpec.describe Api::ExternalGradersController, type: :request, api: true do
   let!(:submission3)     { create :submission, challenge: challenge, participant: participant, created_at: 2.days.ago }
 
   # PRESIGN
-  describe "GET /api/external_graders/presign : get presigned S3 url" do
+  describe 'GET /api/external_graders/presign : get presigned S3 url' do
     context 'individual developer API key validation' do
-      describe "with valid organizer auth key" do
+      describe 'with valid organizer auth key' do
         before do
           get "/api/external_graders/#{participant.api_key}/presign",
               headers: {
@@ -35,7 +35,7 @@ RSpec.describe Api::ExternalGradersController, type: :request, api: true do
         it { expect(json(response.body)[:s3_key]).not_to be_nil }
       end
 
-      describe "with invalid developer API key" do
+      describe 'with invalid developer API key' do
         before do
           get "/api/external_graders/#{SecureRandom.uuid}/presign/",
               headers: {

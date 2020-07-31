@@ -14,13 +14,12 @@ describe Aws::FetchDatasetFolderService do
     context 'when valid dataset_folder provided' do
       let(:dataset_folder) do
         create(:dataset_folder,
-          directory_path: 'test_things',
-          aws_access_key: 'REDACTED',
-          aws_secret_key: 'REDACTED',
-          bucket_name:    'test-s3-integratioon',
-          region:         'eu-north-1',
-          aws_endpoint:   ''
-        )
+               directory_path: 'test_things',
+               aws_access_key: 'REDACTED',
+               aws_secret_key: 'REDACTED',
+               bucket_name:    'test-s3-integratioon',
+               region:         'eu-north-1',
+               aws_endpoint:   '')
       end
 
       it 'returns success with list of dataset_files' do
@@ -36,13 +35,12 @@ describe Aws::FetchDatasetFolderService do
     context 'when invalid dataset_folder provided' do
       let(:dataset_folder) do
         create(:dataset_folder,
-          directory_path: 'test_things',
-          aws_access_key: 'REDACTED',
-          aws_secret_key: 'REDACTED',
-          bucket_name:    'test-s3-integratioon',
-          region:         'eu-north-1',
-          aws_endpoint:   ''
-        )
+               directory_path: 'test_things',
+               aws_access_key: 'REDACTED',
+               aws_secret_key: 'REDACTED',
+               bucket_name:    'test-s3-integratioon',
+               region:         'eu-north-1',
+               aws_endpoint:   '')
       end
 
       it 'returns failure with error message' do

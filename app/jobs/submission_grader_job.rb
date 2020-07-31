@@ -2,7 +2,7 @@ class SubmissionGraderJob < ApplicationJob
   queue_as :default
 
   def perform(submission_id)
-    if get_evaluator_type(submission_id) == "evaluations_api"
+    if get_evaluator_type(submission_id) == 'evaluations_api'
       EvaluationsApiService.new(submission_id: submission_id).call
     else
       GraderService.new(submission_id: submission_id).call

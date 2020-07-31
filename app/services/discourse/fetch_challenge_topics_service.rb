@@ -16,10 +16,10 @@ module Discourse
 
         participants    = get_participants(response.body['users'])
         category_topics = topics_with_participant(
-                            response.body['topic_list']['topics'],
-                            response.body['users'],
-                            participants
-                          )
+          response.body['topic_list']['topics'],
+          response.body['users'],
+          participants
+        )
 
         success(category_topics)
       end

@@ -1,7 +1,7 @@
 module Discourse
   class FetchBadgesService < ::Discourse::BaseService
     def initialize(previous_id)
-      @client = prepare_http_client
+      @client      = prepare_http_client
       @previous_id = previous_id
     end
 

@@ -36,11 +36,11 @@ class ApplicationPolicy
 
   protected
 
-  def cached_with_issues(method_name, out_issues_hash, &block)
+  def cached_with_issues(method_name, out_issues_hash)
     cache_key = "#{participant&.to_global_id}|#{record&.to_global_id}|#{method_name}"
     issues    = RequestStore.store[cache_key]
     if issues.nil?
-      issues = {}
+      issues                        = {}
       # `yield` returns a conditions hash,
       #  which we reduce into an array of keys for which the value is truthy,
       #  of which the first is considered the most important

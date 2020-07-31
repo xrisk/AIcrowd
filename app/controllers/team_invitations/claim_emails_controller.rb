@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class TeamInvitations::ClaimEmailsController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_invitations, only: :create
@@ -24,25 +25,25 @@ class TeamInvitations::ClaimEmailsController < ApplicationController
   private
 
   def set_invitations
-    @email_claim_params = params.require(:email_claim).permit(
+    @email_claim_params       = params.require(:email_claim).permit(
       :email_token,
       :email_confirmation
     )
     email_token               = Base31.normalize_s(@email_claim_params.fetch(:email_token, ''))
     email_confirmation        = @email_claim_params.fetch(:email_confirmation, '').strip
     @claimed_email_invitation = TeamInvitation.all
-      .includes(:invitee_email_invitation)
-      .where(email_invitations: {
-               token: email_token,
-               email: email_confirmation
-             })
-      .first
+                                              .includes(:invitee_email_invitation)
+                                              .where(email_invitations: {
+                                                       token: email_token,
+                                                       email: email_confirmation
+                                                     })
+                                              .first
       &.invitee_email_invitation
     @invitations_to_transform = TeamInvitation.all
-      .joins(:invitee_email_invitation)
-      .where(email_invitations: {
-               email: email_confirmation
-             })
+                                              .joins(:invitee_email_invitation)
+                                              .where(email_invitations: {
+                                                       email: email_confirmation
+                                                     })
   end
 
   def redirect_from_create_on_disallowed

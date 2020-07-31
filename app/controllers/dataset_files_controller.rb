@@ -68,9 +68,7 @@ class DatasetFilesController < ApplicationController
 
   def check_participation_terms
     challenge = @challenge
-    if @meta_challenge.present?
-      challenge = @meta_challenge
-    end
+    challenge = @meta_challenge if @meta_challenge.present?
 
     unless policy(challenge).has_accepted_participation_terms?
       redirect_to [challenge, ParticipationTerms.current_terms]
@@ -79,7 +77,7 @@ class DatasetFilesController < ApplicationController
 
     unless policy(challenge).has_accepted_challenge_rules?
       redirect_to challenge_challenge_rules_path(challenge)
-      return
+      nil
     end
   end
 
@@ -107,10 +105,11 @@ class DatasetFilesController < ApplicationController
 
   def set_s3_direct_post
     @s3_direct_post = S3_BUCKET
-      .presigned_post(
-        key:                   "dataset_files/challenge_#{@challenge.id}/#{SecureRandom.uuid}_${filename}",
-        success_action_status: '201',
-        acl:                   'private')
+                      .presigned_post(
+                        key:                   "dataset_files/challenge_#{@challenge.id}/#{SecureRandom.uuid}_${filename}",
+                        success_action_status: '201',
+                        acl:                   'private'
+                      )
   end
 
   def validate_aws_credentials

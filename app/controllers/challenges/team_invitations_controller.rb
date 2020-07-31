@@ -15,7 +15,7 @@ class Challenges::TeamInvitationsController < ApplicationController
     if @invitation.save
       Participants::InvitationsMailer.invitation_pending_email(@invitation).deliver_later
 
-      flash[:success] = I18n.t(:success, scope: %i[helpers teams create_invitation_flash])
+      flash[:success] = I18n.t(:success, scope: [:helpers, :teams, :create_invitation_flash])
     else
       flash[:error] = error_msg(:unspecified)
     end
@@ -39,10 +39,10 @@ class Challenges::TeamInvitationsController < ApplicationController
     case @search_field
     when :email
       @invitee = Participant.where('LOWER(email) = LOWER(?)', name_or_email).first ||
-        EmailInvitation.new(
-          invitor_id: current_participant.id,
-          email:      name_or_email
-        )
+                 EmailInvitation.new(
+                   invitor_id: current_participant.id,
+                   email:      name_or_email
+                 )
     when :name
       @invitee = Participant.where('LOWER(name) = LOWER(?)', name_or_email).first
     end
@@ -68,8 +68,8 @@ class Challenges::TeamInvitationsController < ApplicationController
       end
     elsif @invitee.is_a?(EmailInvitation)
       if @team.team_invitations_pending
-          .joins(:invitee_email_invitation)
-          .exists?(email_invitations: { email: @invitee.email })
+              .joins(:invitee_email_invitation)
+              .exists?(email_invitations: { email: @invitee.email })
         err = :invitee_on_this_team_pending
       end
     end
@@ -80,7 +80,7 @@ class Challenges::TeamInvitationsController < ApplicationController
   end
 
   def error_msg(key)
-    i18n_scope = %i[helpers teams create_invitation_flash]
+    i18n_scope = [:helpers, :teams, :create_invitation_flash]
     msg        = ''
     msg << I18n.t(:error_preamble, scope: i18n_scope)
     msg << ' '

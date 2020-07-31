@@ -105,7 +105,7 @@ class ChallengePolicy < ApplicationPolicy
   def has_accepted_participation_terms?
     return unless participant
 
-    return participant.has_accepted_participation_terms?
+    participant.has_accepted_participation_terms?
   end
 
   def submissions_allowed?
@@ -135,11 +135,12 @@ class ChallengePolicy < ApplicationPolicy
     clef_task             = challenge.clef_task
     participant_clef_task = ParticipantClefTask.where(
       participant_id: participant,
-      clef_task_id:   clef_task.id).first
+      clef_task_id:   clef_task.id
+    ).first
     if participant_clef_task
       return true if participant_clef_task.registered?
     else
-      return false
+      false
     end
   end
 
@@ -186,8 +187,8 @@ class ChallengePolicy < ApplicationPolicy
       else
         if participant&.organizers.present?
           scope.left_joins(:organizers)
-            .where("status_cd IN ('running','completed','starting_soon') OR organizers.id IN (#{participant.organizer_ids.join(',')})")
-            .group('challenges.id')
+               .where("status_cd IN ('running','completed','starting_soon') OR organizers.id IN (#{participant.organizer_ids.join(',')})")
+               .group('challenges.id')
         elsif participant
           scope.where(participant_sql(email: participant.email))
         else

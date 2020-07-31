@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-describe "site navigation for authenticated participant" do
+describe 'site navigation for authenticated participant' do
   let!(:participant) { create(:participant) }
   3.times do |i|
     let!("challenge_#{i + 1}") { create :challenge, :running }
   end
   let(:draft) { create :challenge, :draft }
 
-  context "landing page" do
+  context 'landing page' do
     it do
       visit_landing_page
       expect(page).to have_content challenge_1.challenge
@@ -19,7 +19,7 @@ describe "site navigation for authenticated participant" do
     end
   end
 
-  context "challenges" do
+  context 'challenges' do
     it do
       visit_landing_page
       visit_challenges
@@ -38,23 +38,23 @@ describe "site navigation for authenticated participant" do
       expect(page).to have_link 'Discussion'
       expect(page).to have_link 'Resources'
       expect(page).to have_link 'FOLLOW'
-      # TODO - look for edit icon ... expect(page).not_to have_link 'Edit'
+      # TODO: - look for edit icon ... expect(page).not_to have_link 'Edit'
     end
   end
 
-  context "challenge tabs", :js do
+  context 'challenge tabs', :js do
     it do
       visit_challenge(challenge_1)
-      click_link "Overview"
+      click_link 'Overview'
       expect(page).to have_link 'Overview',
                                 class: 'active'
-      click_link "Leaderboard"
+      click_link 'Leaderboard'
       expect(page).to have_link 'Leaderboard',
                                 class: 'active'
-      click_link "Discussion"
+      click_link 'Discussion'
       expect(page).to have_link 'Discussion',
                                 class: 'active'
-      click_link "Resources"
+      click_link 'Resources'
       expect(page).to have_text 'You need to sign in or sign up before continuing'
     end
   end

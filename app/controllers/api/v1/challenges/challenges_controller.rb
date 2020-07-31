@@ -42,12 +42,12 @@ module Api
         def masthead
           render json: {
             masthead:
-              render_to_string(
-                partial: 'shared/challenges/masthead',
-                formats: :html,
-                layout: false,
-                locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow }
-              )
+                      render_to_string(
+                        partial: 'shared/challenges/masthead',
+                        formats: :html,
+                        layout:  false,
+                        locals:  { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow }
+                      )
           }
         end
 

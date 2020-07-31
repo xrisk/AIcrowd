@@ -6,7 +6,6 @@ describe MlChallenge::AwardScoreImprovedPointService do
   let!(:activity_point)  { create(:activity_point, activity_key: 'score_improved_over_5_times') }
 
   describe 'create MlActivityPoint' do
-
     context 'Create Award point for improve score in a day' do
       let(:participant)      { create(:participant) }
       let!(:submission1)     { create(:submission, challenge: challenge, participant: participant, grading_status_cd: 'graded', challenge_round_id: challenge_round.id, score: 0.7) }

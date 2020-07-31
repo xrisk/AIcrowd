@@ -1,5 +1,5 @@
 class ChallengeRound < ApplicationRecord
-  before_update :rollback_rating, :if => :end_dttm_changed?
+  before_update :rollback_rating, if: :end_dttm_changed?
   include Markdownable
 
   belongs_to :challenge, inverse_of: :challenge_rounds
@@ -43,7 +43,7 @@ class ChallengeRound < ApplicationRecord
   as_enum :secondary_sort_order, [:ascending, :descending, :not_used, :hidden], map: :string, prefix: true
 
   default_scope { order :start_dttm }
-  scope :started, -> { where("start_dttm < ?", Time.current) }
+  scope :started, -> { where('start_dttm < ?', Time.current) }
 
   after_initialize :set_defaults
 
@@ -52,6 +52,7 @@ class ChallengeRound < ApplicationRecord
   def rollback_rating
     RollbackRatingJob.perform_later(end_dttm_was.to_s)
   end
+
   def get_score_title
     score_title.presence || 'Primary Score'
   end

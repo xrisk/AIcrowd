@@ -25,7 +25,7 @@ class InvitationImporter
       end
       false
     end
-    return [@warnings, nil]
+    [@warnings, nil]
   end
 
   def load_imported_invitees
@@ -34,17 +34,18 @@ class InvitationImporter
     invitees    = []
     (2..spreadsheet.last_row).each do |i|
       row     = Hash[[header, spreadsheet.row(i)].transpose]
-      invitee = Invitation.find_by(challenge_id: @challenge_id, email: row["email"])
+      invitee = Invitation.find_by(challenge_id: @challenge_id, email: row['email'])
       if invitee.present?
         @warnings << { row: i, message: (row['email']).to_s }
       else
         invitee = Invitation.new(
           challenge_id: @challenge_id,
-          invitee_name: row["name"],
-          email:        row["email"])
+          invitee_name: row['name'],
+          email:        row['email']
+        )
       end
       invitees << invitee
     end
-    return invitees
+    invitees
   end
 end

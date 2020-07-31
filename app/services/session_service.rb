@@ -3,7 +3,7 @@ require 'active_support'
 
 class SessionService < ::BaseService
   def initialize(cookie)
-    @cookie                  = CGI::unescape(cookie)
+    @cookie                  = CGI.unescape(cookie)
     @secret_key_base         = Rails.application.secret_key_base
     @salt                    = 'authenticated encrypted cookie'
     @encrypted_cookie_cipher = 'aes-256-gcm'
@@ -21,7 +21,7 @@ class SessionService < ::BaseService
     rescue StandardError => e
       puts 'Error to descrypt'
     end
-    if result.present? && !result["warden.user.participant.key"].nil?
+    if result.present? && !result['warden.user.participant.key'].nil?
       success(result)
     else
       failure('Fail to decrypt and verify cookie.')

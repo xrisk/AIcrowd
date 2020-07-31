@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :organizer, class: 'Organizer' do
     organizer { FFaker::Lorem.sentence(3) }
     address { FFaker::Lorem.sentence(3) }
-    tagline { "Coke is it" }
+    tagline { 'Coke is it' }
     description { FFaker::Lorem.sentence(20) }
     approved { true }
     clef_organizer { false }

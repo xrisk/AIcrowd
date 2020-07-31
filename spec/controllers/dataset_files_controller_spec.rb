@@ -22,8 +22,8 @@ describe DatasetFilesController, type: :controller do
       end
     end
 
-    describe "GET #new" do
-      it "assigns a new dataset_file as @dataset_file" do
+    describe 'GET #new' do
+      it 'assigns a new dataset_file as @dataset_file' do
         get :new, params: { challenge_id: challenge.id }
         expect(assigns(:dataset_file)).to be_a_new(DatasetFile)
       end
@@ -36,7 +36,7 @@ describe DatasetFilesController, type: :controller do
 
     before { sign_in admin }
 
-    describe "DELETE #destroy" do
+    describe 'DELETE #destroy' do
       def delete_file
         delete :destroy, params: { challenge_id: challenge.id, id: file1.id }
       end
@@ -44,7 +44,7 @@ describe DatasetFilesController, type: :controller do
       it 'removes dataset_file record from database' do
         Aws::S3::Client.any_instance.stub(:delete_object).and_return(true)
 
-        expect { delete_file }.to change { DatasetFile.count }.by -1
+        expect { delete_file }.to change { DatasetFile.count }.by(-1)
         expect(response).to redirect_to(challenge_dataset_files_path(challenge))
         expect(flash[:notice]).to match "Dataset file #{file1.title} was deleted."
       end

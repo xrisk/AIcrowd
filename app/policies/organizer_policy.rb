@@ -8,7 +8,7 @@ class OrganizerPolicy < ApplicationPolicy
   end
 
   def edit?
-    participant&.admin? || participant && participant.organizer_ids.include?(@record.id)
+    participant&.admin? || participant&.organizer_ids&.include?(@record.id)
   end
 
   def update?
@@ -56,7 +56,7 @@ class OrganizerPolicy < ApplicationPolicy
         scope.all
       else
         if participant&.organizers&.any?
-          scope.where("id = ?", participant.organizer_ids)
+          scope.where('id = ?', participant.organizer_ids)
         else
           scope.none
         end

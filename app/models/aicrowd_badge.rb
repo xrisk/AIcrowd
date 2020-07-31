@@ -6,7 +6,6 @@ class AicrowdBadge < ApplicationRecord
   mount_uploader :image, LogoImageUploader
   validates :name, uniqueness: true, presence: true
   def badges_event_name
-    BadgesEvent.find_by(id:self.badges_event_id)&.name
+    BadgesEvent.find_by(id: badges_event_id)&.name
   end
-
 end

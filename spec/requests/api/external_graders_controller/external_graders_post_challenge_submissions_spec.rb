@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Api::ExternalGradersController, type: :request do
   before do
-    Timecop.freeze(DateTime.new(2017, 10, 30, 2, 2, 2, "+02:00"))
+    Timecop.freeze(DateTime.new(2017, 10, 30, 2, 2, 2, '+02:00'))
   end
 
   after do
@@ -16,7 +16,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
   let!(:participant)           { create :participant, api_key: '5762b9423a01f72662264358f071908c' }
   let!(:challenge_participant) { create :challenge_participant, challenge: challenge, participant: participant }
 
-  describe "POST /api/external_graders/ : create submission" do
+  describe 'POST /api/external_graders/ : create submission' do
     def valid_attributes
       { challenge_client_name: challenge.challenge_client_name,
         api_key:               participant.api_key,
@@ -35,7 +35,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
 
       it {
         expect(json(response.body)[:message])
-        .to eq("Participant #{participant.name} scored")
+          .to eq("Participant #{participant.name} scored")
       }
 
       it { expect(json(response.body)[:submission_id]).to be_a Integer }

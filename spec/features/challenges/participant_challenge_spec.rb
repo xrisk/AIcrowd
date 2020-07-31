@@ -1,14 +1,13 @@
 require 'rails_helper'
 
-describe "participant accesses challenge", :js do
+describe 'participant accesses challenge', :js do
   let!(:challenge) { create(:challenge, :running) }
   let!(:draft_challenge) { create(:challenge, :draft) }
   let!(:participant) { create(:participant) }
   let!(:running_participant) { create(:challenge_participant, challenge: challenge, participant: participant) }
   let!(:draft_participant) { create(:challenge_participant, challenge: draft_challenge, participant: participant) }
 
-
-  describe "participant can view challenges list" do
+  describe 'participant can view challenges list' do
     before do
       log_in participant
       visit '/challenges'
@@ -19,7 +18,7 @@ describe "participant accesses challenge", :js do
     specify { expect(page).to have_link 'Challenges' }
   end
 
-  describe "participant can view challenge details" do
+  describe 'participant can view challenge details' do
     before do
       log_in participant
       visit '/challenges'
@@ -30,33 +29,33 @@ describe "participant accesses challenge", :js do
     specify { expect(page).to have_content challenge.tagline }
   end
 
-  describe "participant" do
+  describe 'participant' do
     before do
       log_in participant
       visit '/challenges'
       click_link challenge.challenge
     end
 
-    it "can follow Overview link" do
-      click_link "Overview"
+    it 'can follow Overview link' do
+      click_link 'Overview'
       expect(page).to have_content 'Overview'
     end
 
-    it "can follow Resources link" do
-      click_link "Resources"
+    it 'can follow Resources link' do
+      click_link 'Resources'
       expect(page).to have_content 'Resources'
     end
   end
 
-  describe "access restricted parts of the challenge" do
+  describe 'access restricted parts of the challenge' do
     before do
       log_in participant
       visit '/challenges'
       click_link challenge.challenge
     end
 
-    it "follow Resources link" do
-      click_link "Resources"
+    it 'follow Resources link' do
+      click_link 'Resources'
       expect(page).to have_content 'Resources'
     end
   end
