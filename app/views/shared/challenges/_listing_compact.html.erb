@@ -2,10 +2,10 @@
   <div class="<%= defined?(is_practice) && is_practice ? 'col-md-3' : 'col-md-4' %>">
     <div class="card card-challenge">
       <div class="image-wrapper" style="padding-bottom: 56.2%;position: relative;">
-        <%= link_to challenge_path(challenge) do %>
+        <%= link_to challenge_path(challenge, ml_challenge: @challenge&.ml_challenge) do %>
           <%= image_tag(challenge.image_url, class: 'card-img image_16x9') %>
         <% end %>
-        <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
+        <%= link_to challenge_path(challenge, ml_challenge: @challenge&.ml_challenge), class: "card-img-overlay" do %>
           <% if challenge.practice_flag %>
             <% if is_draft_practice(challenge) == "Draft" %>
               <span class="badge badge-primary practice-draft-badge"><%= is_draft_practice(challenge) %></span>
@@ -25,7 +25,7 @@
       <!-- card body -->
       <div class="card-body">
         <div class="card-intro" style="margin-bottom:10px">
-          <h5 class="card-title"><%= link_to challenge.challenge, challenge_path(challenge) %></h5>
+          <h5 class="card-title"><%= link_to challenge.challenge, challenge_path(challenge, ml_challenge: @challenge&.ml_challenge) %></h5>
           <p class="card-text"><%= challenge.tagline %></p>
         </div>
         <!-- stats group -->

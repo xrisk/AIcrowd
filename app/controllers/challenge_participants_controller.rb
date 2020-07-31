@@ -22,8 +22,12 @@ class ChallengeParticipantsController < ApplicationController
     @challenge_participant.challenge_rules_accepted_date    = Time.now
     @challenge_participant.challenge_rules_accepted_version = @challenge_participant.challenge.current_challenge_rules&.version
     if @challenge_participant.update(challenge_participant_params)
-      redirect_to(stored_location_for(:user) || @challenge_participant.challenge)
-      session.delete(:forwarding_url)
+      if @challenge_participant.challenge.ml_challenge
+        redirect_to daily_practice_goals_path(challenge_id: @challenge_participant.challenge.slug)
+      else
+        redirect_to(stored_location_for(:user) || @challenge_participant.challenge)
+        session.delete(:forwarding_url)
+      end
     else
       render :edit
     end

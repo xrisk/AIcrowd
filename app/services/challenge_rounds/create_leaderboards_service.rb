@@ -1,15 +1,19 @@
 module ChallengeRounds
   class CreateLeaderboardsService < ::BaseService
-    def initialize(challenge_round:, meta_challenge_id: nil)
+    def initialize(challenge_round:, meta_challenge_id: nil, ml_challenge_id: nil)
       @challenge_round       = challenge_round
       @challenge             = @challenge_round.challenge
       @submissions           = @challenge_round.submissions.reorder(created_at: :desc)
       @meta_challenge_id     = meta_challenge_id
+      @ml_challenge_id       = ml_challenge_id
       @is_freeze             = @challenge_round.freeze_flag
 
-      if @meta_challenge_id.blank?
+      if @meta_challenge_id.blank? && @ml_challenge_id.blank?
         @team_participants_ids = @challenge.team_participants.pluck(:participant_id)
         @team_challenge_id     = @challenge.id
+      elsif @ml_challenge_id.present?
+        @team_participants_ids = Challenge.find(@ml_challenge_id).team_participants.pluck(:participant_id)
+        @team_challenge_id     = @ml_challenge_id
       else
         @team_participants_ids = Challenge.find(@meta_challenge_id).team_participants.pluck(:participant_id)
         @team_challenge_id     = @meta_challenge_id
@@ -21,33 +25,47 @@ module ChallengeRounds
         truncate_scores
 
         BaseLeaderboard.where(challenge_round: challenge_round, meta_challenge_id: meta_challenge_id).delete_all
+        BaseLeaderboard.where(challenge_round: challenge_round, ml_challenge_id: ml_challenge_id).delete_all if ml_challenge_id.present?
 
         leaderboards          = build_base_leaderboards('leaderboard', [false], freeze_time)
         previous_leaderboards = build_base_leaderboards('leaderboard', [false], window_border_dttm([false]))
 
         create_leaderboards(leaderboards, previous_leaderboards)
+        if leaderboards.present? && leaderboards.first.ml_challenge_id.present?
+          award_point_for_legendary_submission(leaderboards.first(3))
+          award_point_for_rank_change(leaderboards)
+        end
 
         ongoing_leaderboards          = build_base_leaderboards('ongoing', [true, false], Time.current)
         previous_ongoing_leaderboards = build_base_leaderboards('ongoing', [true, false], window_border_dttm([true, false]))
 
         create_leaderboards(ongoing_leaderboards, previous_ongoing_leaderboards)
       end
-
       success
     end
 
     private
 
-    attr_reader :challenge_round, :challenge, :submissions, :window_border, :meta_challenge_id, :team_participants_ids, :team_challenge_id
+    attr_reader :challenge_round, :challenge, :submissions, :window_border, :meta_challenge_id, :ml_challenge_id, :team_participants_ids, :team_challenge_id
 
     def truncate_scores
-      submissions
-        .where(meta_challenge_id: meta_challenge_id)
-        .update_all([
-          'score_display = ROUND(score::numeric, ?), score_secondary_display = ROUND(score_secondary::numeric, ?)',
-          @challenge_round.score_precision,
-          @challenge_round.score_secondary_precision
-        ])
+      if @ml_challenge_id.present?
+        submissions
+          .where(ml_challenge_id: ml_challenge_id)
+          .update_all([
+            'score_display = ROUND(score::numeric, ?), score_secondary_display = ROUND(score_secondary::numeric, ?)',
+            @challenge_round.score_precision,
+            @challenge_round.score_secondary_precision
+          ])
+      else
+        submissions
+          .where(meta_challenge_id: meta_challenge_id)
+          .update_all([
+            'score_display = ROUND(score::numeric, ?), score_secondary_display = ROUND(score_secondary::numeric, ?)',
+            @challenge_round.score_precision,
+            @challenge_round.score_secondary_precision
+          ])
+      end
     end
 
     def build_base_leaderboards(leaderboard_type, post_challenge, cuttoff_dttm)
@@ -105,41 +123,75 @@ module ChallengeRounds
     end
 
     def teams_submissions(post_challenge, cuttoff_dttm)
-      submissions.joins(participant: :teams)
-        .where(teams: { challenge_id: team_challenge_id })
-        .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: false)
-        .where('submissions.created_at <= ?', cuttoff_dttm)
-        .select('teams.id AS team_id, submissions.*')
-        .reorder(submissions_order)
-        .group_by { |submission| submission.team_id }
+      if @ml_challenge_id.present?
+        submissions.joins(participant: :teams)
+          .where(teams: { challenge_id: team_challenge_id })
+          .where(challenge_round_id: challenge_round.id, ml_challenge_id: ml_challenge_id, post_challenge: post_challenge, baseline: false)
+          .where('submissions.created_at <= ?', cuttoff_dttm)
+          .select('teams.id AS team_id, submissions.*')
+          .reorder(submissions_order)
+          .group_by { |submission| submission.team_id }
+      else
+        submissions.joins(participant: :teams)
+          .where(teams: { challenge_id: team_challenge_id })
+          .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: false)
+          .where('submissions.created_at <= ?', cuttoff_dttm)
+          .select('teams.id AS team_id, submissions.*')
+          .reorder(submissions_order)
+          .group_by { |submission| submission.team_id }
+      end
     end
 
     def participants_submissions(post_challenge, cuttoff_dttm)
-      submissions.joins(:participant)
-        .where.not(participant_id: team_participants_ids)
-        .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: false)
-        .where('submissions.created_at <= ?', cuttoff_dttm)
-        .reorder(submissions_order)
-        .group_by { |submission| submission.participant_id }
+      if @ml_challenge_id.present?
+        submissions.joins(:participant)
+          .where.not(participant_id: team_participants_ids)
+          .where(challenge_round_id: challenge_round.id, ml_challenge_id: ml_challenge_id, post_challenge: post_challenge, baseline: false)
+          .where('submissions.created_at <= ?', cuttoff_dttm)
+          .reorder(submissions_order)
+          .group_by { |submission| submission.participant_id }
+      else
+        submissions.joins(:participant)
+          .where.not(participant_id: team_participants_ids)
+          .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: false)
+          .where('submissions.created_at <= ?', cuttoff_dttm)
+          .reorder(submissions_order)
+          .group_by { |submission| submission.participant_id }
+      end
     end
 
     def migration_submmissions(post_challenge, cuttoff_dttm)
-      submissions.left_joins(:participant)
-        .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: false, grading_status_cd: 'graded')
-        .where('submissions.created_at <= ?', cuttoff_dttm)
-        .reorder(submissions_order)
-        .where('participants.id IS NULL')
+      if @ml_challenge_id.present?
+        submissions.left_joins(:participant)
+          .where(challenge_round_id: challenge_round.id, ml_challenge_id: ml_challenge_id, post_challenge: post_challenge, baseline: false, grading_status_cd: 'graded')
+          .where('submissions.created_at <= ?', cuttoff_dttm)
+          .reorder(submissions_order)
+          .where('participants.id IS NULL')
+      else
+        submissions.left_joins(:participant)
+          .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: false, grading_status_cd: 'graded')
+          .where('submissions.created_at <= ?', cuttoff_dttm)
+          .reorder(submissions_order)
+          .where('participants.id IS NULL')
+      end
     end
 
     def baseline_submissions(post_challenge, cuttoff_dttm)
-      challenge_round.submissions
-        .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: true, grading_status_cd: 'graded')
-        .where('submissions.created_at <= ?', cuttoff_dttm)
+      if @ml_challenge_id.present?
+        challenge_round.submissions
+          .where(challenge_round_id: challenge_round.id, ml_challenge_id: ml_challenge_id, post_challenge: post_challenge, baseline: true, grading_status_cd: 'graded')
+          .where('submissions.created_at <= ?', cuttoff_dttm)
+      else
+        challenge_round.submissions
+          .where(challenge_round_id: challenge_round.id, meta_challenge_id: meta_challenge_id, post_challenge: post_challenge, baseline: true, grading_status_cd: 'graded')
+          .where('submissions.created_at <= ?', cuttoff_dttm)
+      end
     end
 
     def build_leaderboard(submission, submissions_count, submitter_type, submitter_id, leaderboard_type = 'leaderboard')
       BaseLeaderboard.new(
         meta_challenge_id:    meta_challenge_id,
+        ml_challenge_id:      ml_challenge_id,
         challenge_id:         challenge.id,
         challenge_round_id:   challenge_round.id,
         submitter_type:       submitter_type,
@@ -241,7 +293,12 @@ module ChallengeRounds
     end
 
     def window_border_dttm(post_challenge)
-      (submissions.find_by(post_challenge: post_challenge, meta_challenge_id: meta_challenge_id)&.created_at || Time.current) - challenge_round.ranking_window.hours
+      get_submissions = if @ml_challenge_id.present?
+                          submissions.find_by(post_challenge: post_challenge, ml_challenge_id: ml_challenge_id)
+                        else
+                          submissions.find_by(post_challenge: post_challenge, meta_challenge_id: meta_challenge_id)
+                        end
+      (get_submissions&.created_at || Time.current) - challenge_round.ranking_window.hours
     end
 
     def freeze_time
@@ -252,6 +309,20 @@ module ChallengeRounds
       return Time.current if @challenge_round.end_dttm.nil?
 
       @challenge_round.end_dttm - @challenge_round.freeze_duration.hours
+    end
+
+    def award_point_for_legendary_submission(top_3_leaderboards)
+      top_3_leaderboards.each do |leaderboard|
+        MlChallenge::AwardPointJob.perform_now(leaderboard, 'legendary_submission')
+      end
+    end
+
+    def award_point_for_rank_change(leaderboards)
+      leaderboards.find do |leaderboard|
+        next if leaderboard.previous_row_num.zero?
+
+        MlChallenge::AwardPointJob.perform_now(leaderboard, 'leaderboard_rank_change') if leaderboard.previous_row_num < leaderboard.row_num
+      end
     end
   end
 end

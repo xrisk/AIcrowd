@@ -28,6 +28,13 @@
           <% end %>
         <% end %>
       <% end %>
+      <% if current_participant.present? && current_participant.ml_activity_points.present? %>
+        <div class="col-6">
+          <%= render partial: 'insights/_charts/award_point' %>
+        </div>
+      <% else %>
+        <p class="text-center">There is no award point for this challenge.</p>
+      <% end %>
     </div>
   </div>
 </section>

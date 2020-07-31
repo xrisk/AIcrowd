@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2020_07_24_153329) do
+=======
+ActiveRecord::Schema.define(version: 2020_07_29_153925) do
+>>>>>>> Create ML challenge and set day of problem
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -51,6 +55,14 @@ ActiveRecord::Schema.define(version: 2020_07_24_153329) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "activity_points", force: :cascade do |t|
+    t.string "activity_key", null: false
+    t.string "description"
+    t.integer "point", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "ahoy_events", force: :cascade do |t|
@@ -162,9 +174,11 @@ ActiveRecord::Schema.define(version: 2020_07_24_153329) do
     t.string "submitter_type"
     t.bigint "submitter_id"
     t.integer "meta_challenge_id"
+    t.integer "ml_challenge_id"
     t.index ["challenge_id"], name: "index_base_leaderboards_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_base_leaderboards_on_challenge_round_id"
     t.index ["leaderboard_type_cd"], name: "index_base_leaderboards_on_leaderboard_type_cd"
+    t.index ["ml_challenge_id"], name: "index_base_leaderboards_on_ml_challenge_id"
     t.index ["submitter_type", "submitter_id"], name: "index_base_leaderboards_on_submitter_type_and_submitter_id"
   end
 
@@ -345,6 +359,7 @@ ActiveRecord::Schema.define(version: 2020_07_24_153329) do
     t.integer "problem_id"
     t.float "weight"
     t.integer "challenge_round_id"
+    t.integer "occur_day"
   end
 
   create_table "challenge_rounds", force: :cascade do |t|
@@ -481,6 +496,7 @@ ActiveRecord::Schema.define(version: 2020_07_24_153329) do
     t.string "banner_mobile_file"
     t.float "weight", default: 0.0, null: false
     t.boolean "editors_selection", default: false, null: false
+    t.boolean "ml_challenge", default: false, null: false
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
   end
@@ -513,6 +529,14 @@ ActiveRecord::Schema.define(version: 2020_07_24_153329) do
     t.string "eua_file"
     t.boolean "use_challenge_dataset_files", default: false, null: false
     t.index ["organizer_id"], name: "index_clef_tasks_on_organizer_id"
+  end
+
+  create_table "daily_practice_goals", force: :cascade do |t|
+    t.string "title", null: false
+    t.integer "points", null: false
+    t.string "duration_text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "dataset_file_downloads", id: :serial, force: :cascade do |t|
@@ -681,6 +705,18 @@ ActiveRecord::Schema.define(version: 2020_07_24_153329) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "ml_activity_points", force: :cascade do |t|
+    t.bigint "participant_id", null: false
+    t.bigint "challenge_id", null: false
+    t.bigint "activity_point_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "point", default: 0, null: false
+    t.index ["activity_point_id"], name: "index_ml_activity_points_on_activity_point_id"
+    t.index ["challenge_id"], name: "index_ml_activity_points_on_challenge_id"
+    t.index ["participant_id"], name: "index_ml_activity_points_on_participant_id"
+  end
+
   create_table "newsletter_emails", force: :cascade do |t|
     t.text "bcc", default: "", null: false
     t.text "cc", default: "", null: false
@@ -792,6 +828,18 @@ ActiveRecord::Schema.define(version: 2020_07_24_153329) do
     t.string "status_cd"
     t.index ["clef_task_id"], name: "index_participant_clef_tasks_on_clef_task_id"
     t.index ["participant_id"], name: "index_participant_clef_tasks_on_participant_id"
+  end
+
+  create_table "participant_ml_challenge_goals", force: :cascade do |t|
+    t.bigint "participant_id", null: false
+    t.bigint "challenge_id", null: false
+    t.bigint "daily_practice_goal_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_participant_ml_challenge_goals_on_challenge_id"
+    t.index ["daily_practice_goal_id"], name: "index_participant_ml_challenge_goals_on_daily_practice_goal_id"
+    t.index ["participant_id", "challenge_id", "daily_practice_goal_id"], name: "participant_challenge_goal_id", unique: true
+    t.index ["participant_id"], name: "index_participant_ml_challenge_goals_on_participant_id"
   end
 
   create_table "participant_organizers", force: :cascade do |t|
@@ -976,8 +1024,10 @@ ActiveRecord::Schema.define(version: 2020_07_24_153329) do
     t.string "baseline_comment"
     t.integer "meta_challenge_id"
     t.string "submission_link"
+    t.integer "ml_challenge_id"
     t.index ["challenge_id"], name: "index_submissions_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_submissions_on_challenge_round_id"
+    t.index ["ml_challenge_id"], name: "index_submissions_on_ml_challenge_id"
     t.index ["participant_id"], name: "index_submissions_on_participant_id"
   end
 
@@ -1123,6 +1173,9 @@ ActiveRecord::Schema.define(version: 2020_07_24_153329) do
   add_foreign_key "follows", "participants"
   add_foreign_key "invitations", "challenges"
   add_foreign_key "invitations", "participants"
+  add_foreign_key "ml_activity_points", "activity_points"
+  add_foreign_key "ml_activity_points", "challenges"
+  add_foreign_key "ml_activity_points", "participants"
   add_foreign_key "newsletter_emails", "challenges"
   add_foreign_key "newsletter_emails", "participants"
   add_foreign_key "notifications", "challenges"
@@ -1131,6 +1184,9 @@ ActiveRecord::Schema.define(version: 2020_07_24_153329) do
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "participant_clef_tasks", "clef_tasks"
   add_foreign_key "participant_clef_tasks", "participants"
+  add_foreign_key "participant_ml_challenge_goals", "challenges"
+  add_foreign_key "participant_ml_challenge_goals", "daily_practice_goals"
+  add_foreign_key "participant_ml_challenge_goals", "participants"
   add_foreign_key "participant_organizers", "organizers"
   add_foreign_key "participant_organizers", "participants"
   add_foreign_key "partners", "organizers"
@@ -1385,7 +1441,8 @@ ActiveRecord::Schema.define(version: 2020_07_24_153329) do
       base_leaderboards.meta,
       base_leaderboards.submitter_type,
       base_leaderboards.submitter_id,
-      base_leaderboards.meta_challenge_id
+      base_leaderboards.meta_challenge_id,
+      base_leaderboards.ml_challenge_id
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
   SQL
@@ -1418,7 +1475,8 @@ ActiveRecord::Schema.define(version: 2020_07_24_153329) do
       base_leaderboards.meta,
       base_leaderboards.submitter_type,
       base_leaderboards.submitter_id,
-      base_leaderboards.meta_challenge_id
+      base_leaderboards.meta_challenge_id,
+      base_leaderboards.ml_challenge_id
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'leaderboard'::text);
   SQL

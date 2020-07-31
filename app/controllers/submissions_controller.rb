@@ -99,11 +99,13 @@ class SubmissionsController < ApplicationController
     if @meta_challenge.present?
       session_info[:meta_challenge_id] = @meta_challenge.id
     end
+    if @ml_challenge.present?
+      session_info[:ml_challenge_id] = @ml_challenge.id
+    end
     @submission = @challenge.submissions.new(submission_params.merge(session_info))
     authorize @submission
 
     validate_submission_file_presence
-
     if @submission.errors.none? && @submission.save
       SubmissionGraderJob.perform_later(@submission.id)
       redirect_to helpers.challenge_submissions_path(@challenge), notice: 'Submission accepted.'
@@ -157,17 +159,25 @@ class SubmissionsController < ApplicationController
   end
 
   def set_challenge
-    @challenge = Challenge.friendly.find(params[:challenge_id])
-    if params.has_key?('meta_challenge_id') and params[:meta_challenge_id] != params[:challenge_id]
-      @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id])
-    elsif @challenge.meta_challenge
-      params[:meta_challenge_id] = params[:challenge_id]
+    @challenge     = Challenge.friendly.find(params[:challenge_id])
+    challenge_type = params['ml_challenge_id'].present? ? 'ml_challenge_id' : 'meta_challenge_id'
+
+    if params.has_key?(challenge_type) && params[challenge_type.to_sym] != params[:challenge_id]
+      if params['ml_challenge_id'].present?
+        @ml_challenge = Challenge.includes(:organizers).friendly.find(params[challenge_type.
+          to_sym])
+      else
+        @meta_challenge = Challenge.includes(:organizers).friendly.find(params[challenge_type.
+          to_sym])
+      end
+    elsif @challenge.meta_challenge || @challenge.ml_challenge
+      params[challenge_type.to_sym] = params[:challenge_id]
     end
 
-    if !params.has_key?('meta_challenge_id')
+    if !params.has_key?(challenge_type)
       cp = ChallengeProblems.find_by(problem_id: @challenge.id)
       if cp.present?
-        params[:meta_challenge_id] = Challenge.find(cp.challenge_id).slug
+        params[challenge_type.to_sym] = Challenge.find(cp.challenge_id).slug
         redirect_to helpers.challenge_submissions_path(@challenge)
       end
     end
@@ -227,6 +237,7 @@ class SubmissionsController < ApplicationController
     params
         .require(:submission)
         .permit(
+          :ml_challenge_id,
           :meta_challenge_id,
           :challenge_id,
           :participant_id,

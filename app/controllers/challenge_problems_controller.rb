@@ -23,7 +23,8 @@ class ChallengeProblemsController < ApplicationController
       challenge_id: @challenge.id,
       problem_id: params[:challenge_problems][:problem_id],
       weight: params[:challenge_problems][:weight],
-      challenge_round_id: params[:challenge_problems][:challenge_round_id]
+      challenge_round_id: params[:challenge_problems][:challenge_round_id],
+      occur_day: params[:challenge_problems][:occur_day]
     })
     authorize obj
     obj.save!
@@ -39,6 +40,7 @@ class ChallengeProblemsController < ApplicationController
       obj = ChallengeProblems.find_by(challenge_id: @challenge.id, problem_id: problem_id)
       obj.weight = value['weight']
       obj.challenge_round_id = value['challenge_round_id']
+      obj.occur_day = value['occur_day']
       authorize obj
       obj.save!
     end

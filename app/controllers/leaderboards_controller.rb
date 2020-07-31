@@ -18,6 +18,7 @@ class LeaderboardsController < ApplicationController
       end
     end
     @top_three_winners = @leaderboards.where(baseline: false).first(3)
+
     if params[:country_name].present? || params[:affiliation].present?
       @leaderboards = @leaderboards.where(id: @filter.call('leaderboard_ids'))
       @leaderboards = paginate_leaderboards_by(:seq)
@@ -28,6 +29,7 @@ class LeaderboardsController < ApplicationController
                             paginate_leaderboards_by(:seq)
                           end
     end
+
     @vote             = @challenge.votes.find_by(participant_id: current_participant.id) if current_participant.present?
     @follow           = @challenge.follows.find_by(participant_id: current_participant.id) if current_participant.present?
     @challenge_rounds = @challenge.challenge_rounds.started
@@ -62,16 +64,26 @@ class LeaderboardsController < ApplicationController
 
   def set_challenge
     @challenge = Challenge.friendly.find(params[:challenge_id])
-    if params.has_key?('meta_challenge_id') and params[:meta_challenge_id] != params[:challenge_id]
-      @meta_challenge = Challenge.includes(:organizers).friendly.find(params[:meta_challenge_id])
+    challenge_type = params['ml_challenge_id'].present? ? 'ml_challenge_id' : 'meta_challenge_id'
+
+    if params.has_key?(challenge_type) and params[challenge_type.to_sym] != params[:challenge_id]
+      if params['ml_challenge_id'].present?
+        @ml_challenge = Challenge.includes(:organizers).friendly.find(params[challenge_type.
+          to_sym])
+      else
+        @meta_challenge = Challenge.includes(:organizers).friendly.find(params[challenge_type.
+          to_sym])
+      end
     elsif @challenge.meta_challenge
-      params[:meta_challenge_id] = params[:challenge_id]
+      params[challenge_type.to_sym] = params[:challenge_id]
+    elsif @challenge.ml_challenge
+      params[challenge_type.to_sym] = params[:challenge_id]
     end
 
-    if !params.has_key?('meta_challenge_id')
+    if !params.has_key?(challenge_type)
       cp = ChallengeProblems.find_by(problem_id: @challenge.id)
       if cp.present? && params[:action] != 'get_affiliation'
-        params[:meta_challenge_id] = Challenge.find(cp.challenge_id).slug
+        params[challenge_type.to_sym] = Challenge.find(cp.challenge_id).slug
         redirect_to helpers.challenge_leaderboards_path(@challenge)
       end
     end
@@ -98,6 +110,8 @@ class LeaderboardsController < ApplicationController
 
     if @meta_challenge.present?
       filter[:meta_challenge_id] = @meta_challenge.id
+    elsif @ml_challenge.present?
+      filter[:ml_challenge_id] = @ml_challenge.id
     end
     @leaderboards = if @challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
       BaseLeaderboard
@@ -106,10 +120,13 @@ class LeaderboardsController < ApplicationController
     elsif post_challenge? || freeze_record_for_organizer
       policy_scope(OngoingLeaderboard)
         .where(filter)
+    elsif @challenge.ml_challenge? && current_participant.nil?
+      Leaderboard.none
     else
       policy_scope(Leaderboard)
         .where(filter)
     end
+
     if following?
       following_ids = current_participant.following.pluck(:followable_id)
       @leaderboards = @leaderboards.where(submitter_id: following_ids)

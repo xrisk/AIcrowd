@@ -1,0 +1,19 @@
+<div class="chart-wrapper pb-5">
+  <header class="section-header">
+    <div>
+      <h4>Ml Challenge Award Point</h4>
+    </div>
+  </header>
+  <div class='goal-point-streak'>
+    Points Gained :
+    <span class="badge-point badge-gold">
+      <%= "#{@gained_points} / #{@goal_points}" if @gained_points.present? && @goal_points.present? %>
+    </span>
+    <br /><br />
+    Streak :
+    <span class="badge-circle"><%= @streak_record %></span>
+  </div><br />
+  <!-- Add points out of / daily point -->
+  <%= line_chart get_award_point_on_day(current_participant), xtitle: "Time", ytitle: "Award point" %>
+</div>
+<!-- badge-point badge-success -->
