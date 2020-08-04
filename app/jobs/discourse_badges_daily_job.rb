@@ -4,7 +4,7 @@ class DiscourseBadgesDailyJob < ApplicationJob
   def perform(*args)
     discourse_initial_id = ENV['DISCOURSE_INITIAL_ID'].to_i
     user_badges = get_badges
-    while user_badges.present? do
+    while user_badges.present? && user_badges.kind_of?(Array) do
       user_badges.each do |user_badge|
         participant = Participant.find_by(name: user_badge['username'])
         if participant
