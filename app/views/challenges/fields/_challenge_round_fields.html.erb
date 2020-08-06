@@ -89,6 +89,16 @@
         </div>
 
         <div class="form-group col-sm-12 col-md-6">
+          <%= f.label :debug_submission_limit, "Debug Submission Limit" %>
+          <%= f.text_field :debug_submission_limit, class: "form-control" %>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6">
+          <%= f.label :debug_submission_time, "Debug Submission Time" %>
+          <%= f.number_field :debug_submission_time, min: 0, class: "form-control" %>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6">
           <%= f.label :parallel_submissions, "Parallel Submissions" %>
           <%= f.text_field :parallel_submissions, class: "form-control" %>
         </div>

@@ -378,7 +378,9 @@ class ChallengesController < ApplicationController
         :secondary_sort_order,
         :freeze_flag,
         :freeze_duration,
-        :submissions_type
+        :submissions_type,
+        :debug_submission_limit,
+        :debug_submission_time
       ],
       challenge_rules_attributes: [
         :id,
