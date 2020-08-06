@@ -44,7 +44,9 @@ class LeaderboardsController < ApplicationController
   def export
     authorize @challenge, :export?
 
-    @leaderboards = Leaderboard
+    leaderboard_class = freeze_record_for_organizer ? 'OngoingLeaderboard' : 'Leaderboard'
+
+    @leaderboards = leaderboard_class.constantize
       .where(challenge_round_id: params[:leaderboard_export_challenge_round_id].to_i)
       .order(:seq)
 
