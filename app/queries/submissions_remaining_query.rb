@@ -12,13 +12,17 @@ class SubmissionsRemainingQuery
   def call
     return [1, nil, []] unless @challenge.running? && @challenge.active_round.present?
 
-    case @challenge.active_round.submission_limit_period_cd.to_s
-    when 'day'
-      day_amount
-    when 'week'
-      week_amount
-    when 'round'
-      round_amount
+    if @challenge.submissions.first&.debug_submission
+      debug_amount
+    else
+      case @challenge.active_round.submission_limit_period_cd.to_s
+      when 'day'
+        day_amount
+      when 'week'
+        week_amount
+      when 'round'
+        round_amount
+      end
     end
   end
 
@@ -87,6 +91,30 @@ class SubmissionsRemainingQuery
       [(@challenge.active_round.submission_limit - submissions.count + failed_adj),
        nil,
        previous_submissions(submissions: submissions)]
+    end
+  end
+
+  def debug_amount
+    round = @challenge.active_round
+
+    submissions = @challenge.submissions
+                      .where("participant_id IN (?) and created_at >= ?", team_participants_ids, Time.zone.now - round.debug_submission_time.to_i.hours)
+                      .order(created_at: :asc)
+
+    if submissions.blank?
+      [round.debug_submission_limit.to_i, nil, previous_submissions(submissions: submissions)]
+    else
+      failed_submission_count = @challenge.submissions
+                                    .where("grading_status_cd = 'failed' and participant_id IN (?) and created_at >= ?",
+                                           team_participants_ids,
+                                          Time.zone.now - round.debug_submission_time.to_i.hours)
+                                    .count
+      failed_adj = [failed_submission_count, round.failed_submissions.to_i].min
+
+      [(round.debug_submission_limit.to_i - submissions.count + failed_adj),
+       (submissions.first.created_at + 1.day).to_s,
+       previous_submissions(submissions: submissions)
+      ]
     end
   end
 
