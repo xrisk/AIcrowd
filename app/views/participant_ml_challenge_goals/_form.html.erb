@@ -1,0 +1,17 @@
+<%= form_for goal_commitment, validate: true, html: {class: "form-rg mt-5", multipart: true} do |f| %>
+  <%= f.hidden_field :challenge_id, value: params[:challenge_id] %>
+  <%= f.hidden_field :participant_id, value: current_participant.id %>
+
+  <% goals.each do |goal| %>
+    <div class="form-check">
+      <%= label_tag do %>
+        <%= f.radio_button :daily_practice_goal_id, goal.id, class: 'form-check-input' %>
+        <b><%= goal.title.humanize %></b> - <%= goal.points %> Points Each Day ( Course Completion : <%= goal.duration_text %> )
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="btn-set" aria-hidden="true">
+    <%= f.button ("Save"), class: 'btn btn-primary requires-agreement' %>
+  </div>
+<% end %>

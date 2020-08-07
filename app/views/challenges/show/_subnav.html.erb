@@ -23,7 +23,6 @@
       <% if required_terms_or_rules_path(challenge).blank? %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Rules', link: challenge_challenge_rules_path(challenge) } %>
       <% end %>
-
       <li class="overflow-nav nav-item dropdown ml-auto">
         <a class="nav-link overflow-nav-title" data-toggle="dropdown" href="#" role="button">
           <svg width="16" height="4" xmlns="http://www.w3.org/2000/svg">
@@ -36,6 +35,8 @@
 
     <% if required_terms_or_rules_path(challenge).present? %>
       <%= link_to 'Participate', required_terms_or_rules_path(challenge), class: "btn btn-primary btn-sm pull-right" %>
+    <% elsif challenge.ml_challenge && current_participant.present? && current_participant.participant_ml_challenge_goals.exists?(challenge_id: challenge.id) %>
+      <%= link_to 'Goal Commitment', edit_participant_ml_challenge_goal_path(challenge_id: challenge.slug), class: "btn btn-primary btn-sm pull-right" %>
     <% else %>
       <%= my_team_view_or_create_button(challenge) %>
       <% if !challenge.meta_challenge && !challenge.ml_challenge %>
