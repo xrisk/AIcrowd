@@ -134,7 +134,11 @@ module LeaderboardHelper
 
   def participate_challenge_problems(challenge, participant)
     challenge_participant = participant.challenge_participants.find_by(challenge_id: challenge.id)
-    day_num = (Time.now.to_date - challenge_participant.challenge_rules_accepted_date.to_date).to_i + 1
-    challenge.challenge_problems.where("occur_day <= ?", day_num)
+    if challenge_participant.present? && challenge_participant.challenge_rules_accepted_date
+      day_num = (Time.now.to_date - challenge_participant.challenge_rules_accepted_date.to_date).to_i + 1
+      challenge.challenge_problems.where("occur_day <= ?", day_num)
+    else
+      challenge.challenge_problems
+    end
   end
 end
