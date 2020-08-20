@@ -2,7 +2,7 @@ class SearchesController < ApplicationController
   DEFAULT_LIMIT = 6.freeze
 
   def show
-    @challenges        = policy_scope(Challenge).where('challenge ILIKE ? OR description ILIKE ?', "%#{params[:q]}%", "%#{params[:q]}%").limit(DEFAULT_LIMIT)
+    @challenges        = policy_scope(Challenge).where('challenges.challenge ILIKE ? OR challenges.description ILIKE ?', "%#{params[:q]}%", "%#{params[:q]}%").limit(DEFAULT_LIMIT)
     @participants      = Participant.where('name ILIKE ?', "%#{params[:q]}%").limit(DEFAULT_LIMIT)
     @discussions_fetch = Rails.cache.fetch("discourse-search-discussions/#{params[:q]}", expires_in: 5.minutes) do
       Discourse::FetchSearchResultsService.new(q: params[:q]).call
