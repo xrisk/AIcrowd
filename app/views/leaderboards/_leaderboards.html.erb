@@ -87,13 +87,13 @@
       <% if !leaderboard.baseline? %>
         <td class="text-right"><%= leaderboard.entries %></td>
         <td class="text-right"><%= local_time(leaderboard.created_at, "%a, %e %b %Y %H:%M") %></td>
-        <td>
-          <% unless leaderboard.disentanglement? %>
+        <% if defined?(@submitter_submissions) %>
+          <td>
             <% if leaderboard.submitter.present? %>
               <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter: leaderboard.submitter, challenge: challenge, width: '200px', id: leaderboard.submitter.id } %>
             <% end %>
-          <% end %>
-        </td>
+          </td>
+        <% end %>
       <% else %>
         <td colspan="3"></td>
       <% end %>
@@ -106,10 +106,6 @@
         <% submission = leaderboard.try(:submission) %>
         <% if submission_code_link(submission).present? %>
           <%= link_to "Code", submission_code_link(submission), class: 'btn btn-secondary btn-sm mr-1', target: "_blank", data: { toggle: 'tooltip', placement: 'top' }, title: "Browse codebase (based on your access permissions)" %>
-        <% end %>
-        <% if submission.present? && policy(submission).show? %>
-          <% text = 'Submission %s by %s have rank #%s on %s leaderboard!! 🎉 #AIcrowd' % [submission.id, leaderboard.submitter&.name, leaderboard.row_num, challenge.challenge] %>
-          <%= social_share('twitter', challenge, leaderboard, text) %>
         <% end %>
       </td>
     <% end %>

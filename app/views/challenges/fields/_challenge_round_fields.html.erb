@@ -1,6 +1,6 @@
 <div id="challenge-round-wrapper-<%= f.object.id %>" class="round nested-fields">
-  <div class="bg-light border p-3 text-left mb-3">
-    <div class="row d-flex align-items-end">
+  <div class="text-left mb-3 border-bottom border-red">
+    <div class="row d-flex align-items-end pt-3 pb-2 mb-2">
       <div class="form-group col-sm-12 col-md-6">
         <%= f.label :challenge_round, "Round Name:" %>
         <%= f.text_field :challenge_round, class: "form-control" %>
@@ -13,114 +13,18 @@
         <% end %>
       </div>
       <div class="form-group col-xs-6 col-md-2 text-right">
-        <a data-toggle="collapse" href="#collapse-_<%= f.index %>_" class="btn btn-secondary challenges-form__toggle-expand">
-          Expand
+        <a data-toggle="collapse" href="#collapse-_<%= f.index %>_" class="btn btn-primary challenges-form__toggle-expand">
+          <span class="fa fa-cog"></span>&nbsp;Configure
         </a>
       </div>
       <hr>
     </div>
 
     <div id="collapse-_<%= f.index %>_" class="collapse" data-parent="#rounds">
-      <div class="row align-items-end">
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :freeze_duration, "Freeze Window:" %>
-          <%= f.number_field :freeze_duration, class: "form-control", min: '0', placeholder: 'Value in Hour, like 1 or 3' %>
-        </div>
-
-        <div class="form-group col-xs-6 col-md-4">
-          <%= f.label :freeze_flag, class: "toggle-switch toggle-switch-large" do %>
-            <%= f.check_box :freeze_flag %>
-            <span class="switcher"></span>
-            <span class="label">Enable Freeze</span>
-          <% end %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :score_title %>
-          <%= f.text_field :score_title, class: "form-control" %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :score_secondary_title %>
-          <%= f.text_field :score_secondary_title, class: "form-control" %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <label for="primaryScoreTitleSortOrder">Primary score sort order</label>
-          <%= f.select :primary_sort_order, enum_option_pairs(ChallengeRound, :primary_sort_order), {}, { class: "form-control", required: true } %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <label for="secondaryScoreTitleSortOrder">Secondary score sort order</label>
-          <%= f.select :secondary_sort_order, enum_option_pairs(ChallengeRound, :secondary_sort_order), {}, { class: "form-control", required: true } %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :minimum_score, "Prior Round Min Score" %>
-          <%= f.text_field :minimum_score, class: "form-control", placeholder: 'No limitations' %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :minimum_score_secondary, "Prior Round Min Secondary Score" %>
-          <%= f.text_field :minimum_score_secondary, class: "form-control", placeholder: 'No limitations' %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :submissions_type, "Submissions Type" %>
-          <%= f.select :submissions_type, enum_option_pairs(ChallengeRound, :submissions_type), {}, { class: "form-control" } %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :submission_limit, "Submission Limit" %>
-          <%= f.text_field :submission_limit, class: "form-control", placeholder: 'Enter maximum submissions' %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :submission_limit_period, "Submission Limit Period" %>
-          <%= f.select :submission_limit_period,
-                      enum_option_pairs(ChallengeRound, :submission_limit_period),
-                      {},
-                      {class: "form-control"} %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :failed_submissions, "Failed submissions allowed" %>
-          <%= f.text_field :failed_submissions, class: "form-control" %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :debug_submission_limit, "Debug Submission Limit" %>
-          <%= f.text_field :debug_submission_limit, class: "form-control" %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :debug_submission_time, "Debug Submission Time" %>
-          <%= f.number_field :debug_submission_time, min: 0, class: "form-control" %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :parallel_submissions, "Parallel Submissions" %>
-          <%= f.text_field :parallel_submissions, class: "form-control" %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :ranking_highlight, "Highlighted Rankings" %>
-          <%= f.text_field :ranking_highlight, class: "form-control" %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :ranking_window, "Ranking window (hours)" %>
-          <%= f.text_field :ranking_window, class: "form-control" %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :score_precision, "Score Precision" %>
-          <%= f.text_field :score_precision, class: "form-control" %>
-        </div>
-
-        <div class="form-group col-sm-12 col-md-6">
-          <%= f.label :score_secondary_precision, "Secondary Score Precision" %>
-          <%= f.text_field :score_secondary_precision, class: "form-control" %>
+      <div class="row mt-4">
+        <div class="form-group col-sm-12 col-md-12">
+          <h4>Details</h4>
+          <small class="form-text text-muted">Tell more about your round, when should we start and stop submissions?</small>
         </div>
 
         <div class="form-group col-sm-12 col-md-6">
@@ -132,12 +36,206 @@
           <%= f.label :end_dttm, 'Round End (UTC)' %>
           <%= f.text_field :end_dttm, class: "form-control", data: {controller: 'flatpickr'} %>
         </div>
+      </div>
 
-        <div class="form-group col-12">
-            <%= f.label :leaderboard_note, 'Leaderboard Note' %>
-            <%= f.cktext_area :leaderboard_note, class: "form-control md-content" %>
+
+      <div class="row mt-4">
+        <div class="form-group col-sm-12 col-md-12">
+          <h4>Submissions</h4>
+          <small class="form-text text-muted">Configure submission process and limits for your challenge.</small>
         </div>
 
+        <div class="form-group col-sm-12 col-md-5">
+          <%= f.label :submissions_type, "Submissions Type" %>
+          <%= f.select :submissions_type, enum_option_pairs(ChallengeRound, :submissions_type), {}, { class: "form-control" } %>
+          <small class="form-text text-muted">Artifacts: File uploads (default), Code: IDE, GitLab: Repositories</small>
+        </div>
+
+        <div class="clearfix col-md-5"></div>
+
+        <div class="form-group col-sm-12 col-md-3">
+          <%= f.label :submission_limit, "Submission Limit" %>
+          <div class="form-row">
+            <div class="form-group col-md-4 mb-0">
+              <%= f.text_field :submission_limit, class: "form-control", placeholder: 'Enter maximum submissions' %>
+            </div>
+            <div class="form-group col-md-8 mb-0">
+              <%= f.select :submission_limit_period,
+                      enum_option_pairs(ChallengeRound, :submission_limit_period),
+                      {},
+                      {class: "form-control"} %>
+            </div>
+          </div>
+          <small class="form-text text-muted">Maximum number allowed</small>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-3">
+          <%= f.label :failed_submissions, "Failed submissions allowed" %>
+          <%= f.text_field :failed_submissions, class: "form-control" %>
+          <small class="form-text text-muted">Mistakes happen, how many not to count?</small>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-3">
+          <%= f.label :parallel_submissions, "Parallel Submissions" %>
+          <%= f.text_field :parallel_submissions, class: "form-control" %>
+          <small class="form-text text-muted">Reject new if old are evaluating (same user)</small>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-3">
+          <%= f.label :debug_submission_limit, "Debug Submission Limit" %>
+          <div class="form-row">
+            <div class="form-group col-md-4 mb-0">
+              <%= f.text_field :debug_submission_limit, class: "form-control" %>
+            </div>
+            <div class="form-group col-md-8 mb-0">
+              <%= f.select :debug_submission_limit_period,
+                      enum_option_pairs(ChallengeRound, :debug_submission_limit_period),
+                      {},
+                      {class: "form-control"} %>
+            </div>
+          </div>
+          <small class="form-text text-muted"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>&nbsp;Valid if you support debug submissions</small>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="form-group col-10">
+          <h4>Leaderboard</h4>
+          <small class="form-text text-muted">These configurations controls your leaderboard calculation and visilibity.</small>
+        </div>
+        <!--<div class="form-group col-2 text-right" data-controller="challenge-rounds" data-action="click->challenge-rounds#onboardingTour">
+          <a class="btn btn-secondary"><span class="fa fa-question-circle"></span>&nbsp; Tour</a>
+        </div>-->
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="table-responsive">
+            <table class="table table-leaderboard" style="filter: blur(1px);">
+              <thead>
+                <%= render partial: 'leaderboards/leaderboards_header', locals: { leaderboards: @leaderboards, current_round: f.object, truncate: 'true', current_participant: current_participant } %>
+              </thead>
+              <tbody>
+                <% if f.object.leaderboards.length > 3 %>
+                  <%= render 'leaderboards/leaderboards', leaderboards: f.object.leaderboards.first(3), current_round: f.object, truncate: 'true' %>
+                <% else %>
+                  <%= render 'leaderboards/leaderboards', leaderboards: @example_leaderboards, current_round: f.object, truncate: 'true' %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+
+        <div class="form-group col-sm-12 col-md-4 border-right">
+          <div class="form-group">
+            <h4 class="text-secondary">Primary Score</h4>
+            <small class="form-text text-muted">Control how primary score is used for leaderboard</small>
+          </div>
+          <div class="form-group">
+            <label>Score Title</label>
+            <%= f.text_field :score_title, class: "form-control" %>
+            <small class="form-text text-muted">Ex: Name of metric, criteria, etc.</small>
+          </div>
+          <div class="form-group">
+            <label for="primaryScoreTitleSortOrder">Primary score sort order</label>
+            <%= f.select :primary_sort_order, enum_option_pairs(ChallengeRound, :primary_sort_order), {}, { class: "form-control", required: true } %>
+            <small class="form-text text-muted">Descending means higher score is better.</small>
+          </div>
+          <div class="form-group">
+            <%= f.label :score_precision, "Score Precision" %>
+            <%= f.text_field :score_precision, class: "form-control" %>
+            <small class="form-text text-muted">Round off precision to compute ranks.</small>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4 border-right">
+          <div class="form-group">
+            <h4 class="text-secondary">Secondary Score</h4>
+            <small class="form-text text-muted">Control how secondary score is used for leaderboard</small>
+          </div>
+          <div class="form-group">
+            <%= f.label :score_secondary_title %>
+            <%= f.text_field :score_secondary_title, class: "form-control" %>
+            <small class="form-text text-muted">Ex: Name of metric, criteria, etc.</small>
+          </div>
+          <div class="form-group">
+            <label for="secondaryScoreTitleSortOrder">Secondary score sort order</label>
+            <%= f.select :secondary_sort_order, enum_option_pairs(ChallengeRound, :secondary_sort_order), {}, { class: "form-control", required: true } %>
+            <small class="form-text text-muted">Not used: Not used for sort, Hidden: Hide completely</small>
+          </div>
+          <div class="form-group">
+            <%= f.label :score_secondary_precision, "Secondary Score Precision" %>
+            <%= f.text_field :score_secondary_precision, class: "form-control" %>
+            <small class="form-text text-muted">Round off precision to compute ranks.</small>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-4">
+          <div class="form-group">
+            <h4 class="text-secondary">Other Score(s)</h4>
+            <small class="form-text text-muted">List additional scores to show on leaderboard</small>
+          </div>
+          <div>
+            <label for="otherScoresFieldnames">Fieldnames for other scores</label>
+            <%= f.text_field :other_scores_fieldnames, class: "form-control" %>
+            <small class="form-text text-muted">Comma seperated list of additional scores generated during evaluation (max 5 fields)</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row align-items-end">
+        <div class="form-group col-sm-12 col-md-12">
+          <span class="label-text">Options</span>
+          <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :show_leaderboard, text: "Show leaderboard" } %>
+          <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :media_on_leaderboard, text: "Show media on leaderboard" } %>
+          <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :freeze_flag, text: "Enable freeze leaderboard" } %>
+
+          <% if f.object.leaderboard_note.blank? %>
+            <label class="toggle-switch toggle-switch-large" data-controller="challenge-rounds" data-action="click->challenge-rounds#leaderboardNoteToogle">
+              <span class="switcher mr-2"></span>
+              <span class="label">Show note/text on leaderboard</span>
+            </label>
+          <% end %>
+
+          <div class="leaderboard-text-area form-group col-12 <% if f.object.leaderboard_note.blank? %>d-none<% end %>">
+            <%= f.label :leaderboard_note, 'Leaderboard Note' %>
+            <%= f.cktext_area :leaderboard_note, class: "form-control md-content" %>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6">
+          <%= f.label :freeze_duration, "Freeze Window:", id: 'my-element' %>
+          <%= f.number_field :freeze_duration, class: "form-control", min: '0', placeholder: 'Value in Hour, like 1 or 3' %>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6">
+          <%= f.label :ranking_window, "Ranking window (hours)" %>
+          <%= f.text_field :ranking_window, class: "form-control" %>
+        </div>
+
+      </div>
+
+      <div class="row mt-4">
+        <div class="form-group col-sm-12 col-md-12">
+          <h4>Qualification Criteria</h4>
+          <small class="form-text text-muted">In case of multi-round challenges, which users should be qualitifed to next round?</small>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6">
+          <%= f.label :minimum_score, "Round Min Score" %>
+          <%= f.text_field :minimum_score, class: "form-control", placeholder: 'No limitations' %>
+        </div>
+
+        <div class="form-group col-sm-12 col-md-6">
+          <%= f.label :minimum_score_secondary, "Round Min Secondary Score" %>
+          <%= f.text_field :minimum_score_secondary, class: "form-control", placeholder: 'No limitations' %>
+        </div>
+      </div>
+
+      <div class="row mt-4">
         <% if f.object.persisted? %>
           <div class="form-group col-4 text-center"
               data-controller="challenge-rounds"

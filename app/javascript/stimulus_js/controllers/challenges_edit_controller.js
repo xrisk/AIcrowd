@@ -5,10 +5,12 @@ export default class extends Controller {
     const that = this;
 
     $(document).ready(function() {
-      $('.select2').select2();
-      $('.category_select2').select2({
-        tags: true
-      });
+      if ($(".select2").length > 0) {
+        $('.select2').select2();
+        $('.category_select2').select2({
+          tags: true
+        });
+      }
     });
 
     let switch_handler = function () {

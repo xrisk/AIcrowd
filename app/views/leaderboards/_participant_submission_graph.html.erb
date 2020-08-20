@@ -1,2 +1,4 @@
-<% uniform_submissions = uniform_submissions(@submitter_submissions[:"submitter#{submitter.id}_submissions_by_day"], @current_round) %>
-<%= line_chart uniform_submissions, submission_trend_attributes(id + rand, @current_round, width,uniform_submissions) %>
+<% if defined?(@submitter_submissions) %>
+  <% uniform_submissions = uniform_submissions(@submitter_submissions[:"submitter#{submitter.id}_submissions_by_day"], @current_round) %>
+  <%= line_chart uniform_submissions, submission_trend_attributes(id + rand, @current_round, width,uniform_submissions) %>
+<% end %>

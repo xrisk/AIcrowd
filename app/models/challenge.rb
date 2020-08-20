@@ -161,8 +161,8 @@ class Challenge < ApplicationRecord
     return super
   end
 
-  def submissions_remaining(participant_id)
-    SubmissionsRemainingQuery.new(challenge: self, participant_id: participant_id).call
+  def submissions_remaining(participant_id, debug_submission=false)
+    SubmissionsRemainingQuery.new(challenge: self, participant_id: participant_id, debug_submission: debug_submission).call
   end
 
   def active_round
