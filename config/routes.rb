@@ -237,7 +237,7 @@ Rails.application.routes.draw do
   match '/crowdai_migration/save', to: 'crowdai_migration#create', via: :post
 
   # Custom Redirect
-  get '/blitz', to: redirect('/challenges/aicrowd-blitz-may-2020', status: 302)
+  get '/blitz', to: redirect('/challenges/ai-for-good-ai-blitz-3', status: 302)
 
   resources :markdown_editors, only: [:index, :create] do
     put :presign, on: :collection
