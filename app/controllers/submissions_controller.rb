@@ -99,9 +99,6 @@ class SubmissionsController < ApplicationController
     if @meta_challenge.present?
       session_info[:meta_challenge_id] = @meta_challenge.id
     end
-    if @ml_challenge.present?
-      session_info[:ml_challenge_id] = @ml_challenge.id
-    end
     @submission = @challenge.submissions.new(submission_params.merge(session_info))
     authorize @submission
 

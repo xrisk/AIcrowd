@@ -49,7 +49,7 @@
     <% end %>
 
     <td class="text-right"><strong><%= leaderboard_formatted_value(current_round, leaderboard.score) %></strong></td>
-    <% if @current_round&.get_score_secondary_title.present? && !@challenge.meta_challenge && !@challenge.ml_challenge %>
+    <% if @current_round&.get_score_secondary_title.present? && !@challenge.meta_challenge %>
       <% if !(@current_round&.secondary_sort_order.present? && @current_round&.secondary_sort_order == :hidden) %>
         <td class="text-right"><strong><%= leaderboard_formatted_value(current_round, leaderboard.score_secondary) %></strong></td>
       <% end %>

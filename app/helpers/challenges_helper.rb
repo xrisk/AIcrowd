@@ -179,29 +179,9 @@ module ChallengesHelper
     return false
   end
 
-  def is_current_page_ml_challenge_child(challenge)
-    if params.has_key?('ml_challenge_id')
-      if challenge.is_a?(String)
-        if challenge != params['ml_challenge_id']
-          return true
-        end
-      elsif challenge.is_a?(Hash)
-        if challenge.has_key?(:challenge_id) && (challenge[:challenge_id] != params['ml_challenge_id'])
-          return true
-        end
-      elsif challenge.slug != params['ml_challenge_id']
-        return true
-      end
-    end
-    return false
-  end
-
   def meta_challenge(link, challenge)
-    params_sub_challenge_id = params['meta_challenge_id'] || params['ml_challenge_id']
-
-    challenge_child_action = params['meta_challenge_id'].present? ? is_current_page_meta_challenge_child(challenge) : is_current_page_ml_challenge_child(challenge)
-    if challenge_child_action
-      return challenge_path(params_sub_challenge_id) + link.gsub(/^\/challenges/, "/problems")
+    if is_current_page_meta_challenge_child(challenge)
+      return challenge_path(params['meta_challenge_id']) + link.gsub(/^\/challenges/, "/problems")
     end
     return link
   end
