@@ -22,7 +22,7 @@ class EvaluationsApiService
     artifact = get_submission_artifact
 
     submission_code = download_s3_file(artifact.submission_file_s3_key)
-    if get_submission_artifact == 'artifact'
+    if artifact.submission_type == 'artifact'
       submission_code = artifact.submission_file_s3_key
     end
     attribute = {
