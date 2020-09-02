@@ -238,6 +238,7 @@ Rails.application.routes.draw do
 
   # Custom Redirect
   get '/blitz', to: redirect('/challenges/ai-for-good-ai-blitz-3', status: 302)
+  get '/food', to: redirect('/challenges/food-recognition-challenge', status: 302)
 
   resources :markdown_editors, only: [:index, :create] do
     put :presign, on: :collection
