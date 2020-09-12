@@ -34,8 +34,7 @@ class EvaluationsApiService
       }.to_json,
       submission_data: {
         type: artifact.submission_type,
-        # TODO: Directly submit s3 url as submission instead of downloading
-        code: s3_file_download_url
+        url: s3_file_download_url
       }
     }
     payload = AIcrowdEvaluations::Submissions.new attribute
