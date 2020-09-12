@@ -64,6 +64,6 @@ class EvaluationsApiService
   end
 
   def get_s3_file_download_url(file_key)
-    return S3_BUCKET.object(file_key).url_for(:read, :secure => true).to_s
+    return S3_BUCKET.object(file_key).presigned_url(:get, :secure => true).to_s
   end
 end
