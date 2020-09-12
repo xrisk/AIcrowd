@@ -21,10 +21,7 @@ class EvaluationsApiService
   def create_submission(grader_id)
     artifact = get_submission_artifact
 
-    submission_code = download_s3_file(artifact.submission_file_s3_key)
-    if artifact.submission_type == 'artifact'
-      submission_code = artifact.submission_file_s3_key
-    end
+    s3_file_download_url = get_s3_file_download_url(artifact.submission_file_s3_key)
     attribute = {
       grader_id: grader_id,
       meta: {
@@ -38,7 +35,7 @@ class EvaluationsApiService
       submission_data: {
         type: artifact.submission_type,
         # TODO: Directly submit s3 url as submission instead of downloading
-        code: submission_code
+        code: s3_file_download_url
       }
     }
     payload = AIcrowdEvaluations::Submissions.new attribute
@@ -67,7 +64,7 @@ class EvaluationsApiService
     return @submission.submission_files.first
   end
 
-  def download_s3_file(file_key)
-    return S3_BUCKET.object(file_key).get().body.string
+  def get_s3_file_download_url(file_key)
+    return S3_BUCKET.object(file_key).url_for(:read, :secure => true).to_s
   end
 end
