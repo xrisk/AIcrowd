@@ -7,7 +7,7 @@ class LandingPageController < ApplicationController
                       .where(private_challenge: false)
                       .where(hidden_challenge: false)
                       .where.not(status_cd: :draft)
-                      .limit(6)
+                      .limit(9)
     @partners = Partner
                     .where(visible: true)
                     .where.not(image_file: nil)
