@@ -5,6 +5,10 @@ RSpec.configure do
     expect(response).to redirect_to new_participant_session_path
   end
 
+  def asks_to_sign_up
+    expect(response).to redirect_to new_participant_registration_path
+  end
+
   def denies_access
     expect(response).to have_http_status(:found)
     expect(response).to redirect_to root_path

@@ -11,7 +11,7 @@ describe "challenge", :js do
     end
 
     specify { expect(page).to have_link challenge.challenge }
-    specify { expect(page).to have_selector(:link_or_button, 'Log in') }
+    specify { expect(page).to have_selector(:link_or_button, 'Sign Up') }
     specify { expect(page).to have_link 'Blog' }
     specify { expect(page).to have_link 'Challenges' }
   end
@@ -22,7 +22,7 @@ describe "challenge", :js do
       click_link challenge.challenge
     end
 
-    specify { expect(page).to have_link 'Log in' }
+    specify { expect(page).to have_link 'Sign Up' }
     specify { expect(page).to have_content challenge.challenge }
     specify { expect(page).to have_content challenge.tagline }
   end
@@ -61,7 +61,7 @@ describe "challenge", :js do
 
     it "show for draft challenge" do
       visit "/challenges/#{draft_challenge.id}"
-      expect(page).to have_current_path('/participants/sign_in')
+      expect(page).to have_current_path('/participants/sign_up')
     end
 
     it "show for running challenge" do
