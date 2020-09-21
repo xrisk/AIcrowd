@@ -109,7 +109,7 @@ class ApplicationController < ActionController::Base
 
   def request_login
     flash[:info] = 'Please log into AIcrowd to perform this action.'
-    redirect_to new_participant_session_path
+    redirect_to new_participant_registration_path
   end
 
   def not_authorized
