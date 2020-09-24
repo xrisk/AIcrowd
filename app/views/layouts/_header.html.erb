@@ -98,6 +98,13 @@
 							<%= link_to 'Account Settings', edit_participant_registration_path, {class: "dropdown-item"} %>
 							<div class="dropdown-divider"></div>
 							<%= link_to 'Log Out', destroy_participant_session_path, class: "dropdown-item", :method => :delete %>
+                                                        <div class="dropdown-divider"></div>
+                                                        <span class="dropdown-item-no-click">
+                                                            Follow us on<br>
+                                                            <a href="https://fb.com/aicrowdHQ" target="_blank"><span class="border btn fa fa-facebook"></span></a>
+                                                            <a href="https://twitter.com/aicrowdHQ" target="_blank"><span class="border btn fa fa-twitter"></span></a>
+                                                            <a href="https://www.linkedin.com/company/aicrowd" target="_blank"><span class="border btn fa fa-linkedin"></span></a>
+                                                        </span>
 						</div>
 					</div>
 				</div>
@@ -131,11 +138,8 @@
 							<%= link_to "Our Team", team_members_path, {class: "dropdown-item"} %>
 							<%= link_to "Jobs", job_postings_path, {class: "dropdown-item"} %>
 
-							<div class="dropdown-divider"></div>
-							<%= link_to "Log In", new_participant_session_path, {class: "dropdown-item"} %>
-
                                                         <div class="dropdown-divider"></div>
-                                                        <span class="dropdown-item">
+                                                        <span class="dropdown-item-no-click">
                                                             Follow us on<br>
 							    <a href="https://fb.com/aicrowdHQ" target="_blank"><span class="border btn fa fa-facebook"></span></a>
                                                             <a href="https://twitter.com/aicrowdHQ" target="_blank"><span class="border btn fa fa-twitter"></span></a>
@@ -146,10 +150,13 @@
 				</ul>
 
 				<div class="user-options">
-          <%= link_to new_participant_registration_path do %>
-            <button type="button" class="btn btn-secondary">Sign Up</button>
-          <% end %>
-        </div>
+                                  <%= link_to new_participant_session_path do %>
+                                    <button type="button" class="btn btn-secondary">Log In</button>
+                                  <% end %>
+                                  <%= link_to new_participant_registration_path do %>
+                                    <button type="button" class="btn btn-primary">Sign Up</button>
+                                  <% end %>
+                                </div>
 
 				<div class="dropdown">
 					<button class="app-header-toggler" type="button" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
