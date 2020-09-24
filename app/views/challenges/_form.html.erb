@@ -37,6 +37,10 @@
                 <%= render partial: 'challenges/tabs/winner_form', locals: { f: f, challenge: challenge } %>
               </div>
 
+              <div id='tab-branding' class="tab-pane fade">
+                <%= render partial: 'challenges/tabs/branding_form', locals: { f: f, challenge: challenge } %>
+              </div>
+
               <div id='tab-misc' class="tab-pane fade">
                 <%= render partial: 'challenges/tabs/misc_form', locals: { f: f, challenge: challenge, challenge_rounds: challenge_rounds } %>
               </div>

@@ -48,7 +48,7 @@ class Api::ExternalGradersController < Api::BaseController
 
       raise TermsNotAcceptedByParticipant if challenge_participant.blank?
 
-      submissions_remaining, reset_dttm = challenge.submissions_remaining(participant.id)
+      submissions_remaining, reset_dttm = challenge.submissions_remaining(participant.id, debug_submission(challenge, params))
       raise NoSubmissionSlotsRemaining, reset_dttm if submissions_remaining < 1
 
       params[:meta] = clean_meta(params[:meta]) if params[:meta].present?
@@ -59,6 +59,7 @@ class Api::ExternalGradersController < Api::BaseController
           challenge_round_id:   challenge_round_id,
           description:          params[:description],
           post_challenge:       post_challenge(challenge, params),
+          debug_submission:     debug_submission(challenge, params),
           meta:                 params[:meta])
       if media_fields_present?
         submission.update(
@@ -216,6 +217,16 @@ class Api::ExternalGradersController < Api::BaseController
     else
       return false
     end
+  end
+
+  def debug_submission(challenge, params)
+    return false unless params.has_key?(:debug_submission)
+
+    challenge_round_id = get_challenge_round_id(challenge: challenge, params: params)
+    challenge_round = ChallengeRound.find(challenge_round_id)
+    return false unless challenge_round.debug_submission_limit.present?
+
+    return params[:debug_submission] == true || params[:debug_submission] == "true"
   end
 
   class DeveloperAPIKeyInvalid < StandardError

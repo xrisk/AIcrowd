@@ -62,39 +62,7 @@
           <div class="table-responsive-md">
             <table class="table table-leaderboard">
               <thead>
-              <tr>
-                <th scope="col" class="leaderboard-change">Δ</th>
-                <th scope="col">#</th>
-                <th scope="col">Participants</th>
-                <% if @challenge.media_on_leaderboard %>
-                  <th scope="col">Media</th>
-                <% end %>
-                <th scope="col" class="text-right"><%= @current_round&.get_score_title %></th>
-                <% if @current_round&.get_score_secondary_title.present? && !@challenge.meta_challenge && !@challenge.ml_challenge %>
-                  <% if !(@current_round&.secondary_sort_order.present? && @current_round&.secondary_sort_order == :hidden) %>
-                    <th scope="col" class="text-right"><%= @current_round.get_score_secondary_title %></th>
-                  <% end %>
-                <% end %>
-                <% if @challenge.meta_challenge || @challenge.ml_challenge %>
-                  <th scope="col" class="text-center">Submission Trend</th>
-                  <% participate_challenge_problems(@challenge, current_participant).each do |challenge_problem| %>
-                    <th scope="col" class="text-right">
-                      <%= link_to challenge_problem.problem.challenge, challenge_leaderboards_path(challenge_problem.problem), data: { toggle: 'tooltip', placement: 'top' }, title: 'Leaderboard for ' + challenge_problem.problem.challenge %><br/>
-                      <span class="badge badge-gold">Weight: <%= challenge_problem.weight %></span>
-                    </th>
-                  <% end %>
-                <% else %>
-                  <% @challenge.other_scores_fieldnames_array.each do |fname| %>
-                    <th scope="col" class="text-right"><%= fname %></th>
-                  <% end %>
-                  <th scope="col" class="text-right">Entries</th>
-                  <th scope="col" class="text-right">Last Submission</th>
-                  <% unless disentanglement_leaderboard %>
-                    <th scope="col" class="text-center">Submission Trend</th>
-                  <% end %>
-                  <th scope="col" class="text-right"></th>
-                <% end %>
-              </tr>
+                <%= render partial: 'leaderboards_header', locals: { leaderboards: @leaderboards, current_round: @current_round, truncate: 'true', current_participant: current_participant } %>
               </thead>
               <tbody id="leaderboards-div" data-page='1' data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data" data-meta-challenge-id="<%= @challenge.is_a_problem? ? @challenge.challenge_problem.challenge.friendly_id : '' %>">
                 <%= render partial: 'leaderboards', locals: { leaderboards: @leaderboards, current_round: @current_round, truncate: 'true' } %>

@@ -39,6 +39,7 @@ class ChallengeRound < ApplicationRecord
   validates :freeze_duration, numericality: { greater_than: 0 }, if: -> { freeze_duration.present? }
 
   as_enum :submission_limit_period, [:day, :week, :round], map: :string
+  as_enum :debug_submission_limit_period, [:day, :week, :round], map: :string
   as_enum :primary_sort_order, [:ascending, :descending], map: :string, prefix: true
   as_enum :secondary_sort_order, [:ascending, :descending, :not_used, :hidden], map: :string, prefix: true
 

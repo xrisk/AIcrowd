@@ -2,7 +2,7 @@
   <h4 class="mb-3">Challenge Rounds</h4>
   <div id='rounds' class="accordion">
     <%= f.fields_for :challenge_rounds do |challenge_round| %>
-      <%= render 'challenges/fields/challenge_round_fields', f: challenge_round %>
+      <%= render 'challenges/fields/challenge_round_fields', f: challenge_round, challenge: challenge %>
     <% end %>
 
     <div class='links'>

@@ -88,7 +88,27 @@ class ChallengesController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @example_leaderboards = []
+    for rank in 1..4
+      if Participant.count < 10
+        break
+      end
+      @example_leaderboards.append(
+        Leaderboard.new(
+          row_num: rank,
+          score: 9/rank,
+          score_secondary: 3/rank,
+          submitter_type: 'Participant',
+          submitter_id: Participant.all.sample(10)[rank].id,
+          participant: Participant.all.sample(10)[rank],
+          challenge_id: @challenge.id,
+          created_at: Time.new,
+          entries: 10
+        )
+      )
+    end
+  end
 
   def update
     if @challenge.update(challenge_params)
@@ -378,7 +398,12 @@ class ChallengesController < ApplicationController
         :secondary_sort_order,
         :freeze_flag,
         :freeze_duration,
-        :submissions_type
+        :submissions_type,
+        :debug_submission_limit,
+        :debug_submission_limit_period,
+        :media_on_leaderboard,
+        :show_leaderboard,
+        :other_scores_fieldnames
       ],
       challenge_rules_attributes: [
         :id,

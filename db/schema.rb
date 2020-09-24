@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_29_153925) do
+ActiveRecord::Schema.define(version: 2020_08_06_103949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -388,6 +388,8 @@ ActiveRecord::Schema.define(version: 2020_07_29_153925) do
     t.boolean "freeze_flag", default: false, null: false
     t.integer "freeze_duration"
     t.string "submissions_type_cd", default: "artifact", null: false
+    t.string "debug_submission_limit"
+    t.integer "debug_submission_time"
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
   end
 
@@ -1022,6 +1024,7 @@ ActiveRecord::Schema.define(version: 2020_07_29_153925) do
     t.integer "meta_challenge_id"
     t.string "submission_link"
     t.integer "ml_challenge_id"
+    t.boolean "debug_submission", default: false, null: false
     t.index ["challenge_id"], name: "index_submissions_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_submissions_on_challenge_round_id"
     t.index ["ml_challenge_id"], name: "index_submissions_on_ml_challenge_id"

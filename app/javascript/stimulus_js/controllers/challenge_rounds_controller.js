@@ -3,6 +3,12 @@ import { showAlert } from '../helpers/alerts_helper'
 import { enableButton, disableButton } from '../helpers/buttons_helper'
 
 export default class extends Controller {
+  leaderboardNoteToogle(event) {
+    const leaderboardToogle = event.target;
+    $(leaderboardToogle).closest('label').hide();
+    $(leaderboardToogle).closest('div').find('.leaderboard-text-area').removeClass('d-none');
+  }
+
   removeChallengeRound(event) {
     event.preventDefault();
 
@@ -47,5 +53,25 @@ export default class extends Controller {
     .catch((error) => {
       console.error('Error:', error);
     });
+  }
+
+  onboardingTour(event) {
+    console.log("To be implemented");
+    return;
+
+    //initialize instance
+    var enjoyhint_instance = new EnjoyHint({});
+
+    var enjoyhint_script_steps = [
+      {
+        'next .score-title': 'Hey!'
+      }  
+    ];
+
+    //set script config
+    enjoyhint_instance.set(enjoyhint_script_steps);
+
+    //run Enjoyhint script
+    enjoyhint_instance.run();
   }
 }

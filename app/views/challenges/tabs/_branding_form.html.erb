@@ -1,0 +1,57 @@
+<div>
+  <h4 class="mb-3">Branding</h4>
+
+  <div class="challenges-form__thin-tab">
+    <div class="form-group">
+        <span class="label-text">Card image</span>
+        <%= image_tag challenge.image_url, id: 'challenges-form-card-image', class: 'form-challenge-card-image' %>
+    </div>
+
+    <div class="form-group">
+        <%= f.file_field :image_file %>
+        <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :big_challenge_card_image, text: "Use image for big cards" } %>
+        <% if @challenge.persisted? %>
+            <% remove_image_class = @challenge.image_file.present? ? '' : 'challenges-form__link--hidden' %>
+            <%= link_to 'Delete', remove_image_challenge_path(@challenge), remote: true, id: 'challenges-form-remove-card-image', class: "form-text #{remove_image_class}" %>
+        <% end %>
+        <small id="partnerLogoHelp" class="form-text text-muted">Your image will be cropped if necessary. 5 MB limit</small>
+    </div>
+
+    <div class="form-group">
+        <span class="label-text">Banner image</span>
+        <% if challenge.banner_file.present? %>
+            <%= image_tag challenge.banner_file.url, id: 'challenges-form-card-image', class: 'form-challenge-card-image' %>
+        <% end %>
+    </div>
+
+    <div class="form-group">
+        <%= f.file_field :banner_file %>
+        <% if @challenge.persisted? %>
+            <%= link_to 'Delete', remove_banner_challenge_path(@challenge), remote: true, id: 'challenges-form-remove-card-image', class: "form-text" %>
+        <% end %>
+        <small id="partnerLogoHelp" class="form-text text-muted">Your image will be cropped if necessary. 5 MB limit</small>
+    </div>
+
+    <div class="form-group">
+        <span class="label-text">Banner image (mobile)</span>
+        <% if challenge.banner_mobile_file.present? %>
+            <%= image_tag challenge.banner_mobile_file.url, id: 'challenges-form-card-image', class: 'form-challenge-card-image' %>
+        <% end %>
+    </div>
+
+    <div class="form-group">
+        <%= f.file_field :banner_mobile_file %>
+        <% if @challenge.persisted? %>
+            <%= link_to 'Delete', remove_banner_mobile_challenge_path(@challenge), remote: true, id: 'challenges-form-remove-card-image', class: "form-text" %>
+        <% end %>
+        <small id="partnerLogoHelp" class="form-text text-muted">Your image will be cropped if necessary. 5 MB limit</small>
+    </div>
+
+    <div class='form-group'>
+        <span class="label-text">Banner Color (Hex Color)</span>
+        <%= f.text_field :banner_color, placeholder: "F8F9F9", class: "form-control" %>
+    </div>
+
+    <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, current_step: 'branding' } %>
+  </div>
+</div>
