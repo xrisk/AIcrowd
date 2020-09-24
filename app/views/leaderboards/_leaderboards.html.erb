@@ -1,4 +1,4 @@
-<% leaderboards.each do |leaderboard| %>
+<% (leaderboards || []).each do |leaderboard| %>
   <%
     participants = leaderboard_participants(leaderboard)
     challenge    = leaderboard.challenge

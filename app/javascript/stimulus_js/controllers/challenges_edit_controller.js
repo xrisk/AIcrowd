@@ -39,6 +39,11 @@ export default class extends Controller {
         'ranking_window',
         'score_precision',
         'score_secondary_precision',
+        'debug_submission_limit',
+        'debug_submission_limit_period',
+        'media_on_leaderboard',
+        'show_leaderboard',
+        'other_scores_fieldnames',
       ];
 
       // Get the round just above current round
