@@ -3101,13 +3101,13 @@ input[type="button"].btn-block {
   background-color: #D9DCDC;
 }
 
-.dropdown-item {
+.dropdown-item, .dropdown-item-no-click {
   display: block;
   width: 100%;
   padding: 0.375rem 1rem;
   clear: both;
   font-weight: 400;
-  color: #0F1214;
+  color: #434547;
   text-align: inherit;
   white-space: nowrap;
   background-color: transparent;

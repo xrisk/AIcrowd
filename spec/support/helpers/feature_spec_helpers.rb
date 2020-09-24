@@ -5,7 +5,7 @@ module FeatureSpecHelpers
     visit new_participant_session_path
     fill_in 'Email address', with: participant.email
     fill_in 'Password', with: participant.password
-    click_button 'Log In'
+    find('#new_participant button[type=submit]').click
   end
 
   def expect_sign_in
