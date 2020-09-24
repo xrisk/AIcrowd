@@ -7,6 +7,7 @@ module ChallengeRounds
       @meta_challenge_id     = meta_challenge_id
       @ml_challenge_id       = ml_challenge_id
       @is_freeze             = @challenge_round.freeze_flag
+      @is_borda_ranking      = false
 
       if @meta_challenge_id.blank? && @ml_challenge_id.blank?
         @team_participants_ids = @challenge.team_participants.pluck(:participant_id)
@@ -26,6 +27,8 @@ module ChallengeRounds
 
         BaseLeaderboard.where(challenge_round: challenge_round, meta_challenge_id: meta_challenge_id).delete_all
         BaseLeaderboard.where(challenge_round: challenge_round, ml_challenge_id: ml_challenge_id).delete_all if ml_challenge_id.present?
+
+        populate_borda_field_if_required
 
         leaderboards          = build_base_leaderboards('leaderboard', [false], freeze_time)
         previous_leaderboards = build_base_leaderboards('leaderboard', [false], window_border_dttm([false]))
@@ -47,6 +50,15 @@ module ChallengeRounds
     private
 
     attr_reader :challenge_round, :challenge, :submissions, :window_border, :meta_challenge_id, :ml_challenge_id, :team_participants_ids, :team_challenge_id
+
+    def populate_borda_field_if_required
+      # Magically populate borda ranks when enabled
+      first_submission = @submissions.first
+      if defined? first_submission['meta']['private_borda_ranking_enabled']
+        @is_borda_ranking = true
+        PopulateBordaFieldsService.new(challenge_round_id: @challenge_round.id).perform_now
+      end
+    end
 
     def truncate_scores
       if @ml_challenge_id.present?
@@ -232,6 +244,8 @@ module ChallengeRounds
 
     def submissions_order
       return 'updated_at desc' if challenge.latest_submission == true
+
+      return "meta->>'private_borda_ranking_rank_sum' asc" if @is_borda_ranking
 
       score_sort_order = sort_map(challenge_round.primary_sort_order_cd)
 
