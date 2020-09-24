@@ -50,7 +50,7 @@
             <h3>Meta parameters</h3>
           </div>
           <% submission_meta_hash(@submission).each do |key, value| %>
-            <% if not key.start_with?('private') || policy(@challenge).edit? %>
+            <% if not key.start_with?('private') %>
               <div class="d-flex mt-4">
                 <div class="mr-4">
                   <h4> <%= key %> </h4>
