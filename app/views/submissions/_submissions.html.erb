@@ -19,6 +19,11 @@
     <% if !@challenge.meta_challenge && challenge_round&.score_secondary_title.present? %>
       <td><%= submission_formatted_value(submission, submission.score_secondary_display) %></td>
     <% end %>
+    <% if !@challenge.meta_challenge %>
+      <% leaderboard_other_scores_array(submission, challenge).each do |other_score| %>
+        <td class="text-right"><%= other_score %></td>
+      <% end %>
+    <% end %>
     <td>
       <span data-controller="linkify-content">
         <%= submission.grading_message %>
