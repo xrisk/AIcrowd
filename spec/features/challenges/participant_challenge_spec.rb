@@ -42,10 +42,6 @@ describe "participant accesses challenge", :js do
       expect(page).to have_content 'Overview'
     end
 
-    it "can follow Resources link" do
-      click_link "Resources"
-      expect(page).to have_content 'Resources'
-    end
   end
 
   describe "access restricted parts of the challenge" do
@@ -55,9 +51,5 @@ describe "participant accesses challenge", :js do
       click_link challenge.challenge
     end
 
-    it "follow Resources link" do
-      click_link "Resources"
-      expect(page).to have_content 'Resources'
-    end
   end
 end

@@ -39,16 +39,30 @@
 						<%= f.button 'Log In', type: 'submit', class: 'btn btn-primary btn-block' %>
 					<% end %>
 
-					<div class="sub-section-header">
-						<h4>Can't log in?</h4>
-					</div>
 
-					<ul class="list-unstyled">
-						<li><%= link_to "Not registered – Sign up", new_participant_registration_path %></li>
-						<li><%= link_to "Forgot your password?", new_password_path(resource_name) %></li>
-						<li><%= link_to "Account locked?", new_unlock_path(resource_name) %></li>
-						<li><%= link_to "Resend account confirmation", new_confirmation_path(resource_name) %></li>
-					</ul>
+          <div class="row">
+            <div class="col-sm-6 col-lg-3">
+              <div class="sub-section-header">
+                <h4>Not registered?</h4>
+              </div>
+
+              <%= link_to new_participant_registration_path, {class: "btn btn-secondary"} do%>
+                Sign up now
+              <% end %>
+            </div>
+
+            <div class="col-sm-6 col-lg-3">
+              <div class="sub-section-header">
+                <h4>Can't log in?</h4>
+              </div>
+
+              <ul class="list-unstyled">
+                <li><%= link_to "Forgot your password?", new_password_path(resource_name) %></li>
+                <li><%= link_to "Account locked?", new_unlock_path(resource_name) %></li>
+                <li><%= link_to "Resend account confirmation", new_confirmation_path(resource_name) %></li>
+              </ul>
+            </div>
+          </div>
 
 				</div>
 			</div>

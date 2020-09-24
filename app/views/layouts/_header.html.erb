@@ -132,14 +132,22 @@
 							<%= link_to "Jobs", job_postings_path, {class: "dropdown-item"} %>
 
 							<div class="dropdown-divider"></div>
-							<%= link_to "Sign Up", new_participant_registration_path, {class: "dropdown-item"} %>
+							<%= link_to "Log In", new_participant_session_path, {class: "dropdown-item"} %>
+
+                                                        <div class="dropdown-divider"></div>
+                                                        <span class="dropdown-item">
+                                                            Follow us on<br>
+							    <a href="https://fb.com/aicrowdHQ" target="_blank"><span class="border btn fa fa-facebook"></span></a>
+                                                            <a href="https://twitter.com/aicrowdHQ" target="_blank"><span class="border btn fa fa-twitter"></span></a>
+                                                            <a href="https://www.linkedin.com/company/aicrowd" target="_blank"><span class="border btn fa fa-linkedin"></span></a>
+                                                        </span>
 						</div>
 					</li>
 				</ul>
 
 				<div class="user-options">
-          <%= link_to new_participant_session_path do %>
-            <button type="button" class="btn btn-secondary">Log in</button>
+          <%= link_to new_participant_registration_path do %>
+            <button type="button" class="btn btn-secondary">Sign Up</button>
           <% end %>
         </div>
 
