@@ -56,7 +56,7 @@ module ChallengeRounds
       first_submission = @submissions.first
       if defined? first_submission['meta']['private_borda_ranking_enabled']
         @is_borda_ranking = true
-        PopulateBordaFieldsService.new(challenge_round_id: @challenge_round.id).perform_now
+        ChallengeRounds::PopulateBordaFieldsService.new(challenge_round_id: @challenge_round.id).call
       end
     end
 
@@ -257,6 +257,8 @@ module ChallengeRounds
     end
 
     def sort_leaderboards(all_leaderboards)
+      return all_leaderboards.sort_by { |leaderboard| leaderboard['meta']['private_borda_ranking_rank_sum'].to_i } if @is_borda_ranking
+
       score_sort_order = sort_map(challenge_round.primary_sort_order_cd)
 
       if challenge_round.secondary_sort_order_cd.blank? || challenge_round.secondary_sort_order_cd == 'not_used'
@@ -287,6 +289,16 @@ module ChallengeRounds
         next_leaderboard    = sorted_leaderboards[index + 1]
 
         next if next_leaderboard.blank?
+
+        if @is_borda_ranking
+          if next_leaderboard['meta']['private_borda_ranking_rank_sum'] == leaderboard['meta']['private_borda_ranking_rank_sum']
+            same_score_count += 1
+          else
+            current_row_num  += 1 + same_score_count
+            same_score_count = 0
+          end
+          next
+        end
 
         if challenge_round.secondary_sort_order_cd.blank? || challenge_round.secondary_sort_order_cd == 'not_used'
           if next_leaderboard.score == leaderboard.score
