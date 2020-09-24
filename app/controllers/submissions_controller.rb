@@ -238,7 +238,7 @@ class SubmissionsController < ApplicationController
           :meta_challenge_id,
           :challenge_id,
           :participant_id,
-          :description_markdown,
+          :description,
           :score,
           :score_secondary,
           :grading_status,
