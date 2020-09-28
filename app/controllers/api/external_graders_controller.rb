@@ -226,7 +226,7 @@ class Api::ExternalGradersController < Api::BaseController
     challenge_round = ChallengeRound.find(challenge_round_id)
     return false unless challenge_round.debug_submission_limit.present?
 
-    return params[:debug_submission] == true || params[:debug_submission] == "true"
+    return params[:debug_submission] == true || params[:debug_submission].to_s.downcase == "true"
   end
 
   class DeveloperAPIKeyInvalid < StandardError
