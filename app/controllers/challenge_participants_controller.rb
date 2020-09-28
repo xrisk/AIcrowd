@@ -9,6 +9,7 @@ class ChallengeParticipantsController < ApplicationController
     authorize @challenge_participant
 
     if @challenge_participant.save
+      accept_non_exclusive_challenge_rules(@challenge, current_participant)
       redirect_to(session[:forwarding_url] || @challenge)
       session.delete(:forwarding_url)
     else
@@ -22,6 +23,7 @@ class ChallengeParticipantsController < ApplicationController
     @challenge_participant.registered = true
     @challenge_participant.challenge_rules_accepted_date    = Time.now
     @challenge_participant.challenge_rules_accepted_version = @challenge_participant.challenge.current_challenge_rules&.version
+    accept_non_exclusive_challenge_rules(@challenge_participant.challenge, current_participant)
     if @challenge_participant.update(challenge_participant_params)
       if @challenge_participant.challenge.ml_challenge
         redirect_to daily_practice_goals_path(challenge_id: @challenge_participant.challenge.slug)
@@ -35,6 +37,21 @@ class ChallengeParticipantsController < ApplicationController
   end
 
   private
+
+  def accept_non_exclusive_challenge_rules(challenge, participant)
+    if challenge.meta_challenge? && challenge.challenge_problems.where(exclusive: false).present?
+      challenge.challenge_problems.where(exclusive: false).each do |challenge_problem|
+        challenge_participant =
+          ChallengeParticipant
+          .where(challenge_id: challenge_problem.problem.id, participant_id: participant.id)
+          .first_or_create
+        challenge_participant.challenge_rules_accepted_version = challenge_problem.problem.current_challenge_rules.version
+        challenge_participant.registered = true
+        challenge_participant.challenge_rules_accepted_date    = Time.now
+        challenge_participant.save!
+      end
+    end
+  end
 
   def challenge_participant_params
     params

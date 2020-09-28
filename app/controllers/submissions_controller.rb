@@ -48,8 +48,6 @@ class SubmissionsController < ApplicationController
     end
     if @meta_challenge.present?
       filter = filter.where(meta_challenge_id: @meta_challenge.id)
-    else
-      filter = filter.where(meta_challenge_id: nil)
     end
 
     if @challenge.meta_challenge
@@ -105,6 +103,17 @@ class SubmissionsController < ApplicationController
     validate_submission_file_presence
     if @submission.errors.none? && @submission.save
       SubmissionGraderJob.perform_later(@submission.id)
+
+      non_exclusive_meta_challenges = ChallengeProblems.where(problem_id: @challenge.id, exclusive: false)
+      if non_exclusive_meta_challenges.present?
+        challenge = non_exclusive_meta_challenges.first.challenge
+        registration = challenge.challenge_participants.where(participant_id: current_participant.id).first
+        if registration.present? and registration.registered
+          @submission.meta_challenge_id = challenge.id
+          @submission.save!
+        end
+      end
+
       redirect_to helpers.challenge_submissions_path(@challenge), notice: 'Submission accepted.'
     else
       @submission.submission_files.build
@@ -172,10 +181,13 @@ class SubmissionsController < ApplicationController
     end
 
     if !params.has_key?(challenge_type)
-      cp = ChallengeProblems.find_by(problem_id: @challenge.id)
-      if cp.present?
-        params[challenge_type.to_sym] = Challenge.find(cp.challenge_id).slug
-        redirect_to helpers.challenge_submissions_path(@challenge)
+      cps = ChallengeProblems.where(problem_id: @challenge.id)
+      cps.each do |cp|
+        if cp.exclusive?
+          challenge_type_id                = "#{cp.challenge.challenge_type}_id"
+          params[challenge_type_id.to_sym] = Challenge.find(cp.challenge_id).slug
+          redirect_to helpers.challenge_path(@challenge) and return
+        end
       end
     end
   end

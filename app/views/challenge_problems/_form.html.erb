@@ -18,6 +18,11 @@
         <%= f.text_field :weight, class: "form-control" %>
       </div>
 
+      <div class="form-group">
+        <label>Exclusive</label>
+        <%= f.check_box :exclusive, class: "form-control" %>
+      </div>
+
       <% if @challenge.ml_challenge %>
         <div class="form-group">
           <label>Occur Day No</label>
