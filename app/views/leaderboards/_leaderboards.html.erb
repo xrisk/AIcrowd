@@ -38,7 +38,13 @@
       <td><span class="fa fa-thumb-tack" data-toggle="tooltip" data-placement="top" title="Baseline"></span></td>
       <td></td>
       <td class="participant">
-        <div>Baseline <mark><%= leaderboard.baseline_comment %></mark></div>
+        <div>
+          Baseline
+          <mark><%= leaderboard.baseline_comment %></mark>
+          <% if leaderboard.submission_link.present? %>
+            <i><small style="clear: both;display: block;" class="mt-2"><a style="color:#a5a5a5" href="<%= leaderboard.submission_link %>"><span class="fa fa-code-fork"></span>&nbsp;Fork to make your submission</a></small></i>
+          <% end %>
+        </div>
       </td>
     <% end %>
 

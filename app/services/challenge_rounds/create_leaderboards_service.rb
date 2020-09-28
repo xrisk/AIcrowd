@@ -225,6 +225,7 @@ module ChallengeRounds
         post_challenge:       submission.post_challenge,
         baseline:             submission.baseline,
         baseline_comment:     submission.baseline_comment,
+        submission_link:      submission.submission_link,
         refreshed_at:         Time.current,
         created_at:           submission.created_at,
         updated_at:           submission.updated_at
