@@ -256,7 +256,7 @@ class Challenge < ApplicationRecord
   end
 
   def hidden_in_discourse?
-    draft? || private_challenge? || meta_challenge?
+    draft? || private_challenge?
   end
 
   def problems

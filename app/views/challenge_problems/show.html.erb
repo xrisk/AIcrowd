@@ -25,6 +25,10 @@
           <span class="ml-3">Occur Day&nbsp;
             <input class='width-185' value="<%= cp.occur_day %>" name="data[<%=cp.problem_id%>][occur_day]">
           </span>
+
+          <span class="ml-3">Exclusive&nbsp;
+            <input <% if cp.exclusive %> checked="checked" <% end %> name="data[<%=cp.problem_id%>][exclusive]" type="checkbox">
+          </span>
         </div>
         <button name="delete[<%=cp.problem_id%>]" type="submit" class="btn btn-secondary">Remove</button>
       </li>

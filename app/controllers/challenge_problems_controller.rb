@@ -18,13 +18,18 @@ class ChallengeProblemsController < ApplicationController
 
   private
 
+  def is_exclusive(values)
+    values[:exclusive].present?
+  end
+
   def create
     obj = ChallengeProblems.new({
       challenge_id: @challenge.id,
       problem_id: params[:challenge_problems][:problem_id],
       weight: params[:challenge_problems][:weight],
       challenge_round_id: params[:challenge_problems][:challenge_round_id],
-      occur_day: params[:challenge_problems][:occur_day]
+      occur_day: params[:challenge_problems][:occur_day],
+      exclusive: is_exclusive(params[:challenge_problems])
     })
     authorize obj
     obj.save!
@@ -41,6 +46,7 @@ class ChallengeProblemsController < ApplicationController
       obj.weight = value['weight']
       obj.challenge_round_id = value['challenge_round_id']
       obj.occur_day = value['occur_day']
+      obj.exclusive = is_exclusive(value)
       authorize obj
       obj.save!
     end

@@ -18,6 +18,35 @@
           <!-- Challenge Rules -->
           <div data-controller="linkify-content" class="md-content">
             <%= sanitize_html(@challenge_rules.terms) %>
+
+            <% if @challenge.meta_challenge? %>
+              <% if @challenge.challenge_problems.where(exclusive: false).present? %>
+                <p class="font-weight-bold">Note: This challenge contains independent running challenges too.</p>
+                <p><mark>Independent challenge’ rules supersede the rules mentioned above</mark> for it's dataset, submissions, resources, etc. Please go through them below and in case of confusion or conflict reach out to us.</p>
+                <p>Submissions which are done after entering this challenge would be counted toward both leaderboards.</p>
+
+                <div class="accordion" id="subChallengeRules">
+                <% @challenge.challenge_problems.where(exclusive: false).each do |problem| %>
+                  <div class="card">
+                    <div class="card-header" id="heading<%= problem.id %>">
+                      <h2>
+                        <button class="btn btn-link m-0 collapsed" type="button" data-toggle="collapse" data-target="#collapse<%= problem.id %>" aria-expanded="false" aria-controls="collapse<%= problem.id %>">
+                          <%= problem.problem.challenge %>'s Rules
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapse<%= problem.id %>" class="collapse" aria-labelledby="heading<%= problem.id %>" data-parent="#subChallengeRules">
+                      <div class="card-body">
+                        <div data-controller="linkify-content" class="md-content">
+                          <%= sanitize_html(problem.problem.current_challenge_rules.terms) %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+                </div>
+              <% end %>
+            <% end %>
           </div>
           <% if current_participant.present? && required_terms_or_rules_path(@challenge).present? %>
             <%= form_for [@challenge, @challenge_participant], validate: true, html: {class: "form-rg mt-5", multipart: true} do |f| %>

@@ -4,6 +4,21 @@
 <!-- section -->
 <section class="section-p-md">
   <div class="container-fluid">
+    <% if meta_challenge_exist_and_running %>
+    <div class="row">
+      <div class="row md-content mw-100 w-100">
+        <blockquote class="w-100">
+          <p>
+          <% if !meta_challenge_exist_and_user_registered %>
+            Hit two targets with one submission! Enter <%= get_meta_challenge.challenge %> challenge and make your submissions eligible for it too!
+            <a class="btn btn-primary btn-sm pull-right m-0 text-decoration-none" href="<%= challenge_challenge_rules_path(get_meta_challenge) %>" style="text-decoration: none;">Enter</a>
+          <% end %>
+          </p>
+        </blockquote>
+      </div>
+    </div>
+    <% end %>
+
     <div class="row">
 
       <!-- sub-nav – vertical -->

@@ -220,12 +220,13 @@ class ChallengesController < ApplicationController
     end
 
     if !params.has_key?('meta_challenge_id') && !params.has_key?('ml_challenge_id')
-      cp = ChallengeProblems.find_by(problem_id: @challenge.id)
-      if cp.present?
-        challenge_type_id                = "#{cp.challenge.challenge_type}_id"
-        params[challenge_type_id.to_sym] = Challenge.find(cp.challenge_id).slug
-
-        redirect_to helpers.challenge_path(@challenge)
+      cps = ChallengeProblems.where(problem_id: @challenge.id)
+      cps.each do |cp|
+        if cp.exclusive?
+          challenge_type_id                = "#{cp.challenge.challenge_type}_id"
+          params[challenge_type_id.to_sym] = Challenge.find(cp.challenge_id).slug
+          redirect_to helpers.challenge_path(@challenge) and return
+        end
       end
     end
   end

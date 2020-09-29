@@ -344,6 +344,32 @@ module ChallengesHelper
     return (challenge_remaining_text(challenge, challenge_round) == "Completed") ? "" : challenge_round.end_dttm
   end
 
+  def get_meta_challenge
+    meta_challenge = ChallengeProblems.where(problem_id: @challenge.id, exclusive: false)
+    if meta_challenge.present?
+      return meta_challenge.first.challenge
+    end
+  end
+
+  def meta_challenge_exist_and_running
+    meta_challenge = get_meta_challenge
+    if meta_challenge.present?
+      return meta_challenge.running?
+    end
+    return false
+  end
+
+  def meta_challenge_exist_and_user_registered
+    if meta_challenge_exist_and_running && !current_participant.nil?
+      meta_challenge = get_meta_challenge
+      registration = meta_challenge.challenge_participants.where(participant_id: current_participant.id).first
+      if registration.present? and registration.registered
+        return true
+      end
+    end
+    return false
+  end
+
   private
 
   def challenge_submissions_count(challenge, parent_meta_challenge)
