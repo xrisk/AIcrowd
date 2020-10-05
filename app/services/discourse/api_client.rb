@@ -45,9 +45,9 @@ module Discourse
 
       Faraday.new(http_client_options) do |http_client|
         http_client.request :url_encoded
-        http_client.use     FaradayMiddleware::FollowRedirects
         http_client.use     Discourse::HandleErrorsMiddleware
         http_client.use     Discourse::ParseJsonMiddleware
+        http_client.use     FaradayMiddleware::FollowRedirects
         http_client.adapter Faraday.default_adapter
       end
     end
