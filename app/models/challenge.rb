@@ -261,7 +261,11 @@ class Challenge < ApplicationRecord
 
   def problems
     if meta_challenge? || ml_challenge
-      return Challenge.where(id: challenge_problems.pluck('problem_id'))
+      problems = []
+      challenge_problems.order('challenge_problems.weight').pluck('problem_id').each do |challenge_id|
+          problems.push(Challenge.where(id: challenge_id)[0])
+      end
+      return problems
     end
   end
 
