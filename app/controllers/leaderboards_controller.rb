@@ -82,10 +82,12 @@ class LeaderboardsController < ApplicationController
     end
 
     if !params.has_key?(challenge_type)
-      cp = ChallengeProblems.find_by(problem_id: @challenge.id)
-      if cp.present? && params[:action] != 'get_affiliation'
-        params[challenge_type.to_sym] = Challenge.find(cp.challenge_id).slug
-        redirect_to helpers.challenge_leaderboards_path(@challenge)
+      cps = ChallengeProblems.where(problem_id: @challenge.id)
+      cps.each do |cp|
+        if cp.exclusive? && params[:action] != 'get_affiliation'
+          params[challenge_type.to_sym] = Challenge.find(cp.challenge_id).slug
+          redirect_to helpers.challenge_leaderboards_path(@challenge) and return
+        end
       end
     end
   end
