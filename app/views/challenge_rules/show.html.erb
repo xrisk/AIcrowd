@@ -21,9 +21,9 @@
 
             <% if @challenge.meta_challenge? %>
               <% if @challenge.challenge_problems.where(exclusive: false).present? %>
-                <p class="font-weight-bold">Note: This challenge contains independent running challenges too.</p>
-                <p><mark>Independent challenge’ rules supersede the rules mentioned above</mark> for it's dataset, submissions, resources, etc. Please go through them below and in case of confusion or conflict reach out to us.</p>
-                <p>Submissions which are done after entering this challenge would be counted toward both leaderboards.</p>
+                <p class="font-weight-bold">Note: This challenge includes some problems which are independent research challenges.</p>
+                <p><mark>In case of a conflict between the rules</mark> of <%= @challenge.challenge %> and the rules of an independent challenge, the rules of the independent challenge hold priority. Please go through the rules of the independent challenges below. In case of any confusion or conflict, please do not hesitate to reach out to us.</p>
+                <p>Submissions made to the independent challenges will be counted as valid submissions for both the <%= @challenge.challenge %> leaderboard, and the leaderboard of the independent challenge(s).</p>
 
                 <div class="accordion" id="subChallengeRules">
                 <% @challenge.challenge_problems.where(exclusive: false).each do |problem| %>
