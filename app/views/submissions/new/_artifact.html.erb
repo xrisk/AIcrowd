@@ -28,7 +28,7 @@
           <% if meta_challenge_exist_and_user_registered %>
             Your submissions are valid for both <%= @challenge.challenge %> and <%= get_meta_challenge.challenge %> challenges ! 🎉
           <% else %>
-            This challenge is also a part of <%= get_meta_challenge.challenge %>. Click here to Participate.
+            This challenge is also a part of <%= get_meta_challenge.challenge %>. Click <a href="<%= challenge_challenge_rules_path(get_meta_challenge) %>">here</a> to Participate.
             <a class="btn btn-primary btn-sm pull-right m-0 text-decoration-none" href="<%= challenge_challenge_rules_path(get_meta_challenge) %>" style="text-decoration: none;">Enter</a>
           <% end %>
         </p>

@@ -22,14 +22,14 @@ module MediaHelper
     return 'video' if ['mp4', 'webM'].include?(file_type)
   end
 
-  def media_asset(mediable, content_type, size)
+  def media_asset(mediable, content_type, size, autoplay: true)
     case content_type
     when nil
       return '-'
     when 'image'
       return render_image(mediable, size)
     when 'video'
-      return render_video(mediable, size)
+      return render_video(mediable, size, autoplay: autoplay)
     when 'youtube'
       return render_youtube(mediable, size)
     end
@@ -50,12 +50,17 @@ module MediaHelper
     end
   end
 
-  def render_video(mediable, size)
+  def render_video(mediable, size, autoplay: true)
     if s3_public_url(mediable, size).present?
       if size == :large
         return video_tag(s3_public_url(mediable, size), size: dimensions(size), controls: true, muted: true, autoplay: true, loop: true, class: "media")
       else
-        return video_tag(s3_public_url(mediable, size), size: dimensions(size), autoplay: true, muted: true, loop: true, class: "media")
+        # small/leaderboard rendering
+        if autoplay
+          return video_tag(s3_public_url(mediable, size), size: dimensions(size), autoplay: true, muted: true, loop: true, class: "media")
+        else
+          return video_tag(s3_public_url(mediable, size), size: dimensions(size), controls: true, class: "media")
+        end
       end
     else
       return "-"
