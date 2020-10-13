@@ -150,7 +150,9 @@ class SubmissionsController < ApplicationController
       .includes(:participant, :challenge_round)
       .where(challenge_round_id: params[:submissions_export_challenge_round_id].to_i)
 
-    csv_data = Submissions::CSVExportService.new(submissions: @submissions).call.value
+    downloadable = @challenge.submissions_downloadable || current_participant.admin?
+    csv_data = Submissions::CSVExportService.new(submissions: @submissions, downloadable:downloadable).call.value
+
 
     send_data csv_data,
               type:     'text/csv',

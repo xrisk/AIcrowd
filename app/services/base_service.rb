@@ -18,4 +18,5 @@ class BaseService
   def failure(value = false)
     Result.new(false, value)
   end
+
 end
