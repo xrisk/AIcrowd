@@ -7,6 +7,7 @@ class Challenge < ApplicationRecord
               use: %i[slugged finders history]
 
   mount_uploader :image_file, ImageUploader
+  mount_uploader :social_media_image_file, RawImageUploader
   mount_uploader :banner_file, RawImageUploader
   mount_uploader :banner_mobile_file, RawImageUploader
 
@@ -289,6 +290,10 @@ class Challenge < ApplicationRecord
 
   def image_url
     image_file_url.present? ?  image_file_url : get_default_image
+  end
+
+  def social_media_image_url
+    social_media_image_file_url.present? ?  social_media_image_file_url : nil
   end
 
   def get_default_image

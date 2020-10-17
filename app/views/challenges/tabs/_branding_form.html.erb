@@ -18,6 +18,21 @@
     </div>
 
     <div class="form-group">
+      <span class="label-text">Social media image</span>
+      <% if challenge.social_media_image_url.present? %>
+        <%= image_tag challenge.social_media_image_url, id: 'challenges-form-card-image', class: 'form-challenge-card-image' %>
+      <% end %>
+    </div>
+
+    <div class="form-group">
+      <%= f.file_field :social_media_image_file %>
+      <% if @challenge.persisted? %>
+        <%= link_to 'Delete', remove_social_media_image_challenge_path(@challenge), remote: true, id: 'challenges-form-remove-card-image', class: "form-text" %>
+      <% end %>
+      <small id="partnerLogoHelp" class="form-text text-muted">Your image will be cropped if necessary. 5 MB limit</small>
+    </div>
+
+    <div class="form-group">
         <span class="label-text">Banner image</span>
         <% if challenge.banner_file.present? %>
             <%= image_tag challenge.banner_file.url, id: 'challenges-form-card-image', class: 'form-challenge-card-image' %>
