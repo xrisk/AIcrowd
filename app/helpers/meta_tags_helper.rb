@@ -38,7 +38,7 @@ module MetaTagsHelper
       if controller_name == 'submissions'
         having_media_large_image?(@challenge, @submission) ? s3_public_url(@submission, :large) : content_for_meta_image
       elsif controller_name == 'challenges'
-        @challenge.image_url
+        @challenge.social_media_image_url ? @challenge.social_media_image_url : @challenge.image_url
       elsif controller_name == 'organizers' && @organizer.image_file?
         @organizer.image_file.url
       elsif controller_name == 'participants' && @participant.image_file?

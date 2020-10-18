@@ -55,6 +55,10 @@ class ChallengePolicy < ApplicationPolicy
     update?
   end
 
+  def remove_social_media_image?
+    update?
+  end
+
   def remove_invited?
     update?
   end
