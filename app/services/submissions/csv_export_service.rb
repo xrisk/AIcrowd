@@ -1,7 +1,8 @@
 module Submissions
   class CSVExportService < ::BaseService
-    def initialize(submissions: submissions)
+    def initialize(submissions: submissions, downloadable:downloadable)
       @submissions = submissions
+      @downloadable = downloadable
       @meta_keys   = SelectUniqueMetaKeysQuery.new(submissions).call
     end
 
@@ -10,7 +11,7 @@ module Submissions
         csv_file << csv_headers
 
         submissions.find_each do |submission|
-          csv_file << [
+          data_instance = [
             submission.id,
             submission_type(submission),
             team_name(submission),
@@ -26,6 +27,16 @@ module Submissions
             submission.grading_status,
             submission.challenge_round&.challenge_round
           ]
+          if downloadable
+            links = []
+            if submission.submission_files.present?
+              submission.submission_files.each do |file|
+                links += [S3Service.new(file.submission_file_s3_key).expiring_url]
+              end
+            end
+            data_instance += [links * ' ; ']
+          end
+          csv_file << data_instance
         end
       end
 
@@ -34,10 +45,10 @@ module Submissions
 
     private
 
-    attr_reader :submissions, :meta_keys
+    attr_reader :submissions, :meta_keys, :downloadable
 
     def csv_headers
-      [
+      headers = [
         'Submission ID',
         'Type',
         'Team Name',
@@ -51,8 +62,12 @@ module Submissions
         'Updated At',
         'Grading Message',
         'Grading Status',
-        'Challenge Round'
+        'Challenge Round',
       ]
+      if downloadable
+        headers += ['Download Links']
+      end
+      return headers
     end
 
     def challenge_round
