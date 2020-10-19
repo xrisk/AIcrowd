@@ -123,4 +123,5 @@ class SubmissionsRemainingQuery
       [participant_id]
     end
   end
+
 end

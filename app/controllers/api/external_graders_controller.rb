@@ -392,9 +392,20 @@ class Api::ExternalGradersController < Api::BaseController
     min_score = challenge.previous_round.minimum_score
     return true if min_score.nil?
 
+    # if participant has team, check for team's qualification else: participant's qualification
+    team_id = get_team_id(challenge, participant.id)
+    if team_id.present?
+      submitter_id = team_id
+      submitter_type = 'Team'
+    else
+      submitter_id = participant.id
+      submitter_type = 'Participant'
+    end
+
     participant_leaderboard = challenge
                           .leaderboards
-                          .where(submitter_id:     participant.id,
+                          .where(submitter_id: submitter_id,
+                                 submitter_type: submitter_type,
                                  challenge_round_id: challenge.previous_round.id).first
     return false if participant_leaderboard.nil?
     if participant_leaderboard.score >= min_score
@@ -442,4 +453,15 @@ class Api::ExternalGradersController < Api::BaseController
   def parallel_submissions_allowed?(challenge, participant)
     ParallelSubmissionsAllowedService.new(challenge, participant).call
   end
+
+  def get_team_id(challenge, participant_id)
+    team = challenge.teams.joins(:team_participants).find_by(team_participants: { participant_id: participant_id})
+
+    if team.present?
+      team.id
+    else
+      nil
+    end
+  end
+
 end
