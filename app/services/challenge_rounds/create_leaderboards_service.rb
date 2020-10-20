@@ -1,11 +1,12 @@
 module ChallengeRounds
   class CreateLeaderboardsService < ::BaseService
-    def initialize(challenge_round:, meta_challenge_id: nil, ml_challenge_id: nil)
+    def initialize(challenge_round:, meta_challenge_id: nil, ml_challenge_id: nil, challenge_leaderboard_extra: nil)
       @challenge_round       = challenge_round
       @challenge             = @challenge_round.challenge
       @submissions           = @challenge_round.submissions.reorder(created_at: :desc)
       @meta_challenge_id     = meta_challenge_id
       @ml_challenge_id       = ml_challenge_id
+      @challenge_leaderboard_extra = challenge_leaderboard_extra
       @is_freeze             = @challenge_round.freeze_flag
       @is_borda_ranking      = false
 
@@ -25,8 +26,9 @@ module ChallengeRounds
       ActiveRecord::Base.transaction do
         truncate_scores
 
-        BaseLeaderboard.where(challenge_round: challenge_round, meta_challenge_id: meta_challenge_id).delete_all
-        BaseLeaderboard.where(challenge_round: challenge_round, ml_challenge_id: ml_challenge_id).delete_all if ml_challenge_id.present?
+        delete_entries = BaseLeaderboard.where(challenge_round: challenge_round)
+        delete_entries = dynamic_filters(delete_entries, deletion=true)
+        delete_entries.delete_all
 
         populate_borda_field_if_required
 
@@ -123,73 +125,73 @@ module ChallengeRounds
       BaseLeaderboard.import!(leaderboards)
     end
 
-    def teams_submissions(post_challenge, cuttoff_dttm)
+    def dynamic_filters(entries, deletion=false)
       if @meta_challenge_id.present?
-        submissions.joins(participant: :teams)
-          .where(teams: { challenge_id: team_challenge_id })
-          .where(challenge_round_id: challenge_round.id, meta_challenge_id: @meta_challenge_id, post_challenge: post_challenge, baseline: false)
-          .where('submissions.created_at <= ?', cuttoff_dttm)
-          .select('teams.id AS team_id, submissions.*')
-          .reorder(submissions_order)
-          .group_by { |submission| submission.team_id }
-      else
-        submissions.joins(participant: :teams)
-          .where(teams: { challenge_id: team_challenge_id })
-          .where(challenge_round_id: challenge_round.id, post_challenge: post_challenge, baseline: false)
-          .where('submissions.created_at <= ?', cuttoff_dttm)
-          .select('teams.id AS team_id, submissions.*')
-          .reorder(submissions_order)
-          .group_by { |submission| submission.team_id }
+        entries = entries.where(meta_challenge_id: @meta_challenge_id)
       end
+
+      if @challenge_leaderboard_extra.present? && !deletion
+        entries = entries.where(@challenge_leaderboard_extra.filter)
+      end
+
+      if deletion
+        if @challenge_leaderboard_extra.present?
+          entries = entries.where(challenge_leaderboard_extra_id: @challenge_leaderboard_extra.id)
+        else
+          entries = entries.where(challenge_leaderboard_extra_id: nil)
+        end
+      end
+
+      return entries
+    end
+
+    def teams_submissions(post_challenge, cuttoff_dttm)
+      entries = submissions.joins(participant: :teams)
+                  .where(teams: { challenge_id: team_challenge_id })
+                  .where(challenge_round_id: challenge_round.id, post_challenge: post_challenge, baseline: false)
+                  .where('submissions.created_at <= ?', cuttoff_dttm)
+      entries = dynamic_filters(entries)
+      entries = entries.select('teams.id AS team_id, submissions.*')
+                  .reorder(submissions_order)
+                  .group_by { |submission| submission.team_id }
+      return entries
     end
 
     def participants_submissions(post_challenge, cuttoff_dttm)
-      if @meta_challenge_id.present?
-        submissions.joins(:participant)
-          .where.not(participant_id: team_participants_ids)
-          .where(challenge_round_id: challenge_round.id, meta_challenge_id: @meta_challenge_id, post_challenge: post_challenge, baseline: false)
-          .where('submissions.created_at <= ?', cuttoff_dttm)
-          .reorder(submissions_order)
-          .group_by { |submission| submission.participant_id }
-      else
-        submissions.joins(:participant)
-          .where.not(participant_id: team_participants_ids)
-          .where(challenge_round_id: challenge_round.id, post_challenge: post_challenge, baseline: false)
-          .where('submissions.created_at <= ?', cuttoff_dttm)
-          .reorder(submissions_order)
-          .group_by { |submission| submission.participant_id }
-      end
+      entries = submissions.joins(:participant)
+                  .where.not(participant_id: team_participants_ids)
+                  .where(challenge_round_id: challenge_round.id, post_challenge: post_challenge, baseline: false)
+                  .where('submissions.created_at <= ?', cuttoff_dttm)
+      entries = dynamic_filters(entries)
+      entries = entries.reorder(submissions_order)
+                  .group_by { |submission| submission.participant_id }
+      return entries
     end
 
     def migration_submmissions(post_challenge, cuttoff_dttm)
-      if @meta_challenge_id.present?
-        submissions.left_joins(:participant)
-          .where(challenge_round_id: challenge_round.id, meta_challenge_id: @meta_challenge_id, post_challenge: post_challenge, baseline: false, grading_status_cd: 'graded')
-          .where('submissions.created_at <= ?', cuttoff_dttm)
-          .reorder(submissions_order)
-          .where('participants.id IS NULL')
-      else
-        submissions.left_joins(:participant)
-          .where(challenge_round_id: challenge_round.id, post_challenge: post_challenge, baseline: false, grading_status_cd: 'graded')
-          .where('submissions.created_at <= ?', cuttoff_dttm)
-          .reorder(submissions_order)
-          .where('participants.id IS NULL')
-      end
+      entries = submissions.left_joins(:participant)
+                  .where(challenge_round_id: challenge_round.id, post_challenge: post_challenge, baseline: false, grading_status_cd: 'graded')
+                  .where('submissions.created_at <= ?', cuttoff_dttm)
+                  .where('participants.id IS NULL')
+      entries = dynamic_filters(entries)
+      entries = entries.reorder(submissions_order)
+      return entries
     end
 
     def baseline_submissions(post_challenge, cuttoff_dttm)
-      if @meta_challenge_id.present?
-        challenge_round.submissions
-          .where(challenge_round_id: challenge_round.id, meta_challenge_id: @meta_challenge_id, post_challenge: post_challenge, baseline: true, grading_status_cd: 'graded')
-          .where('submissions.created_at <= ?', cuttoff_dttm)
-      else
-        challenge_round.submissions
-          .where(challenge_round_id: challenge_round.id, post_challenge: post_challenge, baseline: true, grading_status_cd: 'graded')
-          .where('submissions.created_at <= ?', cuttoff_dttm)
-      end
+      entries = challenge_round.submissions
+                  .where(challenge_round_id: challenge_round.id, post_challenge: post_challenge, baseline: true, grading_status_cd: 'graded')
+                  .where('submissions.created_at <= ?', cuttoff_dttm)
+      entries = dynamic_filters(entries)
+      return entries
     end
 
     def build_leaderboard(submission, submissions_count, submitter_type, submitter_id, leaderboard_type = 'leaderboard')
+      challenge_leaderboard_extra_id = nil
+      if @challenge_leaderboard_extra.present?
+        challenge_leaderboard_extra_id = @challenge_leaderboard_extra.id
+      end
+
       BaseLeaderboard.new(
         meta_challenge_id:    meta_challenge_id,
         ml_challenge_id:      ml_challenge_id,
@@ -215,6 +217,7 @@ module ChallengeRounds
         baseline:             submission.baseline,
         baseline_comment:     submission.baseline_comment,
         submission_link:      submission.submission_link,
+        challenge_leaderboard_extra_id: challenge_leaderboard_extra_id,
         refreshed_at:         Time.current,
         created_at:           submission.created_at,
         updated_at:           submission.updated_at

@@ -2,6 +2,7 @@ class LeaderboardsController < ApplicationController
   before_action :authenticate_participant!, except: [:index, :get_affiliation]
   before_action :set_challenge, only: [:index, :export, :get_affiliation]
   before_action :set_current_round, only: [:index, :export, :get_affiliation]
+  before_action :set_current_extra_leaderboard, only: [:index, :export, :get_affiliation]
   before_action :set_leaderboards, only: [:index, :get_affiliation]
   before_action :set_filter_service, only: [:index, :get_affiliation]
 
@@ -100,6 +101,14 @@ class LeaderboardsController < ApplicationController
     end
   end
 
+  def set_current_extra_leaderboard
+    @current_challenge_leaderboard_extra = if params[:challenge_leaderboard_extra_id].present?
+      @challenge.challenge_leaderboard_extras.find(params[:challenge_leaderboard_extra_id].to_i)
+    else
+      nil
+    end
+  end
+
   def post_challenge?
     @challenge.completed? && params[:post_challenge] == "true" && !@challenge.meta_challenge?
   end
@@ -109,7 +118,7 @@ class LeaderboardsController < ApplicationController
   end
 
   def set_leaderboards
-    filter = { challenge_round_id: @current_round&.id.to_i, meta_challenge_id: nil }
+    filter = { challenge_round_id: @current_round&.id.to_i, meta_challenge_id: nil, challenge_leaderboard_extra_id: @current_challenge_leaderboard_extra&.id }
 
     if @meta_challenge.present?
       filter[:meta_challenge_id] = @meta_challenge.id
@@ -138,7 +147,7 @@ class LeaderboardsController < ApplicationController
   end
 
   def paginate_leaderboards_by(order)
-    @leaderboards.page(params[:page]).per(10).order(order)
+    @leaderboards.page(params[:page]).per(20).order(order)
   end
 
   def set_filter_service

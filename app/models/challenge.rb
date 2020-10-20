@@ -41,6 +41,7 @@ class Challenge < ApplicationRecord
   has_many :ongoing_leaderboards, class_name: 'OngoingLeaderboard'
 
   has_many :challenge_problems, foreign_key: "challenge_id", class_name: "ChallengeProblems"
+  has_many :challenge_leaderboard_extras, foreign_key: "challenge_id", class_name: "ChallengeLeaderboardExtra"
 
   has_many :votes, as: :votable
   has_many :follows, as: :followable

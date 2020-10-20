@@ -27,5 +27,15 @@
     <%= f.text_field :weight, class: "form-control" %>
   </div>
 
+  <div class="form-group">
+    <span class="label-text">Extra Leaderboards: Names</span>
+    <%= f.text_field :challenge_extra_leaderboard_names, class: "form-control", value: @challenge.challenge_leaderboard_extras.pluck(:name).join(',') %>
+  </div>
+
+  <div class="form-group">
+    <span class="label-text">Extra Leaderboards: Filter</span>
+    <%= f.text_field :challenge_extra_leaderboard_filters, class: "form-control", value: @challenge.challenge_leaderboard_extras.pluck(:filter).join(',') %>
+  </div>
+
   <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, current_step: 'admin' } %>
 </div>

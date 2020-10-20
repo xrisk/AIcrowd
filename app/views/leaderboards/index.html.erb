@@ -23,6 +23,23 @@
           <!-- / Challenge Round Pills  -->
         <% end %>
 
+        <% if @challenge.challenge_leaderboard_extras.size > 0 %>
+          <ul class="nav nav-pills">
+              <li class="nav-item">
+                <%= link_to "Overall",
+                            challenge_leaderboards_path(@challenge, challenge_round_id: @current_round),
+                            class: round_pills_tab_classes(nil, @current_challenge_leaderboard_extra) %>
+              </li>
+              <% @challenge.challenge_leaderboard_extras.each do |extra_leaderboard| %>
+              <li class="nav-item">
+                <%= link_to extra_leaderboard.name,
+                            challenge_leaderboards_path(@challenge, challenge_round_id: @current_round, challenge_leaderboard_extra_id: extra_leaderboard.id),
+                            class: round_pills_tab_classes(extra_leaderboard, @current_challenge_leaderboard_extra) %>
+              </li>
+              <% end %>
+          </ul>
+        <% end %>
+
         <!-- challenge leaderboard -->
         <% if @current_round&.leaderboard_note.present? %>
           <div class="md-content width-100">

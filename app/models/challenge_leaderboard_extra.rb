@@ -1,0 +1,2 @@
+class ChallengeLeaderboardExtra < ApplicationRecord
+end

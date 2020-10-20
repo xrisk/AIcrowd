@@ -46,7 +46,7 @@ class ChallengesController < ApplicationController
     @partners = Partner.where(organizer_id: @challenge.organizer_ids) if @challenge.organizers.any?
     @challenge_baseline_discussion = @challenge.baseline_discussion
     if @challenge.active_round
-      @top_five_leaderboards = @challenge.active_round.leaderboards.where(meta_challenge_id: @meta_challenge, baseline: false).limit(5)
+      @top_five_leaderboards = @challenge.active_round.leaderboards.where(meta_challenge_id: @meta_challenge, baseline: false, challenge_leaderboard_extra_id: nil).limit(5)
       @latest_five_submissions = @challenge.active_round.submissions.where(meta_challenge_id: @meta_challenge).order(created_at: :desc).limit(5)
     end
 
@@ -110,7 +110,31 @@ class ChallengesController < ApplicationController
     end
   end
 
+  def update_challenge_leaderboard_extras
+    filters = params[:challenge][:challenge_extra_leaderboard_filters].split(',').reject { |c| c.empty? }
+    names = params[:challenge][:challenge_extra_leaderboard_names].split(',').reject { |c| c.empty? }
+    if filters.length != names.length
+      @challenge.errors.messages.merge!('Invalid configuration provided for extra leaderboards.')
+      return
+    end
+
+    @challenge.challenge_leaderboard_extras.each do |leaderboard|
+      if !filters.include?(leaderboard.filter)
+        leaderboard.destroy
+      end
+    end
+
+    for i in (0..names.length-1) do
+      leaderboard = ChallengeLeaderboardExtra.where(challenge_id: @challenge.id, filter: filters[i]).first_or_initialize
+      leaderboard.name = names[i]
+      leaderboard.save!
+    end
+
+    leaderboard_recomputations
+  end
+
   def update
+    update_challenge_leaderboard_extras if params[:challenge][:challenge_extra_leaderboard_names].present?
     if @challenge.update(challenge_params)
       update_challenges_organizers if params[:challenge][:organizer_ids].present?
       update_challenge_categories if params[:challenge][:category_names].present?
