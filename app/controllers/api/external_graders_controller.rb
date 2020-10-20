@@ -392,27 +392,25 @@ class Api::ExternalGradersController < Api::BaseController
     min_score = challenge.previous_round.minimum_score
     return true if min_score.nil?
 
-    # if participant has team, check for team's qualification else: participant's qualification
-    team_id = get_team_id(challenge, participant.id)
-    if team_id.present?
-      submitter_id = team_id
-      submitter_type = 'Team'
-    else
-      submitter_id = participant.id
-      submitter_type = 'Participant'
-    end
+    participant_leaderboard = get_qualification(participant.id, 'Participant', challenge)
+    team_leaderboard = get_qualification(get_team_id(challenge, participant.id), 'Team', challenge)
 
-    participant_leaderboard = challenge
-                          .leaderboards
-                          .where(submitter_id: submitter_id,
-                                 submitter_type: submitter_type,
-                                 challenge_round_id: challenge.previous_round.id).first
-    return false if participant_leaderboard.nil?
-    if participant_leaderboard.score >= min_score
+    if (not participant_leaderboard.nil? && participant_leaderboard.score >= min_score) || (
+    not team_leaderboard.nil? && team_leaderboard.score >= min_score)
       return true
-    else
-      return false
     end
+    return false
+  end
+
+  def get_qualification(submitter_id, submitter_type, challenge)
+    if submitter_id.present?
+      leaderboard =  challenge.leaderboards
+                 .where(submitter_id: submitter_id,
+                 submitter_type: submitter_type,
+                 challenge_round_id: challenge.previous_round.id).first
+      return leaderboard if not leaderboard.nil?
+    end
+    nil
   end
 
   def notify_admins(submission)
