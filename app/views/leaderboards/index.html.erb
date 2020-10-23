@@ -82,7 +82,18 @@
                 <%= render partial: 'leaderboards_header', locals: { leaderboards: @leaderboards, current_round: @current_round, truncate: 'true', current_participant: current_participant } %>
               </thead>
               <tbody id="leaderboards-div" data-page='1' data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data" data-meta-challenge-id="<%= @challenge.is_a_problem? ? @challenge.challenge_problem.challenge.friendly_id : '' %>">
+               <script>
+                   stick_user_rows = document.getElementsByClassName("pinned-user-leaderboard")
+                   if (stick_user_rows){
+                       for(row of stick_user_rows) {row.remove();}
+                   }
+               </script>
+
                 <%= render partial: 'leaderboards', locals: { leaderboards: @leaderboards, current_round: @current_round, truncate: 'true' } %>
+
+                <% if @self_standing %>
+                  <%= render partial: 'leaderboards', locals: { leaderboards: @self_standing, current_round: @current_round, truncate: 'true', sticky_class: "pinned-user-leaderboard"} %>
+                <%end%>
               </tbody>
             </table>
           </div>
