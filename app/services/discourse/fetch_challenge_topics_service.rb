@@ -30,7 +30,7 @@ module Discourse
     attr_reader :client, :challenge, :page
 
     def challenge_posts_path
-      "/c/#{challenge.discourse_category_id}.json?page=#{page}"
+      "/c/#{challenge.discourse_category_id}/l/latest.json?order=activity"
     end
   end
 end
