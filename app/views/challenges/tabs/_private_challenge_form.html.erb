@@ -1,8 +1,12 @@
 <div>
+  <h4 class="mb-3">Access Policy</h4>
+
   <div class="form-group">
-    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :private_challenge, text: "Private Challenge" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :hidden_challenge, text: "Hide Challenge (url needed to access and register)" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :private_challenge, text: "Private Challenge (only allowed username can access)" } %>
   </div>
 
+  <h4 class="mt-5">Private Challenge (Users)</h4>
   <div class='email_invitation_form challenges-form__thin-tab display-none'>
     <div class="form-group">
       <%= f.label :invitation_email, 'Email addresses' %>
@@ -21,5 +25,12 @@
       <% end %>
     </div>
   <% end %>
+
+  <h4 class="mt-5">Registration Form</h4>
+  <div class="form-group">
+    <span class="label-text">Field names (comma seperated)</span>
+    <%= f.text_field :registration_form_fields, class: "form-control" %>
+  </div>
+
   <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, current_step: 'private-challenge' } %>
 </div>

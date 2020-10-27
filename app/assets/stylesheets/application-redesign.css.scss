@@ -14276,6 +14276,17 @@ input.width-185 {
   width: 185px;
 }
 
+.scrollable {
+  max-width: 740px;
+  padding-right: 50px;
+  padding-left: 50px;
+  padding-top: 20px;
+  border: 1px solid #dcdcdc;
+  max-height: 500px;
+  overflow: scroll;
+  border-radius: 20px;
+}
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';

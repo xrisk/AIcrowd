@@ -4,19 +4,44 @@
       <div class="row">
         <div class="col-12">
           <h4><%= link_to @challenge.challenge, challenge_path(@challenge), class: 'red-link' %></h4>
-          <h1>Challenge Rules</h1>
+          <% if current_participant.present? && required_terms_or_rules_path(@challenge).present? %>
+            <h1>Registration</h1>
+          <% else %>
+            <h1>Challenge Rules</h1>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
 
   <!-- section -->
-  <div class="section-p-sm">
+  <div class="section-p-sm pb-0">
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
+          <% if @participation_terms.present? %>
+            <div data-controller="linkify-content" class="md-content scrollable mb-3">
+              <div class="container-fluid pl-0">
+                <div class="row">
+                  <div class="col-12">
+                    <h4 class="ml-n4">AIcrowd Pariticipation Terms</h4>
+                  </div>
+                </div>
+              </div>
+              <%= sanitize_html(@participation_terms.terms) %>
+            </div>
+          <% end %>
           <!-- Challenge Rules -->
-          <div data-controller="linkify-content" class="md-content">
+          <div data-controller="linkify-content" class="md-content <% if current_participant.present? && required_terms_or_rules_path(@challenge).present? %>scrollable<% end %>">
+            <% if current_participant.present? && required_terms_or_rules_path(@challenge).present? %>
+              <div class="container-fluid pl-0">
+                <div class="row">
+                  <div class="col-12">
+                    <h4 class="ml-n4">Challenge Rules</h4>
+                  </div>
+                </div>
+              </div>
+            <% end %>
             <%= sanitize_html(@challenge_rules.terms) %>
 
             <% if @challenge.meta_challenge? %>
@@ -48,16 +73,39 @@
               <% end %>
             <% end %>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- section -->
+  <div class="section-p-sm pt-0">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
           <% if current_participant.present? && required_terms_or_rules_path(@challenge).present? %>
-            <%= form_for [@challenge, @challenge_participant], validate: true, html: {class: "form-rg mt-5", multipart: true} do |f| %>
+            <%= form_for [@challenge, @challenge_participant], validate: true, html: {class: "form-rg mt-5", style: "max-width: 640px", multipart: true} do |f| %>
               <%= render partial: 'shared/error_messages', locals: { target: @challenge_participant } %>
 
               <%= f.hidden_field :challenge_rules_accepted_version, value: @challenge_rules.version %>
 
+              <% if @challenge.registration_form_fields.present? %>
+              <div class="form-group">
+                <h4>Registration Form</h4>
+                <span>ℹ️ <i>Your details below will be shared with the challenge organizers</i></span>
+              </div>
+                <% @challenge.registration_form_fields.split(',').each do |field| %>
+                <div class="form-group">
+                  <span class="label-text"><%= field %></span>
+                  <input class="form-control" type="text" name="challenge_participant[registration_form_details][<%= field %>]" required="required" pattern=".*\S+.*" />
+                </div>
+                <% end %>
+              <% end %>
+
               <div class="form-group form-check">
                 <%= check_box("rules", "accepted", {class: 'form-check-input requires-agreement-checkbox', 'data-target': 'accept-challenge-rules-button'}, "yes", "no") %>
                 <label for="rules_accepted">
-                  <p> I have read and agree to the challenge rules (required) </p>
+                  <p> I have read and agree to the challenge rules <% if @participation_terms.present? %>and AIcrowd participation terms<% end %> (required) </p>
                 </label>
               </div>
 

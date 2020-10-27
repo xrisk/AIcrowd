@@ -1,9 +1,16 @@
 class ChallengeRulesController < ApplicationController
   before_action :set_challenge_rules
+  before_action :set_participation_terms
 
   def show; end
 
   private
+
+  def set_participation_terms
+    if current_participant.present? && !policy(@challenge).has_accepted_participation_terms?
+      @participation_terms = ParticipationTerms.current_terms
+    end
+  end
 
   def set_challenge_rules
     @challenge = Challenge.friendly.find(params[:challenge_id])
