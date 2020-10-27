@@ -10,6 +10,7 @@ class ChallengeParticipantsController < ApplicationController
 
     if @challenge_participant.save
       accept_non_exclusive_challenge_rules(@challenge, current_participant)
+      accept_participation_terms(current_participant)
       redirect_to(session[:forwarding_url] || @challenge)
       session.delete(:forwarding_url)
     else
@@ -23,7 +24,11 @@ class ChallengeParticipantsController < ApplicationController
     @challenge_participant.registered = true
     @challenge_participant.challenge_rules_accepted_date    = Time.now
     @challenge_participant.challenge_rules_accepted_version = @challenge_participant.challenge.current_challenge_rules&.version
+    if params[:challenge_participant][:registration_form_details].present?
+      @challenge_participant.registration_form_details        = params[:challenge_participant][:registration_form_details]
+    end
     accept_non_exclusive_challenge_rules(@challenge_participant.challenge, current_participant)
+    accept_participation_terms(current_participant)
     if @challenge_participant.update(challenge_participant_params)
       if @challenge_participant.challenge.ml_challenge
         redirect_to daily_practice_goals_path(challenge_id: @challenge_participant.challenge.slug)
@@ -37,6 +42,14 @@ class ChallengeParticipantsController < ApplicationController
   end
 
   private
+
+  def accept_participation_terms(participant)
+    if !participant.has_accepted_participation_terms?
+      participant.participation_terms_accepted_date = Time.now
+      participant.participation_terms_accepted_version = ParticipationTerms.current_terms&.version
+      participant.save!
+    end
+  end
 
   def accept_non_exclusive_challenge_rules(challenge, participant)
     if challenge.meta_challenge? && challenge.challenge_problems.where(exclusive: false).present?
@@ -58,7 +71,9 @@ class ChallengeParticipantsController < ApplicationController
       .require(:challenge_participant)
       .permit(
         :challenge_rules_additional_checkbox,
-        :challenge_rules_accepted_version
+        :challenge_rules_accepted_version,
+        :registration_form_details
       )
   end
+
 end

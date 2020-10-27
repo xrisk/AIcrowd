@@ -21,9 +21,7 @@ module ChallengesHelper
       challenge    = Challenge.friendly.find(challenge_id)
     end
 
-    if !policy(challenge).has_accepted_participation_terms?
-      [challenge, ParticipationTerms.current_terms]
-    elsif !policy(challenge).has_accepted_challenge_rules?
+    if !policy(challenge).has_accepted_participation_terms? or !policy(challenge).has_accepted_challenge_rules?
       challenge_challenge_rules_path(challenge)
     end
   end

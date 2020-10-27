@@ -399,6 +399,7 @@ class ChallengesController < ApplicationController
       :big_challenge_card_image,
       :practice_flag,
       :ml_challenge,
+      :registration_form_fields,
       image_attributes: [
         :id,
         :image,
