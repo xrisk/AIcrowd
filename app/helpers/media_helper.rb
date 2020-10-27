@@ -59,7 +59,7 @@ module MediaHelper
         if autoplay
           return video_tag(s3_public_url(mediable, size), size: dimensions(size), autoplay: true, muted: true, loop: true, class: "media")
         else
-          return video_tag(s3_public_url(mediable, size), size: dimensions(size), controls: true, class: "media")
+          return video_tag(s3_public_url(mediable, size), size: dimensions(size), controls: true, class: "media", preload:"metadata")
         end
       end
     else
