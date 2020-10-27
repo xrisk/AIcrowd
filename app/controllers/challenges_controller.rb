@@ -400,6 +400,7 @@ class ChallengesController < ApplicationController
       :practice_flag,
       :ml_challenge,
       :registration_form_fields,
+      :submission_window_type_cd,
       image_attributes: [
         :id,
         :image,

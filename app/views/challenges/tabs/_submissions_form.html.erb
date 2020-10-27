@@ -21,6 +21,11 @@
 
   </div>
 
+  <div class="form-group col-sm-12 col-md-4">
+    <span class="label-text">Submission Window Type</span>
+    <%= f.select :submission_window_type_cd, Challenge::SUBMISSION_WINDOW_TYPES, {}, class: 'form-control' %>
+  </div>
+
   <hr/>
 
   <div class="form-group">

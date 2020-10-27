@@ -92,6 +92,11 @@ class Challenge < ApplicationRecord
     'Evaluations API (v2, Beta)' => :evaluations_api
   }.freeze
 
+  SUBMISSION_WINDOW_TYPES = {
+    'Rolling window (counts submission in last X hrs)' => :rolling_window,
+    'Fixed window (counts submission since 00:00 UTC)' => :fixed_window
+  }
+
   as_enum :evaluator_type, EVALUATOR_TYPES.keys(), map: :string
 
   default_scope do

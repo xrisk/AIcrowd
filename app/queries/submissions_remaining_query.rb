@@ -42,8 +42,14 @@ class SubmissionsRemainingQuery
   end
 
   def day_amount
+    if @challenge.submission_window_type_cd == 'fixed_window'
+      count_submission_from = Date.current.to_time
+    else
+      count_submission_from = Time.zone.now - 24.hours
+    end
+
     submissions = @challenge.submissions
-                      .where("participant_id IN (?) and created_at >= ?", team_participants_ids, Time.zone.now - 24.hours)
+                      .where("participant_id IN (?) and created_at >= ?", team_participants_ids, count_submission_from)
                       .order(created_at: :asc)
     submissions = submissions.where("debug_submission = ?", @debug_submission)
 
