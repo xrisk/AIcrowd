@@ -59,6 +59,10 @@ class ChallengePolicy < ApplicationPolicy
     update?
   end
 
+  def remove_banner_mobile?
+    update?
+  end
+
   def remove_invited?
     update?
   end
