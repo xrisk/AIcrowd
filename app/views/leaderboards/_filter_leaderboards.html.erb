@@ -37,7 +37,7 @@
         <%= link_to challenge_leaderboards_path(challenge_round_id: @current_round, post_challenge: @post_challenge.blank?, country_name: params[:country_name], affiliation: params[:affiliation], challenge_id: @challenge.friendly_id) do %>
           <input id="post-challenge-switch" type="checkbox" <%= "checked" if @post_challenge %> >
           <span class="switcher mr-2"></span>
-          <span class="label">Show post-challenge submissions</span>
+          <span class="label">Include post-challenge submissions</span>
         <% end %>
       </label>
     </div>
