@@ -1,7 +1,7 @@
 class ChallengesController < ApplicationController
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :terminate_challenge, only: [:show, :index]
-  before_action :set_challenge, only: [:show, :edit, :update, :clef_task, :remove_image, :remove_banner, :export, :import, :remove_invited, :remove_social_media_image]
+  before_action :set_challenge, only: [:show, :edit, :update, :clef_task, :remove_image, :remove_banner, :export, :import, :remove_invited, :remove_social_media_image, :remove_banner_mobile]
   before_action :set_vote, only: [:show, :clef_task]
   before_action :set_follow, only: [:show, :clef_task]
   after_action :verify_authorized, except: [:index, :show]
