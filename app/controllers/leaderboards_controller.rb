@@ -19,15 +19,6 @@ class LeaderboardsController < ApplicationController
     end
     @top_three_winners = @leaderboards.where(baseline: false).first(3)
 
-    if current_participant.present?
-      team_id = get_team_id(@challenge, @current_participant.id)
-      if team_id.present?
-        @self_standing    = @leaderboards.where(submitter_id: team_id, submitter_type: 'Team')
-      else
-        @self_standing    = @leaderboards.where(submitter_id: @current_participant.id, submitter_type: 'Participant')
-      end
-    end
-
     if params[:country_name].present? || params[:affiliation].present?
       @leaderboards = @leaderboards.where(id: @filter.call('leaderboard_ids'))
       @leaderboards = paginate_leaderboards_by(:seq)
@@ -158,13 +149,24 @@ class LeaderboardsController < ApplicationController
   def paginate_leaderboards_by(order)
     nextpage = @leaderboards.page(params[:page]).per(20).order(order)
 
-    if @self_standing.present? && nextpage.present?
-        nextpage.each do |row|
-          if @self_standing.ids.include? row.id
-            @self_standing = nil
-            break
+    if current_participant.present?
+
+      team_id = get_team_id(@challenge, @current_participant.id)
+
+      if team_id.present?
+        @self_standing    = @leaderboards.where(submitter_id: team_id, submitter_type: 'Team')
+      else
+        @self_standing    = @leaderboards.where(submitter_id: @current_participant.id, submitter_type: 'Participant')
+      end
+
+      if @self_standing.present? && nextpage.present?
+          nextpage.each do |row|
+            if @self_standing.ids.include? row.id
+              @self_standing = nil
+              break
+            end
           end
-        end
+      end
     end
 
     nextpage
