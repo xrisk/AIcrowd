@@ -49,19 +49,28 @@ module Challenges
     end
 
     def import_images_from_base64
-      challenge.image_file = decode_base64_data(import_params[:image_file])
-      challenge.banner_file = decode_base64_data(import_params[:banner_file])
 
       ::Challenge::IMPORTABLE_IMAGES.each do |element|
         if element.is_a?(Symbol) # :field_name
-           # Assign decoded image to challenge fields
-           challenge.public_send("#{element}=", decode_base64_data(import_params[element]))
+
+          if !import_params[element].present? || !decode_base64_data(import_params[element]).present?
+            next
+          end
+
+          challenge[element] = decode_base64_data(import_params[element])
+
+          # Assign decoded image to challenge fields
+          challenge.public_send("#{element}=", decode_base64_data(import_params[element]))
         elsif element.is_a?(Hash) # { association_name: :field_name }
           association_name = element.keys.first
           field_name       = element.values.first
 
           # Assign decoded image to associations fields
           challenge.public_send(association_name).each_with_index do |association, index|
+            if !import_params["#{association_name}_attributes"][index][field_name].present? ||
+                !decode_base64_data(import_params["#{association_name}_attributes"][index][field_name]).present?
+              next
+            end
             association.public_send("#{field_name}=", decode_base64_data(import_params["#{association_name}_attributes"][index][field_name]))
           end
         end
