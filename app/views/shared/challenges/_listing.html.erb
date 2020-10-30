@@ -20,7 +20,7 @@
           <% else %>
             <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>" data-toggle="tooltip" data-placement="top" title="<%= challenge_end_time(challenge , challenge.active_round) %>">
               <img src="/assets/img/icon-time.svg">
-              <%= challenge.active_round&.challenge_round %>: <%= challenge_remaining_text(challenge, challenge.active_round) %>
+              <%= challenge.active_round&.challenge_round %>: <%= challenge_remaining_text(challenge, challenge.active_round, false) %>
             </span>
             <% if challenge_weight(challenge) %>
               <span class="badge badge-gold">Weight: <%= challenge_weight(challenge) %></span>

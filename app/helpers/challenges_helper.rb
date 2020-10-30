@@ -26,15 +26,23 @@ module ChallengesHelper
     end
   end
 
-  def challenge_remaining_text(challenge, challenge_round)
+  def challenge_remaining_text(challenge, challenge_round, ending=true)
     case challenge.status
     when :running, :perpetual
       if remaining_time_in_days(challenge_round) >= 2
         "#{pluralize(remaining_time_in_days(challenge_round), 'day')} left"
       elsif remaining_time_in_hours(challenge_round) > 0
-        sanitize_html("#{pluralize(remaining_time_in_hours(challenge_round), 'hour')} left &middot; Ending #{ending_dttm(challenge_round)}")
+        if ending
+          sanitize_html("#{pluralize(remaining_time_in_hours(challenge_round), 'hour')} left &middot; Ending #{ending_dttm(challenge_round)}")
+        else
+          sanitize_html("#{pluralize(remaining_time_in_hours(challenge_round), 'hour')} left")
+        end
       elsif remaining_time_in_seconds(challenge_round) > 0
-        sanitize_html("Less than 1 hour left &middot; Ending #{ending_dttm(challenge_round)}")
+        if ending
+          sanitize_html("Less than 1 hour left &middot; Ending #{ending_dttm(challenge_round)}")
+        else
+          sanitize_html("Less than 1 hour left")
+        end
       else
         "Completed" # display for perpetual challenges
       end
