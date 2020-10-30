@@ -4,7 +4,21 @@
   $('#leaderboards-div').attr("data-request-completed", true);
 <% end %>
 $("#loader-container").hide();
+
+stick_user_rows = document.getElementsByClassName("pinned-user-leaderboard");
+if (stick_user_rows){for(row of stick_user_rows) {row.remove();}};
+
 $(".table-leaderboard").append("<%= j render partial: 'leaderboards', locals: { leaderboards: @leaderboards, current_round: @current_round } %>");
+<% if @self_standing %>
+  if( typeof participant_visited == 'undefined' ) {
+      $(".table-leaderboard").append("<%= j render partial: 'leaderboards', locals: { leaderboards: @self_standing, current_round: @current_round, truncate: 'true', sticky_class: "pinned-user-leaderboard"} %>");
+  }
+<% else %>
+  participant_visited = true
+<%end%>
+
+
+
 
 if (localStorage.getItem('leaderboard-geek-view') === "true") {
   $('.geek-view-normal').addClass('d-none', 100);
