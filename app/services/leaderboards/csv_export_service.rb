@@ -83,7 +83,7 @@ module Leaderboards
           leaderboard.submitter.participants.each do |participant|
             challenge_participants.push(ChallengeParticipant.find_by(challenge_id: leaderboard.challenge.id, participant_id: participant.id))
           end
-        else
+        elsif leaderboard.submitter.present?
           challenge_participants.push(ChallengeParticipant.find_by(challenge_id: leaderboard.challenge.id, participant_id: leaderboard.submitter.id))
         end
 
