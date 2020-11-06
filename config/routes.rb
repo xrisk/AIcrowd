@@ -161,6 +161,8 @@ Rails.application.routes.draw do
     match '/notifications', to: 'email_preferences#update', via: :patch
   end
 
+  match '/api/v1/submissions', to: 'submissions#create', via: :post
+
   resources :job_postings, path: "jobs", only: [:index, :show]
   resources :gdpr_exports, only: [:create]
   resources :landing_page, only: [:index]
