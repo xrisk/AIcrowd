@@ -43,7 +43,7 @@ class Participant < ApplicationRecord
          :registerable,
          :rememberable,
          :validatable,
-         :omniauthable, omniauth_providers: %i[github oauth2_generic]
+         :omniauthable, omniauth_providers: %i[github oauth2_generic google_oauth2]
 
   default_scope { order('participants.name ASC') }
 

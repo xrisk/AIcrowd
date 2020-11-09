@@ -78,7 +78,7 @@ module ChallengeRounds
         first_graded_submission = submissions.find { |submission| submission.grading_status_cd == 'graded' }
         next if first_graded_submission.blank?
 
-        users_leaderboards << build_leaderboard(first_graded_submission, submissions.size, 'Team', team_id, leaderboard_type)
+        users_leaderboards << build_leaderboard(first_graded_submission, submissions.size, 'Team', team_id[0], leaderboard_type)
       end
 
 
@@ -153,7 +153,7 @@ module ChallengeRounds
       entries = dynamic_filters(entries)
       entries = entries.select('teams.id AS team_id, submissions.*')
                   .reorder(submissions_order)
-                  .group_by { |submission| submission.team_id }
+                  .group_by { |submission| [submission.team_id, submission.meta['tags']] }
       return entries
     end
 
