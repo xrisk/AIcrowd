@@ -46,7 +46,7 @@ ActiveAdmin.register Partner do
   form do |f|
     f.inputs "Organizer" do
       f.input :organizer,
-              as:         :select,
+              as:         :searchable_select,
               collection: Organizer.all.sort.map { |organizer| [organizer.organizer, organizer.id] }
       f.input :name
       f.input :image_file,

@@ -39,8 +39,8 @@ ActiveAdmin.register TeamParticipant do
   form do |f|
     f.semantic_errors
     f.inputs do
-      f.input :participant, collection: Participant.order(:slug).pluck(:slug, :id)
-      f.input :role, as: :select, collection: TeamParticipant::ROLES.map { |x| [x.to_s.titleize, x] }
+      f.input :participant, as: :searchable_select, collection: Participant.order(:slug).pluck(:slug, :id)
+      f.input :role, as: :searchable_select, collection: TeamParticipant::ROLES.map { |x| [x.to_s.titleize, x] }
     end
     f.actions
   end
