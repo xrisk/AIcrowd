@@ -16,6 +16,6 @@ class RawImageUploader < CarrierWave::Uploader::Base
     ivar = "@#{mounted_as}_secure_token"
     token = model.instance_variable_get(ivar)
     token ||= model.instance_variable_set(ivar, random_token)
-    "#{model.id}_#{token}.jpg" if original_filename
+    "#{token}.#{file.extension}" if original_filename
   end
 end
