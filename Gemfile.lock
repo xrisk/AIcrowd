@@ -62,6 +62,10 @@ GEM
       ransack (>= 1.8.7)
       sass (~> 3.1)
       sprockets (< 4.1)
+    activeadmin-searchable_select (1.2.0)
+      activeadmin (>= 1.x, < 3)
+      jquery-rails (>= 3.0, < 5)
+      select2-rails (~> 4.0)
     activejob (5.2.2.1)
       activesupport (= 5.2.2.1)
       globalid (>= 0.3.6)
@@ -926,6 +930,7 @@ DEPENDENCIES
   ace-rails-ap
   active_model_serializers
   activeadmin (= 1.4.3)
+  activeadmin-searchable_select
   activerecord-import
   ahoy_matey
   aicrowd_evaluations!

@@ -35,7 +35,7 @@ ActiveAdmin.register JobPosting do
       f.input :title
       f.input :organisation
       f.input :status,
-              as:            :select,
+              as:            :searchable_select,
               collection:    enum_option_pairs(JobPosting, :status),
               include_blank: false
       f.input :contact_email
@@ -44,7 +44,7 @@ ActiveAdmin.register JobPosting do
       f.input :posting_date
       f.input :closing_date
       f.input :location
-      f.input :country
+      f.input :country, as: :searchable_select
       f.input :remote
       f.label 'Description', class: 'ckeditor_label job_posting'
       f.text_area :description, class: 'ckeditor'

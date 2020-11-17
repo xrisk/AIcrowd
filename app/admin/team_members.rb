@@ -30,7 +30,7 @@ ActiveAdmin.register TeamMember do
       f.input :title
       f.input :description
       f.input :section
-      f.input :participant
+      f.input :participant, as: :searchable_select
       f.input :seq
     end
     f.actions

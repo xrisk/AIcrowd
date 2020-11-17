@@ -24,7 +24,7 @@ ActiveAdmin.register Blog do
 
   form do |f|
     f.inputs do
-      f.input :participant
+      f.input :participant, as: :searchable_select
       f.input :title
       f.input :slug
       f.input :seq

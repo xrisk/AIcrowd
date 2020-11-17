@@ -34,7 +34,7 @@ ActiveAdmin.register NewsletterEmail do
 
   form do |f|
     f.inputs do
-      f.input :participant
+      f.input :participant, as: :searchable_select
       f.input :bcc
       f.input :cc
       f.input :subject
