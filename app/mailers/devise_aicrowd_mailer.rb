@@ -16,8 +16,9 @@ class DeviseAicrowdMailer < Devise::Mailer
     @record = record
     @token  = token
     subject = '[AIcrowd] Confirmation Instructions'
+    to = (record.confirmed? && record.unconfirmed_email.present?) ? record.unconfirmed_email : record.email
 
-    mail(to: @record.email, subject: subject)
+    mail(to: to, subject: subject)
   end
 
   def unlock_instructions(record, token, opts = {})
