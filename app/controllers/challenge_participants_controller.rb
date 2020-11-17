@@ -1,5 +1,6 @@
 class ChallengeParticipantsController < ApplicationController
   before_action :authenticate_participant!
+  before_action :set_challenge
 
   def create
     @challenge                            = Challenge.friendly.find(params[:challenge_id])
@@ -41,7 +42,23 @@ class ChallengeParticipantsController < ApplicationController
     end
   end
 
+  def export
+    authorize @challenge, :export?
+
+    @challenge_participants = @challenge.challenge_participants
+    csv_data = ChallengeParticipants::CSVExportService.new(@challenge_participants, @challenge).call.value
+
+
+    send_data csv_data,
+              type:     'text/csv',
+              filename: "#{@challenge.challenge.to_s.parameterize.underscore}_participants_export.csv"
+  end
+
   private
+
+  def set_challenge
+    @challenge     = Challenge.friendly.find(params[:challenge_id])
+  end
 
   def accept_participation_terms(participant)
     if !participant.has_accepted_participation_terms?

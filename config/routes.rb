@@ -44,7 +44,9 @@ def challenge_routes
   resources :participation_terms, only: [:show, :create, :index]
   resource :challenge_rules, only: [:show]
   resources :challenge_rules, only: [:show]
-  resources :challenge_participants
+  resources :challenge_participants do
+    get :export, on: :collection
+  end
   resources :insights, only: [:index] do
     collection do
       get 'submissions_vs_time'
