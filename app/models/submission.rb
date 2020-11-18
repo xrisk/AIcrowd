@@ -50,7 +50,7 @@ class Submission < ApplicationRecord
     end
   end
 
-  after_save do
+  after_commit do
     # !self.meta&.dig('final_avg') is added to prevent infinite loops in New Leaderboard Calculation
     if grading_status_cd == 'graded' && !meta&.dig('private_ignore-leaderboard-job-computation')
       Rails.logger.info "[Submission Model] Starting the Leaderboard Update Job! (onsave)"
