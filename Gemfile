@@ -98,6 +98,7 @@ gem "select2-rails"
 gem 'dalli', '~> 2.7', '>= 2.7.10' # Memcache client
 gem 'csv'
 gem 'airbrake-ruby'
+gem 'onebox'
 
 # HTTP clients
 gem 'faraday', '~> 1.0'

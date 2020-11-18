@@ -687,6 +687,14 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.string "slug"
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.integer "reference_id"
+    t.string "reference_type"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "mandrill_messages", force: :cascade do |t|
     t.jsonb "res"
     t.jsonb "message"
@@ -933,6 +941,17 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.index ["organizer_id"], name: "index_partners_on_organizer_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
+    t.string "tagline"
+    t.text "description"
+    t.string "external_link"
+    t.integer "challenge_id"
+    t.integer "submission_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "reserved_userhandles", force: :cascade do |t|
