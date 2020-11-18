@@ -93,6 +93,8 @@ GEM
       device_detector
       geocoder (>= 1.4.5)
       safely_block (>= 0.2.1)
+    airbrake (11.0.1)
+      airbrake-ruby (~> 5.1)
     airbrake-ruby (5.1.0)
       rbtree3 (~> 0.5)
     arbre (1.1.1)
@@ -934,6 +936,7 @@ DEPENDENCIES
   activerecord-import
   ahoy_matey
   aicrowd_evaluations!
+  airbrake
   airbrake-ruby
   authtrail
   aws-sdk (~> 2.2)

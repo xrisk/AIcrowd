@@ -99,6 +99,7 @@ gem 'dalli', '~> 2.7', '>= 2.7.10' # Memcache client
 gem 'csv'
 gem 'activeadmin-searchable_select'
 gem 'airbrake-ruby'
+gem 'airbrake'
 
 # HTTP clients
 gem 'faraday', '~> 1.0'
