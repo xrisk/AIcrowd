@@ -1,0 +1,67 @@
+<!-- section -->
+<section class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- md content -->
+      <div class="col-md-8 col-lg-7">
+        <div>
+
+          <h1 id="introduction" class="mt-0"><%=@post.title%></h1>
+          <!-- author/options -->
+          <div class="row">
+            <div class="col-12 d-flex align-items-center flex-wrap">
+              <div class="row avatar-group p-3">
+                <span>
+                  Contributed by
+                  <%= render partial: 'participants/get_user_profile', locals: { participant: current_participant, username: 'false' } %>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <%= @post.description.html_safe %>
+          </div>
+        </div>
+      </div>
+      <!-- /md content -->
+
+      <!-- top contributors -->
+      <div class="top-contributors-container col-sm-12 col-md-4 col-lg-3">
+        <%= render 'posts/sidenav', post: @post%>
+      </div>
+      <!-- /top contributors -->
+
+    </div>
+  </div>
+</section>
+
+
+<section class="section-p-md col-md-12">
+  <div>
+    <% if @post.notebook_html.present? %>
+      <hr/>
+      <div class="row">
+        <div class="col-md-9">
+          <button type="button" class="btn btn-sm btn-link">Jupyter Notebook</button>
+        </div>
+        <div class="col-md-0">
+          <button type="button" class="btn btn-sm btn-primary">Download</button>
+        </div>
+        <div class="col-md-1">
+          <button type="button" class="btn btn-sm btn-primary">Execute in Colab</button>
+        </div>
+      </div>
+      <hr/>
+      <%= @post.notebook_html.html_safe %>
+    <% end %>
+  </div>
+  <div>
+    <% if @post.external_link.present? %>
+      <h3>Code</h3>
+      <hr/>
+      <%= Onebox.preview('https://gist.github.com/sujnesh/f8bc5b3f38668a14b4c1706d4abb7fb9').to_s.html_safe %>
+    <% end%>
+  </div>
+</section>
+<!-- /section -->
+

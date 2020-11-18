@@ -1,0 +1,49 @@
+<header class="mb-0">
+  <div class=row>
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-1">
+      <button type="button" class="btn btn-primary">Vote</button>
+    </div>
+  </div>
+</header>
+<div>
+  <%
+    users = post.likes.includes(:participant).map(&:participant).sample(50)
+    users_remaining_count = post.likes.count - 50
+  %>
+  <div class="row avatar-group p-3">
+  <% if current_participant%>
+    <span>
+      <%= render partial: 'participants/get_user_profile', locals: { participant: current_participant, username: 'false' } %>
+    </span>
+  <% end %>
+  <% users.each do |user| %>
+    <% if !(current_participant && user.id==current_participant.id) %>
+      <span>
+        <%= render partial: 'participants/get_user_profile', locals: { participant: user, username: 'false' } %>
+      </span>
+    <% end %>
+  <% end %>
+  <% if users_remaining_count > 0 %>
+    <span class="avatar user-rating-0 text-center" data-toggle="tooltip" title="<%= users_remaining_count %> more participants">
+      <span class="fa fa-ellipsis-h align-bottom"></span>
+    </span>
+  <% end %>
+  </div>
+  <% if post.challenge.present? %>
+    <div class="card-body">
+      <div>
+        <h4 style="text-align: center;">Challenge</h4>
+      </div>
+      <img class="card-img" src="<%= post.challenge.image_url %>" alt="Card image">
+    </div>
+    <div>
+      <button type="button" class="btn btn-link"><%= post.challenge.challenge %></button>
+    </div>
+    <!-- <div>
+      <h4 style="text-align: center;">Submission</h4>
+      <button type="button" class="btn btn-link"><%= post.submission_id %></button>
+    </div> -->
+  <% end %>
+</div>
