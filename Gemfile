@@ -101,6 +101,9 @@ gem 'activeadmin-searchable_select'
 gem 'airbrake-ruby'
 gem 'onebox'
 gem 'airbrake'
+gem 'gist'
+gem 'commontator'
+gem 'sassc-rails'
 
 # HTTP clients
 gem 'faraday', '~> 1.0'

@@ -172,6 +172,8 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.integer "meta_challenge_id"
     t.integer "ml_challenge_id"
     t.bigint "old_participant_id"
+    t.text "submission_link"
+    t.integer "challenge_leaderboard_extra_id"
     t.index ["challenge_id"], name: "index_base_leaderboards_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_base_leaderboards_on_challenge_round_id"
     t.index ["leaderboard_type_cd"], name: "index_base_leaderboards_on_leaderboard_type_cd"
@@ -323,6 +325,14 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.index ["organizer_id"], name: "index_challenge_calls_on_organizer_id"
   end
 
+  create_table "challenge_leaderboard_extras", force: :cascade do |t|
+    t.integer "challenge_id"
+    t.string "filter"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "challenge_participants", force: :cascade do |t|
     t.bigint "challenge_id"
     t.bigint "participant_id"
@@ -338,6 +348,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.datetime "challenge_rules_accepted_date"
     t.integer "challenge_rules_accepted_version"
     t.boolean "challenge_rules_additional_checkbox", default: false
+    t.jsonb "registration_form_details"
     t.index ["challenge_id"], name: "index_challenge_participants_on_challenge_id"
     t.index ["participant_id"], name: "index_challenge_participants_on_participant_id"
   end
@@ -357,6 +368,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.float "weight"
     t.integer "challenge_round_id"
     t.integer "occur_day"
+    t.boolean "exclusive", default: true
   end
 
   create_table "challenge_rounds", force: :cascade do |t|
@@ -388,8 +400,12 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.boolean "freeze_flag", default: false, null: false
     t.integer "freeze_duration"
     t.string "submissions_type_cd", default: "artifact", null: false
-    t.string "debug_submission_limit"
+    t.integer "debug_submission_limit", default: 0
     t.integer "debug_submission_time"
+    t.string "other_scores_fieldnames"
+    t.string "debug_submission_limit_period_cd"
+    t.boolean "show_leaderboard"
+    t.boolean "media_on_leaderboard"
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
   end
 
@@ -496,6 +512,9 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.float "weight", default: 0.0, null: false
     t.boolean "editors_selection", default: false, null: false
     t.boolean "ml_challenge", default: false, null: false
+    t.string "social_media_image_file"
+    t.string "registration_form_fields"
+    t.string "submission_window_type_cd", default: "rolling_window"
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
   end
@@ -528,6 +547,49 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.string "eua_file"
     t.boolean "use_challenge_dataset_files", default: false, null: false
     t.index ["organizer_id"], name: "index_clef_tasks_on_organizer_id"
+  end
+
+  create_table "commontator_comments", force: :cascade do |t|
+    t.bigint "thread_id", null: false
+    t.string "creator_type", null: false
+    t.bigint "creator_id", null: false
+    t.string "editor_type"
+    t.bigint "editor_id"
+    t.text "body", null: false
+    t.datetime "deleted_at"
+    t.integer "cached_votes_up", default: 0
+    t.integer "cached_votes_down", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "parent_id"
+    t.index ["cached_votes_down"], name: "index_commontator_comments_on_cached_votes_down"
+    t.index ["cached_votes_up"], name: "index_commontator_comments_on_cached_votes_up"
+    t.index ["creator_id", "creator_type", "thread_id"], name: "index_commontator_comments_on_c_id_and_c_type_and_t_id"
+    t.index ["editor_type", "editor_id"], name: "index_commontator_comments_on_editor_type_and_editor_id"
+    t.index ["parent_id"], name: "index_commontator_comments_on_parent_id"
+    t.index ["thread_id", "created_at"], name: "index_commontator_comments_on_thread_id_and_created_at"
+  end
+
+  create_table "commontator_subscriptions", force: :cascade do |t|
+    t.bigint "thread_id", null: false
+    t.string "subscriber_type", null: false
+    t.bigint "subscriber_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subscriber_id", "subscriber_type", "thread_id"], name: "index_commontator_subscriptions_on_s_id_and_s_type_and_t_id", unique: true
+    t.index ["thread_id"], name: "index_commontator_subscriptions_on_thread_id"
+  end
+
+  create_table "commontator_threads", force: :cascade do |t|
+    t.string "commontable_type"
+    t.bigint "commontable_id"
+    t.string "closer_type"
+    t.bigint "closer_id"
+    t.datetime "closed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["closer_type", "closer_id"], name: "index_commontator_threads_on_closer_type_and_closer_id"
+    t.index ["commontable_type", "commontable_id"], name: "index_commontator_threads_on_c_id_and_c_type", unique: true
   end
 
   create_table "daily_practice_goals", force: :cascade do |t|
@@ -690,7 +752,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
   create_table "likes", force: :cascade do |t|
     t.integer "reference_id"
     t.string "reference_type"
-    t.integer "user_id"
+    t.integer "participant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -952,6 +1014,9 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.integer "submission_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "thumbnail"
+    t.text "notebook_html"
+    t.string "gist_id"
   end
 
   create_table "reserved_userhandles", force: :cascade do |t|
@@ -1182,6 +1247,9 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
   add_foreign_key "challenges_organizers", "challenges"
   add_foreign_key "challenges_organizers", "organizers"
   add_foreign_key "clef_tasks", "organizers"
+  add_foreign_key "commontator_comments", "commontator_comments", column: "parent_id", on_update: :restrict, on_delete: :cascade
+  add_foreign_key "commontator_comments", "commontator_threads", column: "thread_id", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "commontator_subscriptions", "commontator_threads", column: "thread_id", on_update: :cascade, on_delete: :cascade
   add_foreign_key "dataset_file_downloads", "dataset_files"
   add_foreign_key "dataset_file_downloads", "participants"
   add_foreign_key "dataset_folders", "challenges"
@@ -1432,40 +1500,6 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     WHERE ((cr.participant_id = p.id) AND (cr.challenge_id = c.id));
   SQL
 
-  create_view "ongoing_leaderboards",  sql_definition: <<-SQL
-      SELECT base_leaderboards.id,
-      base_leaderboards.challenge_id,
-      base_leaderboards.challenge_round_id,
-      base_leaderboards.row_num,
-      base_leaderboards.previous_row_num,
-      base_leaderboards.slug,
-      base_leaderboards.name,
-      base_leaderboards.entries,
-      base_leaderboards.score,
-      base_leaderboards.score_secondary,
-      base_leaderboards.media_large,
-      base_leaderboards.media_thumbnail,
-      base_leaderboards.media_content_type,
-      base_leaderboards.description,
-      base_leaderboards.description_markdown,
-      base_leaderboards.leaderboard_type_cd,
-      base_leaderboards.refreshed_at,
-      base_leaderboards.created_at,
-      base_leaderboards.updated_at,
-      base_leaderboards.submission_id,
-      base_leaderboards.post_challenge,
-      base_leaderboards.seq,
-      base_leaderboards.baseline,
-      base_leaderboards.baseline_comment,
-      base_leaderboards.meta,
-      base_leaderboards.submitter_type,
-      base_leaderboards.submitter_id,
-      base_leaderboards.meta_challenge_id,
-      base_leaderboards.ml_challenge_id
-     FROM base_leaderboards
-    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
-  SQL
-
   create_view "leaderboards",  sql_definition: <<-SQL
       SELECT base_leaderboards.id,
       base_leaderboards.challenge_id,
@@ -1495,9 +1529,49 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
       base_leaderboards.submitter_type,
       base_leaderboards.submitter_id,
       base_leaderboards.meta_challenge_id,
-      base_leaderboards.ml_challenge_id
+      base_leaderboards.ml_challenge_id,
+      base_leaderboards.old_participant_id,
+      base_leaderboards.submission_link,
+      base_leaderboards.challenge_leaderboard_extra_id
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'leaderboard'::text);
+  SQL
+
+  create_view "ongoing_leaderboards",  sql_definition: <<-SQL
+      SELECT base_leaderboards.id,
+      base_leaderboards.challenge_id,
+      base_leaderboards.challenge_round_id,
+      base_leaderboards.row_num,
+      base_leaderboards.previous_row_num,
+      base_leaderboards.slug,
+      base_leaderboards.name,
+      base_leaderboards.entries,
+      base_leaderboards.score,
+      base_leaderboards.score_secondary,
+      base_leaderboards.media_large,
+      base_leaderboards.media_thumbnail,
+      base_leaderboards.media_content_type,
+      base_leaderboards.description,
+      base_leaderboards.description_markdown,
+      base_leaderboards.leaderboard_type_cd,
+      base_leaderboards.refreshed_at,
+      base_leaderboards.created_at,
+      base_leaderboards.updated_at,
+      base_leaderboards.submission_id,
+      base_leaderboards.post_challenge,
+      base_leaderboards.seq,
+      base_leaderboards.baseline,
+      base_leaderboards.baseline_comment,
+      base_leaderboards.meta,
+      base_leaderboards.submitter_type,
+      base_leaderboards.submitter_id,
+      base_leaderboards.meta_challenge_id,
+      base_leaderboards.ml_challenge_id,
+      base_leaderboards.old_participant_id,
+      base_leaderboards.submission_link,
+      base_leaderboards.challenge_leaderboard_extra_id
+     FROM base_leaderboards
+    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
   SQL
 
 end

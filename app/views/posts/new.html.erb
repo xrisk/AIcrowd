@@ -14,7 +14,7 @@
         <div class="form-group">
           <span class="label-text">Avatar</span>
           <div class="custom-file mt-1">
-            <%= f.file_field :image_file, class: 'custom-file-input' %>
+            <%= f.file_field :thumbnail, class: 'custom-file-input' %>
             <label class="custom-file-label" for="customFile" aria-describedby="avatarHelp">Choose file</label>
             <small id="avatarHelp" class="form-text text-muted">Your image will be cropped to a square aspect ratio if required. 5 MB limit</small>
           </div>
@@ -49,13 +49,13 @@
 
         <div class="form-group">
           <label for="challenge">Challenge</label>
-          <%= f.collection_select :challenge_id, Challenge.all, :id, :challenge, include_blank: true%>
+          <%= f.collection_select :challenge_id, ChallengeParticipant.where(participant_id: current_participant.id).map(&:challenge), :id, :challenge, include_blank: true%>
           <span>Is this related to a particular challenge?</span>
         </div>
 
         <div class="form-group">
           <label for="submission">Submission</label>
-          <%= f.collection_select :submission_id, Submission.all, :id, :id, include_blank: true %>
+          <%= f.collection_select :submission_id, Submission.where(participant_id: current_participant.id), :id, :id, include_blank: true %>
           <span>Is this related to a particular submission?</span>
         </div>
 

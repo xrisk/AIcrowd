@@ -3,7 +3,9 @@
     <div class="col-md-3">
     </div>
     <div class="col-md-1">
-      <button type="button" class="btn btn-primary">Vote</button>
+      <%= link_to post_likes_path(post), id: post.id, method: :post, remote: true do %>
+        <button type="button" class="btn btn-primary">Vote</button>
+      <% end %>
     </div>
   </div>
 </header>
@@ -12,25 +14,27 @@
     users = post.likes.includes(:participant).map(&:participant).sample(50)
     users_remaining_count = post.likes.count - 50
   %>
-  <div class="row avatar-group p-3">
-  <% if current_participant%>
-    <span>
-      <%= render partial: 'participants/get_user_profile', locals: { participant: current_participant, username: 'false' } %>
-    </span>
-  <% end %>
-  <% users.each do |user| %>
-    <% if !(current_participant && user.id==current_participant.id) %>
+  <% if post.likes.count > 5 %>
+    <div class="row avatar-group p-3">
+    <% if current_participant%>
       <span>
-        <%= render partial: 'participants/get_user_profile', locals: { participant: user, username: 'false' } %>
+        <%= render partial: 'participants/get_user_profile', locals: { participant: current_participant, username: 'false' } %>
       </span>
     <% end %>
+    <% users.each do |user| %>
+      <% if !(current_participant && user.id==current_participant.id) %>
+        <span>
+          <%= render partial: 'participants/get_user_profile', locals: { participant: user, username: 'false' } %>
+        </span>
+      <% end %>
+    <% end %>
+    <% if users_remaining_count > 0 %>
+      <span class="avatar user-rating-0 text-center" data-toggle="tooltip" title="<%= users_remaining_count %> more participants">
+        <span class="fa fa-ellipsis-h align-bottom"></span>
+      </span>
+    <% end %>
+    </div>
   <% end %>
-  <% if users_remaining_count > 0 %>
-    <span class="avatar user-rating-0 text-center" data-toggle="tooltip" title="<%= users_remaining_count %> more participants">
-      <span class="fa fa-ellipsis-h align-bottom"></span>
-    </span>
-  <% end %>
-  </div>
   <% if post.challenge.present? %>
     <div class="card-body">
       <div>

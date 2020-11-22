@@ -45,10 +45,10 @@
           <button type="button" class="btn btn-sm btn-link">Jupyter Notebook</button>
         </div>
         <div class="col-md-0">
-          <button type="button" class="btn btn-sm btn-primary">Download</button>
+          <button type="button" class="btn btn-sm btn-primary"><a href='<%= @download_url %>' target="_blank">Download</a></button>
         </div>
         <div class="col-md-1">
-          <button type="button" class="btn btn-sm btn-primary">Execute in Colab</button>
+          <button type="button" class="btn btn-sm btn-primary"><a href='<%= @execute_in_colab_url %>' target="_blank">Execute in Colab</a></button>
         </div>
       </div>
       <hr/>
@@ -61,6 +61,10 @@
       <hr/>
       <%= Onebox.preview('https://gist.github.com/sujnesh/f8bc5b3f38668a14b4c1706d4abb7fb9').to_s.html_safe %>
     <% end%>
+  </div>
+  <hr/>
+  <div class="container-fluid">
+    <%= commontator_thread(@post) %>
   </div>
 </section>
 <!-- /section -->

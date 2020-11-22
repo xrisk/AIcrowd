@@ -1,5 +1,8 @@
 class PostsController < InheritedResources::Base
 
+  COLAB_URL = 'https://colab.research.google.com/gist/'
+  GIST_URL = "https://gist.github.com/"
+  USER_NAME = "sujnesh"
   def new
     @post = Post.new
   end
@@ -10,29 +13,25 @@ class PostsController < InheritedResources::Base
 
   def show
     @post = Post.find_by_id(params[:id])
+    commontator_thread_show(@post)
+    if @post.gist_id.present?
+      @execute_in_colab_url = COLAB_URL + USER_NAME + '/' + @post.gist_id
+      @download_url = GIST_URL + USER_NAME + '/' + @post.gist_id
+    end
   end
 
   def update
   end
 
   def create
-    byebug
-    post = Post.new(post_params)
-    if params["post"]["notebook_file"].present?
-      uploaded_file = params["post"]["notebook_file"]
-      notebook_file_path = Rails.root.join('public', 'uploads',uploaded_file.original_filename)
-      File.open(notebook_file_path, 'wb'){ |file| file.write(uploaded_file.read)}
-      `jupyter nbconvert --to html #{notebook_file_path}`
-      html_filename = uploaded_file.original_filename.chomp(File.extname(uploaded_file.original_filename)) + (".html")
-      post.notebook_html = File.read(Rails.root.join('public', 'uploads', html_filename)).html_safe
-    end
+    post = Posts::CreatePostService.new(post_params).call
+
     if post.save
       render :index
     else
       flash[:error] = 'Something went wrong'
       render :new
     end
-    byebug
   end
 
   def destroy

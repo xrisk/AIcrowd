@@ -17,6 +17,8 @@
 //= require select2
 //= require ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js
 //= require ace-rails-ap
+//= require jquery
+//= require commontator/application
 
 // --------------------- Vendor ------------------------ //
 //= require jQuery-File-Upload
