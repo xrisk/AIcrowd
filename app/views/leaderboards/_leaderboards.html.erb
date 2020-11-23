@@ -104,7 +104,7 @@
         </strong></td>
       <% end %>
     <% else %>
-      <% leaderboard_other_scores_array(leaderboard, challenge).each do |other_score| %>
+      <% leaderboard_other_scores_array(leaderboard, current_round).each do |other_score| %>
         <td class="text-right <%= cls ||= '' %>"><strong><%= other_score %></strong></td>
       <% end %>
       <% if !leaderboard.baseline? %>
