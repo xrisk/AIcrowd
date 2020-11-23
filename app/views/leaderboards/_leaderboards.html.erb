@@ -7,13 +7,13 @@
 
     if !participants.empty?
       team = leaderboard.try(:team)
-      if team.present?
+      if !leaderboard.baseline? && team.present?
         participants.each do |participant|
           if @current_participant && participant && @current_participant.id == participant.id
             cls = "sticky-footer current-user"
           end
         end
-      elsif participants.length==1
+      elsif !leaderboard.baseline? && participants.length==1
         if @current_participant && participants[0] && @current_participant.id == participants[0].id
           cls = "sticky-footer current-user"
         end
