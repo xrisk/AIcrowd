@@ -51,11 +51,11 @@ module LeaderboardHelper
     end
   end
 
-  def leaderboard_other_scores_array(leaderboard, challenge)
+  def leaderboard_other_scores_array(leaderboard, challenge_round)
     other_scores = []
-    challenge.other_scores_fieldnames_array.map(&:to_s).each do |fname|
+    challenge_round.other_scores_fieldnames_array.map(&:to_s).each do |fname|
       other_scores << if (leaderboard.meta) && (leaderboard.meta.key? fname)
-                        (leaderboard.meta[fname].nil? ? "-" : leaderboard_formatted_value(challenge.active_round, leaderboard.meta[fname]))
+                        (leaderboard.meta[fname].nil? ? "-" : leaderboard_formatted_value(challenge_round, leaderboard.meta[fname]))
                       else
                         '-'
                       end
@@ -63,9 +63,9 @@ module LeaderboardHelper
     return other_scores
   end
 
-  def leaderboard_meta_challenge_other_scores_array(leaderboard, challenge, participant_id)
+  def leaderboard_meta_challenge_other_scores_array(leaderboard, challenge_round, participant_id)
     other_scores = []
-    challenge.other_scores_fieldnames_array.map(&:to_s).each do |fname|
+    challenge_round.other_scores_fieldnames_array.map(&:to_s).each do |fname|
       if leaderboard.meta && (leaderboard.meta.key? fname) && (leaderboard.meta[fname]) && (leaderboard.meta[fname].key? 'position')
         other_scores << leaderboard.meta[fname]
       else

@@ -85,7 +85,7 @@
           <% end %>
         <% end %>
       </td>
-      <% leaderboard_meta_challenge_other_scores_array(leaderboard, challenge, current_participant&.id).each do |problem_score| %>
+      <% leaderboard_meta_challenge_other_scores_array(leaderboard, current_round, current_participant&.id).each do |problem_score| %>
         <td class="text-right <%= cls ||= '' %>">
           <% if problem_score['position'].present? %>
             <span class="geek-view-normal" data-toggle="tooltip" data-placement="top" title="Rank in problem"><strong>

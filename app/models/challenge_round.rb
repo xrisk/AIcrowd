@@ -72,4 +72,28 @@ class ChallengeRound < ApplicationRecord
   def recalculate_leaderboard
     CalculateLeaderboardJob.perform_now(challenge_round_id: id) unless freeze_flag
   end
+
+
+  def other_scores_fieldnames_array(participant_id=nil)
+    participant = Participant.find(participant_id)
+    challenge_problems = if participant.present?
+                           return self.challenge.challenge_problems if participant&.admin?
+                           return self.challenge.challenge_problems unless participant.present?
+
+                           challenge_participant = participant.challenge_participants.where(challenge_id: self.challenge.id).first
+
+                           return self.challenge.challenge_problems unless challenge_participant.present?
+
+                           day_num               = (Time.now.to_date - challenge_participant.challenge_rules_accepted_date.to_date).to_i + 1
+                           self.challenge.challenge_problems.where("occur_day <= ?", day_num)
+                         else
+                           self.challenge.challenge_problems
+                         end
+
+    if self.challenge.meta_challenge || self.challenge.ml_challenge
+      return self.challenge.challenge_problems.pluck('challenge_round_id')
+    end
+    arr = other_scores_fieldnames
+    arr&.split(',')&.map(&:strip) || []
+  end
 end

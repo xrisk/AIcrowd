@@ -20,7 +20,7 @@
       </th>
     <% end %>
   <% else %>
-    <% @challenge.other_scores_fieldnames_array.each do |fname| %>
+    <% current_round.other_scores_fieldnames_array.each do |fname| %>
       <th scope="col" class="text-right other-score-title"><%= fname %></th>
     <% end %>
     <th scope="col" class="text-right">Entries</th>
