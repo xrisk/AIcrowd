@@ -183,6 +183,11 @@
             <%= f.text_field :other_scores_fieldnames, class: "form-control" %>
             <small class="form-text text-muted">Comma seperated list of additional scores generated during evaluation (max 5 fields)</small>
           </div>
+          <div>
+            <label for="otherScoresFieldnames">Display name for other scores (optional)</label>
+            <%= f.text_field :other_scores_fieldnames_display, class: "form-control" %>
+            <small class="form-text text-muted">Display name for additional score columns</small>
+          </div>
         </div>
       </div>
 

@@ -440,7 +440,8 @@ class ChallengesController < ApplicationController
         :debug_submission_limit_period,
         :media_on_leaderboard,
         :show_leaderboard,
-        :other_scores_fieldnames
+        :other_scores_fieldnames,
+        :other_scores_fieldnames_display
       ],
       challenge_rules_attributes: [
         :id,

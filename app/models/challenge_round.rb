@@ -93,7 +93,15 @@ class ChallengeRound < ApplicationRecord
     if self.challenge.meta_challenge || self.challenge.ml_challenge
       return self.challenge.challenge_problems.pluck('challenge_round_id')
     end
-    arr = other_scores_fieldnames
-    arr&.split(',')&.map(&:strip) || []
+
+    arr = other_scores_fieldnames&.split(',')&.map(&:strip)
+    display_arr = other_scores_fieldnames_display&.split(',')&.map(&:strip)
+    if arr.present? && display_arr.present? && arr.length == display_arr.length && display_arr.length > 0
+      return display_arr
+    elsif arr.present? && arr.length > 0
+      return arr
+    else
+      return []
+    end
   end
 end
