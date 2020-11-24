@@ -9,6 +9,9 @@ class CreatePosts < ActiveRecord::Migration[5.2]
       t.integer :submission_id
       t.text :thumbnail
       t.text :notebook_html
+      t.string :slug
+      t.string :gist_id
+      t.string :notebook_s3_url
 
       t.timestamps
     end

@@ -1050,7 +1050,6 @@ DEPENDENCIES
   safely_block (~> 0.2.2)
   sanitize (~> 5.2)
   sass-rails
-  sassc-rails
   scenic (~> 1.3)
   scss_lint
   sdoc (~> 0.4.0)

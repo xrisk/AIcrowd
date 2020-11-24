@@ -1,9 +1,14 @@
 class Post < ApplicationRecord
+
+  extend FriendlyId
+  friendly_id :title, use: :slugged
   has_many :likes, as: :reference, dependent: :destroy
   belongs_to :challenge, optional: true
   belongs_to :submission, optional: true
   mount_uploader :thumbnail, RawImageUploader
   acts_as_commontable
+  attr_accessor :notebook_file_path
+
 
 
   def liked?(pariticipant)

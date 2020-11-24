@@ -9,7 +9,8 @@
         </div>
 
       <!-- account settings -->
-      <%= form_for Post.new, html: { method: :post } do |f| %>
+      <%= form_for @post, html: { method: :post } do |f| %>
+        <%= f.hidden_field :notebook_file_path, value: @post.notebook_file_path %>
 
         <div class="form-group">
           <span class="label-text">Avatar</span>
@@ -45,6 +46,7 @@
         <div class="form-group">
           <label for="gist_link">Add Link</label>
          <%= f.text_field :external_link, placeholder: 'Add Link', class: "form-control" %>
+         <%= f.button 'Fetch Url', type: 'submit', class: "btn btn-sm btn-secondary", name: 'notebook_url_fetch'%>
         </div>
 
         <div class="form-group">
@@ -69,7 +71,4 @@
   </div>
 </div>
 <script>
-  CKEDITOR.replace( 'post_description', {
-        height: 800
-    } );
 </script>

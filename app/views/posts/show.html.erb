@@ -56,11 +56,11 @@
     <% end %>
   </div>
   <div>
-    <% if @post.external_link.present? %>
+    <% if @external_link.present? %>
       <h3>Code</h3>
       <hr/>
-      <%= Onebox.preview('https://gist.github.com/sujnesh/f8bc5b3f38668a14b4c1706d4abb7fb9').to_s.html_safe %>
-    <% end%>
+      <%= Onebox.preview(@external_link).to_s.html_safe %>
+    <% end %>
   </div>
   <hr/>
   <div class="container-fluid">
