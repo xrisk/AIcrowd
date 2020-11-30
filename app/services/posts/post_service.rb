@@ -1,6 +1,7 @@
 module Posts
   GIST_URL = "https://gist.github.com/"
   class PostService < BaseService
+    include ActiveModel::Model
 
     def initialize params, post_id=nil
       @params = params
@@ -25,10 +26,14 @@ module Posts
       end
 
       if notebook_file_path.present?
-        `jupyter nbconvert --to html #{notebook_file_path}`
-        notebook_gist_url = `gist #{notebook_file_path}`
-        # post.notebook_s3_url = upload_to_s3(notebook_file_path, )
+        `jupyter nbconvert --ExecutePreprocessor.allow_errors=true --to html #{notebook_file_path}`
         html_filename = filename.chomp(File.extname(filename)) + (".html")
+        unless File.exist?(Rails.root.join('public', 'uploads', html_filename))
+          errors.add(:base, "Sorry, the notebook seems to be private. Please make it public and try again.")
+          return
+        end
+        notebook_gist_url = `gist #{notebook_file_path}`
+        post.notebook_s3_url = upload_to_s3(notebook_file_path, )
         post.notebook_html = File.read(Rails.root.join('public', 'uploads', html_filename)).html_safe
         post.gist_id = notebook_gist_url.strip.gsub(GIST_URL, "")
       end

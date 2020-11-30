@@ -47,7 +47,7 @@ class PostsController < InheritedResources::Base
     if post.save
       render :index
     else
-      flash[:error] = 'Something went wrong'
+      flash[:error] = t(result.errors[:base])
       render :new
     end
   end
@@ -72,7 +72,7 @@ class PostsController < InheritedResources::Base
     if post.save
       render :index
     else
-      flash[:error] = 'Something went wrong'
+      flash[:error] = t(result.errors[:base])
       render :new
     end
   end
