@@ -1,15 +1,18 @@
 module Posts
   GIST_URL = "https://gist.github.com/"
-  class CreatePostService < BaseService
+  class PostService < BaseService
 
-    def initialize params
+    def initialize params, post_id=nil
       @params = params
+      @post_id = post_id
     end
 
     def call
-      post = Post.new(@params)
-      byebug
-      external_link = @params[:external_link]
+      if @post_id
+        post = Post.find_by_id(@post_id)
+      else
+        post = Post.new(@params)
+      end
 
       if @params[:notebook_file].present?
         uploaded_file = @params[:notebook_file]

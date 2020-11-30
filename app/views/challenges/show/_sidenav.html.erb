@@ -48,3 +48,13 @@
 <% if policy(challenge).show_submissions? && (latest_submissions.present? || @challenge.meta_challenge) %>
   <%= render 'challenges/show/latest_five_submissions', latest_submissions: latest_submissions, challenge: challenge %>
 <% end %>
+<% if challenge.posts.count > 0 %>
+  <header class="section-header">
+    <div>
+      <h4>Latest Posts</h4>
+    </div>
+
+    <%= link_to 'See all', posts_path, class: "btn btn-secondary btn-sm" %>
+  </header>
+  <%= render 'shared/posts/post_list',  posts: challenge.posts %>
+<% end %>

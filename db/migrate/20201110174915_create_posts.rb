@@ -12,6 +12,7 @@ class CreatePosts < ActiveRecord::Migration[5.2]
       t.string :slug
       t.string :gist_id
       t.string :notebook_s3_url
+      t.integer :participant_id
 
       t.timestamps
     end

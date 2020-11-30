@@ -114,6 +114,7 @@ class Participant < ApplicationRecord
   has_many :participant_ml_challenge_goals, dependent: :destroy
   has_many :ml_activity_points
   has_many :likes, dependent: :destroy
+  has_many :posts
 
   validates :email,
             presence:              true,

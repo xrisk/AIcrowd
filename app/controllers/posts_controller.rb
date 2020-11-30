@@ -16,20 +16,48 @@ class PostsController < InheritedResources::Base
     if @post.gist_id.present?
       @execute_in_colab_url = COLAB_URL + USER_NAME + '/' + @post.gist_id
     end
-    unless @post.external_link.include?("https://colab.research.google.com")
+    unless @post.external_link.present? && @post.external_link.include?("https://colab.research.google.com")
       @external_link = @post.external_link
     end
   end
 
   def update
+    if !params["remove_notebook"].nil?
+      @post = remove_notebook(post_params[:id].to_i)
+      render :edit and return
+    end
+
+    if !params["notebook_url_fetch"].nil?
+      @post = Post.find_by_id(post_params[:id].to_i)
+      url = params["post"]["external_link"]
+      @post.external_link = url
+      if url.include?("colab.research.google.com")
+        notebook_file_path = colab_handler(url)
+        @post.notebook_file_path = notebook_file_path
+        flash[:success] = "Fetched successfully"
+        render :edit and return
+      else
+        flash[:success] = "Fetched Successfully"
+        return
+      end
+    end
+
+    post = Posts::PostService.new(post_params, post_params[:id].to_i).call
+
+    if post.save
+      render :index
+    else
+      flash[:error] = 'Something went wrong'
+      render :new
+    end
   end
 
   def create
     if !params["notebook_url_fetch"].nil?
+      @post = Post.new(post_params)
       url = params["post"]["external_link"]
       if url.include?("colab.research.google.com")
         notebook_file_path = colab_handler(url)
-        @post = Post.new(post_params)
         @post.notebook_file_path = notebook_file_path
         flash[:success] = "Fetched successfully"
         render :new and return
@@ -39,7 +67,7 @@ class PostsController < InheritedResources::Base
       end
     end
 
-    post = Posts::CreatePostService.new(post_params).call
+    post = Posts::PostService.new(post_params).call
 
     if post.save
       render :index
@@ -74,7 +102,19 @@ class PostsController < InheritedResources::Base
     end
 
     def post_params
-      params.require(:post).permit(:title, :tagline, :thumbnail, :description, :external_link, :challenge_id, :submission_id, :notebook_file_path)
+      params.require(:post).permit(:id, :title, :tagline, :thumbnail, :description, :external_link, :challenge_id, :submission_id, :notebook_file_path)
+    end
+
+    def remove_notebook post_id
+      post = Post.find_by_id(post_id)
+      post.gist_id = nil
+      post.notebook_s3_url = nil
+      post.notebook_html = nil
+      if post.external_link.present? && post.external_link.include?("colab.research.google.com/drive/")
+        post.external_link = nil
+      end
+      post.save!
+      post
     end
 end
 
