@@ -1,0 +1,2 @@
+class CommontatorThread < ApplicationRecord
+end

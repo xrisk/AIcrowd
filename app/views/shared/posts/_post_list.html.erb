@@ -1,0 +1,36 @@
+<table class="table table-responsive-md side-border">
+  <tbody id="posts-div">
+    <% posts.each do |post| %>
+      <%
+        # participant     = post.participant.participant
+        # challenge       = submission.challenge
+        # challenge_round = submission.challenge_round
+      %>
+      <tr>
+        <td>
+          <div class="like-counter-vertical">
+            <span><%= post.likes.count %></span>
+            <% if post.likes.count.positive? %>
+              <%= image_tag image_path('img/icon-like.svg'), alt: 'Like icon' %>
+            <% else %>
+              <%= image_tag image_path('img/icon-like-grey.svg'), alt: 'Like icon' %>
+            <% end %>
+          </div>
+        </td>
+        <td>
+          <div>
+          <span><%= link_to post.title, post_path(post.id), class: 'topic-title text-link' %></span>
+          <span>By <%= render partial: 'participants/get_user_profile', locals: { participant: post.participant, avatar: 'false' } %></span>
+          </div>
+        </td>
+        <td>
+          <div class="topic-comments">
+          <%= image_tag image_path('img/icon-comment.svg') %>
+          <%= CommontatorComment.where(thread_id: CommontatorThread.where(commontable_id: 9, commontable_type: "Post").first.id).count %>
+      </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
