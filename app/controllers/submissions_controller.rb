@@ -59,6 +59,7 @@ class SubmissionsController < ApplicationController
     end
     @search = filter.search(search_params)
     @search.sorts = 'created_at desc' if @search.sorts.empty?
+    params[:page] ||= 1
     @submissions  = @search.result.includes(:participant).page(params[:page]).per(10)
   end
 
