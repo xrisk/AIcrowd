@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include ::ActionController::HttpAuthentication::Token::ControllerMethods
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :not_authorized_or_login
   after_action :participant_activity
@@ -10,7 +11,6 @@ class ApplicationController < ActionController::Base
   before_action :store_user_location!, if: :storable_location?
   before_action :modify_params_for_meta_challenges
   before_action :notifications
-  before_action :is_api_request?
 
   def track_action
     properties         = { request: request.filtered_parameters }
@@ -147,19 +147,17 @@ class ApplicationController < ActionController::Base
   end
 
   def set_user_by_token(mapping = nil)
-    if is_api_request
-      api_key, _options = ActionController::HttpAuthentication::Token.token_and_options(request)
-      participant = Participant.find_by(api_key: api_key)
-      participant.nil? ? '' : sign_in(:participant, participant)
-      participant
+    if is_api_request?
+      authenticate_or_request_with_http_token do |token, options|
+        participant = Participant.find_by(api_key: token)
+        if participant.present?
+          sign_in(:participant, participant)
+        end
+      end
     end
   end
 
   def is_api_request?
-    if request.path.split('/')[1]=='api'
-      @is_api_request = true
-      return
-    end
-    @is_api_request = false
+    params[:is_api_request].present? && params[:is_api_request]
   end
 end

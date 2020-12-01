@@ -7,13 +7,12 @@ class SubmissionsController < ApplicationController
   before_action :set_vote, only: [:index, :new, :create, :show]
   before_action :set_follow, only: [:index, :new, :create, :show]
   before_action :check_participation_terms, except: [:show, :index, :export]
-  before_action :set_s3_direct_post, only: [:new, :edit, :create, :update]
+  before_action :set_s3_direct_post, only: [:new, :new_api, :edit, :create, :update]
   before_action :set_submissions_remaining, except: [:show, :index]
   before_action :set_current_round, only: [:index, :new, :create]
   before_action :set_form_type, only: [:new, :create]
   before_action :handle_code_based_submissions, only: [:create]
   before_action :handle_artifact_based_submissions, only: [:create]
-  before_action :new_submission, only: [:create]
 
   layout :set_layout
   respond_to :html, :js
@@ -90,16 +89,18 @@ class SubmissionsController < ApplicationController
       participant_id: current_participant.id
     ).call
     @submission = @challenge.submissions.new
+    @submission.challenge = @challenge
     @submission.submission_files.build
     authorize @submission
   end
 
   def create
-    session_info = {participant_id: current_participant.id, online_submission: true, submission_received_from: is_api_request ? "api" : "web"}
+    session_info = {participant_id: current_participant.id, online_submission: true, submission_received_from: is_api_request? ? "api" : "web"}
     if @meta_challenge.present?
       session_info[:meta_challenge_id] = @meta_challenge.id
     end
     @submission = @challenge.submissions.new(submission_params.merge(session_info))
+    @submission.challenge = @challenge
     authorize @submission
 
     validate_submission_file_presence
@@ -116,17 +117,11 @@ class SubmissionsController < ApplicationController
         end
       end
 
-      if is_api_request
-        payload = { message: "Submission accepted" }
-        status  = :ok
-        render json: payload, status: status
-      else
-        redirect_to helpers.challenge_submissions_path(@challenge), notice: 'Submission accepted.'
-      end
+      redirect_or_json(helpers.challenge_submissions_path(@challenge), "Submission accepted", :ok, "Submission accepted")
     else
       @submission.submission_files.build
       flash[:error] = @submission.errors.full_messages.to_sentence
-      render :new
+      render_or_json :new
     end
   end
 
@@ -167,19 +162,26 @@ class SubmissionsController < ApplicationController
               filename: "#{@challenge.challenge.to_s.parameterize.underscore}_submissions_export.csv"
   end
 
-  private
-
-  def new_submission
-    if is_api_request && !new
-      payload = { message: "Either exceeded maximum allowed limit of submission or participant is not authorised for submission." }
-      status  = :ok
-      render json: payload, status: status
+  def new_api
+    check_participation_terms
+    @submissions_remaining, @reset_dttm = SubmissionsRemainingQuery.new(
+      challenge:      @challenge,
+      participant_id: current_participant.id
+    ).call
+    if @submissions_remaining < 1
+      redirect_or_json(helpers.challenge_submissions_path(@challenge), "Submission limit reached for your account, it will reset at #{@reset_dttm}", :forbidden)
     end
+    render json: {message: "Presigned key generated!", data: { fields: @s3_direct_post.fields, url: @s3_direct_post.url }, success: true}, status: :ok
   end
+
+  private
 
   def set_submission
     @submission = Submission.find(params[:id])
     authorize @submission
+  rescue ActiveRecord::RecordNotFound
+    flash[:error] = "Submission not found."
+    redirect_or_json(root_path, "Submission not found.", :not_found)
   end
 
   def set_challenge
@@ -208,6 +210,9 @@ class SubmissionsController < ApplicationController
         end
       end
     end
+  rescue ActiveRecord::RecordNotFound
+    flash[:error] = "Challenge not found."
+    redirect_or_json(root_path, "Challenge not found.", :not_found)
   end
 
   def set_challenge_rounds
@@ -241,14 +246,8 @@ class SubmissionsController < ApplicationController
     end
 
     unless policy(challenge).has_accepted_challenge_rules? || policy(challenge).has_accepted_participation_terms?
-      if is_api_request
-        link_terms = "#{request.env["HTTP_HOST"]}#{challenge_challenge_rules_path(challenge)}"
-        payload = { message: "Please accept Challenges terms first here => #{link_terms}" }
-        status  = :ok
-        render json: payload, status: status
-      else
-        redirect_to challenge_challenge_rules_path(challenge)
-      end
+      terms_accept_page = "#{request.env["HTTP_HOST"]}#{challenge_challenge_rules_path(challenge)}"
+      redirect_or_json(challenge_challenge_rules_path(challenge), "Please accept challenge terms before making submission here: #{terms_accept_page}", :unauthorized)
       return
     end
   end
@@ -309,46 +308,30 @@ class SubmissionsController < ApplicationController
   end
 
   def handle_code_based_submissions
-
-    if is_api_request
-
-      params[:submission_files_attributes].each do |file|
-        if file[:submission_type] != "code"
-          payload = { message: "Only Base64 encoded content is accepted. While file #{file[:filename]} is not" }
-          status  = :bad_request
-          render json: payload, status: status
-        end
-      end
-
-      params[:submission][:submission_files_attributes] = []
-
-      params[:submission_files_attributes].each_with_index do |file, index|
-        file_location = get_s3_key.gsub("${filename}", file[:filename])
-        begin
-          S3_BUCKET.object(file_location).put(body: file[:content])
-        rescue Aws::S3::Errors::ServiceError
-          render json: { message: "Submission upload failed for #{file[:filename]}, please try again." }, status: :internal_server_error
-        end
-
-        params[:submission][:submission_files_attributes] << {seq: index.to_s, submission_type: file[:language], submission_file_s3_key: file_location}
-      end
-
-    else
-      return if params[:submission][:submission_type] != "code"
-      file_location = get_s3_key.gsub("${filename}", "editor_input." + params[:language])
-      begin
-        S3_BUCKET.object(file_location).put(body: params[:submission][:submission_data])
-      rescue Aws::S3::Errors::ServiceError
-        redirect_to helpers.challenge_submissions_path(@challenge), notice: 'Submission upload failed, please try again.'
-      end
-      params[:submission].merge!({submission_files_attributes: {"0": {seq: "", submission_type: params[:language], submission_file_s3_key: file_location}}})
+    return if params[:submission][:submission_type] != "code" || is_api_request?
+    file_location = get_s3_key.gsub("${filename}", "editor_input." + params[:language])
+    begin
+      S3_BUCKET.object(file_location).put(body: params[:submission][:submission_data])
+    rescue Aws::S3::Errors::ServiceError
+      redirect_to helpers.challenge_submissions_path(@challenge), notice: 'Submission upload failed, please try again.'
     end
 
   end
 
   def handle_artifact_based_submissions
-    return if is_api_request ||
-                                        params.dig('submission', 'submission_files_attributes', '0', 'submission_type') != 'artifact'
+    if is_api_request?
+      params[:submission] = {'submission_files_attributes': {} }
+      if params[:submission_files].nil?
+        redirect_or_json(root_path, "Submission file not sent.", :bad_request)
+        return
+      end
+      params[:submission_files].each_with_index do |file, index|
+        params[:submission][:submission_files_attributes][index.to_s] = file
+        params[:submission][:submission_files_attributes][index.to_s]['submission_type'] = 'artifact'
+      end
+    end
+
+    return if params.dig('submission', 'submission_files_attributes', '0', 'submission_type') != 'artifact'
     # TODO: Make this accepted extension list dynamic via evaluations API
     accepted_formats = [".csv", ".ipynb", ".pt", ".json", ".py", ".c", ".cpp"]
     file_path = params[:submission][:submission_files_attributes]["0"][:submission_file_s3_key]
@@ -391,5 +374,31 @@ class SubmissionsController < ApplicationController
 
   def validate_submission_file_presence
     @submission.errors.add(:base, 'Submission file is required.') if @form_type == 'artifact' && @submission.submission_files.none?
+  end
+
+  def redirect_or_json(redirect_path, message, status, notice=nil)
+    if is_api_request?
+      render json: {message: message, success: status == :ok}, status: status
+    else
+      if notice.present?
+        redirect_to redirect_path, notice: notice
+      else
+        redirect_to redirect_path
+      end
+    end
+  end
+
+  def render_or_json(render)
+    if is_api_request?
+      status = :ok
+      message = 'Something went wrong! :('
+      if flash[:error].present?
+        status = :error
+        message = flash[:error]
+      end
+      render json: {message: message, success: status == :ok}, status: status
+    else
+      render render
+    end
   end
 end
