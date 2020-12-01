@@ -45,6 +45,10 @@
               </div>
             </div>
 
+            <div class="form-group">
+              <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :visible, text: "Visible" } %>
+            </div>
+
             <div class="btn-set" aria-hidden="true">
               <%= f.button (f.object.new_record? ? "Add File" : "Update File"), class: 'btn btn-primary', id: 'submitS3' %>
               <%= link_to organizer_clef_tasks_path(@clef_task.organizer), class: "btn btn-secondary", validate: false do %>
