@@ -11,6 +11,7 @@ module Posts
     def call
       if @post_id
         post = Post.find_by_id(@post_id)
+        post.assign_attributes(@params)
       else
         post = Post.new(@params)
       end
