@@ -23,7 +23,7 @@ class Participant < ApplicationRecord
     :last_name
   ].freeze
 
-  friendly_id :name, use: [:slugged, :finders, :history]
+  friendly_id :name, use: [:slugged, :finders]
 
   before_save :set_api_key
   before_save { self.email = email.downcase }

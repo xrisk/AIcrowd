@@ -151,7 +151,7 @@ Rails.application.routes.draw do
     registrations: 'participants/registrations'
   }
 
-  resources :participants, only: [:show, :edit, :update, :destroy, :index] do
+  resources :participants, only: [:show, :edit, :update, :destroy, :index], id: /[^\/]+/ do
     resources :follows, only: [:create, :destroy]
     get :sync_mailchimp
     get :regen_api_key
