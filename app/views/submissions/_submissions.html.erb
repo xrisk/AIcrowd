@@ -20,7 +20,7 @@
       <td><%= submission_formatted_value(submission, submission.score_secondary_display) %></td>
     <% end %>
     <% if !@challenge.meta_challenge %>
-      <% leaderboard_other_scores_array(submission, challenge).each do |other_score| %>
+      <% leaderboard_other_scores_array(submission, challenge_round).each do |other_score| %>
         <td class="text-right"><%= other_score %></td>
       <% end %>
     <% end %>
