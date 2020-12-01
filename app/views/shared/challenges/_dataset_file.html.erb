@@ -18,7 +18,7 @@
     <% end %>
   </div>
 
-  <% if !dataset_file.visible? || dataset_file.evaluation? %>
+  <% if !dataset_file.present? || dataset_file.evaluation? %>
     <i class="fa fa-eye-slash" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Not visible" ></i>
   <% end %>
 
