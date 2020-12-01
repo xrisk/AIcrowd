@@ -43,7 +43,6 @@ module Posts
 
     def upload_to_s3 filepath, filename
       s3_key          = "colab_notebooks/#{SecureRandom.hex}_#{filename}"
-      file            = attachment.tempfile
       s3_obj          = Aws::S3::Resource.new.bucket(ENV['AWS_S3_SHARED_BUCKET']).object(s3_key)
       s3_obj.upload_file(filepath, acl: 'public-read')
       url             = s3_obj.public_url

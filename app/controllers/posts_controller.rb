@@ -42,12 +42,12 @@ class PostsController < InheritedResources::Base
       end
     end
 
-    post = Posts::PostService.new(post_params, post_params[:id].to_i).call
+    @post = Posts::PostService.new(post_params, post_params[:id].to_i).call
 
-    if post.save
+    if @post.save
       render :index
     else
-      flash[:error] = t(result.errors[:base])
+      flash[:error] = t(@post.errors[:base])
       render :new
     end
   end
@@ -67,12 +67,20 @@ class PostsController < InheritedResources::Base
       end
     end
 
-    post = Posts::PostService.new(post_params).call
+    if params["post"]["external_link"].present? && params["post"]["external_link"].include?("https://colab.research.google.com")
+      if params["post"]["notebook_file_path"].blank?
+        flash[:error] = "Please fetch the url to check compatibility"
+        @post = Post.new(post_params)
+        render :new and return
+      end
+    end
 
-    if post.save
+    @post = Posts::PostService.new(post_params).call
+
+    if @post.save
       render :index
     else
-      flash[:error] = t(result.errors[:base])
+      flash[:error] = t(@post.errors[:base])
       render :new
     end
   end
@@ -102,7 +110,7 @@ class PostsController < InheritedResources::Base
     end
 
     def post_params
-      params.require(:post).permit(:id, :title, :tagline, :thumbnail, :description, :external_link, :challenge_id, :submission_id, :notebook_file_path)
+      params.require(:post).permit(:id, :title, :tagline, :thumbnail, :description, :external_link, :challenge_id, :submission_id, :notebook_file_path, :participant_id)
     end
 
     def remove_notebook post_id
