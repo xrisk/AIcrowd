@@ -15,7 +15,7 @@ module Admin
       @participant      = newsletter_email.participant
       subject           = "[#{@challenge&.challenge}] New newsletter email is waiting for verification"
 
-      mail(to: first_admin.email, bcc: aicrowd_admins.pluck(:email), subject: subject, reply_to: @participant.email)
+      mail(to: first_admin.email, bcc: aicrowd_admins.pluck(:email), subject: subject)
     end
 
     def organizer_application_notification_email(participant, organizer_application)

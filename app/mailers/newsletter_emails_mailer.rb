@@ -7,7 +7,7 @@ class NewsletterEmailsMailer < ApplicationMailer
 
     subject = "[#{@challenge&.challenge}] #{@newsletter_email.subject}"
 
-    mail(to: @newsletter_email.participant.email, cc: allowed_emails(@newsletter_email, :cc), bcc: allowed_emails(@newsletter_email, :bcc), subject: subject)
+    mail(to: @newsletter_email.participant.email, cc: allowed_emails(@newsletter_email, :cc), bcc: allowed_emails(@newsletter_email, :bcc), subject: subject, reply_to: newsletter_email.participant.email)
   end
 
   def declined_email(newsletter_email)
