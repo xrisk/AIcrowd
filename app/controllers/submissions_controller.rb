@@ -245,10 +245,9 @@ class SubmissionsController < ApplicationController
       challenge = @meta_challenge
     end
 
-    unless policy(challenge).has_accepted_challenge_rules? || policy(challenge).has_accepted_participation_terms?
+    unless policy(challenge).has_accepted_challenge_rules? && policy(challenge).has_accepted_participation_terms?
       terms_accept_page = "#{request.env["HTTP_HOST"]}#{challenge_challenge_rules_path(challenge)}"
       redirect_or_json(challenge_challenge_rules_path(challenge), "Please accept challenge terms before making submission here: #{terms_accept_page}", :unauthorized)
-      return
     end
   end
 
