@@ -1,0 +1,128 @@
+<% hidden = "d-none" %>
+<% if defined?(expanded) && expanded %>
+  <%  hidden = "" %>
+<% end %>
+
+<div class="row mt-4 child <%= hidden %>">
+
+  <div class="form-group col-12">
+    <h5>
+      <div class="col-4 float-left">
+        <%= f.text_field :name, class: "form-control", placeholder: "(optional) Name of the leaderboard" %>
+      </div>
+      <% if f.object.default %>
+        <span class="float-left"><span class="fa fa-star-o fa-3x"></span> Default</span>
+      <% end %>
+      <span class="float-right"><%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :show_leaderboard, text: "Public?" } %></span>
+      <span class="float-right"><%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :media_on_leaderboard, text: "Media Asset?" } %></span>
+    </h5>
+    <hr class="fading_line" style="clear:both" />
+  </div>
+
+  <div class="form-group col-sm-12 col-md-4 border-right">
+    <div class="form-group">
+      <h4 class="text-secondary">Primary Score</h4>
+      <small class="form-text text-muted">Control how primary score is used for leaderboard</small>
+    </div>
+    <div class="form-group">
+      <label>Score Title</label>
+      <%= f.text_field :score_title, class: "form-control" %>
+      <small class="form-text text-muted">Ex: Name of metric, criteria, etc.</small>
+    </div>
+    <div class="form-group">
+      <label for="primaryScoreTitleSortOrder">Primary score sort order</label>
+      <%= f.select :primary_sort_order, enum_option_pairs(ChallengeLeaderboardExtra, :primary_sort_order), {}, { class: "form-control", required: true } %>
+      <small class="form-text text-muted">Descending means higher score is better.</small>
+    </div>
+    <div class="form-group">
+      <%= f.label :score_precision, "Score Precision" %>
+      <%= f.text_field :score_precision, class: "form-control" %>
+      <small class="form-text text-muted">Round off precision to compute ranks.</small>
+    </div>
+    <div class="form-group">
+      <%= f.label :dynamic_score_field, "Dynamic Score Field" %>
+      <%= f.text_field :dynamic_score_field, class: "form-control", placeholder: 'Decided by evaluator' %>
+      <small class="form-text text-muted">Advanced: Dynamically choose fields for "score"</small>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12 col-md-4 border-right">
+    <div class="form-group">
+      <h4 class="text-secondary">Secondary Score</h4>
+      <small class="form-text text-muted">Control how secondary score is used for leaderboard</small>
+    </div>
+    <div class="form-group">
+      <%= f.label :score_secondary_title %>
+      <%= f.text_field :score_secondary_title, class: "form-control" %>
+      <small class="form-text text-muted">Ex: Name of metric, criteria, etc.</small>
+    </div>
+    <div class="form-group">
+      <label for="secondaryScoreTitleSortOrder">Secondary score sort order</label>
+      <%= f.select :secondary_sort_order, enum_option_pairs(ChallengeLeaderboardExtra, :secondary_sort_order), {}, { class: "form-control", required: true } %>
+      <small class="form-text text-muted">Not used: Not used for sort, Hidden: Hide completely</small>
+    </div>
+    <div class="form-group">
+      <%= f.label :score_secondary_precision, "Secondary Score Precision" %>
+      <%= f.text_field :score_secondary_precision, class: "form-control" %>
+      <small class="form-text text-muted">Round off precision to compute ranks.</small>
+    </div>
+    <div class="form-group">
+      <%= f.label :dynamic_score_secondary_field, "Dynamic Secondary Score Field" %>
+      <%= f.text_field :dynamic_score_secondary_field, class: "form-control", placeholder: 'Decided by evaluator' %>
+      <small class="form-text text-muted">Advanced: Dynamically choose fields for "score_secondary"</small>
+    </div>
+  </div>
+
+  <div class="form-group col-sm-12 col-md-4">
+    <div class="form-group">
+      <h4 class="text-secondary">Other Score(s)</h4>
+      <small class="form-text text-muted">List additional scores to show on leaderboard</small>
+    </div>
+    <div class="form-group">
+      <label for="otherScoresFieldnames">Fieldnames for other scores</label>
+      <%= f.text_field :other_scores_fieldnames, class: "form-control" %>
+      <small class="form-text text-muted">Comma seperated list of additional scores generated during evaluation (max 5 fields)</small>
+    </div>
+    <div class="form-group mt-n3">
+      <label for="otherScoresFieldnames">Display name for other scores (optional)</label>
+      <%= f.text_field :other_scores_fieldnames_display, class: "form-control" %>
+      <small class="form-text text-muted">Display name for additional score columns</small>
+    </div>
+    <div class="form-group">
+      <%= f.label :freeze_duration, "Freeze Leaderboard", id: 'my-element' %>
+      <div class="row mt-n2">
+        <div class="col-md-9">
+          <%= f.number_field :freeze_duration, class: "form-control", min: '0', placeholder: 'Time in hours, like 1 or 3' %>
+          <small class="form-text text-muted">Make suspense by freezing for final hours!</small>
+        </div>
+        <div class="col-md-3">
+          <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :freeze_flag, text: "" } %>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <%= f.label :ranking_window, "Ranking window (hours)" %>
+      <%= f.text_field :ranking_window, class: "form-control" %>
+      <small class="form-text text-muted">Advanced: Time period for progression arrows</small>
+    </div>
+  </div>
+</div>
+
+<div class="row align-items-end child <%= hidden %>">
+  <div class="form-group col-sm-12 col-md-12">
+
+    <% if f.object.leaderboard_note.blank? %>
+      <img src="/assets/misc/note.png" width="72" />
+      <label class="toggle-switch toggle-switch-large" data-controller="challenge-rounds" data-action="click->challenge-rounds#leaderboardNoteToogle">
+        <span class="switcher mr-2"></span>
+        <span class="label">Show note/text on leaderboard</span>
+      </label>
+    <% end %>
+
+    <div class="leaderboard-text-area form-group col-12 <% if f.object.leaderboard_note.blank? %>child d-none<% end %>">
+      <%= f.label :leaderboard_note, 'Leaderboard Note' %>
+      <%= f.cktext_area :leaderboard_note, class: "form-control md-content" %>
+    </div>
+  </div>
+
+</div>

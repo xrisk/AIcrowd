@@ -101,6 +101,16 @@ export default class extends Controller {
       }, 1000);
     });
 
+    $('#challenges-form-add-leaderboard').click(function() {
+      that.resetChallengesFormClientValidations();
+
+      setTimeout(function() {
+        $('.challenges-form__toggle-expand').click(function(event) {
+          that.resetChallengesFormClientValidations();
+        });
+      }, 1000);
+    });
+
     $('#leaderboard-export-rounds-select').on('change', function(event) {
       const leaderboardExportChallengeRoundId = event.target.value;
       const leaderboardExportLink             = $('#leaderboard-export-link').attr('href');

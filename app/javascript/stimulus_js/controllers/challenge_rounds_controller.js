@@ -3,6 +3,27 @@ import { showAlert } from '../helpers/alerts_helper'
 import { enableButton, disableButton } from '../helpers/buttons_helper'
 
 export default class extends Controller {
+  connect(event) {
+    $('div[data-action="click->challenge-rounds#toogleSubtab"]').css('cursor', 'pointer');
+  }
+
+  toogleSubtab(event) {
+    var divToPlay = event.target;
+    if(event.target.tagName !== 'div') {
+      divToPlay = $(event.target).closest('div.row');
+    }
+
+    while (divToPlay.length > 0) {
+      divToPlay = $(divToPlay).nextAll("div.row:first");
+      console.log(divToPlay);
+      if (!divToPlay.is(".child")) {
+        console.log("skipped....");
+        break;
+      }
+      divToPlay.toggleClass("d-none");
+    }
+  }
+
   leaderboardNoteToogle(event) {
     const leaderboardToogle = event.target;
     $(leaderboardToogle).closest('label').hide();
