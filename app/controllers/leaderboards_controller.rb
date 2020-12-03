@@ -99,7 +99,7 @@ class LeaderboardsController < ApplicationController
     else
       @challenge.active_round
     end
-    raise ActionController::RoutingError, 'Not Found' if @current_round.blank?
+    raise ActionController::RoutingError, 'Could not found current round for the challenge' if @current_round.blank?
   end
 
   def set_current_extra_leaderboard

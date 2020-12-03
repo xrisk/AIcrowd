@@ -234,7 +234,7 @@ class ChallengesController < ApplicationController
   private
 
   def set_challenge
-    @challenge = Challenge.includes(:organizers).friendly.find(params[:challenge_id])
+    @challenge = Challenge.includes(:organizers).friendly.find(params[:id])
     @challenge = @challenge.versions[params[:version].to_i].reify if params[:version]
     authorize @challenge
 
