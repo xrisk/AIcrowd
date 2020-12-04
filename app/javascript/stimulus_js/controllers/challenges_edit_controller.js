@@ -25,10 +25,6 @@ export default class extends Controller {
       added_round.find('.active-switch').on('click', switch_handler);
 
       const inputs_to_copy = [
-        'score_title',
-        'score_secondary_title',
-        'primary_sort_order',
-        'secondary_sort_order',
         'submission_limit_period',
         'minimum_score',
         'minimum_score_secondary',
@@ -37,13 +33,8 @@ export default class extends Controller {
         'parallel_submissions',
         'ranking_highlight',
         'ranking_window',
-        'score_precision',
-        'score_secondary_precision',
         'debug_submission_limit',
         'debug_submission_limit_period',
-        'media_on_leaderboard',
-        'show_leaderboard',
-        'other_scores_fieldnames',
       ];
 
       // Get the round just above current round
@@ -92,6 +83,16 @@ export default class extends Controller {
     });
 
     $('#challenges-form-add-round').click(function() {
+      that.resetChallengesFormClientValidations();
+
+      setTimeout(function() {
+        $('.challenges-form__toggle-expand').click(function(event) {
+          that.resetChallengesFormClientValidations();
+        });
+      }, 1000);
+    });
+
+    $('#challenges-form-add-leaderboard').click(function() {
       that.resetChallengesFormClientValidations();
 
       setTimeout(function() {

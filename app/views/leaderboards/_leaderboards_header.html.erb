@@ -2,13 +2,13 @@
   <th scope="col" class="leaderboard-change">Δ</th>
   <th scope="col">#</th>
   <th scope="col">Participants</th>
-  <% if @challenge.media_on_leaderboard %>
+  <% if @current_leaderboard.media_on_leaderboard %>
     <th scope="col">Media</th>
   <% end %>
-  <th scope="col" class="text-right score-title"><%= current_round&.get_score_title %></th>
-  <% if current_round&.get_score_secondary_title.present? && !@challenge.meta_challenge && !@challenge.ml_challenge %>
-    <% if !(current_round&.secondary_sort_order.present? && current_round&.secondary_sort_order == :hidden) %>
-      <th scope="col" class="text-right secondary-score-title"><%= current_round.get_score_secondary_title %></th>
+  <th scope="col" class="text-right score-title"><%= @current_leaderboard&.get_score_title %></th>
+  <% if @current_leaderboard&.get_score_secondary_title.present? && !@challenge.meta_challenge && !@challenge.ml_challenge %>
+    <% if !(@current_leaderboard&.secondary_sort_order.present? && @current_leaderboard&.secondary_sort_order == :hidden) %>
+      <th scope="col" class="text-right secondary-score-title"><%= @current_leaderboard.get_score_secondary_title %></th>
     <% end %>
   <% end %>
   <% if @challenge.meta_challenge || @challenge.ml_challenge %>
@@ -20,7 +20,7 @@
       </th>
     <% end %>
   <% else %>
-    <% current_round.other_scores_fieldnames_array(display=true).each do |fname| %>
+    <% @current_leaderboard.other_scores_fieldnames_array(display=true).each do |fname| %>
       <th scope="col" class="text-right other-score-title"><%= fname %></th>
     <% end %>
     <th scope="col" class="text-right">Entries</th>
