@@ -24,12 +24,12 @@
 
         <div class="d-flex">
           <div class="mr-4">
-            <h4><%= @submission.challenge_round&.score_title %></h4>
+            <h4><%= @submission.challenge_round.default_leaderboard&.score_title %></h4>
             <span><%= submission_formatted_value(@submission, @submission.score_display) %></span>
           </div>
 
           <div class="mr-4">
-            <h4><%= @submission.challenge_round&.score_secondary_title %></h4>
+            <h4><%= @submission.challenge_round.default_leaderboard&.score_secondary_title %></h4>
             <span><%= submission_formatted_value(@submission, @submission.score_secondary_display) %></span>
           </div>
 

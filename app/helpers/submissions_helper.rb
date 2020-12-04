@@ -14,7 +14,7 @@ module SubmissionsHelper
   end
 
   def submission_formatted_value(submission, value)
-    format("%.#{submission.challenge_round.score_precision}f", value || 0)
+    format("%.#{submission.challenge_round.default_leaderboard.score_precision}f", value || 0)
   end
 
   def submission_enable_links_in_raw_text(text)

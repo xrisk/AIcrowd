@@ -37,10 +37,10 @@ module LeaderboardHelper
     return temp_participants
   end
 
-  def leaderboard_formatted_value(challenge_round, value)
+  def leaderboard_formatted_value(leaderboard_config, value)
     if value.to_i.to_s == value || value.to_f.to_s == value
-      if challenge_round.present?
-        return format("%.#{challenge_round.score_precision}f", value || 0)
+      if leaderboard_config.present?
+        return format("%.#{leaderboard_config.score_precision}f", value || 0)
       else
         return format("%.3f", value || 0)
       end
@@ -51,11 +51,11 @@ module LeaderboardHelper
     end
   end
 
-  def leaderboard_other_scores_array(leaderboard, challenge_round)
+  def leaderboard_other_scores_array(leaderboard, leaderboard_config)
     other_scores = []
-    challenge_round.other_scores_fieldnames_array.map(&:to_s).each do |fname|
+    leaderboard_config.other_scores_fieldnames_array.map(&:to_s).each do |fname|
       other_scores << if (leaderboard.meta) && (leaderboard.meta.key? fname)
-                        (leaderboard.meta[fname].nil? ? "-" : leaderboard_formatted_value(challenge_round, leaderboard.meta[fname]))
+                        (leaderboard.meta[fname].nil? ? "-" : leaderboard_formatted_value(leaderboard_config, leaderboard.meta[fname]))
                       else
                         '-'
                       end
@@ -63,9 +63,9 @@ module LeaderboardHelper
     return other_scores
   end
 
-  def leaderboard_meta_challenge_other_scores_array(leaderboard, challenge_round, participant_id)
+  def leaderboard_meta_challenge_other_scores_array(leaderboard, leaderboard_config, participant_id)
     other_scores = []
-    challenge_round.other_scores_fieldnames_array.map(&:to_s).each do |fname|
+    leaderboard_config.other_scores_fieldnames_array.map(&:to_s).each do |fname|
       if leaderboard.meta && (leaderboard.meta.key? fname) && (leaderboard.meta[fname]) && (leaderboard.meta[fname].key? 'position')
         other_scores << leaderboard.meta[fname]
       else

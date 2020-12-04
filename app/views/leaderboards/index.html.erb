@@ -23,50 +23,50 @@
           <!-- / Challenge Round Pills  -->
         <% end %>
 
-        <% if @challenge.challenge_leaderboard_extras.size > 0 %>
+        <% if @current_round.extra_leaderboards.size > 0 %>
           <ul class="nav nav-pills">
               <li class="nav-item">
-                <%= link_to "Overall",
+                <%= link_to @current_round.default_leaderboard.name.presence || "Overall",
                             challenge_leaderboards_path(@challenge, challenge_round_id: @current_round),
-                            class: round_pills_tab_classes(nil, @current_challenge_leaderboard_extra) %>
+                            class: round_pills_tab_classes(@current_round.default_leaderboard, @current_leaderboard) %>
               </li>
-              <% @challenge.challenge_leaderboard_extras.each do |extra_leaderboard| %>
+              <% @current_round.extra_leaderboards.each do |extra_leaderboard| %>
               <li class="nav-item">
                 <%= link_to extra_leaderboard.name,
                             challenge_leaderboards_path(@challenge, challenge_round_id: @current_round, challenge_leaderboard_extra_id: extra_leaderboard.id),
-                            class: round_pills_tab_classes(extra_leaderboard, @current_challenge_leaderboard_extra) %>
+                            class: round_pills_tab_classes(extra_leaderboard, @current_leaderboard) %>
               </li>
               <% end %>
           </ul>
         <% end %>
 
         <!-- challenge leaderboard -->
-        <% if @current_round&.leaderboard_note.present? %>
+        <% if @current_leaderboard&.leaderboard_note.present? %>
           <div class="md-content width-100">
             <div class="note">
-              <%= sanitize_html(@current_round.leaderboard_note) %>
+              <%= sanitize_html(@current_leaderboard.leaderboard_note) %>
             </div>
           </div>
         <% end %>
 
-        <% if @current_round&.freeze_flag %>
+        <% if @current_leaderboard&.freeze_flag %>
         <div class="md-content">
           <blockquote><p>ℹ️
-            This leaderboard has been frozen on <%= freeze_time(@current_round) %>
+            This leaderboard has been frozen on <%= freeze_time(@current_leaderboard) %>
           </p></blockquote>
         </div>
         <% end %>
 
-        <% if policy(@challenge).show_leaderboard? %>
+        <% if @current_leaderboard.show_leaderboard? || @current_user_view_all %>
           <% unless disentanglement_leaderboard %>
             <!-- leaderbaord winners -->
             <%= render partial: 'winners', locals: { leaderboards: @top_three_winners, current_round: @current_round }  %>
             <!-- /leaderbaord winners -->
           <% end %>
 
-          <% unless policy(@challenge).leaderboard_public? %>
+          <% unless @current_leaderboard.show_leaderboard? %>
             <div class="leaderboard-important-msg">
-              <p>Leaderboard is only visible to organizers</p>
+              <p><span class="fa fa-notice"></span> This leaderboard is only visible to organizers</p>
             </div>
           <% end %>
 
@@ -95,7 +95,7 @@
           </div>
         <% else %>
           <div class="leaderboard-msg">
-            <p>Leaderboard is not displayed yet.</p>
+            <p><span class="fa fa-notice"></span> Leaderboard is not released yet.</p>
           </div>
         <% end %>
       </div>
