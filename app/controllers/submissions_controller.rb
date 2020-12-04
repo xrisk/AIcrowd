@@ -118,7 +118,7 @@ class SubmissionsController < ApplicationController
         end
       end
 
-      redirect_or_json(helpers.challenge_submissions_path(@challenge), "Submission accepted", :ok, "Submission accepted")
+      redirect_or_json(helpers.challenge_submissions_path(@challenge), "Submission accepted", :ok, "Submission accepted", {"submission_id": @submission.id, "created_at": @submission.created_at})
     else
       @submission.submission_files.build
       flash[:error] = @submission.errors.full_messages.to_sentence
@@ -376,9 +376,13 @@ class SubmissionsController < ApplicationController
     @submission.errors.add(:base, 'Submission file is required.') if @form_type == 'artifact' && @submission.submission_files.none?
   end
 
-  def redirect_or_json(redirect_path, message, status, notice=nil)
+  def redirect_or_json(redirect_path, message, status, notice=nil, data=nil)
     if is_api_request?
-      render json: {message: message, success: status == :ok}, status: status
+      if data.present?
+        render json: {message: message, success: status == :ok, data: data}, status: status
+      else
+        render json: {message: message, success: status == :ok}, status: status
+      end
     else
       if notice.present?
         redirect_to redirect_path, notice: notice
