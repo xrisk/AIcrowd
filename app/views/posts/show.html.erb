@@ -13,8 +13,13 @@
               <div class="row avatar-group p-3">
                 <span>
                   Contributed by
-                  <%= render partial: 'participants/get_user_profile', locals: { participant: current_participant, username: 'false' } %>
+                  <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant, username: 'false' } %>
                 </span>
+                <% if current_participant.present? && @post.participant_id == current_participant.id %>
+                  <div class="col-md-2">
+                    <%= button_to 'Edit', edit_post_path(@post.id), class: "btn btn-secondary btn-sm", method: :get %>
+                  </div>
+                <% end %>
               </div>
             </div>
           </div>
