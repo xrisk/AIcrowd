@@ -15,17 +15,7 @@ module Api
           start_dttm:                 challenge_round.start_dttm,
           end_dttm:                   challenge_round.end_dttm,
           minimum_score:              challenge_round.minimum_score,
-          minimum_score_secondary:    challenge_round.minimum_score_secondary,
-          ranking_window:             challenge_round.ranking_window,
-          ranking_highlight:          challenge_round.ranking_highlight,
-          score_precision:            challenge_round.score_precision,
-          score_secondary_precision:  challenge_round.score_secondary_precision,
-          leaderboard_note_markdown:  challenge_round.leaderboard_note_markdown,
-          leaderboard_note:           challenge_round.leaderboard_note,
-          score_title:                challenge_round.score_title,
-          score_secondary_title:      challenge_round.score_secondary_title,
-          primary_sort_order_cd:      challenge_round.primary_sort_order_cd,
-          secondary_sort_order_cd:    challenge_round.secondary_sort_order_cd
+          minimum_score_secondary:    challenge_round.minimum_score_secondary
         }
       end
 

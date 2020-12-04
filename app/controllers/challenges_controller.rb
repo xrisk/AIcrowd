@@ -420,6 +420,9 @@ class ChallengesController < ApplicationController
           :show_leaderboard,
           :other_scores_fieldnames,
           :other_scores_fieldnames_display,
+          :dynamic_score_field,
+          :dynamic_score_secondary_field,
+          :filter
         ]
       ],
       challenge_rules_attributes: [
