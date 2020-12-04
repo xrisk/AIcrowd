@@ -152,7 +152,7 @@ Rails.application.routes.draw do
     registrations: 'participants/registrations'
   }
 
-  resources :participants, only: [:show, :edit, :update, :destroy, :index] do
+  resources :participants, only: [:show, :edit, :update, :destroy, :index], id: /[^\/]+/ do
     resources :follows, only: [:create, :destroy]
     get :sync_mailchimp
     get :regen_api_key
@@ -163,6 +163,9 @@ Rails.application.routes.draw do
     match '/notifications', to: 'email_preferences#edit', via: :get
     match '/notifications', to: 'email_preferences#update', via: :patch
   end
+
+  match '/api/v1/submissions', to: 'submissions#create', via: :post, defaults: { is_api_request: true }
+  match '/api/v1/submissions', to: 'submissions#new_api', via: :get, defaults: { is_api_request: true }
 
   resources :job_postings, path: "jobs", only: [:index, :show]
   resources :gdpr_exports, only: [:create]

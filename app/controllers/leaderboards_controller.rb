@@ -2,7 +2,7 @@ class LeaderboardsController < ApplicationController
   before_action :authenticate_participant!, except: [:index, :get_affiliation]
   before_action :set_challenge, only: [:index, :export, :get_affiliation]
   before_action :set_current_round, only: [:index, :export, :get_affiliation]
-  before_action :set_current_extra_leaderboard, only: [:index, :export, :get_affiliation]
+  before_action :set_current_leaderboard, only: [:index, :export, :get_affiliation]
   before_action :set_leaderboards, only: [:index, :get_affiliation]
   before_action :set_filter_service, only: [:index, :get_affiliation]
 
@@ -99,13 +99,21 @@ class LeaderboardsController < ApplicationController
     else
       @challenge.active_round
     end
+    raise ActionController::RoutingError, 'Could not found current round for the challenge' if @current_round.blank?
   end
 
-  def set_current_extra_leaderboard
-    @current_challenge_leaderboard_extra = if params[:challenge_leaderboard_extra_id].present?
-      @challenge.challenge_leaderboard_extras.find(params[:challenge_leaderboard_extra_id].to_i)
+  def set_current_leaderboard
+    @current_leaderboard = if params[:challenge_leaderboard_extra_id].present?
+      @current_round.challenge_leaderboard_extras.find(params[:challenge_leaderboard_extra_id].to_i)
     else
-      nil
+      @current_round.default_leaderboard
+    end
+
+    @current_user_view_all = false
+    if current_participant.present?
+      if (policy(@challenge).edit? || current_participant&.admin)
+        @current_user_view_all = true
+      end
     end
   end
 
@@ -118,7 +126,14 @@ class LeaderboardsController < ApplicationController
   end
 
   def set_leaderboards
-    filter = { challenge_round_id: @current_round&.id.to_i, meta_challenge_id: nil, challenge_leaderboard_extra_id: @current_challenge_leaderboard_extra&.id }
+    # Backward compactibility for multiple leaderboards change
+    # Old challenges can continue to show their single leaderboard (without id)
+    leaderboard_ids = [@current_leaderboard&.id]
+    if !@current_leaderboard.present? || @current_leaderboard.id == @current_round.default_leaderboard.id
+      leaderboard_ids.push(nil)
+    end
+
+    filter = { challenge_round_id: @current_round&.id.to_i, meta_challenge_id: nil, challenge_leaderboard_extra_id: leaderboard_ids }
 
     if @meta_challenge.present?
       filter[:meta_challenge_id] = @meta_challenge.id
@@ -181,7 +196,7 @@ class LeaderboardsController < ApplicationController
   end
 
   def freeze_record_for_organizer
-    return false unless @current_round&.freeze_flag
+    return false unless @current_leaderboard&.freeze_flag
 
     (policy(@challenge).edit? || current_participant&.admin)
   end

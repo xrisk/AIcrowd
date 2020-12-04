@@ -7,13 +7,13 @@
 
     if !participants.empty?
       team = leaderboard.try(:team)
-      if team.present?
+      if !leaderboard.baseline? && team.present?
         participants.each do |participant|
           if @current_participant && participant && @current_participant.id == participant.id
             cls = "sticky-footer current-user"
           end
         end
-      elsif participants.length==1
+      elsif !leaderboard.baseline? && participants.length==1
         if @current_participant && participants[0] && @current_participant.id == participants[0].id
           cls = "sticky-footer current-user"
         end
@@ -65,16 +65,16 @@
       </td>
     <% end %>
 
-    <% if challenge.media_on_leaderboard %>
+    <% if @current_leaderboard.media_on_leaderboard %>
       <td class="<%= cls ||= '' %>">
         <%= render partial: 'shared/challenges/media', locals: { mediable: leaderboard, submission_id: leaderboard.submission_id, size: :thumb, autoplay: leaderboard.row_num <= 5 } %>
       </td>
     <% end %>
 
-    <td class="text-right <%= cls ||= '' %>"><strong><%= leaderboard_formatted_value(current_round, leaderboard.score) %></strong></td>
-    <% if @current_round&.get_score_secondary_title.present? && !@challenge.meta_challenge %>
-      <% if !(@current_round&.secondary_sort_order.present? && @current_round&.secondary_sort_order == :hidden) %>
-        <td class="text-right <%= cls ||= '' %>"><strong><%= leaderboard_formatted_value(current_round, leaderboard.score_secondary) %></strong></td>
+    <td class="text-right <%= cls ||= '' %>"><strong><%= leaderboard_formatted_value(@current_leaderboard, leaderboard.score) %></strong></td>
+    <% if @current_leaderboard&.get_score_secondary_title.present? && !@challenge.meta_challenge %>
+      <% if !(@current_leaderboard&.secondary_sort_order.present? && @current_leaderboard&.secondary_sort_order == :hidden) %>
+        <td class="text-right <%= cls ||= '' %>"><strong><%= leaderboard_formatted_value(@current_leaderboard, leaderboard.score_secondary) %></strong></td>
       <% end %>
     <% end %>
     <% if @challenge.meta_challenge || @challenge.ml_challenge %>
@@ -85,7 +85,7 @@
           <% end %>
         <% end %>
       </td>
-      <% leaderboard_meta_challenge_other_scores_array(leaderboard, challenge, current_participant&.id).each do |problem_score| %>
+      <% leaderboard_meta_challenge_other_scores_array(leaderboard, @current_leaderboard, current_participant&.id).each do |problem_score| %>
         <td class="text-right <%= cls ||= '' %>">
           <% if problem_score['position'].present? %>
             <span class="geek-view-normal" data-toggle="tooltip" data-placement="top" title="Rank in problem"><strong>
@@ -104,7 +104,7 @@
         </strong></td>
       <% end %>
     <% else %>
-      <% leaderboard_other_scores_array(leaderboard, challenge).each do |other_score| %>
+      <% leaderboard_other_scores_array(leaderboard, @current_leaderboard).each do |other_score| %>
         <td class="text-right <%= cls ||= '' %>"><strong><%= other_score %></strong></td>
       <% end %>
       <% if !leaderboard.baseline? %>

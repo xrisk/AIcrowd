@@ -31,7 +31,7 @@
   <% end %>
 
   <!-- toggle switch -->
-  <% if @challenge.status == :completed && @current_round.present? && !@challenge.meta_challenge? && !@current_round.freeze_flag %>
+  <% if @challenge.status == :completed && @current_round.present? && !@challenge.meta_challenge? && !@current_leaderboard.freeze_flag %>
     <div class="my-2">
       <label class="toggle-switch" style="width: max-content;">
         <%= link_to challenge_leaderboards_path(challenge_round_id: @current_round, post_challenge: @post_challenge.blank?, country_name: params[:country_name], affiliation: params[:affiliation], challenge_id: @challenge.friendly_id) do %>

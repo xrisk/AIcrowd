@@ -14287,6 +14287,14 @@ input.width-185 {
   border-radius: 20px;
 }
 
+.fading_line {
+  margin: 25px 0;
+  height: 1px;
+  border: 0;
+  background: black;
+  background: linear-gradient(to right, #333, #333 20%, #eee 80%);
+}
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';

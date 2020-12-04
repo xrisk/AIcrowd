@@ -86,7 +86,7 @@
                     <th scope="col"><%= sort_link(@search, :score_secondary_display, @current_round.score_secondary_title) %></th>
                   <% end %>
                   <% if !@challenge.meta_challenge %>
-                    <% @challenge.other_scores_fieldnames_array.each do |fname| %>
+                    <% @current_round.default_leaderboard.other_scores_fieldnames_array.each do |fname| %>
                       <th scope="col" class="text-right other-score-title"><%= fname %></th>
                     <% end %>
                   <% end %>

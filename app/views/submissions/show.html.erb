@@ -24,19 +24,33 @@
 
         <div class="d-flex">
           <div class="mr-4">
-            <h4><%= @submission.challenge_round&.score_title %></h4>
+            <h4><%= @submission.challenge_round.default_leaderboard&.score_title %></h4>
             <span><%= submission_formatted_value(@submission, @submission.score_display) %></span>
           </div>
 
           <div class="mr-4">
-            <h4><%= @submission.challenge_round&.score_secondary_title %></h4>
+            <h4><%= @submission.challenge_round.default_leaderboard&.score_secondary_title %></h4>
             <span><%= submission_formatted_value(@submission, @submission.score_secondary_display) %></span>
           </div>
 
-          <div>
+          <div class="mr-4">
             <h4>Message</h4>
             <span data-controller="linkify-content"><%= @submission.grading_message %></span>
           </div>
+
+          <% if @submission.submission_files.present? && (@challenge.submissions_downloadable && (current_participant.present? && (current_participant.admin? || current_participant.id== @submission.participant_id))) %>
+            <div class="mr-4">
+              <h4>Submission Files</h4>
+              <span>
+                <% @submission.submission_files.each do |file| %>
+                  <%= link_to "Download file #{file.id}",
+                              s3_expiring_url(file.submission_file_s3_key)
+                  %>&nbsp;
+                <% end %>
+              </span>
+            </div>
+          <% end %>
+
         </div><br>
         <% if submission_code_link(@submission).present? %>
           <div class="mr-4">

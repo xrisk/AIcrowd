@@ -121,7 +121,7 @@
                 <%= f.button ("Save"), class: 'btn btn-primary requires-agreement', id: 'accept-challenge-rules-button', disabled: true %>
               </div>
             <% end %>
-          <% elsif @challenge_rules.has_additional_checkbox %>
+          <% elsif current_participant.present? && @challenge_rules.has_additional_checkbox %>
             <input type="checkbox" disabled <%= 'checked' if @challenge_participant.challenge_rules_additional_checkbox %>>
             <label>
               <%= sanitize_html(@challenge_rules.additional_checkbox_text) %>
