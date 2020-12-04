@@ -105,6 +105,13 @@
       <%= f.text_field :ranking_window, class: "form-control" %>
       <small class="form-text text-muted">Advanced: Time period for progression arrows</small>
     </div>
+    <% if current_participant&.admin? %>
+    <div class="form-group">
+      <%= f.label :filter, "Filter" %>
+      <%= f.text_field :filter, class: "form-control" %>
+      <small class="form-text text-muted">Advanced: Choose which submissions to consider</small>
+    </div>
+    <% end %>
   </div>
 </div>
 

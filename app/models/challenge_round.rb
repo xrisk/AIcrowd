@@ -31,6 +31,8 @@ class ChallengeRound < ApplicationRecord
   default_scope { order :start_dttm }
   scope :started, -> { where("start_dttm < ?", Time.current) }
 
+  after_save :create_default_leaderboard
+
   after_initialize :set_defaults
 
   def rollback_rating
@@ -47,6 +49,11 @@ class ChallengeRound < ApplicationRecord
 
   def recalculate_leaderboard
     CalculateLeaderboardJob.perform_now(challenge_round_id: id) unless freeze_flag
+  end
+
+  def create_default_leaderboard
+    leaderboard = ChallengeLeaderboardExtra.where(default: true, challenge_round_id: id, challenge_id: challenge.id).first_or_initialize
+    leaderboard.save!
   end
 
 end
