@@ -171,6 +171,7 @@ class SubmissionsController < ApplicationController
     ).call
     if @submissions_remaining < 1
       redirect_or_json(helpers.challenge_submissions_path(@challenge), "Submission limit reached for your account, it will reset at #{@reset_dttm}", :forbidden)
+      return
     end
     render json: {message: "Presigned key generated!", data: { fields: @s3_direct_post.fields, url: @s3_direct_post.url }, success: true}, status: :ok
   end
