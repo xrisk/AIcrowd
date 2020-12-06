@@ -29,6 +29,9 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
 
   def from_omniauth(auth)
     email     = auth.info.email
+    participant = User.find_by(email: email)
+    return participant if participant.present? && participant.confirmed?
+
     username  = auth.info.name
     username  = username.gsub(/\s+/, '_').downcase
     username  = sanitize_userhandle(username)
@@ -49,7 +52,7 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
   end
 
   def sanitize_userhandle(userhandle)
-    userhandle.to_ascii
+    username = userhandle.to_ascii
       .tr("@", "a")
       .gsub("&", "and")
       .delete('#')
@@ -57,5 +60,9 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
       .gsub(/[\,\.\'\;\-\=]/, "")
       .gsub(/[\(\)]/, "_")
       .tr(' ', "_")
+
+    while Participant.where(name: username).exists?
+      username = username + rand(1..9).to_s
+    end
   end
 end
