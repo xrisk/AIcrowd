@@ -2,6 +2,7 @@ ActiveAdmin.register Participant do
   permit_params :name,
                 :email,
                 :admin,
+                :trusted,
                 :password,
                 :password_confirmation
 
@@ -42,6 +43,7 @@ ActiveAdmin.register Participant do
       f.input :email
       f.input :name
       f.input :admin
+      f.input :trusted
       f.input :password
       f.input :password_confirmation
     end
