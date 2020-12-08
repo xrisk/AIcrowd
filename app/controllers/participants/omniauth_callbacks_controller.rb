@@ -29,7 +29,7 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
 
   def from_omniauth(auth)
     email     = auth.info.email
-    participant = User.find_by(email: email)
+    participant = Participant.find_by(email: email)
     return participant if participant.present? && participant.confirmed?
 
     username  = auth.info.name
