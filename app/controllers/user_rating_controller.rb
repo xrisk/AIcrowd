@@ -21,7 +21,7 @@ class UserRatingController < ApplicationController
           time_difference = time_difference.to_i
           factor_of_decay = 4
           total_number_of_days = factor_of_decay*365
-          updated_rating = participant.fixed_rating * (Math.exp(-time_difference.to_f/total_number_of_days.to_f))
+          updated_rating = participant.fixed_rating.to_f * (Math.exp(-time_difference.to_f/total_number_of_days.to_f))
           participant.update!({rating: updated_rating})
           UserRating.create!(participant_id: participant.id, rating: updated_rating, variation: user_final_rating['variation'], challenge_round: nil, created_at: challenge_round.end_dttm - 1.days)
           ranks, teams_rating, teams_variation, teams_participant_ids = user_rating_service.filter_leaderboard_stats leaderboard_rating_stats

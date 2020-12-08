@@ -56,20 +56,20 @@ ActiveAdmin.register Submission do
   form do |f|
     f.inputs 'Submission' do
       f.input :challenge,
-              as:         :select,
+              as:         :searchable_select,
               collection: Challenge.all.map { |challenge|
                             [challenge.challenge, challenge.id]
                           }
       f.input :challenge_round_id
       f.input :participant_id,
               label:      'Participant',
-              as:         :select,
+              as:         :searchable_select,
               collection: Participant.all.order(:name).map { |u| ["#{u.name} - #{u.id}", u.id] }
       f.input :score
       f.input :score_secondary
       f.input :description_markdown
       f.input :grading_status,
-              as:         :select,
+              as:         :searchable_select,
               collection: enum_option_pairs(Submission, :grading_status)
       f.input :grading_message
       f.input :post_challenge

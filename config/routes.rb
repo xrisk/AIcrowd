@@ -44,7 +44,9 @@ def challenge_routes
   resources :participation_terms, only: [:show, :create, :index]
   resource :challenge_rules, only: [:show]
   resources :challenge_rules, only: [:show]
-  resources :challenge_participants
+  resources :challenge_participants do
+    get :export, on: :collection
+  end
   resources :insights, only: [:index] do
     collection do
       get 'submissions_vs_time'
@@ -149,7 +151,7 @@ Rails.application.routes.draw do
     registrations: 'participants/registrations'
   }
 
-  resources :participants, only: [:show, :edit, :update, :destroy, :index] do
+  resources :participants, only: [:show, :edit, :update, :destroy, :index], id: /[^\/]+/ do
     resources :follows, only: [:create, :destroy]
     get :sync_mailchimp
     get :regen_api_key
@@ -160,6 +162,9 @@ Rails.application.routes.draw do
     match '/notifications', to: 'email_preferences#edit', via: :get
     match '/notifications', to: 'email_preferences#update', via: :patch
   end
+
+  match '/api/v1/submissions', to: 'submissions#create', via: :post, defaults: { is_api_request: true }
+  match '/api/v1/submissions', to: 'submissions#new_api', via: :get, defaults: { is_api_request: true }
 
   resources :job_postings, path: "jobs", only: [:index, :show]
   resources :gdpr_exports, only: [:create]
@@ -240,6 +245,7 @@ Rails.application.routes.draw do
   # Custom Redirect
   get '/blitz', to: redirect('/challenges/ai-for-good-ai-blitz-3', status: 302)
   get '/food', to: redirect('/challenges/food-recognition-challenge', status: 302)
+  get '/derk', to: redirect('/challenges/dr-derk-s-battleground', status: 302)
 
   resources :markdown_editors, only: [:index, :create] do
     put :presign, on: :collection

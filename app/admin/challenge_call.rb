@@ -48,7 +48,7 @@ ActiveAdmin.register ChallengeCall do
   form do |f|
     f.inputs "Challenge Call" do
       f.input :title
-      f.input :organizer, as: :select, member_label: :organizer
+      f.input :organizer, as: :searchable_select, member_label: :organizer
       f.input :headline
       f.label 'Description', class: 'ckeditor_label challenge_call'
       f.text_area :description, class: 'ckeditor'

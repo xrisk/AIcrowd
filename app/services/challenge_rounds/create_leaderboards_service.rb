@@ -7,7 +7,11 @@ module ChallengeRounds
       @meta_challenge_id     = meta_challenge_id
       @ml_challenge_id       = ml_challenge_id
       @challenge_leaderboard_extra = challenge_leaderboard_extra
-      @is_freeze             = @challenge_round.freeze_flag
+      if challenge_leaderboard_extra.nil?
+        @challenge_leaderboard_extra = @challenge_round.default_leaderboard
+      end
+
+      @is_freeze             = @challenge_leaderboard_extra.freeze_flag
       @is_borda_ranking      = false
 
       if @meta_challenge_id.blank? && @ml_challenge_id.blank?
@@ -66,8 +70,8 @@ module ChallengeRounds
       submissions
         .update_all([
           'score_display = ROUND(score::numeric, ?), score_secondary_display = ROUND(score_secondary::numeric, ?)',
-          @challenge_round.score_precision,
-          @challenge_round.score_secondary_precision
+          @challenge_leaderboard_extra.score_precision,
+          @challenge_leaderboard_extra.score_secondary_precision
         ])
     end
 
@@ -136,7 +140,11 @@ module ChallengeRounds
 
       if deletion
         if @challenge_leaderboard_extra.present?
-          entries = entries.where(challenge_leaderboard_extra_id: @challenge_leaderboard_extra.id)
+          if @challenge_leaderboard_extra.default
+            entries = entries.where(challenge_leaderboard_extra_id: [nil, @challenge_leaderboard_extra.id])
+          else
+            entries = entries.where(challenge_leaderboard_extra_id: @challenge_leaderboard_extra.id)
+          end
         else
           entries = entries.where(challenge_leaderboard_extra_id: nil)
         end
@@ -187,10 +195,17 @@ module ChallengeRounds
     end
 
     def build_leaderboard(submission, submissions_count, submitter_type, submitter_id, leaderboard_type = 'leaderboard')
-      challenge_leaderboard_extra_id = nil
-      if @challenge_leaderboard_extra.present?
-        challenge_leaderboard_extra_id = @challenge_leaderboard_extra.id
+      score = submission.score
+      if @challenge_leaderboard_extra.dynamic_score_field.present?
+        score = submission["meta"][@challenge_leaderboard_extra.dynamic_score_field].presence || nil
       end
+      score = score.to_f.round(@challenge_leaderboard_extra.score_precision)
+
+      score_secondary = submission.score_secondary
+      if @challenge_leaderboard_extra.dynamic_score_secondary_field.present?
+        score_secondary = submission["meta"][@challenge_leaderboard_extra.dynamic_score_secondary_field].presence || nil
+      end
+      score_secondary = score_secondary.to_f.round(@challenge_leaderboard_extra.score_secondary_precision)
 
       BaseLeaderboard.new(
         meta_challenge_id:    meta_challenge_id,
@@ -204,8 +219,8 @@ module ChallengeRounds
         row_num:              0,
         previous_row_num:     0,
         entries:              submissions_count,
-        score:                submission.score_display,
-        score_secondary:      submission.score_secondary_display,
+        score:                score,
+        score_secondary:      score_secondary,
         meta:                 submission.meta,
         media_large:          submission.media_large,
         media_thumbnail:      submission.media_thumbnail,
@@ -217,7 +232,7 @@ module ChallengeRounds
         baseline:             submission.baseline,
         baseline_comment:     submission.baseline_comment,
         submission_link:      submission.submission_link,
-        challenge_leaderboard_extra_id: challenge_leaderboard_extra_id,
+        challenge_leaderboard_extra_id: @challenge_leaderboard_extra.id,
         refreshed_at:         Time.current,
         created_at:           submission.created_at,
         updated_at:           submission.updated_at
@@ -240,28 +255,36 @@ module ChallengeRounds
 
       return "meta->>'private_borda_ranking_rank_sum' asc" if @is_borda_ranking
 
-      score_sort_order = sort_map(challenge_round.primary_sort_order_cd)
+      score_field = "score"
+      if @challenge_leaderboard_extra.dynamic_score_field.present?
+        score_field = "meta->>'#{@challenge_leaderboard_extra.dynamic_score_field}'"
+      end
 
-      return "score_display #{score_sort_order} NULLS LAST" if challenge_round.secondary_sort_order_cd.blank? || challenge_round.secondary_sort_order_cd == 'not_used'
+      score_secondary_field = "score_secondary"
+      if @challenge_leaderboard_extra.dynamic_score_secondary_field.present?
+        score_secondary_field = "meta->>'#{@challenge_leaderboard_extra.dynamic_score_secondary_field}'"
+      end
 
-      secondary_sort_order = sort_map(challenge_round.secondary_sort_order_cd)
+      score_sort_order = sort_map(@challenge_leaderboard_extra.primary_sort_order_cd)
+      return "#{score_field} #{score_sort_order} NULLS LAST" if @challenge_leaderboard_extra.secondary_sort_order_cd.blank? || @challenge_leaderboard_extra.secondary_sort_order_cd == 'not_used'
 
-      "score_display #{score_sort_order} NULLS LAST, score_secondary_display #{secondary_sort_order} NULLS LAST"
+      secondary_sort_order = sort_map(@challenge_leaderboard_extra.secondary_sort_order_cd)
+      return "#{score_field} #{score_sort_order} NULLS LAST, #{score_secondary_field} #{secondary_sort_order} NULLS LAST"
     end
 
     def sort_leaderboards(all_leaderboards)
       return all_leaderboards.sort_by { |leaderboard| leaderboard['meta']['private_borda_ranking_rank_sum'].to_i } if @is_borda_ranking
 
-      score_sort_order = sort_map(challenge_round.primary_sort_order_cd)
+      score_sort_order = sort_map(@challenge_leaderboard_extra.primary_sort_order_cd)
 
-      if challenge_round.secondary_sort_order_cd.blank? || challenge_round.secondary_sort_order_cd == 'not_used'
+      if @challenge_leaderboard_extra.secondary_sort_order_cd.blank? || @challenge_leaderboard_extra.secondary_sort_order_cd == 'not_used'
         sorted_leaderboards = all_leaderboards.sort_by { |leaderboard| leaderboard.score.to_f }
         sorted_leaderboards.reverse! if score_sort_order == 'desc'
 
         return sorted_leaderboards
       end
 
-      secondary_sort_order = sort_map(challenge_round.secondary_sort_order_cd)
+      secondary_sort_order = sort_map(@challenge_leaderboard_extra.secondary_sort_order_cd)
 
       all_leaderboards.sort_by do |leaderboard|
         first_column     = score_sort_order == 'asc' ? leaderboard.score.to_f : leaderboard.score.to_f * -1
@@ -293,7 +316,7 @@ module ChallengeRounds
           next
         end
 
-        if challenge_round.secondary_sort_order_cd.blank? || challenge_round.secondary_sort_order_cd == 'not_used'
+        if @challenge_leaderboard_extra.secondary_sort_order_cd.blank? || @challenge_leaderboard_extra.secondary_sort_order_cd == 'not_used'
           if next_leaderboard.score == leaderboard.score
             same_score_count += 1
           else
@@ -317,7 +340,7 @@ module ChallengeRounds
                         else
                           submissions.find_by(post_challenge: post_challenge, meta_challenge_id: meta_challenge_id)
                         end
-      (get_submissions&.created_at || Time.current) - challenge_round.ranking_window.hours
+      (get_submissions&.created_at || Time.current) - @challenge_leaderboard_extra.ranking_window.hours
     end
 
     def freeze_time
@@ -327,7 +350,7 @@ module ChallengeRounds
     def freeze_dttm
       return Time.current if @challenge_round.end_dttm.nil?
 
-      @challenge_round.end_dttm - @challenge_round.freeze_duration.hours
+      @challenge_round.end_dttm - @challenge_leaderboard_extra.freeze_duration.hours
     end
 
     def award_point_for_legendary_submission(top_3_leaderboards)

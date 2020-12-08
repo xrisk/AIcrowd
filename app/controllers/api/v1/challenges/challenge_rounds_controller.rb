@@ -44,16 +44,6 @@ module Api
             :end_dttm,
             :minimum_score,
             :minimum_score_secondary,
-            :ranking_window,
-            :ranking_highlight,
-            :score_precision,
-            :score_secondary_precision,
-            :leaderboard_note_markdown,
-            :leaderboard_note,
-            :score_title,
-            :score_secondary_title,
-            :primary_sort_order_cd,
-            :secondary_sort_order_cd,
             :submissions_type
           )
         end

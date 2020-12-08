@@ -62,6 +62,10 @@ GEM
       ransack (>= 1.8.7)
       sass (~> 3.1)
       sprockets (< 4.1)
+    activeadmin-searchable_select (1.2.0)
+      activeadmin (>= 1.x, < 3)
+      jquery-rails (>= 3.0, < 5)
+      select2-rails (~> 4.0)
     activejob (5.2.2.1)
       activesupport (= 5.2.2.1)
       globalid (>= 0.3.6)
@@ -89,6 +93,10 @@ GEM
       device_detector
       geocoder (>= 1.4.5)
       safely_block (>= 0.2.1)
+    airbrake (11.0.1)
+      airbrake-ruby (~> 5.1)
+    airbrake-ruby (5.1.0)
+      rbtree3 (~> 0.5)
     arbre (1.1.1)
       activesupport (>= 3.0.0)
     arel (9.0.0)
@@ -705,6 +713,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    rbtree3 (0.6.0)
     rbvmomi (2.2.0)
       builder (~> 3.0)
       json (>= 1.8)
@@ -923,9 +932,12 @@ DEPENDENCIES
   ace-rails-ap
   active_model_serializers
   activeadmin (= 1.4.3)
+  activeadmin-searchable_select
   activerecord-import
   ahoy_matey
   aicrowd_evaluations!
+  airbrake
+  airbrake-ruby
   authtrail
   aws-sdk (~> 2.2)
   blazer

@@ -68,7 +68,7 @@ ActiveAdmin.register Team do
   form do |f|
     f.semantic_errors
     f.inputs do
-      f.input :challenge, collection: Challenge.all.map { |x| [x.challenge, x.id] }
+      f.input :challenge, collection: Challenge.all.map { |x| [x.challenge, x.id] }, as: :searchable_select
       f.input :name, as: :string
     end
     f.actions

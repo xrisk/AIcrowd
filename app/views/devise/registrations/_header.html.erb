@@ -20,6 +20,10 @@
       <li class="nav-item">
         <%= link_to "Notifications", participant_notifications_path(@participant), class: "nav-link nav-link-02" %>
       </li>
+      <li class="nav-item">
+        <%= link_to "Edit Profile", edit_participant_path(current_participant), class: "nav-link nav-link-03" %>
+      </li>
+
 
       <!-- more dropdown md -->
       <li class="nav-item dropdown more-md">
@@ -48,7 +52,5 @@
       </li>
       <!-- /more dropdown xs -->
     </ul>
-
-    <%= link_to "Edit Profile", edit_participant_path(current_participant) , class: "btn btn-secondary btn-sm" %>
   </div>
 </div>

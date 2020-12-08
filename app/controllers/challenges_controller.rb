@@ -110,31 +110,7 @@ class ChallengesController < ApplicationController
     end
   end
 
-  def update_challenge_leaderboard_extras
-    filters = params[:challenge][:challenge_extra_leaderboard_filters].split(',').reject { |c| c.empty? }
-    names = params[:challenge][:challenge_extra_leaderboard_names].split(',').reject { |c| c.empty? }
-    if filters.length != names.length
-      @challenge.errors.messages.merge!('Invalid configuration provided for extra leaderboards.')
-      return
-    end
-
-    @challenge.challenge_leaderboard_extras.each do |leaderboard|
-      if !filters.include?(leaderboard.filter)
-        leaderboard.destroy
-      end
-    end
-
-    for i in (0..names.length-1) do
-      leaderboard = ChallengeLeaderboardExtra.where(challenge_id: @challenge.id, filter: filters[i]).first_or_initialize
-      leaderboard.name = names[i]
-      leaderboard.save!
-    end
-
-    leaderboard_recomputations
-  end
-
   def update
-    update_challenge_leaderboard_extras if params[:challenge][:challenge_extra_leaderboard_names].present?
     if @challenge.update(challenge_params)
       update_challenges_organizers if params[:challenge][:organizer_ids].present?
       update_challenge_categories if params[:challenge][:category_names].present?
@@ -414,8 +390,6 @@ class ChallengesController < ApplicationController
       ],
       challenge_rounds_attributes: [
         :id,
-        :score_title,
-        :score_secondary_title,
         :challenge_round,
         :minimum_score,
         :minimum_score_secondary,
@@ -423,24 +397,33 @@ class ChallengesController < ApplicationController
         :submission_limit_period,
         :failed_submissions,
         :parallel_submissions,
-        :ranking_highlight,
-        :ranking_window,
-        :score_precision,
-        :score_secondary_precision,
         :start_dttm,
         :end_dttm,
         :active,
-        :leaderboard_note,
-        :primary_sort_order,
-        :secondary_sort_order,
-        :freeze_flag,
-        :freeze_duration,
         :submissions_type,
         :debug_submission_limit,
         :debug_submission_limit_period,
-        :media_on_leaderboard,
-        :show_leaderboard,
-        :other_scores_fieldnames
+        challenge_leaderboard_extras_attributes: [
+          :id,
+          :name,
+          :primary_sort_order,
+          :secondary_sort_order,
+          :score_title,
+          :score_secondary_title,
+          :ranking_window,
+          :score_precision,
+          :score_secondary_precision,
+          :leaderboard_note,
+          :freeze_flag,
+          :freeze_duration,
+          :media_on_leaderboard,
+          :show_leaderboard,
+          :other_scores_fieldnames,
+          :other_scores_fieldnames_display,
+          :dynamic_score_field,
+          :dynamic_score_secondary_field,
+          :filter
+        ]
       ],
       challenge_rules_attributes: [
         :id,

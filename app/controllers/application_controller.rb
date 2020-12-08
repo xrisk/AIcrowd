@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include ::ActionController::HttpAuthentication::Token::ControllerMethods
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :not_authorized_or_login
   after_action :participant_activity
@@ -30,6 +31,8 @@ class ApplicationController < ActionController::Base
   def notifications
     @notifications = current_user&.notifications
   end
+
+  attr_reader :is_api_request
 
   private
 
@@ -141,5 +144,20 @@ class ApplicationController < ActionController::Base
     else
       { host: ENV['DOMAIN_NAME'] || 'localhost:3000' }
     end
+  end
+
+  def set_user_by_token(mapping = nil)
+    if is_api_request?
+      authenticate_or_request_with_http_token do |token, options|
+        participant = Participant.find_by(api_key: token)
+        if participant.present?
+          sign_in(:participant, participant)
+        end
+      end
+    end
+  end
+
+  def is_api_request?
+    params[:is_api_request].present? && params[:is_api_request]
   end
 end
