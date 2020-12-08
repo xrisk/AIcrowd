@@ -128,7 +128,7 @@ module LeaderboardHelper
   end
 
   def freeze_time(ch_round)
-    time = ch_round.end_dttm - ch_round.freeze_duration.to_i.hours
+    time = ch_round.end_dttm - ch_round.default_leaderboard.freeze_duration.to_i.hours
     time.strftime("%B %d, %Y, %H:%M %Z")
   end
 
