@@ -34,6 +34,14 @@ Rails.application.configure do
   config.active_storage.service            = :local
   config.action_mailer.default_url_options = { host: ENV["DOMAIN_NAME"] }
   config.action_controller.asset_host      = ENV["DOMAIN_NAME"]
+
+  Bullet.enable = true
+  Bullet.alert = true
+  Bullet.bullet_logger = true
+  Bullet.console = true
+  Bullet.rails_logger = true
+  Bullet.add_footer = true
+  Bullet.skip_html_injection = false
 end
 
 Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']

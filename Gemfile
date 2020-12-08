@@ -139,6 +139,7 @@ group :development, :test do
   gem 'parallel_tests'
   gem 'spring'
   gem 'table_print'
+  gem 'bullet'
 end
 
 group :test do

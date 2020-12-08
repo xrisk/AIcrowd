@@ -3,7 +3,7 @@ class LandingPageController < ApplicationController
 
   def index
     @challenges = Challenge
-                      .includes(:organizers)
+                      .includes([:organizers, :categories])
                       .where(private_challenge: false)
                       .where(hidden_challenge: false)
                       .where.not(status_cd: :draft)
