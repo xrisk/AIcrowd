@@ -64,5 +64,6 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
     while Participant.where(name: username).exists?
       username = username + rand(1..9).to_s
     end
+    username
   end
 end
