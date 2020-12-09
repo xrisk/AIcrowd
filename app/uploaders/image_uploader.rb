@@ -1,6 +1,8 @@
 class ImageUploader < CarrierWave::Uploader::Base
   include ActionView::Helpers::AssetUrlHelper
   include CarrierWave::MiniMagick
+  include CarrierWave::ImageOptimizer
+  process :optimize, resize_to_fit: [500, 10000]
   # https://github.com/DarthSim/carrierwave-bombshelter
 
   storage :fog
