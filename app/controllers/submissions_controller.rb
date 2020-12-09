@@ -43,7 +43,7 @@ class SubmissionsController < ApplicationController
                       .where(
                         challenge_round_id: @current_round&.id,
                         challenge_id:       @challenge.id)
-                      .freeze_record(current_participant)
+                      .freeze_record(current_participant, @current_round&.default_leaderboard)
 
       end
     end
