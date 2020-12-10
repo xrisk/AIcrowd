@@ -127,8 +127,8 @@ module LeaderboardHelper
     uniform_submissions.values.max
   end
 
-  def freeze_time(leaderboard)
-    time = leaderboard.end_dttm - leaderboard.freeze_duration.to_i.hours
+  def freeze_time(challenge_round, leaderboard)
+    time = challenge_round.end_dttm - leaderboard.freeze_duration.to_i.hours
     time.strftime("%B %d, %Y, %H:%M %Z")
   end
 
