@@ -69,8 +69,7 @@ describe SubmissionPolicy do
   context 'challenge running / no leaderboard' do
     let!(:challenge) do
       create(:challenge,
-             :running,
-             show_leaderboard: false)
+             :running)
     end
     let!(:round) { challenge.challenge_rounds.first }
     let!(:p1) { create :participant }
@@ -526,7 +525,6 @@ describe SubmissionPolicy do
         create(:challenge,
                :running,
                private_challenge: true,
-               show_leaderboard:  false,
                submissions_page:  true)
       end
       let!(:round) { challenge.challenge_rounds.first }
@@ -821,7 +819,6 @@ describe SubmissionPolicy do
       let!(:challenge) do
         create(:challenge,
                :completed,
-               show_leaderboard: false,
                submissions_page: true)
       end
       let!(:round) { challenge.challenge_rounds.first }
