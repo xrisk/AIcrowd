@@ -2,7 +2,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   include ActionView::Helpers::AssetUrlHelper
   include CarrierWave::MiniMagick
   include CarrierWave::ImageOptimizer
-  process :optimize, resize_to_fit: [500, 10000]
+  process :optimize, :resize_image
   # https://github.com/DarthSim/carrierwave-bombshelter
 
   storage :fog
@@ -28,6 +28,18 @@ class ImageUploader < CarrierWave::Uploader::Base
       "/assets/challenges/AIcrowd-ProblemStatements-#{num}.jpg"
     else
       '/assets/users/user-avatar-default.svg'
+    end
+  end
+
+  def resize_image
+    if self.model.class.name == "Participant"
+      resize_to_fit(500, 1000000)
+    elsif self.model.class.name == "Challenge"
+      if self.model.big_challenge_card_image
+        resize_to_fit(1540, 1000000)
+      else
+        resize_to_fit(441, 1000000)
+      end
     end
   end
 end
