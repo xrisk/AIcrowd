@@ -40,8 +40,8 @@ module Leaderboards
         'Participants',
         *participants_registration_fields(leaderboard),
         'Submission ID',
-        challenge_round&.score_title,
-        challenge_round&.score_secondary_title,
+        leaderboard&.score_title,
+        leaderboard&.score_secondary_title,
         'Description',
         *meta_headers
       ]

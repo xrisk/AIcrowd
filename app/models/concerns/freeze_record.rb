@@ -2,12 +2,13 @@ module FreezeRecord
   extend ActiveSupport::Concern
 
   included do
-    def self.freeze_record(participant)
+    def self.freeze_record(participant, current_leaderboard=nil)
       return all if first.nil? || participant_is_organizer(participant&.email) || participant&.admin?
 
       ch_round = first.challenge_round
+      current_leaderboard = ch_round.default_leaderboard if current_leaderboard.blank?
       if freeze_duration?(participant)
-        freeze_beyond_time = ch_round.end_dttm - ch_round.freeze_duration.to_i.hours
+        freeze_beyond_time = ch_round.end_dttm - current_leaderboard.freeze_duration.to_i.hours
 
         participant_and_before_freeze_record  = where("participant_id = ? OR created_at < ?", participant&.id, freeze_beyond_time)
 
@@ -30,7 +31,7 @@ module FreezeRecord
     end
 
     def is_freeze?(challenge_round)
-      challenge_round.freeze_flag && freeze_time(challenge_round)
+      challenge_round&.default_leaderboard&.freeze_flag && freeze_time(challenge_round)
     end
 
     def freeze_time(ch_round)
