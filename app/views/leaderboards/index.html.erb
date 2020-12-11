@@ -52,7 +52,7 @@
         <% if @current_leaderboard&.freeze_flag %>
         <div class="md-content">
           <blockquote><p>ℹ️
-            This leaderboard has been frozen on <%= freeze_time(@current_leaderboard) %>
+            This leaderboard has been frozen on <%= freeze_time(@current_round, @current_leaderboard) %>
           </p></blockquote>
         </div>
         <% end %>
