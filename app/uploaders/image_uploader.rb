@@ -1,3 +1,4 @@
+INFINTY = 100000000
 class ImageUploader < CarrierWave::Uploader::Base
   include ActionView::Helpers::AssetUrlHelper
   include CarrierWave::MiniMagick
@@ -33,12 +34,12 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   def resize_image
     if self.model.class.name == "Participant"
-      resize_to_fit(500, 1000000)
+      resize_to_fit(500, INFINTY)
     elsif self.model.class.name == "Challenge"
       if self.model.big_challenge_card_image
-        resize_to_fit(1540, 1000000)
+        resize_to_fit(1540, INFINTY)
       else
-        resize_to_fit(441, 1000000)
+        resize_to_fit(441, INFINTY)
       end
     end
   end

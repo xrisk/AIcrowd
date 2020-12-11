@@ -1,3 +1,4 @@
+INFINTY = 100000000
 class RawImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   process :optimize, :resize_image
@@ -23,11 +24,11 @@ class RawImageUploader < CarrierWave::Uploader::Base
   def resize_image
     if self.model.class.name == "Challenge"
       if self.mounted_as == :social_media_image_file
-        resize_to_fit(1200, 1000000)
+        resize_to_fit(1200, INFINTY)
       elsif self.mounted_as == :banner_file
-        resize_to_fit(5315, 1000000)
+        resize_to_fit(5315, INFINTY)
       elsif self.mounted_as == :banner_mobile_file
-        resize_to_fit(1540, 1000000)
+        resize_to_fit(1540, INFINTY)
       end
     end
   end
