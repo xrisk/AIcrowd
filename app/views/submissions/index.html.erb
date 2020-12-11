@@ -81,9 +81,9 @@
                   <th scope="col"><%= sort_link(@search, :id,"ID") %></th>
                   <th scope="col"><%= sort_link(@search, :name,"Participant") %></th>
                   <th scope="col"><%= sort_link(@search, :grading_status_cd,"Status") %></th>
-                  <th scope="col"><%= sort_link(@search, :score_display, @current_round&.score_title) %></th>
-                  <% if @current_round&.score_secondary_title.present? %>
-                    <th scope="col"><%= sort_link(@search, :score_secondary_display, @current_round.score_secondary_title) %></th>
+                  <th scope="col"><%= sort_link(@search, :score_display, @current_round&.default_leaderboard&.score_title) %></th>
+                  <% if @current_round&.default_leaderboard&.score_secondary_title.present? %>
+                    <th scope="col"><%= sort_link(@search, :score_secondary_display, @current_round&.default_leaderboard&.score_secondary_score_secondary_title) %></th>
                   <% end %>
                   <% if !@challenge.meta_challenge %>
                     <% @current_round.default_leaderboard.other_scores_fieldnames_array.each do |fname| %>
