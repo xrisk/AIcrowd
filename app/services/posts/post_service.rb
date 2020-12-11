@@ -1,5 +1,4 @@
 module Posts
-  GIST_URL = "https://gist.github.com/"
   class PostService < BaseService
     include ActiveModel::Model
 
@@ -36,7 +35,7 @@ module Posts
         notebook_gist_url = `gist #{notebook_file_path}`
         post.notebook_s3_url = upload_to_s3(notebook_file_path, )
         post.notebook_html = File.read(Rails.root.join('public', 'uploads', html_filename)).html_safe
-        post.gist_id = notebook_gist_url.strip.gsub(GIST_URL, "")
+        post.gist_id = notebook_gist_url.strip.gsub(ENV['GIST_URL'], "")
         File.delete(notebook_file_path) if File.exist?(notebook_file_path)
         File.delete(Rails.root.join('public', 'uploads', html_filename)) if File.exist?(Rails.root.join('public', 'uploads', html_filename))
       end

@@ -1,8 +1,8 @@
 class PostsController < InheritedResources::Base
 
-  COLAB_URL = 'https://colab.research.google.com/gist/'
-  GIST_URL = "https://gist.github.com/"
-  USER_NAME = "sujnesh"
+  COLAB_URL = ENV['COLLAB_URL']
+  GIST_URL = ENV['GIST_URL']
+  USER_NAME = ENV['GIST_USERNAME']
   def new
     @post = Post.new
   end

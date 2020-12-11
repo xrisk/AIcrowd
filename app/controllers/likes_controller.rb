@@ -1,7 +1,7 @@
 class LikesController < ApplicationController
 
   def create
-    Post.find_by_id(params[:id]).likes.create!(participant_id: current_participant.id)
+    Post.friendly.find(params[:post_id]).likes.create!(participant_id: current_participant.id)
   end
 
   private
