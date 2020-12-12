@@ -38,7 +38,7 @@
             <span data-controller="linkify-content"><%= @submission.grading_message %></span>
           </div>
 
-          <% if @submission.submission_files.present? && (@challenge.submissions_downloadable && (policy(@challenge).edit? || current_participant.id== @submission.participant_id)) %>
+          <% if @submission.submission_files.present? && (@challenge.submissions_downloadable && (current_participant.present? && (policy(@challenge).edit? || current_participant.id== @submission.participant_id))) %>
             <div class="mr-4">
               <h4>Submission Files</h4>
               <span>
