@@ -1,6 +1,7 @@
 INFINTY = 100000000
 class RawImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
+  include CarrierWave::ImageOptimizer
   process :optimize, :resize_image
 
   storage :fog
