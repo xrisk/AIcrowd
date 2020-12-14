@@ -100,6 +100,7 @@ gem 'csv'
 gem 'activeadmin-searchable_select'
 gem 'airbrake-ruby'
 gem 'airbrake'
+gem 'carrierwave-imageoptimizer'
 
 # HTTP clients
 gem 'faraday', '~> 1.0'

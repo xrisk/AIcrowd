@@ -1,5 +1,7 @@
+INFINTY = 100000000
 class RawImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
+  process :optimize, :resize_image
 
   storage :fog
 
@@ -17,5 +19,17 @@ class RawImageUploader < CarrierWave::Uploader::Base
     token = model.instance_variable_get(ivar)
     token ||= model.instance_variable_set(ivar, random_token)
     "#{token}.#{file.extension}" if original_filename
+  end
+
+  def resize_image
+    if self.model.class.name == "Challenge"
+      if self.mounted_as == :social_media_image_file
+        resize_to_fit(1200, INFINTY)
+      elsif self.mounted_as == :banner_file
+        resize_to_fit(5315, INFINTY)
+      elsif self.mounted_as == :banner_mobile_file
+        resize_to_fit(1540, INFINTY)
+      end
+    end
   end
 end
