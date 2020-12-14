@@ -24,7 +24,7 @@ class InsightsController < ApplicationController
     # Calculate running maximum hash for dates
 
     score              = params[:score].presence || 'score'
-    precision          = @current_round["#{score}_precision"]
+    precision          = @current_round.default_leaderboard.score_precision
 
     sort_order         = if score == 'score'
                            @current_round["primary_sort_order_cd"]
