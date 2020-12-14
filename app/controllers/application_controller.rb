@@ -164,7 +164,7 @@ class ApplicationController < ActionController::Base
 
   def check_for_redirection
     url = request.path
-    if Redirect.where(redirect_url: url, active: true).exists? and request.get?
+    if request.get? && Redirect.where(redirect_url: url, active: true).exists?
       destination_url = Redirect.where(redirect_url: url, active: true).first.destination_url
       redirect_to destination_url and return
     end
