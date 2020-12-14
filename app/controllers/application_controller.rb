@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :store_user_location!, if: :storable_location?
   before_action :modify_params_for_meta_challenges
   before_action :notifications
+  before_action :check_for_redirection
 
   def track_action
     properties         = { request: request.filtered_parameters }
@@ -159,5 +160,13 @@ class ApplicationController < ActionController::Base
 
   def is_api_request?
     params[:is_api_request].present? && params[:is_api_request]
+  end
+
+  def check_for_redirection
+    url = request.path
+    if Redirect.where(redirect_url: url, active: true).exists? and request.get?
+      destination_url = Redirect.where(redirect_url: url, active: true).first.destination_url
+      redirect_to destination_url and return
+    end
   end
 end

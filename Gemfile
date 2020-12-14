@@ -100,7 +100,6 @@ gem 'csv'
 gem 'activeadmin-searchable_select'
 gem 'airbrake-ruby'
 gem 'airbrake'
-gem 'rack-rewrite', '~> 1.5.0'
 gem 'carrierwave-imageoptimizer'
 
 # HTTP clients

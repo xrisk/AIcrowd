@@ -60,12 +60,6 @@ module Crowdai
       end
     end
 
-    config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
-      YAML.load(File.open(Rails.root.join('config', 'url_redirect.yml'))).each do |old_path, new_path|
-        found old_path, new_path
-      end
-    end
-
     console do
       ARGV.push "-r", root.join("lib/console.rb")
     end
