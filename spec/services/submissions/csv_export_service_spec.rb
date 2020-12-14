@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Submissions::CSVExportService do
 
   let!(:participant)     { create(:participant, name: 'Jhon') }
-  let!(:challenge_round) { create(:challenge_round, score_title: 'Test Title', score_secondary_title: 'Test Secondary Title') }
+  let!(:challenge_round) { create(:challenge_round) }
   let!(:submissions)     { create_list(:submission, 3, :with_meta, :with_file, participant: participant, challenge_round: challenge_round, ) }
 
   describe '#call' do

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe ChallengeRounds::CreateLeaderboardsService do
   subject { described_class.new(challenge_round: challenge_round, meta_challenge_id: meta_challenge_id) }
 
-  let(:challenge_round) { create(:challenge_round, challenge: challenge, score_precision: 3, score_secondary_precision: 3) }
+  let(:challenge_round) { create(:challenge_round, challenge: challenge) }
   let(:challenge)       { create(:challenge, :running) }
 
   describe '#call' do
@@ -239,7 +239,7 @@ describe ChallengeRounds::CreateLeaderboardsService do
 
     context 'when meta_challenge_id is provided' do
       let(:meta_challenge)    { create(:challenge, :running, meta_challenge: true) }
-      let(:challenge_round)   { create(:challenge_round, challenge: meta_challenge, score_precision: 3, score_secondary_precision: 3)}
+      let(:challenge_round)   { create(:challenge_round, challenge: meta_challenge)}
       let(:meta_challenge_id) { meta_challenge.id }
 
       context 'when challenge_round doesn\'t have submissions' do
