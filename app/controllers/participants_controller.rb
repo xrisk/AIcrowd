@@ -118,6 +118,15 @@ class ParticipantsController < ApplicationController
   private
 
   def set_participant
+    if params[:id].downcase == 'me'
+      if current_participant.present?
+        redirect_to current_participant
+      else
+        flash[:error] = 'Unable to find your account, please login'
+        redirect_to root_path
+      end
+    end
+
     @participant = Participant.friendly.find_by_friendly_id(params[:id].downcase)
     authorize @participant
   end
