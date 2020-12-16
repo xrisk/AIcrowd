@@ -34,6 +34,9 @@ Rails.application.configure do
   config.active_storage.service            = :local
   config.action_mailer.default_url_options = { host: ENV["DOMAIN_NAME"] }
   config.action_controller.asset_host      = ENV["DOMAIN_NAME"]
+
+  config.logger = Logger.new(STDOUT)
+  config.log_level = :DEBUG
 end
 
 Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']

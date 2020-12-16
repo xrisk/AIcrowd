@@ -116,6 +116,9 @@ GEM
     aws-sdk-resources (2.11.190)
       aws-sdk-core (= 2.11.190)
     aws-sigv4 (1.0.3)
+    barnes (0.0.8)
+      multi_json (~> 1)
+      statsd-ruby (~> 1.1)
     bcrypt (3.1.13)
     benchmark-ips (2.7.2)
     bindex (0.5.0)
@@ -872,6 +875,7 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     stackprof (0.2.12)
+    statsd-ruby (1.4.0)
     stringex (2.8.5)
     table_print (1.5.6)
     thor (0.20.3)
@@ -943,6 +947,7 @@ DEPENDENCIES
   airbrake-ruby
   authtrail
   aws-sdk (~> 2.2)
+  barnes
   blazer
   bootstrap (~> 4.3.1)
   brakeman

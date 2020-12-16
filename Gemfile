@@ -102,6 +102,7 @@ gem 'airbrake'
 gem 'carrierwave-imageoptimizer'
 gem 'rack-timeout'
 gem 'derailed'
+gem 'barnes'
 
 # HTTP clients
 gem 'faraday', '~> 1.0'

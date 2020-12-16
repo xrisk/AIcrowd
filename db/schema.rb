@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_06_103949) do
+ActiveRecord::Schema.define(version: 2020_12_14_124902) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -170,8 +170,10 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.string "submitter_type"
     t.bigint "submitter_id"
     t.integer "meta_challenge_id"
-    t.integer "ml_challenge_id"
     t.bigint "old_participant_id"
+    t.integer "ml_challenge_id"
+    t.text "submission_link"
+    t.integer "challenge_leaderboard_extra_id"
     t.index ["challenge_id"], name: "index_base_leaderboards_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_base_leaderboards_on_challenge_round_id"
     t.index ["leaderboard_type_cd"], name: "index_base_leaderboards_on_leaderboard_type_cd"
@@ -323,6 +325,33 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.index ["organizer_id"], name: "index_challenge_calls_on_organizer_id"
   end
 
+  create_table "challenge_leaderboard_extras", force: :cascade do |t|
+    t.integer "challenge_id"
+    t.string "filter"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "challenge_round_id", default: 1, null: false
+    t.string "score_title", default: "Score"
+    t.string "score_secondary_title", default: "Secondary Score"
+    t.string "primary_sort_order_cd", default: "ascending"
+    t.string "secondary_sort_order_cd", default: "not_used"
+    t.boolean "freeze_flag", default: false
+    t.integer "freeze_duration"
+    t.string "other_scores_fieldnames"
+    t.boolean "show_leaderboard", default: true
+    t.boolean "media_on_leaderboard", default: false
+    t.string "other_scores_fieldnames_display"
+    t.string "dynamic_score_field"
+    t.string "dynamic_score_secondary_field"
+    t.integer "ranking_window", default: 96
+    t.integer "score_precision", default: 3
+    t.integer "score_secondary_precision", default: 3
+    t.text "leaderboard_note_markdown"
+    t.text "leaderboard_note"
+    t.boolean "default", default: false
+  end
+
   create_table "challenge_participants", force: :cascade do |t|
     t.bigint "challenge_id"
     t.bigint "participant_id"
@@ -338,6 +367,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.datetime "challenge_rules_accepted_date"
     t.integer "challenge_rules_accepted_version"
     t.boolean "challenge_rules_additional_checkbox", default: false
+    t.jsonb "registration_form_details"
     t.index ["challenge_id"], name: "index_challenge_participants_on_challenge_id"
     t.index ["participant_id"], name: "index_challenge_participants_on_participant_id"
   end
@@ -357,6 +387,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.float "weight"
     t.integer "challenge_round_id"
     t.integer "occur_day"
+    t.boolean "exclusive", default: true
   end
 
   create_table "challenge_rounds", force: :cascade do |t|
@@ -371,25 +402,15 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.datetime "end_dttm"
     t.float "minimum_score", default: 0.0
     t.float "minimum_score_secondary", default: 0.0
-    t.integer "ranking_window", default: 96
     t.integer "ranking_highlight", default: 3
-    t.integer "score_precision", default: 3
-    t.integer "score_secondary_precision", default: 3
-    t.text "leaderboard_note_markdown"
-    t.text "leaderboard_note"
     t.integer "failed_submissions", default: 0
     t.integer "parallel_submissions", default: 0, null: false
-    t.string "score_title", default: "Score", null: false
-    t.string "score_secondary_title", default: "Secondary Score", null: false
-    t.string "primary_sort_order_cd", default: "ascending", null: false
-    t.string "secondary_sort_order_cd", default: "not_used", null: false
     t.boolean "calculated_permanent", default: false, null: false
     t.boolean "assigned_permanent_badge", default: false, null: false
-    t.boolean "freeze_flag", default: false, null: false
-    t.integer "freeze_duration"
     t.string "submissions_type_cd", default: "artifact", null: false
-    t.string "debug_submission_limit"
+    t.integer "debug_submission_limit", default: 0
     t.integer "debug_submission_time"
+    t.string "debug_submission_limit_period_cd"
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
   end
 
@@ -483,19 +504,22 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.integer "team_freeze_seconds_before_end", default: 604800
     t.boolean "hidden_challenge", default: false, null: false
     t.datetime "team_freeze_time"
-    t.string "evaluator_type_cd"
     t.boolean "scrollable_overview_tabs", default: true, null: false
     t.bigint "discourse_group_id"
+    t.string "evaluator_type_cd"
     t.string "discourse_group_name"
     t.boolean "meta_challenge"
-    t.boolean "practice_flag", default: false, null: false
     t.string "banner_file"
     t.string "banner_color"
     t.boolean "big_challenge_card_image"
     t.string "banner_mobile_file"
+    t.boolean "practice_flag", default: false, null: false
     t.float "weight", default: 0.0, null: false
     t.boolean "editors_selection", default: false, null: false
     t.boolean "ml_challenge", default: false, null: false
+    t.string "social_media_image_file"
+    t.string "registration_form_fields"
+    t.string "submission_window_type_cd", default: "rolling_window"
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
   end
@@ -907,8 +931,10 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.bigint "gitlab_id"
     t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
     t.bigint "referred_by_id"
+    t.boolean "trusted", default: false
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
+    t.index ["name"], name: "index_participants_on_name", unique: true
     t.index ["reset_password_token"], name: "index_participants_on_reset_password_token", unique: true
     t.index ["slug"], name: "index_participants_on_slug", unique: true
     t.index ["unlock_token"], name: "index_participants_on_unlock_token", unique: true
@@ -933,6 +959,14 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.index ["organizer_id"], name: "index_partners_on_organizer_id"
+  end
+
+  create_table "redirects", force: :cascade do |t|
+    t.string "redirect_url"
+    t.string "destination_url"
+    t.boolean "active", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "reserved_userhandles", force: :cascade do |t|
@@ -1025,6 +1059,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.string "submission_link"
     t.integer "ml_challenge_id"
     t.boolean "debug_submission", default: false, null: false
+    t.string "submission_received_from", default: "web"
     t.index ["challenge_id"], name: "index_submissions_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_submissions_on_challenge_round_id"
     t.index ["ml_challenge_id"], name: "index_submissions_on_ml_challenge_id"
@@ -1063,6 +1098,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "dataset_file_s3_key"
+    t.boolean "visible", default: true
     t.index ["clef_task_id"], name: "index_task_dataset_files_on_clef_task_id"
   end
 
@@ -1112,6 +1148,42 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     t.datetime "updated_at", null: false
     t.index ["challenge_id"], name: "index_teams_on_challenge_id"
     t.index ["name", "challenge_id"], name: "index_teams_on_name_and_challenge_id", unique: true
+  end
+
+  create_table "trajnet_duplicate_submissions", id: false, force: :cascade do |t|
+    t.integer "challenge_id"
+    t.integer "participant_id"
+    t.float "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text "description"
+    t.float "score_secondary"
+    t.string "grading_message"
+    t.string "grading_status_cd"
+    t.text "description_markdown"
+    t.integer "vote_count"
+    t.boolean "post_challenge"
+    t.string "api"
+    t.string "media_large"
+    t.string "media_thumbnail"
+    t.string "media_content_type"
+    t.integer "challenge_round_id"
+    t.json "meta"
+    t.string "short_url"
+    t.text "clef_method_description"
+    t.string "clef_retrieval_type"
+    t.string "clef_run_type"
+    t.boolean "clef_primary_run"
+    t.text "clef_other_info"
+    t.text "clef_additional"
+    t.boolean "online_submission"
+    t.float "score_display"
+    t.float "score_secondary_display"
+    t.boolean "baseline"
+    t.string "baseline_comment"
+    t.integer "meta_challenge_id"
+    t.string "submission_link"
+    t.integer "ml_challenge_id"
   end
 
   create_table "user_ratings", force: :cascade do |t|
@@ -1206,98 +1278,6 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
   add_foreign_key "user_ratings", "participants"
   add_foreign_key "votes", "participants"
 
-  create_view "participant_sign_ups",  sql_definition: <<-SQL
-      SELECT row_number() OVER () AS id,
-      count(participants.id) AS count,
-      (date_part('month'::text, participants.created_at))::integer AS mnth,
-      (date_part('year'::text, participants.created_at))::integer AS yr
-     FROM participants
-    GROUP BY ((date_part('month'::text, participants.created_at))::integer), ((date_part('year'::text, participants.created_at))::integer)
-    ORDER BY ((date_part('year'::text, participants.created_at))::integer), ((date_part('month'::text, participants.created_at))::integer);
-  SQL
-
-  create_view "participant_submissions",  sql_definition: <<-SQL
-      SELECT s.id,
-      s.challenge_id,
-      s.participant_id,
-      p.name,
-      s.grading_status_cd,
-      s.post_challenge,
-      s.score,
-      s.score_secondary,
-      count(f.*) AS files,
-      s.created_at
-     FROM participants p,
-      (submissions s
-       LEFT JOIN submission_files f ON ((f.submission_id = s.id)))
-    WHERE (s.participant_id = p.id)
-    GROUP BY s.id, s.challenge_id, s.participant_id, p.name, s.grading_status_cd, s.post_challenge, s.score, s.score_secondary, s.created_at
-    ORDER BY s.created_at DESC;
-  SQL
-
-  create_view "challenge_round_views",  sql_definition: <<-SQL
-      SELECT cr.id,
-      cr.challenge_round,
-      cr.row_num,
-      cr.active,
-      cr.challenge_id,
-      cr.start_dttm,
-      cr.end_dttm,
-      cr.submission_limit,
-      cr.submission_limit_period_cd,
-      cr.failed_submissions,
-      cr.minimum_score,
-      cr.minimum_score_secondary
-     FROM ( SELECT r1.id,
-              r1.challenge_id,
-              r1.challenge_round,
-              r1.active,
-              r1.created_at,
-              r1.updated_at,
-              r1.submission_limit,
-              r1.submission_limit_period_cd,
-              r1.start_dttm,
-              r1.end_dttm,
-              r1.minimum_score,
-              r1.minimum_score_secondary,
-              r1.ranking_window,
-              r1.ranking_highlight,
-              r1.score_precision,
-              r1.score_secondary_precision,
-              r1.leaderboard_note_markdown,
-              r1.leaderboard_note,
-              r1.failed_submissions,
-              row_number() OVER (PARTITION BY r1.challenge_id ORDER BY r1.challenge_id, r1.start_dttm) AS row_num
-             FROM challenge_rounds r1) cr;
-  SQL
-
-  create_view "challenge_round_summaries",  sql_definition: <<-SQL
-      SELECT cr.id,
-      cr.challenge_round,
-      cr.row_num,
-      acr.row_num AS active_row_num,
-          CASE
-              WHEN (cr.row_num < acr.row_num) THEN 'history'::text
-              WHEN (cr.row_num = acr.row_num) THEN 'current'::text
-              WHEN (cr.row_num > acr.row_num) THEN 'future'::text
-              ELSE NULL::text
-          END AS round_status_cd,
-      cr.active,
-      cr.challenge_id,
-      cr.start_dttm,
-      cr.end_dttm,
-      cr.submission_limit,
-      cr.submission_limit_period_cd,
-      cr.failed_submissions,
-      cr.minimum_score,
-      cr.minimum_score_secondary,
-      c.status_cd
-     FROM challenge_round_views cr,
-      challenge_round_views acr,
-      challenges c
-    WHERE ((c.id = cr.challenge_id) AND (c.id = acr.challenge_id) AND (acr.active IS TRUE));
-  SQL
-
   create_view "challenge_registrations",  sql_definition: <<-SQL
       SELECT row_number() OVER () AS id,
       x.challenge_id,
@@ -1319,7 +1299,7 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
           UNION
            SELECT df.challenge_id,
               dfd.participant_id,
-              'dataset_download'::text,
+              'dataset_download'::text AS text,
               NULL::integer AS clef_task_id
              FROM dataset_file_downloads dfd,
               dataset_files df
@@ -1332,34 +1312,6 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
              FROM participant_clef_tasks pc,
               challenges c
             WHERE (c.clef_task_id = pc.clef_task_id)) x;
-  SQL
-
-  create_view "participant_challenge_counts",  sql_definition: <<-SQL
-      SELECT row_number() OVER () AS row_number,
-      y.challenge_id,
-      y.participant_id,
-      y.registration_type
-     FROM ( SELECT DISTINCT x.challenge_id,
-              x.participant_id,
-              x.registration_type
-             FROM ( SELECT s.challenge_id,
-                      s.participant_id,
-                      'submission'::text AS registration_type
-                     FROM submissions s
-                  UNION
-                   SELECT s.votable_id,
-                      s.participant_id,
-                      'heart'::text AS registration_type
-                     FROM votes s
-                    WHERE ((s.votable_type)::text = 'Challenge'::text)
-                  UNION
-                   SELECT df.challenge_id,
-                      dfd.participant_id,
-                      'dataset_download'::text
-                     FROM dataset_file_downloads dfd,
-                      dataset_files df
-                    WHERE (dfd.dataset_file_id = df.id)) x
-            ORDER BY x.challenge_id, x.participant_id) y;
   SQL
 
   create_view "challenge_stats",  sql_definition: <<-SQL
@@ -1383,6 +1335,34 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
       challenge_rounds r
     WHERE (r.challenge_id = c.id)
     ORDER BY (row_number() OVER ()), c.challenge;
+  SQL
+
+  create_view "participant_challenge_counts",  sql_definition: <<-SQL
+      SELECT row_number() OVER () AS row_number,
+      y.challenge_id,
+      y.participant_id,
+      y.registration_type
+     FROM ( SELECT DISTINCT x.challenge_id,
+              x.participant_id,
+              x.registration_type
+             FROM ( SELECT s.challenge_id,
+                      s.participant_id,
+                      'submission'::text AS registration_type
+                     FROM submissions s
+                  UNION
+                   SELECT s.votable_id,
+                      s.participant_id,
+                      'heart'::text AS registration_type
+                     FROM votes s
+                    WHERE ((s.votable_type)::text = 'Challenge'::text)
+                  UNION
+                   SELECT df.challenge_id,
+                      dfd.participant_id,
+                      'dataset_download'::text AS text
+                     FROM dataset_file_downloads dfd,
+                      dataset_files df
+                    WHERE (dfd.dataset_file_id = df.id)) x
+            ORDER BY x.challenge_id, x.participant_id) y;
   SQL
 
   create_view "participant_challenges",  sql_definition: <<-SQL
@@ -1413,38 +1393,33 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
     WHERE ((cr.participant_id = p.id) AND (cr.challenge_id = c.id));
   SQL
 
-  create_view "ongoing_leaderboards",  sql_definition: <<-SQL
-      SELECT base_leaderboards.id,
-      base_leaderboards.challenge_id,
-      base_leaderboards.challenge_round_id,
-      base_leaderboards.row_num,
-      base_leaderboards.previous_row_num,
-      base_leaderboards.slug,
-      base_leaderboards.name,
-      base_leaderboards.entries,
-      base_leaderboards.score,
-      base_leaderboards.score_secondary,
-      base_leaderboards.media_large,
-      base_leaderboards.media_thumbnail,
-      base_leaderboards.media_content_type,
-      base_leaderboards.description,
-      base_leaderboards.description_markdown,
-      base_leaderboards.leaderboard_type_cd,
-      base_leaderboards.refreshed_at,
-      base_leaderboards.created_at,
-      base_leaderboards.updated_at,
-      base_leaderboards.submission_id,
-      base_leaderboards.post_challenge,
-      base_leaderboards.seq,
-      base_leaderboards.baseline,
-      base_leaderboards.baseline_comment,
-      base_leaderboards.meta,
-      base_leaderboards.submitter_type,
-      base_leaderboards.submitter_id,
-      base_leaderboards.meta_challenge_id,
-      base_leaderboards.ml_challenge_id
-     FROM base_leaderboards
-    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
+  create_view "participant_sign_ups",  sql_definition: <<-SQL
+      SELECT row_number() OVER () AS id,
+      count(participants.id) AS count,
+      (date_part('month'::text, participants.created_at))::integer AS mnth,
+      (date_part('year'::text, participants.created_at))::integer AS yr
+     FROM participants
+    GROUP BY ((date_part('month'::text, participants.created_at))::integer), ((date_part('year'::text, participants.created_at))::integer)
+    ORDER BY ((date_part('year'::text, participants.created_at))::integer), ((date_part('month'::text, participants.created_at))::integer);
+  SQL
+
+  create_view "participant_submissions",  sql_definition: <<-SQL
+      SELECT s.id,
+      s.challenge_id,
+      s.participant_id,
+      p.name,
+      s.grading_status_cd,
+      s.post_challenge,
+      s.score,
+      s.score_secondary,
+      count(f.*) AS files,
+      s.created_at
+     FROM participants p,
+      (submissions s
+       LEFT JOIN submission_files f ON ((f.submission_id = s.id)))
+    WHERE (s.participant_id = p.id)
+    GROUP BY s.id, s.challenge_id, s.participant_id, p.name, s.grading_status_cd, s.post_challenge, s.score, s.score_secondary, s.created_at
+    ORDER BY s.created_at DESC;
   SQL
 
   create_view "leaderboards",  sql_definition: <<-SQL
@@ -1476,9 +1451,49 @@ ActiveRecord::Schema.define(version: 2020_08_06_103949) do
       base_leaderboards.submitter_type,
       base_leaderboards.submitter_id,
       base_leaderboards.meta_challenge_id,
-      base_leaderboards.ml_challenge_id
+      base_leaderboards.old_participant_id,
+      base_leaderboards.ml_challenge_id,
+      base_leaderboards.submission_link,
+      base_leaderboards.challenge_leaderboard_extra_id
      FROM base_leaderboards
     WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'leaderboard'::text);
+  SQL
+
+  create_view "ongoing_leaderboards",  sql_definition: <<-SQL
+      SELECT base_leaderboards.id,
+      base_leaderboards.challenge_id,
+      base_leaderboards.challenge_round_id,
+      base_leaderboards.row_num,
+      base_leaderboards.previous_row_num,
+      base_leaderboards.slug,
+      base_leaderboards.name,
+      base_leaderboards.entries,
+      base_leaderboards.score,
+      base_leaderboards.score_secondary,
+      base_leaderboards.media_large,
+      base_leaderboards.media_thumbnail,
+      base_leaderboards.media_content_type,
+      base_leaderboards.description,
+      base_leaderboards.description_markdown,
+      base_leaderboards.leaderboard_type_cd,
+      base_leaderboards.refreshed_at,
+      base_leaderboards.created_at,
+      base_leaderboards.updated_at,
+      base_leaderboards.submission_id,
+      base_leaderboards.post_challenge,
+      base_leaderboards.seq,
+      base_leaderboards.baseline,
+      base_leaderboards.baseline_comment,
+      base_leaderboards.meta,
+      base_leaderboards.submitter_type,
+      base_leaderboards.submitter_id,
+      base_leaderboards.meta_challenge_id,
+      base_leaderboards.old_participant_id,
+      base_leaderboards.ml_challenge_id,
+      base_leaderboards.submission_link,
+      base_leaderboards.challenge_leaderboard_extra_id
+     FROM base_leaderboards
+    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
   SQL
 
 end
