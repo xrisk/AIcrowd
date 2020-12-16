@@ -56,6 +56,10 @@ module LeaderboardHelper
     leaderboard_config.other_scores_fieldnames_array.map(&:to_s).each do |fname|
       other_scores << if (leaderboard.meta) && (leaderboard.meta.key? fname)
                         (leaderboard.meta[fname].nil? ? "-" : leaderboard_formatted_value(leaderboard_config, leaderboard.meta[fname]))
+                      elsif leaderboard.is_a?(Leaderboard) && leaderboard.submission.has_attribute?(fname) && leaderboard.submission[fname].present?
+                        leaderboard_formatted_value(leaderboard_config, leaderboard.submission[fname])
+                      elsif leaderboard.is_a?(Submission) && leaderboard.has_attribute?(fname) && leaderboard[fname].present?
+                        leaderboard_formatted_value(leaderboard_config, leaderboard[fname])
                       else
                         '-'
                       end
