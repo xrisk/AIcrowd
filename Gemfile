@@ -81,7 +81,6 @@ gem 'sprockets'
 gem 'social-share-button'
 gem 'sass-rails'
 gem "safely_block", "~> 0.2.2"
-gem 'skylight', '~> 3.0'
 gem 'sidekiq', '~> 5.1.1'
 gem 'sidekiq-cron', '~> 0.6.3'
 gem 'sidekiq-history'
@@ -101,6 +100,8 @@ gem 'activeadmin-searchable_select'
 gem 'airbrake-ruby'
 gem 'airbrake'
 gem 'carrierwave-imageoptimizer'
+gem 'rack-timeout'
+gem 'derailed'
 
 # HTTP clients
 gem 'faraday', '~> 1.0'
