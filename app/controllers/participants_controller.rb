@@ -120,10 +120,10 @@ class ParticipantsController < ApplicationController
   def set_participant
     if params[:id].downcase == 'me'
       if current_participant.present?
-        redirect_to current_participant
+        redirect_to current_participant and return
       else
-        flash[:error] = 'Unable to find your account, please login'
-        redirect_to root_path
+        session['participant_return_to'] = request.original_fullpath
+        redirect_to new_participant_session_path and return
       end
     end
 
