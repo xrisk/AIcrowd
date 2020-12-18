@@ -28,10 +28,12 @@
             <span><%= submission_formatted_value(@submission, @submission.score_display) %></span>
           </div>
 
+          <% if !(@submission.challenge_round.default_leaderboard&.secondary_sort_order.present? && @submission.challenge_round.default_leaderboard&.secondary_sort_order == :hidden) %>
           <div class="mr-4">
             <h4><%= @submission.challenge_round.default_leaderboard&.score_secondary_title %></h4>
             <span><%= submission_formatted_value(@submission, @submission.score_secondary_display) %></span>
           </div>
+          <% end %>
 
           <div class="mr-4">
             <h4>Message</h4>
