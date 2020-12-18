@@ -1,6 +1,6 @@
 class Post < ApplicationRecord
   has_paper_trail
-  extend FriendlyId
+  include FriendlyId
   friendly_id :title, use: :slugged
   has_many :likes, as: :reference, dependent: :destroy
 

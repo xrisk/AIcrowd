@@ -3,36 +3,37 @@
   <div class="container-fluid">
     <div class="row">
       <!-- md content -->
-      <div class="col-md-8 col-lg-7">
-        <div>
+      <div class="col-md-12 text-center">
+        <h1 id="introduction" class="mt-0"><%=@post.title%></h1>
+        <% if current_participant.present? && @post.participant_id == current_participant.id %>
+          <%= button_to 'Edit', edit_post_path(@post), class: "btn btn-secondary btn-sm float-right", method: :get %>
+        <% end %>
+        <p><%= @post.tagline %></p>
+      </div>
+      <div class="container-fluid row">
+        <div class="col-md-6 p-0 b-0 pt-2">
+          <i class="float-right">Contributed by &nbsp;</i>
+        </div>
+        <div class="col-md-6 float-left p-0 b-0">
+          <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant, username: 'false' } %>
+        </div>
+      </div>
 
-          <h1 id="introduction" class="mt-0"><%=@post.title%></h1>
-          <!-- author/options -->
-          <div class="row">
-            <div class="col-12 d-flex align-items-center flex-wrap">
-              <div class="row avatar-group p-3">
-                <span>
-                  Contributed by
-                  <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant, username: 'false' } %>
-                </span>
-                <% if current_participant.present? && @post.participant_id == current_participant.id %>
-                  <div class="col-md-2">
-                    <%= button_to 'Edit', edit_post_path(@post.id), class: "btn btn-secondary btn-sm", method: :get %>
-                  </div>
-                <% end %>
-              </div>
-            </div>
-          </div>
-          <div>
-            <%= @post.description.html_safe %>
-          </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-7 mt-5 posts-form">
+        <div class="col-md-12 text-center">
+          <img src="<%= @post.thumbnail %>" class="img-fluid" style="max-width: 100%; max-height: 600px;" />
+        </div>
+        <hr class="w-50"/>
+        <div class="col-md-12 mt-4 md-content">
+          <%= @post.description.html_safe %>
         </div>
       </div>
       <!-- /md content -->
 
       <!-- top contributors -->
-      <div class="top-contributors-container col-sm-12 col-md-4 col-lg-3">
-        <%= render 'posts/sidenav', post: @post%>
+      <div class="top-contributors-container col-md-4 mt-5">
+        <%= render 'posts/sidenav', post: @post %>
       </div>
       <!-- /top contributors -->
 
@@ -40,9 +41,8 @@
   </div>
 </section>
 
-
-<section class="section-p-md col-md-12">
-  <div>
+<section class="section-p-md">
+  <div class="container-fluid">
     <% if @post.notebook_html.present? %>
       <hr/>
       <div class="row">
@@ -60,11 +60,21 @@
       <%= @post.notebook_html.html_safe %>
     <% end %>
   </div>
-  <div>
+  <div class="container-fluid">
     <% if @external_link.present? %>
-      <h3>Code</h3>
-      <hr/>
-      <%= Onebox.preview(@external_link).to_s.html_safe %>
+      <div class="border-top border-bottom p-3 mb-3">
+        <h3>
+          Additional Links
+          <a href='<%= @external_link %>' target="_blank">
+            <button type="button" class="btn btn-sm btn-primary float-right">Visit</button>
+          </a>
+        </h3>
+      </div>
+      <div class="text-center">
+        <% cache(@external_link) do %>
+          <%= Onebox.preview(@external_link).to_s.html_safe %>
+        <% end %>
+      </div>
     <% end %>
   </div>
   <hr/>
@@ -74,3 +84,8 @@
 </section>
 <!-- /section -->
 
+<style>
+$(window).load(function() {
+  $(".posts-form img").filter(function(){return this.title.match(/:*:/);}).attr('width', '24px');
+}
+</style>

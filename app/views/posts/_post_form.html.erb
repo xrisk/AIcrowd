@@ -1,0 +1,91 @@
+<div class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+
+        <div class="col-12", style="padding:0">
+          <% if @post.persisted? %>
+            <h3>👋 Edit Your Community Contribution</h3>
+          <% else %>
+            <h3>👋 Add Community Contribution</h3>
+          <% end %>
+          <hr/>
+          <br>
+        </div>
+
+      <!-- account settings -->
+      <%= form_for @post, html: { class: 'posts-form' } do |f| %>
+        <%= f.hidden_field :notebook_file_path, value: @post.notebook_file_path %>
+
+        <div class="form-group">
+          <label for="tite">Title</label>
+          <%= f.text_field :title, placeholder: 'Add a title for your contribution', class: "form-control", required: true %>
+        </div>
+
+        <div class="form-group">
+          <label for="tagline">Tagline</label>
+          <%= f.text_field :tagline, placeholder: 'Concise and descriptive tagline for your contribution', class: "form-control" %>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <div class="md-content" style="max-width:100%">
+            <%= f.cktext_area :description, :class => 'ckeditor', required: true%>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <span class="label-text">Thumbnail</span>
+          <div class="custom-file mt-1 ">
+            <%= f.file_field :thumbnail, class: 'custom-file-input' %>
+            <label class="custom-file-label" for="customFile" aria-describedby="avatarHelp">Choose file</label>
+            <small id="avatarHelp" class="form-text text-muted">🖼️ Let images speak along with your words. Max Limit: 5mb</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <span class="label-text">Jupyter Notebook</span>
+          <div class="custom-file mt-1">
+            <%= f.file_field :notebook_file, class: 'custom-file-input' %>
+            <label class="custom-file-label" for="customFile">Choose file</label>
+            <small>🙇 Uploading .ipynb files will help community experiment your idea faster</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <span class="label-text">External Link</span>
+          <div class="row">
+            <div class="col-md-9">
+              <%= f.text_field :external_link, placeholder: 'Have any cool Youtub video, Colab notebook, and more?', class: "form-control" %>
+              <small>💪 Because we know our community has no limit when it comes to creativity</small>
+            </div>
+            <div class="col-md-3 float-right">
+              <%= f.button 'Fetch', type: 'submit', class: "btn btn-sm btn-secondary", name: 'notebook_url_fetch'%>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <span class="label-text">Challenge</span>
+          <%= f.select :challenge_id, ChallengeParticipant.where(participant_id: current_participant.id).map(&:challenge).collect {|c| [ c.challenge, c.id] }, 
+                {prompt: 'Select Challenge (optional)'}, {class: "select2 form-control" } %>
+          <small class="form-text text-muted">🏆 Is this related to a particular challenge?</span>
+        </div>
+
+        <div class="form-group">
+          <span class="label-text">Submission</span>
+          <%= f.select :submission_id, Submission.where(participant_id: current_participant.id).order("id DESC").collect {|s| [ s.id, s.id] },
+                {prompt: 'Select Submission (optional)'}, {class: "select2 form-control" } %>
+          <small class="form-text text-muted">🚀 Is this related to a particular submission?</span>
+        </div>
+
+        <%= f.button 'Submit', type: 'submit', class: "btn btn-primary" %>
+      <% end %>
+
+      </div>
+      <!-- /account settings -->
+
+    </div>
+  </div>
+</div>
+<script>
+</script>

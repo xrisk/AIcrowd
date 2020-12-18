@@ -1,18 +1,26 @@
 class PostsController < InheritedResources::Base
+  before_action :authenticate_participant!, except: [:show, :index]
+  before_action :set_post, only: [:show, :edit, :update]
 
-  COLAB_URL = ENV['COLLAB_URL']
+  COLAB_URL = ENV['COLAB_URL']
   GIST_URL = ENV['GIST_URL']
   USER_NAME = ENV['GIST_USERNAME']
+
   def new
     @post = Post.new
+    @post.participant_id = current_user.id
+  end
+
+  def set_post
+    @post = Post.friendly.find(params[:id])
   end
 
   def index
-    @post = Post.friendly.all
+    params[:page] ||= 1
+    @post = Post.paginate(page: params[:page], per_page: 10)
   end
 
   def show
-    @post = Post.friendly.find(params[:id])
     if @post.gist_id.present?
       @execute_in_colab_url = COLAB_URL + USER_NAME + '/' + @post.gist_id
     end
@@ -23,12 +31,11 @@ class PostsController < InheritedResources::Base
 
   def update
     if !params["remove_notebook"].nil?
-      @post = remove_notebook(post_params[:id].to_i)
+      @post = remove_notebook(@post)
       render :edit and return
     end
 
     if !params["notebook_url_fetch"].nil?
-      @post = Post.find_by_id(post_params[:id].to_i)
       url = params["post"]["external_link"]
       @post.external_link = url
       if url.include?("colab.research.google.com")
@@ -42,7 +49,8 @@ class PostsController < InheritedResources::Base
       end
     end
 
-    @post = Posts::PostService.new(post_params, post_params[:id].to_i).call
+    @post.update(post_params)
+    @post = Posts::PostService.new(post_params, @post).call
 
     if @post.save
       render :index
@@ -110,11 +118,10 @@ class PostsController < InheritedResources::Base
     end
 
     def post_params
-      params.require(:post).permit(:id, :title, :tagline, :thumbnail, :description, :external_link, :challenge_id, :submission_id, :notebook_file_path, :participant_id)
+      params.require(:post).permit(:id, :title, :tagline, :thumbnail, :description, :external_link, :challenge_id, :submission_id, :notebook_file_path)
     end
 
-    def remove_notebook post_id
-      post = Post.find_by_id(post_id)
+    def remove_notebook(post)
       post.gist_id = nil
       post.notebook_s3_url = nil
       post.notebook_html = nil

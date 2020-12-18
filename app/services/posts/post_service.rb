@@ -2,16 +2,14 @@ module Posts
   class PostService < BaseService
     include ActiveModel::Model
 
-    def initialize params, post_id=nil
+    def initialize(params, post=nil)
       @params = params
-      @post_id = post_id
+      @post = post
     end
 
     def call
-      if @post_id
-        post = Post.find_by_id(@post_id)
-        post.assign_attributes(@params)
-      else
+      post = @post
+      if post.nil?
         post = Post.new(@params)
       end
 
@@ -33,19 +31,19 @@ module Posts
           return
         end
         notebook_gist_url = `gist #{notebook_file_path}`
-        post.notebook_s3_url = upload_to_s3(notebook_file_path, )
+        post.notebook_s3_url = upload_to_s3(notebook_file_path, filename)
         post.notebook_html = File.read(Rails.root.join('public', 'uploads', html_filename)).html_safe
         post.gist_id = notebook_gist_url.strip.gsub(ENV['GIST_URL'], "")
         File.delete(notebook_file_path) if File.exist?(notebook_file_path)
         File.delete(Rails.root.join('public', 'uploads', html_filename)) if File.exist?(Rails.root.join('public', 'uploads', html_filename))
       end
 
-      post
+       return post
     end
 
     def upload_to_s3 filepath, filename
       s3_key          = "colab_notebooks/#{SecureRandom.hex}_#{filename}"
-      s3_obj          = Aws::S3::Resource.new.bucket(ENV['AWS_S3_SHARED_BUCKET']).object(s3_key)
+      s3_obj          = Aws::S3::Resource.new.bucket(ENV['AWS_S3_BUCKET']).object(s3_key)
       s3_obj.upload_file(filepath, acl: 'public-read')
       url             = s3_obj.public_url
     end

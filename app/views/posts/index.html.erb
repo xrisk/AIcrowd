@@ -16,12 +16,12 @@
             <img class="award" src="<%=post.thumbnail%>">
           </a>
           <div>
-            <%= link_to post.title, post_path(post.id)%>
+            <%= link_to post.title, post_path(post)%>
             <span class="description">
               <%= post.tagline %>
             </span>
             <div class="topic-comments">
-              <img src="https://d3qvx1ggyg4lu1.cloudfront.net/assets/img/icon-comment-11e998ea01cd8cbe77d3cbff35bb8c27e78c508e352bdb847fb56b76717b4c6b.svg">
+              <img src="/assets/img/icon-comment.svg">
                     <%= CommontatorComment.where(thread_id: CommontatorThread.where(commontable_id: post.id, commontable_type: "Post").first.id).count %>
             </div>
           </div>
@@ -40,4 +40,5 @@
       <!-- /achievement -->
     <% end %>
   </ul>
+
 </div>
