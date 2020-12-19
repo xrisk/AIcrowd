@@ -6,7 +6,7 @@ class Api::SubmissionsController < Api::BaseController
   def show
     @submission = Submission.where(id: params[:id]).first
     if @submission.present?
-      raise OrganizerNotAuthorized unless (@admin || @permitted_challenges.include?(@submission.challenge.id)
+      raise OrganizerNotAuthorized unless (@admin || @permitted_challenges.include?(@submission.challenge.id))
       payload = Api::SubmissionSerializer.new(@submission).as_json
       payload.merge(message: 'Submission found.')
       status = :ok
@@ -78,7 +78,10 @@ class Api::SubmissionsController < Api::BaseController
     if !@admin && @organizer.nil?
       render json: { message: 'Login failed' }, status: :forbidden
     end
-    @permitted_challenges = @organizer.challenges.pluck(:id)
+    @permitted_challenges = []
+    if !@organizer.nil?
+      @permitted_challenges = @organizer.challenges.pluck(:id)
+    end
   end
 
   class OrganizerNotAuthorized < StandardError
