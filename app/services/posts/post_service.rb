@@ -24,7 +24,7 @@ module Posts
       end
 
       if notebook_file_path.present?
-        `jupyter nbconvert --ExecutePreprocessor.allow_errors=true --template basic --to html #{notebook_file_path}`
+        `jupyter nbconvert --to html #{notebook_file_path}`
         html_filename = filename.chomp(File.extname(filename)) + (".html")
         unless File.exist?(Rails.root.join('public', 'uploads', html_filename))
           errors.add(:base, "Sorry, the notebook seems to be private. Please make it public and try again.")
