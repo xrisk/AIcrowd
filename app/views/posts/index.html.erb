@@ -12,8 +12,8 @@
       <!-- achievement -->
       <li class="list-group-item">
         <div>
-          <a class="award-image" href="#">
-            <img class="award" src="<%=post.thumbnail%>">
+          <a class="mr-2" href="<%= post_path(post) %>">
+            <img src="<%=post.thumbnail%>" width=80 height=80>
           </a>
           <div>
             <%= link_to post.title, post_path(post)%>

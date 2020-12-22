@@ -44,11 +44,17 @@
 
         <div class="form-group">
           <span class="label-text">Jupyter Notebook</span>
-          <div class="custom-file mt-1">
-            <%= f.file_field :notebook_file, class: 'custom-file-input' %>
-            <label class="custom-file-label" for="customFile">Choose file</label>
-            <small>🙇 Uploading .ipynb files will help community experiment your idea faster</small>
-          </div>
+          <% if @post.notebook_s3_url.present? %>
+            <div class="col-md-3 pl-0">
+              <%= f.button 'Detach', type: 'submit', class: "btn btn-sm btn-secondary", name: 'remove_notebook'%>
+            </div>
+          <% else %>
+            <div class="custom-file mt-1">
+              <%= f.file_field :notebook_file, class: 'custom-file-input' %>
+              <label class="custom-file-label" for="customFile">Choose file</label>
+              <small>🙇 Uploading .ipynb files will help community experiment your idea faster</small>
+            </div>
+          <% end %>
         </div>
 
         <div class="form-group">

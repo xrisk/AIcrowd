@@ -1,12 +1,8 @@
 <header class="mb-0">
-  <div class=row>
-    <div class="col-md-3">
-    </div>
-    <div class="col-md-1">
-      <%= link_to post_likes_path(post), id: post.id, method: :post, remote: true do %>
-        <button type="button" class="btn btn-primary">Vote</button>
-      <% end %>
-    </div>
+  <div class="row text-center col-md-12">
+    <%= link_to post_likes_path(post.id), id: post.id, class: "w-100", method: :post, remote: true do %>
+      <button type="button" class="btn btn-primary">Vote</button>
+    <% end %>
   </div>
 </header>
 <div>
@@ -14,7 +10,7 @@
     users = post.likes.includes(:participant).map(&:participant).sample(50)
     users_remaining_count = post.likes.count - 50
   %>
-  <% if post.likes.count > 5 %>
+  <% if post.likes.count > 0 %>
     <div class="row avatar-group p-3">
     <% if current_participant%>
       <span>
@@ -36,18 +32,20 @@
     </div>
   <% end %>
   <% if post.challenge.present? %>
-    <div class="card-body">
+    <div class="card-body text-center">
       <div>
         <h4 style="text-align: center;">Challenge</h4>
       </div>
-      <img class="card-img" src="<%= post.challenge.image_url %>" alt="Card image">
+      <a href="<%= challenge_path(post.challenge) %>"><img class="card-img" src="<%= post.challenge.image_url %>" alt="Card image"></a>
+      <a href="<%= challenge_path(post.challenge) %>"><button type="button" class="btn btn-link"><%= post.challenge.challenge %></button></a>
     </div>
-    <div>
-      <button type="button" class="btn btn-link"><%= post.challenge.challenge %></button>
+  <% end %>
+  <% if post.submission_id.present? %>
+    <div class="card-body text-center">
+      <div>
+        <h4 style="text-align: center;">Submission</h4>
+      </div>
+      <a href="<%= challenge_submission_path(post.submission.challenge, post.submission_id) %>"><button type="button" class="btn btn-link">#<%= post.submission_id %></button></a>
     </div>
-    <!-- <div>
-      <h4 style="text-align: center;">Submission</h4>
-      <button type="button" class="btn btn-link"><%= post.submission_id %></button>
-    </div> -->
   <% end %>
 </div>
