@@ -8,7 +8,7 @@ class PostsController < InheritedResources::Base
 
   def new
     @post = Post.new
-    @post.participant_id = current_user.id
+    @post.participant_id = current_participant.id
   end
 
   def set_post
@@ -50,6 +50,14 @@ class PostsController < InheritedResources::Base
     end
 
     @post.update(post_params)
+
+    if params["post"]["external_link"].present? && params["post"]["external_link"].include?("https://colab.research.google.com")
+      if params["post"]["notebook_file_path"].blank?
+        flash[:error] = "We noticed you are trying colab link, please use \"Fetch\" button before submitting this form"
+        render :edit and return
+      end
+    end
+
     @post = Posts::PostService.new(post_params, @post).call
 
     if @post.save
@@ -77,7 +85,7 @@ class PostsController < InheritedResources::Base
 
     if params["post"]["external_link"].present? && params["post"]["external_link"].include?("https://colab.research.google.com")
       if params["post"]["notebook_file_path"].blank?
-        flash[:error] = "Please fetch the url to check compatibility"
+        flash[:error] = "We noticed you are trying colab link, please use \"Fetch\" button before submitting this form"
         @post = Post.new(post_params)
         render :new and return
       end
@@ -85,10 +93,12 @@ class PostsController < InheritedResources::Base
 
     @post = Posts::PostService.new(post_params).call
 
+    @post.participant = current_participant
+
     if @post.save
       render :index
     else
-      flash[:error] = t(@post.errors[:base])
+      flash[:error] = @post.errors
       render :new
     end
   end
