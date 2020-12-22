@@ -112,6 +112,10 @@ module MetaTagsHelper
       get_title(@blog.title)
     when 'submissions'
       get_title(@challenge.challenge) + " #" + @submission.id.to_s
+    when 'posts'
+      get_title(@post.title)
+    when 'job_postings'
+      get_title(@job_posting.title)
     end
   end
 
