@@ -1,0 +1,49 @@
+<%
+  # Controllers that use this partial must supply the following variables:
+  # user
+  # comment
+  # nested_children or page
+  # show_all
+
+  thread = comment.thread
+  nested_children ||= begin
+    children = thread.paginated_comments(page, comment.id, show_all)
+    thread.nested_comments_for(user, children, show_all)
+  end
+
+  creator = comment.creator
+  link = Commontator.commontator_link(creator, main_app)
+  name = Commontator.commontator_name(creator) || ''
+%>
+
+<div class="topic-comment mt-4">
+    <%= render partial: 'participants/get_user_profile', locals: { participant: creator, username: 'false' } %>
+    <div class="discussion-topic-body">
+      <span class="discussion-details">By <div style="display: inline-flex;"><%= render partial: 'participants/get_user_profile', locals: { participant: creator, avatar: 'false' } %></div>, <%= comment.created_timestamp %></span>
+      <p><%= render partial: 'commontator/comments/body', locals: { comment: comment } %></p>
+    </div>
+  <span id="commontator-comment-<%= comment.id %>-actions" class="actions">
+    <%=
+      link_to(
+        t('commontator.comment.actions.edit'),
+        commontator.edit_comment_path(comment),
+        id: "commontator-comment-#{comment.id}-edit",
+        class: 'edit',
+        remote: true
+      ) if comment.can_be_edited_by?(user)
+    %>
+
+    <% if comment.can_be_deleted_by?(user) %>
+      <% is_deleted = comment.is_deleted? %>
+      <% del_string = is_deleted ? 'undelete' : 'delete' %>
+      <%= link_to t("commontator.comment.actions.#{del_string}"),
+                  commontator.polymorphic_path([del_string, comment]),
+                  data: is_deleted ? {} : { confirm: t('commontator.comment.actions.confirm_delete') },
+                  method: :put,
+                  id: "commontator-comment-#{comment.id}-#{del_string}",
+                  class: del_string,
+                  remote: true %>
+    <% end %>
+  </span>
+</div>
+

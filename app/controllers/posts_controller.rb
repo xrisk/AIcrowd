@@ -27,6 +27,7 @@ class PostsController < InheritedResources::Base
     unless @post.external_link.present? && @post.external_link.include?("https://colab.research.google.com")
       @external_link = @post.external_link
     end
+    commontator_thread_show(@post)
   end
 
   def update
