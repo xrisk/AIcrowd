@@ -129,7 +129,7 @@ class PostsController < InheritedResources::Base
     end
 
     def post_params
-      params.require(:post).permit(:id, :title, :tagline, :thumbnail, :description, :external_link, :challenge_id, :submission_id, :notebook_file_path)
+      params.require(:post).permit(:id, :title, :tagline, :thumbnail, :description, :external_link, :challenge_id, :submission_id, :notebook_file_path, :notebook_file)
     end
 
     def remove_notebook(post)

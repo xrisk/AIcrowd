@@ -9,7 +9,7 @@ class Post < ApplicationRecord
   belongs_to :submission, optional: true
   mount_uploader :thumbnail, RawImageUploader
   acts_as_commontable
-  attr_accessor :notebook_file_path
+  attr_accessor :notebook_file_path, :notebook_file
 
 
 
