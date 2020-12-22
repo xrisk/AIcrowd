@@ -16,8 +16,8 @@
     </td>
     <td><span class="badge <%= submission_grade_class(submission) %>"><%= submission.grading_status_cd %></span></td>
     <td><%= submission_formatted_value(submission, submission.score_display) %></td>
-    <% if !@challenge.meta_challenge && challenge_round&.score_secondary_title.present? %>
-      <td><%= submission_formatted_value(submission, submission.score_secondary_display) %></td>
+    <% if !@challenge.meta_challenge && challenge_round&.default_leaderboard&.score_secondary_title.present? %>
+      <td><%= submission_formatted_value(submission, submission.score_secondary) %></td>
     <% end %>
     <% if !@challenge.meta_challenge %>
       <% leaderboard_other_scores_array(submission, challenge_round.default_leaderboard).each do |other_score| %>

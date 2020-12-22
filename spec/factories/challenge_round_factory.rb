@@ -6,13 +6,7 @@ FactoryBot.define do
     active                    { true }
     submission_limit          { 5 }
     submission_limit_period   { :day }
-    score_precision           { 3 }
-    score_secondary_precision { 3 }
-    ranking_window            { 48 }
-    ranking_highlight         { 3 }
     parallel_submissions      { 0 }
-    score_title               { 'Score Title'}
-    score_secondary_title     { 'Secondary Score Title' }
 
     association(:challenge)
 

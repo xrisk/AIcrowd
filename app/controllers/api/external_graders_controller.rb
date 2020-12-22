@@ -6,9 +6,14 @@ class Api::ExternalGradersController < Api::BaseController
     Rails.logger.info "[api] Api::ExternalGradersController#get"
     Rails.logger.info "[api] params: #{params}"
     participant = Participant.where(api_key: params[:id]).first
+    organiser = Organizer.where(api_key: params[:id]).first
     if participant.present?
       message        = "Developer API key is valid"
       participant_id = participant.id
+      status         = :ok
+    elsif organiser.present?
+      message        = "Organizer API key is valid"
+      participant_id = organiser.id
       status         = :ok
     else
       message        = "No participant could be found for this API key"

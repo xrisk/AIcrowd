@@ -28,17 +28,19 @@
             <span><%= submission_formatted_value(@submission, @submission.score_display) %></span>
           </div>
 
+          <% if !(@submission.challenge_round.default_leaderboard&.secondary_sort_order.present? && @submission.challenge_round.default_leaderboard&.secondary_sort_order == :hidden) %>
           <div class="mr-4">
             <h4><%= @submission.challenge_round.default_leaderboard&.score_secondary_title %></h4>
             <span><%= submission_formatted_value(@submission, @submission.score_secondary_display) %></span>
           </div>
+          <% end %>
 
           <div class="mr-4">
             <h4>Message</h4>
             <span data-controller="linkify-content"><%= @submission.grading_message %></span>
           </div>
 
-          <% if @submission.submission_files.present? && (@challenge.submissions_downloadable && (current_participant.present? && (current_participant.admin? || current_participant.id== @submission.participant_id))) %>
+          <% if @submission.submission_files.present? && (@challenge.submissions_downloadable && (current_participant.present? && (policy(@challenge).edit? || current_participant.id== @submission.participant_id))) %>
             <div class="mr-4">
               <h4>Submission Files</h4>
               <span>

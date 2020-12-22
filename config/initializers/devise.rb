@@ -15,7 +15,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::CrowdaiMailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'info@crowdai.org'
+  config.mailer_sender = 'hello@aicrowd.com'
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::CrowdaiMailer'   # devise erb templates
@@ -245,6 +245,7 @@ Devise.setup do |config|
   # up on your models and hooks.
 
   config.omniauth :github, ENV['GITHUB_OAUTH_KEY'], ENV['GITHUB_OAUTH_SECRET'], scope: 'user:email'
+  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], {}
   config.omniauth :oauth2_generic, ENV['CROWDAI_OAUTH_KEY'], ENV['CROWDAI_OAUTH_SECRET'], {
     "client_options" => {
       "site"          => "https://www.crowdai.org",

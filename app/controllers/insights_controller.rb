@@ -24,12 +24,12 @@ class InsightsController < ApplicationController
     # Calculate running maximum hash for dates
 
     score              = params[:score].presence || 'score'
-    precision          = @current_round["#{score}_precision"]
+    precision          = @current_round.default_leaderboard["#{score}_precision"]
 
     sort_order         = if score == 'score'
-                           @current_round["primary_sort_order_cd"]
+                           @current_round.default_leaderboard["primary_sort_order_cd"]
                          else
-                           @current_round["secondary_sort_order_cd"]
+                           @current_round.default_leaderboard["secondary_sort_order_cd"]
                          end
 
     grouped_collection = @collection.group_by_day(:created_at)

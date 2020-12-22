@@ -5,7 +5,7 @@ default: &default
 
 development:
   <<: *default
-  database: crowdai_development
+  database: aicrowd_24_sept_2020
 
 
 staging:

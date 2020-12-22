@@ -12,8 +12,8 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
         token = @user.send(:set_reset_password_token)
         redirect_to edit_password_path(@user, reset_password_token: token)
       else
-        set_flash_message(:notice, :success, kind: 'GitHub') if is_navigational_format?
-        sign_in_and_redirect @user
+        set_flash_message(:notice, :success, kind: @user.provider) if is_navigational_format?
+        sign_in_and_redirect @user, event: :authentication
       end
     else
       session['devise.omniauth_data'] = request.env['omniauth.auth']
@@ -25,16 +25,24 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
     redirect_to root_path
   end
 
+  def google_oauth2
+    oauth2_generic
+  end
+
   private
 
   def from_omniauth(auth)
     email     = auth.info.email
+    participant = Participant.find_by(email: email)
+    return participant if participant.present? && participant.confirmed?
+
     username  = auth.info.name
     username  = username.gsub(/\s+/, '_').downcase
     username  = sanitize_userhandle(username)
     image_url = auth.info.image
     provider  = auth.provider
     provider  = 'crowdai' if provider == 'oauth2_generic'
+    provider  = 'google' if provider == 'google_oauth2'
 
     participant                       = Participant.where(email: email).first_or_initialize
     participant.password              = Devise.friendly_token[0, 20]
@@ -49,7 +57,7 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
   end
 
   def sanitize_userhandle(userhandle)
-    userhandle.to_ascii
+    username = userhandle.to_ascii
       .tr("@", "a")
       .gsub("&", "and")
       .delete('#')
@@ -57,5 +65,10 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
       .gsub(/[\,\.\'\;\-\=]/, "")
       .gsub(/[\(\)]/, "_")
       .tr(' ', "_")
+
+    while Participant.where(name: username).exists?
+      username = username + rand(1..9).to_s
+    end
+    username
   end
 end

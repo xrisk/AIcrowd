@@ -118,6 +118,15 @@ class ParticipantsController < ApplicationController
   private
 
   def set_participant
+    if params[:id].downcase == 'me'
+      if current_participant.present?
+        redirect_to current_participant and return
+      else
+        session['participant_return_to'] = request.original_fullpath
+        redirect_to new_participant_session_path and return
+      end
+    end
+
     @participant = Participant.friendly.find_by_friendly_id(params[:id].downcase)
     authorize @participant
   end

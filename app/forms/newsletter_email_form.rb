@@ -24,7 +24,13 @@ class NewsletterEmailForm
       challenge:   challenge
     )
 
-    Admin::NotificationsMailer.newsletter_email_notification_email(newsletter_email).deliver_later
+    if participant.trusted?
+      NewsletterEmailsMailer.organizer_email(newsletter_email).deliver_later
+      newsletter_email.pending = false
+      newsletter_email.save!
+    else
+      Admin::NotificationsMailer.newsletter_email_notification_email(newsletter_email).deliver_later
+    end
 
     true
   end

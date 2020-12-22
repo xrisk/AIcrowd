@@ -3,7 +3,7 @@ require 'rails_helper'
 describe ChallengeRounds::CreateLeaderboardsService do
   subject { described_class.new(challenge_round: challenge_round, meta_challenge_id: meta_challenge_id) }
 
-  let(:challenge_round) { create(:challenge_round, challenge: challenge, score_precision: 3, score_secondary_precision: 3) }
+  let(:challenge_round) { create(:challenge_round, challenge: challenge) }
   let(:challenge)       { create(:challenge, :running) }
 
   describe '#call' do
@@ -59,7 +59,8 @@ describe ChallengeRounds::CreateLeaderboardsService do
       end
 
       context 'when challenge_round has submissions from previous ranking window' do
-        let(:challenge_round) { create(:challenge_round, ranking_window: 6, score_precision: 3,  score_secondary_precision: 3) }
+        let(:default_leaderboard) { create(:challenge_leaderboard_extra, ranking_window: 6, score_precision: 3,  score_secondary_precision: 3)}
+        let(:challenge_round) { create(:challenge_round, default_leaderboard: default_leaderboard) }
         let(:participant_1)   { create(:participant) }
         let(:participant_2)   { create(:participant) }
         let(:participant_3)   { create(:participant) }
@@ -108,7 +109,8 @@ describe ChallengeRounds::CreateLeaderboardsService do
       end
 
       context 'when 2 submissions from different participants have same score' do
-        let(:challenge_round) { create(:challenge_round, challenge: challenge, score_precision: 3, score_secondary_precision: 3, secondary_sort_order: :ascending) }
+        let(:default_leaderboard) { create(:challenge_leaderboard_extra, score_precision: 3, score_secondary_precision: 3, secondary_sort_order: :ascending)}
+        let(:challenge_round) { create(:challenge_round, challenge: challenge, default_leaderboard: default_leaderboard) }
 
         let(:participant_1) { create(:participant) }
         let(:participant_2) { create(:participant) }
@@ -133,7 +135,8 @@ describe ChallengeRounds::CreateLeaderboardsService do
       end
 
       context 'when there are submissions with score below and above 1 with descending sort_order' do
-        let(:challenge_round) { create(:challenge_round, challenge: challenge, score_precision: 3, primary_sort_order: :descending) }
+        let(:default_leaderboard) { create(:challenge_leaderboard_extra, score_precision: 3, primary_sort_order: :descending)}
+        let(:challenge_round) { create(:challenge_round, challenge: challenge, default_leaderboard: default_leaderboard) }
 
         let(:participant_1) { create(:participant) }
         let(:participant_2) { create(:participant) }
@@ -158,7 +161,8 @@ describe ChallengeRounds::CreateLeaderboardsService do
       end
 
       context 'when challenge_round has pimary descending and secondary descending score order' do
-        let(:challenge_round) { create(:challenge_round, challenge: challenge, score_precision: 3, score_secondary_precision: 3, primary_sort_order: :descending, secondary_sort_order: :descending) }
+        let(:default_leaderboard) { create(:challenge_leaderboard_extra, score_precision: 3, score_secondary_precision: 3, primary_sort_order: :descending, secondary_sort_order: :descending)}
+        let(:challenge_round) { create(:challenge_round, challenge: challenge, default_leaderboard: default_leaderboard) }
 
         let(:participant_1) { create(:participant) }
         let(:participant_2) { create(:participant) }
@@ -183,7 +187,8 @@ describe ChallengeRounds::CreateLeaderboardsService do
       end
 
       context 'when challenge has latest_submission turned on' do
-        let(:challenge_round) { create(:challenge_round, challenge: challenge, score_precision: 3, primary_sort_order: :descending) }
+        let(:default_leaderboard) { create(:challenge_leaderboard_extra, score_precision: 3, primary_sort_order: :descending)}
+        let(:challenge_round) { create(:challenge_round, challenge: challenge, default_leaderboard: default_leaderboard) }
         let(:challenge)       { create(:challenge, :running, latest_submission: true) }
 
         let(:participant_1) { create(:participant) }
@@ -207,7 +212,8 @@ describe ChallengeRounds::CreateLeaderboardsService do
       end
 
       context 'when challenge has submissions with nil score and nil score_secondary' do
-        let(:challenge_round) { create(:challenge_round, challenge: challenge, score_precision: 3, score_secondary_precision: 3, primary_sort_order: :descending, secondary_sort_order: :descending) }
+        let(:default_leaderboard) { create(:challenge_leaderboard_extra, score_precision: 3, score_secondary_precision: 3, primary_sort_order: :descending, secondary_sort_order: :descending)}
+        let(:challenge_round) { create(:challenge_round, challenge: challenge, default_leaderboard: default_leaderboard) }
 
         let(:participant_1) { create(:participant) }
         let(:participant_2) { create(:participant) }
@@ -226,14 +232,14 @@ describe ChallengeRounds::CreateLeaderboardsService do
           sequence_and_row_numbers = BaseLeaderboard.leaderboards.pluck(:seq, :row_num, :submission_id, :score)
 
           expect(sequence_and_row_numbers.size).to eq 3
-          expect(sequence_and_row_numbers).to include [1, 1, participant_2_submission.id, 2.0], [2, 2, participant_1_submission.id, nil], [3, 3, participant_3_submission.id, nil]
+          expect(sequence_and_row_numbers).to include [1, 1, participant_2_submission.id, 2.0], [2, 2, participant_1_submission.id, 0.0], [3, 3, participant_3_submission.id, 0.0]
         end
       end
     end
 
     context 'when meta_challenge_id is provided' do
       let(:meta_challenge)    { create(:challenge, :running, meta_challenge: true) }
-      let(:challenge_round)   { create(:challenge_round, challenge: meta_challenge, score_precision: 3, score_secondary_precision: 3)}
+      let(:challenge_round)   { create(:challenge_round, challenge: meta_challenge)}
       let(:meta_challenge_id) { meta_challenge.id }
 
       context 'when challenge_round doesn\'t have submissions' do

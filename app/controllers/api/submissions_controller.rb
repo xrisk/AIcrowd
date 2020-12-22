@@ -1,11 +1,12 @@
 class Api::SubmissionsController < Api::BaseController
-  before_action :auth_by_admin_api_key, only: [:index, :show]
-  before_action :set_organizer, only: :index
+  before_action :auth_by_api_key, only: [:index, :show]
+  before_action :set_organizer, only: [:index, :show]
   respond_to :json
 
   def show
     @submission = Submission.where(id: params[:id]).first
     if @submission.present?
+      raise OrganizerNotAuthorized unless (@admin || @permitted_challenges.include?(@submission.challenge.id))
       payload = Api::SubmissionSerializer.new(@submission).as_json
       payload.merge(message: 'Submission found.')
       status = :ok
@@ -32,8 +33,8 @@ class Api::SubmissionsController < Api::BaseController
       message = "challenge_client_name #{@challenge_client_name} not found"
       render json: { message: message }, status: :not_found
     else
-      challenge_id = challenge.id
-      set_submissions(challenge_id, params[:grading_status], params[:after], params[:challenge_round_id])
+      raise OrganizerNotAuthorized unless (@admin || @permitted_challenges.include?(challenge.id))
+      set_submissions(challenge.id, params[:grading_status], params[:after], params[:challenge_round_id])
       @submission_ids = @submissions.map(&:id)
       render json: @submission_ids, status: :ok
     end
@@ -73,6 +74,14 @@ class Api::SubmissionsController < Api::BaseController
   def set_organizer
     token, _options = ActionController::HttpAuthentication::Token.token_and_options(request)
     @organizer      = Organizer.find_by_api_key(token)
+    @admin          = (token == ENV['AICROWD_API_KEY'])
+    if !@admin && @organizer.nil?
+      render json: { message: 'Login failed' }, status: :forbidden
+    end
+    @permitted_challenges = []
+    if !@organizer.nil?
+      @permitted_challenges = @organizer.challenges.pluck(:id)
+    end
   end
 
   class OrganizerNotAuthorized < StandardError

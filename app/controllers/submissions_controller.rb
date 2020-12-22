@@ -43,7 +43,7 @@ class SubmissionsController < ApplicationController
                       .where(
                         challenge_round_id: @current_round&.id,
                         challenge_id:       @challenge.id)
-                      .freeze_record(current_participant)
+                      .freeze_record(current_participant, @current_round&.default_leaderboard)
 
       end
     end
@@ -374,7 +374,7 @@ class SubmissionsController < ApplicationController
   end
 
   def validate_submission_file_presence
-    @submission.errors.add(:base, 'Submission file is required.') if @form_type == 'artifact' && @submission.submission_files.none?
+    @submission.errors.add(:base, 'Submission file is required.') if @form_type == :artifact && @submission.submission_files.none?
   end
 
   def redirect_or_json(redirect_path, message, status, notice=nil, data=nil)

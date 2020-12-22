@@ -2866,6 +2866,7 @@ input[type="button"].btn-block {
 
 .btn-facebook,
 .btn-twitter,
+.btn-google,
 .btn-github {
   background-color: #4267b1;
   color: #fff;
@@ -2876,6 +2877,9 @@ input[type="button"].btn-block {
 .btn-twitter:active,
 .btn-twitter:focus,
 .btn-twitter:hover,
+.btn-google:active,
+.btn-google:focus,
+.btn-google:hover,
 .btn-github:active,
 .btn-github:focus,
 .btn-github:hover {
@@ -2886,6 +2890,7 @@ input[type="button"].btn-block {
 
 .btn-facebook img,
 .btn-twitter img,
+.btn-google img,
 .btn-github img {
   width: 16px;
 }
@@ -2902,6 +2907,12 @@ input[type="button"].btn-block {
 
 .btn-github {
   background-color: #24292e;
+  box-shadow: 0px 2px 5px 0px rgba(36, 41, 46, 0.12);
+}
+
+.btn-google, .btn-google:focus, .btn-google:hover, .btn-google:active {
+  color: #24292e;
+  background-color: white;
   box-shadow: 0px 2px 5px 0px rgba(36, 41, 46, 0.12);
 }
 
@@ -10697,9 +10708,9 @@ a.text-bronze:hover, a.text-bronze:focus {
 .app-brand .logo-aicrowd,
 .app-brand .logo-aicrowd-light {
   display: block;
-  background: url("../../assets/img/logo-aicrowd.svg") no-repeat 0 0;
-  height: 24px;
-  width: 126px;
+  background: url("../../assets/img/logo-aicrowd-santa.svg") no-repeat 0 0;
+  height: 48px;
+  width: 256px;
 }
 
 .app-brand .logo-aicrowd span,
