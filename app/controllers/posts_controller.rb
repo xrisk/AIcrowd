@@ -53,7 +53,7 @@ class PostsController < InheritedResources::Base
     @post.update(post_params)
 
     if params["post"]["external_link"].present? && params["post"]["external_link"].include?("https://colab.research.google.com")
-      if params["post"]["notebook_file_path"].blank? && params["post"]["notebook_s3_url"].blank?
+      if params["post"]["notebook_file_path"].blank? && (params["post"]["external_link"] != @post.external_link)
         flash[:error] = "We noticed you are trying colab link, please use \"Fetch\" button before submitting this form"
         render :edit and return
       end
