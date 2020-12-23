@@ -155,7 +155,7 @@
           </header>
 
           <% if @top_posts.count > 0 %>
-            <%= render partial: 'shared/posts/post_list', locals: { posts: @posts } %>
+            <%= render partial: 'shared/posts/post_list', locals: { posts: @top_posts } %>
           <% else %>
             <p><%= @discourse_topics_fetch.value %></p>
           <% end %>
