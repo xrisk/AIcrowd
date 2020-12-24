@@ -61,7 +61,7 @@ class SubmissionsController < ApplicationController
     @search = filter.search(search_params)
     @search.sorts = 'created_at desc' if @search.sorts.empty?
     params[:page] ||= 1
-    @submissions  = @search.result.includes(:participant).page(params[:page]).per(10)
+    @submissions  = @search.result.includes(:participant).per_page_kaminari(params[:page]).per(10)
   end
 
   def filter
@@ -70,7 +70,7 @@ class SubmissionsController < ApplicationController
     @search      = policy_scope(Submission).ransack(params[:q])
     @submissions = @search.result
                        .where(challenge_id: @challenge.id)
-                       .page(1).per(10)
+                       .per_page_kaminari(1).per(10)
     render @submissions
   end
 

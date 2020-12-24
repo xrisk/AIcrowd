@@ -2,7 +2,7 @@ class Components::NotificationsController < ApplicationController
   before_action :authenticate_participant!
 
   def index
-    @notifications          = Notification.where(participant: current_participant).recent.page(params[:page]).per(3)
+    @notifications          = Notification.where(participant: current_participant).recent.per_page_kaminari(params[:page]).per(3)
     @new_notification_count = @notifications.count
   end
 
