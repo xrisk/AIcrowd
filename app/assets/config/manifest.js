@@ -6,3 +6,4 @@
 
 //= link ckeditor/application.js
 //= link ckeditor/application.css
+//= link commontator/manifest.js

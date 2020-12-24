@@ -27,9 +27,9 @@ class ChallengesController < ApplicationController
                         end
     @challenges       = Challenges::FilterService.new(params, @challenges).call
     @challenges       = if current_participant&.admin?
-                          @challenges.page(params[:page]).per(18)
+                          @challenges.per_page_kaminari(params[:page]).per(18)
                         else
-                          @challenges.where(hidden_challenge: false).page(params[:page]).per(18)
+                          @challenges.where(hidden_challenge: false).per_page_kaminari(params[:page]).per(18)
                         end
   end
 

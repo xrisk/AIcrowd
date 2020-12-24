@@ -58,6 +58,7 @@ end
 
 Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
+  mount Commontator::Engine => '/commontator'
   get '/robots.txt' => RobotsTxt
   use_doorkeeper
 
@@ -233,6 +234,9 @@ Rails.application.routes.draw do
 
   resources :team_members, path: "our_team", only: [:index]
   resources :practice, only: [:index]
+  resources :posts do
+    resources :likes, only: [:create]
+  end
 
   match '/contact', to: 'pages#contact', via: :get
   match '/privacy', to: 'pages#privacy', via: :get

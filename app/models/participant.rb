@@ -45,6 +45,8 @@ class Participant < ApplicationRecord
          :validatable,
          :omniauthable, omniauth_providers: %i[github oauth2_generic google_oauth2]
 
+  acts_as_commontator
+
   default_scope { order('participants.name ASC') }
 
   scope :rated_users_count, -> { Participant.where("ranking > 0").count }
@@ -111,6 +113,8 @@ class Participant < ApplicationRecord
   has_many :team_members, dependent: :destroy
   has_many :participant_ml_challenge_goals, dependent: :destroy
   has_many :ml_activity_points
+  has_many :likes, dependent: :destroy
+  has_many :posts
 
   validates :email,
             presence:              true,

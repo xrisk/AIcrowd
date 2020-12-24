@@ -68,6 +68,7 @@ class Challenge < ApplicationRecord
   has_many :notifications, class_name: 'Notification'
   has_many :participant_ml_challenge_goals, dependent: :destroy
   has_many :ml_activity_points
+  has_many :posts
 
   as_enum :status,
           %i[draft running completed starting_soon],

@@ -162,7 +162,7 @@ class LeaderboardsController < ApplicationController
   end
 
   def paginate_leaderboards_by(order)
-    nextpage = @leaderboards.page(params[:page]).per(20).order(order)
+    nextpage = @leaderboards.per_page_kaminari(params[:page]).per(20).order(order)
 
     if current_participant.present?
 

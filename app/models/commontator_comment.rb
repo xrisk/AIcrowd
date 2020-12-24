@@ -1,0 +1,2 @@
+class CommontatorComment < ApplicationRecord
+end

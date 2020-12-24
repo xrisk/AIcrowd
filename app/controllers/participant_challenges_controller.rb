@@ -12,7 +12,7 @@ class ParticipantChallengesController < ApplicationController
                                   .challenge_participants
                                   .where.not(participant_id: nil)
                                   .order('updated_at asc')
-                                  .page(params[:page])
+                                  .per_page_kaminari(params[:page])
                                   .per(10)
     authorize @participant_challenges
   end

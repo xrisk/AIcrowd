@@ -7,7 +7,7 @@ class BlogsController < ApplicationController
   def index
     @blogs = policy_scope(Blog)
       .order(seq: :asc, posted_at: :desc)
-      .page(params[:page])
+      .per_page_kaminari(params[:page])
       .per(20)
   end
 

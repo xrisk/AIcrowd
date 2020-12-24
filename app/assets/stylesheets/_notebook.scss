@@ -1,0 +1,3149 @@
+.ipynb-notebook-container .modal.fade .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+.ipynb-notebook-container code {
+  color: #000;
+}
+.ipynb-notebook-container pre {
+  font-size: inherit;
+  line-height: inherit;
+}
+.ipynb-notebook-container label {
+  font-weight: normal;
+}
+/* Make the page background atleast 100% the height of the view port */
+/* Make the page itself atleast 70% the height of the view port */
+.ipynb-notebook-container .border-box-sizing {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+.ipynb-notebook-container .corner-all {
+  border-radius: 2px;
+}
+.ipynb-notebook-container .no-padding {
+  padding: 0px;
+}
+/* Flexible box model classes */
+/* Taken from Alex Russell http://infrequently.org/2009/08/css-3-progress/ */
+/* This file is a compatability layer.  It allows the usage of flexible box 
+model layouts accross multiple browsers, including older browsers.  The newest,
+universal implementation of the flexible box model is used when available (see
+`Modern browsers` comments below).  Browsers that are known to implement this 
+new spec completely include:
+
+    Firefox 28.0+
+    Chrome 29.0+
+    Internet Explorer 11+ 
+    Opera 17.0+
+
+Browsers not listed, including Safari, are supported via the styling under the
+`Old browsers` comments below.
+*/
+.ipynb-notebook-container .hbox {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+.ipynb-notebook-container .hbox > * {
+  /* Old browsers */
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  /* Modern browsers */
+  flex: none;
+}
+.ipynb-notebook-container .vbox {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.ipynb-notebook-container .vbox > * {
+  /* Old browsers */
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  /* Modern browsers */
+  flex: none;
+}
+.ipynb-notebook-container .hbox.reverse,
+.ipynb-notebook-container .vbox.reverse,
+.ipynb-notebook-container .reverse {
+  /* Old browsers */
+  -webkit-box-direction: reverse;
+  -moz-box-direction: reverse;
+  box-direction: reverse;
+  /* Modern browsers */
+  flex-direction: row-reverse;
+}
+.ipynb-notebook-container .hbox.box-flex0,
+.ipynb-notebook-container .vbox.box-flex0,
+.ipynb-notebook-container .box-flex0 {
+  /* Old browsers */
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  /* Modern browsers */
+  flex: none;
+  width: auto;
+}
+.ipynb-notebook-container .hbox.box-flex1,
+.ipynb-notebook-container .vbox.box-flex1,
+.ipynb-notebook-container .box-flex1 {
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+.ipynb-notebook-container .hbox.box-flex,
+.ipynb-notebook-container .vbox.box-flex,
+.ipynb-notebook-container .box-flex {
+  /* Old browsers */
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+.ipynb-notebook-container .hbox.box-flex2,
+.ipynb-notebook-container .vbox.box-flex2,
+.ipynb-notebook-container .box-flex2 {
+  /* Old browsers */
+  -webkit-box-flex: 2;
+  -moz-box-flex: 2;
+  box-flex: 2;
+  /* Modern browsers */
+  flex: 2;
+}
+.ipynb-notebook-container .box-group1 {
+  /*  Deprecated */
+  -webkit-box-flex-group: 1;
+  -moz-box-flex-group: 1;
+  box-flex-group: 1;
+}
+.ipynb-notebook-container .box-group2 {
+  /* Deprecated */
+  -webkit-box-flex-group: 2;
+  -moz-box-flex-group: 2;
+  box-flex-group: 2;
+}
+.ipynb-notebook-container .hbox.start,
+.ipynb-notebook-container .vbox.start,
+.ipynb-notebook-container .start {
+  /* Old browsers */
+  -webkit-box-pack: start;
+  -moz-box-pack: start;
+  box-pack: start;
+  /* Modern browsers */
+  justify-content: flex-start;
+}
+.ipynb-notebook-container .hbox.end,
+.ipynb-notebook-container .vbox.end,
+.ipynb-notebook-container .end {
+  /* Old browsers */
+  -webkit-box-pack: end;
+  -moz-box-pack: end;
+  box-pack: end;
+  /* Modern browsers */
+  justify-content: flex-end;
+}
+.ipynb-notebook-container .hbox.center,
+.ipynb-notebook-container .vbox.center,
+.ipynb-notebook-container .center {
+  /* Old browsers */
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  box-pack: center;
+  /* Modern browsers */
+  justify-content: center;
+}
+.ipynb-notebook-container .hbox.baseline,
+.ipynb-notebook-container .vbox.baseline,
+.ipynb-notebook-container .baseline {
+  /* Old browsers */
+  -webkit-box-pack: baseline;
+  -moz-box-pack: baseline;
+  box-pack: baseline;
+  /* Modern browsers */
+  justify-content: baseline;
+}
+.ipynb-notebook-container .hbox.stretch,
+.ipynb-notebook-container .vbox.stretch,
+.ipynb-notebook-container .stretch {
+  /* Old browsers */
+  -webkit-box-pack: stretch;
+  -moz-box-pack: stretch;
+  box-pack: stretch;
+  /* Modern browsers */
+  justify-content: stretch;
+}
+.ipynb-notebook-container .hbox.align-start,
+.ipynb-notebook-container .vbox.align-start,
+.ipynb-notebook-container .align-start {
+  /* Old browsers */
+  -webkit-box-align: start;
+  -moz-box-align: start;
+  box-align: start;
+  /* Modern browsers */
+  align-items: flex-start;
+}
+.ipynb-notebook-container .hbox.align-end,
+.ipynb-notebook-container .vbox.align-end,
+.ipynb-notebook-container .align-end {
+  /* Old browsers */
+  -webkit-box-align: end;
+  -moz-box-align: end;
+  box-align: end;
+  /* Modern browsers */
+  align-items: flex-end;
+}
+.ipynb-notebook-container .hbox.align-center,
+.ipynb-notebook-container .vbox.align-center,
+.ipynb-notebook-container .align-center {
+  /* Old browsers */
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  box-align: center;
+  /* Modern browsers */
+  align-items: center;
+}
+.ipynb-notebook-container .hbox.align-baseline,
+.ipynb-notebook-container .vbox.align-baseline,
+.ipynb-notebook-container .align-baseline {
+  /* Old browsers */
+  -webkit-box-align: baseline;
+  -moz-box-align: baseline;
+  box-align: baseline;
+  /* Modern browsers */
+  align-items: baseline;
+}
+.ipynb-notebook-container .hbox.align-stretch,
+.ipynb-notebook-container .vbox.align-stretch,
+.ipynb-notebook-container .align-stretch {
+  /* Old browsers */
+  -webkit-box-align: stretch;
+  -moz-box-align: stretch;
+  box-align: stretch;
+  /* Modern browsers */
+  align-items: stretch;
+}
+.ipynb-notebook-container div.error {
+  margin: 2em;
+  text-align: center;
+}
+.ipynb-notebook-container div.error > h1 {
+  font-size: 500%;
+  line-height: normal;
+}
+.ipynb-notebook-container div.error > p {
+  font-size: 200%;
+  line-height: normal;
+}
+.ipynb-notebook-container div.traceback-wrapper {
+  text-align: left;
+  max-width: 800px;
+  margin: auto;
+}
+/**
+ * Primary styles
+ *
+ * Author: Jupyter Development Team
+ */
+.ipynb-notebook-container {
+  background-color: #fff;
+  /* This makes sure that the body covers the entire window and needs to
+       be in a different element than the display: box in wrapper below */
+  position: relative;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  overflow: visible;
+}
+.ipynb-notebook-container > #header {
+  /* Initially hidden to prevent FLOUC */
+  display: none;
+  background-color: #fff;
+  /* Display over codemirror */
+  position: relative;
+  z-index: 100;
+}
+.ipynb-notebook-container > #header #header-container {
+  padding-bottom: 5px;
+  padding-top: 5px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+.ipynb-notebook-container > #header .header-bar {
+  width: 100%;
+  height: 1px;
+  background: #e7e7e7;
+  margin-bottom: -1px;
+}
+.ipynb-notebook-container #header-spacer {
+  width: 100%;
+  visibility: hidden;
+}
+.ipynb-notebook-container #ipython_notebook {
+  padding-left: 0px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+.ipynb-notebook-container [dir="rtl"] #ipython_notebook {
+  float: right !important;
+}
+.ipynb-notebook-container #noscript {
+  width: auto;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  text-align: center;
+  font-size: 22px;
+  color: red;
+  font-weight: bold;
+}
+.ipynb-notebook-container #ipython_notebook img {
+  height: 28px;
+}
+.ipynb-notebook-container #site {
+  width: 100%;
+  display: none;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  overflow: auto;
+}
+/* Smaller buttons */
+.ipynb-notebook-container .ui-button .ui-button-text {
+  padding: 0.2em 0.8em;
+  font-size: 77%;
+}
+.ipynb-notebook-container input.ui-button {
+  padding: 0.3em 0.9em;
+}
+.ipynb-notebook-container span#login_widget {
+  float: right;
+}
+.ipynb-notebook-container span#login_widget > .button,
+.ipynb-notebook-container #logout {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+.ipynb-notebook-container span#login_widget > .button:focus,
+.ipynb-notebook-container #logout:focus,
+.ipynb-notebook-container span#login_widget > .button.focus,
+.ipynb-notebook-container #logout.focus {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #8c8c8c;
+}
+.ipynb-notebook-container span#login_widget > .button:hover,
+.ipynb-notebook-container #logout:hover {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+.ipynb-notebook-container span#login_widget > .button:active,
+.ipynb-notebook-container #logout:active,
+.ipynb-notebook-container span#login_widget > .button.active,
+.ipynb-notebook-container #logout.active,
+.ipynb-notebook-container .open > .dropdown-togglespan#login_widget > .button,
+.ipynb-notebook-container .open > .dropdown-toggle#logout {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+.ipynb-notebook-container span#login_widget > .button:active:hover,
+.ipynb-notebook-container #logout:active:hover,
+.ipynb-notebook-container span#login_widget > .button.active:hover,
+.ipynb-notebook-container #logout.active:hover,
+.ipynb-notebook-container .open > .dropdown-togglespan#login_widget > .button:hover,
+.ipynb-notebook-container .open > .dropdown-toggle#logout:hover,
+.ipynb-notebook-container span#login_widget > .button:active:focus,
+.ipynb-notebook-container #logout:active:focus,
+.ipynb-notebook-container span#login_widget > .button.active:focus,
+.ipynb-notebook-container #logout.active:focus,
+.ipynb-notebook-container .open > .dropdown-togglespan#login_widget > .button:focus,
+.ipynb-notebook-container .open > .dropdown-toggle#logout:focus,
+.ipynb-notebook-container span#login_widget > .button:active.focus,
+.ipynb-notebook-container #logout:active.focus,
+.ipynb-notebook-container span#login_widget > .button.active.focus,
+.ipynb-notebook-container #logout.active.focus,
+.ipynb-notebook-container .open > .dropdown-togglespan#login_widget > .button.focus,
+.ipynb-notebook-container .open > .dropdown-toggle#logout.focus {
+  color: #333;
+  background-color: #d4d4d4;
+  border-color: #8c8c8c;
+}
+.ipynb-notebook-container span#login_widget > .button:active,
+.ipynb-notebook-container #logout:active,
+.ipynb-notebook-container span#login_widget > .button.active,
+.ipynb-notebook-container #logout.active,
+.ipynb-notebook-container .open > .dropdown-togglespan#login_widget > .button,
+.ipynb-notebook-container .open > .dropdown-toggle#logout {
+  background-image: none;
+}
+.ipynb-notebook-container span#login_widget > .button.disabled:hover,
+.ipynb-notebook-container #logout.disabled:hover,
+.ipynb-notebook-container span#login_widget > .button[disabled]:hover,
+.ipynb-notebook-container #logout[disabled]:hover,
+.ipynb-notebook-container fieldset[disabled] span#login_widget > .button:hover,
+.ipynb-notebook-container fieldset[disabled] #logout:hover,
+.ipynb-notebook-container span#login_widget > .button.disabled:focus,
+.ipynb-notebook-container #logout.disabled:focus,
+.ipynb-notebook-container span#login_widget > .button[disabled]:focus,
+.ipynb-notebook-container #logout[disabled]:focus,
+.ipynb-notebook-container fieldset[disabled] span#login_widget > .button:focus,
+.ipynb-notebook-container fieldset[disabled] #logout:focus,
+.ipynb-notebook-container span#login_widget > .button.disabled.focus,
+.ipynb-notebook-container #logout.disabled.focus,
+.ipynb-notebook-container span#login_widget > .button[disabled].focus,
+.ipynb-notebook-container #logout[disabled].focus,
+.ipynb-notebook-container fieldset[disabled] span#login_widget > .button.focus,
+.ipynb-notebook-container fieldset[disabled] #logout.focus {
+  background-color: #fff;
+  border-color: #ccc;
+}
+.ipynb-notebook-container span#login_widget > .button .badge,
+.ipynb-notebook-container #logout .badge {
+  color: #fff;
+  background-color: #333;
+}
+.ipynb-notebook-container .nav-header {
+  text-transform: none;
+}
+.ipynb-notebook-container #header > span {
+  margin-top: 10px;
+}
+.ipynb-notebook-container .modal_stretch .modal-dialog {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-height: 80vh;
+}
+.ipynb-notebook-container .modal_stretch .modal-dialog .modal-body {
+  max-height: calc(100vh - 200px);
+  overflow: auto;
+  flex: 1;
+}
+/*!
+*
+* IPython auth
+*
+*/
+.ipynb-notebook-container .center-nav {
+  display: inline-block;
+  margin-bottom: -4px;
+}
+/*!
+*
+* IPython tree view
+*
+*/
+/* We need an invisible input field on top of the sentense*/
+/* "Drag file onto the list ..." */
+.ipynb-notebook-container .alternate_upload {
+  background-color: none;
+  display: inline;
+}
+.ipynb-notebook-container .alternate_upload.form {
+  padding: 0;
+  margin: 0;
+}
+.ipynb-notebook-container .alternate_upload input.fileinput {
+  text-align: center;
+  vertical-align: middle;
+  display: inline;
+  opacity: 0;
+  z-index: 2;
+  width: 12ex;
+  margin-right: -12ex;
+}
+.ipynb-notebook-container .alternate_upload .btn-upload {
+  height: 22px;
+}
+/**
+ * Primary styles
+ *
+ * Author: Jupyter Development Team
+ */
+.ipynb-notebook-container [dir="rtl"] #tabs li {
+  float: right;
+}
+.ipynb-notebook-container ul#tabs {
+  margin-bottom: 4px;
+}
+.ipynb-notebook-container [dir="rtl"] ul#tabs {
+  margin-right: 0px;
+}
+.ipynb-notebook-container ul#tabs a {
+  padding-top: 6px;
+  padding-bottom: 4px;
+}
+.ipynb-notebook-container ul.breadcrumb a:focus,
+.ipynb-notebook-container ul.breadcrumb a:hover {
+  text-decoration: none;
+}
+.ipynb-notebook-container ul.breadcrumb i.icon-home {
+  font-size: 16px;
+  margin-right: 4px;
+}
+.ipynb-notebook-container ul.breadcrumb span {
+  color: #5e5e5e;
+}
+.ipynb-notebook-container .list_toolbar {
+  padding: 4px 0 4px 0;
+  vertical-align: middle;
+}
+.ipynb-notebook-container .list_toolbar .tree-buttons {
+  padding-top: 1px;
+}
+.ipynb-notebook-container [dir="rtl"] .list_toolbar .tree-buttons {
+  float: left !important;
+}
+.ipynb-notebook-container [dir="rtl"] .list_toolbar .pull-right {
+  padding-top: 1px;
+  float: left !important;
+}
+.ipynb-notebook-container [dir="rtl"] .list_toolbar .pull-left {
+  float: right !important;
+}
+.ipynb-notebook-container .dynamic-buttons {
+  padding-top: 3px;
+  display: inline-block;
+}
+.ipynb-notebook-container .list_toolbar [class*="span"] {
+  min-height: 24px;
+}
+.ipynb-notebook-container .list_header {
+  font-weight: bold;
+  background-color: #EEE;
+}
+.ipynb-notebook-container .list_placeholder {
+  font-weight: bold;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 7px;
+  padding-right: 7px;
+}
+.ipynb-notebook-container .list_container {
+  margin-top: 4px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+}
+.ipynb-notebook-container .list_container > div {
+  border-bottom: 1px solid #ddd;
+}
+.ipynb-notebook-container .list_container > div:hover .list-item {
+  background-color: red;
+}
+.ipynb-notebook-container .list_container > div:last-child {
+  border: none;
+}
+.ipynb-notebook-container .list_item:hover .list_item {
+  background-color: #ddd;
+}
+.ipynb-notebook-container .list_item a {
+  text-decoration: none;
+}
+.ipynb-notebook-container .list_item:hover {
+  background-color: #fafafa;
+}
+.ipynb-notebook-container .list_header > div,
+.ipynb-notebook-container .list_item > div {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 7px;
+  padding-right: 7px;
+  line-height: 22px;
+}
+.ipynb-notebook-container .list_header > div input,
+.ipynb-notebook-container .list_item > div input {
+  margin-right: 7px;
+  margin-left: 14px;
+  vertical-align: baseline;
+  line-height: 22px;
+  position: relative;
+  top: -1px;
+}
+.ipynb-notebook-container .list_header > div .item_link,
+.ipynb-notebook-container .list_item > div .item_link {
+  margin-left: -1px;
+  vertical-align: baseline;
+  line-height: 22px;
+}
+.ipynb-notebook-container .new-file input[type=checkbox] {
+  visibility: hidden;
+}
+.ipynb-notebook-container .item_name {
+  line-height: 22px;
+  height: 24px;
+}
+.ipynb-notebook-container .item_icon {
+  font-size: 14px;
+  color: #5e5e5e;
+  margin-right: 7px;
+  margin-left: 7px;
+  line-height: 22px;
+  vertical-align: baseline;
+}
+.ipynb-notebook-container .item_buttons {
+  line-height: 1em;
+  margin-left: -5px;
+}
+.ipynb-notebook-container .item_buttons .btn,
+.ipynb-notebook-container .item_buttons .btn-group,
+.ipynb-notebook-container .item_buttons .input-group {
+  float: left;
+}
+.ipynb-notebook-container .item_buttons > .btn,
+.ipynb-notebook-container .item_buttons > .btn-group,
+.ipynb-notebook-container .item_buttons > .input-group {
+  margin-left: 5px;
+}
+.ipynb-notebook-container .item_buttons .btn {
+  min-width: 13ex;
+}
+.ipynb-notebook-container .item_buttons .running-indicator {
+  padding-top: 4px;
+  color: #5cb85c;
+}
+.ipynb-notebook-container .item_buttons .kernel-name {
+  padding-top: 4px;
+  color: #5bc0de;
+  margin-right: 7px;
+  float: left;
+}
+.ipynb-notebook-container .toolbar_info {
+  height: 24px;
+  line-height: 24px;
+}
+.ipynb-notebook-container .list_item input:not([type=checkbox]) {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  height: 22px;
+  line-height: 14px;
+  margin: 0px;
+}
+.ipynb-notebook-container .highlight_text {
+  color: blue;
+}
+.ipynb-notebook-container #project_name {
+  display: inline-block;
+  padding-left: 7px;
+  margin-left: -2px;
+}
+.ipynb-notebook-container #project_name > .breadcrumb {
+  padding: 0px;
+  margin-bottom: 0px;
+  background-color: transparent;
+  font-weight: bold;
+}
+.ipynb-notebook-container #tree-selector {
+  padding-right: 0px;
+}
+.ipynb-notebook-container [dir="rtl"] #tree-selector a {
+  float: right;
+}
+.ipynb-notebook-container #button-select-all {
+  min-width: 50px;
+}
+.ipynb-notebook-container #select-all {
+  margin-left: 7px;
+  margin-right: 2px;
+}
+.ipynb-notebook-container .menu_icon {
+  margin-right: 2px;
+}
+.ipynb-notebook-container .tab-content .row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.ipynb-notebook-container .folder_icon:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f114";
+}
+.ipynb-notebook-container .folder_icon:before.pull-left {
+  margin-right: .3em;
+}
+.ipynb-notebook-container .folder_icon:before.pull-right {
+  margin-left: .3em;
+}
+.ipynb-notebook-container .notebook_icon:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f02d";
+  position: relative;
+  top: -1px;
+}
+.ipynb-notebook-container .notebook_icon:before.pull-left {
+  margin-right: .3em;
+}
+.ipynb-notebook-container .notebook_icon:before.pull-right {
+  margin-left: .3em;
+}
+.ipynb-notebook-container .running_notebook_icon:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f02d";
+  position: relative;
+  top: -1px;
+  color: #5cb85c;
+}
+.ipynb-notebook-container .running_notebook_icon:before.pull-left {
+  margin-right: .3em;
+}
+.ipynb-notebook-container .running_notebook_icon:before.pull-right {
+  margin-left: .3em;
+}
+.ipynb-notebook-container .file_icon:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f016";
+  position: relative;
+  top: -2px;
+}
+.ipynb-notebook-container .file_icon:before.pull-left {
+  margin-right: .3em;
+}
+.ipynb-notebook-container .file_icon:before.pull-right {
+  margin-left: .3em;
+}
+.ipynb-notebook-container #notebook_toolbar .pull-right {
+  padding-top: 0px;
+  margin-right: -1px;
+}
+.ipynb-notebook-container ul#new-menu {
+  left: auto;
+  right: 0;
+}
+.ipynb-notebook-container [dir="rtl"] #new-menu {
+  text-align: right;
+}
+.ipynb-notebook-container .kernel-menu-icon {
+  padding-right: 12px;
+  width: 24px;
+  content: "\f096";
+}
+.ipynb-notebook-container .kernel-menu-icon:before {
+  content: "\f096";
+}
+.ipynb-notebook-container .kernel-menu-icon-current:before {
+  content: "\f00c";
+}
+.ipynb-notebook-container #tab_content {
+  padding-top: 20px;
+}
+.ipynb-notebook-container #running .panel-group .panel {
+  margin-top: 3px;
+  margin-bottom: 1em;
+}
+.ipynb-notebook-container #running .panel-group .panel .panel-heading {
+  background-color: #EEE;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 7px;
+  padding-right: 7px;
+  line-height: 22px;
+}
+.ipynb-notebook-container #running .panel-group .panel .panel-heading a:focus,
+.ipynb-notebook-container #running .panel-group .panel .panel-heading a:hover {
+  text-decoration: none;
+}
+.ipynb-notebook-container #running .panel-group .panel .panel-body {
+  padding: 0px;
+}
+.ipynb-notebook-container #running .panel-group .panel .panel-body .list_container {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  border: 0px;
+  border-radius: 0px;
+}
+.ipynb-notebook-container #running .panel-group .panel .panel-body .list_container .list_item {
+  border-bottom: 1px solid #ddd;
+}
+.ipynb-notebook-container #running .panel-group .panel .panel-body .list_container .list_item:last-child {
+  border-bottom: 0px;
+}
+.ipynb-notebook-container [dir="rtl"] #running .col-sm-8 {
+  float: right !important;
+}
+.ipynb-notebook-container .delete-button {
+  display: none;
+}
+.ipynb-notebook-container .duplicate-button {
+  display: none;
+}
+.ipynb-notebook-container .rename-button {
+  display: none;
+}
+.ipynb-notebook-container .shutdown-button {
+  display: none;
+}
+.ipynb-notebook-container .dynamic-instructions {
+  display: inline-block;
+  padding-top: 4px;
+}
+/*!
+*
+* IPython text editor webapp
+*
+*/
+.ipynb-notebook-container .selected-keymap i.fa {
+  padding: 0px 5px;
+}
+.ipynb-notebook-container .selected-keymap i.fa:before {
+  content: "\f00c";
+}
+.ipynb-notebook-container #mode-menu {
+  overflow: auto;
+  max-height: 20em;
+}
+.ipynb-notebook-container .edit_app #header {
+  -webkit-box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
+  box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
+}
+.ipynb-notebook-container .edit_app #menubar .navbar {
+  /* Use a negative 1 bottom margin, so the border overlaps the border of the
+    header */
+  margin-bottom: -1px;
+}
+.ipynb-notebook-container .dirty-indicator {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 20px;
+}
+.ipynb-notebook-container .dirty-indicator.pull-left {
+  margin-right: .3em;
+}
+.ipynb-notebook-container .dirty-indicator.pull-right {
+  margin-left: .3em;
+}
+.ipynb-notebook-container .dirty-indicator-dirty {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 20px;
+}
+.ipynb-notebook-container .dirty-indicator-dirty.pull-left {
+  margin-right: .3em;
+}
+.ipynb-notebook-container .dirty-indicator-dirty.pull-right {
+  margin-left: .3em;
+}
+.ipynb-notebook-container .dirty-indicator-clean {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 20px;
+}
+.ipynb-notebook-container .dirty-indicator-clean.pull-left {
+  margin-right: .3em;
+}
+.ipynb-notebook-container .dirty-indicator-clean.pull-right {
+  margin-left: .3em;
+}
+.ipynb-notebook-container .dirty-indicator-clean:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f00c";
+}
+.ipynb-notebook-container .dirty-indicator-clean:before.pull-left {
+  margin-right: .3em;
+}
+.ipynb-notebook-container .dirty-indicator-clean:before.pull-right {
+  margin-left: .3em;
+}
+.ipynb-notebook-container #filename {
+  font-size: 16pt;
+  display: table;
+  padding: 0px 5px;
+}
+.ipynb-notebook-container #current-mode {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.ipynb-notebook-container #texteditor-backdrop {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.ipynb-notebook-container #texteditor-backdrop {
+  background-color: #EEE;
+}
+.ipynb-notebook-container #texteditor-backdrop #texteditor-container .CodeMirror-gutter,
+.ipynb-notebook-container #texteditor-backdrop #texteditor-container .CodeMirror-gutters {
+  background-color: #fff;
+}
+.ipynb-notebook-container #texteditor-backdrop #texteditor-container {
+  padding: 0px;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
+  box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
+}
+/*!
+*
+* IPython notebook
+*
+*/
+/* CSS font colors for translated ANSI colors. */
+.ipynb-notebook-container .ansibold {
+  font-weight: bold;
+}
+/* use dark versions for foreground, to improve visibility */
+.ipynb-notebook-container .ansiblack {
+  color: black;
+}
+.ipynb-notebook-container .ansired {
+  color: darkred;
+}
+.ipynb-notebook-container .ansigreen {
+  color: darkgreen;
+}
+.ipynb-notebook-container .ansiyellow {
+  color: #c4a000;
+}
+.ipynb-notebook-container .ansiblue {
+  color: darkblue;
+}
+.ipynb-notebook-container .ansipurple {
+  color: darkviolet;
+}
+.ipynb-notebook-container .ansicyan {
+  color: steelblue;
+}
+.ipynb-notebook-container .ansigray {
+  color: gray;
+}
+/* and light for background, for the same reason */
+.ipynb-notebook-container .ansibgblack {
+  background-color: black;
+}
+.ipynb-notebook-container .ansibgred {
+  background-color: red;
+}
+.ipynb-notebook-container .ansibggreen {
+  background-color: green;
+}
+.ipynb-notebook-container .ansibgyellow {
+  background-color: yellow;
+}
+.ipynb-notebook-container .ansibgblue {
+  background-color: blue;
+}
+.ipynb-notebook-container .ansibgpurple {
+  background-color: magenta;
+}
+.ipynb-notebook-container .ansibgcyan {
+  background-color: cyan;
+}
+.ipynb-notebook-container .ansibggray {
+  background-color: gray;
+}
+.ipynb-notebook-container div.cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  border-left-width: 1px;
+  padding-left: 5px;
+  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
+}
+.ipynb-notebook-container div.cell.jupyter-soft-selected {
+  border-left-color: #90CAF9;
+  border-left-color: #E3F2FD;
+  border-left-width: 1px;
+  padding-left: 5px;
+  border-right-color: #E3F2FD;
+  border-right-width: 1px;
+  background: #E3F2FD;
+}
+.ipynb-notebook-container div.cell.selected {
+  border-color: #ababab;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
+}
+.ipynb-notebook-container div.cell.selected.jupyter-soft-selected {
+  border-left-width: 0;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
+}
+.ipynb-notebook-container .edit_mode div.cell.selected {
+  border-color: #66BB6A;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
+}
+.ipynb-notebook-container .prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+.ipynb-notebook-container div.inner_cell {
+  min-width: 0;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+.ipynb-notebook-container div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+/* This is needed so that empty prompt areas can collapse to zero height when there
+   is no content in the output_subarea and the prompt. The main purpose of this is
+   to make sure that empty JavaScript output_subareas have no height. */
+.ipynb-notebook-container div.prompt:empty {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.ipynb-notebook-container div.unrecognized_cell {
+  padding: 5px 5px 5px 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+.ipynb-notebook-container div.unrecognized_cell .inner_cell {
+  border-radius: 2px;
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid #cfcfcf;
+  background: #eaeaea;
+}
+.ipynb-notebook-container div.unrecognized_cell .inner_cell a {
+  color: inherit;
+  text-decoration: none;
+}
+.ipynb-notebook-container div.unrecognized_cell .inner_cell a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.ipynb-notebook-container div.code_cell {
+  /* avoid page breaking on code cells when printing */
+}
+/* any special styling for code cells that are currently running goes here */
+.ipynb-notebook-container div.input {
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+.ipynb-notebook-container div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+.ipynb-notebook-container div.input_area > div.highlight {
+  margin: 0.4em;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+.ipynb-notebook-container div.input_area > div.highlight > pre {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+/* The following gets added to the <head> if it is detected that the user has a
+ * monospace font with inconsistent normal/bold/italic height.  See
+ * notebookmain.js.  Such fonts will have keywords vertically offset with
+ * respect to the rest of the text.  The user should select a better font.
+ * See: https://github.com/ipython/ipython/issues/1503
+ *
+ * .CodeMirror span {
+ *      vertical-align: bottom;
+ * }
+ */
+.ipynb-notebook-container .CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.ipynb-notebook-container .CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.ipynb-notebook-container .CodeMirror-lines {
+  /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
+  /* we have set a different line-height and want this to scale with that. */
+  padding: 0.4em;
+}
+.ipynb-notebook-container .CodeMirror-linenumber {
+  padding: 0 8px 0 4px;
+}
+.ipynb-notebook-container .CodeMirror-gutters {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.ipynb-notebook-container .CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
+  /* .CodeMirror-lines */
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+Adapted from GitHub theme
+
+*/
+.ipynb-notebook-container .highlight-base {
+  color: #000;
+}
+.ipynb-notebook-container .highlight-variable {
+  color: #000;
+}
+.ipynb-notebook-container .highlight-variable-2 {
+  color: #1a1a1a;
+}
+.ipynb-notebook-container .highlight-variable-3 {
+  color: #333333;
+}
+.ipynb-notebook-container .highlight-string {
+  color: #BA2121;
+}
+.ipynb-notebook-container .highlight-comment {
+  color: #408080;
+  font-style: italic;
+}
+.ipynb-notebook-container .highlight-number {
+  color: #080;
+}
+.ipynb-notebook-container .highlight-atom {
+  color: #88F;
+}
+.ipynb-notebook-container .highlight-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.ipynb-notebook-container .highlight-builtin {
+  color: #008000;
+}
+.ipynb-notebook-container .highlight-error {
+  color: #f00;
+}
+.ipynb-notebook-container .highlight-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.ipynb-notebook-container .highlight-meta {
+  color: #AA22FF;
+}
+/* previously not defined, copying from default codemirror */
+.ipynb-notebook-container .highlight-def {
+  color: #00f;
+}
+.ipynb-notebook-container .highlight-string-2 {
+  color: #f50;
+}
+.ipynb-notebook-container .highlight-qualifier {
+  color: #555;
+}
+.ipynb-notebook-container .highlight-bracket {
+  color: #997;
+}
+.ipynb-notebook-container .highlight-tag {
+  color: #170;
+}
+.ipynb-notebook-container .highlight-attribute {
+  color: #00c;
+}
+.ipynb-notebook-container .highlight-header {
+  color: blue;
+}
+.ipynb-notebook-container .highlight-quote {
+  color: #090;
+}
+.ipynb-notebook-container .highlight-link {
+  color: #00c;
+}
+/* apply the same style to codemirror */
+.ipynb-notebook-container .cm-s-ipython span.cm-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-atom {
+  color: #88F;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-number {
+  color: #080;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-def {
+  color: #00f;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-variable {
+  color: #000;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-variable-2 {
+  color: #1a1a1a;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-variable-3 {
+  color: #333333;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-comment {
+  color: #408080;
+  font-style: italic;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-string {
+  color: #BA2121;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-string-2 {
+  color: #f50;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-meta {
+  color: #AA22FF;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-qualifier {
+  color: #555;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-builtin {
+  color: #008000;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-bracket {
+  color: #997;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-tag {
+  color: #170;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-attribute {
+  color: #00c;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-header {
+  color: blue;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-quote {
+  color: #090;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-link {
+  color: #00c;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-error {
+  color: #f00;
+}
+.ipynb-notebook-container .cm-s-ipython span.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+.ipynb-notebook-container div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+/* class for the output area when it should be height-limited */
+.ipynb-notebook-container div.output_scroll {
+  /* ideally, this would be max-height, but FF barfs all over that */
+  height: 24em;
+  /* FF needs this *and the wrapper* to specify full width, or it will shrinkwrap */
+  width: 100%;
+  overflow: auto;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: block;
+}
+/* output div while it is collapsed */
+.ipynb-notebook-container div.output_collapsed {
+  margin: 0px;
+  padding: 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.ipynb-notebook-container div.out_prompt_overlay {
+  height: 100%;
+  padding: 0px 0.4em;
+  position: absolute;
+  border-radius: 2px;
+}
+.ipynb-notebook-container div.out_prompt_overlay:hover {
+  /* use inner shadow to get border that is computed the same on WebKit/FF */
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+  background: rgba(240, 240, 240, 0.5);
+}
+.ipynb-notebook-container div.output_prompt {
+  color: #D84315;
+}
+/* This class is the outer container of all output sections. */
+.ipynb-notebook-container div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+.ipynb-notebook-container div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+.ipynb-notebook-container div.output_area .rendered_html table {
+  margin-left: 0;
+  margin-right: 0;
+}
+.ipynb-notebook-container div.output_area .rendered_html img {
+  margin-left: 0;
+  margin-right: 0;
+}
+.ipynb-notebook-container div.output_area img,
+.ipynb-notebook-container div.output_area svg {
+  max-width: 100%;
+  height: auto;
+}
+.ipynb-notebook-container div.output_area img.unconfined,
+.ipynb-notebook-container div.output_area svg.unconfined {
+  max-width: none;
+}
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.ipynb-notebook-container .output {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+.ipynb-notebook-container div.output_area pre {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+/* This class is for the output subarea inside the output_area and after
+   the prompt div. */
+.ipynb-notebook-container div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+.ipynb-notebook-container div.output_scroll div.output_subarea {
+  overflow-x: visible;
+}
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+.ipynb-notebook-container div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+/* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
+.ipynb-notebook-container div.output_stderr {
+  background: #fdd;
+  /* very light red background for stderr */
+}
+.ipynb-notebook-container div.output_latex {
+  text-align: left;
+}
+/* Empty output_javascript divs should have no height */
+.ipynb-notebook-container div.output_javascript:empty {
+  padding: 0;
+}
+.ipynb-notebook-container .js-error {
+  color: darkred;
+}
+/* raw_input styles */
+.ipynb-notebook-container div.raw_input_container {
+  line-height: 1.21429em;
+  padding-top: 5px;
+}
+.ipynb-notebook-container pre.raw_input_prompt {
+  /* nothing needed here. */
+}
+.ipynb-notebook-container input.raw_input {
+  font-family: monospace;
+  font-size: inherit;
+  color: inherit;
+  width: auto;
+  /* make sure input baseline aligns with prompt */
+  vertical-align: baseline;
+  /* padding + margin = 0.5em between prompt and cursor */
+  padding: 0em 0.25em;
+  margin: 0em 0.25em;
+}
+.ipynb-notebook-container input.raw_input:focus {
+  box-shadow: none;
+}
+.ipynb-notebook-container p.p-space {
+  margin-bottom: 10px;
+}
+.ipynb-notebook-container div.output_unrecognized {
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+}
+.ipynb-notebook-container div.output_unrecognized a {
+  color: inherit;
+  text-decoration: none;
+}
+.ipynb-notebook-container div.output_unrecognized a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.ipynb-notebook-container .rendered_html {
+  color: #000;
+  /* any extras will just be numbers: */
+}
+.ipynb-notebook-container .rendered_html em {
+  font-style: italic;
+}
+.ipynb-notebook-container .rendered_html strong {
+  font-weight: bold;
+}
+.ipynb-notebook-container .rendered_html u {
+  text-decoration: underline;
+}
+.ipynb-notebook-container .rendered_html :link {
+  text-decoration: underline;
+}
+.ipynb-notebook-container .rendered_html :visited {
+  text-decoration: underline;
+}
+.ipynb-notebook-container .rendered_html h1 {
+  font-size: 185.7%;
+  margin: 1.08em 0 0 0;
+  font-weight: bold;
+  line-height: 1.0;
+}
+.ipynb-notebook-container .rendered_html h2 {
+  font-size: 157.1%;
+  margin: 1.27em 0 0 0;
+  font-weight: bold;
+  line-height: 1.0;
+}
+.ipynb-notebook-container .rendered_html h3 {
+  font-size: 128.6%;
+  margin: 1.55em 0 0 0;
+  font-weight: bold;
+  line-height: 1.0;
+}
+.ipynb-notebook-container .rendered_html h4 {
+  font-size: 100%;
+  margin: 2em 0 0 0;
+  font-weight: bold;
+  line-height: 1.0;
+}
+.ipynb-notebook-container .rendered_html h5 {
+  font-size: 100%;
+  margin: 2em 0 0 0;
+  font-weight: bold;
+  line-height: 1.0;
+  font-style: italic;
+}
+.ipynb-notebook-container .rendered_html h6 {
+  font-size: 100%;
+  margin: 2em 0 0 0;
+  font-weight: bold;
+  line-height: 1.0;
+  font-style: italic;
+}
+.ipynb-notebook-container .rendered_html h1:first-child {
+  margin-top: 0.538em;
+}
+.ipynb-notebook-container .rendered_html h2:first-child {
+  margin-top: 0.636em;
+}
+.ipynb-notebook-container .rendered_html h3:first-child {
+  margin-top: 0.777em;
+}
+.ipynb-notebook-container .rendered_html h4:first-child {
+  margin-top: 1em;
+}
+.ipynb-notebook-container .rendered_html h5:first-child {
+  margin-top: 1em;
+}
+.ipynb-notebook-container .rendered_html h6:first-child {
+  margin-top: 1em;
+}
+.ipynb-notebook-container .rendered_html ul {
+  list-style: disc;
+  margin: 0em 2em;
+  padding-left: 0px;
+}
+.ipynb-notebook-container .rendered_html ul ul {
+  list-style: square;
+  margin: 0em 2em;
+}
+.ipynb-notebook-container .rendered_html ul ul ul {
+  list-style: circle;
+  margin: 0em 2em;
+}
+.ipynb-notebook-container .rendered_html ol {
+  list-style: decimal;
+  margin: 0em 2em;
+  padding-left: 0px;
+}
+.ipynb-notebook-container .rendered_html ol ol {
+  list-style: upper-alpha;
+  margin: 0em 2em;
+}
+.ipynb-notebook-container .rendered_html ol ol ol {
+  list-style: lower-alpha;
+  margin: 0em 2em;
+}
+.ipynb-notebook-container .rendered_html ol ol ol ol {
+  list-style: lower-roman;
+  margin: 0em 2em;
+}
+.ipynb-notebook-container .rendered_html ol ol ol ol ol {
+  list-style: decimal;
+  margin: 0em 2em;
+}
+.ipynb-notebook-container .rendered_html * + ul {
+  margin-top: 1em;
+}
+.ipynb-notebook-container .rendered_html * + ol {
+  margin-top: 1em;
+}
+.ipynb-notebook-container .rendered_html hr {
+  color: black;
+  background-color: black;
+}
+.ipynb-notebook-container .rendered_html pre {
+  margin: 1em 2em;
+}
+.ipynb-notebook-container .rendered_html pre,
+.ipynb-notebook-container .rendered_html code {
+  border: 0;
+  background-color: #fff;
+  color: #000;
+  font-size: 100%;
+  padding: 0px;
+}
+.ipynb-notebook-container .rendered_html blockquote {
+  margin: 1em 2em;
+}
+.ipynb-notebook-container .rendered_html table {
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+.ipynb-notebook-container .rendered_html tr,
+.ipynb-notebook-container .rendered_html th,
+.ipynb-notebook-container .rendered_html td {
+  border: 1px solid black;
+  border-collapse: collapse;
+  margin: 1em 2em;
+}
+.ipynb-notebook-container .rendered_html td,
+.ipynb-notebook-container .rendered_html th {
+  text-align: left;
+  vertical-align: middle;
+  padding: 4px;
+}
+.ipynb-notebook-container .rendered_html th {
+  font-weight: bold;
+}
+.ipynb-notebook-container .rendered_html * + table {
+  margin-top: 1em;
+}
+.ipynb-notebook-container .rendered_html p {
+  text-align: left;
+}
+.ipynb-notebook-container .rendered_html * + p {
+  margin-top: 1em;
+}
+.ipynb-notebook-container .rendered_html img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.ipynb-notebook-container .rendered_html * + img {
+  margin-top: 1em;
+}
+.ipynb-notebook-container .rendered_html img,
+.ipynb-notebook-container .rendered_html svg {
+  max-width: 100%;
+  height: auto;
+}
+.ipynb-notebook-container .rendered_html img.unconfined,
+.ipynb-notebook-container .rendered_html svg.unconfined {
+  max-width: none;
+}
+.ipynb-notebook-container div.text_cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+.ipynb-notebook-container div.text_cell_render {
+  /*font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;*/
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+.ipynb-notebook-container a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+.ipynb-notebook-container h1:hover .anchor-link,
+.ipynb-notebook-container h2:hover .anchor-link,
+.ipynb-notebook-container h3:hover .anchor-link,
+.ipynb-notebook-container h4:hover .anchor-link,
+.ipynb-notebook-container h5:hover .anchor-link,
+.ipynb-notebook-container h6:hover .anchor-link {
+  visibility: visible;
+}
+.ipynb-notebook-container .text_cell.rendered .input_area {
+  display: none;
+}
+.ipynb-notebook-container .text_cell.rendered .rendered_html {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.ipynb-notebook-container .text_cell.unrendered .text_cell_render {
+  display: none;
+}
+.ipynb-notebook-container .cm-header-1,
+.ipynb-notebook-container .cm-header-2,
+.ipynb-notebook-container .cm-header-3,
+.ipynb-notebook-container .cm-header-4,
+.ipynb-notebook-container .cm-header-5,
+.ipynb-notebook-container .cm-header-6 {
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.ipynb-notebook-container .cm-header-1 {
+  font-size: 185.7%;
+}
+.ipynb-notebook-container .cm-header-2 {
+  font-size: 157.1%;
+}
+.ipynb-notebook-container .cm-header-3 {
+  font-size: 128.6%;
+}
+.ipynb-notebook-container .cm-header-4 {
+  font-size: 110%;
+}
+.ipynb-notebook-container .cm-header-5 {
+  font-size: 100%;
+  font-style: italic;
+}
+.ipynb-notebook-container .cm-header-6 {
+  font-size: 100%;
+  font-style: italic;
+}
+/*!
+*
+* IPython notebook webapp
+*
+*/
+.ipynb-notebook-container #ipython-main-app {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  height: 100%;
+}
+.ipynb-notebook-container div#notebook_panel {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  height: 100%;
+}
+.ipynb-notebook-container div#notebook {
+  font-size: 14px;
+  line-height: 20px;
+  overflow-y: hidden;
+  overflow-x: auto;
+  width: 100%;
+  /* This spaces the page away from the edge of the notebook area */
+  padding-top: 20px;
+  margin: 0px;
+  outline: none;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  min-height: 100%;
+}
+.ipynb-notebook-container  #notebook-container {
+    padding: 15px;
+    background-color: #fff;
+    min-height: 0;
+    -webkit-box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
+    box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
+}
+.ipynb-notebook-container div.ui-widget-content {
+  border: 1px solid #ababab;
+  outline: none;
+}
+.ipynb-notebook-container pre.dialog {
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  padding: 0.4em;
+  padding-left: 2em;
+}
+.ipynb-notebook-container p.dialog {
+  padding: 0.2em;
+}
+/* Word-wrap output correctly.  This is the CSS3 spelling, though Firefox seems
+   to not honor it correctly.  Webkit browsers (Chrome, rekonq, Safari) do.
+ */
+.ipynb-notebook-container pre,
+code,
+kbd,
+.ipynb-notebook-container samp {
+  white-space: pre-wrap;
+}
+.ipynb-notebook-container #fonttest {
+  font-family: monospace;
+}
+.ipynb-notebook-container p {
+  margin-bottom: 0;
+}
+.ipynb-notebook-container .end_space {
+  min-height: 100px;
+  transition: height .2s ease;
+}
+.ipynb-notebook-container .notebook_app > #header {
+  -webkit-box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
+  box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
+}
+.ipynb-notebook-container .notebook_app {
+    background-color: #EEE;
+}
+.ipynb-notebook-container kbd {
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: none;
+  margin: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+/* CSS for the cell toolbar */
+.ipynb-notebook-container .celltoolbar {
+  border: thin solid #CFCFCF;
+  border-bottom: none;
+  background: #EEE;
+  border-radius: 2px 2px 0px 0px;
+  width: 100%;
+  height: 29px;
+  padding-right: 4px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-pack: end;
+  -moz-box-pack: end;
+  box-pack: end;
+  /* Modern browsers */
+  justify-content: flex-end;
+  display: -webkit-flex;
+}
+.ipynb-notebook-container .ctb_hideshow {
+  display: none;
+  vertical-align: bottom;
+}
+/* ctb_show is added to the ctb_hideshow div to show the cell toolbar.
+   Cell toolbars are only shown when the ctb_global_show class is also set.
+*/
+.ipynb-notebook-container .ctb_global_show .ctb_show.ctb_hideshow {
+  display: block;
+}
+.ipynb-notebook-container .ctb_global_show .ctb_show + .input_area,
+.ipynb-notebook-container .ctb_global_show .ctb_show + div.text_cell_input,
+.ipynb-notebook-container .ctb_global_show .ctb_show ~ div.text_cell_render {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
+.ipynb-notebook-container .ctb_global_show .ctb_show ~ div.text_cell_render {
+  border: 1px solid #cfcfcf;
+}
+.ipynb-notebook-container .celltoolbar {
+  font-size: 87%;
+  padding-top: 3px;
+}
+.ipynb-notebook-container .celltoolbar select {
+  display: block;
+  width: 100%;
+  height: 32px;
+  padding: 6px 12px;
+  font-size: 13px;
+  line-height: 1.42857143;
+  color: #555555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  height: 30px;
+  padding: 5px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 1px;
+  width: inherit;
+  font-size: inherit;
+  height: 22px;
+  padding: 0px;
+  display: inline-block;
+}
+.ipynb-notebook-container .celltoolbar select:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.ipynb-notebook-container .celltoolbar select::-moz-placeholder {
+  color: #999;
+  opacity: 1;
+}
+.ipynb-notebook-container .celltoolbar select:-ms-input-placeholder {
+  color: #999;
+}
+.ipynb-notebook-container .celltoolbar select::-webkit-input-placeholder {
+  color: #999;
+}
+.ipynb-notebook-container .celltoolbar select::-ms-expand {
+  border: 0;
+  background-color: transparent;
+}
+.ipynb-notebook-container .celltoolbar select[disabled],
+.ipynb-notebook-container .celltoolbar select[readonly],
+.ipynb-notebook-container fieldset[disabled] .celltoolbar select {
+  background-color: #eeeeee;
+  opacity: 1;
+}
+.ipynb-notebook-container .celltoolbar select[disabled],
+.ipynb-notebook-container fieldset[disabled] .celltoolbar select {
+  cursor: not-allowed;
+}
+.ipynb-notebook-container textarea.celltoolbar select {
+  height: auto;
+}
+.ipynb-notebook-container select.celltoolbar select {
+  height: 30px;
+  line-height: 30px;
+}
+.ipynb-notebook-container textarea.celltoolbar select,
+.ipynb-notebook-container select[multiple].celltoolbar select {
+  height: auto;
+}
+.ipynb-notebook-container .celltoolbar label {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.ipynb-notebook-container .completions {
+  position: absolute;
+  z-index: 110;
+  overflow: hidden;
+  border: 1px solid #ababab;
+  border-radius: 2px;
+  -webkit-box-shadow: 0px 6px 10px -1px #adadad;
+  box-shadow: 0px 6px 10px -1px #adadad;
+  line-height: 1;
+}
+.ipynb-notebook-container .completions select {
+  background: white;
+  outline: none;
+  border: none;
+  padding: 0px;
+  margin: 0px;
+  overflow: auto;
+  font-family: monospace;
+  font-size: 110%;
+  color: #000;
+  width: auto;
+}
+.ipynb-notebook-container .completions select option.context {
+  color: #286090;
+}
+.ipynb-notebook-container #kernel_logo_widget {
+  float: right !important;
+  float: right;
+}
+.ipynb-notebook-container #kernel_logo_widget .current_kernel_logo {
+  display: none;
+  margin-top: -1px;
+  margin-bottom: -1px;
+  width: 32px;
+  height: 32px;
+}
+.ipynb-notebook-container #menubar {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  margin-top: 1px;
+}
+.ipynb-notebook-container #menubar .navbar {
+  border-top: 1px;
+  border-radius: 0px 0px 2px 2px;
+  margin-bottom: 0px;
+}
+.ipynb-notebook-container #menubar .navbar-toggle {
+  float: left;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  border: none;
+}
+.ipynb-notebook-container #menubar .navbar-collapse {
+  clear: left;
+}
+.ipynb-notebook-container .nav-wrapper {
+  border-bottom: 1px solid #e7e7e7;
+}
+.ipynb-notebook-container i.menu-icon {
+  padding-top: 4px;
+}
+.ipynb-notebook-container ul#help_menu li a {
+  overflow: hidden;
+  padding-right: 2.2em;
+}
+.ipynb-notebook-container ul#help_menu li a i {
+  margin-right: -1.2em;
+}
+.ipynb-notebook-container .dropdown-submenu {
+  position: relative;
+}
+.ipynb-notebook-container .dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+}
+.ipynb-notebook-container .dropdown-submenu:hover > .dropdown-menu {
+  display: block;
+}
+.ipynb-notebook-container .dropdown-submenu > a:after {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: block;
+  content: "\f0da";
+  float: right;
+  color: #333333;
+  margin-top: 2px;
+  margin-right: -10px;
+}
+.ipynb-notebook-container .dropdown-submenu > a:after.pull-left {
+  margin-right: .3em;
+}
+.ipynb-notebook-container .dropdown-submenu > a:after.pull-right {
+  margin-left: .3em;
+}
+.ipynb-notebook-container .dropdown-submenu:hover > a:after {
+  color: #262626;
+}
+.ipynb-notebook-container .dropdown-submenu.pull-left {
+  float: none;
+}
+.ipynb-notebook-container .dropdown-submenu.pull-left > .dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+}
+.ipynb-notebook-container #notification_area {
+  float: right !important;
+  float: right;
+  z-index: 10;
+}
+.ipynb-notebook-container .indicator_area {
+  float: right !important;
+  float: right;
+  color: #777;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 11px;
+  z-index: 10;
+  text-align: center;
+  width: auto;
+}
+.ipynb-notebook-container #kernel_indicator {
+  float: right !important;
+  float: right;
+  color: #777;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 11px;
+  z-index: 10;
+  text-align: center;
+  width: auto;
+  border-left: 1px solid;
+}
+.ipynb-notebook-container #kernel_indicator .kernel_indicator_name {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.ipynb-notebook-container #modal_indicator {
+  float: right !important;
+  float: right;
+  color: #777;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 11px;
+  z-index: 10;
+  text-align: center;
+  width: auto;
+}
+.ipynb-notebook-container #readonly-indicator {
+  float: right !important;
+  float: right;
+  color: #777;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 11px;
+  z-index: 10;
+  text-align: center;
+  width: auto;
+  margin-top: 2px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  display: none;
+}
+.ipynb-notebook-container .modal_indicator:before {
+  width: 1.28571429em;
+  text-align: center;
+}
+.ipynb-notebook-container .edit_mode .modal_indicator:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f040";
+}
+.ipynb-notebook-container .edit_mode .modal_indicator:before.pull-left {
+  margin-right: .3em;
+}
+.ipynb-notebook-container .edit_mode .modal_indicator:before.pull-right {
+  margin-left: .3em;
+}
+.ipynb-notebook-container .command_mode .modal_indicator:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: ' ';
+}
+.ipynb-notebook-container .command_mode .modal_indicator:before.pull-left {
+  margin-right: .3em;
+}
+.ipynb-notebook-container .command_mode .modal_indicator:before.pull-right {
+  margin-left: .3em;
+}
+.ipynb-notebook-container .kernel_idle_icon:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f10c";
+}
+.ipynb-notebook-container .kernel_idle_icon:before.pull-left {
+  margin-right: .3em;
+}
+.ipynb-notebook-container .kernel_idle_icon:before.pull-right {
+  margin-left: .3em;
+}
+.ipynb-notebook-container .kernel_busy_icon:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f111";
+}
+.ipynb-notebook-container .kernel_busy_icon:before.pull-left {
+  margin-right: .3em;
+}
+.ipynb-notebook-container .kernel_busy_icon:before.pull-right {
+  margin-left: .3em;
+}
+.ipynb-notebook-container .kernel_dead_icon:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f1e2";
+}
+.ipynb-notebook-container .kernel_dead_icon:before.pull-left {
+  margin-right: .3em;
+}
+.ipynb-notebook-container .kernel_dead_icon:before.pull-right {
+  margin-left: .3em;
+}
+.ipynb-notebook-container .kernel_disconnected_icon:before {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\f127";
+}
+.ipynb-notebook-container .kernel_disconnected_icon:before.pull-left {
+  margin-right: .3em;
+}
+.ipynb-notebook-container .kernel_disconnected_icon:before.pull-right {
+  margin-left: .3em;
+}
+.ipynb-notebook-container .notification_widget {
+  color: #777;
+  z-index: 10;
+  background: rgba(240, 240, 240, 0.5);
+  margin-right: 4px;
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+.ipynb-notebook-container .notification_widget:focus,
+.ipynb-notebook-container .notification_widget.focus {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #8c8c8c;
+}
+.ipynb-notebook-container .notification_widget:hover {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+.ipynb-notebook-container .notification_widget:active,
+.ipynb-notebook-container .notification_widget.active,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget {
+  color: #333;
+  background-color: #e6e6e6;
+  border-color: #adadad;
+}
+.ipynb-notebook-container .notification_widget:active:hover,
+.ipynb-notebook-container .notification_widget.active:hover,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget:hover,
+.ipynb-notebook-container .notification_widget:active:focus,
+.ipynb-notebook-container .notification_widget.active:focus,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget:focus,
+.ipynb-notebook-container .notification_widget:active.focus,
+.ipynb-notebook-container .notification_widget.active.focus,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.focus {
+  color: #333;
+  background-color: #d4d4d4;
+  border-color: #8c8c8c;
+}
+.ipynb-notebook-container .notification_widget:active,
+.ipynb-notebook-container .notification_widget.active,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget {
+  background-image: none;
+}
+.ipynb-notebook-container .notification_widget.disabled:hover,
+.ipynb-notebook-container .notification_widget[disabled]:hover,
+.ipynb-notebook-container fieldset[disabled] .notification_widget:hover,
+.ipynb-notebook-container .notification_widget.disabled:focus,
+.ipynb-notebook-container .notification_widget[disabled]:focus,
+.ipynb-notebook-container fieldset[disabled] .notification_widget:focus,
+.ipynb-notebook-container .notification_widget.disabled.focus,
+.ipynb-notebook-container .notification_widget[disabled].focus,
+.ipynb-notebook-container fieldset[disabled] .notification_widget.focus {
+  background-color: #fff;
+  border-color: #ccc;
+}
+.ipynb-notebook-container .notification_widget .badge {
+  color: #fff;
+  background-color: #333;
+}
+.ipynb-notebook-container .notification_widget.warning {
+  color: #fff;
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+.ipynb-notebook-container .notification_widget.warning:focus,
+.ipynb-notebook-container .notification_widget.warning.focus {
+  color: #fff;
+  background-color: #ec971f;
+  border-color: #985f0d;
+}
+.ipynb-notebook-container .notification_widget.warning:hover {
+  color: #fff;
+  background-color: #ec971f;
+  border-color: #d58512;
+}
+.ipynb-notebook-container .notification_widget.warning:active,
+.ipynb-notebook-container .notification_widget.warning.active,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.warning {
+  color: #fff;
+  background-color: #ec971f;
+  border-color: #d58512;
+}
+.ipynb-notebook-container .notification_widget.warning:active:hover,
+.ipynb-notebook-container .notification_widget.warning.active:hover,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.warning:hover,
+.ipynb-notebook-container .notification_widget.warning:active:focus,
+.ipynb-notebook-container .notification_widget.warning.active:focus,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.warning:focus,
+.ipynb-notebook-container .notification_widget.warning:active.focus,
+.ipynb-notebook-container .notification_widget.warning.active.focus,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.warning.focus {
+  color: #fff;
+  background-color: #d58512;
+  border-color: #985f0d;
+}
+.ipynb-notebook-container .notification_widget.warning:active,
+.ipynb-notebook-container .notification_widget.warning.active,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.warning {
+  background-image: none;
+}
+.ipynb-notebook-container .notification_widget.warning.disabled:hover,
+.ipynb-notebook-container .notification_widget.warning[disabled]:hover,
+.ipynb-notebook-container fieldset[disabled] .notification_widget.warning:hover,
+.ipynb-notebook-container .notification_widget.warning.disabled:focus,
+.ipynb-notebook-container .notification_widget.warning[disabled]:focus,
+.ipynb-notebook-container fieldset[disabled] .notification_widget.warning:focus,
+.ipynb-notebook-container .notification_widget.warning.disabled.focus,
+.ipynb-notebook-container .notification_widget.warning[disabled].focus,
+.ipynb-notebook-container fieldset[disabled] .notification_widget.warning.focus {
+  background-color: #f0ad4e;
+  border-color: #eea236;
+}
+.ipynb-notebook-container .notification_widget.warning .badge {
+  color: #f0ad4e;
+  background-color: #fff;
+}
+.ipynb-notebook-container .notification_widget.success {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.ipynb-notebook-container .notification_widget.success:focus,
+.ipynb-notebook-container .notification_widget.success.focus {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #255625;
+}
+.ipynb-notebook-container .notification_widget.success:hover {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+.ipynb-notebook-container .notification_widget.success:active,
+.ipynb-notebook-container .notification_widget.success.active,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.success {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+.ipynb-notebook-container .notification_widget.success:active:hover,
+.ipynb-notebook-container .notification_widget.success.active:hover,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.success:hover,
+.ipynb-notebook-container .notification_widget.success:active:focus,
+.ipynb-notebook-container .notification_widget.success.active:focus,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.success:focus,
+.ipynb-notebook-container .notification_widget.success:active.focus,
+.ipynb-notebook-container .notification_widget.success.active.focus,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.success.focus {
+  color: #fff;
+  background-color: #398439;
+  border-color: #255625;
+}
+.ipynb-notebook-container .notification_widget.success:active,
+.ipynb-notebook-container .notification_widget.success.active,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.success {
+  background-image: none;
+}
+.ipynb-notebook-container .notification_widget.success.disabled:hover,
+.ipynb-notebook-container .notification_widget.success[disabled]:hover,
+.ipynb-notebook-container fieldset[disabled] .notification_widget.success:hover,
+.ipynb-notebook-container .notification_widget.success.disabled:focus,
+.ipynb-notebook-container .notification_widget.success[disabled]:focus,
+.ipynb-notebook-container fieldset[disabled] .notification_widget.success:focus,
+.ipynb-notebook-container .notification_widget.success.disabled.focus,
+.ipynb-notebook-container .notification_widget.success[disabled].focus,
+.ipynb-notebook-container fieldset[disabled] .notification_widget.success.focus {
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+.ipynb-notebook-container .notification_widget.success .badge {
+  color: #5cb85c;
+  background-color: #fff;
+}
+.ipynb-notebook-container .notification_widget.info {
+  color: #fff;
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+.ipynb-notebook-container .notification_widget.info:focus,
+.ipynb-notebook-container .notification_widget.info.focus {
+  color: #fff;
+  background-color: #31b0d5;
+  border-color: #1b6d85;
+}
+.ipynb-notebook-container .notification_widget.info:hover {
+  color: #fff;
+  background-color: #31b0d5;
+  border-color: #269abc;
+}
+.ipynb-notebook-container .notification_widget.info:active,
+.ipynb-notebook-container .notification_widget.info.active,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.info {
+  color: #fff;
+  background-color: #31b0d5;
+  border-color: #269abc;
+}
+.ipynb-notebook-container .notification_widget.info:active:hover,
+.ipynb-notebook-container .notification_widget.info.active:hover,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.info:hover,
+.ipynb-notebook-container .notification_widget.info:active:focus,
+.ipynb-notebook-container .notification_widget.info.active:focus,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.info:focus,
+.ipynb-notebook-container .notification_widget.info:active.focus,
+.ipynb-notebook-container .notification_widget.info.active.focus,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.info.focus {
+  color: #fff;
+  background-color: #269abc;
+  border-color: #1b6d85;
+}
+.ipynb-notebook-container .notification_widget.info:active,
+.ipynb-notebook-container .notification_widget.info.active,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.info {
+  background-image: none;
+}
+.ipynb-notebook-container .notification_widget.info.disabled:hover,
+.ipynb-notebook-container .notification_widget.info[disabled]:hover,
+.ipynb-notebook-container fieldset[disabled] .notification_widget.info:hover,
+.ipynb-notebook-container .notification_widget.info.disabled:focus,
+.ipynb-notebook-container .notification_widget.info[disabled]:focus,
+.ipynb-notebook-container fieldset[disabled] .notification_widget.info:focus,
+.ipynb-notebook-container .notification_widget.info.disabled.focus,
+.ipynb-notebook-container .notification_widget.info[disabled].focus,
+.ipynb-notebook-container fieldset[disabled] .notification_widget.info.focus {
+  background-color: #5bc0de;
+  border-color: #46b8da;
+}
+.ipynb-notebook-container .notification_widget.info .badge {
+  color: #5bc0de;
+  background-color: #fff;
+}
+.ipynb-notebook-container .notification_widget.danger {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.ipynb-notebook-container .notification_widget.danger:focus,
+.ipynb-notebook-container .notification_widget.danger.focus {
+  color: #fff;
+  background-color: #c9302c;
+  border-color: #761c19;
+}
+.ipynb-notebook-container .notification_widget.danger:hover {
+  color: #fff;
+  background-color: #c9302c;
+  border-color: #ac2925;
+}
+.ipynb-notebook-container .notification_widget.danger:active,
+.ipynb-notebook-container .notification_widget.danger.active,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.danger {
+  color: #fff;
+  background-color: #c9302c;
+  border-color: #ac2925;
+}
+.ipynb-notebook-container .notification_widget.danger:active:hover,
+.ipynb-notebook-container .notification_widget.danger.active:hover,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.danger:hover,
+.ipynb-notebook-container .notification_widget.danger:active:focus,
+.ipynb-notebook-container .notification_widget.danger.active:focus,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.danger:focus,
+.ipynb-notebook-container .notification_widget.danger:active.focus,
+.ipynb-notebook-container .notification_widget.danger.active.focus,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.danger.focus {
+  color: #fff;
+  background-color: #ac2925;
+  border-color: #761c19;
+}
+.ipynb-notebook-container .notification_widget.danger:active,
+.ipynb-notebook-container .notification_widget.danger.active,
+.ipynb-notebook-container .open > .dropdown-toggle.notification_widget.danger {
+  background-image: none;
+}
+.ipynb-notebook-container .notification_widget.danger.disabled:hover,
+.ipynb-notebook-container .notification_widget.danger[disabled]:hover,
+.ipynb-notebook-container fieldset[disabled] .notification_widget.danger:hover,
+.ipynb-notebook-container .notification_widget.danger.disabled:focus,
+.ipynb-notebook-container .notification_widget.danger[disabled]:focus,
+.ipynb-notebook-container fieldset[disabled] .notification_widget.danger:focus,
+.ipynb-notebook-container .notification_widget.danger.disabled.focus,
+.ipynb-notebook-container .notification_widget.danger[disabled].focus,
+.ipynb-notebook-container fieldset[disabled] .notification_widget.danger.focus {
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+.ipynb-notebook-container .notification_widget.danger .badge {
+  color: #d9534f;
+  background-color: #fff;
+}
+.ipynb-notebook-container div#pager {
+  background-color: #fff;
+  font-size: 14px;
+  line-height: 20px;
+  overflow: hidden;
+  display: none;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  max-height: 50%;
+  padding-top: 8px;
+  -webkit-box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
+  box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
+  /* Display over codemirror */
+  z-index: 100;
+  /* Hack which prevents jquery ui resizable from changing top. */
+  top: auto !important;
+}
+.ipynb-notebook-container div#pager pre {
+  line-height: 1.21429em;
+  color: #000;
+  background-color: #f7f7f7;
+  padding: 0.4em;
+}
+.ipynb-notebook-container div#pager #pager-button-area {
+  position: absolute;
+  top: 8px;
+  right: 20px;
+}
+.ipynb-notebook-container div#pager #pager-contents {
+  position: relative;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+}
+.ipynb-notebook-container div#pager #pager-contents #pager-container {
+  position: relative;
+  padding: 15px 0px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+.ipynb-notebook-container div#pager .ui-resizable-handle {
+  top: 0px;
+  height: 8px;
+  background: #f7f7f7;
+  border-top: 1px solid #cfcfcf;
+  border-bottom: 1px solid #cfcfcf;
+  /* This injects handle bars (a short, wide = symbol) for 
+        the resize handle. */
+}
+.ipynb-notebook-container div#pager .ui-resizable-handle::after {
+  content: '';
+  top: 2px;
+  left: 50%;
+  height: 3px;
+  width: 30px;
+  margin-left: -15px;
+  position: absolute;
+  border-top: 1px solid #cfcfcf;
+}
+.ipynb-notebook-container .quickhelp {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  line-height: 1.8em;
+}
+.ipynb-notebook-container .shortcut_key {
+  display: inline-block;
+  width: 21ex;
+  text-align: right;
+  font-family: monospace;
+}
+.ipynb-notebook-container .shortcut_descr {
+  display: inline-block;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+.ipynb-notebook-container span.save_widget {
+  margin-top: 6px;
+}
+.ipynb-notebook-container span.save_widget span.filename {
+  height: 1em;
+  line-height: 1em;
+  padding: 3px;
+  margin-left: 16px;
+  border: none;
+  font-size: 146.5%;
+  border-radius: 2px;
+}
+.ipynb-notebook-container span.save_widget span.filename:hover {
+  background-color: #e6e6e6;
+}
+.ipynb-notebook-container span.checkpoint_status,
+.ipynb-notebook-container span.autosave_status {
+  font-size: small;
+}
+.ipynb-notebook-container .toolbar {
+  padding: 0px;
+  margin-left: -5px;
+  margin-top: 2px;
+  margin-bottom: 5px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+.ipynb-notebook-container .toolbar select,
+.ipynb-notebook-container .toolbar label {
+  width: auto;
+  vertical-align: middle;
+  margin-right: 2px;
+  margin-bottom: 0px;
+  display: inline;
+  font-size: 92%;
+  margin-left: 0.3em;
+  margin-right: 0.3em;
+  padding: 0px;
+  padding-top: 3px;
+}
+.ipynb-notebook-container .toolbar .btn {
+  padding: 2px 8px;
+}
+.ipynb-notebook-container .toolbar .btn-group {
+  margin-top: 0px;
+  margin-left: 5px;
+}
+.ipynb-notebook-container #maintoolbar {
+  margin-bottom: -3px;
+  margin-top: -8px;
+  border: 0px;
+  min-height: 27px;
+  margin-left: 0px;
+  padding-top: 11px;
+  padding-bottom: 3px;
+}
+.ipynb-notebook-container #maintoolbar .navbar-text {
+  float: none;
+  vertical-align: middle;
+  text-align: right;
+  margin-left: 5px;
+  margin-right: 0px;
+  margin-top: 0px;
+}
+.ipynb-notebook-container .select-xs {
+  height: 24px;
+}
+.ipynb-notebook-container .pulse,
+.ipynb-notebook-container .dropdown-menu > li > a.pulse,
+.ipynb-notebook-container li.pulse > a.dropdown-toggle,
+.ipynb-notebook-container li.pulse.open > a.dropdown-toggle {
+  background-color: #F37626;
+  color: white;
+}
+/**
+ * Primary styles
+ *
+ * Author: Jupyter Development Team
+ */
+/** WARNING IF YOU ARE EDITTING THIS FILE, if this is a .css file, It has a lot
+ * of chance of beeing generated from the ../less/[samename].less file, you can
+ * try to get back the less file by reverting somme commit in history
+ **/
+/*
+ * We'll try to get something pretty, so we
+ * have some strange css to have the scroll bar on
+ * the left with fix button on the top right of the tooltip
+ */
+@-moz-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@-moz-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/*properties of tooltip after "expand"*/
+.ipynb-notebook-container .bigtooltip {
+  overflow: auto;
+  height: 200px;
+  -webkit-transition-property: height;
+  -webkit-transition-duration: 500ms;
+  -moz-transition-property: height;
+  -moz-transition-duration: 500ms;
+  transition-property: height;
+  transition-duration: 500ms;
+}
+/*properties of tooltip before "expand"*/
+.ipynb-notebook-container .smalltooltip {
+  -webkit-transition-property: height;
+  -webkit-transition-duration: 500ms;
+  -moz-transition-property: height;
+  -moz-transition-duration: 500ms;
+  transition-property: height;
+  transition-duration: 500ms;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 80px;
+}
+.ipynb-notebook-container .tooltipbuttons {
+  position: absolute;
+  padding-right: 15px;
+  top: 0px;
+  right: 0px;
+}
+.ipynb-notebook-container .tooltiptext {
+  /*avoid the button to overlap on some docstring*/
+  padding-right: 30px;
+}
+.ipynb-notebook-container .ipython_tooltip {
+  max-width: 700px;
+  /*fade-in animation when inserted*/
+  -webkit-animation: fadeOut 400ms;
+  -moz-animation: fadeOut 400ms;
+  animation: fadeOut 400ms;
+  -webkit-animation: fadeIn 400ms;
+  -moz-animation: fadeIn 400ms;
+  animation: fadeIn 400ms;
+  vertical-align: middle;
+  background-color: #f7f7f7;
+  overflow: visible;
+  border: #ababab 1px solid;
+  outline: none;
+  padding: 3px;
+  margin: 0px;
+  padding-left: 7px;
+  font-family: monospace;
+  min-height: 50px;
+  -moz-box-shadow: 0px 6px 10px -1px #adadad;
+  -webkit-box-shadow: 0px 6px 10px -1px #adadad;
+  box-shadow: 0px 6px 10px -1px #adadad;
+  border-radius: 2px;
+  position: absolute;
+  z-index: 1000;
+}
+.ipynb-notebook-container .ipython_tooltip a {
+  float: right;
+}
+.ipynb-notebook-container .ipython_tooltip .tooltiptext pre {
+  border: 0;
+  border-radius: 0;
+  font-size: 100%;
+  background-color: #f7f7f7;
+}
+.ipynb-notebook-container .pretooltiparrow {
+  left: 0px;
+  margin: 0px;
+  top: -16px;
+  width: 40px;
+  height: 16px;
+  overflow: hidden;
+  position: absolute;
+}
+.ipynb-notebook-container .pretooltiparrow:before {
+  background-color: #f7f7f7;
+  border: 1px #ababab solid;
+  z-index: 11;
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 10px;
+  width: 25px;
+  height: 25px;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+}
+.ipynb-notebook-container ul.typeahead-list i {
+  margin-left: -10px;
+  width: 18px;
+}
+.ipynb-notebook-container ul.typeahead-list {
+  max-height: 80vh;
+  overflow: auto;
+}
+.ipynb-notebook-container ul.typeahead-list > li > a {
+  /** Firefox bug **/
+  /* see https://github.com/jupyter/notebook/issues/559 */
+  white-space: normal;
+}
+.ipynb-notebook-container .cmd-palette .modal-body {
+  padding: 7px;
+}
+.ipynb-notebook-container .cmd-palette form {
+  background: white;
+}
+.ipynb-notebook-container .cmd-palette input {
+  outline: none;
+}
+.ipynb-notebook-container .no-shortcut {
+  display: none;
+}
+.ipynb-notebook-container .command-shortcut:before {
+  content: "(command)";
+  padding-right: 3px;
+  color: #777777;
+}
+.ipynb-notebook-container .edit-shortcut:before {
+  content: "(edit)";
+  padding-right: 3px;
+  color: #777777;
+}
+.ipynb-notebook-container #find-and-replace #replace-preview .match,
+.ipynb-notebook-container #find-and-replace #replace-preview .insert {
+  background-color: #BBDEFB;
+  border-color: #90CAF9;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0px;
+}
+.ipynb-notebook-container #find-and-replace #replace-preview .replace .match {
+  background-color: #FFCDD2;
+  border-color: #EF9A9A;
+  border-radius: 0px;
+}
+.ipynb-notebook-container #find-and-replace #replace-preview .replace .insert {
+  background-color: #C8E6C9;
+  border-color: #A5D6A7;
+  border-radius: 0px;
+}
+.ipynb-notebook-container #find-and-replace #replace-preview {
+  max-height: 60vh;
+  overflow: auto;
+}
+.ipynb-notebook-container #find-and-replace #replace-preview pre {
+  padding: 5px 10px;
+}
+.ipynb-notebook-container .terminal-app {
+  background: #EEE;
+}
+.ipynb-notebook-container .terminal-app #header {
+  background: #fff;
+  -webkit-box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
+  box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.2);
+}
+.ipynb-notebook-container .terminal-app .terminal {
+  width: 100%;
+  float: left;
+  font-family: monospace;
+  color: white;
+  background: black;
+  padding: 0.4em;
+  border-radius: 2px;
+  -webkit-box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.4);
+  box-shadow: 0px 0px 12px 1px rgba(87, 87, 87, 0.4);
+}
+.ipynb-notebook-container .terminal-app .terminal,
+.ipynb-notebook-container .terminal-app .terminal dummy-screen {
+  line-height: 1em;
+  font-size: 14px;
+}
+.ipynb-notebook-container .terminal-app .terminal .xterm-rows {
+  padding: 10px;
+}
+.ipynb-notebook-container .terminal-app .terminal-cursor {
+  color: black;
+  background: white;
+}
+.ipynb-notebook-container .terminal-app #terminado-container {
+  margin-top: 20px;
+}
+/*# sourceMappingURL=style.min.css.map */
+.highlight .hll { background-color: #ffffcc }
+.ipynb-notebook-container .highlight  { background: #f8f8f8; }
+.ipynb-notebook-container .highlight .c { color: #408080; font-style: italic } /* Comment */
+.ipynb-notebook-container .highlight .err { border: 1px solid #FF0000 } /* Error */
+.ipynb-notebook-container .highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.ipynb-notebook-container .highlight .o { color: #666666 } /* Operator */
+.ipynb-notebook-container .highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.ipynb-notebook-container .highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.ipynb-notebook-container .highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.ipynb-notebook-container .highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.ipynb-notebook-container .highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.ipynb-notebook-container .highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.ipynb-notebook-container .highlight .gd { color: #A00000 } /* Generic.Deleted */
+.ipynb-notebook-container .highlight .ge { font-style: italic } /* Generic.Emph */
+.ipynb-notebook-container .highlight .gr { color: #FF0000 } /* Generic.Error */
+.ipynb-notebook-container .highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.ipynb-notebook-container .highlight .gi { color: #00A000 } /* Generic.Inserted */
+.ipynb-notebook-container .highlight .go { color: #888888 } /* Generic.Output */
+.ipynb-notebook-container .highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.ipynb-notebook-container .highlight .gs { font-weight: bold } /* Generic.Strong */
+.ipynb-notebook-container .highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.ipynb-notebook-container .highlight .gt { color: #0044DD } /* Generic.Traceback */
+.ipynb-notebook-container .highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.ipynb-notebook-container .highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.ipynb-notebook-container .highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.ipynb-notebook-container .highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.ipynb-notebook-container .highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.ipynb-notebook-container .highlight .kt { color: #B00040 } /* Keyword.Type */
+.ipynb-notebook-container .highlight .m { color: #666666 } /* Literal.Number */
+.ipynb-notebook-container .highlight .s { color: #BA2121 } /* Literal.String */
+.ipynb-notebook-container .highlight .na { color: #7D9029 } /* Name.Attribute */
+.ipynb-notebook-container .highlight .nb { color: #008000 } /* Name.Builtin */
+.ipynb-notebook-container .highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.ipynb-notebook-container .highlight .no { color: #880000 } /* Name.Constant */
+.ipynb-notebook-container .highlight .nd { color: #AA22FF } /* Name.Decorator */
+.ipynb-notebook-container .highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.ipynb-notebook-container .highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.ipynb-notebook-container .highlight .nf { color: #0000FF } /* Name.Function */
+.ipynb-notebook-container .highlight .nl { color: #A0A000 } /* Name.Label */
+.ipynb-notebook-container .highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.ipynb-notebook-container .highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.ipynb-notebook-container .highlight .nv { color: #19177C } /* Name.Variable */
+.ipynb-notebook-container .highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.ipynb-notebook-container .highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.ipynb-notebook-container .highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.ipynb-notebook-container .highlight .mf { color: #666666 } /* Literal.Number.Float */
+.ipynb-notebook-container .highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.ipynb-notebook-container .highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.ipynb-notebook-container .highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.ipynb-notebook-container .highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.ipynb-notebook-container .highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.ipynb-notebook-container .highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.ipynb-notebook-container .highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.ipynb-notebook-container .highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.ipynb-notebook-container .highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.ipynb-notebook-container .highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.ipynb-notebook-container .highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.ipynb-notebook-container .highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.ipynb-notebook-container .highlight .sx { color: #008000 } /* Literal.String.Other */
+.ipynb-notebook-container .highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.ipynb-notebook-container .highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.ipynb-notebook-container .highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.ipynb-notebook-container .highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.ipynb-notebook-container .highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.ipynb-notebook-container .highlight .vc { color: #19177C } /* Name.Variable.Class */
+.ipynb-notebook-container .highlight .vg { color: #19177C } /* Name.Variable.Global */
+.ipynb-notebook-container .highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.ipynb-notebook-container .highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.ipynb-notebook-container .highlight .il { color: #666666 } /* Literal.Number.Integer.Long */
+.ipynb-notebook-container .ansi-black-fg { color: #3E424D; }
+.ipynb-notebook-container .ansi-black-bg { background-color: #3E424D; }
+.ipynb-notebook-container .ansi-black-intense-fg { color: #282C36; }
+.ipynb-notebook-container .ansi-black-intense-bg { background-color: #282C36; }
+.ipynb-notebook-container .ansi-red-fg { color: #E75C58; }
+.ipynb-notebook-container .ansi-red-bg { background-color: #E75C58; }
+.ipynb-notebook-container .ansi-red-intense-fg { color: #B22B31; }
+.ipynb-notebook-container .ansi-red-intense-bg { background-color: #B22B31; }
+.ipynb-notebook-container .ansi-green-fg { color: #00A250; }
+.ipynb-notebook-container .ansi-green-bg { background-color: #00A250; }
+.ipynb-notebook-container .ansi-green-intense-fg { color: #007427; }
+.ipynb-notebook-container .ansi-green-intense-bg { background-color: #007427; }
+.ipynb-notebook-container .ansi-yellow-fg { color: #DDB62B; }
+.ipynb-notebook-container .ansi-yellow-bg { background-color: #DDB62B; }
+.ipynb-notebook-container .ansi-yellow-intense-fg { color: #B27D12; }
+.ipynb-notebook-container .ansi-yellow-intense-bg { background-color: #B27D12; }
+.ipynb-notebook-container .ansi-blue-fg { color: #208FFB; }
+.ipynb-notebook-container .ansi-blue-bg { background-color: #208FFB; }
+.ipynb-notebook-container .ansi-blue-intense-fg { color: #0065CA; }
+.ipynb-notebook-container .ansi-blue-intense-bg { background-color: #0065CA; }
+.ipynb-notebook-container .ansi-magenta-fg { color: #D160C4; }
+.ipynb-notebook-container .ansi-magenta-bg { background-color: #D160C4; }
+.ipynb-notebook-container .ansi-magenta-intense-fg { color: #A03196; }
+.ipynb-notebook-container .ansi-magenta-intense-bg { background-color: #A03196; }
+.ipynb-notebook-container .ansi-cyan-fg { color: #60C6C8; }
+.ipynb-notebook-container .ansi-cyan-bg { background-color: #60C6C8; }
+.ipynb-notebook-container .ansi-cyan-intense-fg { color: #258F8F; }
+.ipynb-notebook-container .ansi-cyan-intense-bg { background-color: #258F8F; }
+.ipynb-notebook-container .ansi-white-fg { color: #C5C1B4; }
+.ipynb-notebook-container .ansi-white-bg { background-color: #C5C1B4; }
+.ipynb-notebook-container .ansi-white-intense-fg { color: #A1A6B2; }
+.ipynb-notebook-container .ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ipynb-notebook-container .ansi-bold { font-weight: bold; }
+
+.ipynb-notebook-container {
+  overflow: visible;
+  padding: 8px;
+}
+
+.ipynb-notebook-container div#notebook {
+  overflow: visible;
+  border-top: none;
+}
+.ipynb-notebook-container .action-btn {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}

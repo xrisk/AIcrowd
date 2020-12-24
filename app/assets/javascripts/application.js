@@ -1,4 +1,5 @@
 // ---------------------- Gems ----------------------- //
+//= require jquery
 // require jquery_ujs
 //= require rails-ujs
 //= require jquery-ui
@@ -17,6 +18,7 @@
 //= require select2
 //= require ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js
 //= require ace-rails-ap
+//= require commontator/application
 
 // --------------------- Vendor ------------------------ //
 //= require jQuery-File-Upload

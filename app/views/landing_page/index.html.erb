@@ -127,7 +127,7 @@
     <div class="container-fluid">
       <div class="row">
         <!-- discourse latest posts list -->
-        <div class="col-sm-12 col-md-8">
+        <div class="col-sm-12 col-md-4">
           <header class="section-header">
             <div>
               <h4>Latest Discussions</h4>
@@ -144,6 +144,25 @@
         </div>
 
         <!-- /discourse latest posts list -->
+        <!-- Top posts list -->
+        <div class="col-sm-12 col-md-4">
+          <header class="section-header">
+            <div>
+              <h4>Latest Posts</h4>
+            </div>
+
+            <%= link_to 'See all', posts_path, class: "btn btn-secondary btn-sm" %>
+          </header>
+
+          <% if @top_posts.count > 0 %>
+            <%= render partial: 'shared/posts/post_list', locals: { posts: @top_posts } %>
+          <% else %>
+            <p><%= @discourse_topics_fetch.value %></p>
+          <% end %>
+        </div>
+        <!-- /top latest posts list -->
+
+
         <div class="col-sm-12 col-md-4">
           <header class="section-header">
             <div>

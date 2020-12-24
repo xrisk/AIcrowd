@@ -8,7 +8,7 @@ class PracticeController < ApplicationController
     @practice_challenges = @all_challenges.practice
     @practice_challenges = Challenges::FilterService.new(params, @practice_challenges).call
     @editor_challenges   = @practice_challenges.editors_selections
-    @practice_challenges = @practice_challenges.not_editors_selections.page(params[:page]).per(16)
+    @practice_challenges = @practice_challenges.not_editors_selections.per_page_kaminari(params[:page]).per(16)
   end
 
   private

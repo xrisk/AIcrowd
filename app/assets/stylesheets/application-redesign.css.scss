@@ -14306,6 +14306,15 @@ input.width-185 {
   background: linear-gradient(to right, #333, #333 20%, #eee 80%);
 }
 
+.cke_wysiwyg_div {
+  min-height: 300px;
+}
+
+.posts-form .md-content p, .posts-form .md-content, .posts-form .md-content > * {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';
@@ -14316,3 +14325,5 @@ input.width-185 {
 @import 'challenges/dataset_files';
 @import '_search.scss';
 @import 'feedback';
+@import 'commontator/application';
+@import '_notebook.scss';

@@ -410,6 +410,10 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.string "submissions_type_cd", default: "artifact", null: false
     t.integer "debug_submission_limit", default: 0
     t.integer "debug_submission_time"
+    t.string "other_scores_fieldnames"
+    t.string "debug_submission_limit_period_cd"
+    t.boolean "show_leaderboard"
+    t.boolean "media_on_leaderboard"
     t.string "debug_submission_limit_period_cd"
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
   end
@@ -552,6 +556,49 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.string "eua_file"
     t.boolean "use_challenge_dataset_files", default: false, null: false
     t.index ["organizer_id"], name: "index_clef_tasks_on_organizer_id"
+  end
+
+  create_table "commontator_comments", force: :cascade do |t|
+    t.bigint "thread_id", null: false
+    t.string "creator_type", null: false
+    t.bigint "creator_id", null: false
+    t.string "editor_type"
+    t.bigint "editor_id"
+    t.text "body", null: false
+    t.datetime "deleted_at"
+    t.integer "cached_votes_up", default: 0
+    t.integer "cached_votes_down", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "parent_id"
+    t.index ["cached_votes_down"], name: "index_commontator_comments_on_cached_votes_down"
+    t.index ["cached_votes_up"], name: "index_commontator_comments_on_cached_votes_up"
+    t.index ["creator_id", "creator_type", "thread_id"], name: "index_commontator_comments_on_c_id_and_c_type_and_t_id"
+    t.index ["editor_type", "editor_id"], name: "index_commontator_comments_on_editor_type_and_editor_id"
+    t.index ["parent_id"], name: "index_commontator_comments_on_parent_id"
+    t.index ["thread_id", "created_at"], name: "index_commontator_comments_on_thread_id_and_created_at"
+  end
+
+  create_table "commontator_subscriptions", force: :cascade do |t|
+    t.bigint "thread_id", null: false
+    t.string "subscriber_type", null: false
+    t.bigint "subscriber_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["subscriber_id", "subscriber_type", "thread_id"], name: "index_commontator_subscriptions_on_s_id_and_s_type_and_t_id", unique: true
+    t.index ["thread_id"], name: "index_commontator_subscriptions_on_thread_id"
+  end
+
+  create_table "commontator_threads", force: :cascade do |t|
+    t.string "commontable_type"
+    t.bigint "commontable_id"
+    t.string "closer_type"
+    t.bigint "closer_id"
+    t.datetime "closed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["closer_type", "closer_id"], name: "index_commontator_threads_on_closer_type_and_closer_id"
+    t.index ["commontable_type", "commontable_id"], name: "index_commontator_threads_on_c_id_and_c_type", unique: true
   end
 
   create_table "daily_practice_goals", force: :cascade do |t|
@@ -709,6 +756,14 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.datetime "updated_at", null: false
     t.string "job_url"
     t.string "slug"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer "reference_id"
+    t.string "reference_type"
+    t.integer "participant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "mandrill_messages", force: :cascade do |t|
@@ -961,6 +1016,18 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.index ["organizer_id"], name: "index_partners_on_organizer_id"
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
+    t.string "tagline"
+    t.text "description"
+    t.string "external_link"
+    t.integer "challenge_id"
+    t.integer "submission_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "thumbnail"
+    t.text "notebook_html"
+    t.string "gist_id"
   create_table "redirects", force: :cascade do |t|
     t.string "redirect_url"
     t.string "destination_url"
@@ -1235,6 +1302,9 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
   add_foreign_key "challenges_organizers", "challenges"
   add_foreign_key "challenges_organizers", "organizers"
   add_foreign_key "clef_tasks", "organizers"
+  add_foreign_key "commontator_comments", "commontator_comments", column: "parent_id", on_update: :restrict, on_delete: :cascade
+  add_foreign_key "commontator_comments", "commontator_threads", column: "thread_id", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "commontator_subscriptions", "commontator_threads", column: "thread_id", on_update: :cascade, on_delete: :cascade
   add_foreign_key "dataset_file_downloads", "dataset_files"
   add_foreign_key "dataset_file_downloads", "participants"
   add_foreign_key "dataset_folders", "challenges"
@@ -1451,6 +1521,8 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
       base_leaderboards.submitter_type,
       base_leaderboards.submitter_id,
       base_leaderboards.meta_challenge_id,
+      base_leaderboards.ml_challenge_id,
+      base_leaderboards.old_participant_id,
       base_leaderboards.old_participant_id,
       base_leaderboards.ml_challenge_id,
       base_leaderboards.submission_link,
@@ -1488,6 +1560,8 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
       base_leaderboards.submitter_type,
       base_leaderboards.submitter_id,
       base_leaderboards.meta_challenge_id,
+      base_leaderboards.ml_challenge_id,
+      base_leaderboards.old_participant_id,
       base_leaderboards.old_participant_id,
       base_leaderboards.ml_challenge_id,
       base_leaderboards.submission_link,
