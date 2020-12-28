@@ -7,11 +7,11 @@ class ChallengeLeaderboardExtra < ApplicationRecord
                             allow_nil:                true }
   validates :score_precision,
             numericality: { only_integer:             true,
-                            greater_than_or_equal_to: 1,
+                            greater_than_or_equal_to: 0,
                             allow_nil:                true }
   validates :score_secondary_precision,
             numericality: { only_integer:             true,
-                            greater_than_or_equal_to: 1,
+                            greater_than_or_equal_to: 0,
                             allow_nil:                true }
 
   as_enum :primary_sort_order, [:ascending, :descending], map: :string, prefix: true

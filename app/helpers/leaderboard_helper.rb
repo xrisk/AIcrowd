@@ -45,7 +45,11 @@ module LeaderboardHelper
         return format("%.3f", value || 0)
       end
     elsif value.present?
-      return value
+      if leaderboard_config.present? && value.is_a?(Numeric)
+        return format("%.#{leaderboard_config.score_precision}f", value || 0)
+      else
+        return value
+      end
     else
       return 0
     end
