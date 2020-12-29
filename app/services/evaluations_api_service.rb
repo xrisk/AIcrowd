@@ -30,7 +30,7 @@ class EvaluationsApiService
         submission_id: @submission.id,
         challenge_client_name: @submission.challenge.challenge_client_name,
         domain_name: ENV['DOMAIN_NAME'],
-        aicrowd_token: ENV['AICROWD_API_KEY']
+        aicrowd_token: submission.challenge.organizers&.first&.api_key # ENV['AICROWD_API_KEY']
       }.to_json,
       submission_data: {
         type: artifact.submission_type,

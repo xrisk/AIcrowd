@@ -38,7 +38,7 @@ module LeaderboardHelper
   end
 
   def leaderboard_formatted_value(leaderboard_config, value)
-    if value.to_i.to_s == value || value.to_f.to_s == value
+    if value.to_i.to_s == value || value.to_f.to_s == value || value.is_a?(Numeric)
       if leaderboard_config.present?
         return format("%.#{leaderboard_config.score_precision}f", value || 0)
       else
