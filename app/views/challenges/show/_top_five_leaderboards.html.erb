@@ -40,7 +40,7 @@
             <% end %>
           <% end %>
         </td>
-        <td><strong><%= leaderboard_formatted_value(challenge.active_round, leaderboard.score) %></strong></td>
+        <td><strong><%= leaderboard_formatted_value(challenge.active_round.default_leaderboard, leaderboard.score) %></strong></td>
       </tr>
     <% end %>
   </tbody>
