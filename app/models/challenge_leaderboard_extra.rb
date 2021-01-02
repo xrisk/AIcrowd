@@ -8,17 +8,17 @@ class ChallengeLeaderboardExtra < ApplicationRecord
   validates :score_precision,
             numericality: { only_integer:             true,
                             greater_than_or_equal_to: 0,
-                            allow_nil:                true }
+                            allow_nil:                false }
   validates :score_secondary_precision,
             numericality: { only_integer:             true,
                             greater_than_or_equal_to: 0,
-                            allow_nil:                true }
+                            allow_nil:                false }
 
   as_enum :primary_sort_order, [:ascending, :descending], map: :string, prefix: true
   as_enum :secondary_sort_order, [:ascending, :descending, :not_used, :hidden], map: :string, prefix: true
 
-  validates :primary_sort_order, presence: true, numericality: {only_integer: true}
-  validates :secondary_sort_order, presence: true, numericality: { only_integer: true}
+  validates :primary_sort_order, presence: true
+  validates :secondary_sort_order, presence: true
   validates :freeze_duration, numericality: { greater_than: 0 }, if: -> { freeze_duration.present? }
 
   after_save :recalculate_leaderboard, if: :saved_change_to_freeze_flag
