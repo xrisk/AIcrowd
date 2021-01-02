@@ -8,11 +8,11 @@ class ChallengeLeaderboardExtra < ApplicationRecord
   validates :score_precision,
             numericality: { only_integer:             true,
                             greater_than_or_equal_to: 0,
-                            allow_nil:                true }
+                            allow_nil:                false }
   validates :score_secondary_precision,
             numericality: { only_integer:             true,
                             greater_than_or_equal_to: 0,
-                            allow_nil:                true }
+                            allow_nil:                false }
 
   as_enum :primary_sort_order, [:ascending, :descending], map: :string, prefix: true
   as_enum :secondary_sort_order, [:ascending, :descending, :not_used, :hidden], map: :string, prefix: true
