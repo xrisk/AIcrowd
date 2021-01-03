@@ -360,6 +360,7 @@ class ChallengesController < ApplicationController
       :post_challenge_submissions,
       :submission_instructions,
       :license,
+      :submission_note,
       :winners_tab_active,
       :winner_description,
       :submissions_downloadable,

@@ -73,5 +73,13 @@
       <%= f.cktext_area :license, class: "form-control", placeholder: "Please upload your submissions and include a detailed description of the methodology, techniques and insights leveraged with this submission. After the end of the challenge, these comments will be made public, and the submitted code and models will be freely available to other AIcrowd participants. All submitted content will be licensed under Creative Commons (CC)." %>
     </div>
   </div>
+
+  <div class="form-group">
+    <span class="label-text">Submission Note Text</span>
+    <i>This text will appear at the top of the submission page</i>
+    <div class="md-content mt-2">
+      <%= f.cktext_area :submission_note, class: "form-control", placeholder: "Add notes you want to show the participants visting the submission page." %>
+    </div>
+  </div>
   <%= render partial: 'challenges/fields/submit_buttons', locals: {f: f, current_step: 'submissions'} %>
 </div>
