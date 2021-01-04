@@ -70,13 +70,19 @@
               <div class="d-flex mt-4">
                 <div class="mr-4">
                   <h4> <%= key %> </h4>
-                  <span>
-                    <% if not key.include?('URL') %>
-                      <a><%= value %></a>
-                    <% else %>
-                      <%= value %>
-                    <% end %>
-                  </span>
+                  <% if key == 'description_markdown'%>
+                    <span>
+                      <%= @description_markdown %>
+                    </span>
+                  <% else %>
+                    <span>
+                      <% if not key.include?('URL') %>
+                        <a><%= value %></a>
+                      <% else %>
+                        <%= value %>
+                      <% end %>
+                    </span>
+                  <% end %>
                 </div>
               </div>
             <% end %>
