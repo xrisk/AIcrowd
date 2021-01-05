@@ -61,6 +61,14 @@
           </div>
         <% end %>
 
+        <hr/>
+        <% if @submission.meta.present? %>
+          <h4> Description Markdown </h4>
+          <div class="md-content w-100">
+            <%= @description_markdown %>
+          </div>
+        <% end %>
+
         <% if @submission.meta.present? %>
           <div class="section-header mt-4 pt-5 border-top">
             <h3>Meta parameters</h3>
@@ -69,12 +77,8 @@
             <% if not key.start_with?('private') %>
               <div class="d-flex mt-4">
                 <div class="mr-4">
-                  <h4> <%= key %> </h4>
-                  <% if key == 'description_markdown'%>
-                    <span>
-                      <%= @description_markdown %>
-                    </span>
-                  <% else %>
+                  <% unless key == 'description_markdown'%>
+                    <h4> <%= key %> </h4>
                     <span>
                       <% if not key.include?('URL') %>
                         <a><%= value %></a>
