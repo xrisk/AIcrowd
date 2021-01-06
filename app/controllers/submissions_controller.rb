@@ -87,9 +87,11 @@ class SubmissionsController < ApplicationController
         start_index = @description_markdown.index(">mermaid")
         @description_markdown.remove!("mermaid")
         @description_markdown.insert(start_index, " class='mermaid'")
-        @description_markdown = EmojiParser.detokenize(EmojiParser.detokenize(@description_markdown))
-        @description_markdown = @description_markdown.html_safe
       end
+      @description_markdown = EmojiParser.detokenize(EmojiParser.detokenize(@description_markdown))
+      @description_markdown.gsub!("<h1", "<h2")
+      @description_markdown.gsub!("</h1>", "</h2>")
+      @description_markdown = @description_markdown.html_safe
     end
 
     render :show

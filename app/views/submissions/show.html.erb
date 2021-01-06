@@ -61,9 +61,9 @@
           </div>
         <% end %>
 
-        <hr/>
-        <% if @submission.meta.present? %>
-          <h4> Description Markdown </h4>
+
+        <% if @description_markdown.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(submission, current_participant))) %>
+          <hr/>
           <div class="md-content w-100">
             <%= @description_markdown %>
           </div>
