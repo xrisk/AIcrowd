@@ -74,19 +74,17 @@
             <h3>Meta parameters</h3>
           </div>
           <% submission_meta_hash(@submission).each do |key, value| %>
-            <% if not key.start_with?('private') %>
+            <% if not key.start_with?('private') && key != 'description_markdown'>
               <div class="d-flex mt-4">
                 <div class="mr-4">
-                  <% unless key == 'description_markdown'%>
-                    <h4> <%= key %> </h4>
-                    <span>
-                      <% if not key.include?('URL') %>
-                        <a><%= value %></a>
-                      <% else %>
-                        <%= value %>
-                      <% end %>
-                    </span>
-                  <% end %>
+                  <h4> <%= key %> </h4>
+                  <span>
+                    <% if not key.include?('URL') %>
+                      <a><%= value %></a>
+                    <% else %>
+                      <%= value %>
+                    <% end %>
+                  </span>
                 </div>
               </div>
             <% end %>

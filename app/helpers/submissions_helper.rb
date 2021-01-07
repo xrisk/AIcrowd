@@ -65,8 +65,8 @@ module SubmissionsHelper
     submission_participant = Participant.find_by_id(submission.particpant_id)
     return false if submission_participant.blank?
     team = submission_participant.teams.where(challenge_id: submission.challenge_id).first
-    reutrn false if team.blank?
+    return false if team.blank?
     participant_ids = team.team_particpants.pluck(:participant_id)
-    particpant_ids.include?(participant.id)
+    participant_ids.include?(participant.id)
   end
 end
