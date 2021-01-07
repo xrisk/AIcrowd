@@ -106,6 +106,7 @@ gem 'carrierwave-imageoptimizer'
 gem 'rack-timeout'
 gem 'derailed'
 gem 'barnes'
+gem 'gemoji-parser'
 
 # HTTP clients
 gem 'faraday', '~> 1.0'
