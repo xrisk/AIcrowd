@@ -89,6 +89,7 @@ $(document).ready(function(){
     $('[data-toggle="popover"]').popover();
     hljs.initHighlightingOnLoad();
     $('form').removeAttr('novalidate');
+    mermaid.initialize();
 });
 
 function hidegrowl(){
