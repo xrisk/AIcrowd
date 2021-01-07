@@ -19,7 +19,6 @@
 //= require ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js
 //= require ace-rails-ap
 //= require commontator/application
-//= require mermaid
 
 // --------------------- Vendor ------------------------ //
 //= require jQuery-File-Upload
@@ -90,7 +89,6 @@ $(document).ready(function(){
     $('[data-toggle="popover"]').popover();
     hljs.initHighlightingOnLoad();
     $('form').removeAttr('novalidate');
-    mermaid.initialize();
 });
 
 function hidegrowl(){
