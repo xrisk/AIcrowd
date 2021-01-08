@@ -81,7 +81,7 @@ class SubmissionsController < ApplicationController
       view_context: view_context
     )
 
-    if @submission.meta['description_markdown'].present?
+    if @submission.meta.present? && @submission.meta['description_markdown'].present?
       @description_markdown = Kramdown::Document.new(@submission.meta['description_markdown'], { coderay_line_numbers: nil }).to_html.html_safe
       if @description_markdown.include?("<p><code>mermaid")
         start_index = @description_markdown.index(">mermaid")
