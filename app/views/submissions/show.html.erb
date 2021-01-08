@@ -64,7 +64,7 @@
 
         <% if @description_markdown.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant))) %>
           <hr/>
-          <div class="md-content w-100">
+          <div class="md-content w-100" data-controller="mermaid">
             <%= @description_markdown %>
           </div>
         <% end %>

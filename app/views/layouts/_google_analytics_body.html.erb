@@ -1,6 +1,9 @@
 <% if Rails.env.production? %>
   <script>
-    ga('set', 'location', location.href.split('#')[0]);
-    ga('send', 'pageview', {"title": document.title});
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-132885496-1');
   </script>
 <% end %>
