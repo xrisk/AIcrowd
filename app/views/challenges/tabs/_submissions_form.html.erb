@@ -56,6 +56,21 @@
   <hr/>
 
   <div class="form-group">
+  <h4>Submission Locking Setting</h4>
+  </div>
+  <%= render partial: 'challenges/fields/fancy_radio', locals: {
+        f: f,
+        name: :submission_lock_enabled,
+        text: "Submission Locking Enabled",
+        p: {data: {target: 'challenge-submission.post'}}} %>
+  <div class="form-group col-sm-12 col-md-4">
+    <span class="label-text">Deadline</span>
+    <%= f.datetime_select :submission_lock_time, class: 'form-control' %>
+  </div>
+
+  <hr/>
+
+  <div class="form-group">
   <h4>Instructions and License</h4>
   </div>
 

@@ -29,6 +29,7 @@ def challenge_routes
   resources :submissions do
     post :filter, on: :collection
     get :export, on: :collection
+    get :lock, on: :collection
   end
   resources :dynamic_contents, only: [:index]
   resources :leaderboards, only: :index do

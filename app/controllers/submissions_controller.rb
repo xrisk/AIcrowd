@@ -9,7 +9,7 @@ class SubmissionsController < ApplicationController
   before_action :check_participation_terms, except: [:show, :index, :export]
   before_action :set_s3_direct_post, only: [:new, :new_api, :edit, :create, :update]
   before_action :set_submissions_remaining, except: [:show, :index]
-  before_action :set_current_round, only: [:index, :new, :create]
+  before_action :set_current_round, only: [:index, :new, :create, :lock]
   before_action :set_form_type, only: [:new, :create]
   before_action :handle_code_based_submissions, only: [:create]
   before_action :handle_artifact_based_submissions, only: [:create]
@@ -175,6 +175,11 @@ class SubmissionsController < ApplicationController
     end
     render json: {message: "Presigned key generated!", data: { fields: @s3_direct_post.fields, url: @s3_direct_post.url }, success: true}, status: :ok
   end
+
+  def lock
+    @locked_submission = LockedSubmission.new
+  end
+
 
   private
 
