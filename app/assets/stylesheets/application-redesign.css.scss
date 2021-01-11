@@ -10708,9 +10708,9 @@ a.text-bronze:hover, a.text-bronze:focus {
 .app-brand .logo-aicrowd,
 .app-brand .logo-aicrowd-light {
   display: block;
-  background: url("../../assets/img/logo-aicrowd-santa.svg") no-repeat 0 0;
-  height: 48px;
-  width: 256px;
+  background: url("../../assets/img/logo-aicrowd.svg") no-repeat 0 0;
+  height: 24px;
+  width: 126px;
 }
 
 .app-brand .logo-aicrowd span,
@@ -14317,6 +14317,11 @@ input.width-185 {
 .posts-form .md-content p, .posts-form .md-content, .posts-form .md-content > * {
   max-width: 100%;
   overflow-wrap: anywhere;
+}
+
+.mermaid {
+  background: unset;
+  font-size: unset;
 }
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';

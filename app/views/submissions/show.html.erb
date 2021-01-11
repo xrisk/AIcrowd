@@ -61,12 +61,20 @@
           </div>
         <% end %>
 
+
+        <% if @description_markdown.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant))) %>
+          <hr/>
+          <div class="md-content w-100" data-controller="mermaid">
+            <%= @description_markdown %>
+          </div>
+        <% end %>
+
         <% if @submission.meta.present? %>
           <div class="section-header mt-4 pt-5 border-top">
             <h3>Meta parameters</h3>
           </div>
           <% submission_meta_hash(@submission).each do |key, value| %>
-            <% if not key.start_with?('private') %>
+            <% if (not key.start_with?('private')) && (key != 'description_markdown') %>
               <div class="d-flex mt-4">
                 <div class="mr-4">
                   <h4> <%= key %> </h4>

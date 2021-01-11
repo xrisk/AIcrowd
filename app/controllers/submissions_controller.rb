@@ -80,6 +80,20 @@ class SubmissionsController < ApplicationController
       challenge:    @challenge,
       view_context: view_context
     )
+
+    if @submission.meta.present? && @submission.meta['description_markdown'].present?
+      @description_markdown = Kramdown::Document.new(@submission.meta['description_markdown'], { coderay_line_numbers: nil }).to_html.html_safe
+      if @description_markdown.include?("<p><code>mermaid")
+        start_index = @description_markdown.index(">mermaid")
+        @description_markdown.remove!("mermaid")
+        @description_markdown.insert(start_index, " class='mermaid'")
+      end
+      @description_markdown = EmojiParser.detokenize(EmojiParser.detokenize(@description_markdown))
+      @description_markdown.gsub!("<h1", "<h2")
+      @description_markdown.gsub!("</h1>", "</h2>")
+      @description_markdown = @description_markdown.html_safe
+    end
+
     render :show
   end
 

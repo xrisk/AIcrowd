@@ -63,4 +63,14 @@ module SubmissionsHelper
   def submission_locking_enabled?(challenge_round)
     ((challenge_round&.submission_lock_enabled) && (challenge_round&.submission_note.present?) && (challenge_round&.submission_lock_time > Time.now))
   end
+
+  def submission_team?(submission, participant)
+    return true if submission.participant_id == participant.id
+    submission_participant = Participant.find_by_id(submission.participant_id)
+    return false if submission_participant.blank?
+    team = submission_participant.teams.where(challenge_id: submission.challenge_id).first
+    return false if team.blank?
+    participant_ids = team.team_participants.pluck(:participant_id)
+    participant_ids.include?(participant.id)
+  end
 end
