@@ -3,5 +3,6 @@ class AddSubmissionFreezingColumnsToChallenge < ActiveRecord::Migration[5.2]
     add_column :challenges, :submission_lock_time, :datetime
     add_column :challenges, :submission_lock_enabled, :boolean, default: false
     add_column :challenges, :submission_filter, :text
+    add_column :challenges, :submission_note, :text
   end
 end
