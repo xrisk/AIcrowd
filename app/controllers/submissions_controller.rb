@@ -180,6 +180,24 @@ class SubmissionsController < ApplicationController
     @locked_submission = LockedSubmission.new
   end
 
+  def freezed_submission_export
+    authorize @challenge, :export?
+
+    @submissions = Submission.where(id: @challenge.locked_submissions.pluck(:submission_id))
+      .includes(:participant, :challenge_round)
+
+    csv_data = Submissions::CSVExportService.new(submissions: @submissions, downloadable: false).call.value
+
+    send_data csv_data,
+              type:     'text/csv',
+              filename: "#{@challenge.challenge.to_s.parameterize.underscore}_submissions_export.csv"
+  end
+
+  def reset_locked_submissions
+    Challenge.locked_submissions.update_all(deleted: true)
+    render json: {}, status: :ok
+  end
+
 
   private
 

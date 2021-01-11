@@ -64,14 +64,25 @@
         text: "Submission Locking Enabled",
         p: {data: {target: 'challenge-submission.post'}}} %>
   <div class="form-group col-sm-12 col-md-4">
-    <span class="label-text">Deadline</span>
-    <%= f.datetime_select :submission_lock_time, class: 'form-control' %>
+    <%= f.label :submission_lock_time, 'Submission Locking Deadline (UTC)' %>
+    <%= f.text_field :submission_lock_time, class: "form-control", data: {controller: 'flatpickr '} %>
   </div>
 
-  <div class="form-group">
-    <button class='btn btn-primary btn-sm'>Reset User Preferences</button>
-    <span> ⚠️ <i>This will soft delete all the locked submissions for the current round.</i></span>
+  <div class="form-group col-sm-12 col-md-4">
+    <%= link_to 'Reset Preferences', reset_locked_submissions_challenge_submissions_path(challenge), class: 'btn btn-primary', data: { disable_with: 'Submissions Exported' } %>
   </div>
+
+  <div class="form-group col-sm-12 col-md-4">
+    <%= link_to 'Export Participant Preferences', freezed_submission_export_challenge_submissions_path(challenge), class: 'btn btn-primary', data: { disable_with: 'Preferences Exported' } %>
+  </div>
+
+  <% if current_participant&.admin? %>
+    <div class="form-group col-sm-12 col-md-4">
+      <%= f.label :submission_filter, "Filter" %>
+      <%= f.text_field :submission_filter, class: "form-control" %>
+      <small class="form-text text-muted">Advanced: Choose which submissions to consider</small>
+    </div>
+  <% end %>
 
   <div class="form-group">
     <span class="label-text">Submission Freeze Text</span>

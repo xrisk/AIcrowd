@@ -59,4 +59,8 @@ module SubmissionsHelper
     end
     submission_link
   end
+
+  def submission_locking_enabled?(challenge_round)
+    ((challenge_round&.submission_lock_enabled) && (challenge_round&.submission_note.present?) && (challenge_round&.submission_lock_time > Time.now))
+  end
 end

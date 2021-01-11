@@ -30,6 +30,8 @@ def challenge_routes
     post :filter, on: :collection
     get :export, on: :collection
     get :lock, on: :collection
+    get :freezed_submission_export, on: :collection
+    get :reset_locked_submissions, on: :collection
   end
   resources :dynamic_contents, only: [:index]
   resources :leaderboards, only: :index do

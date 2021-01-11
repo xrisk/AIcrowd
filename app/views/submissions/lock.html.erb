@@ -1,0 +1,33 @@
+<div class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12", style="padding:0">
+        <% if submission_locking_enabled?(@current_round) %>
+          <h3>👋 Lock Your Submissions for this round before <%= @current_round.submission_lock_time %></h3
+            >
+        <% else %>
+          <h3>Submission locking is disabled please come back later.</h3
+            >
+        <% end %>
+        <hr/>
+        <br>
+      </div>
+
+      <% if submission_locking_enabled?(@current_round) %>
+        <%= form_with model: @locked_submission, url: lock_challenge_submissions_path, html: { class: 'posts-form' } do |f| %>
+
+          <div class="form-group">
+            <span class="label-text">Submission</span>
+            <%= f.select :submission_id, Submission.where(participant_id: current_participant.id, challenge_round_id: @current_round.id).order("id DESC").collect {|s| [ s.id, s.id] },
+                  {prompt: 'Select Submission (optional)'}, {class: "select2 form-control" } %>
+            <small class="form-text text-muted">🚀 Lock your submission.</span>
+          </div>
+
+          <%= f.button 'Submit', type: 'submit', class: "btn btn-primary" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+

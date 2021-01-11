@@ -5,6 +5,13 @@
 <section class="section-p-md">
   <div class="container-fluid">
     <div class="row">
+      <% if submission_locking_enabled?(@active_round) %>
+        <div class="md-content width-100">
+          <div class="note">
+            <%= @challenge.submission_note.html_safe %>
+          </div>
+        </div>
+      <% end %>
       <% if @submissions_remaining == 0 %>
         <%= render partial: 'submissions/new/no_submissions' %>
       <% else %>

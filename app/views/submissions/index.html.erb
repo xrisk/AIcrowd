@@ -39,7 +39,7 @@
             <!-- sub-nav pills -->
           <% end %>
 
-          <% if @challenge&.submission_note.present? %>
+          <% if submission_locking_enabled?(@current_round) %>
             <div class="md-content width-100">
               <div class="note">
                 <%= sanitize_html(@challenge.submission_note) %>
