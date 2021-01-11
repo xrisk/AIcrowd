@@ -378,6 +378,9 @@ class ChallengesController < ApplicationController
       :ml_challenge,
       :registration_form_fields,
       :submission_window_type_cd,
+      :submission_lock_enabled,
+      :submission_lock_time,
+      :submission_filter,
       image_attributes: [
         :id,
         :image,
@@ -404,9 +407,6 @@ class ChallengesController < ApplicationController
         :submissions_type,
         :debug_submission_limit,
         :debug_submission_limit_period,
-        :submission_lock_enabled,
-        :submission_lock_time,
-        :submission_filter,
         challenge_leaderboard_extras_attributes: [
           :id,
           :name,

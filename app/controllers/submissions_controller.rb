@@ -194,6 +194,17 @@ class SubmissionsController < ApplicationController
     @locked_submission = LockedSubmission.new
   end
 
+  def freeze_submission
+    unless params[:locked_submission][:submission_id].present?
+      LockedSubmission.create!(
+        submission_id: params[:locked_submission][:submission_id].to_i,
+        challenge_id: @challenge.id
+        )
+    end
+
+    return redirect_to(root_path, flash: { success: 'We have received your submission.' })
+  end
+
   def freezed_submission_export
     authorize @challenge, :export?
 

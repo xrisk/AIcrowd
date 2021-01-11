@@ -49,7 +49,7 @@
           </div>
         <% end %>
 
-        <% if submission_locking_enabled?(@current_round) %>
+        <% if submission_locking_enabled?(@challenge) %>
           <div class="md-content width-100">
             <div class="note">
               <%= @challenge.submission_note.html_safe %>
