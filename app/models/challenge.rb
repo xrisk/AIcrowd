@@ -316,6 +316,13 @@ class Challenge < ApplicationRecord
     end
   end
 
+  def locked_submission?(participant)
+    team = participant.teams.where(challenge_id: self.id)
+    participant_ids = team.team_participants.pluck(:participant_id) if team.present?
+    participant_ids = participant.id if participant_ids.blank?
+    LockedSubmission.where(challenge_id: self.id, locked_by: participant_ids).exists?
+  end
+
   private
 
   def set_defaults

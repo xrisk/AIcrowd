@@ -61,7 +61,8 @@ class SubmissionsController < ApplicationController
     @search = filter.search(search_params)
     @search.sorts = 'created_at desc' if @search.sorts.empty?
     params[:page] ||= 1
-    @submissions  = @search.result.includes(:participant).per_page_kaminari(params[:page]).per(10)
+    filter = @challenge.submission_filter
+    @submissions  = @search.result.where(filter).includes(:participant).per_page_kaminari(params[:page]).per(10)
   end
 
   def filter
@@ -234,7 +235,7 @@ class SubmissionsController < ApplicationController
         submission = @challenge.submissions.where(participant_id: participant.id).order(@challenge.submission_freezing_order).first
         LockedSubmission.create!(submission_id: submission.id, locked_by: participant.id, challenge_id: @challenge.id) if submission
       else
-        unless LockedSubmission.where(participant_id: team.team_participants.pluck(:participant_id)).exists?
+        unless LockedSubmission.where(locked_by: team.team_participants.pluck(:participant_id)).exists?
           submission = @challenge.submissions.where(participant_id: team.team_participants.pluck(:participant_id)).order(@challenge.submission_freezing_order).first
           LockedSubmission.create!(submission_id: submission.id, locked_by: participant.id, challenge_id: @challenge.id) if submission
         end
