@@ -3,9 +3,9 @@ class SubmissionsController < ApplicationController
   before_action :authenticate_participant!, except: [:index, :show]
   before_action :set_submission, only: [:show, :edit, :update]
   before_action :set_challenge
-  before_action :set_challenge_rounds, only: [:index, :new, :create, :show]
-  before_action :set_vote, only: [:index, :new, :create, :show]
-  before_action :set_follow, only: [:index, :new, :create, :show]
+  before_action :set_challenge_rounds, only: [:index, :new, :create, :show, :lock]
+  before_action :set_vote, only: [:index, :new, :create, :show, :lock]
+  before_action :set_follow, only: [:index, :new, :create, :show, :lock]
   before_action :check_participation_terms, except: [:show, :index, :export]
   before_action :set_s3_direct_post, only: [:new, :new_api, :edit, :create, :update]
   before_action :set_submissions_remaining, except: [:show, :index]
@@ -196,10 +196,24 @@ class SubmissionsController < ApplicationController
 
   def freeze_submission
     unless params[:locked_submission][:submission_id].present?
-      LockedSubmission.create!(
-        submission_id: params[:locked_submission][:submission_id].to_i,
-        challenge_id: @challenge.id
-        )
+      team = current_participant.teams.where(challenge_id: @challenge.id).first
+      participant_ids = team.team_participants.pluck(:participant_id) if team.present?
+      participant_ids = current_participant.id if participant_ids.blank?
+      locked_submission = LockedSubmission.where(locked_by: participant_ids).first
+
+      if locked_submission.present?
+        if locked_submission.submission_id != params[:locked_submission][:submission_id].to_i
+          locked_submission.submission_id = params[:locked_submission][:submission_id].to_i
+          locked_submission.locked_by = current_participant.id
+          locked_submission.save!
+        end
+      else
+        LockedSubmission.create!(
+          submission_id: params[:locked_submission][:submission_id].to_i,
+          challenge_id: @challenge.id,
+          locked_by: current_participant.id
+          )
+      end
     end
 
     return redirect_to(root_path, flash: { success: 'We have received your submission.' })
@@ -208,6 +222,25 @@ class SubmissionsController < ApplicationController
   def freezed_submission_export
     authorize @challenge, :export?
 
+    participant_ids = LockedSubmission.where(challenge_id: @challenge.id).pluck(:locked_by)
+    challenge_participant_ids = @challenge.submissions.pluck(:participant_id).uniq
+    remaining_participants = challenge_participant_ids - participant_ids
+
+    Participant.where(id: remaining_participants).each do |participant|
+      next if LockedSubmission.where(locked_by: participant.id).exists?
+
+      team = participant.teams.where(challenge_id: @challenge.id).first
+      if team.blank?
+        submission = @challenge.submissions.where(participant_id: participant.id).order(@challenge.submission_freezing_order).first
+        LockedSubmission.create!(submission_id: submission.id, locked_by: participant.id, challenge_id: @challenge.id) if submission
+      else
+        unless LockedSubmission.where(participant_id: team.team_participants.pluck(:participant_id)).exists?
+          submission = @challenge.submissions.where(participant_id: team.team_participants.pluck(:participant_id)).order(@challenge.submission_freezing_order).first
+          LockedSubmission.create!(submission_id: submission.id, locked_by: participant.id, challenge_id: @challenge.id) if submission
+        end
+      end
+    end
+
     @submissions = Submission.where(id: @challenge.locked_submissions.pluck(:submission_id))
       .includes(:participant, :challenge_round)
 
@@ -215,7 +248,7 @@ class SubmissionsController < ApplicationController
 
     send_data csv_data,
               type:     'text/csv',
-              filename: "#{@challenge.challenge.to_s.parameterize.underscore}_submissions_export.csv"
+              filename: "#{@challenge.challenge.to_s.parameterize.underscore}_locked_submissions_export.csv"
   end
 
   def reset_locked_submissions

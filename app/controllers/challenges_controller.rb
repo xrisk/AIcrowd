@@ -381,6 +381,7 @@ class ChallengesController < ApplicationController
       :submission_lock_enabled,
       :submission_lock_time,
       :submission_filter,
+      :submission_freezing_order,
       image_attributes: [
         :id,
         :image,

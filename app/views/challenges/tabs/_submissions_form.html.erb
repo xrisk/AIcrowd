@@ -78,6 +78,12 @@
 
   <% if current_participant&.admin? %>
     <div class="form-group col-sm-12 col-md-4">
+      <%= f.label :submission_freezing_order, "Submission Freezing Order" %>
+      <%= f.text_field :submission_freezing_order, class: "form-control" %>
+      <small class="form-text text-muted">Choose the priority of the default submission</small>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-4">
       <%= f.label :submission_filter, "Filter" %>
       <%= f.text_field :submission_filter, class: "form-control" %>
       <small class="form-text text-muted">Advanced: Choose which submissions to consider</small>
