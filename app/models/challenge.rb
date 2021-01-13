@@ -340,6 +340,7 @@ class Challenge < ApplicationRecord
     return if Rails.env.development? || Rails.env.test?
     if challenge.discourse_category_id.blank?
       Discourse::CreateCategoryJob.perform_later(id)
+      return
     end
     return unless saved_change_to_attribute?(:challenge)
 
