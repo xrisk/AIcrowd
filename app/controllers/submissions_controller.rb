@@ -197,23 +197,25 @@ class SubmissionsController < ApplicationController
 
   def freeze_submission
     unless params[:locked_submission][:submission_id].present?
-      team = current_participant.teams.where(challenge_id: @challenge.id).first
-      participant_ids = team.team_participants.pluck(:participant_id) if team.present?
-      participant_ids = current_participant.id if participant_ids.blank?
-      locked_submission = LockedSubmission.where(locked_by: participant_ids).first
+      unless LockedSubmission.where(submission_id: params[:locked_submission][:submission_id].to_i)
+        team = current_participant.teams.where(challenge_id: @challenge.id).first
+        participant_ids = team.team_participants.pluck(:participant_id) if team.present?
+        participant_ids = current_participant.id if participant_ids.blank?
+        locked_submission = LockedSubmission.where(locked_by: participant_ids).first
 
-      if locked_submission.present?
-        if locked_submission.submission_id != params[:locked_submission][:submission_id].to_i
-          locked_submission.submission_id = params[:locked_submission][:submission_id].to_i
-          locked_submission.locked_by = current_participant.id
-          locked_submission.save!
+        if locked_submission.present?
+          if locked_submission.submission_id != params[:locked_submission][:submission_id].to_i
+            locked_submission.submission_id = params[:locked_submission][:submission_id].to_i
+            locked_submission.locked_by = current_participant.id
+            locked_submission.save!
+          end
+        else
+          LockedSubmission.create!(
+            submission_id: params[:locked_submission][:submission_id].to_i,
+            challenge_id: @challenge.id,
+            locked_by: current_participant.id
+            )
         end
-      else
-        LockedSubmission.create!(
-          submission_id: params[:locked_submission][:submission_id].to_i,
-          challenge_id: @challenge.id,
-          locked_by: current_participant.id
-          )
       end
     end
 
@@ -223,24 +225,7 @@ class SubmissionsController < ApplicationController
   def freezed_submission_export
     authorize @challenge, :export?
 
-    participant_ids = LockedSubmission.where(challenge_id: @challenge.id).pluck(:locked_by)
-    challenge_participant_ids = @challenge.submissions.pluck(:participant_id).uniq
-    remaining_participants = challenge_participant_ids - participant_ids
-
-    Participant.where(id: remaining_participants).each do |participant|
-      next if LockedSubmission.where(locked_by: participant.id).exists?
-
-      team = participant.teams.where(challenge_id: @challenge.id).first
-      if team.blank?
-        submission = @challenge.submissions.where(participant_id: participant.id).order(@challenge.submission_freezing_order).first
-        LockedSubmission.create!(submission_id: submission.id, locked_by: participant.id, challenge_id: @challenge.id) if submission
-      else
-        unless LockedSubmission.where(locked_by: team.team_participants.pluck(:participant_id)).exists?
-          submission = @challenge.submissions.where(participant_id: team.team_participants.pluck(:participant_id)).order(@challenge.submission_freezing_order).first
-          LockedSubmission.create!(submission_id: submission.id, locked_by: participant.id, challenge_id: @challenge.id) if submission
-        end
-      end
-    end
+    create_default_locked_submissions
 
     @submissions = Submission.where(id: @challenge.locked_submissions.pluck(:submission_id))
       .includes(:participant, :challenge_round)
@@ -253,8 +238,8 @@ class SubmissionsController < ApplicationController
   end
 
   def reset_locked_submissions
-    Challenge.locked_submissions.update_all(deleted: true)
-    render json: {}, status: :ok
+    @challenge.locked_submissions.update_all(deleted: true)
+    redirect_to edit_challenge_path(@challenge)
   end
 
 
@@ -486,6 +471,27 @@ class SubmissionsController < ApplicationController
       render json: {message: message, success: status == :ok}, status: status
     else
       render render
+    end
+  end
+
+  def create_default_locked_submissions
+    participant_ids = LockedSubmission.where(challenge_id: @challenge.id).pluck(:locked_by)
+    challenge_participant_ids = @challenge.submissions.pluck(:participant_id).uniq
+    remaining_participants = challenge_participant_ids - participant_ids
+
+    Participant.where(id: remaining_participants).each do |participant|
+      next if LockedSubmission.where(locked_by: participant.id).exists?
+
+      team = participant.teams.where(challenge_id: @challenge.id).first
+      if team.blank?
+        submission = @challenge.submissions.where(participant_id: participant.id).order(@challenge.submission_freezing_order).first
+        LockedSubmission.create!(submission_id: submission.id, locked_by: participant.id, challenge_id: @challenge.id) if submission
+      else
+        unless LockedSubmission.where(locked_by: team.team_participants.pluck(:participant_id)).exists?
+          submission = @challenge.submissions.where(participant_id: team.team_participants.pluck(:participant_id)).order(@challenge.submission_freezing_order).first
+          LockedSubmission.create!(submission_id: submission.id, locked_by: participant.id, challenge_id: @challenge.id) if submission
+        end
+      end
     end
   end
 end
