@@ -59,17 +59,17 @@
     <div class="form-group">
       <label>Submission File</label>
       <%= f.fields_for :submission_files do |f| %>
-        <div class="nested-fields">
+        <div class="nested-fields btn btn-success fileinput-button">
           <%= f.hidden_field :seq %><!-- populated by controller -->
+            <span>Choose File</span>
           <%= f.file_field :submission_file_s3_key, as: :file, label: "Submissions file", class: 'file-upload s3File', required: true %>
           <%= f.hidden_field :submission_type, value: @form_type %>
-          <small class="form-text text-muted">Caution: By selecting a file, the form will be automatically submitted!</small>
         </div>
       <% end %>
     </div>
     <div class="form-content">
       <div class='btn-set'>
-        <%= f.submit 'Submit Submission', class: 'btn btn-primary btn-sm' %>
+        <%= f.submit 'Submit Submission', class: 'btn btn-primary btn-sm', disabled: true%>
       </div>
     </div>
   <% end %>

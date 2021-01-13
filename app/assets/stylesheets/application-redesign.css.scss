@@ -2921,6 +2921,29 @@ input[type="button"].btn-block {
   box-shadow: 0px 2px 5px 0px rgba(36, 41, 46, 0.24);
 }
 
+ .btn-success {
+    color: #fff;
+    background-color: #F0524D;
+    border-color: #fff;
+}
+/* This is copied from https://github.com/blueimp/jQuery-File-Upload/blob/master/css/jquery.fileupload.css */
+ .fileinput-button {
+    position: relative;
+    overflow: hidden;
+}
+/*Also*/
+ .fileinput-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter:'alpha(opacity=0)';
+    font-size: 200px;
+    direction: ltr;
+    cursor: pointer;
+}
+
 .fade {
   transition: opacity 0.15s linear;
 }
