@@ -69,6 +69,7 @@ class Challenge < ApplicationRecord
   has_many :participant_ml_challenge_goals, dependent: :destroy
   has_many :ml_activity_points
   has_many :posts
+  has_paper_trail
 
   as_enum :status,
           %i[draft running completed starting_soon],

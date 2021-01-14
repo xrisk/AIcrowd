@@ -86,7 +86,8 @@
       <%= f.file_field :submission_file_s3_key,
                        as: :file,
                        label: "Submissions file",
-                       class: 'file-upload s3File form-control' %>
+                       class: 'file-upload s3File form-control',
+                       required: true %>
     </div>
 
   <% end %>
