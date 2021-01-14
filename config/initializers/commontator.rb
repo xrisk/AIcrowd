@@ -212,7 +212,7 @@ Commontator.configure do |config|
   #   :t (always present in the thread's page)
   #   :l (link to the form, which appears in the same location the new comment will appear)
   # Default: :l
-  config.new_comment_style = :l
+  config.new_comment_style = :t
 
   # comment_reply_style
   # Type: Symbol

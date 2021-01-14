@@ -1,29 +1,26 @@
 <div class="container-fluid">
   <header class="section-header col-12 section-p-sm">
     <div>
-      <h4>Topics</h4>
+      <h3>Contributions</h3>
     </div>
     <% if current_participant.present?%>
-      <%= button_to 'New Article', new_post_path, class: "btn btn-secondary btn-sm", method: :get %>
+      <%= button_to 'New Contribution', new_post_path, class: "btn btn-secondary btn-sm", method: :get %>
     <% end %>
   </header>
   <ul class="list-group list-group-flush-px-0 list-group-achievements">
     <% Post.friendly.all.each do |post| %>
       <!-- achievement -->
       <li class="list-group-item">
-        <div>
-          <a class="mr-2" href="<%= post_path(post) %>">
+        <div class="col-md-12 p-0">
+          <a class="mr-2 col-md-1 col-3" href="<%= post_path(post) %>">
             <img src="<%=post.thumbnail%>" width=80 height=80>
           </a>
-          <div>
+          <div class="col-md-11 p-0 col-9 ml-2">
             <%= link_to post.title, post_path(post)%>
             <span class="description">
               <%= post.tagline %>
             </span>
-            <div class="topic-comments">
-              <img src="/assets/img/icon-comment.svg">
-                    <%= CommontatorComment.where(thread_id: CommontatorThread.where(commontable_id: post.id, commontable_type: "Post").first.id).count %>
-            </div>
+            <br/><small class="fixed-bottom position-absolute">By <div style="display: inline-flex;"><%= render partial: 'participants/get_user_profile', locals: { participant: post.participant} %></div> <%= "#{discourse_time_ago(post.created_at)}" %></small>
           </div>
         </div>
         <div class="row">

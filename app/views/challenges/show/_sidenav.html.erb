@@ -45,9 +45,7 @@
 <% if policy(challenge).show_leaderboard? && top_leaderboards.present? %>
   <%= render 'challenges/show/top_five_leaderboards', top_leaderboards: top_leaderboards, challenge: challenge, truncate: 'true' %>
 <% end %>
-<% if policy(challenge).show_submissions? && (latest_submissions.present? || @challenge.meta_challenge) %>
-  <%= render 'challenges/show/latest_five_submissions', latest_submissions: latest_submissions, challenge: challenge %>
-<% end %>
+
 <% if challenge.posts.count > 0 %>
   <header class="section-header">
     <div>
@@ -57,4 +55,8 @@
     <%= link_to 'See all', posts_path, class: "btn btn-secondary btn-sm" %>
   </header>
   <%= render 'shared/posts/post_list',  posts: challenge.posts %>
+<% end %>
+
+<% if policy(challenge).show_submissions? && (latest_submissions.present? || @challenge.meta_challenge) %>
+  <%= render 'challenges/show/latest_five_submissions', latest_submissions: latest_submissions, challenge: challenge %>
 <% end %>
