@@ -27,7 +27,12 @@
         </div>
 
         <div class="form-group">
-          <label for="description">Description</label>
+          <span class="label-text">Tags</span>
+          <%= f.select :category_names, posts_category_options(@post), {}, {class: "select2 category_select2 form-control", multiple: true} %>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description<sup>*</sup></label>
           <div class="md-content" style="max-width:100%">
             <%= f.cktext_area :description, :class => 'ckeditor', required: true%>
           </div>
