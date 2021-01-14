@@ -18,8 +18,8 @@
 
           <div class="form-group">
             <span class="label-text">Submission</span>
-            <%= f.select :submission_id, Submission.where(participant_id: current_participant.id, challenge_round_id: @current_round.id).order("id DESC").collect {|s| [ s.id, s.id] },
-                  {prompt: 'Select Submission (optional)'}, {class: "select2 form-control", required: true}%>
+            <%= f.select :submission_id, Submission.where(participant_id: current_participant.id, challenge_round_id: @current_round.id).where(@filter).order("id DESC").collect {|s| [ s.id, s.id] },
+                  {prompt: 'Select Submission'}, {class: "select2 form-control", required: true}%>
             <small class="form-text text-muted">🚀 Lock your submission.</span>
           </div>
 

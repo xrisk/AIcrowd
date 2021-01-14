@@ -61,8 +61,7 @@ class SubmissionsController < ApplicationController
     @search = filter.search(search_params)
     @search.sorts = 'created_at desc' if @search.sorts.empty?
     params[:page] ||= 1
-    filter = @challenge.submission_filter
-    @submissions  = @search.result.where(filter).includes(:participant).per_page_kaminari(params[:page]).per(10)
+    @submissions  = @search.result.includes(:participant).per_page_kaminari(params[:page]).per(10)
   end
 
   def filter
@@ -192,12 +191,13 @@ class SubmissionsController < ApplicationController
   end
 
   def lock
+    @filter = @challenge.submission_filter
     @locked_submission = LockedSubmission.new
   end
 
   def freeze_submission
-    unless params[:locked_submission][:submission_id].present?
-      unless LockedSubmission.where(submission_id: params[:locked_submission][:submission_id].to_i)
+    if params[:locked_submission][:submission_id].present?
+      unless LockedSubmission.where(submission_id: params[:locked_submission][:submission_id].to_i).exists?
         team = current_participant.teams.where(challenge_id: @challenge.id).first
         participant_ids = team.team_participants.pluck(:participant_id) if team.present?
         participant_ids = current_participant.id if participant_ids.blank?
@@ -219,15 +219,15 @@ class SubmissionsController < ApplicationController
       end
     end
 
-    return redirect_to(root_path, flash: { success: 'We have received your submission.' })
+    return redirect_to(lock_challenge_submissions_path(@challenge), flash: { success: 'We have received your submission.' })
   end
 
   def freezed_submission_export
     authorize @challenge, :export?
 
-    create_default_locked_submissions
+    submission_ids = create_default_locked_submissions
 
-    @submissions = Submission.where(id: @challenge.locked_submissions.pluck(:submission_id))
+    @submissions = Submission.where(id: submission_ids)
       .includes(:participant, :challenge_round)
 
     csv_data = Submissions::CSVExportService.new(submissions: @submissions, downloadable: false).call.value
@@ -476,22 +476,28 @@ class SubmissionsController < ApplicationController
 
   def create_default_locked_submissions
     participant_ids = LockedSubmission.where(challenge_id: @challenge.id).pluck(:locked_by)
-    challenge_participant_ids = @challenge.submissions.pluck(:participant_id).uniq
+    challenge_participant_ids = @challenge.submissions.where(grading_status_cd: 'graded').pluck(:participant_id).uniq
     remaining_participants = challenge_participant_ids - participant_ids
+    locked_submission_hash = {}
 
     Participant.where(id: remaining_participants).each do |participant|
-      next if LockedSubmission.where(locked_by: participant.id).exists?
+      next if LockedSubmission.where(locked_by: participant.id).exists? || locked_submission_hash.keys.include?(participant.id)
 
       team = participant.teams.where(challenge_id: @challenge.id).first
       if team.blank?
         submission = @challenge.submissions.where(participant_id: participant.id).order(@challenge.submission_freezing_order).first
-        LockedSubmission.create!(submission_id: submission.id, locked_by: participant.id, challenge_id: @challenge.id) if submission
+        locked_submission_hash[participant.id] = submission.id
       else
-        unless LockedSubmission.where(locked_by: team.team_participants.pluck(:participant_id)).exists?
+        locked_participants = []
+        locked_participants += team.team_participants.pluck(:participant_id)
+        locked_participants += locked_submission_hash.keys
+        unless LockedSubmission.where(locked_by: locked_participants).exists?
           submission = @challenge.submissions.where(participant_id: team.team_participants.pluck(:participant_id)).order(@challenge.submission_freezing_order).first
-          LockedSubmission.create!(submission_id: submission.id, locked_by: participant.id, challenge_id: @challenge.id) if submission
+          locked_submission_hash[participant_id] = submission.id
         end
       end
     end
+
+    submission_ids = @challenge.locked_submissions.pluck(:submission_id) + locked_submission_hash.values
   end
 end
