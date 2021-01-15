@@ -18,7 +18,7 @@
             <div class="col-md-12 mb-5">
               <div class="empty-card-compact">
                 <div class="text text-small mt-8">
-                  <img src="/assets/img/icon-lock-grey.png"><br/>
+                  <%= image_tag "/assets/img/icon-lock-grey.png" %><br/>
                   <span>Problems will be visible after challenge starts</span>
                 </div>
               </div>
@@ -29,7 +29,7 @@
                 <div class="empty-card-compact">
                   <%= link_to challenge_path(@challenge) + "/problems" do %>
                   <div class="text">
-                    <img src="/assets/img/icon-plus-grey.png"><br/>
+                    <%= image_tag "/assets/img/icon-plus-grey.png" %><br/>
                     <span>Add/Remove Problems</span>
                   </div>
                   <% end %>

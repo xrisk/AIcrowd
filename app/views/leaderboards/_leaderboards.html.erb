@@ -90,7 +90,7 @@
           <% if problem_score['position'].present? %>
             <span class="geek-view-normal" data-toggle="tooltip" data-placement="top" title="Rank in problem"><strong>
               <% if problem_score['position'] == 1 %>
-                <img src="/assets/img/award-gold.svg" style="width: 32px" />
+                <%= image_tag("/assets/img/award-gold.svg", width: "32") %>
               <% else %>
                 <%= problem_score['position'] %>
               <% end %>

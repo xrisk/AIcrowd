@@ -12,7 +12,7 @@
             <span class="badge badge-success">Practice</span>
           <% else %>
             <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>">
-              <img src="/assets/img/icon-time.svg">
+              <%= image_tag "/assets/img/icon-time.svg" %>
               <%= challenge_remaining_text(challenge, challenge.active_round) %>
             </span>
           <% end %>

@@ -16,7 +16,7 @@
       <div class="stat-item" style="width: 72px">
         <center>
         <span data-toggle="tooltip" data-placement="top" title="No. of views">
-          <img src="/assets/img/icon-views.svg">
+          <%= image_tag "/assets/img/icon-views.svg" %>
           <%= challenge_stat_count(challenge, 'view', @meta_challenge) %>
         </span>
         </center>
@@ -24,7 +24,7 @@
       <div class="stat-item" style="width: 72px">
         <center>
         <span data-toggle="tooltip" data-placement="top" title="No. of users">
-          <img src="/assets/img/icon-users.svg">
+          <%= image_tag "/assets/img/icon-users.svg" %>
           <%= challenge_stat_count(challenge, 'participant', @meta_challenge) %>
         </span>
         </center>
@@ -33,7 +33,7 @@
       <div class="stat-item" style="width: 72px">
         <center>
         <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
-          <img src="/assets/img/icon-submissions.svg">
+          <%= image_tag "/assets/img/icon-submissions.svg" %>
           <%= challenge_stat_count(challenge, 'submission', @meta_challenge) %>
         </span>
         </center>
