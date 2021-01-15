@@ -194,6 +194,8 @@ class SubmissionsController < ApplicationController
     participant_ids = get_team_participants
     filter = @challenge.submission_filter
     @my_submissions = @challenge.submissions.where(participant_id: participant_ids)
+    .where(grading_status_cd: 'graded')
+    .where('created_at <= ?', @challenge.submission_lock_time)
     .where(filter)
     .order(@challenge.submission_freezing_order)
     .collect {|s| [ s.id, s.id] }
@@ -480,7 +482,7 @@ class SubmissionsController < ApplicationController
 
   def create_default_locked_submissions
     participant_ids = LockedSubmission.where(challenge_id: @challenge.id).pluck(:locked_by)
-    challenge_participant_ids = @challenge.submissions.where(grading_status_cd: 'graded').pluck(:participant_id).uniq
+    challenge_participant_ids = @challenge.submissions.where(@challenge.submission_filter).where('created_at <= ?', @challenge.submission_lock_time).where(grading_status_cd: 'graded').pluck(:participant_id).uniq
     remaining_participants = challenge_participant_ids - participant_ids
     locked_submission_hash = {}
 
@@ -490,11 +492,19 @@ class SubmissionsController < ApplicationController
       team = participant.teams.where(challenge_id: @challenge.id).first
       if team.present?
         locked_participants = team.team_participants.pluck(:participant_id)
+        team_participant_ids = team.team_participants.pluck(:participant_id)
         next if LockedSubmission.where(locked_by: locked_participants).exists? || (locked_submission_hash.keys & (locked_participants)).present?
       end
+      team_participant_ids = participant.id if team_participant_ids.blank?
 
-      submission = @challenge.submissions.where(participant_id: team.team_participants.pluck(:participant_id)).order(@challenge.submission_freezing_order).first
-      locked_submission_hash[participant_id] = submission.id
+      submission = @challenge.submissions
+        .where(participant_id: team_participant_ids)
+        .where(@challenge.submission_filter)
+        .where('created_at <= ?', @challenge.submission_lock_time)
+        .where(grading_status_cd: 'graded')
+        .order(@challenge.submission_freezing_order)
+        .first
+      locked_submission_hash[participant.id] = submission.id
     end
 
     submission_ids = @challenge.locked_submissions.pluck(:submission_id) + locked_submission_hash.values
