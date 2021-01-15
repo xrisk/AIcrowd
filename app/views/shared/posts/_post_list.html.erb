@@ -9,8 +9,8 @@
       <tr>
         <td>
           <div class="like-counter-vertical">
-            <span><%= post.likes.count %></span>
-            <% if post.likes.count.positive? %>
+            <span><%= post.vote_count %></span>
+            <% if post.vote_count.positive? %>
               <%= image_tag image_path('img/icon-like.svg'), alt: 'Like icon' %>
             <% else %>
               <%= image_tag image_path('img/icon-like-grey.svg'), alt: 'Like icon' %>
