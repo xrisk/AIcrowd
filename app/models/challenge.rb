@@ -347,7 +347,7 @@ class Challenge < ApplicationRecord
 
   def update_discourse_category
     return if Rails.env.development? || Rails.env.test?
-    if challenge.discourse_category_id.blank?
+    if self.discourse_category_id.blank?
       Discourse::CreateCategoryJob.perform_later(id)
       return
     end
