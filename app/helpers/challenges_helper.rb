@@ -29,7 +29,7 @@ module ChallengesHelper
   def challenge_remaining_text(challenge, challenge_round, ending=true)
     case challenge.status
     when :running, :perpetual
-      if !challenge_round.start_dttm.nil? && challenge_round.start_dttm - Time.current > 0
+      if challenge_round.present? && challenge_round.start_dttm.present? && challenge_round.start_dttm - Time.current > 0
         sanitize_html("Starting soon")
       elsif remaining_time_in_days(challenge_round) >= 2
         "#{pluralize(remaining_time_in_days(challenge_round), 'day')} left"
