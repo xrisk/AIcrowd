@@ -60,6 +60,10 @@ module SubmissionsHelper
     submission_link
   end
 
+  def submission_locking_enabled?(challenge)
+    ((challenge&.submission_lock_enabled) && (challenge&.submission_note.present?) && (challenge&.submission_lock_time > Time.now))
+  end
+
   def submission_team?(submission, participant)
     return true if submission.participant_id == participant.id
     submission_participant = Participant.find_by_id(submission.participant_id)
