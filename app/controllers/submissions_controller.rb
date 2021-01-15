@@ -191,17 +191,21 @@ class SubmissionsController < ApplicationController
   end
 
   def lock
-    @filter = @challenge.submission_filter
+    participant_ids = get_team_participants
+    filter = @challenge.submission_filter
+    @my_submissions = @challenge.submissions.where(participant_id: participant_ids)
+    .where(filter)
+    .order(@challenge.submission_freezing_order)
+    .collect {|s| [ s.id, s.id] }
+
     @locked_submission = LockedSubmission.new
   end
 
   def freeze_submission
     if params[:locked_submission][:submission_id].present?
       unless LockedSubmission.where(submission_id: params[:locked_submission][:submission_id].to_i).exists?
-        team = current_participant.teams.where(challenge_id: @challenge.id).first
-        participant_ids = team.team_participants.pluck(:participant_id) if team.present?
-        participant_ids = current_participant.id if participant_ids.blank?
-        locked_submission = LockedSubmission.where(locked_by: participant_ids).first
+        team_participant_ids = get_team_participants
+        locked_submission = LockedSubmission.where(locked_by: team_participant_ids).first
 
         if locked_submission.present?
           if locked_submission.submission_id != params[:locked_submission][:submission_id].to_i
@@ -494,5 +498,11 @@ class SubmissionsController < ApplicationController
     end
 
     submission_ids = @challenge.locked_submissions.pluck(:submission_id) + locked_submission_hash.values
+  end
+
+  def get_team_participants
+    team = current_participant.teams.where(challenge_id: @challenge.id).first
+    participant_ids = team.team_participants.pluck(:participant_id) if team.present?
+    participant_ids = current_participant.id if participant_ids.blank?
   end
 end
