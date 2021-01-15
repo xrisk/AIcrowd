@@ -69,6 +69,7 @@ class Challenge < ApplicationRecord
   has_many :participant_ml_challenge_goals, dependent: :destroy
   has_many :ml_activity_points
   has_many :posts
+  has_many :locked_submissions
   has_paper_trail
 
   as_enum :status,
@@ -314,6 +315,13 @@ class Challenge < ApplicationRecord
     elsif meta_challenge
       'meta_challenge'
     end
+  end
+
+  def locked_submission?(participant)
+    team = participant.teams.where(challenge_id: self.id)
+    participant_ids = team.team_participants.pluck(:participant_id) if team.present?
+    participant_ids = participant.id if participant_ids.blank?
+    LockedSubmission.where(challenge_id: self.id, locked_by: participant_ids).exists?
   end
 
   private

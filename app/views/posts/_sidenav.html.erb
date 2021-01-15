@@ -1,28 +1,19 @@
 <header class="mb-0">
-  <div class="row text-center col-md-12">
-    <%= link_to post_likes_path(post.id), id: post.id, class: "w-100", method: :post, remote: true do %>
-      <button type="button" class="btn btn-primary">Vote</button>
-    <% end %>
+  <div class="row justify-content-center">
+    <%= render partial: 'shared/votes/button', locals: { votable: post, vote: post.vote(current_participant) } %>
   </div>
 </header>
 <div>
   <%
-    users = post.likes.includes(:participant).map(&:participant).sample(50)
-    users_remaining_count = post.likes.count - 50
+    users = post.votes.includes(:participant).map(&:participant).sample(50)
+    users_remaining_count = post.vote_count - 50
   %>
-  <% if post.likes.count > 0 %>
+  <% if post.vote_count > 0 %>
     <div class="row avatar-group p-3">
-    <% if current_participant%>
-      <span>
-        <%= render partial: 'participants/get_user_profile', locals: { participant: current_participant, username: 'false' } %>
-      </span>
-    <% end %>
     <% users.each do |user| %>
-      <% if !(current_participant && user.id==current_participant.id) %>
-        <span>
-          <%= render partial: 'participants/get_user_profile', locals: { participant: user, username: 'false' } %>
-        </span>
-      <% end %>
+      <span>
+        <%= render partial: 'participants/get_user_profile', locals: { participant: user, username: 'false' } %>
+      </span>
     <% end %>
     <% if users_remaining_count > 0 %>
       <span class="avatar user-rating-0 text-center" data-toggle="tooltip" title="<%= users_remaining_count %> more participants">
@@ -31,6 +22,11 @@
     <% end %>
     </div>
   <% end %>
+  <div class="row justify-content-center mt-1">
+    <% @post.categories.each do |category| %>
+      <span class="badge badge-outline">#<%=category.name%></span>
+    <% end %>
+  </div>
   <% if post.challenge.present? %>
     <div class="card-body text-center">
       <div>

@@ -29,6 +29,10 @@ def challenge_routes
   resources :submissions do
     post :filter, on: :collection
     get :export, on: :collection
+    get :lock, on: :collection
+    get :freezed_submission_export, on: :collection
+    get :reset_locked_submissions, on: :collection
+    post :freeze_submission, on: :collection
   end
   resources :dynamic_contents, only: [:index]
   resources :leaderboards, only: :index do
@@ -234,8 +238,8 @@ Rails.application.routes.draw do
 
   resources :team_members, path: "our_team", only: [:index]
   resources :practice, only: [:index]
-  resources :posts do
-    resources :likes, only: [:create]
+  resources :posts, path: :contributions do
+    resources :votes, only: [:create, :destroy]
   end
 
   match '/contact', to: 'pages#contact', via: :get

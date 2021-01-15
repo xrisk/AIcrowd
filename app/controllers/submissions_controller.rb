@@ -3,13 +3,13 @@ class SubmissionsController < ApplicationController
   before_action :authenticate_participant!, except: [:index, :show]
   before_action :set_submission, only: [:show, :edit, :update]
   before_action :set_challenge
-  before_action :set_challenge_rounds, only: [:index, :new, :create, :show]
-  before_action :set_vote, only: [:index, :new, :create, :show]
-  before_action :set_follow, only: [:index, :new, :create, :show]
+  before_action :set_challenge_rounds, only: [:index, :new, :create, :show, :lock]
+  before_action :set_vote, only: [:index, :new, :create, :show, :lock]
+  before_action :set_follow, only: [:index, :new, :create, :show, :lock]
   before_action :check_participation_terms, except: [:show, :index, :export]
   before_action :set_s3_direct_post, only: [:new, :new_api, :edit, :create, :update]
   before_action :set_submissions_remaining, except: [:show, :index]
-  before_action :set_current_round, only: [:index, :new, :create]
+  before_action :set_current_round, only: [:index, :new, :create, :lock]
   before_action :set_form_type, only: [:new, :create]
   before_action :handle_code_based_submissions, only: [:create]
   before_action :handle_artifact_based_submissions, only: [:create]
@@ -189,6 +189,63 @@ class SubmissionsController < ApplicationController
     end
     render json: {message: "Presigned key generated!", data: { fields: @s3_direct_post.fields, url: @s3_direct_post.url }, success: true}, status: :ok
   end
+
+  def lock
+    participant_ids = get_team_participants
+    filter = @challenge.submission_filter
+    @my_submissions = @challenge.submissions.where(participant_id: participant_ids)
+    .where(filter)
+    .order(@challenge.submission_freezing_order)
+    .collect {|s| [ s.id, s.id] }
+
+    @locked_submission = LockedSubmission.new
+  end
+
+  def freeze_submission
+    if params[:locked_submission][:submission_id].present?
+      unless LockedSubmission.where(submission_id: params[:locked_submission][:submission_id].to_i).exists?
+        team_participant_ids = get_team_participants
+        locked_submission = LockedSubmission.where(locked_by: team_participant_ids).first
+
+        if locked_submission.present?
+          if locked_submission.submission_id != params[:locked_submission][:submission_id].to_i
+            locked_submission.submission_id = params[:locked_submission][:submission_id].to_i
+            locked_submission.locked_by = current_participant.id
+            locked_submission.save!
+          end
+        else
+          LockedSubmission.create!(
+            submission_id: params[:locked_submission][:submission_id].to_i,
+            challenge_id: @challenge.id,
+            locked_by: current_participant.id
+            )
+        end
+      end
+    end
+
+    return redirect_to(lock_challenge_submissions_path(@challenge), flash: { success: 'We have received your submission.' })
+  end
+
+  def freezed_submission_export
+    authorize @challenge, :export?
+
+    submission_ids = create_default_locked_submissions
+
+    @submissions = Submission.where(id: submission_ids)
+      .includes(:participant, :challenge_round)
+
+    csv_data = Submissions::CSVExportService.new(submissions: @submissions, downloadable: false).call.value
+
+    send_data csv_data,
+              type:     'text/csv',
+              filename: "#{@challenge.challenge.to_s.parameterize.underscore}_locked_submissions_export.csv"
+  end
+
+  def reset_locked_submissions
+    @challenge.locked_submissions.update_all(deleted: true)
+    redirect_to edit_challenge_path(@challenge)
+  end
+
 
   private
 
@@ -419,5 +476,33 @@ class SubmissionsController < ApplicationController
     else
       render render
     end
+  end
+
+  def create_default_locked_submissions
+    participant_ids = LockedSubmission.where(challenge_id: @challenge.id).pluck(:locked_by)
+    challenge_participant_ids = @challenge.submissions.where(grading_status_cd: 'graded').pluck(:participant_id).uniq
+    remaining_participants = challenge_participant_ids - participant_ids
+    locked_submission_hash = {}
+
+    Participant.where(id: remaining_participants).each do |participant|
+      next if LockedSubmission.where(locked_by: participant.id).exists? || locked_submission_hash.keys.include?(participant.id)
+
+      team = participant.teams.where(challenge_id: @challenge.id).first
+      if team.present?
+        locked_participants = team.team_participants.pluck(:participant_id)
+        next if LockedSubmission.where(locked_by: locked_participants).exists? || (locked_submission_hash.keys & (locked_participants)).present?
+      end
+
+      submission = @challenge.submissions.where(participant_id: team.team_participants.pluck(:participant_id)).order(@challenge.submission_freezing_order).first
+      locked_submission_hash[participant_id] = submission.id
+    end
+
+    submission_ids = @challenge.locked_submissions.pluck(:submission_id) + locked_submission_hash.values
+  end
+
+  def get_team_participants
+    team = current_participant.teams.where(challenge_id: @challenge.id).first
+    participant_ids = team.team_participants.pluck(:participant_id) if team.present?
+    participant_ids = current_participant.id if participant_ids.blank?
   end
 end

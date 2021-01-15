@@ -12,7 +12,15 @@
         <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Resources', link: resources_link(challenge)} %>
       <% end %>
       <% if policy(challenge).show_submissions? %>
-        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Submissions', link: challenge_submissions_path(challenge)} %>
+        <% if submission_locking_enabled?(challenge) %>
+          <% if current_participant && challenge.locked_submission?(current_participant) %>
+            <%= render partial: 'challenges/show/subnav_link', locals: {text: '🔒 Submissions', link: challenge_submissions_path(challenge)} %>
+          <% else %>
+            <%= render partial: 'challenges/show/subnav_link', locals: {text: '🔓 Submissions', link: challenge_submissions_path(challenge)} %>
+          <% end %>
+        <% else %>
+          <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Submissions', link: challenge_submissions_path(challenge)} %>
+        <% end %>
       <% end %>
       <% if policy(challenge).show_winners? %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Winners', link: challenge_winners_path(challenge)} %>

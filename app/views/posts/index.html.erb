@@ -1,39 +1,38 @@
 <div class="container-fluid">
   <header class="section-header col-12 section-p-sm">
     <div>
-      <h4>Topics</h4>
+      <h3>Contributions</h3>
     </div>
     <% if current_participant.present?%>
-      <%= button_to 'New Article', new_post_path, class: "btn btn-secondary btn-sm", method: :get %>
+      <%= button_to 'New Contribution', new_post_path, class: "btn btn-secondary btn-sm", method: :get %>
     <% end %>
   </header>
   <ul class="list-group list-group-flush-px-0 list-group-achievements">
     <% Post.friendly.all.each do |post| %>
       <!-- achievement -->
       <li class="list-group-item">
-        <div>
-          <a class="mr-2" href="<%= post_path(post) %>">
+        <div class="col-md-12 p-0">
+          <a class="mr-2 col-md-1 col-3" href="<%= post_path(post) %>">
             <img src="<%=post.thumbnail%>" width=80 height=80>
           </a>
-          <div>
+          <div class="col-md-11 p-0 col-9 ml-2">
+            <div class="btn-set float-right" aria-hidden="true">
+              <%= render partial: 'shared/votes/button', locals: { votable: post, vote: post.vote(current_participant) } %>
+            </div>
             <%= link_to post.title, post_path(post)%>
             <span class="description">
+              <% if post.tagline.blank?%>
+                <span>&nbsp;</span>
+              <% end %>
               <%= post.tagline %>
             </span>
-            <div class="topic-comments">
-              <img src="/assets/img/icon-comment.svg">
-                    <%= CommontatorComment.where(thread_id: CommontatorThread.where(commontable_id: post.id, commontable_type: "Post").first.id).count %>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="btn-set" aria-hidden="true">
-            <%= link_to post_likes_path(post), id: post.id, method: :post, remote: true do %>
-            <button type="button" class="btn btn-secondary btn-sm">
-              <svg width="12" height="11" xmlns="http://www.w3.org/2000/svg"><path d="M10.8746251 6.14539024L5.97691577 11.0430996 1.07920644 6.14539024C.43154568 5.50196808.03030318 4.61061457.03030318 3.62554576c0-1.96049121 1.58929212-3.54978364 3.54978364-3.54978364.92305599 0 1.76382467.35231416 2.39516959.92980603.63649437-.6044087 1.49691101-.97526512 2.44394586-.97526512 1.96049123 0 3.54978363 1.58929242 3.54978363 3.54978364 0 1.00819292-.4203017 1.91821904-1.0952455 2.56441886z" fill="#F0524D" fill-rule="evenodd"/></svg>
-              <%= post.likes.count %>
-            </button>
-            <% end %>
+            <br/><small class="fixed-bottom position-absolute">By <div style="display: inline-flex;"><%= render partial: 'participants/get_user_profile', locals: { participant: post.participant, avatar: 'false'} %></div> <%= "#{discourse_time_ago(post.created_at)}" %>
+              <div class="btn-set float-right">
+                <% post.categories.each do |category| %>
+                  <span class="badge badge-outline">#<%=category.name%></span>
+                <% end %>
+              </div>
+            </small>
           </div>
         </div>
       </li>
