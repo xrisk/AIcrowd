@@ -62,6 +62,7 @@ class PostsController < InheritedResources::Base
     @post = Posts::PostService.new(post_params, @post).call
 
     if @post.save
+      update_post_categories if params["post"]["category_names"].present?
       render :index
     else
       flash[:error] = t(@post.errors[:base])
@@ -97,6 +98,7 @@ class PostsController < InheritedResources::Base
     @post.participant = current_participant
 
     if @post.save
+      update_post_categories if params["post"]["category_names"].present?
       render :index
     else
       flash[:error] = @post.errors
@@ -141,6 +143,18 @@ class PostsController < InheritedResources::Base
       end
       post.save!
       post
+    end
+
+    def update_post_categories
+      @post.category_posts.destroy_all if @post.category_posts.present?
+      params[:post][:category_names].reject(&:empty?).each do |category_name|
+        category = Category.find_or_create_by(name: category_name)
+        if category.save
+          @post.category_posts.create!(category_id: category.id)
+        else
+          @post.errors.messages.merge!(category.errors.messages)
+        end
+      end
     end
 end
 

@@ -238,8 +238,8 @@ Rails.application.routes.draw do
 
   resources :team_members, path: "our_team", only: [:index]
   resources :practice, only: [:index]
-  resources :posts do
-    resources :likes, only: [:create]
+  resources :posts, path: :contributions do
+    resources :votes, only: [:create, :destroy]
   end
 
   match '/contact', to: 'pages#contact', via: :get
