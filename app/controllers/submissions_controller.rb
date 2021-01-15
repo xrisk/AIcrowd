@@ -482,7 +482,7 @@ class SubmissionsController < ApplicationController
 
   def create_default_locked_submissions
     participant_ids = LockedSubmission.where(challenge_id: @challenge.id).pluck(:locked_by)
-    challenge_participant_ids = @challenge.submissions.where(@challenge.submission_filter).where('created_at <= ?', Time.now).where(grading_status_cd: 'graded').pluck(:participant_id).uniq
+    challenge_participant_ids = @challenge.submissions.where(@challenge.submission_filter).where('created_at <= ?', @challenge.submission_lock_time).where(grading_status_cd: 'graded').pluck(:participant_id).uniq
     remaining_participants = challenge_participant_ids - participant_ids
     locked_submission_hash = {}
 
@@ -500,7 +500,7 @@ class SubmissionsController < ApplicationController
       submission = @challenge.submissions
         .where(participant_id: team_participant_ids)
         .where(@challenge.submission_filter)
-        .where('created_at <= ?', Time.now)
+        .where('created_at <= ?', @challenge.submission_lock_time)
         .where(grading_status_cd: 'graded')
         .order(@challenge.submission_freezing_order)
         .first
