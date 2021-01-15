@@ -13,7 +13,7 @@
             <span class="badge badge-success">Practice</span>
           <% elsif !is_current_page_meta_challenge_child(challenge) %>
             <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>">
-              <img src="/assets/img/icon-time.svg">
+              <%= image_tag "/assets/img/icon-time.svg" %>
               <%= challenge_remaining_text(challenge, challenge.active_round) %>
             </span>
           <% end %>
@@ -32,7 +32,7 @@
         <div class="stats-group">
           <div class="stat-item">
             <span data-toggle="tooltip" data-placement="top" title="No. of views">
-              <img src="/assets/img/icon-views.svg">
+              <%= image_tag "/assets/img/icon-views.svg" %>
               <%= challenge_stat_count(challenge, 'view', meta_challenge) %>
             </span>
           </div>
@@ -40,7 +40,7 @@
           <% if meta_challenge.nil? %>
             <div class="stat-item">
               <span data-toggle="tooltip" data-placement="top" title="No. of users">
-                <img src="/assets/img/icon-users.svg">
+                <%= image_tag "/assets/img/icon-users.svg" %>
                 <%= challenge_stat_count(challenge, 'participant', nil) %>
               </span>
             </div>
@@ -48,7 +48,7 @@
 
           <div class="stat-item">
             <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
-              <img src="/assets/img/icon-submissions.svg">
+              <%= image_tag "/assets/img/icon-submissions.svg" %>
               <%= challenge_stat_count(challenge, 'submission', meta_challenge) %>
             </span>
           </div>

@@ -1,5 +1,5 @@
 <% if country_cd.present? %>
-    <img src="/assets/flags/<%= country_cd %>.svg" class="country-flag" />
+    <%= image_tag("/assets/flags/#{country_cd}.svg", class: "country-flag") %>
 <% else %>
-    <img src="/assets/flags/UNKNOWN.svg" class="country-flag" />
+    <%= image_tag("/assets/flags/UNKNOWN.svg", class: "country-flag") %>
 <% end %>
