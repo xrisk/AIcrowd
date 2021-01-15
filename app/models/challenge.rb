@@ -70,6 +70,7 @@ class Challenge < ApplicationRecord
   has_many :ml_activity_points
   has_many :posts
   has_many :locked_submissions
+  has_paper_trail
 
   as_enum :status,
           %i[draft running completed starting_soon],

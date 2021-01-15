@@ -20,7 +20,7 @@ $(document).on('turbolinks:load', function() {
 
       add: function(e, data) {
         data.submit().then(function(){
-          form.submit();
+          submitButton.prop('disabled', false);
         });
       },
 
@@ -50,7 +50,7 @@ $(document).on('turbolinks:load', function() {
       },
 
       fail: function (e, data) {
-        submitButton.prop('disabled', false);
+        submitButton.prop('disabled', true);
 
         elem.value = '';
 
