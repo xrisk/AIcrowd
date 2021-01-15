@@ -484,18 +484,13 @@ class SubmissionsController < ApplicationController
       next if LockedSubmission.where(locked_by: participant.id).exists? || locked_submission_hash.keys.include?(participant.id)
 
       team = participant.teams.where(challenge_id: @challenge.id).first
-      if team.blank?
-        submission = @challenge.submissions.where(participant_id: participant.id).order(@challenge.submission_freezing_order).first
-        locked_submission_hash[participant.id] = submission.id
-      else
-        locked_participants = []
-        locked_participants += team.team_participants.pluck(:participant_id)
-        locked_participants += locked_submission_hash.keys
-        unless LockedSubmission.where(locked_by: locked_participants).exists?
-          submission = @challenge.submissions.where(participant_id: team.team_participants.pluck(:participant_id)).order(@challenge.submission_freezing_order).first
-          locked_submission_hash[participant_id] = submission.id
-        end
+      if team.present?
+        locked_participants = team.team_participants.pluck(:participant_id)
+        next if LockedSubmission.where(locked_by: locked_participants).exists? || (locked_submission_hash.keys & (locked_participants)).present?
       end
+
+      submission = @challenge.submissions.where(participant_id: team.team_participants.pluck(:participant_id)).order(@challenge.submission_freezing_order).first
+      locked_submission_hash[participant_id] = submission.id
     end
 
     submission_ids = @challenge.locked_submissions.pluck(:submission_id) + locked_submission_hash.values
