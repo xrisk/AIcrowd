@@ -514,5 +514,6 @@ class SubmissionsController < ApplicationController
     team = current_participant.teams.where(challenge_id: @challenge.id).first
     participant_ids = team.team_participants.pluck(:participant_id) if team.present?
     participant_ids = current_participant.id if participant_ids.blank?
+    return participant_ids
   end
 end
