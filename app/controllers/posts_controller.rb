@@ -96,6 +96,9 @@ class PostsController < InheritedResources::Base
     @post = Posts::PostService.new(post_params).call
 
     @post.participant = current_participant
+    if @post.thumbnail.blank?
+      @post.thumbnail = @post.get_random_thumbnail
+    end
 
     if @post.save
       update_post_categories if params["post"]["category_names"].present?
