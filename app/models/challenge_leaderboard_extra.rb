@@ -22,6 +22,7 @@ class ChallengeLeaderboardExtra < ApplicationRecord
   validates :freeze_duration, numericality: { greater_than: 0 }, if: -> { freeze_duration.present? }
 
   after_save :recalculate_leaderboard, if: :saved_change_to_freeze_flag
+  attr_accessor :is_default_leaderboard
 
   def get_score_title
     score_title.presence || 'Primary Score'

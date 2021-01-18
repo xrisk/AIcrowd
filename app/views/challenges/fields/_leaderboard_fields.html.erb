@@ -13,6 +13,9 @@
       <% if f.object.default %>
         <span class="float-left"><span class="fa fa-star-o fa-3x"></span> Default</span>
       <% end %>
+      <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f,
+              name: :is_default_leaderboard,
+              text: "Default Leaderboard" } %>
       <span class="float-right"><%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :show_leaderboard, text: "Public?" } %></span>
       <span class="float-right"><%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :media_on_leaderboard, text: "Media Asset?" } %></span>
     </h5>

@@ -32,7 +32,7 @@ class LeaderboardsController < ApplicationController
 
     @vote             = @challenge.votes.find_by(participant_id: current_participant.id) if current_participant.present?
     @follow           = @challenge.follows.find_by(participant_id: current_participant.id) if current_participant.present?
-    @challenge_rounds = @challenge.challenge_rounds.started
+    @challenge_rounds = @challenge.challenge_rounds.reorder(:sequence, :start_dttm).started
     @post_challenge   = post_challenge?
     @following        = following?
 
