@@ -360,6 +360,7 @@ class ChallengesController < ApplicationController
       :post_challenge_submissions,
       :submission_instructions,
       :license,
+      :submission_note,
       :winners_tab_active,
       :winner_description,
       :submissions_downloadable,
@@ -377,6 +378,10 @@ class ChallengesController < ApplicationController
       :ml_challenge,
       :registration_form_fields,
       :submission_window_type_cd,
+      :submission_lock_enabled,
+      :submission_lock_time,
+      :submission_filter,
+      :submission_freezing_order,
       image_attributes: [
         :id,
         :image,

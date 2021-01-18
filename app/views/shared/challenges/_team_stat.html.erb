@@ -1,7 +1,7 @@
 <div class="stat-item <%= defined?(name) ? 'width-72' : 'ml-1 mr-1'%>">
   <center>
     <span data-toggle="tooltip" data-placement="top" title="No. of teams">
-      <img src="/assets/img/icon-teams.svg">
+      <%= image_tag "/assets/img/icon-teams.svg" %>
       <%= challenge_stat_count(challenge, 'team', @meta_challenge) %>
     </span>
   </center>

@@ -12191,6 +12191,10 @@ body {
   max-width: 640px;
 }
 
+.md-content.width-100 p {
+  max-width: unset;
+}
+
 .text-mention {
   color: #2D7680;
   font-weight: 600;

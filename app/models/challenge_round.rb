@@ -10,6 +10,7 @@ class ChallengeRound < ApplicationRecord
   has_one :default_leaderboard, -> { where("challenge_leaderboard_extras.default IS TRUE") }, class_name: "ChallengeLeaderboardExtra"
   has_many :extra_leaderboards, -> { where("challenge_leaderboard_extras.default IS FALSE") }, class_name: "ChallengeLeaderboardExtra"
   accepts_nested_attributes_for :challenge_leaderboard_extras
+  has_paper_trail
 
   as_enum :submissions_type, [:artifact, :code, :gitlab], map: :string
 

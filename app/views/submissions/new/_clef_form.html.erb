@@ -86,10 +86,8 @@
       <%= f.file_field :submission_file_s3_key,
                        as: :file,
                        label: "Submissions file",
-                       class: 'file-upload s3File form-control' %>
-      <small id="primatyRunHelp2" class="form-text text-muted">
-        Caution: By selecting a file, the form will be automatically submitted!
-      </small>
+                       class: 'file-upload s3File form-control',
+                       required: true %>
     </div>
 
   <% end %>
@@ -103,7 +101,11 @@
       <% end %>
     </p>
   <% end %>
-
+  <div class="form-content">
+    <div class='btn-set'>
+      <%= f.submit 'Submit Submission', class: 'btn btn-primary btn-sm', disabled: true%>
+    </div>
+  </div>
   <div class="button-group">
     <%#= f.button "Submit Entry", class: 'btn btn-primary' %>
     <%#= button_to challenge_path(@challenge),

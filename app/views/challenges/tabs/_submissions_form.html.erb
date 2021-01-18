@@ -56,6 +56,51 @@
   <hr/>
 
   <div class="form-group">
+  <h4>Submission Locking Setting</h4>
+  </div>
+  <%= render partial: 'challenges/fields/fancy_radio', locals: {
+        f: f,
+        name: :submission_lock_enabled,
+        text: "Submission Locking Enabled",
+        p: {data: {target: 'challenge-submission.post'}}} %>
+  <div class="form-group col-sm-12 col-md-4">
+    <%= f.label :submission_lock_time, 'Submission Locking Deadline (UTC)' %>
+    <%= f.text_field :submission_lock_time, class: "form-control", data: {controller: 'flatpickr '} %>
+  </div>
+
+  <div class="form-group col-sm-12 col-md-4">
+    <%= link_to 'Reset Preferences', reset_locked_submissions_challenge_submissions_path(challenge), class: 'btn btn-primary', data: { disable_with: 'Resetting...' } %>
+  </div>
+
+  <div class="form-group col-sm-12 col-md-4">
+    <%= link_to 'Export Participant Preferences', freezed_submission_export_challenge_submissions_path(challenge), class: 'btn btn-primary', data: { disable_with: 'Preferences Exported' } %>
+  </div>
+
+  <% if current_participant&.admin? %>
+    <div class="form-group col-sm-12 col-md-4">
+      <%= f.label :submission_freezing_order, "Submission Freezing Order" %>
+      <%= f.text_field :submission_freezing_order, class: "form-control" %>
+      <small class="form-text text-muted">Choose the priority of the default submission</small>
+    </div>
+
+    <div class="form-group col-sm-12 col-md-4">
+      <%= f.label :submission_filter, "Filter" %>
+      <%= f.text_field :submission_filter, class: "form-control" %>
+      <small class="form-text text-muted">Advanced: Choose which submissions to consider</small>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <span class="label-text">Submission Freeze Text</span>
+    <i>This text will appear at the top of the new submission page, submission listing page and the leaderboard page</i>
+    <div class="md-content mt-2">
+      <%= f.cktext_area :submission_note, class: "form-control"%>
+    </div>
+  </div>
+
+  <hr/>
+
+  <div class="form-group">
   <h4>Instructions and License</h4>
   </div>
 

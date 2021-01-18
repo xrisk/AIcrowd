@@ -19,7 +19,7 @@
             <span class="badge badge-success">Practice</span>
           <% else %>
             <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>" data-toggle="tooltip" data-placement="top" title="<%= challenge_end_time(challenge , challenge.active_round) %>">
-              <img src="/assets/img/icon-time.svg">
+              <%= image_tag '/assets/img/icon-time.svg' %>
               <%= challenge.active_round&.challenge_round %>: <%= challenge_remaining_text(challenge, challenge.active_round, false) %>
             </span>
             <% if challenge_weight(challenge) %>
@@ -75,20 +75,20 @@
         <div class="stats-group stat-above-footer <% if challenge.big_challenge_card_image? %>stats-group-fg<% end %>">
           <div class="stat-item ml-1 mr-1">
             <span data-toggle="tooltip" data-placement="top" title="No. of views">
-              <img src="/assets/img/icon-views.svg">
+              <%= image_tag '/assets/img/icon-views.svg' %>
               <%= challenge_stat_count(challenge, 'view') %>
             </span>
           </div>
           <div class="stat-item ml-1 mr-1">
             <span data-toggle="tooltip" data-placement="top" title="No. of users">
-              <img src="/assets/img/icon-users.svg">
+              <%= image_tag '/assets/img/icon-users.svg' %>
               <%= challenge_stat_count(challenge, 'participant') %>
             </span>
           </div>
           <%= render partial: 'shared/challenges/team_stat', locals: { challenge: challenge } %>
           <div class="stat-item ml-1 mr-1">
             <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
-              <img src="/assets/img/icon-submissions.svg">
+              <%= image_tag '/assets/img/icon-submissions.svg' %>
               <%= challenge_stat_count(challenge, 'submission') %>
             </span>
           </div>

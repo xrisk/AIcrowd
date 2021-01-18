@@ -69,6 +69,8 @@ class Challenge < ApplicationRecord
   has_many :participant_ml_challenge_goals, dependent: :destroy
   has_many :ml_activity_points
   has_many :posts
+  has_many :locked_submissions
+  has_paper_trail
 
   as_enum :status,
           %i[draft running completed starting_soon],
@@ -315,6 +317,13 @@ class Challenge < ApplicationRecord
     end
   end
 
+  def locked_submission(participant)
+    team = participant.teams.where(challenge_id: self.id).first
+    participant_ids = team.team_participants.pluck(:participant_id) if team.present?
+    participant_ids = participant.id if participant_ids.blank?
+    LockedSubmission.where(challenge_id: self.id, locked_by: participant_ids).first
+  end
+
   private
 
   def set_defaults
@@ -338,6 +347,10 @@ class Challenge < ApplicationRecord
 
   def update_discourse_category
     return if Rails.env.development? || Rails.env.test?
+    if self.discourse_category_id.blank?
+      Discourse::CreateCategoryJob.perform_later(id)
+      return
+    end
     return unless saved_change_to_attribute?(:challenge)
 
     Discourse::UpdateCategoryJob.perform_later(id)

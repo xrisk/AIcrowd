@@ -31,7 +31,7 @@
                 <div class="leaderboard-position-user-details">
                   <a class="text-link" href="#">
                     <%= link_to submitter.name, challenge_team_path(@challenge, submitter) %>
-                    <img src="/assets/img/icon-teams.svg" alt="Team icon">
+                    <%= image_tag "/assets/img/icon-teams.svg" %>
                   </a>
                   <span class="leaderboard-position-user-score">
                     <%= leaderboard.score %>

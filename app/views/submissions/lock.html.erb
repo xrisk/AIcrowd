@@ -1,0 +1,37 @@
+<%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
+<%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
+<div class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12", style="padding:0">
+        <% if submission_locking_enabled?(@challenge) %>
+          <h3>👋 Lock Your Submissions for this round before <%= @challenge.submission_lock_time %></h3
+            >
+        <% else %>
+          <h3>Submission locking is disabled please come back later.</h3>
+        <% end %>
+        <hr/>
+        <br>
+      </div>
+      <% if @challenge.locked_submission(current_participant).present? %>
+        <p class="font-weight-bold row col-md-12">🔒 Currently locked submission: &nbsp;<%= link_to " #{@challenge.locked_submission(current_participant).submission_id}", challenge_submission_path(@challenge.id, @challenge.locked_submission(current_participant).submission_id) %></p>
+      <% end %>
+
+      <% if submission_locking_enabled?(@challenge) %>
+        <%= form_with model: @locked_submission, url: freeze_submission_challenge_submissions_path do |f| %>
+
+          <div class="form-group">
+            <span class="label-text">Submission</span>
+            <%= f.select :submission_id, @my_submissions,
+                  {prompt: 'Select Submission'}, {class: "select2 form-control", required: true}%>
+            <small class="form-text text-muted">🚀 Lock your submission.</span>
+          </div>
+
+          <%= f.button 'Submit', type: 'submit', class: "btn btn-primary" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+

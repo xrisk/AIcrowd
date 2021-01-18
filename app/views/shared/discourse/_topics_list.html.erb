@@ -24,16 +24,15 @@
         </div>
       </div>
 
-      <!-- <div class="avatar-group col-2"> -->
-      <!-- <div class="avatar-group col-2"> -->
-        <% #discourse_topic['posters'].take(4).each_with_index do |poster, index| %>
-          <% #if poster['participant'].present? %>
-            <%= #render partial: 'participants/get_user_profile', locals: { participant: poster['participant'], username: 'false' } %>
-          <% #else %>
+      <div class="avatar-group col-2">
+        <% discourse_topic['posters'].take(4).each_with_index do |poster, index| %>
+          <% if poster['participant'].present? %>
+            <%= render partial: 'participants/get_user_profile', locals: { participant: poster['participant'], username: 'false' } %>
+          <% else %>
           <!-- TODO: Render profile for a default or deleted user ? -->
-          <%# end %>
-        <% #end %>
-      <!-- </div> -->
+          <% end %>
+        <% end %>
+      </div>
 
       <div class="topic-comments">
         <%= image_tag image_path('img/icon-comment.svg') %>
