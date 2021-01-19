@@ -1,5 +1,6 @@
 class ChallengeLeaderboardExtra < ApplicationRecord
   belongs_to :challenge_round
+  belongs_to :challenge
 
   validates :ranking_window,
             numericality: { only_integer:             true,
@@ -22,6 +23,7 @@ class ChallengeLeaderboardExtra < ApplicationRecord
   validates :freeze_duration, numericality: { greater_than: 0 }, if: -> { freeze_duration.present? }
 
   after_save :recalculate_leaderboard, if: :saved_change_to_freeze_flag
+  after_commit :update_challenge_media, if: :saved_change_to_media_on_leaderboard
 
   def get_score_title
     score_title.presence || 'Primary Score'
@@ -49,5 +51,9 @@ class ChallengeLeaderboardExtra < ApplicationRecord
     else
       return []
     end
+  end
+
+  def update_challenge_media
+    self.challenge.update!(media_on_leaderboard: self.media_on_leaderboard)
   end
 end
