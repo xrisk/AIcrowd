@@ -90,7 +90,7 @@
                   <th scope="col"><%= sort_link(@search, :name,"Participant") %></th>
                   <th scope="col"><%= sort_link(@search, :grading_status_cd,"Status") %></th>
                   <th scope="col"><%= sort_link(@search, :score_display, @current_round&.default_leaderboard&.score_title) %></th>
-                  <% if @current_round&.default_leaderboard&.score_secondary_title.present? && @current_round&.default_leaderboard&.secondary_sort_order_cd != 'not_used' %>
+                  <% if @current_round&.default_leaderboard&.score_secondary_title.present? && @current_round&.default_leaderboard&.secondary_sort_order != :hidden %>
                     <th scope="col"><%= sort_link(@search, :score_secondary_display, @current_round.default_leaderboard.score_secondary_title) %></th>
                   <% end %>
                   <% if !@challenge.meta_challenge %>

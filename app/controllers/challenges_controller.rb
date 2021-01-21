@@ -115,7 +115,6 @@ class ChallengesController < ApplicationController
       update_challenges_organizers if params[:challenge][:organizer_ids].present?
       update_challenge_categories if params[:challenge][:category_names].present?
       create_invitations if params[:challenge][:invitation_email].present?
-      update_default_leaderboard
       leaderboard_recomputations
       respond_to do |format|
         format.html { redirect_to helpers.edit_challenge_path(@challenge, step: params[:current_step]), notice: 'Challenge updated.' }
@@ -324,19 +323,6 @@ class ChallengesController < ApplicationController
     @challenge.problems.where(id: problem_ids)
   end
 
-  def update_default_leaderboard
-     params[:challenge][:challenge_rounds_attributes].each do |key, value|
-      value[:challenge_leaderboard_extras_attributes].each do |_key, _value|
-        if _value[:is_default_leaderboard].to_i == 1
-          cle = ChallengeLeaderboardExtra.find_by_id(_value[:id])
-          return if cle.default
-          ChallengeRound.find_by_id(value[:id]).challenge_leaderboard_extras.update_all(default: false)
-          ChallengeLeaderboardExtra.find_by_id(_value[:id]).update(default: true)
-        end
-      end
-     end
-  end
-
   def challenge_params
     params.require(:challenge).permit(
       :challenge,
@@ -422,7 +408,6 @@ class ChallengesController < ApplicationController
         :submissions_type,
         :debug_submission_limit,
         :debug_submission_limit_period,
-        :sequence,
         challenge_leaderboard_extras_attributes: [
           :id,
           :name,
@@ -443,7 +428,7 @@ class ChallengesController < ApplicationController
           :dynamic_score_field,
           :dynamic_score_secondary_field,
           :filter,
-          :is_default_leaderboard,
+          :sequence
         ]
       ],
       challenge_rules_attributes: [

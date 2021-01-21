@@ -6,7 +6,7 @@
     <th scope="col">Media</th>
   <% end %>
   <th scope="col" class="text-right score-title"><%= @current_leaderboard&.get_score_title %></th>
-  <% if @current_leaderboard&.get_score_secondary_title.present? && !@challenge.meta_challenge && !@challenge.ml_challenge && @current_leaderboard.secondary_sort_order_cd != 'not_used' %>
+  <% if @current_leaderboard&.get_score_secondary_title.present? && !@challenge.meta_challenge %>
     <% if !(@current_leaderboard&.secondary_sort_order.present? && @current_leaderboard&.secondary_sort_order == :hidden) %>
       <th scope="col" class="text-right secondary-score-title"><%= @current_leaderboard.get_score_secondary_title %></th>
     <% end %>

@@ -30,7 +30,7 @@
                             challenge_leaderboards_path(@challenge, challenge_round_id: @current_round),
                             class: round_pills_tab_classes(@current_round.default_leaderboard, @current_leaderboard) %>
               </li>
-              <% @current_round.extra_leaderboards.each do |extra_leaderboard| %>
+              <% @current_round.extra_leaderboards.order(:sequence).each do |extra_leaderboard| %>
               <li class="nav-item">
                 <%= link_to extra_leaderboard.name,
                             challenge_leaderboards_path(@challenge, challenge_round_id: @current_round, challenge_leaderboard_extra_id: extra_leaderboard.id),
