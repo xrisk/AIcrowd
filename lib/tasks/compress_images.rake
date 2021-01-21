@@ -69,6 +69,27 @@ namespace :compress_images do
     end
   end
 
+  task compress_organizer_images: :environment do
+    Organizer.all.each do |organizer|
+      image_file = File.join(STORAGE_PATH, organizer.image_file.path) if organizer.image_file.path.present?
+      if image_file.present?
+        download_image_file = open(image_file) rescue nil
+        next if download_image_file.blank?
+        image_file_name = image_file.split('/')[-1]
+        image_file_path = "#{Rails.root.join('public', 'uploads', image_file_name)}"
+        IO.copy_stream(download_image_file, image_file_path)
+        upload_image_file = ActionDispatch::Http::UploadedFile.new({
+          filename: image_file_name,
+          type: "image/#{File.extname(image_file_name)}",
+          tempfile: File.new(image_file_path)
+        })
+      end
+
+      organizer.image_file = upload_image_file if upload_image_file.present?
+      organizer.save!
+    end
+  end
+
   task compress_participant_images: :environment do
     Participant.all.each do |participant|
       image_file = participant.image_file
@@ -89,25 +110,7 @@ namespace :compress_images do
     end
   end
 
-  task compress_organizer_images: :environment do
-    Organizer.all.each do |organizer|
-      image_file = organizer.image_file
-      if image_file.present?
-        download_image_file = open(image_file)
-        image_file_name = download_image_file.base_uri.to_s.split('/')[-1]
-        image_file_path = "#{Rails.root.join('public', 'uploads', file_name)}"
-        IO.copy_stream(download, file_path)
-        upload_image_file = ActionDispatch::Http::UploadedFile.new({
-          filename: image_file_name,
-          type: "image/#{image_file_name.extension}",
-          tempfile: File.new(image_file_path)
-        })
-      end
 
-      organizer.image_file = upload_image_file if upload_image_file.present?
-      organizer.save!
-    end
-  end
 
   task compress_partner_images: :environment do
     Partner.all.each do |partner|
