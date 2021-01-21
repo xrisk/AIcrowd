@@ -4,26 +4,27 @@ namespace :compress_images do
     STORAGE_PATH = "https://d3121tj603apyt.cloudfront.net"
     Challenge.all.each do |challenge|
       puts challenge.challenge
-      # image_file = File.join(STORAGE_PATH, challenge.image_file.path) if challenge.image_file.path.present?
+      image_file = File.join(STORAGE_PATH, challenge.image_file.path) if challenge.image_file.path.present?
       social_media_image_file = File.join(STORAGE_PATH, challenge.social_media_image_file.path) if challenge.social_media_image_file.path.present?
       banner_file = File.join(STORAGE_PATH, challenge.banner_file.path) if challenge.banner_file.path.present?
-      # banner_mobile_file = File.join(STORAGE_PATH, challenge.banner_mobile_file.path) if challenge.banner_mobile_file.path.present?
-      # if image_file.present?
-      #   download_image_file = open(image_file) rescue nil
-      #   next if download_image_file.blank?
-      #   image_file_name = image_file.split('/')[-1]
-      #   image_file_path = "#{Rails.root.join('public', 'uploads', image_file_name)}"
-      #   IO.copy_stream(download_image_file, image_file_path)
-      #   upload_image_file = ActionDispatch::Http::UploadedFile.new({
-      #     filename: image_file_name,
-      #     type: "image/#{File.extname(image_file_name)}",
-      #     tempfile: File.new(image_file_path)
-      #   })
-      # end
+      banner_mobile_file = File.join(STORAGE_PATH, challenge.banner_mobile_file.path) if challenge.banner_mobile_file.path.present?
+      if image_file.present?
+        download_image_file = open(image_file) rescue nil
+        next if download_image_file.blank?
+        image_file_name = image_file.split('/')[-1]
+        image_file_path = "#{Rails.root.join('public', 'uploads', image_file_name)}"
+        IO.copy_stream(download_image_file, image_file_path)
+        upload_image_file = ActionDispatch::Http::UploadedFile.new({
+          filename: image_file_name,
+          type: "image/#{File.extname(image_file_name)}",
+          tempfile: File.new(image_file_path)
+        })
+      end
 
       if social_media_image_file.present?
         download_social_media_image_file = open(social_media_image_file) rescue nil
         social_media_image_file_name = social_media_image_file.split('/')[-1]
+        next if File.extname(social_media_image_file_name) == "gif"
         social_media_image_file_path = "#{Rails.root.join('public', 'uploads', social_media_image_file_name)}"
         IO.copy_stream(download_social_media_image_file, social_media_image_file_path)
         upload_social_media_image_file = ActionDispatch::Http::UploadedFile.new({
@@ -46,23 +47,23 @@ namespace :compress_images do
         })
       end
 
-      # if banner_mobile_file.present?
-      #   download_banner_mobile_file = open(banner_mobile_file) rescue nil
-      #   next if download_banner_mobile_file.blank?
-      #   banner_mobile_file_name = banner_mobile_file.split('/')[-1]
-      #   banner_mobile_file_path = "#{Rails.root.join('public', 'uploads', banner_mobile_file_name)}"
-      #   IO.copy_stream(download_banner_mobile_file, banner_mobile_file_path)
-      #   upload_banner_mobile_file = ActionDispatch::Http::UploadedFile.new({
-      #     filename: banner_mobile_file_name,
-      #     type: "image/#{File.extname(banner_mobile_file_name)}",
-      #     tempfile: File.new(banner_mobile_file_path)
-      #   })
-      # end
+      if banner_mobile_file.present?
+        download_banner_mobile_file = open(banner_mobile_file) rescue nil
+        next if download_banner_mobile_file.blank?
+        banner_mobile_file_name = banner_mobile_file.split('/')[-1]
+        banner_mobile_file_path = "#{Rails.root.join('public', 'uploads', banner_mobile_file_name)}"
+        IO.copy_stream(download_banner_mobile_file, banner_mobile_file_path)
+        upload_banner_mobile_file = ActionDispatch::Http::UploadedFile.new({
+          filename: banner_mobile_file_name,
+          type: "image/#{File.extname(banner_mobile_file_name)}",
+          tempfile: File.new(banner_mobile_file_path)
+        })
+      end
 
-      # challenge.image_file = upload_image_file if upload_image_file.present?
+      challenge.image_file = upload_image_file if upload_image_file.present?
       challenge.social_media_image_file = upload_social_media_image_file if upload_social_media_image_file.present?
       challenge.banner_file = upload_banner_file if upload_banner_file.present?
-      # challenge.banner_mobile_file = upload_banner_mobile_file if upload_banner_mobile_file.present?
+      challenge.banner_mobile_file = upload_banner_mobile_file if upload_banner_mobile_file.present?
 
       challenge.save!
     end
