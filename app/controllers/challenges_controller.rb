@@ -431,7 +431,8 @@ class ChallengesController < ApplicationController
           :other_scores_fieldnames_display,
           :dynamic_score_field,
           :dynamic_score_secondary_field,
-          :filter
+          :filter,
+          :sequence
         ]
       ],
       challenge_rules_attributes: [

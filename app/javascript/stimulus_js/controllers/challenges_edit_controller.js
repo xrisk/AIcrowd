@@ -21,6 +21,14 @@ export default class extends Controller {
       });
     };
 
+    let leaderboard_switch_handler = function () {
+      $(this).closest('.collapse').find('.leaderboard-active-switch').each((event, checkbox) => {
+        if (checkbox !== this) {
+          checkbox.checked = false;
+        }
+      });
+    };
+
     $("#rounds").on('cocoon:after-insert', function(event, added_round) {
       added_round.find('.active-switch').on('click', switch_handler);
 
@@ -68,6 +76,7 @@ export default class extends Controller {
     });
 
     $('.active-switch').on('click', switch_handler);
+    $('.leaderboard-active-switch').on('click', leaderboard_switch_handler);
 
     $('.challenges-form__toggle-expand').click(function(event) {
       that.resetChallengesFormClientValidations();
