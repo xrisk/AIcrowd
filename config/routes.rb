@@ -16,6 +16,7 @@ def challenge_routes
     get :export
     post :import
     get :remove_invited
+    get :contributions
   end
 
   resources :teams, only: [:create, :show], param: :name, constraints: { name: %r{[^?/]+} }, format: false, controller: 'challenges/teams' do
@@ -240,6 +241,7 @@ Rails.application.routes.draw do
   resources :practice, only: [:index]
   resources :posts, path: :contributions do
     resources :votes, only: [:create, :destroy]
+    post :validate_external_link, on: :collection
   end
 
   match '/contact', to: 'pages#contact', via: :get

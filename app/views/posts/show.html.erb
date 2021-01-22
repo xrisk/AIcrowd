@@ -1,44 +1,54 @@
+<div class="masthead masthead-contribution masthead-blog-post">
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-12">
+        <h4><a href="<%= challenge_path(@post.challenge) %>"><%= @post.challenge.challenge %></a></h4>
+        <h1><%= @post.title %></h1>
+        <p class="masthead-subtitle"><%= @post.tagline %></p>
+      </div>
+    </div>
+    <!-- /title -->
+
+    <div class="row">
+      <div class="col-12 d-flex align-items-center flex-wrap">
+        <div class="author">
+          <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant} %>
+        </div>
+
+        <div class="btn-set" aria-hidden="true">
+          <%= render partial: 'shared/votes/button', locals: { votable: @post, vote: @post.vote(current_participant) } %>
+        </div>
+      </div>
+    </div>
+    <!-- /author/options -->
+
+  </div>
+</div>
+
 <!-- section -->
 <section class="section-p-md">
   <div class="container-fluid">
     <div class="row">
       <!-- md content -->
       <div class="col-md-12 text-center">
-        <h1 id="introduction" class="mt-0"><%=@post.title%></h1>
         <% if current_participant.present? && @post.participant_id == current_participant.id %>
           <%= button_to 'Edit', edit_post_path(@post), class: "btn btn-secondary btn-sm float-right", method: :get %>
         <% end %>
-        <p><%= @post.tagline %></p>
-      </div>
-      <div class="container-fluid row">
-        <div class="col-md-6 p-0 b-0 pt-2">
-          <i class="float-right">Contributed by &nbsp;</i>
-        </div>
-        <div class="col-md-6 float-left p-0 b-0">
-          <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant} %>
-        </div>
       </div>
 
-      <div class="col-md-1"></div>
       <div class="col-md-7 mt-5 posts-form">
-        <% if @post.thumbnail.present? %>
-          <div class="col-md-12 text-center">
+        <div class="col-md-12 text-center">
+          <% if @post.challenge.image_url.present? %>
+            <%= image_tag @post.challenge.image_url, class: 'form-challenge-card-image', style: "max-width: 100%; max-height: 600px;" %>
+          <% else %>
             <img src="<%= @post.thumbnail %>" class="img-fluid" style="max-width: 100%; max-height: 600px;" />
-          </div>
-          <hr class="w-50"/>
-        <% end %>
+          <% end %>
+        </div>
         <div class="col-md-12 mt-4 md-content">
           <%= @post.description.html_safe %>
         </div>
       </div>
-      <!-- /md content -->
-
-      <!-- top contributors -->
-      <div class="top-contributors-container col-md-4 mt-5">
-        <%= render 'posts/sidenav', post: @post %>
-      </div>
-      <!-- /top contributors -->
-
     </div>
   </div>
 </section>

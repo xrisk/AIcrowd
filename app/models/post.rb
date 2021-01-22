@@ -17,4 +17,14 @@ class Post < ApplicationRecord
   def vote(participant)
     self.votes.where(participant_id: participant.id).first if participant.present?
   end
+
+  def get_random_thumbnail
+    images = ["post-img-1.jpg", "post-img-2.jpg"]
+    img = images.sample
+    upload_image_file = ActionDispatch::Http::UploadedFile.new({
+      filename: img,
+      type: "image/jpg",
+      tempfile: File.new(Rails.root.join('app', 'assets', 'images', 'misc', img))
+    })
+  end
 end
