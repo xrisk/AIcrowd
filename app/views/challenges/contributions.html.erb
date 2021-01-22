@@ -1,0 +1,38 @@
+<%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
+<%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
+<div class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <header class="section-header">
+          <div>
+            <h4>Contributions</h4>
+          </div>
+          <%= link_to '+ Contribution', new_post_path(challenge: @challenge), class: 'btn btn-secondary' %>
+        </header>
+        <ul class="list-group list-group-flush-px-0 list-group-contributions">
+          <% @contributions.friendly.all.each do |post| %>
+            <li class="list-group-item">
+              <div class="contribution-details">
+                <a class="image-link" href="<%= post_path(post) %>"><img src="<%=post.thumbnail%>"></a>
+
+                <div class="contribution-text">
+                  <a class="text-link" href="<%= post_path(post) %>"><%= post.title %></a>
+
+                  <span class="contribution-subtitle"><%= post.tagline %></span>
+
+                  <div class="contribution-user-time">
+                    <%= render partial: 'participants/get_user_profile', locals: { participant: post.participant, avatar: 'false'} %></a>&nbsp;·&nbsp;<span class="contribution-time"><%= "#{discourse_time_ago(post.created_at)}" %></span>
+                  </div>
+                </div>
+              </div>
+              <%= render partial: 'shared/votes/button', locals: { votable: post, vote: post.vote(current_participant) } %>
+            </li>
+          <% end %>
+        </ul>
+        <!-- /list-group-contributions -->
+
+      </div>
+    </div>
+  </div>
+</div>

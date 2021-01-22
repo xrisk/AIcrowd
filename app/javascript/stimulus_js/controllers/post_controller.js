@@ -1,0 +1,40 @@
+import { Controller } from 'stimulus';
+export default class extends Controller {
+  validateExternalLink(event){
+    const external_url = event.target.value;
+
+    if (external_url.includes("colab.research.google.com")){
+      var form = $(event.target.form)
+      var submitButton  = form.find('button[type="submit"]');
+      var loader = form.find('.fetch-loader')
+
+      submitButton.prop('disabled', true);
+      loader.removeClass('d-none')
+      $.ajax({
+          url: '/contributions/validate_external_link',
+          type: 'POST',
+          data: {external_link: external_url},
+          success:  function(result){
+              form.find('input[name="post[notebook_file_path]"]').val(result["notebook_file_path"]);
+              submitButton.prop('disabled', false);
+              loader.addClass('d-none')
+          },
+
+          error: function(){
+            submitButton.prop('disabled', false);
+            loader.addClass('d-none');
+            $(`<div class="alert sticky-top alert-flash alert-dismissible show fade flash-message position-fixed w-100" role="alert">
+                <div class="container-fluid">
+                  <center>
+                    Unable to download colab notebook. Please check the link and try again.
+                  </center>
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>`).prependTo('body')
+          }
+      });
+    }
+  }
+}
