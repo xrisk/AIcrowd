@@ -52,7 +52,7 @@
       <h4>Contributions</h4>
     </div>
 
-    <%= link_to 'See all', posts_path, class: "btn btn-secondary btn-sm" %>
+    <%= link_to 'See all', contributions_challenge_path(challenge), class: "btn btn-secondary btn-sm" %>
   </header>
   <%= render 'shared/posts/post_list',  posts: challenge.posts %>
 <% end %>

@@ -20,7 +20,11 @@ module TabsHelper
   def current_tab
     case controller.controller_name
     when 'challenges'
+      if controller.action_name == 'contributions'
+        'Contributions'
+      else
       'Overview'
+      end
     when 'leaderboards'
       'Leaderboard'
     when 'topics'

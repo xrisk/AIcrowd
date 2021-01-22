@@ -597,7 +597,8 @@ hr {
 }
 
 small,
-.small {
+.small,
+.list-group-contributions .contribution-details .contribution-text .contribution-user-time {
   font-size: 0.875rem;
   font-weight: 400;
 }
@@ -5563,7 +5564,8 @@ video {
 .list-group-dataset,
 .list-group-achievements,
 .list-group-discussion,
-.list-group-users {
+.list-group-users,
+.list-group-contributions {
   color: #434547;
 }
 
@@ -5574,7 +5576,8 @@ video {
 .list-group-dataset .list-group-item,
 .list-group-achievements .list-group-item,
 .list-group-discussion .list-group-item,
-.list-group-users .list-group-item {
+.list-group-users .list-group-item,
+.list-group-contributions .list-group-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -5587,7 +5590,8 @@ video {
 .list-group-dataset .avatar,
 .list-group-achievements .avatar,
 .list-group-discussion .avatar,
-.list-group-users .avatar {
+.list-group-users .avatar,
+.list-group-contributions .avatar {
   width: 32px;
   height: 32px;
   margin-right: 8px;
@@ -5608,7 +5612,9 @@ video {
 .list-group-discussion a,
 .list-group-discussion .achievement-title,
 .list-group-users a,
-.list-group-users .achievement-title {
+.list-group-users .achievement-title,
+.list-group-contributions a,
+.list-group-contributions .achievement-title {
   display: block;
   font-weight: 700;
 }
@@ -5620,7 +5626,8 @@ video {
 .list-group-dataset .badge,
 .list-group-achievements .badge,
 .list-group-discussion .badge,
-.list-group-users .badge {
+.list-group-users .badge,
+.list-group-contributions .badge {
   margin-left: 4px;
 }
 
@@ -5785,6 +5792,39 @@ video {
   .list-group-challenge-teams .submissions {
     display: none;
   }
+}
+
+.list-group-contributions .contribution-details {
+  display: flex;
+}
+
+.list-group-contributions .contribution-details .image-link {
+  flex: 0 0 auto;
+  height: 80px;
+  margin-right: 12px;
+  width: 80px;
+}
+
+.list-group-contributions .contribution-details img {
+  border-radius: 3px;
+  height: auto;
+  width: 100%;
+}
+
+.list-group-contributions .contribution-details .contribution-text {
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: column;
+}
+
+.list-group-contributions .contribution-details .contribution-text .contribution-subtitle {
+  flex: 2 1 auto;
+}
+
+.list-group-contributions .contribution-details .contribution-text .contribution-user-time a {
+  display: inline;
+  font-weight: 400;
+  text-decoration: underline;
 }
 
 .close {
@@ -12007,6 +12047,22 @@ body {
   margin-bottom: 0;
 }
 
+.masthead-contribution {
+  background: #FFF;
+}
+
+.masthead-contribution .masthead-subtitle {
+  margin: .75em 0 0 0;
+}
+
+.masthead-contribution h4 a {
+  color: #DE4B46;
+}
+
+.masthead-contribution h4 a:hover {
+  text-decoration: underline;
+}
+
 .md-content blockquote li {
   margin-bottom: .25em !important;
 }
@@ -12312,6 +12368,7 @@ body {
 .sub-section-header {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   justify-content: space-between;
   height: 32px;
   width: 100%;

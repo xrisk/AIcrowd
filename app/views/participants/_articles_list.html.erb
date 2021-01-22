@@ -1,34 +1,30 @@
-<div class="container-fluid">
-  <ul class="list-group list-group-flush-px-0 list-group-achievements">
-    <% Post.friendly.all.each do |post| %>
-      <!-- achievement -->
-      <li class="list-group-item">
-        <div class="col-md-12 p-0">
-          <a class="mr-2 col-md-1 col-3" href="<%= post_path(post) %>">
-            <img src="<%=post.thumbnail%>" width=80 height=80>
-          </a>
-          <div class="col-md-11 p-0 col-9 ml-2">
-            <div class="btn-set float-right" aria-hidden="true">
-              <%= render partial: 'shared/votes/button', locals: { votable: post, vote: post.vote(current_participant) } %>
-            </div>
-            <%= link_to post.title, post_path(post)%>
-            <span class="description">
-              <% if post.tagline.blank?%>
-                <span>&nbsp;</span>
-              <% end %>
-              <%= post.tagline %>
-            </span>
-            <br/><small class="fixed-bottom position-absolute">By <div style="display: inline-flex;"><%= render partial: 'participants/get_user_profile', locals: { participant: post.participant, avatar: 'false'} %></div> <%= "#{discourse_time_ago(post.created_at)}" %>
-              <div class="btn-set float-right">
-                <% post.categories.each do |category| %>
-                  <span class="badge badge-outline">#<%=category.name%></span>
-                <% end %>
+<div class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <ul class="list-group list-group-flush-px-0 list-group-contributions">
+          <% posts.friendly.all.each do |post| %>
+            <li class="list-group-item">
+              <div class="contribution-details">
+                <a class="image-link" href="<%= post_path(post) %>"><img src="<%=post.thumbnail%>"></a>
+
+                <div class="contribution-text">
+                  <a class="text-link" href="<%= post_path(post) %>"><%= post.title %></a>
+
+                  <span class="contribution-subtitle"><%= post.tagline %></span>
+
+                  <div class="contribution-user-time">
+                    <%= render partial: 'participants/get_user_profile', locals: { participant: post.participant, avatar: 'false'} %></a>&nbsp;·&nbsp;<span class="contribution-time"><%= "#{discourse_time_ago(post.created_at)}" %></span>
+                  </div>
+                </div>
               </div>
-            </small>
-          </div>
-        </div>
-      </li>
-      <!-- /achievement -->
-    <% end %>
-  </ul>
+              <%= render partial: 'shared/votes/button', locals: { votable: post, vote: post.vote(current_participant) } %>
+            </li>
+          <% end %>
+        </ul>
+        <!-- /list-group-contributions -->
+
+      </div>
+    </div>
+  </div>
 </div>

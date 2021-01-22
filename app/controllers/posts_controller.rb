@@ -9,6 +9,9 @@ class PostsController < InheritedResources::Base
   def new
     @post = Post.new
     @post.participant_id = current_participant.id
+    if params[:challenge].present?
+      @post.challenge = Challenge.friendly.find(params[:challenge])
+    end
   end
 
   def set_post
@@ -36,34 +39,24 @@ class PostsController < InheritedResources::Base
       render :edit and return
     end
 
-    if !params["notebook_url_fetch"].nil?
-      url = params["post"]["external_link"]
-      @post.external_link = url
-      if url.include?("colab.research.google.com")
-        notebook_file_path = colab_handler(url)
-        @post.notebook_file_path = notebook_file_path
-        flash[:success] = "Fetched successfully"
-        render :edit and return
-      else
-        flash[:success] = "Fetched Successfully"
-        return
-      end
-    end
-
     @post.update(post_params)
 
     if params["post"]["external_link"].present? && params["post"]["external_link"].include?("https://colab.research.google.com")
       if params["post"]["notebook_file_path"].blank? && (params["post"]["external_link"] != @post.external_link)
-        flash[:error] = "We noticed you are trying colab link, please use \"Fetch\" button before submitting this form"
+        flash[:error] = "There was some issue in fetching the colab notebook. Please try again."
         render :edit and return
       end
     end
 
     @post = Posts::PostService.new(post_params, @post).call
 
+    if @post.thumbnail.blank?
+      @post.thumbnail = @post.get_random_thumbnail
+    end
+
     if @post.save
       update_post_categories if params["post"]["category_names"].present?
-      render :index
+      redirect_to(contributions_challenge_path(@post.challenge), notice: "The contribution has been added successfully!")
     else
       flash[:error] = t(@post.errors[:base])
       render :new
@@ -71,23 +64,9 @@ class PostsController < InheritedResources::Base
   end
 
   def create
-    if !params["notebook_url_fetch"].nil?
-      @post = Post.new(post_params)
-      url = params["post"]["external_link"]
-      if url.include?("colab.research.google.com")
-        notebook_file_path = colab_handler(url)
-        @post.notebook_file_path = notebook_file_path
-        flash[:success] = "Fetched successfully"
-        render :new and return
-      else
-        flash[:success] = "Fetched Successfully"
-        return
-      end
-    end
-
     if params["post"]["external_link"].present? && params["post"]["external_link"].include?("https://colab.research.google.com")
       if params["post"]["notebook_file_path"].blank?
-        flash[:error] = "We noticed you are trying colab link, please use \"Fetch\" button before submitting this form"
+        flash[:error] = "There was some issue in fetching the colab notebook. Please try again."
         @post = Post.new(post_params)
         render :new and return
       end
@@ -102,7 +81,7 @@ class PostsController < InheritedResources::Base
 
     if @post.save
       update_post_categories if params["post"]["category_names"].present?
-      render :index
+      redirect_to(contributions_challenge_path(@post.challenge), notice: "The contribution has been added successfully!")
     else
       flash[:error] = @post.errors
       render :new
@@ -110,6 +89,19 @@ class PostsController < InheritedResources::Base
   end
 
   def destroy
+  end
+
+  def validate_external_link
+    url = params[:external_link]
+    return unless url.include?("colab.research.google.com")
+    notebook_file_path = colab_handler(url)
+
+    unless notebook_file_path.present?
+      render json: {}, status: 422
+      return
+    end
+
+    render json: {notebook_file_path: notebook_file_path}, status: 200
   end
 
   private
@@ -126,7 +118,8 @@ class PostsController < InheritedResources::Base
         gist_url = url.scan(/gist(.*)/)[0][0]
         download_url = "https://gist.github.com" + gist_url.split("#")[0] + "/raw"
       end
-      download = open(download_url)
+      download = open(download_url) rescue nil
+      return if download.nil?
       file_name = "#{SecureRandom.uuid}.ipynb"
       file_path = "#{Rails.root.join('public', 'uploads', file_name)}"
       IO.copy_stream(download, file_path)

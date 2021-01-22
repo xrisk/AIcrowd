@@ -1,19 +1,31 @@
-<div class="masthead masthead-home bg-white container-fluid">
+<div class="masthead masthead-contribution masthead-blog-post">
   <div class="container-fluid">
+
     <div class="row">
-      <div class="col-lg-12 col-xl-6">
-        <a href="<%= challenge_path(@post.challenge) %>"><button type="button" class="btn btn-link"><%= @post.challenge.challenge %></button></a>
+      <div class="col-12">
+        <h4><a href="<%= challenge_path(@post.challenge) %>"><%= @post.challenge.challenge %></a></h4>
         <h1><%= @post.title %></h1>
-        <p><%= @post.tagline %></p>
-        <div class="mt-1 col-md-4 p-0 pt-2"><%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant} %>
-          <div class="float-right">
-            <%= render partial: 'shared/votes/button', locals: { votable: @post, vote: @post.vote(current_participant) } %>
-          </div>
+        <p class="masthead-subtitle"><%= @post.tagline %></p>
+      </div>
+    </div>
+    <!-- /title -->
+
+    <div class="row">
+      <div class="col-12 d-flex align-items-center flex-wrap">
+        <div class="author">
+          <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant} %>
+        </div>
+
+        <div class="btn-set" aria-hidden="true">
+          <%= render partial: 'shared/votes/button', locals: { votable: @post, vote: @post.vote(current_participant) } %>
         </div>
       </div>
     </div>
+    <!-- /author/options -->
+
   </div>
 </div>
+
 <!-- section -->
 <section class="section-p-md">
   <div class="container-fluid">
@@ -26,21 +38,17 @@
       </div>
 
       <div class="col-md-7 mt-5 posts-form">
-        <% if @post.thumbnail.present? %>
-          <div class="col-md-12 text-center">
+        <div class="col-md-12 text-center">
+          <% if @post.challenge.image_url.present? %>
+            <%= image_tag @post.challenge.image_url, class: 'form-challenge-card-image', style: "max-width: 100%; max-height: 600px;" %>
+          <% else %>
             <img src="<%= @post.thumbnail %>" class="img-fluid" style="max-width: 100%; max-height: 600px;" />
-          </div>
-          <hr class="w-50"/>
-        <% end %>
+          <% end %>
+        </div>
         <div class="col-md-12 mt-4 md-content">
           <%= @post.description.html_safe %>
         </div>
       </div>
-      <!-- /md content -->
-
-      <!-- top contributors -->
-      <!-- /top contributors -->
-
     </div>
   </div>
 </section>
