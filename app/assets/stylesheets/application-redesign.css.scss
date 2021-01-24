@@ -14387,6 +14387,14 @@ input.width-185 {
   font-size: unset;
 }
 
+.posts-form a {
+    color: #08c;
+}
+
+.table-responsive-lg p {
+  font-size: unset;
+}
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';
