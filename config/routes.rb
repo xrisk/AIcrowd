@@ -188,6 +188,12 @@ Rails.application.routes.draw do
   resources :blogs, only: [:index, :show] do
     resources :votes, only: [:create, :destroy]
   end
+  resources :comment, only: [:index, :show] do
+    resources :votes, only: [:create, :destroy]
+  end
+  resources :commontator_comment, only: [:index, :show] do
+    resources :votes, only: [:create, :destroy]
+  end
 
   resources :teams, only: [:show], param: :name, constraints: { name: %r{[^?/]+} }, format: false # legacy
   resources :claim_emails, only: [:index, :create], controller: 'team_invitations/claim_emails'

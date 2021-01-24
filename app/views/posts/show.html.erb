@@ -13,7 +13,8 @@
     <div class="row">
       <div class="col-12 d-flex align-items-center flex-wrap">
         <div class="author">
-          <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant} %>
+          <span class="mr-2">By</span>
+          <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant } %>
         </div>
 
         <div class="btn-set" aria-hidden="true">
@@ -27,7 +28,7 @@
 </div>
 
 <!-- section -->
-<section class="section-p-md">
+<section class="section">
   <div class="container-fluid">
     <div class="row">
       <!-- md content -->
@@ -38,13 +39,6 @@
       </div>
 
       <div class="col-md-7 mt-5 posts-form">
-        <div class="col-md-12 text-center">
-          <% if @post.challenge.image_url.present? %>
-            <%= image_tag @post.challenge.image_url, class: 'form-challenge-card-image', style: "max-width: 100%; max-height: 600px;" %>
-          <% else %>
-            <img src="<%= @post.thumbnail %>" class="img-fluid" style="max-width: 100%; max-height: 600px;" />
-          <% end %>
-        </div>
         <div class="col-md-12 mt-4 md-content">
           <%= @post.description.html_safe %>
         </div>
@@ -53,7 +47,7 @@
   </div>
 </section>
 
-<section class="section-p-md">
+<section class="section">
   <div class="container-fluid">
     <% if @post.notebook_html.present? %>
       <hr/>
@@ -72,6 +66,7 @@
       <div class="ipynb-notebook-container">
         <%= @post.notebook_html.html_safe %>
       </div>
+      <div class="d-none show-more-btn w-100 text-center p-2 cursor-pointer font-weight-bold text-secondary" style="background: #f6f9ff;" data-controller="post" data-action="click->post#expandNotebook">↕️ Read More</div>
     <% end %>
   </div>
   <div class="container-fluid">
@@ -90,6 +85,12 @@
         <% end %>
       </div>
     <% end %>
+  </div>
+  <hr/>
+  <div class="container-fluid">
+    <div class="row pl-3">
+      <%= render partial: 'shared/votes/button', locals: { votable: @post, vote: @post.vote(current_participant), show_users: true } %>
+    </div>
   </div>
   <hr/>
   <div class="container-fluid">

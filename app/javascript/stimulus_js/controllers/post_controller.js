@@ -1,5 +1,19 @@
 import { Controller } from 'stimulus';
 export default class extends Controller {
+  connect() {
+    if($('.ipynb-notebook-container').height() > 2000) {
+      $('.ipynb-notebook-container').css('overflow', 'hidden');
+      $('.ipynb-notebook-container').css('max-height', '1500px');
+      $('.show-more-btn').removeClass('d-none');
+    }
+  }
+
+  expandNotebook(event) {
+    $('.show-more-btn').addClass('d-none');
+    $('.ipynb-notebook-container').css('overflow', 'unset');
+    $('.ipynb-notebook-container').css('max-height', 'unset');
+  }
+
   validateExternalLink(event){
     const external_url = event.target.value;
 
