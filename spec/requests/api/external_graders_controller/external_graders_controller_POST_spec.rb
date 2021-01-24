@@ -259,7 +259,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(Submission.last.participant_id).to eq(participant.id) }
       it { expect(Submission.last.score).to eq(nil) }
       it { expect(Submission.last.grading_status_cd).to eq('failed') }
-      it { expect(Submission.last.grading_message).to eq(valid_attributes_failed_grading[:grading_message]) }
+      it { expect(Submission.last.grading_message).to include(valid_attributes_failed_grading[:grading_message]) }
     end
 
     context "with valid_attributes_grading_submitted" do
@@ -290,7 +290,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(Submission.last.participant_id).to eq(participant.id) }
       it { expect(Submission.last.score).to eq(nil) }
       it { expect(Submission.last.grading_status_cd).to eq('submitted') }
-      it { expect(Submission.last.grading_message).to eq('in progress') }
+      it { expect(Submission.last.grading_message).to include('in progress') }
     end
 
     context "with valid_attributes_with_secondary_score" do
