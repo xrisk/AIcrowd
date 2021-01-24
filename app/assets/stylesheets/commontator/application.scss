@@ -5,12 +5,6 @@
  */
 
 .commontator {
-  *:not(input):not(textarea) {
-    margin: 0;
-    border: none;
-    padding: 0;
-  }
-
   .commontator-hidden {
     display: none;
   }
