@@ -142,7 +142,7 @@ class Submission < ApplicationRecord
 
   def kramdown_grading_message
     if self.grading_message_changed?
-      self.grading_message = Kramdown::Document.new(self.grading_message, { coderay_line_numbers: nil }).to_html.html_safe
+      self.grading_message = Kramdown::Document.new(self.grading_message.to_s, { coderay_line_numbers: nil }).to_html.html_safe
     end
   end
 

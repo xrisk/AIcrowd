@@ -26,7 +26,7 @@
     <% end %>
     <td>
       <span data-controller="linkify-content">
-        <%= submission.grading_message.html_safe %>
+        <%= submission.grading_message.to_s.html_safe %>
       </span>
     </td>
     <% if @challenge.meta_challenge %><td><%= link_to challenge.challenge, challenge_path(challenge) %></td><% end %>
