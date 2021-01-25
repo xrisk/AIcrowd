@@ -164,17 +164,8 @@ class SubmissionsController < ApplicationController
   def export
     authorize @challenge, :export?
 
-    @submissions = @challenge.submissions
-      .includes(:participant, :challenge_round)
-      .where(challenge_round_id: params[:submissions_export_challenge_round_id].to_i)
-
-    downloadable = @challenge.submissions_downloadable || current_participant.admin?
-    csv_data = Submissions::CSVExportService.new(submissions: @submissions, downloadable:downloadable).call.value
-
-
-    send_data csv_data,
-              type:     'text/csv',
-              filename: "#{@challenge.challenge.to_s.parameterize.underscore}_submissions_export.csv"
+    Admins::ExportChallengeSubmissionJob.perform_later(@challenge.id, current_participant.id, params[:submissions_export_challenge_round_id].to_i)
+    return redirect_to(edit_challenge_path(@challenge), flash: { success: 'The data has been mailed to you.' })
   end
 
   def new_api
