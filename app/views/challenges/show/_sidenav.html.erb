@@ -49,10 +49,10 @@
 <% if challenge.posts.count > 0 %>
   <header class="section-header">
     <div>
-      <h4>Contributions</h4>
+      <h4>Notebooks</h4>
     </div>
 
-    <%= link_to 'See all', contributions_challenge_path(challenge), class: "btn btn-secondary btn-sm" %>
+    <%= link_to 'See all', notebooks_challenge_path(challenge), class: "btn btn-secondary btn-sm" %>
   </header>
   <%= render 'shared/posts/post_list',  posts: challenge.posts %>
 <% end %>

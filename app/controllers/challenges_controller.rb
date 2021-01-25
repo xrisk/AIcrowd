@@ -1,12 +1,12 @@
 class ChallengesController < ApplicationController
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :terminate_challenge, only: [:show, :index]
-  before_action :set_challenge, only: [:show, :edit, :update, :clef_task, :remove_image, :remove_banner, :export, :import, :remove_invited, :remove_social_media_image, :remove_banner_mobile, :contributions]
-  before_action :set_vote, only: [:show, :clef_task, :contributions]
-  before_action :set_follow, only: [:show, :clef_task, :contributions]
+  before_action :set_challenge, only: [:show, :edit, :update, :clef_task, :remove_image, :remove_banner, :export, :import, :remove_invited, :remove_social_media_image, :remove_banner_mobile, :notebooks]
+  before_action :set_vote, only: [:show, :clef_task, :notebooks]
+  before_action :set_follow, only: [:show, :clef_task, :notebooks]
   after_action :verify_authorized, except: [:index, :show]
   before_action :set_s3_direct_post, only: [:edit, :update]
-  before_action :set_challenge_rounds, only: [:edit, :update, :contributions]
+  before_action :set_challenge_rounds, only: [:edit, :update, :notebooks]
   before_action :set_filters, only: [:index]
   before_action :set_organizers_for_select, only: [:new, :create, :edit, :update]
 
@@ -207,7 +207,7 @@ class ChallengesController < ApplicationController
     challenge_invitation.destroy!
   end
 
-  def contributions
+  def notebooks
     @contributions = @challenge.posts
   end
 

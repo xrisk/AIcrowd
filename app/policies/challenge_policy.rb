@@ -79,7 +79,7 @@ class ChallengePolicy < ApplicationPolicy
     create?
   end
 
-  def contributions?
+  def notebooks?
     true
   end
 
