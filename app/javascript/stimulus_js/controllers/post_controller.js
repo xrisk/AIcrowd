@@ -37,6 +37,7 @@ export default class extends Controller {
     if (colab_link.includes("colab.research.google.com")){
       submitButton.prop('disabled', true);
       loader.removeClass('d-none')
+      greenTick.addClass('d-none')
       $.ajax({
           url: '/showcase/validate_colab_link',
           type: 'POST',
