@@ -24,9 +24,7 @@ class PostsController < InheritedResources::Base
   end
 
   def show
-    if @post.gist_id.present?
-      @execute_in_colab_url = COLAB_URL + USER_NAME + '/' + @post.gist_id
-    end
+    @execute_in_colab_url = @post.execute_in_colab_url
     unless @post.external_link.present? && @post.external_link.include?("https://colab.research.google.com")
       @external_link = @post.external_link
     end
