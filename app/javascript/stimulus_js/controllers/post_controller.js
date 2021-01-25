@@ -14,29 +14,47 @@ export default class extends Controller {
     $('.ipynb-notebook-container').css('max-height', 'unset');
   }
 
-  validateExternalLink(event){
-    const external_url = event.target.value;
+  validateColabLink(event){
+    const colab_link = event.target.value;
+    var form = $(event.target.form)
+    var submitButton  = form.find('button[type="submit"]');
+    var loader = form.find('.fetch-loader')
+    var greenTick = form.find('.green-tick')
 
-    if (external_url.includes("colab.research.google.com")){
-      var form = $(event.target.form)
-      var submitButton  = form.find('button[type="submit"]');
-      var loader = form.find('.fetch-loader')
+    if (!!colab_link && !colab_link.includes("colab.research.google.com")){
+      $(`<div class="alert sticky-top alert-flash alert-dismissible show fade flash-message position-fixed w-100" role="alert">
+          <div class="container-fluid">
+            <center>
+              Please input a colab notebook link.
+            </center>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>`).prependTo('body')
+    }
 
+    if (colab_link.includes("colab.research.google.com")){
       submitButton.prop('disabled', true);
       loader.removeClass('d-none')
+      greenTick.addClass('d-none')
       $.ajax({
-          url: '/contributions/validate_external_link',
+          url: '/showcase/validate_colab_link',
           type: 'POST',
-          data: {external_link: external_url},
+          data: {colab_link: colab_link},
           success:  function(result){
-              form.find('input[name="post[notebook_file_path]"]').val(result["notebook_file_path"]);
+              form.find('input[name="post[notebook_s3_url]"]').val(result["notebook_s3_url"]);
+              form.find('input[name="post[notebook_html]"]').val(result["notebook_html"]);
+              form.find('input[name="post[gist_id]"]').val(result["gist_id"]);
               submitButton.prop('disabled', false);
               loader.addClass('d-none')
+              greenTick.removeClass('d-none')
           },
 
           error: function(){
             submitButton.prop('disabled', false);
             loader.addClass('d-none');
+
             $(`<div class="alert sticky-top alert-flash alert-dismissible show fade flash-message position-fixed w-100" role="alert">
                 <div class="container-fluid">
                   <center>

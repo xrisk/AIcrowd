@@ -32,21 +32,14 @@ class PostsController < InheritedResources::Base
   end
 
   def update
-    if !params["remove_notebook"].nil?
-      @post = remove_notebook(@post)
-      render :edit and return
-    end
-
     @post.update(post_params)
 
-    if params["post"]["external_link"].present? && params["post"]["external_link"].include?("https://colab.research.google.com")
-      if params["post"]["notebook_file_path"].blank? && (params["post"]["external_link"] != @post.external_link)
+    if params["post"]["colab_link"].present? && params["post"]["colab_link"].include?("https://colab.research.google.com")
+      if params["post"]["notebook_s3_url"].blank? && (params["post"]["colab_link"] != @post.colab_link)
         flash[:error] = "There was some issue in fetching the colab notebook. Please try again."
         render :edit and return
       end
     end
-
-    @post = Posts::PostService.new(post_params, @post).call
 
     if @post.thumbnail.blank?
       @post.thumbnail = @post.get_random_thumbnail
@@ -54,7 +47,7 @@ class PostsController < InheritedResources::Base
 
     if @post.save
       update_post_categories if params["post"]["category_names"].present?
-      redirect_to(contributions_challenge_path(@post.challenge), notice: "The contribution has been added successfully!")
+      redirect_to(notebooks_challenge_path(@post.challenge), notice: "The contribution has been added successfully!")
     else
       flash[:error] = t(@post.errors[:base])
       render :new
@@ -62,15 +55,15 @@ class PostsController < InheritedResources::Base
   end
 
   def create
-    if params["post"]["external_link"].present? && params["post"]["external_link"].include?("https://colab.research.google.com")
-      if params["post"]["notebook_file_path"].blank?
+    if params["post"]["colab_link"].present? && params["post"]["colab_link"].include?("https://colab.research.google.com")
+      if params["post"]["notebook_s3_url"].blank?
         flash[:error] = "There was some issue in fetching the colab notebook. Please try again."
         @post = Post.new(post_params)
         render :new and return
       end
     end
 
-    @post = Posts::PostService.new(post_params).call
+    @post = Post.new(post_params)
 
     @post.participant = current_participant
     if @post.thumbnail.blank?
@@ -79,7 +72,7 @@ class PostsController < InheritedResources::Base
 
     if @post.save
       update_post_categories if params["post"]["category_names"].present?
-      redirect_to(contributions_challenge_path(@post.challenge), notice: "The contribution has been added successfully!")
+      redirect_to(notebooks_challenge_path(@post.challenge), notice: "The contribution has been added successfully!")
     else
       flash[:error] = @post.errors
       render :new
@@ -89,55 +82,35 @@ class PostsController < InheritedResources::Base
   def destroy
   end
 
-  def validate_external_link
-    url = params[:external_link]
+  def validate_colab_link
+    url = params[:colab_link]
     return unless url.include?("colab.research.google.com")
-    notebook_file_path = colab_handler(url)
+    result = Posts::PostService.new(url).call
 
-    unless notebook_file_path.present?
+    unless result.is_a?(Hash)
       render json: {}, status: 422
       return
     end
 
-    render json: {notebook_file_path: notebook_file_path}, status: 200
+    render json: result, status: 200
   end
 
   private
 
-    def colab_handler(url)
-      if url.include? "colab.research.google.com/drive/"
-        colab_id = url.scan(/[-\w]{25,}/)[0]
-        download_url = "https://docs.google.com/uc?export=download&id=#{colab_id}"
-      elsif url.include? "colab.research.google.com/github/"
-        github_url = url.scan(/github(.*)/)[0][0]
-        download_url = "https://github.com" + github_url.split("#")[0]
-        download_url = download_url.gsub("blob", "raw")
-      elsif url.include?("colab.research.google.com/gist/")
-        gist_url = url.scan(/gist(.*)/)[0][0]
-        download_url = "https://gist.github.com" + gist_url.split("#")[0] + "/raw"
-      end
-      download = open(download_url) rescue nil
-      return if download.nil?
-      file_name = "#{SecureRandom.uuid}.ipynb"
-      file_path = "#{Rails.root.join('public', 'uploads', file_name)}"
-      IO.copy_stream(download, file_path)
-      return file_path
-    end
-
     def post_params
-      params.require(:post).permit(:id, :title, :tagline, :thumbnail, :description, :external_link, :challenge_id, :submission_id, :notebook_file_path, :notebook_file)
+      params.require(:post).permit(:id, :title, :tagline, :thumbnail, :description, :external_link, :challenge_id, :submission_id, :colab_link, :notebook_file_path, :notebook_s3_url, :notebook_html, :gist_id)
     end
 
-    def remove_notebook(post)
-      post.gist_id = nil
-      post.notebook_s3_url = nil
-      post.notebook_html = nil
-      if post.external_link.present? && post.external_link.include?("colab.research.google.com/drive/")
-        post.external_link = nil
-      end
-      post.save!
-      post
-    end
+    # def remove_notebook(post)
+    #   post.gist_id = nil
+    #   post.notebook_s3_url = nil
+    #   post.notebook_html = nil
+    #   if post.external_link.present? && post.external_link.include?("colab.research.google.com/drive/")
+    #     post.external_link = nil
+    #   end
+    #   post.save!
+    #   post
+    # end
 
     def update_post_categories
       @post.category_posts.destroy_all if @post.category_posts.present?
