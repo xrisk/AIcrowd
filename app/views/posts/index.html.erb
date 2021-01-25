@@ -32,7 +32,18 @@
                   </div>
                 </div>
               </div>
-              <%= render partial: 'shared/votes/button', locals: { votable: post, vote: post.vote(current_participant) } %>
+              <div class="float-right">
+                <div class="float-right">
+                  <%= render partial: 'shared/votes/button', locals: { votable: post, vote: post.vote(current_participant) } %>
+                </div>
+                <div class="contribution-user-time d-flex mt-5 small" style="clear: both;">
+                  <a href="#" class="font-weight-light">View</a>
+                  <% if !post.execute_in_colab_url.nil? %>
+                    &nbsp;·&nbsp;
+                    <a href="<%= post.execute_in_colab_url %>" target="_blank" class="font-weight-light">Open in Colab</a>
+                  <% end %>
+                </div>
+              </div>
             </li>
           <% end %>
         </ul>

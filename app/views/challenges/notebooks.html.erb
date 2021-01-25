@@ -12,7 +12,7 @@
       </div>
       <div class="col-12">
         <ul class="list-group list-group-flush-px-0 list-group-contributions">
-          <% @contributions.friendly.all.each do |post| %>
+          <% @notebooks.friendly.all.each do |post| %>
             <li class="list-group-item">
               <div class="contribution-details">
                 <a class="image-link" href="<%= post_path(post) %>"><img src="<%=post.thumbnail%>"></a>
