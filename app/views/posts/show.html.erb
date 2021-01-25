@@ -1,67 +1,70 @@
+<div class="masthead masthead-contribution masthead-blog-post">
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-12">
+        <h4><a href="<%= challenge_path(@post.challenge) %>"><%= @post.challenge.challenge %></a></h4>
+        <h1><%= @post.title %></h1>
+        <p class="masthead-subtitle"><%= @post.tagline %></p>
+      </div>
+    </div>
+    <!-- /title -->
+
+    <div class="row">
+      <div class="col-12 d-flex align-items-center flex-wrap">
+        <div class="author">
+          <span class="mr-2">By</span>
+          <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant } %>
+        </div>
+
+        <div class="btn-set" aria-hidden="true">
+          <%= render partial: 'shared/votes/button', locals: { votable: @post, vote: @post.vote(current_participant) } %>
+          <% if !@execute_in_colab_url.nil? %><button type="button" class="btn btn-sm btn-secondary"><a href='<%= @execute_in_colab_url %>' target="_blank" class="text-secondary"><span class="fa fa-cogs mr-1"></span>Open in Colab</a></button><% end %>
+          <% if current_participant.present? && @post.participant_id == current_participant.id %>
+            <%= button_to 'Edit', edit_post_path(@post), class: "btn btn-secondary btn-sm float-right", method: :get %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <!-- /author/options -->
+
+  </div>
+</div>
+
 <!-- section -->
-<section class="section-p-md">
+<section class="section">
   <div class="container-fluid">
     <div class="row">
       <!-- md content -->
-      <div class="col-md-12 text-center">
-        <h1 id="introduction" class="mt-0"><%=@post.title%></h1>
-        <% if current_participant.present? && @post.participant_id == current_participant.id %>
-          <%= button_to 'Edit', edit_post_path(@post), class: "btn btn-secondary btn-sm float-right", method: :get %>
-        <% end %>
-        <p><%= @post.tagline %></p>
-      </div>
-      <div class="container-fluid row">
-        <div class="col-md-6 p-0 b-0 pt-2">
-          <i class="float-right">Contributed by &nbsp;</i>
-        </div>
-        <div class="col-md-6 float-left p-0 b-0">
-          <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant} %>
-        </div>
-      </div>
-
-      <div class="col-md-1"></div>
-      <div class="col-md-7 mt-5 posts-form">
-        <% if @post.thumbnail.present? %>
-          <div class="col-md-12 text-center">
-            <img src="<%= @post.thumbnail %>" class="img-fluid" style="max-width: 100%; max-height: 600px;" />
-          </div>
-          <hr class="w-50"/>
-        <% end %>
-        <div class="col-md-12 mt-4 md-content">
+      <div class="col-md-7 posts-form mt-4">
+        <div class="col-md-12 md-content">
           <%= @post.description.html_safe %>
         </div>
       </div>
-      <!-- /md content -->
-
-      <!-- top contributors -->
-      <div class="top-contributors-container col-md-4 mt-5">
-        <%= render 'posts/sidenav', post: @post %>
-      </div>
-      <!-- /top contributors -->
-
     </div>
   </div>
 </section>
 
-<section class="section-p-md">
+<section class="section">
   <div class="container-fluid">
     <% if @post.notebook_html.present? %>
       <hr/>
       <div class="row">
         <div class="col-md-9">
-          <button type="button" class="btn btn-sm btn-link">Jupyter Notebook</button>
+          <button type="button" class="btn btn-sm btn-link">Notebook</button>
         </div>
         <div class="col-md-0">
-          <button type="button" class="btn btn-sm btn-primary"><a href='<%= @download_url %>' target="_blank">Download</a></button>
+          <button type="button" class="btn btn-sm btn-primary"><a href='<%= @download_url %>' target="_blank"><span class="fa fa-download mr-1"></span>Download</a></button>
         </div>
         <div class="col-md-1">
-          <button type="button" class="btn btn-sm btn-primary"><a href='<%= @execute_in_colab_url %>' target="_blank">Execute in Colab</a></button>
+          <button type="button" class="btn btn-sm btn-primary"><a href='<%= @execute_in_colab_url %>' target="_blank"><span class="fa fa-cogs mr-1"></span>Open in Colab</a></button>
         </div>
       </div>
       <hr/>
       <div class="ipynb-notebook-container">
         <%= @post.notebook_html.html_safe %>
       </div>
+      <div class="d-none show-more-btn w-100 text-center p-2 cursor-pointer font-weight-bold text-secondary" style="background: #f6f9ff;" data-controller="post" data-action="click->post#expandNotebook">↕️ Read More</div>
     <% end %>
   </div>
   <div class="container-fluid">
@@ -80,6 +83,12 @@
         <% end %>
       </div>
     <% end %>
+  </div>
+  <hr/>
+  <div class="container-fluid">
+    <div class="row pl-3">
+      <%= render partial: 'shared/votes/button', locals: { votable: @post, vote: @post.vote(current_participant), show_users: true } %>
+    </div>
   </div>
   <hr/>
   <div class="container-fluid">

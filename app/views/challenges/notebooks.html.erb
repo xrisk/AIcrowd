@@ -1,0 +1,16 @@
+<%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
+<%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
+<div class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 d-flex align-items-start justify-content-between">
+          <div class="mb-5">
+            <h2 class="mb-1">Notebooks</h2>
+            <small>Community contributed notebooks to help you get started right away</small>
+          </div>
+          <a class="btn btn-primary" href="<%= new_post_path(challenge: @challenge) %>"><span class="fa fa-plus-circle mr-2"></span>Create Notebook</a>
+      </div>
+      <%= render partial: 'shared/posts/index',  locals: { posts: @notebooks } %>
+    </div>
+  </div>
+</div>

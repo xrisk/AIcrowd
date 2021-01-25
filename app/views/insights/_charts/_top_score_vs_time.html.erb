@@ -15,7 +15,7 @@
       <% end %>
     </div>
       <% challenge_rounds.each do |challenge_round| %>
-        <% if challenge_round.default_leaderboard.score_secondary_title.present? %>
+        <% if challenge_round.default_leaderboard.score_secondary_title.present? && challenge_round.default_leaderboard.secondary_sort_order != :hidden %>
           <div class="dropdown display-none" data-target="chart.displayScore" data-round="<%= challenge_round.id %>">
             <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown">
               <%= challenge_round.default_leaderboard.get_score_title %>

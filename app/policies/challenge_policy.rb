@@ -79,6 +79,10 @@ class ChallengePolicy < ApplicationPolicy
     create?
   end
 
+  def notebooks?
+    true
+  end
+
   def leaderboard_public?
     @record.show_leaderboard == true
   end
