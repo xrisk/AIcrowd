@@ -247,7 +247,7 @@ Rails.application.routes.draw do
   resources :practice, only: [:index]
   resources :posts, path: :showcase do
     resources :votes, only: [:create, :destroy]
-    post :validate_external_link, on: :collection
+    post :validate_colab_link, on: :collection
   end
 
   match '/contact', to: 'pages#contact', via: :get
