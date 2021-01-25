@@ -208,7 +208,7 @@ class ChallengesController < ApplicationController
   end
 
   def notebooks
-    @contributions = @challenge.posts
+    @notebooks = @challenge.posts
   end
 
   private
