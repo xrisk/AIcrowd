@@ -54,7 +54,7 @@
           <div class="row">
             <div class="col-md-9">
               <%= f.text_field :colab_link, placeholder: 'https://colab.research.google.com/xxxxxxxxxxxx', class: "form-control", data: {'action': "focusout->post#validateColabLink", "controller": "post"} %>
-              <small>💪 Because we know our community has no limit when it comes to creativity</small>
+              <small>💪 Link to a Google Colab Notebook. Please make sure it is a publically shareable link.</small>
             </div>
             <div class="col-md-3 float-right fetch-loader d-none">
               <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
@@ -73,6 +73,7 @@
         <div class="form-group">
           <label for="external_link">External Link</label>
           <%= f.text_field :external_link, placeholder: 'https://www.youtube.com/watch?v=xxxxxxxxxxxxx', class: "form-control"%>
+           <small>💪 Link to a Youtube video, Blog post or anything that lets you express your creativity.</small>
         </div>
 
         <div class="form-group">
