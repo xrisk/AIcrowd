@@ -20,12 +20,12 @@
             <div class="float-right">
               <%= render partial: 'shared/votes/button', locals: { votable: post, vote: post.vote(current_participant) } %>
             </div>
-            <div class="contribution-user-time d-flex mt-5 small hidden-sm hidden-xs" style="clear: both;">
-              <a href="<%= post_path(post) %>" class="font-weight-light">View</a>
+            <div class="contribution-user-time d-flex mt-5 small flex-row-reverse" style="clear: both;">
               <% if !post.execute_in_colab_url.nil? %>
-                &nbsp;·&nbsp;
                 <a href="<%= post.execute_in_colab_url %>" target="_blank" class="font-weight-light">Open in Colab</a>
+                &nbsp;·&nbsp;
               <% end %>
+              <a href="<%= post_path(post) %>" class="font-weight-light">View</a>
             </div>
           </div>
         </li>

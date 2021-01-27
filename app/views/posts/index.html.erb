@@ -1,12 +1,15 @@
 <div class="section-p-md">
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12 d-flex align-items-start justify-content-between">
-        <div class="mb-5">
-          <h1>AIcrowd Showcase</h1>
+      <div class="col-xs-12 col-sm-12 col-lg-6">
+        <div class="mt-lg-5">
+          <h1><span class="text-primary">AI</span>crowd Showcase</h1>
           <p>Collection of contributed notebooks, helpful resources and <br>inspiring projects made with ❤️ by the community</p>
           <a class="btn btn-primary mt-5 btn-lg" href="<%= new_post_path %>"><span class="fa fa-plus-circle mr-2"></span>Create</a>
         </div>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-lg-6 mt-lg-n5 mb-lg-n5">
+        <%= image_tag "/assets/img/showcase-description.png", class: 'w-100' %>
       </div>
     </div>
     <%= render partial: 'shared/posts/index',  locals: { posts: Post.all } %>
