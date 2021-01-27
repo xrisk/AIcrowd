@@ -21,16 +21,13 @@
       <% if challenge.dynamic_content_tab.present? %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: challenge.dynamic_content_tab, link: challenge_dynamic_contents_path(challenge)} %>
       <% end %>
-      <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Rules', link: challenge_challenge_rules_path(challenge) } %>
 
-      <li class="overflow-nav nav-item dropdown ml-auto">
-        <a class="nav-link overflow-nav-title" data-toggle="dropdown" href="#" role="button">
-          <svg width="16" height="4" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2 0C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM8 0C6.9 0 6 .9 6 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#5D5F60" fill-rule="nonzero"/>
-          </svg>
+     <li class="nav-item dropdown overflow-nav">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More <svg xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="0 0 10 5"><polygon fill="#5D5F60" points="7 10 12 15 17 10" transform="translate(-7 -10)"/></svg>
         </a>
-        <ul class="overflow-nav-list dropdown-menu dropdown-menu-right"></ul>
-      </li>
+        <div class="dropdown-menu dropdown-menu-right overflow-nav-list">
+        </div>
+    </li>
     </ul>
 
     <% if required_terms_or_rules_path(challenge).present? %>
