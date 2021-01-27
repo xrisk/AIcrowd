@@ -1,6 +1,7 @@
 class PostsController < InheritedResources::Base
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :set_post, only: [:show, :edit, :update]
+  before_action :set_my_challenges, only: [:new, :edit, :update]
 
   COLAB_URL = ENV['COLAB_URL']
   GIST_URL = ENV['GIST_URL']
@@ -16,6 +17,16 @@ class PostsController < InheritedResources::Base
 
   def set_post
     @post = Post.friendly.find(params[:id])
+  end
+
+  def set_my_challenges
+    @my_challenges = ChallengeParticipant.where(participant_id: current_participant.id).map(&:challenge).collect {|c| [ c.challenge, c.id] }
+    if params[:challenge].present?
+      challenge = Challenge.friendly.find(params[:challenge])
+      if !@my_challenges.include?([challenge.challenge, challenge.id])
+        @my_challenges.push([challenge.challenge, challenge.id])
+      end
+    end
   end
 
   def index

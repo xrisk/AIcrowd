@@ -1,5 +1,5 @@
 function handleVoteButtonRefresh() {
-  const voteLinkId       = "#<%= "#{votes_link_id(@votable)}" %>";
+  const voteLinkId       = "*[id*=<%= "#{votes_link_id(@votable)}" %>]";
   const refreshedContent = "<%= j render 'shared/votes/button', votable: @votable, vote: @vote %>";
 
   $(voteLinkId).replaceWith(refreshedContent);

@@ -77,7 +77,7 @@
 
         <div class="form-group">
           <span class="label-text">Challenge<sup>*</sup></span>
-          <%= f.select :challenge_id, ChallengeParticipant.where(participant_id: current_participant.id).map(&:challenge).collect {|c| [ c.challenge, c.id] },
+          <%= f.select :challenge_id, @my_challenges,
                 {prompt: 'Select Challenge (optional)'}, {class: "select2 form-control", required: true }%>
           <small class="form-text text-muted">🏆 Which challenge is it related to?</small></span>
         </div>
