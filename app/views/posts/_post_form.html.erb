@@ -11,6 +11,26 @@
           <hr/>
           <br>
         </div>
+        <div class="modal preview-modal" id="preview-modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document" style="max-width: 90%;">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="previewModalLabel">Preview</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                 <div class="ipynb-notebook-container" id="notebook-preview-container">
+                 </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
       <!-- account settings -->
       <%= form_for @post, html: { class: 'posts-form' } do |f| %>
@@ -54,7 +74,7 @@
           <div class="row">
             <div class="col-md-9">
               <%= f.text_field :colab_link, placeholder: 'https://colab.research.google.com/xxxxxxxxxxxx', class: "form-control", data: {'action': "focusout->post#validateColabLink", "controller": "post"} %>
-              <small>💪 Because we know our community has no limit when it comes to creativity</small>
+              <small>💪 Link to a Google Colab Notebook. Please make sure it is a publically shareable link.</small>
             </div>
             <div class="col-md-3 float-right fetch-loader d-none">
               <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
@@ -67,12 +87,16 @@
             <div class="d-none green-tick" style="height: 36px">
               <%= image_tag "misc/green-tick.png", style: "height:100%" %>
             </div>
+            <button type="button" class="btn btn-secondary btn-sm d-none preview-button" data-toggle="modal" data-target="#preview-modal" data-action="click->post#fillFormData" style="height: 60%">
+              Preview
+            </button>
           </div>
         </div>
 
         <div class="form-group">
           <label for="external_link">External Link</label>
           <%= f.text_field :external_link, placeholder: 'https://www.youtube.com/watch?v=xxxxxxxxxxxxx', class: "form-control"%>
+           <small>💪 Link to a Youtube video, Blog post or anything that lets you express your creativity.</small>
         </div>
 
         <div class="form-group">
@@ -92,11 +116,8 @@
         <%= f.button 'Submit', type: 'submit', class: "btn btn-primary" %>
       <% end %>
 
-      </div>
+    </div>
       <!-- /account settings -->
 
-    </div>
   </div>
 </div>
-<script>
-</script>

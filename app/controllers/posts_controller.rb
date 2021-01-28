@@ -74,6 +74,12 @@ class PostsController < InheritedResources::Base
       end
     end
 
+    if params["post"]["description"].size < 50 && params["post"]["notebook_s3_url"].blank?
+      flash[:error] = "Please keep the description to a minimum of 50 characters or upload a colab notebook."
+      @post = Post.new(post_params)
+      render :new and return
+    end
+
     @post = Post.new(post_params)
 
     @post.participant = current_participant

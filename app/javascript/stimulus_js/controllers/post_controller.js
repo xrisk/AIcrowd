@@ -20,6 +20,8 @@ export default class extends Controller {
     var submitButton  = form.find('button[type="submit"]');
     var loader = form.find('.fetch-loader')
     var greenTick = form.find('.green-tick')
+    var previewButton = $('.preview-button')
+    var notebookPreviewDiv = document.getElementById('notebook-preview-container')
 
     if (!!colab_link && !colab_link.includes("colab.research.google.com")){
       $(`<div class="alert sticky-top alert-flash alert-dismissible show fade flash-message position-fixed w-100" role="alert">
@@ -38,6 +40,7 @@ export default class extends Controller {
       submitButton.prop('disabled', true);
       loader.removeClass('d-none')
       greenTick.addClass('d-none')
+      previewButton.addClass('d-none')
       $.ajax({
           url: '/showcase/validate_colab_link',
           type: 'POST',
@@ -46,9 +49,13 @@ export default class extends Controller {
               form.find('input[name="post[notebook_s3_url]"]').val(result["notebook_s3_url"]);
               form.find('input[name="post[notebook_html]"]').val(result["notebook_html"]);
               form.find('input[name="post[gist_id]"]').val(result["gist_id"]);
+              notebookPreviewDiv.insertAdjacentHTML('afterbegin', result["notebook_html"]);
+
+
               submitButton.prop('disabled', false);
               loader.addClass('d-none')
               greenTick.removeClass('d-none')
+              previewButton.removeClass('d-none')
           },
 
           error: function(){
