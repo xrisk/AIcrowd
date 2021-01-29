@@ -209,6 +209,14 @@ class ChallengesController < ApplicationController
 
   def notebooks
     @notebooks = @challenge.posts
+    if @challenge.meta_challenge?
+      @notebooks ||= []
+      Challenge.where(id: @challenge.challenge_problems.pluck(:problem_id)).each do |challenge|
+        @notebooks = @notebooks + challenge.posts
+      end
+    end
+
+    return @notebooks
   end
 
   private
