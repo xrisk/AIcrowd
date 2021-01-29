@@ -12,6 +12,7 @@ class Submission < ApplicationRecord
   belongs_to :ml_challenge, optional: true, class_name: 'Challenge'
   belongs_to :participant, optional: true
   belongs_to :challenge_round, optional: true
+  has_one :notebook, as: :notebookable
 
   with_options dependent: :destroy do
     has_many :submission_files

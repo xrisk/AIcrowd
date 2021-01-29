@@ -102,7 +102,7 @@ class PostsController < InheritedResources::Base
   def validate_colab_link
     url = params[:colab_link]
     return unless url.include?("colab.research.google.com")
-    result = Posts::PostService.new(url).call
+    result = Notebooks::NotebookService.new(url).call
 
     unless result.is_a?(Hash)
       render json: {}, status: 422
