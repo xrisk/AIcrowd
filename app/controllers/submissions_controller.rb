@@ -94,6 +94,10 @@ class SubmissionsController < ApplicationController
       @description_markdown = @description_markdown.html_safe
     end
 
+    if @submission.notebook.present?
+      @execute_in_colab_url = @submission.notebook.execute_in_colab_url
+    end
+
     render :show
   end
 
