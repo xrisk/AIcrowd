@@ -100,6 +100,15 @@
         </div>
 
         <div class="form-group">
+          <%= f.label :private, class: "toggle-switch toggle-switch-large" do %>
+            <%= f.check_box :private, class: "active-switch" %>
+            <span class="switcher"></span>
+            <span class="label">Private</span>
+          <% end %>
+           <small>👋 Is this contribution private?</small>
+        </div>
+
+        <div class="form-group">
           <span class="label-text">Challenge<sup>*</sup></span>
           <%= f.select :challenge_id, @my_challenges,
                 {prompt: 'Select Challenge (optional)'}, {class: "select2 form-control", required: true }%>
