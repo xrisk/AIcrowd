@@ -31,7 +31,7 @@
               </div>
             </li>
           <% elsif post.private? && current_participant.present? && policy(post.challenge).edit? %>
-            <li class="list-group-item" style="background-color: #f1f1f1;">
+            <li class="list-group-item" style="background-color: #f9f9f9;">
               <div class="contribution-details">
                 <a class="image-link" href="<%= post_path(post) %>"><img src="<%=post.thumbnail%>"></a>
 
@@ -48,7 +48,9 @@
               </div>
               <div class="float-right">
                 <div class="float-right" data-toggle="tooltip" title="Visible only to contributor and challenge organizers">
+                  <button type='button' class='btn btn-secondary btn-sm'>
                   🔒
+                  </button>
                 </div>
                 <div class="contribution-user-time d-flex mt-5 small flex-row-reverse" style="clear: both;">
                   <% if !post.execute_in_colab_url.nil? %>
