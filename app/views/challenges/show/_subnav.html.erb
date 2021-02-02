@@ -21,6 +21,7 @@
       <% if challenge.dynamic_content_tab.present? %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: challenge.dynamic_content_tab, link: challenge_dynamic_contents_path(challenge)} %>
       <% end %>
+      <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Rules', link: challenge_challenge_rules_path(challenge)} %>
 
      <li class="nav-item dropdown overflow-nav">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More <svg xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="0 0 10 5"><polygon fill="#5D5F60" points="7 10 12 15 17 10" transform="translate(-7 -10)"/></svg>

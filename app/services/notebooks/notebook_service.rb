@@ -1,6 +1,7 @@
-module Posts
-  class PostService < BaseService
+module Notebooks
+  class NotebookService < BaseService
     include ActiveModel::Model
+    include S3FilesHelper
 
     def initialize(url)
       @url = url
@@ -16,7 +17,7 @@ module Posts
         return
       end
       notebook_gist_url = `gist #{notebook_file_path}`
-      notebook_s3_url = upload_to_s3(notebook_file_path, filename)
+      notebook_s3_url = "testing" # upload_to_s3(notebook_file_path, filename)
       notebook_html = File.read(Rails.root.join('public', 'uploads', html_filename)).html_safe
       gist_id = notebook_gist_url.strip.gsub(ENV['GIST_URL'], "")
       File.delete(notebook_file_path) if File.exist?(notebook_file_path)
@@ -43,6 +44,8 @@ module Posts
       elsif url.include?("colab.research.google.com/gist/")
         gist_url = url.scan(/gist(.*)/)[0][0]
         download_url = "https://gist.github.com" + gist_url.split("#")[0] + "/raw"
+      else
+        download_url = s3_expiring_url(url)
       end
       download = open(download_url) rescue nil
       return if download.nil?
