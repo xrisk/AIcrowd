@@ -1,6 +1,6 @@
 class ChallengeLeaderboardExtra < ApplicationRecord
   belongs_to :challenge_round
-  belongs_to :challenge
+  belongs_to :challenge, optional: true
 
   validates :ranking_window,
             numericality: { only_integer:             true,
@@ -54,6 +54,8 @@ class ChallengeLeaderboardExtra < ApplicationRecord
   end
 
   def update_challenge_media
-    self.challenge.update!(media_on_leaderboard: self.media_on_leaderboard)
+    if self.challenge_id.present?
+      self.challenge.update!(media_on_leaderboard: self.media_on_leaderboard)
+    end
   end
 end
