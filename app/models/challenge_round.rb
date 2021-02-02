@@ -33,6 +33,7 @@ class ChallengeRound < ApplicationRecord
   scope :started, -> { where("start_dttm < ?", Time.current) }
 
   after_save :create_default_leaderboard
+  after_commit :default_leaderboard_check
 
   after_initialize :set_defaults
 
@@ -55,6 +56,14 @@ class ChallengeRound < ApplicationRecord
   def create_default_leaderboard
     leaderboard = ChallengeLeaderboardExtra.where(default: true, challenge_round_id: id, challenge_id: challenge.id).first_or_initialize
     leaderboard.save!
+  end
+
+  def default_leaderboard_check
+    default_cle_count = ChallengeLeaderboardExtra.where(default: true, challenge_round_id: self.id, challenge_id: self.challenge_id).count
+    if default_cle_count == 0 || default_cle_count > 1
+      self.challenge_leaderboard_extra.update_all(default: false)
+      self.challenge_leaderboard_extra.order(:created_at).first.update(default: true)
+    end
   end
 
 end

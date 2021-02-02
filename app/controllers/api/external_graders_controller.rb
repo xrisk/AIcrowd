@@ -400,8 +400,8 @@ class Api::ExternalGradersController < Api::BaseController
     participant_leaderboard = get_qualification(participant.id, 'Participant', challenge)
     team_leaderboard = get_qualification(get_team_id(challenge, participant.id), 'Team', challenge)
 
-    if (not participant_leaderboard.nil? && participant_leaderboard.score >= min_score) || (
-    not team_leaderboard.nil? && team_leaderboard.score >= min_score)
+    if (!participant_leaderboard.nil? && participant_leaderboard.score >= min_score) || (
+    !team_leaderboard.nil? && team_leaderboard.score >= min_score)
       return true
     end
     return false
@@ -413,7 +413,7 @@ class Api::ExternalGradersController < Api::BaseController
                  .where(submitter_id: submitter_id,
                  submitter_type: submitter_type,
                  challenge_round_id: challenge.previous_round.id).first
-      return leaderboard if not leaderboard.nil?
+      return leaderboard if !leaderboard.nil?
     end
     nil
   end

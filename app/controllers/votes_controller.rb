@@ -4,8 +4,7 @@ class VotesController < ApplicationController
   respond_to :js
 
   def create
-    @vote             = @votable.votes.new
-    @vote.participant = current_participant
+    @vote             = @votable.votes.find_or_create_by(participant: current_participant)
     authorize @vote
     @vote.save
     @votable.update(vote_count: @votable.votes.count)

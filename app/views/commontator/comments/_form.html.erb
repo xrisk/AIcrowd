@@ -24,6 +24,10 @@
   </div>
 <% end %>
 
+<div class="topic-add-comment">
+  <%= render partial: 'participants/get_user_profile', locals: { participant: current_participant, username: 'false' } %>
+
+
 <%= form_for([commontator, thread, comment], remote: !no_remote) do |form| %>
   <%= form.hidden_field :parent_id %>
 
@@ -36,10 +40,10 @@
 
   <div class="field">
     <%=
-      form.text_area :body, rows: '7', id: new_record ?
+      form.text_area :body, rows: '5', id: new_record ?
         comment.parent.nil? ? "commontator-thread-#{@commontator_thread.id}-new-comment-body" :
                               "commontator-comment-#{comment.parent.id}-reply" :
-        "commontator-comment-#{comment.id}-edit-body"
+        "commontator-comment-#{comment.id}-edit-body", class: 'form-control'
     %>
   </div>
 
@@ -52,3 +56,4 @@
     %>
   </div>
 <% end %>
+</div>

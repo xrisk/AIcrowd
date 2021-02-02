@@ -37,6 +37,16 @@ module Admin
       mail(to: participant.email, subject: subject)
     end
 
+    def challenge_submissions_csv(csv_data, participant, challenge, challenge_round)
+      @participant           = participant
+      @challenge             = challenge
+      @challenge_round       = challenge_round
+      subject                = "[#{challenge.challenge}] Export for #{challenge_round.challenge_round}’s submission"
+      attachments["#{@challenge.challenge.to_s.parameterize.underscore}_submissions_export.csv"] = {mime_type: 'text/csv', content: csv_data}
+
+      mail(to: participant.email, subject: subject)
+    end
+
     private
 
     def aicrowd_admins

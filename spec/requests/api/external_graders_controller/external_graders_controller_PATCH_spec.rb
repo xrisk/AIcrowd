@@ -286,7 +286,7 @@ RSpec.describe Api::ExternalGradersController, type: :request do
       it { expect(json(response.body)[:message]).to eq("Submission #{submission1.id} updated") }
       it { expect(json(response.body)[:submission_id]).to eq(submission1.id.to_s) }
       it { expect(submission1.grading_status_cd).to eq('submitted') }
-      it { expect(submission1.grading_message).to eq('in progress') }
+      it { expect(submission1.grading_message).to include('in progress') }
     end
 
     context "with invalid submission id" do

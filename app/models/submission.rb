@@ -5,12 +5,14 @@ class Submission < ApplicationRecord
   has_paper_trail
 
   before_validation :generate_short_url
+  before_validation :kramdown_grading_message
 
   belongs_to :challenge, counter_cache: true
   belongs_to :meta_challenge, optional: true, class_name: 'Challenge'
   belongs_to :ml_challenge, optional: true, class_name: 'Challenge'
   belongs_to :participant, optional: true
   belongs_to :challenge_round, optional: true
+  has_one :notebook, as: :notebookable
 
   with_options dependent: :destroy do
     has_many :submission_files
@@ -64,7 +66,8 @@ class Submission < ApplicationRecord
     Notification::SubmissionNotificationJob.perform_later(id)
   end
 
-  after_save :give_awarding_point
+  #TODO: Disabled badge awards
+  #after_save :give_awarding_point
 
   after_destroy do
     CalculateLeaderboardJob
@@ -132,9 +135,15 @@ class Submission < ApplicationRecord
     if short_url.blank?
       short_url = nil
       begin
-        short_url = SecureRandom.hex(6)
+        short_url = SecureRandom.hex(12)
       end while (Submission.exists?(short_url: short_url))
       self.short_url = short_url
+    end
+  end
+
+  def kramdown_grading_message
+    if self.grading_message_changed?
+      self.grading_message = Kramdown::Document.new(self.grading_message.to_s, { coderay_line_numbers: nil }).to_html.html_safe
     end
   end
 

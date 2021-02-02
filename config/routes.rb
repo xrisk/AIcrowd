@@ -16,6 +16,7 @@ def challenge_routes
     get :export
     post :import
     get :remove_invited
+    get :notebooks
   end
 
   resources :teams, only: [:create, :show], param: :name, constraints: { name: %r{[^?/]+} }, format: false, controller: 'challenges/teams' do
@@ -187,6 +188,12 @@ Rails.application.routes.draw do
   resources :blogs, only: [:index, :show] do
     resources :votes, only: [:create, :destroy]
   end
+  resources :comment, only: [:index, :show] do
+    resources :votes, only: [:create, :destroy]
+  end
+  resources :commontator_comment, only: [:index, :show] do
+    resources :votes, only: [:create, :destroy]
+  end
 
   resources :teams, only: [:show], param: :name, constraints: { name: %r{[^?/]+} }, format: false # legacy
   resources :claim_emails, only: [:index, :create], controller: 'team_invitations/claim_emails'
@@ -238,8 +245,9 @@ Rails.application.routes.draw do
 
   resources :team_members, path: "our_team", only: [:index]
   resources :practice, only: [:index]
-  resources :posts, path: :contributions do
+  resources :posts, path: :showcase do
     resources :votes, only: [:create, :destroy]
+    post :validate_colab_link, on: :collection
   end
 
   match '/contact', to: 'pages#contact', via: :get

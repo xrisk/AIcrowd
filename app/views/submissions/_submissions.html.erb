@@ -16,7 +16,7 @@
     </td>
     <td><span class="badge <%= submission_grade_class(submission) %>"><%= submission.grading_status_cd %></span></td>
     <td><%= submission_formatted_value(submission, submission.score_display) %></td>
-    <% if !@challenge.meta_challenge && challenge_round&.default_leaderboard&.score_secondary_title.present? %>
+    <% if !@challenge.meta_challenge && challenge_round&.default_leaderboard&.score_secondary_title.present? && challenge_round&.default_leaderboard&.secondary_sort_order != :hidden %>
       <td><%= submission_formatted_value(submission, submission.score_secondary) %></td>
     <% end %>
     <% if !@challenge.meta_challenge %>
@@ -26,7 +26,7 @@
     <% end %>
     <td>
       <span data-controller="linkify-content">
-        <%= submission.grading_message %>
+        <%= submission.grading_message.to_s.html_safe %>
       </span>
     </td>
     <% if @challenge.meta_challenge %><td><%= link_to challenge.challenge, challenge_path(challenge) %></td><% end %>

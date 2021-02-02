@@ -11,4 +11,8 @@ module PostsHelper
     end
     raw(raw_options)
   end
+
+  def votes_on_comment(comment, participant)
+    Vote.where(participant_id: participant.id, votable_id: comment.id, votable_type: 'CommontatorComment').first if participant.present?
+  end
 end
