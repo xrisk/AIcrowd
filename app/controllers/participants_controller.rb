@@ -105,8 +105,8 @@ class ParticipantsController < ApplicationController
   end
 
   def read_notification
-    if params[:ids].present? # Its a JS request
-      @notifications = current_user.notifications.where(id: JSON.parse(params[:ids]))
+    if params[:is_js_request].present? # Its a JS request
+      @notifications = current_user.notifications.unread
       @notifications.update_all(is_new: false)
     else
       @notification = current_user.notifications.find(params[:id])
