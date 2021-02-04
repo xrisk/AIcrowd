@@ -17,14 +17,14 @@ module Admins
 
 
 
-      downloadable = challenge.submissions_downloadable || participant.admin?
+      downloadable = @challenge.submissions_downloadable || participant.admin?
 
-      submissions = Submission.where(id: submission_ids)
+      submissions = Submission.includes(:participant, :challenge_round).where(id: submission_ids)
 
 
       csv_data = Submissions::CSVExportService.new(submissions: submissions, downloadable: downloadable).call.value
 
-      Admin::NotificationsMailer.challenge_submissions_csv(csv_data, participant, challenge, challenge_round).deliver_later
+      Admin::NotificationsMailer.challenge_submissions_csv(csv_data, participant, @challenge, challenge_round).deliver_later
     end
 
     def freeze_record_for_organizer

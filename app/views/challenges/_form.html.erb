@@ -42,7 +42,7 @@
               </div>
 
               <div id='tab-misc' class="tab-pane fade">
-                <%= render partial: 'challenges/tabs/misc_form', locals: { f: f, challenge: challenge, challenge_rounds: challenge_rounds } %>
+                <%= render partial: 'challenges/tabs/misc_form', locals: { f: f, challenge: challenge, challenge_rounds: challenge_rounds, challenge_leaderboard_list: challenge_leaderboard_list } %>
               </div>
 
               <% if current_participant.admin? %>

@@ -1,12 +1,3 @@
-<%
-  result = []
-  challenge_rounds.each do |challenge_round|
-    challenge_round.challenge_leaderboard_extras.each do |challenge_leaderboard_extra|
-      result << ["#{challenge_round.challenge_round}-#{challenge_leaderboard_extra.name}", challenge_leaderboard_extra.id]
-    end
-  end
-
-%>
 <div class="challenges-form__thin-tab">
   <h2 class="challenges-form__heading">Challenge Export</h2>
 
@@ -33,7 +24,7 @@
   <div class="form-group">
     <label>Challenge Round and Leaderboard for Submissions Export</label>
     <%= select_tag :submissions_export_challenge_round_leaderboard_id,
-                  options_for_select(result),
+                  options_for_select(challenge_leaderboard_list),
                   id: 'submissions-export-rounds-select',
                   class: 'form-control' %>
   </div>
