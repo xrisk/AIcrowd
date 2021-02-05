@@ -12,17 +12,24 @@
 <div class="section-pt-sm-pb-md">
   <div class="container-fluid">
     <% @notifications.each do |notification| %>
-    <div class="topic-comment <%= unread_notification?(notification) %>">
-      <div class="discussion-topic-body">
-        <%= link_to participant_read_notification_path(current_participant, id: notification.id), class: "dropdown-item" do %>
-          <div>
-            <%= image_tag notification.thumbnail_url, class: 'notification-img' if notification.thumbnail_url.present? %>
-            <span><strong><%= notification.notifiable_type %></strong> <%= notification.message %></span><br>
-            <span class="text-muted"><%= notification_time(notification.created_at) %></span>
-          </div>
-        <% end %>
-      </div>
+    <div class="discussion-topic-body">
+      <%= link_to participant_read_notification_path(current_participant, id: notification.id), class: "dropdown-item" do %>
+        <div>
+          <span>
+            <% if notification.notifiable_type == "Graded" || notification.notifiable_type == "Grading Failed" || notification.notifiable_type == "Submission" %>
+              <i class="fa fa-rocket" aria-hidden="true"></i>&nbsp;
+            <% elsif notification.notifiable_type == 'Leaderboard' %>
+              <i class="fa fa-trophy" aria-hidden="true"></i>&nbsp;
+            <% else %>
+              <i class="fa fa-star" aria-hidden="true"></i>
+            <% end %>
+            <strong><%= notification.notifiable_type %></strong>
+            <%= notification.message %></span><br>
+            <span class="text-muted" style="margin-left: 22px;"><%= notification_time(notification.created_at) %></span>
+        </div>
+      <% end %>
     </div>
+    <hr/>
   <% end %>
   </div>
 </div>
