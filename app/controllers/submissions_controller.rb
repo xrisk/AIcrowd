@@ -98,6 +98,8 @@ class SubmissionsController < ApplicationController
       @execute_in_colab_url = @submission.notebook.execute_in_colab_url
     end
 
+    @post = Post.where(submission_id: @submission.id)
+
     render :show
   end
 

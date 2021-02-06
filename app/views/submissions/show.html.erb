@@ -1,5 +1,7 @@
 <%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
 <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
+<% active_tab='overview'%>
+
 <!-- section -->
 <section class="section-p-sm">
   <div class="container-fluid">
@@ -11,143 +13,192 @@
       </div>
 
       <!-- submission details -->
-      <div class="col-sm-12 col-md-6">
+      <div class="col-sm-12 col-md-12">
         <div class="d-flex">
           <h2 class="mr-2">Submission #<%= @submission.id %></h2><span class="badge <%= submission_grade_class(@submission) %>"><%= @submission.grading_status_cd %></span>
         </div>
 
-        <% if submission_view_description(@submission) %>
-          <div class="mb-5">
-            <p><%= @submission.description %></p>
+        <div class="sub-nav-bar">
+          <div class="container-fluid">
+            <ul class="nav tabs">
+              <li class="nav-item">
+                <a class="nav-link nav-link-02<%= ' active' if active_tab == 'overview' %>" data-toggle='tab' href="#tab-overview" onclick="return false;">Overview</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-03<%= ' active' if active_tab == 'status' %>" data-toggle='tab' href="#tab-status" onclick="return false;">Evaluation Status</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-05<%= ' active' if active_tab == 'files' %>" data-toggle='tab' href="#tab-files" onclick="return false;">Files
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-05 <%= ' active' if active_tab == 'notebook' %>" data-toggle="tab" href="#tab-notebook" onclick="return false;">Notebook
+                </a>
+              </li>
+            </ul>
           </div>
-        <% end %>
+        </div>
+        <!-- /sub-nav bar -->
 
-        <div class="d-flex">
-          <div class="mr-4">
-            <h4><%= @submission.challenge_round.default_leaderboard&.score_title %></h4>
-            <span><%= submission_formatted_value(@submission, @submission.score_display) %></span>
-          </div>
+        <div class="tab-content">
+          <div id="tab-overview" class="tab-pane fade<%= ' show active' if active_tab == 'overview' %>">
+            <% if submission_view_description(@submission) %>
+              <div class="mb-5">
+                <p><%= @submission.description %></p>
+              </div>
+            <% end %>
+            <div class="d-flex">
+              <div class="mr-4">
+                <h4><%= @submission.challenge_round.default_leaderboard&.score_title %></h4>
+                <span><%= submission_formatted_value(@submission, @submission.score_display) %></span>
+              </div>
 
-          <% if !(@submission.challenge_round.default_leaderboard&.secondary_sort_order.present? && @submission.challenge_round.default_leaderboard&.secondary_sort_order == :hidden) %>
-          <div class="mr-4">
-            <h4><%= @submission.challenge_round.default_leaderboard&.score_secondary_title %></h4>
-            <span><%= submission_formatted_value(@submission, @submission.score_secondary_display) %></span>
-          </div>
-          <% end %>
+              <% if !(@submission.challenge_round.default_leaderboard&.secondary_sort_order.present? && @submission.challenge_round.default_leaderboard&.secondary_sort_order == :hidden) %>
+              <div class="mr-4">
+                <h4><%= @submission.challenge_round.default_leaderboard&.score_secondary_title %></h4>
+                <span><%= submission_formatted_value(@submission, @submission.score_secondary_display) %></span>
+              </div>
+              <% end %>
 
-          <div class="mr-4 p-normal-font">
-            <h4>Message</h4>
-            <span data-controller="linkify-content"><%= @submission.grading_message.to_s.html_safe %></span>
-          </div>
+              <div class="mr-4 p-normal-font">
+                <h4>Message</h4>
+                <span data-controller="linkify-content"><%= @submission.grading_message.to_s.html_safe %></span>
+              </div>
 
-          <% if @submission.submission_files.present? && (@challenge.submissions_downloadable && (current_participant.present? && (policy(@challenge).edit? || current_participant.id== @submission.participant_id))) %>
-            <div class="mr-4">
-              <h4>Submission Files</h4>
-              <span>
-                <% @submission.submission_files.each do |file| %>
-                  <%= link_to "Download file #{file.id}",
-                              s3_expiring_url(file.submission_file_s3_key)
-                  %>&nbsp;
-                <% end %>
-              </span>
-            </div>
-          <% end %>
-
-        </div><br>
-        <% if submission_code_link(@submission).present? %>
-          <div class="mr-4">
-            <h4>Codebase</h4>
-            <%= link_to "View here", submission_code_link(@submission), target: "_blank" %>
-          </div>
-        <% end %>
-
-
-        <% if @description_markdown.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant))) %>
-          <hr/>
-          <div class="md-content w-100" data-controller="mermaid">
-            <%= @description_markdown %>
-          </div>
-        <% end %>
-
-        <% if @submission.meta.present? %>
-          <div class="section-header mt-4 pt-5 border-top">
-            <h3>Meta parameters</h3>
-          </div>
-          <% submission_meta_hash(@submission).each do |key, value| %>
-            <% if (not key.start_with?('private')) && (key != 'description_markdown') %>
-              <div class="d-flex mt-4">
+              <% if @submission.submission_files.present? && (@challenge.submissions_downloadable && (current_participant.present? && (policy(@challenge).edit? || current_participant.id== @submission.participant_id))) %>
                 <div class="mr-4">
-                  <h4> <%= key %> </h4>
+                  <h4>Submission Files</h4>
                   <span>
-                    <% if not key.include?('URL') %>
-                      <a><%= value %></a>
-                    <% else %>
-                      <%= value %>
+                    <% @submission.submission_files.each do |file| %>
+                      <%= link_to "Download file #{file.id}",
+                                  s3_expiring_url(file.submission_file_s3_key)
+                      %>&nbsp;
                     <% end %>
                   </span>
                 </div>
+              <% end %>
+
+            </div><br>
+            <% if submission_code_link(@submission).present? %>
+              <div class="mr-4">
+                <h4>Codebase</h4>
+                <%= link_to "View here", submission_code_link(@submission), target: "_blank" %>
               </div>
             <% end %>
-          <% end %>
-        <% end %>
+
+            <% if @submission.meta.present? %>
+              <div class="section-header mt-4 pt-5 border-top">
+                <h3>Meta parameters</h3>
+              </div>
+              <% submission_meta_hash(@submission).each do |key, value| %>
+                <% if (not key.start_with?('private')) && (key != 'description_markdown') %>
+                  <div class="d-flex mt-4">
+                    <div class="mr-4">
+                      <h4> <%= key %> </h4>
+                      <span>
+                        <% if not key.include?('URL') %>
+                          <a><%= value %></a>
+                        <% else %>
+                          <%= value %>
+                        <% end %>
+                      </span>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+            <% end %>
+            <!--Detail media start-->
+            <div class="col-sm-12 col-md-6">
+              <% if @challenge.media_on_leaderboard %>
+                <div class="media">
+                  <%= render partial: 'shared/challenges/media', locals: { mediable: @submission, submission_id: @submission.id, size: :large } %>
+                </div>
+              <% end %>
+            </div>
+            <!--Detail media end-->
+            <div class="col-sm-12 col-md-6">
+              <div class="section-header mt-4 pt-4 border-top">
+                <h4>Share</h4>
+                <div class="d-flex">
+                  <input id="shortUrl" type="text" style="display:none; position: relative; left: -10000px;" value='<%= "#{request.base_url}/#{@submission.short_url}" %>' >
+                  <button
+                    id="copyurlbutton"
+                    data-controller="copy-link"
+                    data-action="click->copy-link#copyLink"
+                    class="btn btn-secondary btn-sm mr-2"
+                  >
+                    Copy URL
+                  </button>
+                  <%= social_share('facebook', @challenge, @submission) %>
+                  <%= social_share('twitter', @challenge, @submission) %>
+                </div>
+              </div>
+
+              <% if policy(@challenge).edit? %>
+              <div class="section-header mt-4 pt-4 border-top">
+                <div class="w-100">
+                  <%= link_to 'Edit Submission', edit_challenge_submission_path(@challenge, @submission), {class: "btn btn-primary btn-sm", role:"button"} %>
+                </div>
+              </div>
+              <% end %>
+            </div>
+          </div>
+
+
+          <div id="tab-status" class="tab-pane fade<%= ' show active' if active_tab == 'status' %>">
+            <div class="d-flex col-sm-12 col-md-6">
+              <% if @description_markdown.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant))) %>
+                <hr/>
+                <div class="md-content w-100" data-controller="mermaid">
+                  <%= @description_markdown %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+
+          <div id="tab-files" class="tab-pane fade<%= ' show active' if active_tab == 'files' %>">
+            <div class="row">
+              <div class="col-12 d-flex align-items-start justify-content-between">
+                  <div class="mb-5">
+                    <h2 class="mb-1">Notebooks</h2>
+                  </div>
+                  <a class="btn btn-primary" href="<%= new_post_path(challenge: @challenge) %>"><span class="fa fa-plus-circle mr-2"></span>Create Notebook</a>
+              </div>
+              <div class="col-sm-12">
+                <% if @post.present? %>
+                  <%= render partial: 'shared/posts/index',  locals: { posts: @post } %>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <div id="tab-notebook" class="tab-pane fade<%= ' show active' if active_tab == 'notebook' %>">
+            <% if @submission.notebook.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant))) %>
+              <div class="col-md-12">
+                <hr/>
+                <div class="row">
+                  <div class="col-md-9">
+                    <button type="button" class="btn btn-sm btn-link">Notebook</button>
+                  </div>
+                  <div class="col-md-0">
+                    <button type="button" class="btn btn-sm btn-primary"><a href='<%= s3_expiring_url(@submission.notebook.s3_url) %>' target="_blank" style="color: white"><span class="fa fa-download mr-1"></span>Download</a></button>
+                  </div>
+                  <div class="col-md-1">
+                    <button type="button" class="btn btn-sm btn-primary"><a href='<%= @execute_in_colab_url %>' target="_blank" style="color: white"><span class="fa fa-cogs mr-1"></span>Open in Colab</a></button>
+                  </div>
+                </div>
+                <hr/>
+                <div class="ipynb-notebook-container">
+                  <%= @submission.notebook.notebook_html.html_safe %>
+                </div>
+                <div class="d-none show-more-btn w-100 text-center p-2 cursor-pointer font-weight-bold text-secondary" style="background: #f6f9ff;" data-controller="post" data-action="click->post#expandNotebook">↕️ Read More</div>
+              </div>
+            <% end %>
+          </div>
+        </div>
       </div>
       <!-- /submission details -->
-      <div class="col-sm-12 col-md-6">
-        <!--Detail media start-->
-        <% if @challenge.media_on_leaderboard %>
-          <div class="media">
-            <%= render partial: 'shared/challenges/media', locals: { mediable: @submission, submission_id: @submission.id, size: :large } %>
-          </div>
-        <% end %>
-        <!--Detail media end-->
-      </div>
-      <% if @submission.notebook.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant))) %>
-        <div class="col-md-12">
-          <hr/>
-          <div class="row">
-            <div class="col-md-9">
-              <button type="button" class="btn btn-sm btn-link">Notebook</button>
-            </div>
-            <div class="col-md-0">
-              <button type="button" class="btn btn-sm btn-primary"><a href='<%= s3_expiring_url(@submission.notebook.s3_url) %>' target="_blank" style="color: white"><span class="fa fa-download mr-1"></span>Download</a></button>
-            </div>
-            <div class="col-md-1">
-              <button type="button" class="btn btn-sm btn-primary"><a href='<%= @execute_in_colab_url %>' target="_blank" style="color: white"><span class="fa fa-cogs mr-1"></span>Open in Colab</a></button>
-            </div>
-          </div>
-          <hr/>
-          <div class="ipynb-notebook-container">
-            <%= @submission.notebook.notebook_html.html_safe %>
-          </div>
-          <div class="d-none show-more-btn w-100 text-center p-2 cursor-pointer font-weight-bold text-secondary" style="background: #f6f9ff;" data-controller="post" data-action="click->post#expandNotebook">↕️ Read More</div>
-        </div>
-      <% end %>
-      <div class="col-sm-12 col-md-6">
-        <div class="section-header mt-4 pt-4 border-top">
-          <h4>Share</h4>
-          <div class="d-flex">
-            <input id="shortUrl" type="text" style="display:none; position: relative; left: -10000px;" value='<%= "#{request.base_url}/#{@submission.short_url}" %>' >
-            <button
-              id="copyurlbutton"
-              data-controller="copy-link"
-              data-action="click->copy-link#copyLink"
-              class="btn btn-secondary btn-sm mr-2"
-            >
-              Copy URL
-            </button>
-            <%= social_share('facebook', @challenge, @submission) %>
-            <%= social_share('twitter', @challenge, @submission) %>
-          </div>
-        </div>
 
-        <% if policy(@challenge).edit? %>
-        <div class="section-header mt-4 pt-4 border-top">
-          <div class="w-100">
-            <%= link_to 'Edit Submission', edit_challenge_submission_path(@challenge, @submission), {class: "btn btn-primary btn-sm", role:"button"} %>
-          </div>
-        </div>
-        <% end %>
-      </div>
     </div>
   </div>
 </section>
