@@ -38,14 +38,13 @@
 
                 <% if @show_status_tab %>
                   <li class="nav-item" data-controller="mermaid" data-action="click->mermaid#render">
-                    <a class="nav-link nav-link-02<%= ' active' if active_tab == 'status' %>" data-toggle='tab' href="#tab-status" onclick="return false;" data-controller="mermaid" data-action="click->mermaid#render">Evaluation Status</a>
+                    <a class="nav-link nav-link-02<%= ' active' if active_tab == 'status' %>" data-toggle='tab' href="#tab-status" onclick="return false;" data-controller="mermaid" data-action="click->mermaid#render">Evaluation Status&nbsp;<i class="fa fa-lock" aria-hidden="true" data-toggle="tooltip" title="Visible only to you and organizers"></i></a>
                   </li>
                 <% end%>
 
                 <% if @show_file_tab %>
                   <li class="nav-item">
-                    <a class="nav-link nav-link-03<%= ' active' if active_tab == 'files' %>" data-toggle='tab' href="#tab-files" onclick="return false;">Files
-                    </a>
+                    <a class="nav-link nav-link-03<%= ' active' if active_tab == 'files' %>" data-toggle='tab' href="#tab-files" onclick="return false;">Files&nbsp;<i class="fa fa-lock" aria-hidden="true" data-toggle="tooltip" title="Visible only to you and organizers"></i></a>
                   </li>
                 <% end %>
 

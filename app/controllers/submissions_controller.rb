@@ -99,10 +99,7 @@ class SubmissionsController < ApplicationController
     end
 
     @post = Post.where(submission_id: @submission.id)
-    @show_file_tab = ((@submission.notebook.present? || (@submission.submission_files.present? && (@challenge.submissions_downloadable))) && current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant)))
-
-    @show_notebook_tab = @post.count > 0 ||  (current_participant.present? && (policy(@challenge).edit?))
-    @show_status_tab = @description_markdown.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant)))
+    setup_tabs
 
     render :show
   end
@@ -516,5 +513,11 @@ class SubmissionsController < ApplicationController
     participant_ids = team.team_participants.pluck(:participant_id) if team.present?
     participant_ids = current_participant.id if participant_ids.blank?
     return participant_ids
+  end
+
+  def setup_tabs
+    @show_file_tab = ((@submission.notebook.present? || (@submission.submission_files.present? && (@challenge.submissions_downloadable))) && current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant)))
+    @show_notebook_tab = @post.is_public.count > 0 ||  (current_participant.present? && (policy(@challenge).edit?))
+    @show_status_tab = @description_markdown.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant)))
   end
 end
