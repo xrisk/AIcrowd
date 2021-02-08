@@ -86,7 +86,7 @@ class SubmissionsController < ApplicationController
       if @description_markdown.include?("<p><code>mermaid")
         start_index = @description_markdown.index(">mermaid")
         @description_markdown.remove!("mermaid")
-        @description_markdown.insert(start_index, " class='mermaid'")
+        @description_markdown.insert(start_index, " class='aicrowd-mermaid'")
       end
       @description_markdown = EmojiParser.detokenize(EmojiParser.detokenize(@description_markdown))
       @description_markdown.gsub!("<h1", "<h2")
@@ -99,6 +99,10 @@ class SubmissionsController < ApplicationController
     end
 
     @post = Post.where(submission_id: @submission.id)
+    @show_file_tab = ((@submission.notebook.present? || (@submission.submission_files.present? && (@challenge.submissions_downloadable))) && current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant)))
+
+    @show_notebook_tab = @post.count > 0 ||  (current_participant.present? && (policy(@challenge).edit?))
+    @show_status_tab = @description_markdown.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant)))
 
     render :show
   end
