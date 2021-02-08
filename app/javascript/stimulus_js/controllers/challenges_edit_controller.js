@@ -125,7 +125,7 @@ export default class extends Controller {
       const submissionsExportLink             = $('#submissions-export-link').attr('href');
       const submissionsExportUrl              = new URL(submissionsExportLink);
 
-      submissionsExportUrl.searchParams.set('submissions_export_challenge_round_id', submissionsExportChallengeRoundId);
+      submissionsExportUrl.searchParams.set('submissions_export_challenge_round_leaderboard_id', submissionsExportChallengeRoundId);
       $('#submissions-export-link').attr('href', submissionsExportUrl.toString());
     });
 

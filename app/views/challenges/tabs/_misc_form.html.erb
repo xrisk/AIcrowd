@@ -22,15 +22,15 @@
   <h2 class="challenges-form__heading">Submissions Export</h2>
 
   <div class="form-group">
-    <label>Challenge Round for Submissions Export</label>
-    <%= select_tag :submissions_export_challenge_round_id,
-                  options_for_select(challenge_rounds.map { |challenge_round| [challenge_round.challenge_round, challenge_round.id] }),
+    <label>Challenge Round and Leaderboard for Submissions Export</label>
+    <%= select_tag :submissions_export_challenge_round_leaderboard_id,
+                  options_for_select(challenge_leaderboard_list),
                   id: 'submissions-export-rounds-select',
                   class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= link_to 'Export to CSV', export_challenge_submissions_url(challenge, submissions_export_challenge_round_id: challenge_rounds.first&.id.to_i), id: 'submissions-export-link', class: 'btn btn-primary challenges-form__misc-button' %>
+    <%= link_to 'Export to CSV', export_challenge_submissions_url(challenge, submissions_export_challenge_round_leaderboard_id: challenge_rounds.first.challenge_leaderboard_extras.first&.id.to_i), id: 'submissions-export-link', class: 'btn btn-primary challenges-form__misc-button' %>
   </div>
 
   <h2 class="challenges-form__heading">Participants Export</h2>

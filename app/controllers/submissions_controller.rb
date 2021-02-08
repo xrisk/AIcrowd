@@ -169,7 +169,7 @@ class SubmissionsController < ApplicationController
   def export
     authorize @challenge, :export?
 
-    Admins::ExportChallengeSubmissionJob.perform_later(@challenge.id, current_participant.id, params[:submissions_export_challenge_round_id].to_i)
+    Admins::ExportChallengeSubmissionJob.perform_later(@challenge.id, current_participant.id, params[:submissions_export_challenge_round_leaderboard_id].to_i)
     return redirect_to(edit_challenge_path(@challenge), flash: { success: 'The data has been mailed to you.' })
   end
 
