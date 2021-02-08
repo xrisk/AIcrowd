@@ -1,11 +1,23 @@
 import { Controller } from 'stimulus';
+
+function setupNotebook(){
+  if($('.ipynb-notebook-container').height() > 2000) {
+    $('.ipynb-notebook-container').css('overflow', 'hidden');
+    $('.ipynb-notebook-container').css('max-height', '1500px');
+    $('.show-more-btn').removeClass('d-none');
+  }
+}
+
 export default class extends Controller {
   connect() {
-    if($('.ipynb-notebook-container').height() > 2000) {
-      $('.ipynb-notebook-container').css('overflow', 'hidden');
-      $('.ipynb-notebook-container').css('max-height', '1500px');
-      $('.show-more-btn').removeClass('d-none');
-    }
+    setupNotebook();
+
+    $(".nav-link").click(function () {
+      $(this).delay(1000).queue(function()
+        {
+          setupNotebook();
+        });
+    })
   }
 
   expandNotebook(event) {
