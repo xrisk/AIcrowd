@@ -8,7 +8,7 @@ class SubmissionsController < ApplicationController
   before_action :set_follow, only: [:index, :new, :create, :show, :lock]
   before_action :check_participation_terms, except: [:show, :index, :export]
   before_action :set_s3_direct_post, only: [:new, :new_api, :edit, :create, :update]
-  before_action :set_submissions_remaining, except: [:show, :index]
+  before_action :set_submissions_remaining, except: [:show]
   before_action :set_current_round, only: [:index, :new, :create, :lock]
   before_action :set_form_type, only: [:new, :create]
   before_action :handle_code_based_submissions, only: [:create]
@@ -29,9 +29,6 @@ class SubmissionsController < ApplicationController
     else
       @baselines      = false
       @my_submissions = true if params[:my_submissions] == 'true' && current_participant
-      @submissions_remaining = SubmissionsRemainingQuery.new(
-          challenge:      @challenge,
-          participant_id: current_participant.id).call
 
       if @my_submissions
         filter = policy_scope(Submission)
@@ -418,7 +415,9 @@ class SubmissionsController < ApplicationController
   end
 
   def set_submissions_remaining
-    @submissions_remaining = @challenge.submissions_remaining(current_participant.id)
+    if current_participant.present?
+      @submissions_remaining = @challenge.submissions_remaining(current_participant.id)
+    end
   end
 
   def notify_admins
@@ -517,7 +516,8 @@ class SubmissionsController < ApplicationController
   end
 
   def setup_tabs
-    is_owner_or_organizer = current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant))
+    is_owner_or_organizer = current_participant.present? && (policy(@challenge).edit? || helpers.submission_team?(@submission, current_participant))
+    is_owner_or_organizer = current_participant.present? && (policy(@challenge).edit? || helpers.submission_team?(@submission, current_participant))
     @show_file_tab = (@submission.notebook.present? || (@submission.submission_files.present? && (@challenge.submissions_downloadable))) && is_owner_or_organizer
     @show_notebook_tab = @post.is_public.count > 0 ||  is_owner_or_organizer
     @show_status_tab = @description_markdown.present? && is_owner_or_organizer

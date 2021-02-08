@@ -7,17 +7,19 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
-          <div class="md-content">
-            <blockquote>
-              <p>ℹ️
-                <% if @submissions_remaining[1] %>
-                  You have <%= pluralize(@submissions_remaining[0],'submission') %> remaining until <%= @submissions_remaining[1] %>.
-                <% else %>
-                  You have <%= pluralize(@submissions_remaining[0],'submission') %> remaining.
-                <% end %>
-              </p>
-            </blockquote>
-          </div>
+          <% if @submissions_remaining.present? %>
+            <div class="md-content">
+              <blockquote>
+                <p>ℹ️
+                  <% if @submissions_remaining[1] %>
+                    You have <%= pluralize(@submissions_remaining[0],'submission') %> remaining until <%= @submissions_remaining[1] %>.
+                  <% else %>
+                    You have <%= pluralize(@submissions_remaining[0],'submission') %> remaining.
+                  <% end %>
+                </p>
+              </blockquote>
+            </div>
+          <% end %>
 
           <% if @challenge.challenge_rounds.count > 1 && !@challenge.meta_challenge %>
             <!-- sub-nav pills -->
