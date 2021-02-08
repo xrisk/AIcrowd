@@ -29,15 +29,16 @@ class SubmissionsController < ApplicationController
     else
       @baselines      = false
       @my_submissions = true if params[:my_submissions] == 'true' && current_participant
+      @submissions_remaining = SubmissionsRemainingQuery.new(
+          challenge:      @challenge,
+          participant_id: current_participant.id).call
+
       if @my_submissions
         filter = policy_scope(Submission)
                       .where(
                         challenge_round_id: @current_round&.id,
                         challenge_id:       @challenge.id,
                         participant_id:     current_participant.id)
-        @submissions_remaining = SubmissionsRemainingQuery.new(
-          challenge:      @challenge,
-          participant_id: current_participant.id).call
       else
         filter = policy_scope(Submission)
                       .where(
