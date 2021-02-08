@@ -516,8 +516,9 @@ class SubmissionsController < ApplicationController
   end
 
   def setup_tabs
-    @show_file_tab = ((@submission.notebook.present? || (@submission.submission_files.present? && (@challenge.submissions_downloadable))) && current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant)))
-    @show_notebook_tab = @post.is_public.count > 0 ||  (current_participant.present? && (policy(@challenge).edit?))
-    @show_status_tab = @description_markdown.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant)))
+    is_owner_or_organizer = current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant))
+    @show_file_tab = (@submission.notebook.present? || (@submission.submission_files.present? && (@challenge.submissions_downloadable))) && is_owner_or_organizer
+    @show_notebook_tab = @post.is_public.count > 0 ||  is_owner_or_organizer
+    @show_status_tab = @description_markdown.present? && is_owner_or_organizer
   end
 end
