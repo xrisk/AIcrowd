@@ -13,6 +13,9 @@ class PostsController < InheritedResources::Base
     if params[:challenge].present?
       @post.challenge = Challenge.friendly.find(params[:challenge])
     end
+    if params[:submission].present?
+      @post.submission = Submission.find_by_id(params[:submission])
+    end
   end
 
   def set_post

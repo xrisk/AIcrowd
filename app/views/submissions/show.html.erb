@@ -24,23 +24,30 @@
               <li class="nav-item">
                 <a class="nav-link nav-link-02<%= ' active' if active_tab == 'overview' %>" data-toggle='tab' href="#tab-overview" onclick="return false;">Overview</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link nav-link-03<%= ' active' if active_tab == 'status' %>" data-toggle='tab' href="#tab-status" onclick="return false;">Evaluation Status</a>
-              </li>
+
+              <% if @description_markdown.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant))) %>
+                <li class="nav-item">
+                  <a class="nav-link nav-link-03<%= ' active' if active_tab == 'status' %>" data-toggle='tab' href="#tab-status" onclick="return false;">Evaluation Status</a>
+                </li>
+              <% end%>
+
               <li class="nav-item">
                 <a class="nav-link nav-link-05<%= ' active' if active_tab == 'files' %>" data-toggle='tab' href="#tab-files" onclick="return false;">Files
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link nav-link-05 <%= ' active' if active_tab == 'notebook' %>" data-toggle="tab" href="#tab-notebook" onclick="return false;">Notebook
-                </a>
-              </li>
+
+              <% if @submission.notebook.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant))) %>
+                <li class="nav-item">
+                  <a class="nav-link nav-link-05 <%= ' active' if active_tab == 'notebook' %>" data-toggle="tab" href="#tab-notebook" onclick="return false;">Notebook
+                  </a>
+                </li>
+              <% end %>
             </ul>
           </div>
         </div>
         <!-- /sub-nav bar -->
 
-        <div class="tab-content">
+        <div class="tab-content" style="margin-top: 20px;">
           <div id="tab-overview" class="tab-pane fade<%= ' show active' if active_tab == 'overview' %>">
             <% if submission_view_description(@submission) %>
               <div class="mb-5">
@@ -162,7 +169,7 @@
                   <div class="mb-5">
                     <h2 class="mb-1">Notebooks</h2>
                   </div>
-                  <a class="btn btn-primary" href="<%= new_post_path(challenge: @challenge) %>"><span class="fa fa-plus-circle mr-2"></span>Create Notebook</a>
+                  <a class="btn btn-primary" href="<%= new_post_path(submission: @submission) %>"><span class="fa fa-plus-circle mr-2"></span>Create Notebook</a>
               </div>
               <div class="col-sm-12">
                 <% if @post.present? %>
