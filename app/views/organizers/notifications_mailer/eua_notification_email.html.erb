@@ -1,10 +1,7 @@
-<%
-  params[:meta_challenge_id] = ChallengeProblems.where(problem: @challenge, exclusive: true)&.first&.challenge&.slug
-%>
 <div>
   <p>Hi <%= @organizer_participant.name %>,</p>
   <br/>
   <p><%= @participant.name %> has uploaded an End User Agreement (EUA) for task <%= @clef_task.task %> on AIcrowd. If you are responsible for this task, please check the participant's EUA. If the form is compliant, you can approve it by clicking on the approve button next to the participant's name. In case the EUA is faulty or incomplete the participant can re-upload a new EUA.</p>
-  <p>You can approve the participant's EUA <%= link_to 'here', clef_task_challenge_url(@challenge), target: '_blank' %></p>
+  <p>You can approve the participant's EUA <%= link_to 'here', @clef_task_challenge_url, target: '_blank' %></p>
   <%= render partial: 'shared/mailers/email_preferences_link', locals: { email_preferences_url: @email_preferences_url, notification_reason: @notification_reason }  %>
 </div>
