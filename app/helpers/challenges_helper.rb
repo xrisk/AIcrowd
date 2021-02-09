@@ -201,7 +201,7 @@ module ChallengesHelper
     if challenge.slug != params['meta_challenge_id']
       return challenge_path(params['meta_challenge_id']) + link.gsub(/^\/challenges/, "/problems")
     end
-    return link
+    return link.split("?")[0]
   end
 
   def sequence_num
