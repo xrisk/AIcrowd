@@ -194,16 +194,6 @@ module ChallengesHelper
     return link
   end
 
-  def clef_meta_challenge(link, challenge)
-    request_params = link.split("?")[1]
-    params = {}
-    params['meta_challenge_id'] = request_params.split("=")[1] if (request_params.present? && request_params.split("=")[0] == 'meta_challenge_id')
-    if challenge.slug != params['meta_challenge_id']
-      return challenge_path(params['meta_challenge_id']) + link.gsub(/^\/challenges/, "/problems")
-    end
-    return link.split("?")[0]
-  end
-
   def sequence_num
     @challenge.persisted? ? @challenge.featured_sequence : next_sequence
   end
@@ -357,11 +347,6 @@ module ChallengesHelper
   def notebooks_challenge_path(*args)
     path = super(*args)
     meta_challenge(path, args[0])
-  end
-
-  def clef_task_challenge_url(*args)
-    path = super(*args)
-    clef_meta_challenge(path, args[0])
   end
 
   def challenge_end_time(challenge , active_round)

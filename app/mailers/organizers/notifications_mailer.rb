@@ -1,6 +1,5 @@
 module Organizers
   class NotificationsMailer < ApplicationMailer
-    include ChallengesHelper
 
     def eua_notification_email(organizer_participant, clef_task, participant)
       @organizer_participant   = organizer_participant
@@ -9,7 +8,7 @@ module Organizers
       @challenge               = clef_task.challenges.first
       @email_preferences_url   = EmailPreferencesTokenService.new(@organizer_participant).preferences_token_url
       subject                  = "[#{@challenge&.challenge}] - New EUA uploaded for #{@clef_task.task}"
-      meta_challenge_id        = ChallengeProblems.where(problem: @challenge, exclusive: true)&.first&.challenge&.slug
+      @meta_challenge_id       = ChallengeProblems.where(problem: @challenge, exclusive: true)&.first&.challenge&.slug
       @clef_task_challenge_url = clef_task_challenge_url(@challenge, meta_challenge_id: meta_challenge_id)
 
       mail(to: @organizer_participant.email, subject: subject)
@@ -21,5 +20,14 @@ module Organizers
 
       mail(to: @organizer_application.email, subject: subject)
     end
+
+    def get_clef_task_challenge_url
+      link = clef_task_challenge_url(@challenge)
+      if @meta_challenge_id.present?
+        return link.gsub("clef_task", "problems/#{@meta_challenge_id}/clef_task")
+      end
+      return link
+    end
+
   end
 end
