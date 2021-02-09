@@ -1,3 +1,6 @@
+<%
+  params[:meta_challenge_id] = ChallengeProblems.where(problem: @challenge, exclusive: true)&.first&.challenge&.slug
+%>
 <div>
   <p>Hi <%= @organizer_participant.name %>,</p>
   <br/>

@@ -349,6 +349,11 @@ module ChallengesHelper
     meta_challenge(path, args[0])
   end
 
+  def clef_task_challenge_url(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+
   def challenge_end_time(challenge , active_round)
     return((challenge_remaining_text(challenge, active_round) == "Completed") || challenge_remaining_text(challenge, active_round) == "Starting soon") ? "" : challenge.end_dttm
   end
