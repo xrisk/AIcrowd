@@ -9,7 +9,7 @@ module Organizers
       @email_preferences_url   = EmailPreferencesTokenService.new(@organizer_participant).preferences_token_url
       subject                  = "[#{@challenge&.challenge}] - New EUA uploaded for #{@clef_task.task}"
       @meta_challenge_id       = ChallengeProblems.where(problem: @challenge, exclusive: true)&.first&.challenge&.slug
-      @clef_task_challenge_url = clef_task_challenge_url(@challenge, meta_challenge_id: meta_challenge_id)
+      @clef_task_challenge_url = get_clef_task_challenge_url
 
       mail(to: @organizer_participant.email, subject: subject)
     end
