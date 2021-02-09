@@ -170,13 +170,7 @@ module ChallengesHelper
     submission.created_at.strftime("%a, %e %b %Y") + ' ' + submission.created_at.strftime("%H:%M:%S")
   end
 
-  def is_current_page_meta_challenge_child(challenge, link=nil)
-    if params.nil?
-      request_params = link.split("?")[1]
-      params = {}
-      params['meta_challenge_id'] = request_params.split("=")[1] if (request_params.present? && request_params.split("=")[0] == 'meta_challenge_id')
-    end
-
+  def is_current_page_meta_challenge_child(challenge)
     if params.has_key?('meta_challenge_id')
       if challenge.is_a?(String)
         if challenge != params['meta_challenge_id']
@@ -194,7 +188,17 @@ module ChallengesHelper
   end
 
   def meta_challenge(link, challenge)
-    if is_current_page_meta_challenge_child(challenge, link)
+    if is_current_page_meta_challenge_child(challenge)
+      return challenge_path(params['meta_challenge_id']) + link.gsub(/^\/challenges/, "/problems")
+    end
+    return link
+  end
+
+  def clef_meta_challenge(link, challenge)
+    request_params = link.split("?")[1]
+    params = {}
+    params['meta_challenge_id'] = request_params.split("=")[1] if (request_params.present? && request_params.split("=")[0] == 'meta_challenge_id')
+    if challenge.slug != params['meta_challenge_id']
       return challenge_path(params['meta_challenge_id']) + link.gsub(/^\/challenges/, "/problems")
     end
     return link
@@ -357,7 +361,7 @@ module ChallengesHelper
 
   def clef_task_challenge_url(*args)
     path = super(*args)
-    meta_challenge(path, args[0])
+    clef_meta_challenge(path, args[0])
   end
 
   def challenge_end_time(challenge , active_round)
