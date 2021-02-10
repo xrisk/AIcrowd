@@ -108,6 +108,13 @@ class ChallengesController < ApplicationController
         )
       )
     end
+
+    @challenge_leaderboard_list = []
+    @challenge_rounds.each do |challenge_round|
+      challenge_round.challenge_leaderboard_extras.each do |challenge_leaderboard_extra|
+        @challenge_leaderboard_list << ["#{challenge_round.challenge_round}-#{challenge_leaderboard_extra.name}", challenge_leaderboard_extra.id]
+      end
+    end
   end
 
   def update
@@ -209,6 +216,14 @@ class ChallengesController < ApplicationController
 
   def notebooks
     @notebooks = @challenge.posts
+    if @challenge.meta_challenge?
+      @notebooks ||= []
+      Challenge.where(id: @challenge.challenge_problems.pluck(:problem_id)).each do |challenge|
+        @notebooks = @notebooks + challenge.posts
+      end
+    end
+
+    return @notebooks
   end
 
   private
@@ -432,7 +447,8 @@ class ChallengesController < ApplicationController
           :dynamic_score_field,
           :dynamic_score_secondary_field,
           :filter,
-          :sequence
+          :sequence,
+          :default
         ]
       ],
       challenge_rules_attributes: [

@@ -1,5 +1,7 @@
 <%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
 <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
+<% active_tab='summary'%>
+
 <!-- section -->
 <section class="section-p-sm">
   <div class="container-fluid">
@@ -11,143 +13,73 @@
       </div>
 
       <!-- submission details -->
-      <div class="col-sm-12 col-md-6">
+      <div class="col-sm-12 col-md-12">
         <div class="d-flex">
           <h2 class="mr-2">Submission #<%= @submission.id %></h2><span class="badge <%= submission_grade_class(@submission) %>"><%= @submission.grading_status_cd %></span>
-        </div>
-
-        <% if submission_view_description(@submission) %>
-          <div class="mb-5">
-            <p><%= @submission.description %></p>
-          </div>
-        <% end %>
-
-        <div class="d-flex">
-          <div class="mr-4">
-            <h4><%= @submission.challenge_round.default_leaderboard&.score_title %></h4>
-            <span><%= submission_formatted_value(@submission, @submission.score_display) %></span>
-          </div>
-
-          <% if !(@submission.challenge_round.default_leaderboard&.secondary_sort_order.present? && @submission.challenge_round.default_leaderboard&.secondary_sort_order == :hidden) %>
-          <div class="mr-4">
-            <h4><%= @submission.challenge_round.default_leaderboard&.score_secondary_title %></h4>
-            <span><%= submission_formatted_value(@submission, @submission.score_secondary_display) %></span>
-          </div>
-          <% end %>
-
-          <div class="mr-4 p-normal-font">
-            <h4>Message</h4>
-            <span data-controller="linkify-content"><%= @submission.grading_message.to_s.html_safe %></span>
-          </div>
-
-          <% if @submission.submission_files.present? && (@challenge.submissions_downloadable && (current_participant.present? && (policy(@challenge).edit? || current_participant.id== @submission.participant_id))) %>
-            <div class="mr-4">
-              <h4>Submission Files</h4>
-              <span>
-                <% @submission.submission_files.each do |file| %>
-                  <%= link_to "Download file #{file.id}",
-                              s3_expiring_url(file.submission_file_s3_key)
-                  %>&nbsp;
-                <% end %>
-              </span>
+          <% if policy(@challenge).edit? %>
+            <div class="col-md-8">
+              <div class="pull-right">
+                <%= link_to 'Edit Submission', edit_challenge_submission_path(@challenge, @submission), {class: "btn btn-primary btn-sm", role:"button"} %>
+              </div>
             </div>
           <% end %>
+        </div>
 
-        </div><br>
-        <% if submission_code_link(@submission).present? %>
-          <div class="mr-4">
-            <h4>Codebase</h4>
-            <%= link_to "View here", submission_code_link(@submission), target: "_blank" %>
+        <% if !@show_file_tab && !@show_notebook_tab && !@show_status_tab %>
+          <%= render partial: 'submissions/tabs/summary', locals: { description_markdown: @description_markdown, challenge: @challenge, submission: @submission } %>
+        <% else %>
+
+          <div class="sub-nav-bar">
+            <div>
+              <ul class="nav tabs">
+                <li class="nav-item">
+                  <a class="nav-link nav-link-01<%= ' active' if active_tab == 'summary' %>" data-toggle='tab' href="#tab-summary" onclick="return false;">Summary</a>
+                </li>
+
+                <% if @show_status_tab %>
+                  <li class="nav-item" data-controller="mermaid" data-action="click->mermaid#render">
+                    <a class="nav-link nav-link-02<%= ' active' if active_tab == 'status' %>" data-toggle='tab' href="#tab-status" onclick="return false;" data-controller="mermaid" data-action="click->mermaid#render">Evaluation Status&nbsp;<i class="fa fa-lock" aria-hidden="true" data-toggle="tooltip" title="Visible only to you and organizers"></i></a>
+                  </li>
+                <% end%>
+
+                <% if @show_file_tab %>
+                  <li class="nav-item">
+                    <a class="nav-link nav-link-03<%= ' active' if active_tab == 'files' %>" data-toggle='tab' href="#tab-files" onclick="return false;">Submission Files&nbsp;<i class="fa fa-lock" aria-hidden="true" data-toggle="tooltip" title="Visible only to you and organizers"></i></a>
+                  </li>
+                <% end %>
+
+                <% if @show_notebook_tab %>
+                  <li class="nav-item">
+                    <a class="nav-link nav-link-04 <%= ' active' if active_tab == 'notebook' %>" data-toggle="tab" href="#tab-notebook" onclick="return false;">Notebook
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
+            </div>
           </div>
-        <% end %>
+          <!-- /sub-nav bar -->
 
+          <div class="tab-content" style="margin-top: 20px;">
+            <div id="tab-summary" class="tab-pane fade<%= ' show active' if active_tab == 'summary' %>">
+              <%= render partial: 'submissions/tabs/summary', locals: { description_markdown: @description_markdown, challenge: @challenge, submission: @submission } %>
+            </div>
 
-        <% if @description_markdown.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant))) %>
-          <hr/>
-          <div class="md-content w-100" data-controller="mermaid">
-            <%= @description_markdown %>
+            <div id="tab-status" class="tab-pane fade<%= ' show active' if active_tab == 'status' %>">
+              <%= render partial: 'submissions/tabs/evaluation_status', locals: { description_markdown: @description_markdown, challenge: @challenge, submission: @submission } %>
+            </div>
+
+            <div id="tab-files" class="tab-pane fade<%= ' show active' if active_tab == 'files' %>">
+              <%= render partial: 'submissions/tabs/submission_files', locals: { challenge: @challenge, submission: @submission } %>
+            </div>
+
+            <div id="tab-notebook" class="tab-pane fade<%= ' show active' if active_tab == 'notebook' %>">
+              <%= render partial: 'submissions/tabs/submission_notebooks', locals: { challenge: @challenge, submission: @submission, posts: @post } %>
+            </div>
           </div>
-        <% end %>
-
-        <% if @submission.meta.present? %>
-          <div class="section-header mt-4 pt-5 border-top">
-            <h3>Meta parameters</h3>
-          </div>
-          <% submission_meta_hash(@submission).each do |key, value| %>
-            <% if (not key.start_with?('private')) && (key != 'description_markdown') %>
-              <div class="d-flex mt-4">
-                <div class="mr-4">
-                  <h4> <%= key %> </h4>
-                  <span>
-                    <% if not key.include?('URL') %>
-                      <a><%= value %></a>
-                    <% else %>
-                      <%= value %>
-                    <% end %>
-                  </span>
-                </div>
-              </div>
-            <% end %>
-          <% end %>
         <% end %>
       </div>
       <!-- /submission details -->
-      <div class="col-sm-12 col-md-6">
-        <!--Detail media start-->
-        <% if @challenge.media_on_leaderboard %>
-          <div class="media">
-            <%= render partial: 'shared/challenges/media', locals: { mediable: @submission, submission_id: @submission.id, size: :large } %>
-          </div>
-        <% end %>
-        <!--Detail media end-->
-      </div>
-      <% if @submission.notebook.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant))) %>
-        <div class="col-md-12">
-          <hr/>
-          <div class="row">
-            <div class="col-md-9">
-              <button type="button" class="btn btn-sm btn-link">Notebook</button>
-            </div>
-            <div class="col-md-0">
-              <button type="button" class="btn btn-sm btn-primary"><a href='<%= s3_expiring_url(@submission.notebook.s3_url) %>' target="_blank" style="color: white"><span class="fa fa-download mr-1"></span>Download</a></button>
-            </div>
-            <div class="col-md-1">
-              <button type="button" class="btn btn-sm btn-primary"><a href='<%= @execute_in_colab_url %>' target="_blank" style="color: white"><span class="fa fa-cogs mr-1"></span>Open in Colab</a></button>
-            </div>
-          </div>
-          <hr/>
-          <div class="ipynb-notebook-container">
-            <%= @submission.notebook.notebook_html.html_safe %>
-          </div>
-          <div class="d-none show-more-btn w-100 text-center p-2 cursor-pointer font-weight-bold text-secondary" style="background: #f6f9ff;" data-controller="post" data-action="click->post#expandNotebook">↕️ Read More</div>
-        </div>
-      <% end %>
-      <div class="col-sm-12 col-md-6">
-        <div class="section-header mt-4 pt-4 border-top">
-          <h4>Share</h4>
-          <div class="d-flex">
-            <input id="shortUrl" type="text" style="display:none; position: relative; left: -10000px;" value='<%= "#{request.base_url}/#{@submission.short_url}" %>' >
-            <button
-              id="copyurlbutton"
-              data-controller="copy-link"
-              data-action="click->copy-link#copyLink"
-              class="btn btn-secondary btn-sm mr-2"
-            >
-              Copy URL
-            </button>
-            <%= social_share('facebook', @challenge, @submission) %>
-            <%= social_share('twitter', @challenge, @submission) %>
-          </div>
-        </div>
 
-        <% if policy(@challenge).edit? %>
-        <div class="section-header mt-4 pt-4 border-top">
-          <div class="w-100">
-            <%= link_to 'Edit Submission', edit_challenge_submission_path(@challenge, @submission), {class: "btn btn-primary btn-sm", role:"button"} %>
-          </div>
-        </div>
-        <% end %>
-      </div>
     </div>
   </div>
 </section>

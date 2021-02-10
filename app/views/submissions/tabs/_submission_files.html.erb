@@ -1,0 +1,33 @@
+<% if @submission.submission_files.present? && (@challenge.submissions_downloadable && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant)))) %>
+  <div class="mr-4">
+    <h4>Submission Files</h4>
+    <span>
+      <% @submission.submission_files.each do |file| %>
+        <%= link_to "Download file #{file.id}",
+                    s3_expiring_url(file.submission_file_s3_key)
+        %>&nbsp;
+      <% end %>
+    </span>
+  </div>
+<% end %>
+<% if @submission.notebook.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant))) %>
+  <div class="col-md-12">
+    <hr/>
+    <div class="row">
+      <div class="col-md-9">
+        <button type="button" class="btn btn-sm btn-link">Notebook</button>
+      </div>
+      <div class="col-md-0">
+        <button type="button" class="btn btn-sm btn-primary"><a href='<%= s3_expiring_url(@submission.notebook.s3_url) %>' target="_blank" style="color: white"><span class="fa fa-download mr-1"></span>Download</a></button>
+      </div>
+      <div class="col-md-1">
+        <button type="button" class="btn btn-sm btn-primary"><a href='<%= @execute_in_colab_url %>' target="_blank" style="color: white"><span class="fa fa-cogs mr-1"></span>Open in Colab</a></button>
+      </div>
+    </div>
+    <hr/>
+    <div class="ipynb-notebook-container" data-controller="post">
+      <%= @submission.notebook.notebook_html.html_safe %>
+    </div>
+    <div class="d-none show-more-btn w-100 text-center p-2 cursor-pointer font-weight-bold text-secondary" style="background: #f6f9ff;" data-controller="post" data-action="click->post#expandNotebook">↕️ Read More</div>
+  </div>
+<% end %>

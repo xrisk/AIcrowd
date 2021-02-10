@@ -8,7 +8,7 @@ class SubmissionsController < ApplicationController
   before_action :set_follow, only: [:index, :new, :create, :show, :lock]
   before_action :check_participation_terms, except: [:show, :index, :export]
   before_action :set_s3_direct_post, only: [:new, :new_api, :edit, :create, :update]
-  before_action :set_submissions_remaining, except: [:show, :index]
+  before_action :set_submissions_remaining, except: [:show]
   before_action :set_current_round, only: [:index, :new, :create, :lock]
   before_action :set_form_type, only: [:new, :create]
   before_action :handle_code_based_submissions, only: [:create]
@@ -29,15 +29,13 @@ class SubmissionsController < ApplicationController
     else
       @baselines      = false
       @my_submissions = true if params[:my_submissions] == 'true' && current_participant
+
       if @my_submissions
         filter = policy_scope(Submission)
                       .where(
                         challenge_round_id: @current_round&.id,
                         challenge_id:       @challenge.id,
                         participant_id:     current_participant.id)
-        @submissions_remaining = SubmissionsRemainingQuery.new(
-          challenge:      @challenge,
-          participant_id: current_participant.id).call
       else
         filter = policy_scope(Submission)
                       .where(
@@ -86,7 +84,7 @@ class SubmissionsController < ApplicationController
       if @description_markdown.include?("<p><code>mermaid")
         start_index = @description_markdown.index(">mermaid")
         @description_markdown.remove!("mermaid")
-        @description_markdown.insert(start_index, " class='mermaid'")
+        @description_markdown.insert(start_index, " class='aicrowd-mermaid'")
       end
       @description_markdown = EmojiParser.detokenize(EmojiParser.detokenize(@description_markdown))
       @description_markdown.gsub!("<h1", "<h2")
@@ -97,6 +95,9 @@ class SubmissionsController < ApplicationController
     if @submission.notebook.present?
       @execute_in_colab_url = @submission.notebook.execute_in_colab_url
     end
+
+    @post = Post.where(submission_id: @submission.id)
+    setup_tabs
 
     render :show
   end
@@ -168,7 +169,7 @@ class SubmissionsController < ApplicationController
   def export
     authorize @challenge, :export?
 
-    Admins::ExportChallengeSubmissionJob.perform_later(@challenge.id, current_participant.id, params[:submissions_export_challenge_round_id].to_i)
+    Admins::ExportChallengeSubmissionJob.perform_later(@challenge.id, current_participant.id, params[:submissions_export_challenge_round_leaderboard_id].to_i)
     return redirect_to(edit_challenge_path(@challenge), flash: { success: 'The data has been mailed to you.' })
   end
 
@@ -414,7 +415,9 @@ class SubmissionsController < ApplicationController
   end
 
   def set_submissions_remaining
-    @submissions_remaining = @challenge.submissions_remaining(current_participant.id)
+    if current_participant.present?
+      @submissions_remaining = @challenge.submissions_remaining(current_participant.id)
+    end
   end
 
   def notify_admins
@@ -510,5 +513,13 @@ class SubmissionsController < ApplicationController
     participant_ids = team.team_participants.pluck(:participant_id) if team.present?
     participant_ids = current_participant.id if participant_ids.blank?
     return participant_ids
+  end
+
+  def setup_tabs
+    is_owner_or_organizer = current_participant.present? && (policy(@challenge).edit? || helpers.submission_team?(@submission, current_participant))
+    is_owner_or_organizer = current_participant.present? && (policy(@challenge).edit? || helpers.submission_team?(@submission, current_participant))
+    @show_file_tab = (@submission.notebook.present? || (@submission.submission_files.present? && (@challenge.submissions_downloadable))) && is_owner_or_organizer
+    @show_notebook_tab = @post.is_public.count > 0 ||  is_owner_or_organizer
+    @show_status_tab = @description_markdown.present? && is_owner_or_organizer
   end
 end

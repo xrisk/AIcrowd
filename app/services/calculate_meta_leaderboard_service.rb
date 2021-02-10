@@ -13,11 +13,8 @@ class CalculateMetaLeaderboardService
 
     @challenge.challenge_problems.each do |challenge_problem|
       @weight_hash[challenge_problem.challenge_round_id] = challenge_problem.weight
-      child_leaderboard = if @challenge.ml_challenge
-                            ChallengeRound.find(challenge_problem.challenge_round_id).leaderboards.where(ml_challenge_id: challenge_id)
-                          else
-                            ChallengeRound.find(challenge_problem.challenge_round_id).leaderboards.where(meta_challenge_id: challenge_id)
-                          end
+      problem_challenge_round = ChallengeRound.find(challenge_problem.challenge_round_id)
+      child_leaderboard = problem_challenge_round.leaderboards.where(meta_challenge_id: challenge_id, challenge_leaderboard_extra_id: [nil, problem_challenge_round.default_leaderboard.id])
       if child_leaderboard.present?
         @child_leaderboards.append(child_leaderboard)
       end
