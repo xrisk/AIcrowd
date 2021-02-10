@@ -24,7 +24,7 @@ module Organizers
     def get_clef_task_challenge_url
       link = clef_task_challenge_url(@challenge)
       if @meta_challenge_id.present?
-        return link.gsub("clef_task", "problems/#{@meta_challenge_id}/clef_task")
+        return link.gsub!("#{@challenge.slug}/clef_task", "#{@meta_challenge_id}/problems/#{@challenge.slug}/clef_task")
       end
       return link
     end
