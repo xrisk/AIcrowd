@@ -70,6 +70,7 @@ class Challenge < ApplicationRecord
   has_many :ml_activity_points
   has_many :posts
   has_many :locked_submissions
+  has_one :challenge_property
   has_paper_trail
 
   as_enum :status,
@@ -130,10 +131,10 @@ class Challenge < ApplicationRecord
 
   def record_page_view(parent_meta_challenge)
     if parent_meta_challenge.present?
-      parent_meta_challenge.update!(page_views: parent_meta_challenge.page_views.to_i + 1)
+      parent_meta_challenge.challenge_property.update!(page_views: parent_meta_challenge.challenge_property.page_views.to_i + 1)
     end
 
-    update!(page_views: page_views.to_i + 1)
+    self.challenge_property.update!(page_views: page_views.to_i + 1)
   end
 
   def participants_and_organizers

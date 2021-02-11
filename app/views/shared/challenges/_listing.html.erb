@@ -1,110 +1,112 @@
 <% challenges.each do |challenge| %>
-  <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
-    <% if !challenge.big_challenge_card_image? %>
-      <%= link_to challenge_path(challenge) do %>
-        <div class="card card-challenge">
+  <% cache (challenge) do %>
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
+      <% if !challenge.big_challenge_card_image? %>
+        <%= link_to challenge_path(challenge) do %>
+          <div class="card card-challenge">
+        <% end %>
+      <% else %>
+        <div class="card card-challenge" style="background-image: url('<%= challenge.image_url %>');background-size: 100% auto;">
       <% end %>
-    <% else %>
-      <div class="card card-challenge" style="background-image: url('<%= challenge.image_url %>');background-size: 100% auto;">
-    <% end %>
-      <div class="image-wrapper" style="padding-bottom: 56.2%;position: relative;">
-        <% if !challenge.big_challenge_card_image? %>
-          <%= image_tag(challenge.image_url, class: 'card-img image_16x9') %>
-        <% end %>
-        <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
-          <% if challenge.practice_flag %>
-            <% if is_draft_practice(challenge) == "Draft" %>
-              <span class="badge badge-primary practice-draft-badge"><%= is_draft_practice(challenge) %></span>
-            <% end %>
-            <span class="badge badge-success">Practice</span>
-          <% else %>
-            <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>" data-toggle="tooltip" data-placement="top" title="<%= challenge_end_time(challenge , challenge.active_round) %>">
-              <%= image_tag '/assets/img/icon-time.svg' %>
-              <%= challenge.active_round&.challenge_round %>: <%= challenge_remaining_text(challenge, challenge.active_round, false) %>
-            </span>
-            <% if challenge_weight(challenge) %>
-              <span class="badge badge-gold">Weight: <%= challenge_weight(challenge) %></span>
-            <% end %>
-          <% end %>
-        <% end %>
-      </div>
-      <!-- card body -->
-      <div class="card-body">
-        <div class="card-intro">
+        <div class="image-wrapper" style="padding-bottom: 56.2%;position: relative;">
           <% if !challenge.big_challenge_card_image? %>
-            <h5 class="card-title"><%= link_to challenge.challenge, challenge_path(challenge) %>
-              <% if challenge.private_challenge %>
-              <span class="badge badge-secondary">
-                Private
-              </span>
+            <%= image_tag(challenge.image_url, class: 'card-img image_16x9') %>
+          <% end %>
+          <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
+            <% if challenge.practice_flag %>
+              <% if is_draft_practice(challenge) == "Draft" %>
+                <span class="badge badge-primary practice-draft-badge"><%= is_draft_practice(challenge) %></span>
               <% end %>
-              <% if challenge.hidden_challenge %>
-              <span class="badge badge-secondary">
-                Hidden
+              <span class="badge badge-success">Practice</span>
+            <% else %>
+              <span class="badge <%= challenge_remaining_text(challenge, challenge.active_round) == "Completed" ? "badge-success" : "badge-primary" %>" data-toggle="tooltip" data-placement="top" title="<%= challenge_end_time(challenge , challenge.active_round) %>">
+                <%= image_tag '/assets/img/icon-time.svg' %>
+                <%= challenge.active_round&.challenge_round %>: <%= challenge_remaining_text(challenge, challenge.active_round, false) %>
               </span>
+              <% if challenge_weight(challenge) %>
+                <span class="badge badge-gold">Weight: <%= challenge_weight(challenge) %></span>
               <% end %>
-            </h5>
-            <% if challenge.tagline %>
-              <p class="card-text"><%= challenge.tagline %></p>
             <% end %>
+          <% end %>
+        </div>
+        <!-- card body -->
+        <div class="card-body">
+          <div class="card-intro">
+            <% if !challenge.big_challenge_card_image? %>
+              <h5 class="card-title"><%= link_to challenge.challenge, challenge_path(challenge) %>
+                <% if challenge.private_challenge %>
+                <span class="badge badge-secondary">
+                  Private
+                </span>
+                <% end %>
+                <% if challenge.hidden_challenge %>
+                <span class="badge badge-secondary">
+                  Hidden
+                </span>
+                <% end %>
+              </h5>
+              <% if challenge.tagline %>
+                <p class="card-text"><%= challenge.tagline %></p>
+              <% end %>
+            <% else %>
+              <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
+              <% end %>
+            <% end %>
+          </div>
+
+          <!-- prizes breakdown -->
+          <% if !challenge.big_challenge_card_image? %>
+            <%= render partial: 'shared/challenges/prizes_breakdown', locals: { challenge: challenge } %>
           <% else %>
-            <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
+            <div class="prizes-breakdown"></div>
+          <% end %>
+          <!-- /prizes breakdown -->
+
+          <!-- category group -->
+          <div class='category-group'>
+            <% challenge.categories.each do |category| %>
+              <%= link_to challenges_path(categories: category.name) do %>
+                <span class='badge badge-outline'>#<%= category.name.parameterize.underscore %></span>
+              <% end %>
+            <% end %>
+          </div>
+          <!-- /category group -->
+
+          <!-- stats group -->
+          <div class="stats-group stat-above-footer <% if challenge.big_challenge_card_image? %>stats-group-fg<% end %>">
+            <div class="stat-item ml-1 mr-1">
+              <span data-toggle="tooltip" data-placement="top" title="No. of views">
+                <%= image_tag '/assets/img/icon-views.svg' %>
+                <%= challenge_stat_count(challenge, 'view') %>
+              </span>
+            </div>
+            <div class="stat-item ml-1 mr-1">
+              <span data-toggle="tooltip" data-placement="top" title="No. of users">
+                <%= image_tag '/assets/img/icon-users.svg' %>
+                <%= challenge_stat_count(challenge, 'participant') %>
+              </span>
+            </div>
+            <%= render partial: 'shared/challenges/team_stat', locals: { challenge: challenge } %>
+            <div class="stat-item ml-1 mr-1">
+              <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
+                <%= image_tag '/assets/img/icon-submissions.svg' %>
+                <%= challenge_stat_count(challenge, 'submission') %>
+              </span>
+            </div>
+          </div><br/>
+          <!-- /stats group -->
+        </div>
+        <!-- /card body -->
+
+        <div class="card-footer">
+          <% challenge.organizers.each do |organizer| %>
+            <%= link_to organizer_path(organizer) do %>
+              <%= image_tag organizer.image_file_url %>
+              <span title="<%= organizer.organizer %>"><%= organizer.organizer %></span>
             <% end %>
           <% end %>
         </div>
-
-        <!-- prizes breakdown -->
-        <% if !challenge.big_challenge_card_image? %>
-          <%= render partial: 'shared/challenges/prizes_breakdown', locals: { challenge: challenge } %>
-        <% else %>
-          <div class="prizes-breakdown"></div>
-        <% end %>
-        <!-- /prizes breakdown -->
-
-        <!-- category group -->
-        <div class='category-group'>
-          <% challenge.categories.each do |category| %>
-            <%= link_to challenges_path(categories: category.name) do %>
-              <span class='badge badge-outline'>#<%= category.name.parameterize.underscore %></span>
-            <% end %>
-          <% end %>
-        </div>
-        <!-- /category group -->
-
-        <!-- stats group -->
-        <div class="stats-group stat-above-footer <% if challenge.big_challenge_card_image? %>stats-group-fg<% end %>">
-          <div class="stat-item ml-1 mr-1">
-            <span data-toggle="tooltip" data-placement="top" title="No. of views">
-              <%= image_tag '/assets/img/icon-views.svg' %>
-              <%= challenge_stat_count(challenge, 'view') %>
-            </span>
-          </div>
-          <div class="stat-item ml-1 mr-1">
-            <span data-toggle="tooltip" data-placement="top" title="No. of users">
-              <%= image_tag '/assets/img/icon-users.svg' %>
-              <%= challenge_stat_count(challenge, 'participant') %>
-            </span>
-          </div>
-          <%= render partial: 'shared/challenges/team_stat', locals: { challenge: challenge } %>
-          <div class="stat-item ml-1 mr-1">
-            <span data-toggle="tooltip" data-placement="top" title="No. of submissions">
-              <%= image_tag '/assets/img/icon-submissions.svg' %>
-              <%= challenge_stat_count(challenge, 'submission') %>
-            </span>
-          </div>
-        </div><br/>
-        <!-- /stats group -->
-      </div>
-      <!-- /card body -->
-
-      <div class="card-footer">
-        <% challenge.organizers.each do |organizer| %>
-          <%= link_to organizer_path(organizer) do %>
-            <%= image_tag organizer.image_file_url %>
-            <span title="<%= organizer.organizer %>"><%= organizer.organizer %></span>
-          <% end %>
-        <% end %>
       </div>
     </div>
-  </div>
+  <% end %>
 <% end %>

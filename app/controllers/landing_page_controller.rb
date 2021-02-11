@@ -2,21 +2,29 @@ class LandingPageController < ApplicationController
   before_action :terminate_challenge, only: [:index]
 
   def index
-    @challenges = Challenge
-                      .includes(:organizers)
-                      .where(private_challenge: false)
-                      .where(hidden_challenge: false)
-                      .where.not(status_cd: :draft)
-                      .limit(9)
-    @partners = Partner
-                    .where(visible: true)
-                    .where.not(image_file: nil)
-                    .order(seq: :asc)
-                    .limit(8)
-    @blog_posts = Blog
-                      .where(published: true)
-                      .order(seq: :asc)
-                      .limit(3)
+    @challenges = Rails.cache.fetch('landing-page-challenges', expires_in: 5.minutes) do
+      Challenge
+        .includes(:organizers)
+        .where(private_challenge: false)
+        .where(hidden_challenge: false)
+        .where.not(status_cd: :draft)
+        .limit(9)
+    end
+
+    @partners = Rails.cache.fetch('landing-page-partners', expires_in: 5.minutes) do
+      Partner
+        .where(visible: true)
+        .where.not(image_file: nil)
+        .order(seq: :asc)
+        .limit(8)
+    end
+
+    @blog_posts = Rails.cache.fetch('landing-page-blogs', expires_in: 5.minutes) do
+      Blog
+        .where(published: true)
+        .order(seq: :asc)
+        .limit(3)
+    end
 
     @discourse_topics_fetch = Rails.cache.fetch('discourse-latest-topics', expires_in: 5.minutes) do
       Discourse::FetchLatestTopicsService.new.call

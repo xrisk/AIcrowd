@@ -414,6 +414,6 @@ module ChallengesHelper
   end
 
   def challenge_page_views_count(challenge)
-    formatted_count(challenge.page_views)
+    formatted_count(challenge.challenge_property.page_views)
   end
 end
