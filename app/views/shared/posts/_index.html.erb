@@ -1,6 +1,7 @@
   <div class="col-12">
     <ul class="list-group list-group-flush-px-0 list-group-contributions">
       <% posts.friendly.each do |post| %>
+        <% cache(post) do %>
           <% if !post.private? || (current_participant.present? && (policy(post.challenge).edit? || post.particiant_id == current_participant.id)) %>
             <li class="list-group-item">
               <div class="contribution-details">
@@ -36,7 +37,7 @@
               </div>
             </li>
           <% end %>
-        </li>
+        <% end %>
       <% end %>
     </ul>
   <!-- /list-group-contributions -->
