@@ -17,7 +17,7 @@ module ChallengesHelper
 
   def required_terms_or_rules_path(challenge)
     if current_participant.blank?
-      return new_participant_session_path
+      return new_participant_registration_path
     end
 
     if params.has_key?('meta_challenge_id') || params.has_key?('ml_challenge_id')
