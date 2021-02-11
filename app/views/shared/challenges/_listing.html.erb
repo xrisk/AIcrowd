@@ -1,5 +1,5 @@
 <% challenges.each do |challenge| %>
-  <% cache (challenge) do %>
+  <% cache (challenge), expires_in: 5.minutes do %>
     <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
       <% if !challenge.big_challenge_card_image? %>
         <%= link_to challenge_path(challenge) do %>

@@ -1,7 +1,7 @@
 <table class="table table-responsive-md">
   <tbody id="posts-div">
     <% posts.each do |post| %>
-      <% cache(post) do%>
+      <% cache(post), expires_in: 5.minutes do%>
         <tr>
           <td>
             <div class="like-counter-vertical">
