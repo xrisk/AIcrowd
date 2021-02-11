@@ -11,7 +11,7 @@ function handleChallengeUpdate() {
 
   // Show alert and correct tab after scrolling is completed
   setTimeout(function() {
-    challengeForWrapper.innerHTML = "<%= j render 'challenges/form', challenge: @challenge, challenge_rounds: @challenge_rounds %>";
+    challengeForWrapper.innerHTML = "<%= j render 'challenges/form', challenge: @challenge, challenge_rounds: @challenge_rounds, challenge_leaderboard_list: @challenge_leaderboard_list %>";
     $('.select2').select2();
     // Run script tags that were in the inserted HTML
     runScripts(challengeForWrapper);
