@@ -21,6 +21,7 @@ FactoryBot.define do
 
     after(:create) do |challenge|
       create(:challenges_organizer, challenge: challenge) if challenge.organizers.empty?
+      create(:challenge_property, challenge: challenge) if challenge.challenge_property.blank?
     end
 
     trait :with_rules do
