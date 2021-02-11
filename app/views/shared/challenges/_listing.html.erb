@@ -32,6 +32,7 @@
       <div class="card-body">
         <div class="card-intro">
           <% if !challenge.big_challenge_card_image? %>
+            <%= link_to challenge_path(challenge) do %>
             <h5 class="card-title"><%= link_to challenge.challenge, challenge_path(challenge) %>
               <% if challenge.private_challenge %>
               <span class="badge badge-secondary">
@@ -50,6 +51,7 @@
           <% else %>
             <%= link_to challenge_path(challenge), class: "card-img-overlay" do %>
             <% end %>
+          <% end %>
           <% end %>
         </div>
 
