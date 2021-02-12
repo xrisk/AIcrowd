@@ -430,6 +430,9 @@ class ChallengesController < ApplicationController
         :submissions_type,
         :debug_submission_limit,
         :debug_submission_limit_period,
+        :evaluator_type_cd,
+        :challenge_client_name,
+        :grader_identifier,
         challenge_leaderboard_extras_attributes: [
           :id,
           :name,

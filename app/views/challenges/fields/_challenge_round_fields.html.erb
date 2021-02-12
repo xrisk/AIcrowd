@@ -149,6 +149,36 @@
         </div>
       </div>
 
+      <div class="row mt-4" data-controller="challenge-rounds" data-action="click->challenge-rounds#toogleSubtab">
+        <div class="form-group col-sm-12 col-md-12">
+          <h4><span class="fa fa-chevron-right fa-lg"></span> Evaluation Configuration</h4>
+          <small class="form-text text-muted">Please take help from AIcrowd team in this section.</small>
+        </div>
+      </div>
+
+      <div class="row mt-4 child d-none">
+        <p>
+        </p>
+        <div class="row">
+          <div class="form-group col-sm-12 col-md-4">
+            <span class="label-text">Grader Type</span>
+            <%= f.select :evaluator_type_cd, Challenge::EVALUATOR_TYPES, {}, class: 'form-control' %>
+          </div>
+
+          <div class="form-group col-sm-12 col-md-4">
+            <span class="label-text">Challenge client name</span>
+            <%= f.text_field :challenge_client_name, class: "form-control" %>
+          </div>
+
+          <div class="form-group col-sm-12 col-md-4">
+            <span class="label-text">Grader identifier</span>
+            <%= f.text_field :grader_identifier, class: "form-control" %>
+          </div>
+        </div>
+
+        <hr/>
+      </div>
+
       <div class="row mt-4">
         <% if f.object.persisted? %>
           <div class="form-group col-4 text-center"

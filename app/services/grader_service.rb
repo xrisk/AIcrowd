@@ -32,7 +32,7 @@ class GraderService
   end
 
   def preflight_checked?(challenge, participant, submission_key)
-    if participant.api_key.present? && challenge.grader_identifier.present? && challenge.challenge_client_name.present? &&
+    if participant.api_key.present? && (challenge.grader_identifier.present? || @submission.challenge_round.grader_identifier.present?) && (challenge.challenge_client_name.present? || @submission.challenge_round.challenge_client_name.present?) &&
         submission_key.present?
       return true
     else
@@ -79,8 +79,8 @@ class GraderService
         response_channel:      "na",
         session_token:         "na",
         api_key:               participant.api_key,
-        grader_id:             challenge.grader_identifier, # CLEFChallenges
-        challenge_client_name: challenge.challenge_client_name,
+        grader_id:             @submission.challenge_round.grader_identifier.presence || challenge.grader_identifier, # CLEFChallenges
+        challenge_client_name: @submission.challenge_round.challenge_client_name.presence || challenge.challenge_client_name,
         function_name:         "grade_submission",
         data:                  [{ "file_key": submission_key, submission_id: @submission.id, participant_id: participant.id, challenge_round_id: @submission.challenge_round_id, team_id: team_id }],
         dry_run:               'false',

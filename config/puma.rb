@@ -41,3 +41,8 @@ end
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+if ENV.fetch('RAILS_ENV') == 'development'
+   puts "LOGGER: development => worker_timeout 3600"
+   worker_timeout 3600
+end

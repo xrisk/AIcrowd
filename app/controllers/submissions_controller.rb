@@ -360,6 +360,7 @@ class SubmissionsController < ApplicationController
           :baseline,
           :baseline_comment,
           :submission_link,
+          :challenge_round_id
           submission_files_attributes: [
             :id,
             :seq,

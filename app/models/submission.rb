@@ -35,22 +35,22 @@ class Submission < ApplicationRecord
   scope :participant_challenge_submissions, ->(challenge_id, p_ids) { where(challenge_id: challenge_id, participant_id: p_ids) }
   scope :participant_meta_challenge_submissions, ->(meta_challenge_id, p_ids) { where(meta_challenge_id: meta_challenge_id, participant_id: p_ids) }
 
-  after_create do
-    if challenge_round_id.blank?
-      rnd = challenge
-        .challenge_rounds
-        .where(
-          'start_dttm <= ? and end_dttm >= ?',
-          created_at, created_at).first
-      rnd = challenge.challenge_rounds.last if rnd.blank?
-      if rnd.present? && rnd.end_dttm.present?
-        update(challenge_round_id: rnd.id)
-        update(post_challenge: true) if created_at > rnd.end_dttm
-      else
-        raise ChallengeRoundIDMissing
-      end
-    end
-  end
+  # after_create do
+  #   if challenge_round_id.blank?
+  #     rnd = challenge
+  #       .challenge_rounds
+  #       .where(
+  #         'start_dttm <= ? and end_dttm >= ?',
+  #         created_at, created_at).first
+  #     rnd = challenge.challenge_rounds.last if rnd.blank?
+  #     if rnd.present? && rnd.end_dttm.present?
+  #       update(challenge_round_id: rnd.id)
+  #       update(post_challenge: true) if created_at > rnd.end_dttm
+  #     else
+  #       raise ChallengeRoundIDMissing
+  #     end
+  #   end
+  # end
 
   after_commit on: [:create, :update] do
     # !self.meta&.dig('final_avg') is added to prevent infinite loops in New Leaderboard Calculation

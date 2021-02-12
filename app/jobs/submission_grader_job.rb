@@ -12,7 +12,11 @@ class SubmissionGraderJob < ApplicationJob
   private
 
   def get_evaluator_type(submission_id)
-    challenge = Submission.find(submission_id).challenge
-    challenge.evaluator_type_cd
+    submission = Submission.find(submission_id)
+    challenge_round = submission.challenge_round
+    return challenge_round.evaluator_type_cd if challenge_round.evaluator_type_cd.present?
+
+    challenge = submission.challenge
+    return challenge.evaluator_type_cd
   end
 end

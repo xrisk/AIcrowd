@@ -15,6 +15,12 @@
       <% if @submissions_remaining == 0 %>
         <%= render partial: 'submissions/new/no_submissions' %>
       <% else %>
+        <div class="form-group">
+          <label>Select challenge round for submission</label>
+          <%= select_tag :challenge_round_id,
+                         options_for_select(@challenge_rounds.map { |challenge_round| [challenge_round.challenge_round, challenge_round.id] }, @current_round.id),
+                         class: 'form-control' %>
+        </div>
         <% if @challenge.organizers.any? { |organizer| organizer.clef? } %>
           <%= render partial: 'submissions/new/clef_form' %>
         <% else %>

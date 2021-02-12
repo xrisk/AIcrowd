@@ -3,7 +3,13 @@ require 'aicrowd_evaluations'
 class EvaluationsApiService
   def initialize(submission_id:)
     @submission = Submission.find(submission_id)
-    @grader_id = @submission.challenge.challenge_client_name.to_i
+    if @submission.challenge_round.challenge_client_name.present?
+      @challenge_client_name = @submission.challenge_round.challenge_client_name.
+      @grader_id = @submission.challenge_round.challenge_client_name.to_i
+    else
+      @challenge_client_name = @submission.challenge.challenge_client_name
+      @grader_id = @submission.challenge.challenge_client_name.to_i
+    end
   end
 
   def call
@@ -28,7 +34,7 @@ class EvaluationsApiService
         participant_id: @submission.participant.id,
         round_id: @submission.challenge_round_id,
         submission_id: @submission.id,
-        challenge_client_name: @submission.challenge.challenge_client_name,
+        challenge_client_name: @challenge_client_name,
         domain_name: ENV['DOMAIN_NAME'],
         aicrowd_token: @submission.challenge.organizers&.first&.api_key # ENV['AICROWD_API_KEY']
       }.to_json,
