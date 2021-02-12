@@ -277,7 +277,9 @@ class SubmissionsController < ApplicationController
         if cp.exclusive?
           challenge_type_id                = "#{cp.challenge.challenge_type}_id"
           params[challenge_type_id.to_sym] = Challenge.find(cp.challenge_id).slug
-          redirect_to helpers.challenge_submissions_path(@challenge) and return
+          if !is_api_request?
+            redirect_to helpers.challenge_submissions_path(@challenge) and return
+          end
         end
       end
     end
