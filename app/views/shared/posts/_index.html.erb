@@ -1,33 +1,41 @@
   <div class="col-12">
     <ul class="list-group list-group-flush-px-0 list-group-contributions">
-      <% posts.friendly.each do |post| %>
-        <li class="list-group-item">
-          <div class="contribution-details">
-            <a class="image-link" href="<%= post_path(post) %>"><img src="<%=post.thumbnail%>"></a>
+      <% posts.each do |post| %>
+          <% if !post.private? || (current_participant.present? && (policy(post.challenge).edit? || post.particiant_id == current_participant.id)) %>
+            <li class="list-group-item">
+              <div class="contribution-details">
+                <a class="image-link" href="<%= post_path(post) %>"><img src="<%=post.thumbnail%>"></a>
 
-            <div class="contribution-text">
-              <a class="text-link" href="<%= post_path(post) %>">
-                <%= post.title %>
-              </a>
-              <span class="contribution-subtitle"><%= post.tagline %></span>
+                <div class="contribution-text">
+                  <a class="text-link" href="<%= post_path(post) %>">
+                    <%= post.title %>
+                    <% if post.private? %>
+                      &nbsp;&nbsp;<i class="fa fa-lock" aria-hidden="true" data-toggle="tooltip" title="Visible only to you and organizers"></i>
+                    <% end %>
+                  </a>
+                  <span class="contribution-subtitle"><%= post.tagline %></span>
 
-              <div class="contribution-user-time">
-                <div style="display: inline-flex;"><%= render partial: 'participants/get_user_profile', locals: { participant: post.participant, avatar: 'false'} %></a></div>&nbsp;·&nbsp;<span class="contribution-time"><%= "#{discourse_time_ago(post.created_at)}" %></span>
+                  <div class="contribution-user-time">
+                    <div style="display: inline-flex;"><%= render partial: 'participants/get_user_profile', locals: { participant: post.participant, avatar: 'false'} %></a></div>&nbsp;·&nbsp;<span class="contribution-time"><%= "#{discourse_time_ago(post.created_at)}" %></span>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="float-right">
-            <div class="float-right">
-              <%= render partial: 'shared/votes/button', locals: { votable: post, vote: post.vote(current_participant) } %>
-            </div>
-            <div class="contribution-user-time d-flex mt-5 small flex-row-reverse" style="clear: both;">
-              <% if !post.execute_in_colab_url.nil? %>
-                <a href="<%= post.execute_in_colab_url %>" target="_blank" class="font-weight-light">Open in Colab</a>
-                &nbsp;·&nbsp;
-              <% end %>
-              <a href="<%= post_path(post) %>" class="font-weight-light">View</a>
-            </div>
-          </div>
+              <div class="float-right">
+                <div class="float-right">
+                  <% if !post.private? %>
+                    <%= render partial: 'shared/votes/button', locals: { votable: post, vote: post.vote(current_participant) } %>
+                  <% end %>
+                </div>
+                <div class="contribution-user-time d-flex mt-5 small flex-row-reverse" style="clear: both;">
+                  <% if !post.execute_in_colab_url.nil? %>
+                    <a href="<%= post.execute_in_colab_url %>" target="_blank" class="font-weight-light">Open in Colab</a>
+                    &nbsp;·&nbsp;
+                  <% end %>
+                  <a href="<%= post_path(post) %>" class="font-weight-light">View</a>
+                </div>
+              </div>
+            </li>
+          <% end %>
         </li>
       <% end %>
     </ul>

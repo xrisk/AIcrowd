@@ -4,25 +4,24 @@ class CalculateLeaderboardJob < ApplicationJob
   def perform(challenge_round_id:)
     # This challenge has custom logic that takes 5 different scores and calculates average of them, thus we cannot recalculate
     # leaderboards records with ChallengeRounds::CreateLeaderboardsService class.
-    return if ChallengeRound.find(challenge_round_id).challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
+    challenge_round = ChallengeRound.find(challenge_round_id)
+    return if challenge_round.challenge.challenge == "NeurIPS 2019 : Disentanglement Challenge"
 
-    if ChallengeRound.find(challenge_round_id).challenge.meta_challenge || ChallengeRound.find(challenge_round_id).challenge.ml_challenge
-      CalculateMetaLeaderboardService.new(challenge_id: ChallengeRound.find(challenge_round_id).challenge.id).call
+    if challenge_round.challenge.meta_challenge || challenge_round.challenge.ml_challenge
+      CalculateMetaLeaderboardService.new(challenge_id: challenge_round.challenge.id).call
       return
     end
 
     # Calculate all the leaderboards in this challenge
-    ChallengeRound.find(challenge_round_id).challenge_leaderboard_extras.each do |challenge_leaderboard_extra|
-      ChallengeRounds::CreateLeaderboardsService.new(challenge_round: ChallengeRound.find(challenge_round_id), challenge_leaderboard_extra: challenge_leaderboard_extra).call
+    challenge_round.challenge_leaderboard_extras.each do |challenge_leaderboard_extra|
+      ChallengeRounds::CreateLeaderboardsService.new(challenge_round: challenge_round, challenge_leaderboard_extra: challenge_leaderboard_extra).call
     end
 
 
     # Trigger all the leaderboard computations in case this round_id is being used for meta challenge
     ChallengeProblems.where(challenge_round_id: challenge_round_id).each do |challenge_problem|
-      if challenge_problem.challenge.ml_challenge
-        ChallengeRounds::CreateLeaderboardsService.new(challenge_round: ChallengeRound.find(challenge_round_id), ml_challenge_id: challenge_problem.challenge_id).call
-      else
-        ChallengeRounds::CreateLeaderboardsService.new(challenge_round: ChallengeRound.find(challenge_round_id), meta_challenge_id: challenge_problem.challenge_id).call
+      challenge_round.challenge_leaderboard_extras.each do |challenge_leaderboard_extra|
+        ChallengeRounds::CreateLeaderboardsService.new(challenge_round: challenge_round, meta_challenge_id: challenge_problem.challenge_id, challenge_leaderboard_extra: challenge_leaderboard_extra).call
       end
       CalculateMetaLeaderboardService.new(challenge_id: challenge_problem.challenge_id).call
     end

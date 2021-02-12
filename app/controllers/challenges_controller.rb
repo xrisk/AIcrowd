@@ -9,6 +9,7 @@ class ChallengesController < ApplicationController
   before_action :set_challenge_rounds, only: [:edit, :update, :notebooks]
   before_action :set_filters, only: [:index]
   before_action :set_organizers_for_select, only: [:new, :create, :edit, :update]
+  before_action :set_challenge_leaderboard_list, only: [:edit, :update]
 
   respond_to :html, :js
 
@@ -209,6 +210,14 @@ class ChallengesController < ApplicationController
 
   def notebooks
     @notebooks = @challenge.posts
+    if @challenge.meta_challenge?
+      @notebooks ||= []
+      Challenge.where(id: @challenge.challenge_problems.pluck(:problem_id)).each do |challenge|
+        @notebooks = @notebooks + challenge.posts
+      end
+    end
+
+    return @notebooks
   end
 
   private
@@ -327,6 +336,15 @@ class ChallengesController < ApplicationController
     @challenge.problems.where(id: problem_ids)
   end
 
+  def set_challenge_leaderboard_list
+    @challenge_leaderboard_list = []
+    @challenge_rounds.each do |challenge_round|
+      challenge_round.challenge_leaderboard_extras.each do |challenge_leaderboard_extra|
+        @challenge_leaderboard_list << ["#{challenge_round.challenge_round}-#{challenge_leaderboard_extra.name}", challenge_leaderboard_extra.id]
+      end
+    end
+  end
+
   def challenge_params
     params.require(:challenge).permit(
       :challenge,
@@ -432,7 +450,8 @@ class ChallengesController < ApplicationController
           :dynamic_score_field,
           :dynamic_score_secondary_field,
           :filter,
-          :sequence
+          :sequence,
+          :default
         ]
       ],
       challenge_rules_attributes: [

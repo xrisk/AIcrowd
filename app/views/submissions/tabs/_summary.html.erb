@@ -1,0 +1,79 @@
+<% if submission_view_description(submission) %>
+  <div class="mb-5">
+    <p><%= @submission.description %></p>
+  </div>
+<% end %>
+<div class="d-flex">
+  <div class="mr-4">
+    <h4><%= @submission.challenge_round.default_leaderboard&.score_title.presence || "Score" %></h4>
+    <span><%= submission_formatted_value(@submission, @submission.score_display) %></span>
+  </div>
+
+  <% if !(@submission.challenge_round.default_leaderboard&.secondary_sort_order.present? && @submission.challenge_round.default_leaderboard&.secondary_sort_order == :hidden) %>
+  <div class="mr-4">
+    <h4><%= @submission.challenge_round.default_leaderboard&.score_secondary_title.presence || "Secondary Score" %></h4>
+    <span><%= submission_formatted_value(@submission, @submission.score_secondary_display) %></span>
+  </div>
+  <% end %>
+
+  <div class="mr-4 p-normal-font">
+    <h4>Message</h4>
+    <span data-controller="linkify-content"><%= @submission.grading_message.to_s.html_safe %></span>
+  </div>
+
+</div><br>
+<% if submission_code_link(@submission).present? %>
+  <div class="mr-4">
+    <h4>Codebase</h4>
+    <%= link_to "View here", submission_code_link(@submission), target: "_blank" %>
+  </div>
+<% end %>
+
+<% if @submission.meta.present? %>
+  <div class="section-header mt-4 pt-5 border-top">
+    <h3>Additional Information</h3>
+  </div>
+  <% submission_meta_hash(@submission).each do |key, value| %>
+    <% if (not key.start_with?('private')) && (key != 'description_markdown') %>
+      <div class="d-flex mt-4">
+        <div class="mr-4">
+          <h4> <%= key %> </h4>
+          <span>
+            <% if not key.include?('URL') %>
+              <a><%= value %></a>
+            <% else %>
+              <%= value %>
+            <% end %>
+          </span>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
+<!--Detail media start-->
+<div class="col-sm-12 col-md-6">
+  <% if @challenge.media_on_leaderboard %>
+    <div class="media">
+      <%= render partial: 'shared/challenges/media', locals: { mediable: @submission, submission_id: @submission.id, size: :large } %>
+    </div>
+  <% end %>
+</div>
+<!--Detail media end-->
+<div class="col-sm-12 col-md-6 pl-0">
+  <div class="section-header mt-4 pt-4 border-top">
+    <h4>Share</h4>
+    <div class="d-flex">
+      <input id="shortUrl" type="text" style="display:none; position: relative; left: -10000px;" value='<%= "#{request.base_url}/#{@submission.short_url}" %>' >
+      <button
+        id="copyurlbutton"
+        data-controller="copy-link"
+        data-action="click->copy-link#copyLink"
+        class="btn btn-secondary btn-sm mr-2"
+      >
+        Copy URL
+      </button>
+      <%= social_share('facebook', @challenge, @submission) %>
+      <%= social_share('twitter', @challenge, @submission) %>
+    </div>
+  </div>
+</div>

@@ -1,12 +1,13 @@
 import { Controller } from 'stimulus';
-import { mermaid } from 'mermaid';
+import mermaid from 'mermaid';
 
 export default class extends Controller {
-  connect() {
-    $(document).ready(function() {
+  render(event) {
       if(mermaid) {
-        mermaid.initialize();
+        $(this).delay(1000).queue(function()
+          {
+            mermaid.init({noteMargin: 10}, ".aicrowd-mermaid")
+          });
       }
-    });
   }
 }
