@@ -338,6 +338,7 @@ class Challenge < ApplicationRecord
   def create_default_associations
     ChallengeRound.create!(challenge: self)
     ChallengeRules.create!(challenge: self)
+    ChallengeProperty.create!(challenge: self)
   end
 
   def create_discourse_category
