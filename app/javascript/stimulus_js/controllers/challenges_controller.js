@@ -46,4 +46,9 @@ export default class extends Controller {
       }
     }
   }
+
+  card_click() {
+    var x = $(this.element).find('.card-img-overlay').attr('href');;
+    window.location.href = x;
+  }
 }

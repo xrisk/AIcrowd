@@ -52,7 +52,7 @@ ActiveAdmin.register NewsletterEmail do
   end
 
   member_action :approve, method: :post do
-    NewsletterEmailsMailer.organizer_email(resource).deliver_later
+    NewsletterEmailsMailer.organizer_email(resource).deliver_later if resource.pending?
     resource.update!(pending: false)
 
     redirect_to admin_newsletter_emails_path, flash: { notice: 'Newsletter email has been sent to participants.' }
@@ -67,10 +67,14 @@ ActiveAdmin.register NewsletterEmail do
   end
 
   action_item :approve_newsletter_email, only: :show do
-    a 'Approve', href: approve_admin_newsletter_email_path(resource), 'data-method': :post, 'data-confirm':  'Are you sure you want to send this e-mail to participants?', class: 'member_link'
+    if resource.pending?
+      a 'Approve', href: approve_admin_newsletter_email_path(resource), 'data-method': :post, 'data-confirm':  'Are you sure you want to send this e-mail to participants?', class: 'member_link'
+    end
   end
 
   action_item :decline_newsletter_email, only: :show do
-    a 'Decline', href: '#', 'data-request-url': decline_admin_newsletter_email_url(resource), class: 'member_link newsletter-emails__decline-button'
+    if resource.pending?
+      a 'Decline', href: '#', 'data-request-url': decline_admin_newsletter_email_url(resource), class: 'member_link newsletter-emails__decline-button'
+    end
   end
 end
