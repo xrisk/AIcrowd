@@ -8,18 +8,23 @@ module Gitlab
     def call
       with_gitlab_errors_handling do
         response  = client.get(endpoint_path)
-        try
-          user_data = response.body.first
-        rescue Gitlab::NotFoundError => e
+        user_data = response.body.first
+
+        if user_data.blank?
           response = client.post(
             new_user_endpoint_path,
             {
               email: participant.email,
               name: participant.first_name + ' ' + participant.last_name,
               username: participant.name,
-              skip_confirmation: true
+              skip_confirmation: true,
+              force_random_password: true,
+              reset_password: true
             })
+
           user_data = response.body.first
+          user_data = nil if user_data.first == "message"
+          user_data = {'id': user_data.last} if user_data.first == "id"
         end
 
         return failure('User not found in Gitlab API') if user_data.blank?
@@ -34,11 +39,11 @@ module Gitlab
     attr_reader :client, :participant
 
     def endpoint_path
-      "api/v4/users?extern_uid=#{participant.id}&provider=oauth2_generic"
+      "api/v4/users?username=#{participant.name}"
     end
 
     def new_user_endpoint_path
-      "api/v4/users&provider=oauth2_generic"
+      "api/v4/users"
     end
   end
 end
