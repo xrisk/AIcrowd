@@ -45,7 +45,7 @@ Rails.application.configure do
     user_name: ENV["SMTP_USERNAME"]
   }
   config.action_mailer.default_url_options = { host: ENV["SMTP_DOMAIN"] }
-  config.cache_store = :mem_cache_store,
+  config.cache_store = :mem_cache_store, { expires_in: 6.hours},
                        (ENV['MEMCACHEDCLOUD_SERVERS'].to_s).split(','),
                        {
                          username: ENV['MEMCACHEDCLOUD_USERNAME'],
