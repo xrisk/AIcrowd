@@ -4,7 +4,7 @@
     <div class="container-fluid">
       <span>
       <%= link_to challenge_path(meta_challenge.slug), {:style=>'color:white;'} do %>
-        Back to <%= meta_challenge.challenge %>
+        <span class="fa fa-chevron-left mr-2"></span>Back to <b><%= meta_challenge.challenge %></b>
       <% end %>
       </span>
     </div>
