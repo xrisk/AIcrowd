@@ -19,12 +19,12 @@ module Gitlab
               username: participant.name,
               skip_confirmation: true,
               force_random_password: true,
-              reset_password: true
+              reset_password: false
             })
 
           user_data = response.body.first
           user_data = nil if user_data.first == "message"
-          user_data = {'id': user_data.last} if user_data.first == "id"
+          user_data = HashWithIndifferentAccess.new({id: user_data.last}) if user_data.first == "id"
         end
 
         return failure('User not found in Gitlab API') if user_data.blank?
@@ -39,7 +39,7 @@ module Gitlab
     attr_reader :client, :participant
 
     def endpoint_path
-      "api/v4/users?username=#{participant.name}"
+      "api/v4/users?extern_uid=#{participant.id}&provider=oauth2_generic"
     end
 
     def new_user_endpoint_path
