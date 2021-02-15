@@ -112,6 +112,11 @@ class SubmissionsController < ApplicationController
     @submission.challenge = @challenge
     @submission.submission_files.build
     authorize @submission
+    @allowed_challenge_rounds = @challenge_rounds.where('grader_identifier is not null')
+      .where('challenge_client_name is not null')
+      .where('evaluator_type_cd is not null')
+      .map { |challenge_round| [challenge_round.challenge_round, challenge_round.id] }
+    @allowed_challenge_rounds = [[@current_round.challenge_round, @current_round.id]] if @allowed_challenge_rounds.blank?
   end
 
   def create
@@ -360,7 +365,7 @@ class SubmissionsController < ApplicationController
           :baseline,
           :baseline_comment,
           :submission_link,
-          :challenge_round_id
+          :challenge_round_id,
           submission_files_attributes: [
             :id,
             :seq,

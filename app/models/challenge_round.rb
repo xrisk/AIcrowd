@@ -23,6 +23,9 @@ class ChallengeRound < ApplicationRecord
 
   validates :submission_limit, presence: true
   validates :submission_limit_period, presence: true
+  validates :evaluator_type_cd, :presence, if: Proc.new { |a| a.challenge_client_name.present? && a.grader_identifier.present? }
+  validates :challenge_client_name, :presence, if: Proc.new { |a| a.evaluator_type_cd.present? && a.grader_identifier.present? }
+  validates :grader_identifier, :presence, if: Proc.new { |a| a.challenge_client_name.present? && a.evaluator_type_cd.present? }
 
   as_enum :submission_limit_period, [:day, :week, :round], map: :string
   as_enum :debug_submission_limit_period, [:day, :week, :round], map: :string

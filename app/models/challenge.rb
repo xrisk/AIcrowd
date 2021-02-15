@@ -85,6 +85,9 @@ class Challenge < ApplicationRecord
   validates :slug, uniqueness: true
   validate :other_scores_fieldnames_max
   validate :greater_than_zero
+  validates :evaluator_type_cd, :presence, if: Proc.new { |a| a.challenge_client_name.present? && a.grader_identifier.present? }
+  validates :challenge_client_name, :presence, if: Proc.new { |a| a.evaluator_type_cd.present? && a.grader_identifier.present? }
+  validates :grader_identifier, :presence, if: Proc.new { |a| a.challenge_client_name.present? && a.evaluator_type_cd.present? }
   #validate :banner_color, format: { with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i }
 
   EVALUATOR_TYPES = {
