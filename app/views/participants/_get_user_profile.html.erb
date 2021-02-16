@@ -1,22 +1,20 @@
 <% if participant.present? %>
-  <% cache(participant) do %>
-    <%
-      avatar           = avatar.present? ? avatar : true
-      username         = username.present? ? username : true
-      truncate         = truncate.present? ? truncate : false
-      span_location_id = location_id(participant)
-    %>
+  <%
+    avatar           = avatar.present? ? avatar : true
+    username         = username.present? ? username : true
+    truncate         = truncate.present? ? truncate : false
+    span_location_id = location_id(participant)
+  %>
 
-    <span id="<%= span_location_id %>">
-      <span data-controller="participants"
-            data-participants-participant="<%= participant&.id %>"
-            data-participants-username="<%= username %>"
-            data-participants-avatar="<%= avatar %>"
-            data-participants-truncate="<%= truncate %>"
-            data-participants-location="<%= span_location_id %>"
-            data-action="mouseenter->participants#getUserProfile">
-        <%= render partial: 'participants/name_avatar', locals: { participant: participant, username: username, avatar: avatar, truncate: truncate } %>
-      </span>
+  <span id="<%= span_location_id %>">
+    <span data-controller="participants"
+          data-participants-participant="<%= participant&.id %>"
+          data-participants-username="<%= username %>"
+          data-participants-avatar="<%= avatar %>"
+          data-participants-truncate="<%= truncate %>"
+          data-participants-location="<%= span_location_id %>"
+          data-action="mouseenter->participants#getUserProfile">
+      <%= render partial: 'participants/name_avatar', locals: { participant: participant, username: username, avatar: avatar, truncate: truncate } %>
     </span>
-  <% end %>
+  </span>
 <% end %>
