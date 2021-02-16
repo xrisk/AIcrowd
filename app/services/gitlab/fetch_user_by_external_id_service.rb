@@ -17,7 +17,7 @@ module Gitlab
               extern_uid: participant.id,
               provider: 'oauth2_generic',
               email: participant.email,
-              name: participant.first_name + ' ' + participant.last_name,
+              name: participant.name,
               username: participant.name,
               skip_confirmation: true,
               force_random_password: true,
