@@ -14,6 +14,8 @@ module Gitlab
           response = client.post(
             new_user_endpoint_path,
             {
+              extern_uid: participant.id,
+              provider: 'oauth2_generic',
               email: participant.email,
               name: participant.first_name + ' ' + participant.last_name,
               username: participant.name,
