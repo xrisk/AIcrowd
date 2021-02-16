@@ -24,9 +24,11 @@ module Gitlab
               reset_password: false
             })
 
-          user_data = response.body.first
-          user_data = nil if user_data.first == "message"
-          user_data = HashWithIndifferentAccess.new({id: user_data.last}) if user_data.first == "id"
+          if response.status == 201
+            user_data = HashWithIndifferentAccess.new({id: response.body["id"]})
+          else
+            user_data = nil
+          end
         end
 
         return failure('User not found in Gitlab API') if user_data.blank?

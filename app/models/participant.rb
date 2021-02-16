@@ -31,7 +31,7 @@ class Participant < ApplicationRecord
   after_create :set_email_preferences
   after_save :publish_to_prometheus
   after_commit :upsert_discourse_user, on: [:create, :update]
-  after_commit :update_gitlab_user, on: [:update]
+  after_commit :update_gitlab_user, on: [:update, :create]
 
   mount_uploader :image_file, ImageUploader
   validates :image_file, file_size: { less_than: 5.megabytes }
