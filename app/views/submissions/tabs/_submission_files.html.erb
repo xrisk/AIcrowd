@@ -28,6 +28,6 @@
     <div class="ipynb-notebook-container" data-controller="post">
       <%= @submission.notebook.notebook_html.html_safe %>
     </div>
-    <div class="d-none show-more-btn w-100 text-center p-2 cursor-pointer font-weight-bold text-secondary" style="background: #f6f9ff;" data-controller="post" data-action="click->post#expandNotebook">↕️ Read More</div>
+    <div class="text-center col-12 mt-3"><div class="show-more-btn btn btn-primary col-4" data-controller="post" data-action="click->post#expandNotebook">↕️&nbsp;&nbsp;Read More</div></div>
   </div>
 <% end %>
