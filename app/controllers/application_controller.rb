@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   include ::ActionController::HttpAuthentication::Token::ControllerMethods
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :not_authorized_or_login
-  after_action :participant_activity
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_paper_trail_whodunnit
   after_action :track_action
@@ -30,7 +29,11 @@ class ApplicationController < ActionController::Base
   end
 
   def notifications
-    @notifications = current_user&.notifications
+    if current_user.present?
+      @notifications = Rails.cache.fetch('participant_notifications_#{current_user.id}') do
+        current_user&.notifications
+      end
+    end
   end
 
   attr_reader :is_api_request
@@ -97,10 +100,6 @@ class ApplicationController < ActionController::Base
 
     # Redirect based on available browsing history
     return stored_location_for(:user) || root_path
-  end
-
-  def participant_activity
-    current_participant.try :touch
   end
 
   def not_authorized_or_login

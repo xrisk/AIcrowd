@@ -13,7 +13,7 @@ ActiveAdmin.register Challenge, as: 'Editors Selection' do
     column :challenge
     column :status
     column :featured_sequence
-    column :page_views
+    # column :page_views
     column :participant_count
     column :submissions_count
     column :practice_flag

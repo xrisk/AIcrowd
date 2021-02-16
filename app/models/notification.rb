@@ -11,6 +11,8 @@ class Notification < ApplicationRecord
 
   validates :notification_type, presence: true
 
+  after_commit :invalidate_cache
+
   NOTIFICATION_TYPE = {
     'Mention'        => :mention,
     'Graded'         => :graded,
@@ -22,5 +24,9 @@ class Notification < ApplicationRecord
 
   def read?
     read_at.present?
+  end
+
+  def invalidate_cache
+    Rails.cache.delete("participant_notifications_#{self.participant_id}")
   end
 end

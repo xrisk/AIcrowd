@@ -3,7 +3,8 @@ require 'rails_helper'
 describe ChallengesHelper do
   describe 'challenge_stat_count(challenge, stat_type, parent_meta_challenge)' do
     context 'when standard challenge passed in parameters' do
-      let!(:challenge)              { create(:challenge, :running, page_views: 10) }
+      let!(:challenge)              { create(:challenge, :running) }
+      let!(:challenge_property)     { create(:challenge_property, page_views: 10, challenge: challenge)}
       let!(:submissions)            { create_list(:submission, 2, challenge: challenge) }
       let!(:challenge_participants) { create_list(:challenge_participant, 2, challenge: challenge) }
       let!(:teams)                  { create_list(:team, 2, challenge: challenge) }
@@ -18,14 +19,17 @@ describe ChallengesHelper do
 
     context 'when meta challenge or problem passed in parameters' do
       let!(:meta_challenge)                        { create(:challenge, :running, :meta_challenge, page_views: 10) }
+      let!(:meta_challenge_property)               { create(:challenge_property, page_views: 10, challenge: meta_challenge)}
       let!(:second_problem_challenge_participants) { create_list(:challenge_participant, 5, challenge: meta_challenge) }
       let!(:second_problem_teams)                  { create_list(:team, 5, challenge: meta_challenge) }
 
-      let!(:first_problem_challenge)               { create(:challenge, :running, page_views: 5) }
+      let!(:first_problem_challenge)               { create(:challenge, :running) }
+      let!(:first_problem_challenge_property)      { create(:challenge_property, page_views: 5, challenge: first_problem_challenge)}
       let!(:first_chalenge_problem)                { create(:challenge_problem, challenge: meta_challenge, problem: first_problem_challenge) }
       let!(:first_problem_submissions)             { create_list(:submission, 3, challenge: first_problem_challenge, meta_challenge: meta_challenge) }
 
-      let!(:second_problem_challenge)              { create(:challenge, :running, page_views: 5) }
+      let!(:second_problem_challenge)              { create(:challenge, :running) }
+      let!(:second_problem_challenge_property)     { create(:challenge_property, page_views: 5, challenge: second_problem_challenge)}
       let!(:second_chalenge_problem)               { create(:challenge_problem, challenge: meta_challenge, problem: second_problem_challenge) }
       let!(:second_problem_submissions)            { create_list(:submission, 2, challenge: second_problem_challenge, meta_challenge: meta_challenge) }
 
