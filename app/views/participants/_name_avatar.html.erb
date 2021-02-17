@@ -1,6 +1,8 @@
-<% if !defined?(avatar) || (defined?(avatar) && avatar && avatar != 'false') %>
-  <%= participant_avatar participant %>
-<% end %>
-<% if !defined?(username) || (defined?(username) && username && username != 'false') %>
-  <span class="text-link <%= 'truncate' if truncate == 'true' %>"><%= participant.name %></span>
+<% cache [participant, avatar, username] do %>
+  <% if !defined?(avatar) || (defined?(avatar) && avatar && avatar != 'false') %>
+    <%= participant_avatar participant %>
+  <% end %>
+  <% if !defined?(username) || (defined?(username) && username && username != 'false') %>
+    <span class="text-link <%= 'truncate' if truncate == 'true' %>"><%= participant.name %></span>
+  <% end %>
 <% end %>
