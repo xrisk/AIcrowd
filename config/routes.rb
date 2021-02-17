@@ -249,6 +249,7 @@ Rails.application.routes.draw do
     resources :votes, only: [:create, :destroy]
     post :validate_colab_link, on: :collection
   end
+  resources :publications, only: [:index, :show]
 
   match '/contact', to: 'pages#contact', via: :get
   match '/privacy', to: 'pages#privacy', via: :get
