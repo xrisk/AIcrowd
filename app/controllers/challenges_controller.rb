@@ -337,7 +337,7 @@ class ChallengesController < ApplicationController
   end
 
   def set_challenge_leaderboard_list
-    @challenge_leaderboard_list = []
+    @challenge_leaderboard_list = [["Choose a leaderboard", ""]]
     @challenge_rounds.each do |challenge_round|
       challenge_round.challenge_leaderboard_extras.each do |challenge_leaderboard_extra|
         @challenge_leaderboard_list << ["#{challenge_round.challenge_round}-#{challenge_leaderboard_extra.name}", challenge_leaderboard_extra.id]
