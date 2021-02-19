@@ -4,6 +4,7 @@ class CreatePublicationAuthors < ActiveRecord::Migration[5.2]
       t.string  :name
       t.integer :participant_id
       t.integer :publication_id, null: false
+      t.integer :sequence, default: 0
 
       t.timestamps
     end

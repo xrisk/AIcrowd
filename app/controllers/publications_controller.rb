@@ -1,4 +1,4 @@
-class PostsController < InheritedResources::Base
+class PublicationsController < InheritedResources::Base
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :set_publication, only: [:show]
 
@@ -37,22 +37,32 @@ class PostsController < InheritedResources::Base
      :title,
      :thumbnail,
      :description,
+     :abstract,
      :challenge_id,
      :publication_date,
      :no_of_citations,
      :aicrowd_contributed,
-     publication_venues_attributes:[
+     :sequence,
+     :site,
+     venues_attributes:[
       :id,
       :venue
      ],
-     publication_authors_attributes:[
+     authors_attributes:[
       :id,
       :name,
-      :participant_id
+      :participant_id,
+      :sequence
      ],
-     publication_external_links_attributes:[
+     external_links_attributes:[
       :id,
-      :link
+      :name,
+      :link,
+      :icon
+     ],
+     categories_attributes:[
+      :id,
+      :name
      ]
      )
   end
