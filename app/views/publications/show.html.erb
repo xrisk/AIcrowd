@@ -1,0 +1,100 @@
+<div class="masthead masthead-challenge">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <span class="badge badge-success"><img src="https://d3qvx1ggyg4lu1.cloudfront.net/assets/img/icon-time.svg">
+          <%= @publication.publication_date.strftime("%B %Y") %>
+        </span>
+        <% @publication.categories.each do |category| %>
+          <a href="#">
+            <span class="badge badge-outline">#<%= category.name %></span>
+          </a>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- title/description/prizes -->
+    <div class="row">
+      <div class="col-sm-12">
+        <h4 class="mb-3"><%= @publication.venues.first.venue %></h4>
+        <h1 style="max-width: unset;text-transform: capitalize;font-size: 2.25rem;"><%= @publication.title %></h1>
+
+        <div class="avatar-group mt-3 mb-n4">
+          <% @publication.authors.each do |author| %>
+            <% if author.participant_id.present? %>
+              <%= render partial: 'participants/get_user_profile', locals: { participant: author.participant } %>
+            <% else %>
+              <a href="#" class="mr-3">
+                <img class="avatar" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg" style="width: 24px;height: 24px;">
+                <span class="text-link"><%= author.name %></span>
+              </a>
+            <% end %>
+          <% end %>
+        </div>
+        </div>
+          <div class="col-sm-12 col-md-4 col-lg-3">
+          <div class="prizes-breakdown">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /title/description/prizes -->
+  </div>
+  <!-- /organizer/stats/options -->
+</div>
+<!-- /masthead - challenge -->
+
+<!-- sub-nav bar -->
+<div class="sub-nav-bar sticky-top">
+  <div class="container-fluid overflow-hidden">
+    <div class="row col-12 d-flex justify-content-end">
+      <div class="mr-auto btn-set" aria-hidden="true">
+        <% @publication.external_links.each do |external_link| %>
+          <%= link_to external_link.name, external_link.link, class: 'btn btn-primary btn-sm fa mr-2 #{external_link.icon}' %>
+        <% end %>
+
+      </div>
+      <div class="align-self-center">
+        <a class="btn btn-secondary btn-sm mr-1">
+          <span class="fa fa-facebook" style="color: gray;"></span>
+        </a>
+        <a class="btn btn-secondary btn-sm mr-1">
+          <span class="fa fa-twitter" style="color: gray;"></span>
+        </a>
+        <a class="btn btn-secondary btn-sm mr-1">
+          <span class="fa fa-linkedin" style="color: gray;"></span>
+        </a>
+        <a class="btn btn-secondary btn-sm">
+          <span class="fa fa-quote-left mr-2"></span>Cite
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /sub-nav bar -->
+
+<!-- section -->
+<section class="section-p-md">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="row col-lg-9">
+        <header class="section-header">
+          <h4>Abstract</h4>
+        </header>
+
+        <!-- md content -->
+        <div class="col-md-12">
+          <div class="markdown-wrap">
+            <div class="md-content w-100" style="max-width: unset;">
+              <span style="max-width: unset;text-align: justify;">
+                <%= @publication.abstract.html_safe %>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /section -->
+
