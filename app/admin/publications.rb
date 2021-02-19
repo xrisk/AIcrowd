@@ -1,31 +1,59 @@
 ActiveAdmin.register Publication do
   permit_params(:id,
-    :title,
-    :thumbnail,
-    :description,
-    :challenge_id,
-    :publication_date,
-    :no_of_citations,
-    :aicrowd_contributed,
-    publication_venues_attributes:[
-    :id,
-    :venue
-    ],
-    publication_authors_attributes:[
-    :id,
-    :name,
-    :participant_id
-    ],
-    publication_external_links_attributes:[
-    :id,
-    :link
-    ]
+     :title,
+     :thumbnail,
+     :description,
+     :abstract,
+     :challenge_id,
+     :publication_date,
+     :no_of_citations,
+     :aicrowd_contributed,
+     :sequence,
+     :site,
+     venues_attributes:[
+      :id,
+      :venue,
+      :_destroy
+     ],
+     authors_attributes:[
+      :id,
+      :name,
+      :participant_id,
+      :sequence,
+      :_destroy
+     ],
+     external_links_attributes:[
+      :id,
+      :name,
+      :link,
+      :icon,
+      :_destroy
+     ]
   )
+
+  before_action :update_tags, only: [:update]
 
   controller do
 
     def find_resource
       scoped_collection.friendly.find(params[:id])
+    end
+
+    def update_tags
+      if params["publication"]["categories_attributes"].present?
+        publication = Publication.friendly.find(params["id"])
+        publication.category_publications.destroy_all if publication.category_publications.present?
+
+        params["publication"]["categories_attributes"].each do |key, category|
+          category = Category.find_or_create_by(name: category["name"])
+          if category.save
+            publication.category_publications.create!(category_id: category.id)
+          else
+            publication.errors.messages.merge!(category.errors.messages)
+          end
+        end
+
+      end
     end
   end
 
@@ -33,6 +61,7 @@ ActiveAdmin.register Publication do
     f.inputs do
       f.input :title
       f.input :thumbnail
+      f.input :abstract
       f.input :challenge,
               as:         :searchable_select,
               collection: Challenge.all.map { |challenge|
@@ -41,13 +70,15 @@ ActiveAdmin.register Publication do
       f.input :publication_date
       f.input :no_of_citations
       f.input :aicrowd_contributed
+      f.input :sequence
       f.label 'Description', class: 'ckeditor_label job_posting'
       f.text_area :description, class: 'ckeditor'
     end
 
     f.inputs do
-      f.has_many :publication_authors, heading: 'Authors' do |a|
+      f.has_many :authors, heading: 'Authors', allow_destroy: true do |a|
         a.input :name
+        a.input :sequence
         a.input :participant_id,
               label:      'Participant',
               as:         :searchable_select,
@@ -55,13 +86,20 @@ ActiveAdmin.register Publication do
       end
     end
     f.inputs do
-      f.has_many :publication_venues, heading: 'Venue' do |a|
+      f.has_many :venues, heading: 'Venue', allow_destroy: true do |a|
         a.input :venue
       end
     end
     f.inputs do
-      f.has_many :publication_external_links, heading: 'External Link' do |a|
+      f.has_many :external_links, heading: 'External Link', allow_destroy: true do |a|
+        a.input :name
         a.input :link
+        a.input :icon
+      end
+    end
+    f.inputs do
+      f.has_many :categories, heading: 'Tags' do |a|
+        a.input :name
       end
     end
     f.actions
