@@ -20,22 +20,23 @@
     <% end %>
 
     <div class="row">
+      <% cache(@challenge) do%>
+        <!-- sub-nav – vertical -->
+        <div class="col-lg-2 sub-nav-vertical-container">
+          <ul class="nav flex-column sticky-top-sub-nav" id="table-of-contents">
+          </ul>
+        </div>
+        <!-- /sub-nav – vertical -->
 
-      <!-- sub-nav – vertical -->
-      <div class="col-lg-2 sub-nav-vertical-container">
-        <ul class="nav flex-column sticky-top-sub-nav" id="table-of-contents">
-        </ul>
-      </div>
-      <!-- /sub-nav – vertical -->
-
-      <!-- md content -->
-      <div class="col-md-8 col-lg-7" id="description-wrapper">
-        <div class="markdown-wrap">
-          <div class="md-content ck-content" data-controller="challenge-overview" data-action="resize@window->challenge-overview#showTOC" data-challenge-overview-scrollable-tabs="<%= @challenge.scrollable_overview_tabs %>">
-            <%= sanitize_html(@challenge.description) %>
+        <!-- md content -->
+        <div class="col-md-8 col-lg-7" id="description-wrapper">
+          <div class="markdown-wrap">
+            <div class="md-content ck-content" data-controller="challenge-overview" data-action="resize@window->challenge-overview#showTOC" data-challenge-overview-scrollable-tabs="<%= @challenge.scrollable_overview_tabs %>">
+              <%= sanitize_html(@challenge.description) %>
+            </div>
           </div>
         </div>
-      </div>
+      <% end %>
       <!-- /md content -->
       <div class="top-contributors-container col-sm-12 col-md-4 col-lg-3">
         <%= render 'challenges/show/sidenav', challenge: @challenge, top_leaderboards: @top_five_leaderboards, latest_submissions: @latest_five_submissions, challenge_baseline_discussion: @challenge_baseline_discussion %>

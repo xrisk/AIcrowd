@@ -2,7 +2,7 @@ class ChallengeRound < ApplicationRecord
   before_update :rollback_rating, :if => :end_dttm_changed?
   include Markdownable
 
-  belongs_to :challenge, inverse_of: :challenge_rounds
+  belongs_to :challenge, inverse_of: :challenge_rounds, touch: true
   has_many :submissions, dependent: :restrict_with_error
   has_many :leaderboards
   has_many :user_ratings

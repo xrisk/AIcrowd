@@ -1,45 +1,46 @@
-<% if is_current_page_meta_challenge_child(challenge) %>
-  <% meta_challenge = detect_meta_challenge(challenge) %>
-  <div class="navigation btn-primary p-2">
-    <div class="container-fluid">
-      <span>
-      <%= link_to challenge_path(meta_challenge.slug), {:style=>'color:white;'} do %>
-        <span class="fa fa-chevron-left mr-2"></span>Back to <b><%= meta_challenge.challenge %></b>
-      <% end %>
-      </span>
+<% cache(challenge) do %>
+  <% if is_current_page_meta_challenge_child(challenge) %>
+    <% meta_challenge = detect_meta_challenge(challenge) %>
+    <div class="navigation btn-primary p-2">
+      <div class="container-fluid">
+        <span>
+        <%= link_to challenge_path(meta_challenge.slug), {:style=>'color:white;'} do %>
+          <span class="fa fa-chevron-left mr-2"></span>Back to <b><%= meta_challenge.challenge %></b>
+        <% end %>
+        </span>
+      </div>
     </div>
-  </div>
-<% end %>
-<!-- masthead - challenge -->
-<% if challenge.banner_file.present? %>
-  <!--- TODO: move this embeeded css outside -->
-  <style>
-  .masthead-banner {
-    background-image: url('<%= challenge.banner_file.url %>');
-    background-color: #<%= challenge.banner_color.presence || "F8F9F9" %>
-  }
-  @media (max-width: 768px) {
+  <% end %>
+  <!-- masthead - challenge -->
+  <% if challenge.banner_file.present? %>
+    <!--- TODO: move this embeeded css outside -->
+    <style>
     .masthead-banner {
-      background-image: url('<%= challenge.banner_mobile_file.url %>');
-      background-size: 100% auto;
+      background-image: url('<%= challenge.banner_file.url %>');
+      background-color: #<%= challenge.banner_color.presence || "F8F9F9" %>
     }
-    .mobile-mt-100 {
-      margin-top: 100px;
+    @media (max-width: 768px) {
+      .masthead-banner {
+        background-image: url('<%= challenge.banner_mobile_file.url %>');
+        background-size: 100% auto;
+      }
+      .mobile-mt-100 {
+        margin-top: 100px;
+      }
+      .mobile-mt-100 .organizer-attribution,
+      .mobile-mt-100 .dropdown {
+        display: none;
+      }
     }
-    .mobile-mt-100 .organizer-attribution,
-    .mobile-mt-100 .dropdown {
-      display: none;
-    }
-  }
-  </style>
-  <div class="masthead masthead-challenge masthead-banner">
-<% else %>
-<div class="masthead masthead-challenge">
-<% end %>
+    </style>
+    <div class="masthead masthead-challenge masthead-banner">
+  <% else %>
+  <div class="masthead masthead-challenge">
+  <% end %>
   <div class="container-fluid">
     <%= render partial: 'shared/challenges/masthead_pills', locals: { challenge: challenge, challenge_rounds: challenge_rounds } %>
 
-    <% if !challenge.banner_file.present? %>
+  <% if !challenge.banner_file.present? %>
     <!-- title/description/prizes -->
     <div class="row">
       <div class="col-sm-12 col-md-8 col-lg-9">
@@ -62,13 +63,14 @@
       </div>
     </div>
     <!-- /title/description/prizes -->
-    <% else %>
+  <% else %>
     <div class="row" style="height: 200px"></div>
-    <% end %>
+  <% end %>
+<% end %>
 
-    <!-- organizer/stats/options -->
-    <%= render partial: 'shared/challenges/masthead_extra',
-        locals: { challenge: challenge, challenge_rounds: challenge_rounds, vote: vote, follow: follow } %>
+  <!-- organizer/stats/options -->
+  <%= render partial: 'shared/challenges/masthead_extra',
+      locals: { challenge: challenge, challenge_rounds: challenge_rounds, vote: vote, follow: follow } %>
     <!-- /organizer/stats/options -->
   </div>
 </div>
