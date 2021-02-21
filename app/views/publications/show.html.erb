@@ -13,6 +13,28 @@
       </div>
     </div>
 
+    <div class="modal preview-modal" id="preview-modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document" style="max-width: 90%;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="previewModalLabel">Cite</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="research-citation-caontainer" id="citation-preview-container">
+                <%= @publication.cite %>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type ="button" class="btn btn-secondary clipboard-btn" data-clipboard-action="copy" data-clipboard-target="#citation-preview-container">Copy to clipboard</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- title/description/prizes -->
     <div class="row">
       <div class="col-sm-12">
@@ -26,8 +48,8 @@
             <% else %>
               <a href="#" class="mr-3">
                 <img class="avatar" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg" style="width: 24px;height: 24px;">
+                <span class="text-link"><%= author.name %></span>
               </a>
-              <span class="text-link"><%= author.name %></span>
             <% end %>
           <% end %>
         </div>
@@ -69,9 +91,9 @@
         <a class="btn btn-secondary btn-sm mr-1">
           <span class="fa fa-linkedin" style="color: gray;"></span>
         </a>
-        <a class="btn btn-secondary btn-sm" style="color:gray !important;">
+        <button type="button" class="btn btn-secondary btn-sm preview-button" data-toggle="modal" data-target="#preview-modal" style="height: 60%; color:gray !important;">
           <span class="fa fa-quote-left mr-2"></span>Cite
-        </a>
+        </button>
       </div>
     </div>
   </div>
@@ -84,7 +106,7 @@
     <div class="row">
       <div class="row col-lg-9">
         <header class="section-header">
-          <h4>Abstract</h4>
+          <h4 class="ml-3">Abstract</h4>
         </header>
 
         <!-- md content -->
@@ -94,6 +116,14 @@
               <span style="max-width: unset;text-align: justify;">
                 <%= @publication.abstract.html_safe %>
               </span>
+              <% if @publication.description.present? %>
+                <header class="section-header">
+                  <h4 class="mt-4">Description</h4>
+                </header>
+                <span style="max-width: unset;text-align: justify;">
+                  <%= @publication.abstract.html_safe %>
+                </span>
+              <% end %>
             </div>
           </div>
         </div>

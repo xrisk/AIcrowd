@@ -9,7 +9,7 @@ ActiveAdmin.register Publication do
      :no_of_citations,
      :aicrowd_contributed,
      :sequence,
-     :site,
+     :cite,
      venues_attributes:[
       :id,
       :venue,
@@ -62,6 +62,7 @@ ActiveAdmin.register Publication do
       f.input :title
       f.input :thumbnail
       f.input :abstract
+      f.input :cite
       f.input :challenge,
               as:         :searchable_select,
               collection: Challenge.all.map { |challenge|

@@ -42,6 +42,7 @@
 //= require modules/modals
 //= require modules/social_share
 //= require modules/challenges
+//= require clipboard
 
 // ---------------------- Others --------------------- //
 //= require ahoy
@@ -89,6 +90,13 @@ $(document).ready(function(){
     $('[data-toggle="popover"]').popover();
     hljs.initHighlightingOnLoad();
     $('form').removeAttr('novalidate');
+});
+
+$(document).ready(function(){
+
+  var clipboard = new Clipboard('.clipboard-btn');
+  console.log(clipboard);
+
 });
 
 function hidegrowl(){

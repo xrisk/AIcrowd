@@ -43,7 +43,7 @@ class PublicationsController < InheritedResources::Base
      :no_of_citations,
      :aicrowd_contributed,
      :sequence,
-     :site,
+     :cite,
      venues_attributes:[
       :id,
       :venue
