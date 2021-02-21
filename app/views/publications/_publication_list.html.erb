@@ -27,11 +27,11 @@
                 <small><%= publication.publication_date.strftime("%B %Y") %></small>
               </span>
             </div>
-            <div class="avatar-group mt-2">
-              <% publication.authors.each do |author| %>
+            <div class="avatar-group mt-2 list-group-research">
+              <% publication.authors.limit(3).each do |author| %>
                 <% if author.participant_id.present? %>
                   <span class="mr-2">
-                  <%= render partial: 'participants/get_user_profile', locals: { participant: author.participant } %>
+                  <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
                   </span>
                 <% else %>
                   <a href="#" class="mr-2">
@@ -40,45 +40,34 @@
                   </a>
                 <% end %>
               <% end %>
-
-              <span class="text-link"><small>&amp;</small></span>
-              <div class="avatar-group ml-1">
-                <a href="#">
-                  <img class="avatar mr-0 border border-white" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg" style="width: 18px;height: 18px;">
-                </a>
-                <a href="#">
-                  <img class="avatar mr-0 border border-white" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg" style="width: 18px;height: 18px;">
-                </a>
-                <a href="#">
-                  <img class="avatar mr-0 border border-white" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg" style="width: 18px;height: 18px;">
-                </a>
-                <a href="#">
-                  <img class="avatar mr-0 border border-white" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg" style="width: 18px;height: 18px;">
-                </a>
-                <a href="#">
-                  <img class="avatar mr-0 border border-white" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg" style="width: 18px;height: 18px;">
-                </a>
-                <a href="#">
-                  <img class="avatar mr-0 border border-white" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg" style="width: 18px;height: 18px;">
-                </a>
-              </div>
+              <% if publication.authors.count > 3 %>
+                <span class="text-link"><small>&amp;</small></span>
+                <div class="avatar-group ml-1">
+                  <% publication.authors.offset(3).each do |author| %>
+                    <% if author.participant_id.present?%>
+                      <%= render partial: 'participants/get_user_profile', locals: { participant: author.participant, username: 'false'} %>
+                    <% else %>
+                      <a href="#">
+                        <img class="avatar mr-0 border border-white" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg" style="width: 18px;height: 18px;">
+                      </a>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
             </div>
           </span>
         </div>
       </div>
       <div class="col-md-1 float-right">
         <div class="float-right">
-          <a id="vote-link-post-49" data-remote="true" rel="nofollow" data-method="post" href="/showcase/49/votes">
-            <button type="button" class="btn btn-secondary border btn-sm rounded" style="width: 4rem;">
-              <span class="fa fa-star"></span><br>
-                340
-            </button>
-          </a>
+          <button type="button" class="btn btn-secondary border btn-sm rounded" style="width: 4rem;">
+            <span class="fa fa-star"></span><br><%= publication.no_of_citations.to_i %>
+          </button>
         </div>
       </div>
       <div class="col-md-10 d-flex mt-n4 offset-md-2 pl-0">
-        <div class="contribution-user-time small" data-controller="publications" data-action="click->publications#expandAbstract">
-          <span class="fa fa-caret-right abstract"></span>Abstract
+        <div class="contribution-user-time small cursor-pointer" data-controller="publications" data-action="click->publications#expandAbstract">
+          <span><span class="fa fa-caret-right abstract mr-1"></span>Abstract</span>
             <div class="mt-2 text-justify d-none">
               <%= publication.abstract.html_safe %>
             </div>

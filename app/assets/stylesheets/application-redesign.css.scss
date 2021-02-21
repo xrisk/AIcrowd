@@ -14400,6 +14400,28 @@ input.width-185 {
   background-color: #F8F9F9;
 }
 
+.list-group-research img.avatar {
+    width: 18px;
+    height: 18px;
+    border: 1px solid gray;
+    margin-right: 3px;
+}
+
+.list-group-research img.avatar {
+    width: 24px;
+    height: 24px;
+    border: 1px solid gray;
+    margin-right: 3px;
+}
+
+.list-group-research img.avatar.user-rating-0, .list-group-research img.avatar.user-rating-1, .list-group-research img.avatar.user-rating-2, .list-group-research img.avatar.user-rating-3, .list-group-research img.avatar.user-rating-4, .list-group-research img.avatar.user-rating-5 {
+    box-shadow: none;
+}
+
+.list-group-research-big img.avatar.user-rating-0, .list-group-research img.avatar.user-rating-1, .list-group-research img.avatar.user-rating-2, .list-group-research img.avatar.user-rating-3, .list-group-research img.avatar.user-rating-4, .list-group-research img.avatar.user-rating-5 {
+    box-shadow: none;
+}
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';
