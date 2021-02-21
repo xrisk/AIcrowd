@@ -5,12 +5,13 @@ module Api
       helper ParticipantsHelper
 
       def user_profile
-        username    = params[:username]
-        avatar      = params[:avatar]
-        truncate    = params[:truncate]
+        username      = params[:username]
+        avatar        = params[:avatar]
+        truncate      = params[:truncate]
+        research_name = params[:research_name]
         participant = Participant.find_by(id: params[:id])
 
-        render partial: 'participants/user_link', locals: { participant: participant, username: username, avatar: avatar, truncate: truncate }, layout: false
+        render partial: 'participants/user_link', locals: { participant: participant, username: username, avatar: avatar, truncate: truncate, research_name: research_name }, layout: false
       end
 
       def discourse_notifications

@@ -116,6 +116,8 @@ module MetaTagsHelper
       get_title(@post.title)
     when 'job_postings'
       get_title(@job_posting.title)
+    when 'publications'
+      get_title(@publication.title)
     end
   end
 
