@@ -1,0 +1,19 @@
+<% if participant.present? %>
+  <%
+    avatar           = avatar.present? ? avatar : true
+    span_location_id = location_id(participant)
+    username         = username
+  %>
+
+  <span id="<%= span_location_id %>">
+    <span data-controller="participants"
+          data-participants-participant="<%= participant&.id %>"
+          data-participants-username="<%= false %>"
+          data-participants-avatar="<%= avatar %>"
+          data-participants-location="<%= span_location_id %>"
+          data-participants-research_name="<%= username %>"
+          data-action="mouseenter->participants#getUserProfile">
+          <%= render partial: 'participants/research_name_avatar', locals: { participant: participant, research_name: username } %>
+    </span>
+  </span>
+<% end %>
