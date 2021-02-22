@@ -10,7 +10,7 @@
   <div style="display: table-row;" data-container=".<%= random_class %>" data-html="true" data-toggle="tooltip"
     title='<%= render partial: 'participants/tooltip_profile', locals: { participant: participant } %>'>
     <% if research_name.present? %>
-      <%= render partial: 'participants/research_name_avatar', locals: { participant: participant, research_name: research_name } %>
+      <%= render partial: 'participants/research_name_avatar', locals: { participant: participant, research_name: research_name, base_class: "avatar" } %>
     <% else %>
       <a href="<%= participant_path(participant) %>">
         <%= render partial: 'participants/name_avatar', locals: { participant: participant, username: username, avatar: avatar, truncate: truncate } %>

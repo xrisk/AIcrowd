@@ -249,7 +249,7 @@ Rails.application.routes.draw do
     resources :votes, only: [:create, :destroy]
     post :validate_colab_link, on: :collection
   end
-  resources :publications, only: [:index, :show] do
+  resources :publications, path: :research, only: [:index, :show] do
     get :all, on: :collection
   end
 

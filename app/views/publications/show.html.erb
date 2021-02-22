@@ -6,9 +6,9 @@
           <%= @publication.publication_date.strftime("%B %Y") %>
         </span>
         <% @publication.categories.each do |category| %>
-          <a href="#">
+          <%= link_to all_publications_path(categories: category.name) do %>
             <span class="badge badge-outline">#<%= category.name %></span>
-          </a>
+          <% end %>
         <% end %>
       </div>
     </div>
@@ -16,7 +16,9 @@
     <!-- title/description/prizes -->
     <div class="row">
       <div class="col-sm-12">
-        <h4 class="mb-3"><%= @publication.venues.first.venue %></h4>
+        <%= link_to all_publications_path(venues: @publication.venues.first.short_name) do %>
+          <h4 class="mb-3"><%= @publication.venues.first.venue %></h4>
+        <% end %>
         <h1 style="max-width: unset;text-transform: capitalize;font-size: 2.25rem;"><%= @publication.title %></h1>
 
         <div class="avatar-group mt-3 mb-n4 list-group-research-big">
@@ -107,16 +109,16 @@
         <div class="col-md-12">
           <div class="markdown-wrap">
             <div class="md-content w-100" style="max-width: unset;">
-              <span style="max-width: unset;text-align: justify;">
+              <p style="max-width: unset;text-align: justify; font-size: 18px;">
                 <%= @publication.abstract.html_safe %>
-              </span>
+              </p>
               <% if @publication.description.present? %>
                 <header class="section-header">
                   <h4 class="mt-4">Description</h4>
                 </header>
-                <span style="max-width: unset;text-align: justify;">
+                <p style="max-width: unset;text-align: justify; font-size: 18px;">
                   <%= @publication.abstract.html_safe %>
-                </span>
+                </p>
               <% end %>
             </div>
           </div>

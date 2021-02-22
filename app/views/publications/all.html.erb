@@ -1,22 +1,19 @@
+<div class="masthead">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h1>Publications</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="filter-bar">
+  <div class="container-fluid mt-2">
+    <%= render partial: 'filter', locals: { years: @years, categories: @categories, venues: @venues, path: all_publications_path} %>
+  </div>
+</div>
 <div class="section-p-md">
   <div class="container-fluid">
-    <div class="row mb-5">
-      <div class="col-xs-12 col-sm-12 col-lg-6">
-        <div class="mt-lg-5">
-          <h1><span class="text-primary">AI</span>crowd Research</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-        </div>
-      </div>
-      <div class="col-xs-12 col-sm-12 col-lg-6 mt-lg-n5 mb-lg-n5">
-        <img class="w-100" src="https://i.imgur.com/NVHoE2X.png">
-      </div>
-    </div>
-    <div class="filter-bar">
-      <hr/>
-      <div class="container-fluid mt-2">
-        <%= render partial: 'filter', locals: { years: @years, categories: @categories, venues: @venues, path: all_publications_path} %>
-      </div>
-    </div>
     <%= render partial: 'publication_list', locals: {publications: @publications} %>
   </div>
 </div>
