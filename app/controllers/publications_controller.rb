@@ -1,6 +1,7 @@
 class PublicationsController < InheritedResources::Base
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :set_publication, only: [:show]
+  before_action :set_filters, only: [:all]
 
   def new
   end
@@ -26,10 +27,21 @@ class PublicationsController < InheritedResources::Base
     end
   end
 
+  def all
+    @publications     = Publications::FilterService.new(params).call
+    @publications     = @publications.per_page_kaminari(params[:page]).per(18)
+  end
+
   private
 
   def set_publication
     @publication = Publication.friendly.find(params[:id])
+  end
+
+  def set_filters
+    @categories = Category.all
+    @years      = (1990..Date.today.year).to_a
+    @venues     = PublicationVenue.all.pluck(:short_name)
   end
 
   def publication_params
