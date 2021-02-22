@@ -46,7 +46,8 @@ class PublicationsController < InheritedResources::Base
      :cite,
      venues_attributes:[
       :id,
-      :venue
+      :venue,
+      :short_name
      ],
      authors_attributes:[
       :id,

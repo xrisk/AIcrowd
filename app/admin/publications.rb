@@ -13,6 +13,7 @@ ActiveAdmin.register Publication do
      venues_attributes:[
       :id,
       :venue,
+      :short_name,
       :_destroy
      ],
      authors_attributes:[
@@ -89,6 +90,7 @@ ActiveAdmin.register Publication do
     f.inputs do
       f.has_many :venues, heading: 'Venue', allow_destroy: true do |a|
         a.input :venue
+        a.input :short_name
       end
     end
     f.inputs do
