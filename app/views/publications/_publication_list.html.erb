@@ -31,7 +31,9 @@
               <% publication.authors.limit(3).each do |author| %>
                 <% if author.participant_id.present? %>
                   <span class="mr-2">
-                  <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
+                    <small>
+                      <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
+                    </small>
                   </span>
                 <% else %>
                   <a href="#" class="mr-2">
@@ -60,7 +62,7 @@
       </div>
       <div class="col-md-1 float-right">
         <div class="float-right">
-          <button type="button" class="btn btn-secondary border btn-sm rounded" data-toggle="tooltip" data-placement="top" title="" data-original-title="Citations" style="width: 4rem;">
+          <button type="button" class="btn btn-secondary border btn-sm rounded" data-toggle="tooltip" data-placement="top" title="" data-original-title="Citations" style="width: 4rem; cursor: default;">
             <span class="fa fa-star"></span><br><%= publication.no_of_citations.to_i %>
           </button>
         </div>

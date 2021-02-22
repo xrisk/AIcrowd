@@ -13,28 +13,6 @@
       </div>
     </div>
 
-    <div class="modal preview-modal" id="preview-modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document" style="max-width: 90%;">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="previewModalLabel">Cite</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="research-citation-caontainer" id="citation-preview-container">
-                <%= @publication.cite %>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type ="button" class="btn btn-secondary clipboard-btn" data-clipboard-action="copy" data-clipboard-target="#citation-preview-container">Copy to clipboard</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- title/description/prizes -->
     <div class="row">
       <div class="col-sm-12">
@@ -66,6 +44,28 @@
 </div>
 <!-- /masthead - challenge -->
 
+<div class="modal preview-modal" id="preview-modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="max-width: 90%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="previewModalLabel">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="research-citation-caontainer" id="citation-preview-container">
+            <%= @publication.cite %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type ="button" class="btn btn-secondary clipboard-btn" data-clipboard-action="copy" data-clipboard-target="#citation-preview-container">Copy to clipboard</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- sub-nav bar -->
 <div class="sub-nav-bar sticky-top">
   <div class="container-fluid overflow-hidden">
@@ -82,15 +82,9 @@
 
       </div>
       <div class="align-self-center">
-        <a class="btn btn-secondary btn-sm mr-1">
-          <span class="fa fa-facebook" style="color: gray;"></span>
-        </a>
-        <a class="btn btn-secondary btn-sm mr-1">
-          <span class="fa fa-twitter" style="color: gray;"></span>
-        </a>
-        <a class="btn btn-secondary btn-sm mr-1">
-          <span class="fa fa-linkedin" style="color: gray;"></span>
-        </a>
+        <%= publication_social_share('facebook', request.url, @publication.title) %>
+        <%= publication_social_share('twitter', request.url, @publication.title) %>
+        <%= publication_social_share('linkedin', request.url, @publication.title) %>
         <button type="button" class="btn btn-secondary btn-sm preview-button" data-toggle="modal" data-target="#preview-modal" style="height: 60%; color:gray !important;">
           <span class="fa fa-quote-left mr-2"></span>Cite
         </button>
