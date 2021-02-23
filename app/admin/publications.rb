@@ -1,4 +1,5 @@
 ActiveAdmin.register Publication do
+  config.filters = false
   permit_params(:id,
      :title,
      :thumbnail,
@@ -64,11 +65,11 @@ ActiveAdmin.register Publication do
       f.input :thumbnail
       f.input :abstract
       f.input :cite
-      f.input :challenge,
-              as:         :searchable_select,
-              collection: Challenge.all.map { |challenge|
-                            [challenge.challenge, challenge.id]
-                          }
+      f.input :challenge
+              # as:         :searchable_select,
+              # collection: Challenge.all.map { |challenge|
+              #               [challenge.challenge, challenge.id]
+              #             }
       f.input :publication_date
       f.input :no_of_citations
       f.input :aicrowd_contributed
