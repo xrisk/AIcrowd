@@ -11,6 +11,8 @@ class Publication < ApplicationRecord
 
   belongs_to :challenge, optional: true
 
+  default_scope { order(:sequence) }
+
   mount_uploader :thumbnail, RawImageUploader
 
   accepts_nested_attributes_for :authors, reject_if: :all_blank, allow_destroy: true

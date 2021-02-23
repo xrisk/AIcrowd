@@ -2,20 +2,20 @@ import { Controller } from 'stimulus';
 
 export default class extends Controller {
   expandAbstract(event) {
-    if($('.d-none').length > 0){
-      $('.abstract').removeClass('fa-caret-right')
-      $('.abstract').addClass('fa-caret-down')
-      $('.text-justify').removeClass('d-none')
+    let elementDNone = $(event.target.parentElement)
+    if($(elementDNone.find('.d-none')).length > 0){
+      elementDNone.find('.abstract').removeClass('fa-caret-right')
+      elementDNone.find('.abstract').addClass('fa-caret-down')
+      elementDNone.find('.d-none').removeClass('d-none')
     }else{
-      $('.abstract').removeClass('fa-caret-down')
-      $('.abstract').addClass('fa-caret-right')
-      $('.text-justify').addClass('d-none')
+      elementDNone.find('.abstract').removeClass('fa-caret-down')
+      elementDNone.find('.abstract').addClass('fa-caret-right')
+      elementDNone.find('.text-justify').addClass('d-none')
     }
   }
 
   filterUrl(event){
     event.preventDefault();
-    debugger;
 
     let yearList = document.querySelectorAll("input[name='year']:checked")
     let categoriesList = document.querySelectorAll("input[name='category']:checked")

@@ -40,7 +40,7 @@ class PublicationsController < InheritedResources::Base
 
   def set_filters
     @categories = Category.all
-    @years      = (1990..Date.today.year).to_a
+    @years      = Publication.all.pluck(:publication_date).map(&:year)
     @venues     = PublicationVenue.all.pluck(:short_name)
   end
 
