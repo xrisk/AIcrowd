@@ -81,10 +81,10 @@ ActiveAdmin.register Publication do
       f.has_many :authors, heading: 'Authors', allow_destroy: true do |a|
         a.input :name
         a.input :sequence
-        a.input :participant_id,
-              label:      'Participant',
-              as:         :searchable_select,
-              collection: Participant.all.order(:name).map { |u| ["#{u.name} - #{u.id}", u.id] }
+        a.input :participant_id
+              # label:      'Participant',
+              # as:         :searchable_select,
+              # collection: Participant.all.order(:name).map { |u| ["#{u.name} - #{u.id}", u.id] }
       end
     end
     f.inputs do
