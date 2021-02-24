@@ -1,48 +1,50 @@
 <!-- sub-nav bar -->
-<div class="sub-nav-bar sticky-top">
-  <div class="container-fluid priority-nav" data-controller="prioritynav">
-    <ul class="nav">
-      <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Overview', link: challenge_path(challenge)} %>
-      <% if policy(challenge).show_leaderboard? %>
-        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Leaderboard', link: challenge_leaderboards_path(challenge)} %>
-      <% end %>
-      <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Notebooks', link: notebooks_challenge_path(challenge)} %>
-      <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Discussion', link: challenge_discussion_path(challenge)} %>
-      <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Insights', link: challenge_insights_path(challenge)} %>
-      <% if !challenge.meta_challenge %>
-        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Resources', link: resources_link(challenge)} %>
-      <% end %>
-      <% if policy(challenge).show_submissions? %>
-        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Submissions', link: challenge_submissions_path(challenge)} %>
-      <% end %>
-      <% if policy(challenge).show_winners? %>
-        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Winners', link: challenge_winners_path(challenge)} %>
-      <% end %>
-      <% if challenge.dynamic_content_tab.present? %>
-        <%= render partial: 'challenges/show/subnav_link', locals: {text: challenge.dynamic_content_tab, link: challenge_dynamic_contents_path(challenge)} %>
-      <% end %>
-      <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Rules', link: challenge_challenge_rules_path(challenge)} %>
+<% cache(challenge) do %>
+  <div class="sub-nav-bar sticky-top">
+    <div class="container-fluid priority-nav" data-controller="prioritynav">
+      <ul class="nav">
+        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Overview', link: challenge_path(challenge)} %>
+        <% if policy(challenge).show_leaderboard? %>
+          <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Leaderboard', link: challenge_leaderboards_path(challenge)} %>
+        <% end %>
+        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Notebooks', link: notebooks_challenge_path(challenge)} %>
+        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Discussion', link: challenge_discussion_path(challenge)} %>
+        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Insights', link: challenge_insights_path(challenge)} %>
+        <% if !challenge.meta_challenge %>
+          <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Resources', link: resources_link(challenge)} %>
+        <% end %>
+        <% if policy(challenge).show_submissions? %>
+          <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Submissions', link: challenge_submissions_path(challenge)} %>
+        <% end %>
+        <% if policy(challenge).show_winners? %>
+          <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Winners', link: challenge_winners_path(challenge)} %>
+        <% end %>
+        <% if challenge.dynamic_content_tab.present? %>
+          <%= render partial: 'challenges/show/subnav_link', locals: {text: challenge.dynamic_content_tab, link: challenge_dynamic_contents_path(challenge)} %>
+        <% end %>
+        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Rules', link: challenge_challenge_rules_path(challenge)} %>
 
-     <li class="nav-item dropdown overflow-nav">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More <svg xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="0 0 10 5"><polygon fill="#5D5F60" points="7 10 12 15 17 10" transform="translate(-7 -10)"/></svg>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right overflow-nav-list">
-        </div>
-    </li>
-    </ul>
+       <li class="nav-item dropdown overflow-nav">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More <svg xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="0 0 10 5"><polygon fill="#5D5F60" points="7 10 12 15 17 10" transform="translate(-7 -10)"/></svg>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right overflow-nav-list">
+          </div>
+      </li>
+      </ul>
 
-    <% if required_terms_or_rules_path(challenge).present? %>
-      <%= link_to 'Participate', required_terms_or_rules_path(challenge), class: "btn btn-primary btn-sm pull-right" %>
-    <% else %>
-      <%= my_team_view_or_create_button(challenge) %>
-      <% if !challenge.meta_challenge %>
-        <% if !policy(challenge).starting_soon_mode? && policy(challenge).submissions_allowed? %>
-          <%= link_to 'Create Submission', new_challenge_submission_path(challenge), class: "btn btn-primary btn-sm pull-right" %>
+      <% if required_terms_or_rules_path(challenge).present? %>
+        <%= link_to 'Participate', required_terms_or_rules_path(challenge), class: "btn btn-primary btn-sm pull-right" %>
+      <% else %>
+        <%= my_team_view_or_create_button(challenge) %>
+        <% if !challenge.meta_challenge %>
+          <% if !policy(challenge).starting_soon_mode? && policy(challenge).submissions_allowed? %>
+            <%= link_to 'Create Submission', new_challenge_submission_path(challenge), class: "btn btn-primary btn-sm pull-right" %>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
+    </div>
   </div>
-</div>
-<!-- /sub-nav bar -->
+  <!-- /sub-nav bar -->
 
-<%= render partial: 'challenges/show/create_team_modal', locals: {challenge: challenge} %>
+  <%= render partial: 'challenges/show/create_team_modal', locals: {challenge: challenge} %>
+<% end %>
