@@ -10,6 +10,8 @@ module MetaTagsHelper
       "AIcrowd | " + @page_title
     elsif !title_from_controller_name.nil?
       "AIcrowd | " + title_from_controller_name
+    elsif controller_name.present? && controller_name == "landing_page"
+      "AIcrowd"
     else
       DEFAULT_META["meta_title"]
     end
@@ -43,6 +45,10 @@ module MetaTagsHelper
         @organizer.image_file.url
       elsif controller_name == 'participants' && @participant.image_file?
         @participant.image_file.url
+      end
+    elsif controller_name == 'landing_page' && controller.action_name == 'index'
+      if Setting.first.home_page_social_image?
+        return Setting.first.home_page_social_image.url
       end
     else
       content_for_meta_image

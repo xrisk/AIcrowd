@@ -1,6 +1,4 @@
 class LandingPageController < ApplicationController
-  before_action :terminate_challenge, only: [:index]
-
   def index
     @challenges = Rails.cache.fetch('landing-page-challenges', expires_in: 5.minutes) do
       Challenge
@@ -42,7 +40,15 @@ class LandingPageController < ApplicationController
     
     # TODO: Migrate all the rating related code at one place, so we don't need to 
     # change the whole codebase for future changes.
-    @participants = Participant.where("ranking > 0").reorder(:ranking).limit(5)
+    @participants = Rails.cache.fetch('top5-participants-by-ranking', expires_in: 5.minutes) do
+      Participant.where("ranking > 0").reorder(:ranking).limit(5)
+    end
+
+    @social_mage_image = Rails.cache.fetch('home-page-social-image', expires_in: 5.minutes) do
+      if Setting.first.home_page_social_image?
+        meta_image = Setting.first.home_page_social_image.url
+      end
+    emd
   end
 
   def host

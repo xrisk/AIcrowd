@@ -120,10 +120,6 @@ class ApplicationController < ActionController::Base
     redirect_to root_path
   end
 
-  def terminate_challenge
-    TerminateChallenges.new.call
-  end
-
   def search_params
     params[:q]
   end

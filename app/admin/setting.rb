@@ -10,6 +10,9 @@ ActiveAdmin.register Setting do
   form do |f|
     f.inputs do
       f.input :jobs_visible
+      panel 'Home Page' do
+        f.input :home_page_social_image, :as => :file, :hint => link_to("Current Image", f.object.home_page_social_image.url)
+      end
       panel 'Header Banner' do
         f.input :enable_banner
         f.input :banner_text
