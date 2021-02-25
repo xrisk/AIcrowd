@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
 
   def notifications
     if current_user.present?
-      @notifications = Rails.cache.fetch('participant_notifications_#{current_user.id}') do
+      @notifications = Rails.cache.fetch("participant_notifications_#{current_user.id}") do
         current_user&.notifications
       end
     end
