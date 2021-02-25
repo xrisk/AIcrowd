@@ -35,6 +35,18 @@ ActiveAdmin.register Publication do
 
   before_action :update_tags, only: [:update]
 
+  index do
+    selectable_column
+    column :id
+    column :title
+    column :publication_date
+    column :no_of_citations
+    column :aicrowd_contributed
+    column :sequence
+    column :cite
+    actions
+  end
+
   controller do
 
     def find_resource
@@ -60,6 +72,7 @@ ActiveAdmin.register Publication do
   end
 
   form do |f|
+    f.semantic_errors *f.object.errors.keys
     f.inputs do
       f.input :title
       f.input :thumbnail
