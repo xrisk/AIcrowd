@@ -37,6 +37,7 @@
         <%= f.hidden_field :notebook_s3_url, value: @post.notebook_s3_url %>
         <%= f.hidden_field :notebook_html, value: @post.notebook_html %>
         <%= f.hidden_field :gist_id, value: @post.gist_id %>
+        <%= f.hidden_field :gist_username, value: ENV['GIST_USERNAME'] %>
 
         <div class="form-group">
           <label for="tite">Title<sup>*</sup></label>
