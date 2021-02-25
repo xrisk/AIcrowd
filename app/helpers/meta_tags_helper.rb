@@ -46,10 +46,8 @@ module MetaTagsHelper
       elsif controller_name == 'participants' && @participant.image_file?
         @participant.image_file.url
       end
-    elsif controller_name == 'landing_page' && controller.action_name == 'index'
-      if Setting.first.home_page_social_image?
-        return Setting.first.home_page_social_image.url
-      end
+    elsif controller_name == 'landing_page' && controller.action_name == 'index' && Setting&.first&.home_page_social_image?
+      return Setting.first.home_page_social_image.url
     else
       content_for_meta_image
     end

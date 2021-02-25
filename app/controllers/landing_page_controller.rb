@@ -44,11 +44,11 @@ class LandingPageController < ApplicationController
       Participant.where("ranking > 0").reorder(:ranking).limit(5)
     end
 
-    @social_mage_image = Rails.cache.fetch('home-page-social-image', expires_in: 5.minutes) do
-      if Setting.first.home_page_social_image?
+    @social_media_image = Rails.cache.fetch('home-page-social-image', expires_in: 5.minutes) do
+      if Setting&.first&.home_page_social_image?
         meta_image = Setting.first.home_page_social_image.url
       end
-    emd
+    end
   end
 
   def host
