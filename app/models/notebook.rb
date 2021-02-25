@@ -1,5 +1,5 @@
 class Notebook < ApplicationRecord
-  belongs_to :notebookable, polymorphic: true
+  belongs_to :notebookable, polymorphic: true, touch: true
 
   COLAB_URL = ENV['COLAB_URL']
   GIST_URL = ENV['GIST_URL']

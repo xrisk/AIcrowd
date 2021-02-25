@@ -1,3 +1,4 @@
+<% cache [@submission, @challenge, current_participant] do %>
 <% if submission_view_description(submission) %>
   <div class="mb-5">
     <p><%= @submission.description %></p>
@@ -77,3 +78,4 @@
     </div>
   </div>
 </div>
+<% end %>
