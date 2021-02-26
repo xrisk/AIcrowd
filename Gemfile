@@ -118,7 +118,6 @@ gem 'irbtools', require: 'irbtools/binding'
 
 # ACE editor
 gem 'ace-rails-ap'
-gem 'rails_critical_css_server'
 
 group :development do
   gem "letter_opener"

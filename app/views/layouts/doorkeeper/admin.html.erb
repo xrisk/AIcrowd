@@ -5,9 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= t('doorkeeper.layouts.admin.title') %></title>
-  <%= RailsCriticalCssServer::Rewrite.call self do %>
-    <%= stylesheet_link_tag "doorkeeper/admin/application" %>
-  <% end %>
+  <%= stylesheet_link_tag "doorkeeper/admin/application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
