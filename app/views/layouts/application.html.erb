@@ -61,7 +61,9 @@
       <%= render partial: 'layouts/google_analytics_head' %>
       <%= render partial: 'layouts/rollbar_head' %>
     <% end %>
-    <%= stylesheet_link_tag    'application-redesign', media: 'all', 'data-turbolinks-track' => true %>
+    <%= RailsCriticalCssServer::Rewrite.call self do %>
+      <%= stylesheet_link_tag    'application-redesign', media: 'all', 'data-turbolinks-track' => true %>
+    <% end %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
     <%= csrf_meta_tags %>

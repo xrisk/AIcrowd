@@ -34,7 +34,7 @@ class LandingPageController < ApplicationController
     end
 
     @top_posts = Rails.cache.fetch('top-posts', expires_in: 5.minutes) do
-      @posts = Post.order(:created_at).all.limit(4)
+      @posts = Post.includes(:participant).order(:created_at).all.limit(4)
     end
 
     @discourse_topics           = @discourse_topics_fetch.value
