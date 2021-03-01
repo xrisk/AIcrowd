@@ -18,7 +18,6 @@ export default class extends Controller {
 
     $.ajax({
       url: "/participants/"+ participant_id + "/read_notification/" + notification_ids + ".js",
-      data: {is_js_request: true}
     });
   }
 }

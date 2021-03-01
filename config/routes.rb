@@ -36,7 +36,7 @@ def challenge_routes
     post :freeze_submission, on: :collection
   end
   resources :dynamic_contents, only: [:index]
-  resources :leaderboards, only: :index do
+  resources :leaderboards, only: [:index, :destroy] do
     get :export, on: :collection
     get :get_affiliation, on: :collection
   end

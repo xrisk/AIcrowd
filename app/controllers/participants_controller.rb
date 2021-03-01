@@ -105,7 +105,7 @@ class ParticipantsController < ApplicationController
   end
 
   def read_notification
-    if params[:is_js_request].present? # Its a JS request
+    if request.xhr? # Its a JS request
       @notifications = current_user.notifications.unread
       @notifications.update_all(is_new: false)
     else
