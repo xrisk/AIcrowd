@@ -6,7 +6,7 @@
   class="section-p-sm"
   data-controller="leaderboards"
 >
-<% cache [@challenge, @challenge_rounds, @current_leaderboard] do %>
+<% cache_if cache_enabled?, [@challenge, @challenge_rounds, @current_leaderboard] do %>
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">

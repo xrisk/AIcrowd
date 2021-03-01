@@ -1,4 +1,4 @@
-<% cache(challenge) do %>
+<% cache_if cache_enabled?, [challenge] do %>
   <% if is_current_page_meta_challenge_child(challenge) %>
     <% meta_challenge = detect_meta_challenge(challenge) %>
     <div class="navigation btn-primary p-2">

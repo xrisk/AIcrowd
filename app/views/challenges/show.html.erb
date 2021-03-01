@@ -20,7 +20,7 @@
     <% end %>
 
     <div class="row">
-      <% cache(@challenge) do%>
+      <% cache_if cache_enabled?, [@challenge] do %>
         <!-- sub-nav – vertical -->
         <div class="col-lg-2 sub-nav-vertical-container">
           <ul class="nav flex-column sticky-top-sub-nav" id="table-of-contents">

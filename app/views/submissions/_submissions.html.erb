@@ -1,5 +1,5 @@
 <% submissions.each do |submission| %>
-  <% cache(submission) do %>
+  <% cache_if cache_enabled?, [submission, submission.challenge_round.default_leaderboard], expires_in: 5.minutes do %>
     <%
       participant     = submission.participant
       challenge       = submission.challenge

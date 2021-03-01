@@ -21,7 +21,7 @@
     end
 
   %>
-  <% cache [leaderboard, @current_participant, truncate, sticky_class], expires_in: 1.minute do %>
+  <% cache_if cache_enabled?, [leaderboard, @current_participant, truncate, sticky_class], expires_in: 1.minute do %>
     <tr class="<%= sticky_class ||= '' %>">
       <% if !leaderboard.baseline? %>
         <td class="leaderboard-change <%= cls ||= '' %>">
