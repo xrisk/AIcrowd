@@ -43,12 +43,6 @@ class LandingPageController < ApplicationController
     @participants = Rails.cache.fetch('top5-participants-by-ranking', expires_in: 5.minutes) do
       Participant.where("ranking > 0").reorder(:ranking).limit(5)
     end
-
-    @social_media_image = Rails.cache.fetch('home-page-social-image', expires_in: 5.minutes) do
-      if Setting&.first&.home_page_social_image?
-        meta_image = Setting.first.home_page_social_image.url
-      end
-    end
   end
 
   def host
