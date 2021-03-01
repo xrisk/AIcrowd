@@ -1,5 +1,5 @@
-<% cache [@submission, current_participant] do %>
-  <% if @submission.submission_files.present? && (@challenge.submissions_downloadable && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant)))) %>
+<% cache_if cache_enabled?, [@submission, current_participant] do %>
+  <% if @submission.submission_files.present? && (@challenge.submissions_downloadable && is_admin) %>
     <div class="mr-4">
       <h4>Submission Files</h4>
       <span>
@@ -11,7 +11,7 @@
       </span>
     </div>
   <% end %>
-  <% if @submission.notebook.present? && (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant))) %>
+  <% if @submission.notebook.present? && is_admin %>
     <div class="col-md-12">
       <hr/>
       <div class="row">
