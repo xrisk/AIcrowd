@@ -34,10 +34,13 @@
     <h3>Additional Information</h3>
   </div>
   <% submission_meta_hash(@submission).each do |key, value| %>
-    <% if (not key.start_with?('private')) && (key != 'description_markdown') %>
+    <% if (key != 'description_markdown') %>
+      <% if key.start_with?('private') && !(current_participant.present? && (policy(challenge).edit?)) %>
+        <% next %>
+      <% end %>
       <div class="d-flex mt-4">
         <div class="mr-4">
-          <h4> <%= key %> </h4>
+          <h4> <%= key %> <% if key.start_with?('private') %>&nbsp;<i class="fa fa-lock" aria-hidden="true" data-toggle="tooltip" title="Visible only to organizers"></i><% end %></h4>
           <span>
             <% if not key.include?('URL') %>
               <a><%= value %></a>
