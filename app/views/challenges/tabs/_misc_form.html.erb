@@ -22,7 +22,7 @@
   <h2 class="challenges-form__heading">Submissions Export</h2>
 
   <div class="form-group">
-    <label>Challenge Round and Leaderboard for Submissions Export</label>
+    <label>Challenge Round for Submissions Export</label>
     <%= select_tag :submissions_export_challenge_round_id,
                   options_for_select(challenge_rounds.map { |challenge_round| [challenge_round.challenge_round, challenge_round.id] }),
                   id: 'submissions-export-rounds-select',

@@ -25,7 +25,8 @@ module Submissions
             submission.updated_at,
             submission.grading_message,
             submission.grading_status,
-            submission.challenge_round&.challenge_round
+            submission.challenge_round&.challenge_round,
+            submission.challenge_round_id
           ]
           if downloadable
             links = []
@@ -63,6 +64,7 @@ module Submissions
         'Grading Message',
         'Grading Status',
         'Challenge Round',
+        'Challenge Round ID',
       ]
       if downloadable
         headers += ['Download Links']
