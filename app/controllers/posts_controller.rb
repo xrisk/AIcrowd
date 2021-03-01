@@ -3,10 +3,6 @@ class PostsController < InheritedResources::Base
   before_action :set_post, only: [:show, :edit, :update]
   before_action :set_my_challenges, only: [:new, :edit, :update]
 
-  COLAB_URL = ENV['COLAB_URL']
-  GIST_URL = ENV['GIST_URL']
-  USER_NAME = ENV['GIST_USERNAME']
-
   def new
     @post = Post.new
     @post.participant_id = current_participant.id
@@ -118,7 +114,7 @@ class PostsController < InheritedResources::Base
   private
 
     def post_params
-      params.require(:post).permit(:id, :title, :tagline, :thumbnail, :description, :external_link, :challenge_id, :submission_id, :colab_link, :notebook_file_path, :notebook_s3_url, :notebook_html, :gist_id, :private)
+      params.require(:post).permit(:id, :title, :tagline, :thumbnail, :description, :external_link, :challenge_id, :submission_id, :colab_link, :notebook_file_path, :notebook_s3_url, :notebook_html, :gist_id, :private, :gist_username)
     end
 
     # def remove_notebook(post)

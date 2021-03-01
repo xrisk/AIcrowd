@@ -20,7 +20,7 @@ class Organizer < ApplicationRecord
                       allow_blank: true }
   validates :tagline,
             presence: true
-  after_create :set_api_key
+  before_save :set_api_key
 
   def approved?
     approved

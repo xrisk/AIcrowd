@@ -1,6 +1,6 @@
 class LeaderboardsController < ApplicationController
   before_action :authenticate_participant!, except: [:index, :get_affiliation]
-  before_action :set_challenge, only: [:index, :export, :get_affiliation]
+  before_action :set_challenge, only: [:index, :export, :destroy, :get_affiliation]
   before_action :set_current_round, only: [:index, :export, :get_affiliation]
   before_action :set_current_leaderboard, only: [:index, :export, :get_affiliation]
   before_action :set_leaderboards, only: [:index, :get_affiliation]
@@ -60,6 +60,16 @@ class LeaderboardsController < ApplicationController
 
   def get_affiliation
     @affiliations = @filter.call('participant_affiliations')
+  end
+
+  def destroy
+    leaderboard = ChallengeLeaderboardExtra.find_by_id(params[:id])
+    if !leaderboard.default
+      leaderboard.destroy!
+      redirect_to helpers.edit_challenge_path(@challenge), notice: "Leaderboard deleted successfully!"
+    else
+      redirect_to helpers.edit_challenge_path(@challenge), notice: "Can't delete default leaderboard"
+    end
   end
 
   private
@@ -154,7 +164,7 @@ class LeaderboardsController < ApplicationController
         .where(filter)
     end
 
-    if following?
+    if following? && current_participant.present?
       following_ids = current_participant.following.pluck(:followable_id)
       @leaderboards = @leaderboards.where(submitter_id: following_ids)
       @following    = true

@@ -184,7 +184,7 @@ module ChallengesHelper
         if challenge.has_key?(:challenge_id) && (challenge[:challenge_id] != params['meta_challenge_id'])
           return true
         end
-      elsif challenge.slug != params['meta_challenge_id']
+      elsif challenge.slug != Challenge.friendly.find(params['meta_challenge_id']).slug
         return true
       end
     end
