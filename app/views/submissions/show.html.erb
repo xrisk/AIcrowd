@@ -65,11 +65,11 @@
             </div>
 
             <div id="tab-status" class="tab-pane fade<%= ' show active' if active_tab == 'status' %>">
-              <%= render partial: 'submissions/tabs/evaluation_status', locals: { description_markdown: @description_markdown, challenge: @challenge, submission: @submission, is_admin: @is_admin } %>
+              <%= render partial: 'submissions/tabs/evaluation_status', locals: { description_markdown: @description_markdown, challenge: @challenge, submission: @submission, is_organiser_or_author: @is_organiser_or_author } %>
             </div>
 
             <div id="tab-files" class="tab-pane fade<%= ' show active' if active_tab == 'files' %>">
-              <%= render partial: 'submissions/tabs/submission_files', locals: { challenge: @challenge, submission: @submission, is_admin: @is_admin } %>
+              <%= render partial: 'submissions/tabs/submission_files', locals: { challenge: @challenge, submission: @submission, is_organiser_or_author: @is_organiser_or_author } %>
             </div>
 
             <div id="tab-notebook" class="tab-pane fade<%= ' show active' if active_tab == 'notebook' %>">

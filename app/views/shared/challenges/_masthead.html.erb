@@ -1,16 +1,18 @@
-<% cache_if cache_enabled?, [challenge] do %>
-  <% if is_current_page_meta_challenge_child(challenge) %>
-    <% meta_challenge = detect_meta_challenge(challenge) %>
-    <div class="navigation btn-primary p-2">
-      <div class="container-fluid">
-        <span>
-        <%= link_to challenge_path(meta_challenge.slug), {:style=>'color:white;'} do %>
-          <span class="fa fa-chevron-left mr-2"></span>Back to <b><%= meta_challenge.challenge %></b>
-        <% end %>
-        </span>
-      </div>
+<% if is_current_page_meta_challenge_child(challenge) %>
+  <% meta_challenge = detect_meta_challenge(challenge) %>
+  <% cache_if cache_enabled?, [challenge, meta_challenge] do %>
+  <div class="navigation btn-primary p-2">
+    <div class="container-fluid">
+      <span>
+      <%= link_to challenge_path(meta_challenge.slug), {:style=>'color:white;'} do %>
+        <span class="fa fa-chevron-left mr-2"></span>Back to <b><%= meta_challenge.challenge %></b>
+      <% end %>
+      </span>
     </div>
-  <% end %>
+  </div>
+<% else %>
+  <% cache_if cache_enabled?, [challenge] do %>
+<% end %>
   <!-- masthead - challenge -->
   <% if challenge.banner_file.present? %>
     <!--- TODO: move this embeeded css outside -->

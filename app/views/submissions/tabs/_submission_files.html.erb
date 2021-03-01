@@ -1,5 +1,5 @@
 <% cache_if cache_enabled?, [@submission, current_participant] do %>
-  <% if @submission.submission_files.present? && (@challenge.submissions_downloadable && is_admin) %>
+  <% if @submission.submission_files.present? && (@challenge.submissions_downloadable && is_organiser_or_author) %>
     <div class="mr-4">
       <h4>Submission Files</h4>
       <span>
@@ -11,7 +11,7 @@
       </span>
     </div>
   <% end %>
-  <% if @submission.notebook.present? && is_admin %>
+  <% if @submission.notebook.present? && is_organiser_or_author %>
     <div class="col-md-12">
       <hr/>
       <div class="row">

@@ -1,6 +1,6 @@
-<% cache_if cache_enabled?, is_admin do %>
+<% cache_if cache_enabled?, is_organiser_or_author do %>
   <div class="d-flex col-sm-12 col-md-6">
-    <% if description_markdown.present? && is_admin %>
+    <% if description_markdown.present? && is_organiser_or_author %>
       <hr/>
       <div class="md-content w-100">
         <%= description_markdown %>

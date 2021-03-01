@@ -45,7 +45,7 @@ class ChallengesController < ApplicationController
     @challenge_rules  = @challenge.current_challenge_rules
     @challenge_rounds = @challenge.challenge_rounds.started
     @partners = Partner.where(organizer_id: @challenge.organizer_ids) if @challenge.organizers.any?
-    @challenge_baseline_discussion = Rails.cache.fetch("challenge-baseline-discussions-#{@challenge.updated_at.to_i}", expires_in: 5.minutes) do
+    @challenge_baseline_discussion = Rails.cache.fetch("challenge-baseline-discussions-#{@challenge.discourse_category_id}-#{@challenge.updated_at.to_i}", expires_in: 5.minutes) do
       @challenge.baseline_discussion
     end
     if @challenge.active_round
