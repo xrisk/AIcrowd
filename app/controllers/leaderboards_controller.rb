@@ -164,7 +164,7 @@ class LeaderboardsController < ApplicationController
         .where(filter)
     end
 
-    if following?
+    if following? && current_participant.present?
       following_ids = current_participant.following.pluck(:followable_id)
       @leaderboards = @leaderboards.where(submitter_id: following_ids)
       @following    = true

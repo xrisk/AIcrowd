@@ -47,7 +47,11 @@ class InsightsController < ApplicationController
   def challenge_participants_country
     country_count = Hash.new(0)
     @challenge.participants.each do |participant|
-      country                 = ISO3166::Country[participant.country_cd]&.name
+      if participant.country_cd == "RU"
+        country               = ISO3166::Country[participant.country_cd].unofficial_names.first
+      else
+        country               = ISO3166::Country[participant.country_cd]&.name
+      end
       country               ||= participant.visits.where.not(country: nil).last&.country
       country_count[country] += 1
     end
