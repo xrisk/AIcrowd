@@ -135,6 +135,9 @@ GEM
     brakeman (4.3.1)
     browser (2.5.3)
     builder (3.2.4)
+    bullet (6.1.4)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     byebug (10.0.2)
     callsite (0.0.11)
     capybara (3.12.0)
@@ -911,6 +914,7 @@ GEM
     unf_ext (0.0.7.7)
     unicode-display_width (1.6.0)
     unicode_utils (1.4.0)
+    uniform_notifier (1.14.0)
     valid_email2 (2.3.1)
       activemodel (>= 3.2)
       mail (~> 2.5)
@@ -968,6 +972,7 @@ DEPENDENCIES
   bootstrap (~> 4.3.1)
   brakeman
   browser
+  bullet
   byebug
   capybara
   capybara-screenshot

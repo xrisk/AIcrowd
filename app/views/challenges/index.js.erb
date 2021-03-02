@@ -4,4 +4,4 @@
   $('#challenges-div').attr("data-request-completed", true);
 <% end %>
 $("#loader-container").hide();
-$("#challenges-div").append("<%= j render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>");
+$("#challenges-div").append("<%= j render partial: 'shared/challenges/listing', locals: { challenges: @challenges.includes([:category_challenges, :challenge_property, :categories, :organizers]) } %>");

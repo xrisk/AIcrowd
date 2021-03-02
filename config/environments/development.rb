@@ -37,6 +37,14 @@ Rails.application.configure do
 
   config.logger = Logger.new(STDOUT)
   config.log_level = :DEBUG
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.alert = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+    Bullet.add_footer = true
+    Bullet.skip_html_injection = false
+  end
 end
 
 Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']
