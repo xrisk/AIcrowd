@@ -14,6 +14,7 @@ class Post < ApplicationRecord
   acts_as_commontable
   attr_accessor :notebook_file_path, :notebook_file, :category_names
 
+  default_scope { order('created_at DESC') }
   scope :is_public, -> { where(private: false) }
 
   COLAB_URL = ENV['COLAB_URL']
