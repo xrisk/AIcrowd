@@ -134,7 +134,8 @@ class Challenge < ApplicationRecord
       parent_meta_challenge.challenge_property.update!(page_views: parent_meta_challenge.challenge_property.page_views.to_i + 1)
     end
 
-    self.challenge_property.update!(page_views: page_views.to_i + 1)
+    challenge_property = self.challenge_property
+    challenge_property.update!(page_views: challenge_property.page_views.to_i + 1)
   end
 
   def participants_and_organizers
