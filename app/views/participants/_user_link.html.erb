@@ -1,15 +1,20 @@
 <% avatar = avatar.present? ? avatar : true %>
 <% username = username.present? ? username : true %>
 <% truncate = truncate.present? ? truncate : false %>
+<% research_name = research_name.present? ? research_name : nil %>
 <%
   uniq_id = SecureRandom.hex(2)
   random_class = 'tooltip-user-wrapper-' + uniq_id.to_s + '-' + participant.id.to_s
 %>
 <div class="tooltip-user-wrapper <%= random_class %>">
   <div style="display: table-row;" data-container=".<%= random_class %>" data-html="true" data-toggle="tooltip"
-      title='<%= render partial: 'participants/tooltip_profile', locals: { participant: participant } %>'>
-    <a href="<%= participant_path(participant) %>">
-      <%= render partial: 'participants/name_avatar', locals: { participant: participant, username: username, avatar: avatar, truncate: truncate } %>
-    </a>
+    title='<%= render partial: 'participants/tooltip_profile', locals: { participant: participant } %>'>
+    <% if research_name.present? %>
+      <%= render partial: 'participants/research_name_avatar', locals: { participant: participant, research_name: research_name, base_class: "avatar" } %>
+    <% else %>
+      <a href="<%= participant_path(participant) %>">
+        <%= render partial: 'participants/name_avatar', locals: { participant: participant, username: username, avatar: avatar, truncate: truncate } %>
+      </a>
+    <% end %>
   </div>
 </div>
