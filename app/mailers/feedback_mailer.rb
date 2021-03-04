@@ -5,7 +5,7 @@ class FeedbackMailer < ApplicationMailer
 
   def feedback_email(feedback)
     @feedback = feedback
-    subject   = "[#{feedback.participant.name}] Feedback about AICrowd"
+    subject   = "[#{feedback.participant.name}] Feedback about AIcrowd"
 
     mail(to: DEFAULT_FEEDBACK_EMAIL_ADDRESS, subject: subject)
   end

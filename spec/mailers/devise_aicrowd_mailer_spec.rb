@@ -42,7 +42,7 @@ describe DeviseAicrowdMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(subject.body.encoded).to match 'Your account at AICrowd has been locked due to an excessive number of unsuccessful sign in attempts.'
+      expect(subject.body.encoded).to match 'Your account at AIcrowd has been locked due to an excessive number of unsuccessful sign in attempts.'
     end
   end
 end
