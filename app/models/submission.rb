@@ -66,6 +66,8 @@ class Submission < ApplicationRecord
     Notification::SubmissionNotificationJob.perform_later(id)
   end
 
+  after_commit :render_notebook_from_submission
+
   #TODO: Disabled badge awards
   #after_save :give_awarding_point
 
@@ -163,6 +165,12 @@ class Submission < ApplicationRecord
 
   def editors_challenge?
     challenge.practice_flag && challenge.editors_selection
+  end
+
+  def render_notebook_from_submission
+    if self.meta["private_generate_notebook_section"]
+      NotebookRenderingJob.perform_later(submission_id: self.id)
+    end
   end
 
   class ChallengeRoundIDMissing < StandardError
