@@ -41,7 +41,7 @@
           <!-- md content -->
           <div class="col-md-12" id="description-wrapper">
             <div class="markdown-wrap">
-              <div class="md-content ck-content" data-controller="challenge-overview" data-action="resize@window->challenge-overview#showTOC">
+              <div class="md-content ck-content" data-controller="challenge-overview">
                 <%= sanitize_html(@challenge.description) %>
                 <% if controller_name == 'challenges' && show_action? && @partners.present? %>
                 <h2>Sponsors and Partners</h2>
