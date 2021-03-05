@@ -3,7 +3,7 @@
   <div class="dataset-file__info <%= defined?(folder_item) && folder_item ? 'dataset_file__from-folder' : '' %>">
     <div>
       <%= link_to file_expiring_url(dataset_file), class: 'text-link', data: { :'dataset-file-id' => dataset_file.id } do %>
-        <%= file_title(dataset_file) %> (<%= file_size(dataset_file) %>)
+        <%= file_title(dataset_file) %> <% if file_size(dataset_file).present? %>(<%= file_size(dataset_file) %>)<% end %>
       <% end %>
 
       <span class="description">
