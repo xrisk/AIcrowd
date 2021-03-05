@@ -17,14 +17,16 @@ module FilesHelper
 
   def file_size(file)
     if file.try(:hosting_location) == 'Own S3' || file.new_record?
-      number_to_human_size(file.external_file_size.to_i)
+      return number_to_human_size(file.external_file_size.to_i)
     elsif file.try(:hosting_location) == 'External'
-      file.external_file_size
+      if file.external_file_size.present?
+        return file.external_file_size
+      end
     else
       return 0 if get_s3_file_obj(file).nil? || !get_s3_file_obj(file).exists?
-
-      number_to_human_size(get_s3_file_obj(file).content_length)
+      return number_to_human_size(get_s3_file_obj(file).content_length)
     end
+    return nil
   end
 
   private
