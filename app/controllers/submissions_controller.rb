@@ -525,6 +525,6 @@ class SubmissionsController < ApplicationController
   end
 
   def set_admin_variable
-    @is_organiser_or_author = (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant)))
+    @is_organiser_or_author = (current_participant.present? && (policy(@challenge).edit? || helpers.submission_team?(@submission, current_participant)))
   end
 end
