@@ -19,7 +19,7 @@ module Notebooks
       html_filename_path = Rails.root.join('public', 'uploads', @file_name, html_filename)
 
       notebook_gist_url = `gist #{notebook_file_path}`
-      notebook_s3_url = "testing" #upload_to_s3(notebook_file_path, filename)
+      notebook_s3_url = upload_to_s3(notebook_file_path, filename)
       notebook_html = File.read(html_filename_path).html_safe
       gist_id = notebook_gist_url.strip.gsub(ENV['GIST_URL'], "")
 
@@ -37,13 +37,12 @@ module Notebooks
     end
 
     def process_zip_file
-      # download_url = s3_expiring_url(@url)
-      # download = open(download_url) rescue nil
-      # return if download.nil?
-      # file_name = "#{SecureRandom.uuid}.zip"
-      # file_path = "#{Rails.root.join('public', 'uploads', file_name)}"
-      # IO.copy_stream(download, file_path)
-      file_path = '/Users/sujnesh/Desktop/submission.zip'
+      download_url = s3_expiring_url(@url)
+      download = open(download_url) rescue nil
+      return if download.nil?
+      file_name = "#{SecureRandom.uuid}.zip"
+      file_path = "#{Rails.root.join('public', 'uploads', file_name)}"
+      IO.copy_stream(download, file_path)
       return unzip_file(file_path)
     end
 
