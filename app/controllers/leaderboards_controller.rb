@@ -160,8 +160,15 @@ class LeaderboardsController < ApplicationController
     elsif @challenge.ml_challenge? && current_participant.nil?
       Leaderboard.none
     else
-      policy_scope(Leaderboard)
-        .where(filter)
+      if helpers.cache_enabled?
+        Rails.cache.fetch("leaderboard-#{filter.to_s}") do
+          policy_scope(Leaderboard)
+            .where(filter)
+        end
+      else
+        policy_scope(Leaderboard)
+            .where(filter)
+      end
     end
 
     if following? && current_participant.present?

@@ -189,6 +189,10 @@ module ApplicationHelper
     'dropdown-item-active' if notification.is_new
   end
 
+  def cache_enabled?
+    ENV['CACHE_ENABLED'] == "true"
+  end
+
   private
 
   def data_image_and_url(challenge, mediable)

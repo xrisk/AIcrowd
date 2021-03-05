@@ -1,5 +1,5 @@
 class ChallengeLeaderboardExtra < ApplicationRecord
-  belongs_to :challenge_round
+  belongs_to :challenge_round, touch: true
   belongs_to :challenge, optional: true
 
   validates :ranking_window,

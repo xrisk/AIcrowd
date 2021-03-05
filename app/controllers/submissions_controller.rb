@@ -13,6 +13,7 @@ class SubmissionsController < ApplicationController
   before_action :set_form_type, only: [:new, :create]
   before_action :handle_code_based_submissions, only: [:create]
   before_action :handle_artifact_based_submissions, only: [:create]
+  before_action :set_admin_variable, only: [:show]
 
   layout :set_layout
   respond_to :html, :js
@@ -521,5 +522,9 @@ class SubmissionsController < ApplicationController
     @show_file_tab = (@submission.notebook.present? || (@submission.submission_files.present? && (@challenge.submissions_downloadable))) && is_owner_or_organizer
     @show_notebook_tab = @post.is_public.count > 0 ||  is_owner_or_organizer
     @show_status_tab = @description_markdown.present? && is_owner_or_organizer
+  end
+
+  def set_admin_variable
+    @is_organiser_or_author = (current_participant.present? && (policy(@challenge).edit? || submission_team?(@submission, current_participant)))
   end
 end

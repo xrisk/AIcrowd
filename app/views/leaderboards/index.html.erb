@@ -6,6 +6,7 @@
   class="section-p-sm"
   data-controller="leaderboards"
 >
+<% cache_if cache_enabled?, [@challenge, @challenge_rounds, @current_leaderboard] do %>
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
@@ -64,6 +65,7 @@
           </p></blockquote>
         </div>
         <% end %>
+<% end %>
 
         <% if @current_leaderboard.show_leaderboard? || @current_user_view_all %>
           <% unless disentanglement_leaderboard %>
