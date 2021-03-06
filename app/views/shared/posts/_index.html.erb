@@ -1,8 +1,8 @@
   <div class="col-12">
     <ul class="list-group list-group-flush-px-0 list-group-contributions">
       <% posts.each do |post| %>
-        <% cache_if cache_enabled?, [post, (current_participant.present? && (policy(post.challenge).edit? || post.particiant_id == current_participant.id)), discourse_time_ago(post.created_at)] do %>
-          <% if !post.private? || (current_participant.present? && (policy(post.challenge).edit? || post.particiant_id == current_participant.id)) %>
+        <% cache_if cache_enabled?, [post, (current_participant.present? && (policy(post.challenge).edit? || post.participant_id == current_participant.id)), discourse_time_ago(post.created_at)] do %>
+          <% if !post.private? || (current_participant.present? && (policy(post.challenge).edit? || post.participant_id == current_participant.id)) %>
             <li class="list-group-item">
               <div class="contribution-details">
                 <a class="image-link" href="<%= post_path(post) %>"><img src="<%=post.thumbnail%>"></a>
