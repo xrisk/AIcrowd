@@ -25,6 +25,9 @@ class PostsController < InheritedResources::Base
       if !@my_challenges.include?([challenge.challenge, challenge.id])
         @my_challenges.push([challenge.challenge, challenge.id])
       end
+      if challenge.meta_challenge?
+        @my_challenges += challenge.problems.collect {|c| [ c.challenge, c.id] }
+      end
     end
   end
 

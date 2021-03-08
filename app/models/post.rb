@@ -42,4 +42,8 @@ class Post < ApplicationRecord
     end
     return colab_url
   end
+
+  def should_generate_new_friendly_id?
+    title_changed? || super
+  end
 end

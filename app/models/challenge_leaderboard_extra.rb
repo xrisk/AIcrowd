@@ -22,6 +22,7 @@ class ChallengeLeaderboardExtra < ApplicationRecord
   validates :secondary_sort_order, presence: true
   validates :freeze_duration, numericality: { greater_than: 0 }, if: -> { freeze_duration.present? }
 
+  before_save :set_challenge_for_leaderboard
   after_save :recalculate_leaderboard, if: :saved_change_to_freeze_flag
   after_commit :update_challenge_media, if: :saved_change_to_media_on_leaderboard
 
@@ -56,6 +57,12 @@ class ChallengeLeaderboardExtra < ApplicationRecord
   def update_challenge_media
     if self.challenge_id.present?
       self.challenge.update!(media_on_leaderboard: self.media_on_leaderboard)
+    end
+  end
+
+  def set_challenge_for_leaderboard
+    if self.challenge_id.blank?
+      self.challenge_id = self.challenge_round.challenge_id
     end
   end
 end

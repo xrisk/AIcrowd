@@ -32,7 +32,6 @@ class ChallengeRound < ApplicationRecord
   default_scope { order :start_dttm }
   scope :started, -> { where("start_dttm < ?", Time.current) }
 
-  before_save :set_challenge_for_leaderboard
   after_save :create_default_leaderboard
   after_commit :default_leaderboard_check
 
@@ -52,12 +51,6 @@ class ChallengeRound < ApplicationRecord
 
   def recalculate_leaderboard
     CalculateLeaderboardJob.perform_now(challenge_round_id: id) unless freeze_flag
-  end
-
-  def set_challenge_for_leaderboard
-    if self.challenge_id.blank?
-      self.challenge_id = self.challenge_round.challenge_id
-    end
   end
 
   def create_default_leaderboard
