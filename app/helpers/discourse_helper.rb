@@ -4,7 +4,7 @@ module DiscourseHelper
   end
 
   def discourse_new_topic_url(category_id)
-    "#{ENV['DISCOURSE_DOMAIN_NAME']}/new-topic?category=#{category_id}"
+    "#{ENV['DISCOURSE_DOMAIN_NAME']}/new-topic?category_id=#{category_id}"
   end
 
   def discourse_topic_url(slug)
