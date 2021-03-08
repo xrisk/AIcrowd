@@ -39,9 +39,10 @@
   <% else %>
   <div class="masthead masthead-challenge">
   <% end %>
+<% end %>
   <div class="container-fluid">
     <%= render partial: 'shared/challenges/masthead_pills', locals: { challenge: challenge, challenge_rounds: challenge_rounds } %>
-
+<% cache_if cache_enabled?, [challenge, challenge.banner_file.present?] do %>
   <% if !challenge.banner_file.present? %>
     <!-- title/description/prizes -->
     <div class="row">

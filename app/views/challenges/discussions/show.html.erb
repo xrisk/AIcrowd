@@ -10,7 +10,7 @@
             <div>
               <h4>Topics</h4>
             </div>
-            <%= link_to 'New topic', discourse_new_topic_url(@challenge.slug), class: 'btn btn-secondary' %>
+            <%= link_to 'New topic', discourse_new_topic_url(@challenge.discourse_category_id), class: 'btn btn-secondary' %>
           </header>
 
           <% if @discourse_topics.any? %>
