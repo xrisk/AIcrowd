@@ -1,3 +1,4 @@
+<script src="//www.google.com/jsapi"></script>
 <div class="chart-wrapper pb-5"
      data-chart-index="<%= index %>" >
   <header class="section-header">
@@ -5,5 +6,31 @@
       <h4>Participants</h4>
     </div>
   </header>
-  <%= geo_chart challenge_participants_country_challenge_insights_path(challenge), height: '500px', messages: {empty: "No data present for participant locations"} %>
+  <center>
+    <div id="visualization">
+    </div>
+  </center>
 </div>
+
+<script>
+  $(document).ready(function(){
+    google.load('visualization', '1.1', {packages: ['geochart'], callback: drawVisualization});
+  })
+
+  function drawVisualization() {
+    var data = google.visualization.arrayToDataTable([
+        ['Country', 'Value', {role: 'tooltip', p:{html:true}}],
+        <% country_wise_data.each do |key, value| %>
+          ["<%= key %>", <%= value.length %>, '<%= escape_javascript(render partial: 'shared/participant_avatar_list', locals: { participants: value}) %>'],
+        <% end %>
+        ]);
+    var chart = new google.visualization.GeoChart(document.getElementById('visualization'));
+    chart.draw(data, {
+        width: 800,
+        height: 600,
+        tooltip: {
+            isHtml: true
+        }
+    });
+  }
+</script>

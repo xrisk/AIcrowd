@@ -14400,6 +14400,22 @@ input.width-185 {
   background-color: #F8F9F9;
 }
 
+.list-group-insights img.avatar, .list-group-insights span.avatar {
+    width: 24px;
+    height: 24px;
+    border: 1px solid gray;
+    margin-right: 6px;
+}
+
+.list-group-insights span.avatar {
+    background:white;
+    padding-top:2px;
+}
+
+.list-group-insights span.avatar span {
+    font-size: 8px;
+}
+
 .list-group-research img.avatar {
     width: 18px;
     height: 18px;
