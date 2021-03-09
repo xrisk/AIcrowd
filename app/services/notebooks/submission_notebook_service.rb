@@ -16,7 +16,7 @@ module Notebooks
 
       filename = File.basename(notebook_file_path)
       html_filename = filename.chomp(File.extname(filename)) + (".html")
-      html_filename_path = Rails.root.join('public', 'uploads', @file_name, html_filename)
+      html_filename_path = Rails.root.join('public', 'uploads', html_filename)
 
       notebook_gist_url = `gist #{notebook_file_path}`
       notebook_s3_url = upload_to_s3(notebook_file_path, filename)
@@ -49,13 +49,13 @@ module Notebooks
 
     def unzip_file(file_path)
       Zip::File.open(file_path) do |zip_file|
-        zip_file.glob("#{@file_name}/#{@notebook_name}").each do |f|
+        zip_file.glob("#{@notebook_name}").each do |f|
            f_path=File.join('public', 'uploads', f.name)
            FileUtils.mkdir_p(File.dirname(f_path))
            zip_file.extract(f, f_path) unless File.exist?(f_path)
         end
       end
-      return Rails.root.join('public', 'uploads', @file_name, @notebook_name)
+      return Rails.root.join('public', 'uploads', @notebook_name)
     end
 
   end
