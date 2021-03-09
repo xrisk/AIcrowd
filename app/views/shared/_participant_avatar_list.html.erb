@@ -1,0 +1,10 @@
+<div class="avatar-group mt-2 list-group-research">
+  <div class="avatar-group ml-1">
+    <% participants[0..3].each do |participant| %>
+      <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: participant, base_class: "avatar mr-0 border border-white"} %>
+    <% end %>
+    <% if participants.count > 3 %>
+      <span class="text-link"><small>&nbsp;...</small></span>
+    <% end %>
+  </div>
+</div>

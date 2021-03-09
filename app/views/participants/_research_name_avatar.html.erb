@@ -1,4 +1,4 @@
 <%= participant_avatar participant, base_class %>
-<% if research_name.present? %>
+<% if defined?(research_name) && research_name.present? %>
   <span class="text-link mr-3"><%= research_name %></span>
 <% end %>

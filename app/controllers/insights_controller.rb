@@ -7,6 +7,7 @@ class InsightsController < ApplicationController
   before_action :set_collection, except: [:index, :challenge_participants_country]
 
   def index
+    @country_wise_data = get_country_wise_data
     if current_participant&.ml_activity_points.present?
       @gained_points = current_participant.ml_activity_points.sum_points
       challenge_id   = @ml_challenge.present? ? @ml_challenge.id : @challenge.id
@@ -57,6 +58,23 @@ class InsightsController < ApplicationController
     end
 
     render json: country_count.except(nil)
+  end
+
+  def get_country_wise_data
+    country_data = {}
+    @challenge.participants.each do |participant|
+      if participant.country_cd == "RU"
+        country               = ISO3166::Country[participant.country_cd].unofficial_names.first
+      else
+        country               = ISO3166::Country[participant.country_cd]&.name
+      end
+      country               ||= participant.visits.where.not(country: nil).last&.country
+
+      country_data[country] ||= []
+      country_data[country] << participant
+    end
+
+    return country_data
   end
 
   private
