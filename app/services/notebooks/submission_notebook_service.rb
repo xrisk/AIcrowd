@@ -25,6 +25,7 @@ module Notebooks
 
       File.delete(notebook_file_path) if File.exist?(notebook_file_path)
       File.delete(html_filename_path) if File.exist?(html_filename_path)
+      File.delete(Rails.root.join('public', 'uploads', "#{@file_name}.zip")) if File.exist?(Rails.root.join('public', 'uploads', "#{@file_name}.zip"))
 
       return {notebook_s3_url: notebook_s3_url, notebook_html: notebook_html, gist_id: gist_id}
     end
@@ -40,7 +41,7 @@ module Notebooks
       download_url = s3_expiring_url(@url)
       download = open(download_url) rescue nil
       return if download.nil?
-      file_name = "#{SecureRandom.uuid}.zip"
+      file_name = "#{@file_name}.zip"
       file_path = "#{Rails.root.join('public', 'uploads', file_name)}"
       IO.copy_stream(download, file_path)
       return unzip_file(file_path)
