@@ -12,6 +12,7 @@ module Discourse
       with_discourse_errors_handling do
         response = create_category_request(ensure_uniqueness: retry_count.positive?)
         challenge.update!(discourse_category_id: response.body['category']['id'])
+        response = create_topic_request(dscourse_category_id: response.body['category']['id'])
 
         success
       rescue Discourse::UnprocessableEntity => e
@@ -49,6 +50,12 @@ module Discourse
       )
     end
 
+    def create_topic_request discourse_category_id
+      client.post(
+        '/posts.json', topic_request_payload
+      )
+    end
+
     def category_request_payload(ensure_uniqueness)
       payload = {
         name:       truncated_string(challenge.challenge, ensure_uniqueness),
@@ -65,6 +72,22 @@ module Discourse
       end
 
       payload
+    end
+
+    def topic_request_payload
+      {
+        title: "Welcome to the #{@challenge.challenge}!",
+        category: discourse_category_id
+        raw: "Body: Hi! This is the welcome thread for the <challenge name>, where all the participants of the challenge get to know each other.
+              You can reply to this thread with a brief introduction of you and what brings you to this challenge, and get the ball rolling :sparkles:
+              ---
+              Some important links:
+              :memo: Community Contributed Notebooks: <>
+              :muscle:  Challenge Page: <>
+              :trophy:  Leaderboard: <>
+              All the best!
+              Team AIcrowd"
+      }
     end
   end
 end

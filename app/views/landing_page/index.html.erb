@@ -135,6 +135,8 @@
 
             <%= link_to 'See all', ENV['DISCOURSE_DOMAIN_NAME'], class: "btn btn-secondary btn-sm" %>
           </header>
+          <div id='discourse-list-short'>
+          </div>
 
           <% if @discourse_topics_fetch.success? %>
             <%= render partial: 'shared/discourse/topics_list', locals: { discourse_topics: @discourse_topics } %>
