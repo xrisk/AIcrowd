@@ -9,7 +9,7 @@ class SubmissionsController < ApplicationController
   before_action :check_participation_terms, except: [:show, :index, :export]
   before_action :set_s3_direct_post, only: [:new, :new_api, :edit, :create, :update]
   before_action :set_submissions_remaining, except: [:show]
-  before_action :set_current_round, only: [:index, :new, :create, :lock]
+  before_action :set_current_round, only: [:index, :new, :create, :lock, :reevaluate_submission]
   before_action :set_form_type, only: [:new, :create]
   before_action :handle_code_based_submissions, only: [:create]
   before_action :handle_artifact_based_submissions, only: [:create]
@@ -243,6 +243,13 @@ class SubmissionsController < ApplicationController
   def reset_locked_submissions
     @challenge.locked_submissions.update_all(deleted: true)
     redirect_to edit_challenge_path(@challenge)
+  end
+
+  def reevaluate_submission
+    @current_round.submissions.each do |submission|
+      SubmissionGraderJob.perform_later(submission.id)
+    end
+    return redirect_to(edit_challenge_path(@challenge), flash: { success: 'Revaluation started successfully.' })
   end
 
 
