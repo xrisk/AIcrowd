@@ -42,6 +42,8 @@ class PostsController < InheritedResources::Base
       @external_link = @post.external_link
     end
     commontator_thread_show(@post)
+
+    authorize @post
   end
 
   def update
@@ -57,6 +59,8 @@ class PostsController < InheritedResources::Base
     if @post.thumbnail.blank?
       @post.thumbnail = @post.get_random_thumbnail
     end
+
+    authorize @post
 
     if @post.save
       update_post_categories if params["post"]["category_names"].present?
@@ -88,6 +92,8 @@ class PostsController < InheritedResources::Base
     if @post.thumbnail.blank?
       @post.thumbnail = @post.get_random_thumbnail
     end
+
+    authorize @post
 
     if @post.save
       update_post_categories if params["post"]["category_names"].present?
