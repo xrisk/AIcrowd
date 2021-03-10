@@ -246,6 +246,8 @@ class SubmissionsController < ApplicationController
   end
 
   def reevaluate_submission
+    authorize @challenge, :reevaluate_submission?
+
     @current_round.submissions.each do |submission|
       SubmissionGraderJob.perform_later(submission.id)
     end
