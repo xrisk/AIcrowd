@@ -31,6 +31,7 @@ class Submission < ApplicationRecord
 
   delegate :name, :email, to: :participant, allow_nil: true
 
+  default_scope { where(deleted: false) }
   scope :group_by_created_at, -> { group_by_day(:created_at).count }
   scope :participant_challenge_submissions, ->(challenge_id, p_ids) { where(challenge_id: challenge_id, participant_id: p_ids) }
   scope :participant_meta_challenge_submissions, ->(meta_challenge_id, p_ids) { where(meta_challenge_id: meta_challenge_id, participant_id: p_ids) }
@@ -53,17 +54,19 @@ class Submission < ApplicationRecord
   end
 
   after_commit on: [:create, :update] do
-    # !self.meta&.dig('final_avg') is added to prevent infinite loops in New Leaderboard Calculation
-    if grading_status_cd == 'graded' && !meta&.dig('private_ignore-leaderboard-job-computation')
-      Rails.logger.info "[Submission Model] Starting the Leaderboard Update Job! (onsave)"
-      CalculateLeaderboardJob
-        .perform_later(challenge_round_id: challenge_round_id)
+    unless self.deleted?
+      # !self.meta&.dig('final_avg') is added to prevent infinite loops in New Leaderboard Calculation
+      if grading_status_cd == 'graded' && !meta&.dig('private_ignore-leaderboard-job-computation')
+        Rails.logger.info "[Submission Model] Starting the Leaderboard Update Job! (onsave)"
+        CalculateLeaderboardJob
+          .perform_later(challenge_round_id: challenge_round_id)
+      end
+      Prometheus::SubmissionCounterService.new(submission_id: id).call
+      if grading_status_cd == 'graded'
+        ParticipantBadgeJob.perform_later(name: "onsubmission", submission_id: id, grading_status_cd: grading_status_cd)
+      end
+      Notification::SubmissionNotificationJob.perform_later(id)
     end
-    Prometheus::SubmissionCounterService.new(submission_id: id).call
-    if grading_status_cd == 'graded'
-      ParticipantBadgeJob.perform_later(name: "onsubmission", submission_id: id, grading_status_cd: grading_status_cd)
-    end
-    Notification::SubmissionNotificationJob.perform_later(id)
   end
 
   after_commit :render_notebook_from_submission

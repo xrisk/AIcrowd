@@ -249,7 +249,7 @@ class SubmissionsController < ApplicationController
   private
 
   def set_submission
-    @submission = Submission.find(params[:id])
+    @submission = Submission.unscoped.find(params[:id])
     authorize @submission
   rescue ActiveRecord::RecordNotFound
     flash[:error] = "Submission not found."
@@ -361,6 +361,7 @@ class SubmissionsController < ApplicationController
           :baseline,
           :baseline_comment,
           :submission_link,
+          :deleted,
           submission_files_attributes: [
             :id,
             :seq,
