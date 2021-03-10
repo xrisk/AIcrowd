@@ -108,6 +108,7 @@ gem 'derailed'
 gem 'barnes'
 gem 'gemoji-parser'
 gem 'clipboard-rails'
+gem 'active_admin_jcrop'
 
 # HTTP clients
 gem 'faraday', '~> 1.0'

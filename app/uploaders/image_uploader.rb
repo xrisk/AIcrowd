@@ -3,7 +3,11 @@ class ImageUploader < CarrierWave::Uploader::Base
   include ActionView::Helpers::AssetUrlHelper
   include CarrierWave::MiniMagick
   include CarrierWave::ImageOptimizer
+  include ActiveAdminJcrop::AssetEngine::CarrierWave
   process :optimize, :resize_image
+  version :thumb do
+    process :active_admin_crop
+  end
   # https://github.com/DarthSim/carrierwave-bombshelter
 
   storage :fog
