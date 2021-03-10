@@ -9,7 +9,7 @@ class PostPolicy < ApplicationPolicy
   end
 
   def create?
-    (participant && (participant.admin?))
+    (participant.present?)
   end
 
 end
