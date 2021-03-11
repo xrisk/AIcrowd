@@ -27,6 +27,7 @@ module ChallengeRounds
     end
 
     def call
+      return if @challenge_leaderboard_extra.disable_computation?
       ActiveRecord::Base.transaction do
         truncate_scores
 
