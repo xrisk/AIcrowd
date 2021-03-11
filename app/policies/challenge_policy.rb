@@ -75,6 +75,10 @@ class ChallengePolicy < ApplicationPolicy
     update?
   end
 
+  def reevaluate_submission?
+    update?
+  end
+
   def import?
     create?
   end

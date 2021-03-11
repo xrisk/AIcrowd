@@ -34,6 +34,7 @@ def challenge_routes
     get :freezed_submission_export, on: :collection
     get :reset_locked_submissions, on: :collection
     post :freeze_submission, on: :collection
+    get :reevaluate_submission, on: :collection
   end
   resources :dynamic_contents, only: [:index]
   resources :leaderboards, only: [:index, :destroy] do
