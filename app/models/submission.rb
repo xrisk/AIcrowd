@@ -168,7 +168,7 @@ class Submission < ApplicationRecord
   end
 
   def render_notebook_from_submission
-    if self.meta["private_generate_notebook_section"].present?
+    if self.meta.present? && self.meta["private_generate_notebook_section"].present?
       NotebookRenderingJob.perform_later(submission_id: self.id)
     end
   end
