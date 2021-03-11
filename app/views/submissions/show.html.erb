@@ -10,19 +10,29 @@
         <%= link_to challenge_submissions_path(@submission.challenge) do %>
           <span>&#8592; Back to challenge</span>
         <% end %>
+        <% if policy(@challenge).edit? %>
+          <div class="pull-right">
+            <%= link_to 'Edit Submission', edit_challenge_submission_path(@challenge, @submission), {class: "btn btn-primary btn-sm", role:"button"} %>
+          </div>
+        <% end %>
       </div>
 
       <!-- submission details -->
       <div class="col-sm-12 col-md-12">
         <div class="d-flex">
-          <h2 class="mr-2">Submission #<%= @submission.id %></h2><span class="badge <%= submission_grade_class(@submission) %>"><%= @submission.grading_status_cd %></span>
-          <% if policy(@challenge).edit? %>
-            <div class="col-md-8">
-              <div class="pull-right">
-                <%= link_to 'Edit Submission', edit_challenge_submission_path(@challenge, @submission), {class: "btn btn-primary btn-sm", role:"button"} %>
+          <div class="col-md-7 d-flex pl-0">
+            <h2 class="mr-2">Submission #<%= @submission.id %></h2><span class="badge <%= submission_grade_class(@submission) %>"><%= @submission.grading_status_cd %></span>
+          </div>
+          <div class="col-md-5">
+            <div class="pull-right d-flex">
+              <i class="mr-2 pt-2">Submitted by</i>
+              <div class="avatar-group">
+                <% @authors.each do |participant| %>
+                  <%= render partial: 'participants/get_user_profile', locals: { participant: participant, username: 'false' } %>
+                <% end %>
               </div>
             </div>
-          <% end %>
+          </div>
         </div>
 
         <% if !@show_file_tab && !@show_notebook_tab && !@show_status_tab %>

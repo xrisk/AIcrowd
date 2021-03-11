@@ -29,9 +29,11 @@
     <%= link_to "View here", submission_code_link(@submission), target: "_blank" %>
   </div>
 <% end %>
-
+<hr/>
+<div class="row">
+<div class="col-sm-12 col-md-6">
 <% if @submission.meta.present? %>
-  <div class="section-header mt-4 pt-5 border-top">
+  <div class="section-header mt-4">
     <h3>Additional Information</h3>
   </div>
   <% submission_meta_hash(@submission).each do |key, value| %>
@@ -54,6 +56,7 @@
     <% end %>
   <% end %>
 <% end %>
+</div>
 <!--Detail media start-->
 <div class="col-sm-12 col-md-6">
   <% if @challenge.media_on_leaderboard %>
@@ -61,6 +64,7 @@
       <%= render partial: 'shared/challenges/media', locals: { mediable: @submission, submission_id: @submission.id, size: :large } %>
     </div>
   <% end %>
+</div>
 </div>
 <!--Detail media end-->
 <div class="col-sm-12 col-md-6 pl-0">
