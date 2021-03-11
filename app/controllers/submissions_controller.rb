@@ -98,6 +98,7 @@ class SubmissionsController < ApplicationController
     end
 
     @post = Post.where(submission_id: @submission.id)
+    @authors = get_team_participants(participant=@submission.participant, model=true)
     setup_tabs
 
     render :show
@@ -509,11 +510,14 @@ class SubmissionsController < ApplicationController
     submission_ids = @challenge.locked_submissions.pluck(:submission_id) + locked_submission_hash.values
   end
 
-  def get_team_participants
-    team = current_participant.teams.where(challenge_id: @challenge.id).first
-    participant_ids = team.team_participants.pluck(:participant_id) if team.present?
-    participant_ids = current_participant.id if participant_ids.blank?
-    return participant_ids
+  def get_team_participants(participant=current_participant, model=false)
+    team = participant.teams.where(challenge_id: @challenge.id).first
+    participants = team.team_participants.map(&:participant) if team.present?
+    participants = [participant] if participants.blank?
+    if !model
+        return participants.map(&:id)
+    end
+    return participants
   end
 
   def setup_tabs

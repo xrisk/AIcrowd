@@ -22,7 +22,7 @@
             <% if @submission.participant %>
             <div class="mr-4">
               <h4>Participant</h4>
-              <span><%= link_to @submission.participant.name, participant_path(@submission.participant_id), target: :blank %></span>
+              <span><%= link_to @submission.participant.name, participant_path(@submission.participant), target: :blank %></span>
             </div>
             <% end %>
             <% if @challenge.submissions_downloadable || current_participant.admin? %>
