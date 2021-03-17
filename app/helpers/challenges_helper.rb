@@ -353,12 +353,12 @@ module ChallengesHelper
     meta_challenge(path, args[0])
   end
 
-  def export_challenge_submissions_url(*args)
+  def export_challenge_submissions_path(*args)
     path = super(*args)
     meta_challenge(path, args[0])
   end
 
-  def export_challenge_leaderboards_url(*args)
+  def export_challenge_leaderboards_path(*args)
     path = super(*args)
     meta_challenge(path, args[0])
   end

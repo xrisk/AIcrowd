@@ -16,7 +16,7 @@
   </div>
 
   <div class="form-group">
-    <%= link_to 'Export to CSV', export_challenge_leaderboards_url(challenge, leaderboard_export_challenge_round_id: challenge_rounds.first&.id.to_i), id: 'leaderboard-export-link', class: 'btn btn-primary challenges-form__misc-button' %>
+    <%= link_to 'Export to CSV', export_challenge_leaderboards_path(challenge, leaderboard_export_challenge_round_id: challenge_rounds.first&.id.to_i), id: 'leaderboard-export-link', class: 'btn btn-primary challenges-form__misc-button' %>
   </div>
 
   <h2 class="challenges-form__heading">Submissions Export</h2>
@@ -30,7 +30,7 @@
   </div>
 
   <div class="form-group">
-     <%= link_to 'Export to CSV', export_challenge_submissions_url(challenge, submissions_export_challenge_round_id: challenge_rounds&.first&.id.to_i), id: 'submissions-export-link', class: 'btn btn-primary challenges-form__misc-button' %>
+     <%= link_to 'Export to CSV', export_challenge_submissions_path(challenge, submissions_export_challenge_round_id: challenge_rounds&.first&.id.to_i), id: 'submissions-export-link', class: 'btn btn-primary challenges-form__misc-button' %>
   </div>
 
   <h2 class="challenges-form__heading">Participants Export</h2>
