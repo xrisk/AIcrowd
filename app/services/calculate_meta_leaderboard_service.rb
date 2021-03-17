@@ -1,12 +1,16 @@
 class CalculateMetaLeaderboardService
 
-  def initialize(challenge_id:)
+  def initialize(challenge_id:, challenge_leaderboard_extra: nil)
     @challenge = Challenge.find(challenge_id)
 
     if !@challenge.meta_challenge && !@challenge.ml_challenge
       raise Exception.new('This service should only be called for meta or ml challenges')
     end
     @round = @challenge.active_round
+    @challenge_leaderboard_extra = challenge_leaderboard_extra
+    if challenge_leaderboard_extra.nil?
+      @challenge_leaderboard_extra = @round.default_leaderboard
+    end
 
     @child_leaderboards = []
     @weight_hash = {}
@@ -61,7 +65,8 @@ class CalculateMetaLeaderboardService
       seq: rank,
       meta: scores['rank'],
       submitter_type: participant[0],
-      submitter_id: participant[1]
+      submitter_id: participant[1],
+      challenge_leaderboard_extra_id: @challenge_leaderboard_extra.id
     }
   end
 
