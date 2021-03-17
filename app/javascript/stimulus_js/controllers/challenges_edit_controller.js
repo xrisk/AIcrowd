@@ -129,15 +129,6 @@ export default class extends Controller {
       $('#submissions-export-link').attr('href', submissionsExportUrl.toString());
     });
 
-    $('#submissions-export-leaderboard-select').on('change', function(event) {
-      const submissionsExportLeaderboardId = event.target.value;
-      const submissionsExportLink             = $('#submissions-export-link').attr('href');
-      const submissionsExportUrl              = new URL(submissionsExportLink);
-
-      submissionsExportUrl.searchParams.set('submissions_export_challenge_round_leaderboard_id', submissionsExportLeaderboardId);
-      $('#submissions-export-link').attr('href', submissionsExportUrl.toString());
-    });
-
     // Change here need to be copied to update.js.erb as well!
     $('.challenge-edit-submit').on('click', function (event) {
       for (let selector in CKEDITOR.instances){
