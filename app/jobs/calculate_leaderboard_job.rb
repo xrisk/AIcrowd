@@ -22,8 +22,8 @@ class CalculateLeaderboardJob < ApplicationJob
     ChallengeProblems.where(challenge_round_id: challenge_round_id).each do |challenge_problem|
       challenge_round.challenge_leaderboard_extras.each do |challenge_leaderboard_extra|
         ChallengeRounds::CreateLeaderboardsService.new(challenge_round: challenge_round, meta_challenge_id: challenge_problem.challenge_id, challenge_leaderboard_extra: challenge_leaderboard_extra).call
+        CalculateMetaLeaderboardService.new(challenge_id: challenge_problem.challenge_id, challenge_leaderboard_extra: challenge_leaderboard_extra).call
       end
-      CalculateMetaLeaderboardService.new(challenge_id: challenge_problem.challenge_id).call
     end
 
     Notification::LeaderboardNotificationJob.perform_now(challenge_round_id)

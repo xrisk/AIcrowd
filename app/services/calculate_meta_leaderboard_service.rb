@@ -97,7 +97,8 @@ class CalculateMetaLeaderboardService
       end
     end
 
-    BaseLeaderboard.where(challenge_id: @challenge.id, challenge_round_id: @round.id).delete_all
+    delete_leaderboards
+
     rank       = @challenge.ml_challenge ? people.size : 0
     last_score = -1
 
@@ -109,6 +110,22 @@ class CalculateMetaLeaderboardService
       obj = BaseLeaderboard.new(common_values.merge(participant_values(rank, key, value)))
       obj.save!
     end
+  end
+
+  def delete_leaderboards
+    entries = BaseLeaderboard.where(challenge_id: @challenge.id, challenge_round_id: @round.id)
+
+    if @challenge_leaderboard_extra.present?
+      if @challenge_leaderboard_extra.default
+        entries = entries.where(challenge_leaderboard_extra_id: [nil, @challenge_leaderboard_extra.id])
+      else
+        entries = entries.where(challenge_leaderboard_extra_id: @challenge_leaderboard_extra.id)
+      end
+    else
+      entries = entries.where(challenge_leaderboard_extra_id: nil)
+    end
+
+    entries.delete_all
   end
 
 end
