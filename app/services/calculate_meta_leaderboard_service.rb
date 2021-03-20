@@ -115,14 +115,10 @@ class CalculateMetaLeaderboardService
   def delete_leaderboards
     entries = BaseLeaderboard.where(challenge_id: @challenge.id, challenge_round_id: @round.id)
 
-    if @challenge_leaderboard_extra.present?
-      if @challenge_leaderboard_extra.default
-        entries = entries.where(challenge_leaderboard_extra_id: [nil, @challenge_leaderboard_extra.id])
-      else
-        entries = entries.where(challenge_leaderboard_extra_id: @challenge_leaderboard_extra.id)
-      end
+    if @challenge_leaderboard_extra.default
+      entries = entries.where(challenge_leaderboard_extra_id: [nil, @challenge_leaderboard_extra.id])
     else
-      entries = entries.where(challenge_leaderboard_extra_id: nil)
+      entries = entries.where(challenge_leaderboard_extra_id: @challenge_leaderboard_extra.id)
     end
 
     entries.delete_all
