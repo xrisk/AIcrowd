@@ -69,7 +69,7 @@ class Submission < ApplicationRecord
     end
   end
 
-  after_commit :render_notebook_from_submission
+  after_commit :render_notebook_from_submission, on: :create
 
   #TODO: Disabled badge awards
   #after_save :give_awarding_point
@@ -171,6 +171,7 @@ class Submission < ApplicationRecord
   end
 
   def render_notebook_from_submission
+    return if Post.where(submission_id: self.id, private: true, title: "Solution for submission #{self.id}").exists?
     if self.meta.present? && self.meta["private_generate_notebook_section"].present?
       NotebookRenderingJob.perform_later(self.id)
     end
