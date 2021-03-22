@@ -73,7 +73,7 @@ class CalculateMetaLeaderboardService
   def create_leaderboard
     people = {}
     @child_leaderboards.each do |child_leaderboard|
-      child_leaderboard = child_leaderboard.where(child_leaderboard&.challenge_leaderboard_extra&.filter)
+      child_leaderboard = child_leaderboard.joins(:participant).where(child_leaderboard&.challenge_leaderboard_extra&.filter)
       child_leaderboard.each do |entry|
         key = [entry['submitter_type'], entry['submitter_id']]
         if !people.has_key?(key)
