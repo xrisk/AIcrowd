@@ -74,6 +74,7 @@ class SubmissionsController < ApplicationController
   end
 
   def show
+    authorize @submission
     @presenter = SubmissionDetailPresenter.new(
       submission:   @submission,
       challenge:    @challenge,
