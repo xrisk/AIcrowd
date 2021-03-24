@@ -19,26 +19,26 @@
         <span class="badge <%= submission_grade_class(submission) %>">
           <%= submission.grading_status_cd %></span>
       </td>
-      <% if challenge.show_submission? || participant == current_participant %>
+      <% if challenge.show_submission? || @is_organiser_or_author %>
         <td><%= submission_formatted_value(submission, submission.score_display) %></td>
       <% else %>
-        <td>Hidden</td>
+        <td>Muted</td>
       <% end %>
 
       <% if !@challenge.meta_challenge && challenge_round&.default_leaderboard&.score_secondary_title.present? && challenge_round&.default_leaderboard&.secondary_sort_order != :hidden %>
-        <% if challenge.show_submission? || participant == current_participant %>
+        <% if challenge.show_submission? || @is_organiser_or_author %>
           <td><%= submission_formatted_value(submission, submission.score_secondary) %></td>
         <% else %>
-          <td>Hidden</td>
+          <td>Muted</td>
         <% end %>
       <% end %>
 
       <% if !@challenge.meta_challenge %>
         <% leaderboard_other_scores_array(submission, challenge_round.default_leaderboard).each do |other_score| %>
-          <% if challenge.show_submission? || participant == current_participant %>
+          <% if challenge.show_submission? || @is_organiser_or_author %>
             <td class="text-right"><%= other_score %></td>
           <% else %>
-            <td>Hidden</td>
+            <td>Muted</td>
           <% end %>
         <% end %>
       <% end %>
