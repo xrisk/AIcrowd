@@ -25,14 +25,14 @@
       <% if challenge.show_submission? || is_organiser_or_author %>
         <td><%= submission_formatted_value(submission, submission.score_display) %></td>
       <% else %>
-        <td>Muted</td>
+        <td class="text-muted">Hidden</td>
       <% end %>
 
       <% if !@challenge.meta_challenge && challenge_round&.default_leaderboard&.score_secondary_title.present? && challenge_round&.default_leaderboard&.secondary_sort_order != :hidden %>
         <% if challenge.show_submission? || is_organiser_or_author %>
           <td><%= submission_formatted_value(submission, submission.score_secondary) %></td>
         <% else %>
-          <td>Muted</td>
+          <td class="text-muted">Hidden</td>
         <% end %>
       <% end %>
 
@@ -41,7 +41,7 @@
           <% if challenge.show_submission? || is_organiser_or_author %>
             <td class="text-right"><%= other_score %></td>
           <% else %>
-            <td>Muted</td>
+            <td class="text-muted">Hidden</td>
           <% end %>
         <% end %>
       <% end %>
