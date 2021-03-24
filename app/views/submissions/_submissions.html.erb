@@ -4,6 +4,9 @@
       participant     = submission.participant
       challenge       = submission.challenge
       challenge_round = submission.challenge_round
+      if !challenge.show_submission?
+        is_organiser_or_author = (current_participant.present? && (policy(challenge).edit? || helpers.submission_team?(submission, current_participant)))
+      end
     %>
 
     <tr>
@@ -19,14 +22,14 @@
         <span class="badge <%= submission_grade_class(submission) %>">
           <%= submission.grading_status_cd %></span>
       </td>
-      <% if challenge.show_submission? || @is_organiser_or_author %>
+      <% if challenge.show_submission? || is_organiser_or_author %>
         <td><%= submission_formatted_value(submission, submission.score_display) %></td>
       <% else %>
         <td>Muted</td>
       <% end %>
 
       <% if !@challenge.meta_challenge && challenge_round&.default_leaderboard&.score_secondary_title.present? && challenge_round&.default_leaderboard&.secondary_sort_order != :hidden %>
-        <% if challenge.show_submission? || @is_organiser_or_author %>
+        <% if challenge.show_submission? || is_organiser_or_author %>
           <td><%= submission_formatted_value(submission, submission.score_secondary) %></td>
         <% else %>
           <td>Muted</td>
@@ -35,7 +38,7 @@
 
       <% if !@challenge.meta_challenge %>
         <% leaderboard_other_scores_array(submission, challenge_round.default_leaderboard).each do |other_score| %>
-          <% if challenge.show_submission? || @is_organiser_or_author %>
+          <% if challenge.show_submission? || is_organiser_or_author %>
             <td class="text-right"><%= other_score %></td>
           <% else %>
             <td>Muted</td>

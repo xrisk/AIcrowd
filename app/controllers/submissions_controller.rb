@@ -13,7 +13,7 @@ class SubmissionsController < ApplicationController
   before_action :set_form_type, only: [:new, :create]
   before_action :handle_code_based_submissions, only: [:create]
   before_action :handle_artifact_based_submissions, only: [:create]
-  before_action :set_admin_variable, only: [:show, :index]
+  before_action :set_admin_variable, only: [:show]
 
   layout :set_layout
   respond_to :html, :js
