@@ -52,6 +52,9 @@
       </div>
       <br/><br/>
     </fieldset>
+    <div class="form-group">
+      <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :show_submission, text: 'Allow users to view each other’s scores'} %>
+    </div>
   </div>
   <%= render partial: 'challenges/fields/submit_buttons', locals: {f: f, current_step: 'overview'} %>
 </div>
