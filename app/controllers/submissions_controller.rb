@@ -418,7 +418,7 @@ class SubmissionsController < ApplicationController
 
     return if params.dig('submission', 'submission_files_attributes', '0', 'submission_type') != 'artifact'
     # TODO: Make this accepted extension list dynamic via evaluations API
-    accepted_formats = [".csv", ".ipynb", ".pt", ".json", ".py", ".c", ".cpp"]
+    accepted_formats = [".csv", ".ipynb", ".pt", ".json", ".py", ".c", ".cpp", ".pth"]
     file_path = params[:submission][:submission_files_attributes]["0"][:submission_file_s3_key]
 
     return if file_path.blank?
