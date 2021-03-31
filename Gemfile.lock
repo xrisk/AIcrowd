@@ -16,6 +16,13 @@ GIT
       pundit (~> 1.1, >= 1.1.0)
       rspec-rails (>= 3.0.0)
 
+GIT
+  remote: https://github.com/lardawge/carrierwave_backgrounder
+  revision: e1faa5e264d6a2ee0a58ade6b0d05d1147266b86
+  specs:
+    carrierwave_backgrounder (0.4.2)
+      carrierwave (>= 0.5, < 2.2)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -979,6 +986,7 @@ DEPENDENCIES
   capybara-screenshot
   carrierwave (~> 2.0)
   carrierwave-imageoptimizer
+  carrierwave_backgrounder!
   chartkick
   ckeditor
   client_side_validations (~> 16.1)
