@@ -148,6 +148,8 @@ class Participant < ApplicationRecord
             allow_blank: true
   validates :uuid, uniqueness: true
 
+  attr_accessor :coords_x, :coords_y, :coords_w, :coords_h
+
   after_update do
     ParticipantBadgeJob.perform_later(name: "profileupdate", participant_id: id)
   end

@@ -3,6 +3,7 @@ class ParticipantsController < ApplicationController
   before_action :set_participant,
                 only: [:show, :edit, :update, :destroy, :set_follow]
   before_action :set_follow, only: [:show]
+  before_action :sanitize_fields_params, only: [:update]
 
   respond_to :html, :js
 
@@ -167,7 +168,23 @@ class ParticipantsController < ApplicationController
         # NATE: we might need to allow this if for some reason a user has been created without agreeing,
         # for example during the oauth flow
         # :agreed_to_terms_of_use_and_privacy,
-        :agreed_to_marketing)
+        :agreed_to_marketing,
+        :coords_x,
+        :coords_y,
+        :coords_w,
+        :coords_h)
+  end
+
+  def sanitize_fields_params
+    $coords_x = 0
+    $coords_y = 0
+    $coords_w = 0
+    $coords_h = 0
+
+    $coords_x = params[:participant][:coords_x]
+    $coords_y = params[:participant][:coords_y]
+    $coords_w = params[:participant][:coords_w]
+    $coords_h = params[:participant][:coords_h]
   end
 
   def sso_helper

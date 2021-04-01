@@ -19,6 +19,7 @@
 //= require ckeditor/plugins/codesnippet/lib/highlight/highlight.pack.js
 //= require ace-rails-ap
 //= require commontator/application
+//= require cropperjs/dist/cropper.js
 
 // --------------------- Vendor ------------------------ //
 //= require jQuery-File-Upload
@@ -43,6 +44,7 @@
 //= require modules/social_share
 //= require modules/challenges
 //= require clipboard
+//= require modules/image_cropper
 
 // ---------------------- Others --------------------- //
 //= require ahoy
