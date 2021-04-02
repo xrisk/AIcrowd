@@ -8,6 +8,7 @@ class Leaderboard < SqlView
   belongs_to :submission, optional: true
   belongs_to :meta_challenge, optional: true, class_name: 'Challenge'
   belongs_to :ml_challenge, optional: true, class_name: 'Challenge'
+  belongs_to :challenge_leaderboard_extra, optional: true
 
   as_enum :leaderboard_type,
           [:leaderboard, :ongoing, :disentanglement],
