@@ -48,6 +48,10 @@
             </div>
           </div>
 
+          <% if @participant.image_file.present? %>
+            <%= image_tag @participant.image_file_url, id: 'challenges-form-card-image', class: 'form-challenge-card-image' %>
+          <% end %>
+
           <% %w[x y w h].each do |attribute| %>
             <%= f.hidden_field "coords_#{attribute}", id:"coords_#{attribute}" %>
           <% end %>

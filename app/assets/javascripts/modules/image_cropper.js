@@ -74,9 +74,9 @@ $(document).ready(function(){
     var roundedCanvas;
     croppedCanvas = x.getCroppedCanvas();
     roundedCanvas = getRoundedCanvas(croppedCanvas);
-    $('#avatar')[0].src = roundedCanvas.toDataURL();
-    $('#avatar')[0].setAttribute("height", "100");
-    $('#avatar')[0].setAttribute("width", "100");
+    // $('#avatar')[0].src = roundedCanvas.toDataURL();
+    // $('#avatar')[0].setAttribute("height", "100");
+    // $('#avatar')[0].setAttribute("width", "100");
   });
 
   $("#profile_pic_upload").change(function () {
