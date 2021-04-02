@@ -1,11 +1,11 @@
 <% submissions.each do |submission| %>
-  <% cache_if cache_enabled?, [submission, submission.challenge_round.default_leaderboard], expires_in: 5.minutes do %>
-    <%
-      participant     = submission.participant
-      challenge       = submission.challenge
-      challenge_round = submission.challenge_round
-    %>
-
+  <%
+    participant     = submission.participant
+    challenge       = submission.challenge
+    challenge_round = submission.challenge_round
+    is_organiser_or_author = (current_participant.present? && (policy(challenge).edit? || submission_team?(submission, current_participant)))
+  %>
+  <% cache_if cache_enabled?, [@challenge.id, submission, submission.challenge_round.default_leaderboard, is_organiser_or_author], expires_in: 5.minutes do %>
     <tr>
       <td><strong><%= submission.id %></strong></td>
       <td>
@@ -15,14 +15,31 @@
           <span>#</span>
         <% end %>
       </td>
-      <td><span class="badge <%= submission_grade_class(submission) %>"><%= submission.grading_status_cd %></span></td>
-      <td><%= submission_formatted_value(submission, submission.score_display) %></td>
-      <% if !@challenge.meta_challenge && challenge_round&.default_leaderboard&.score_secondary_title.present? && challenge_round&.default_leaderboard&.secondary_sort_order != :hidden %>
-        <td><%= submission_formatted_value(submission, submission.score_secondary) %></td>
+      <td>
+        <span class="badge <%= submission_grade_class(submission) %>">
+          <%= submission.grading_status_cd %></span>
+      </td>
+      <% if challenge.show_submission? || is_organiser_or_author %>
+        <td><%= submission_formatted_value(submission, submission.score_display) %></td>
+      <% else %>
+        <td class="text-muted">Hidden</td>
       <% end %>
+
+      <% if !@challenge.meta_challenge && challenge_round&.default_leaderboard&.score_secondary_title.present? && challenge_round&.default_leaderboard&.secondary_sort_order != :hidden %>
+        <% if challenge.show_submission? || is_organiser_or_author %>
+          <td><%= submission_formatted_value(submission, submission.score_secondary) %></td>
+        <% else %>
+          <td class="text-muted">Hidden</td>
+        <% end %>
+      <% end %>
+
       <% if !@challenge.meta_challenge %>
         <% leaderboard_other_scores_array(submission, challenge_round.default_leaderboard).each do |other_score| %>
-          <td class="text-right"><%= other_score %></td>
+          <% if challenge.show_submission? || is_organiser_or_author %>
+            <td class="text-right"><%= other_score %></td>
+          <% else %>
+            <td class="text-muted">Hidden</td>
+          <% end %>
         <% end %>
       <% end %>
       <td>
