@@ -27,7 +27,7 @@ class CalculateLeaderboardJob < ApplicationJob
       end
 
       challenge_problem.challenge.active_round.challenge_leaderboard_extras.each do |challenge_leaderboard_extra|
-        CalculateMetaLeaderboardService.new(challenge_id: challenge_problem.challenge_id, challenge_leaderboard_extra_id: challenge_leaderboard_extra).call
+        CalculateMetaLeaderboardService.new(challenge_id: challenge_problem.challenge_id, challenge_leaderboard_extra: challenge_leaderboard_extra).call
       end
 
     end

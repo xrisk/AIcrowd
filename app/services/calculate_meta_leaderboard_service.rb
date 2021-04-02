@@ -72,8 +72,8 @@ class CalculateMetaLeaderboardService
 
   def create_leaderboard
     people = {}
-    filter = @child_leaderboards&.first&.first&.challenge_leaderboard_extra&.filter
     @child_leaderboards.each do |child_leaderboard|
+      filter = child_leaderboard&.first&.challenge_leaderboard_extra&.filter
       child_leaderboard = child_leaderboard.joins(:participant).where(filter) if filter.present?
       child_leaderboard.each do |entry|
         key = [entry['submitter_type'], entry['submitter_id']]
