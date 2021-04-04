@@ -109,6 +109,7 @@ gem 'barnes'
 gem 'gemoji-parser'
 gem 'clipboard-rails'
 gem 'carrierwave_backgrounder', git: 'https://github.com/lardawge/carrierwave_backgrounder'
+gem 'puma_worker_killer'
 
 # HTTP clients
 gem 'faraday', '~> 1.0'
