@@ -3,7 +3,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   include ActionView::Helpers::AssetUrlHelper
   include CarrierWave::MiniMagick
   include CarrierWave::ImageOptimizer
-  process :crop_image, :optimize, :resize_image
+  process :cropper, :optimize, :resize_image
   # https://github.com/DarthSim/carrierwave-bombshelter
 
   storage :fog
@@ -45,7 +45,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def crop_image
-    resize_to_limit(600, 600)
+    resize_to_limit(300, 300)
     unless $coords_x.blank?
       manipulate! do |image|
         x = $coords_x.to_f
@@ -60,7 +60,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   def cropper
-    # resize_to_limit(600, 600)
+    resize_to_limit(300, 300)
     image = MiniMagick::Image.open(self.file.path)
     crop_params = "#{$coords_w}x#{$coords_h}+#{$coords_x}+#{$coords_y}"
     image.crop(crop_params)
