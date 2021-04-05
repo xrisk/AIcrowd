@@ -39,7 +39,7 @@ $(document).ready(function(){
 
   $('#upload-modal').on('shown.bs.modal', function () {
     x = new Cropper($image, {
-    aspectRatio: 1,
+    // aspectRatio: 1,
     viewMode: 1,
     ready: function () {
     croppable = true;
