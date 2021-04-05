@@ -1,7 +1,7 @@
 class PostsController < InheritedResources::Base
   before_action :authenticate_participant!, except: [:show, :index]
-  before_action :set_post, only: [:show, :edit, :update]
-  before_action :set_my_challenges, only: [:new, :edit, :update]
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_my_challenges, only: [:new, :edit, :update, :create]
 
   def new
     @post = Post.new
@@ -105,6 +105,9 @@ class PostsController < InheritedResources::Base
   end
 
   def destroy
+    challenge = @post.challenge
+    @post.destroy
+    redirect_to(notebooks_challenge_path(challenge), notice: "The contribution was deleted successfully!")
   end
 
   def validate_colab_link
