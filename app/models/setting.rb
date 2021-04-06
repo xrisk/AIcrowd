@@ -1,6 +1,7 @@
 class Setting < ApplicationRecord
 
   mount_uploader :home_page_social_image, RawImageUploader
+  process_in_background :home_page_social_image, ImageUploadJob
 
   def self.banner_record
     first&.banner_text if first&.enable_banner

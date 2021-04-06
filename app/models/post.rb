@@ -11,6 +11,7 @@ class Post < ApplicationRecord
   belongs_to :challenge, optional: true
   belongs_to :submission, optional: true
   mount_uploader :thumbnail, RawImageUploader
+  process_in_background :thumbnail, ImageUploadJob
   acts_as_commontable
   attr_accessor :notebook_file_path, :notebook_file, :category_names
 

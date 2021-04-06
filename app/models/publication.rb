@@ -14,6 +14,7 @@ class Publication < ApplicationRecord
   default_scope { order(:sequence) }
 
   mount_uploader :thumbnail, RawImageUploader
+  process_in_background :thumbnail, ImageUploadJob
 
   accepts_nested_attributes_for :authors, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :venues, reject_if: :all_blank, allow_destroy: true

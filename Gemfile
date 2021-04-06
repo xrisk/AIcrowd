@@ -108,6 +108,7 @@ gem 'derailed'
 gem 'barnes'
 gem 'gemoji-parser'
 gem 'clipboard-rails'
+gem 'carrierwave_backgrounder', git: 'https://github.com/AIcrowd/carrierwave_backgrounder'
 gem 'puma_worker_killer'
 
 # HTTP clients
