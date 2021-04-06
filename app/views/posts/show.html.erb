@@ -20,7 +20,7 @@
         <div class="btn-set" aria-hidden="true">
           <%= render partial: 'shared/votes/button', locals: { votable: @post, vote: @post.vote(current_participant) } %>
           <% if !@execute_in_colab_url.nil? %><button type="button" class="btn btn-sm btn-secondary"><a href='<%= @execute_in_colab_url %>' target="_blank" class="text-secondary"><span class="fa fa-cogs mr-1"></span>Open in Colab</a></button><% end %>
-          <% if current_participant.present? && @post.participant_id == current_participant.id %>
+          <% if current_participant.present? && (current_participant.admin? || (@post.participant_id == current_participant.id)) %>
             <%= button_to 'Edit', edit_post_path(@post), class: "btn btn-secondary btn-sm float-right", method: :get %>
             <%= button_to 'Delete', post_path(@post), class: "btn btn-secondary btn-sm float-right", method: :delete %>
           <% end %>
