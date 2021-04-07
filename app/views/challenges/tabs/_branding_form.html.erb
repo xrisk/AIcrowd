@@ -8,7 +8,7 @@
     </div>
 
     <div class="form-group">
-        <%= f.file_field :image_file %>
+        <%= f.file_field :image_file, class: 'crop_image_file' %>
         <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :big_challenge_card_image, text: "Use image for big cards" } %>
         <% if @challenge.persisted? %>
             <% remove_image_class = @challenge.image_file.present? ? '' : 'challenges-form__link--hidden' %>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="form-group">
-      <%= f.file_field :social_media_image_file %>
+      <%= f.file_field :social_media_image_file, class: 'crop_social_media_image_file' %>
       <% if @challenge.persisted? %>
         <%= link_to 'Delete', remove_social_media_image_challenge_path(@challenge), remote: true, id: 'challenges-form-remove-card-image', class: "form-text" %>
       <% end %>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="form-group">
-        <%= f.file_field :banner_file %>
+        <%= f.file_field :banner_file, class: 'crop_banner_image_file' %>
         <% if @challenge.persisted? %>
             <%= link_to 'Delete', remove_banner_challenge_path(@challenge), remote: true, id: 'challenges-form-remove-card-image', class: "form-text" %>
         <% end %>
@@ -55,7 +55,7 @@
     </div>
 
     <div class="form-group">
-        <%= f.file_field :banner_mobile_file %>
+        <%= f.file_field :banner_mobile_file, class: "crop_banner_mobile_image_file" %>
         <% if @challenge.persisted? %>
             <%= link_to 'Delete', remove_banner_mobile_challenge_path(@challenge), remote: true, id: 'challenges-form-remove-card-image', class: "form-text" %>
         <% end %>
@@ -66,6 +66,21 @@
         <span class="label-text">Banner Color (Hex Color)</span>
         <%= f.text_field :banner_color, placeholder: "F8F9F9", class: "form-control" %>
     </div>
+
+    <% %w[x y w h].each do |attribute| %>
+      <%= f.hidden_field "coords_#{attribute}", id:"coords_#{attribute}" %>
+    <% end %>
+
+    <% %w[social_media banner banner_mobile].each do |start| %>
+        <% %w[x y w h].each do |ending| %>
+            <%= f.hidden_field "#{start}_coords_#{ending}", id:"#{start}_coords_#{ending}" %>
+        <% end %>
+    <% end %>
+
+    <%= render partial: 'challenges/modals/card_modal' %>
+    <%= render partial: 'challenges/modals/social_media_modal' %>
+    <%= render partial: 'challenges/modals/banner_modal' %>
+    <%= render partial: 'challenges/modals/banner_mobile_modal' %>
 
     <%= render partial: 'challenges/fields/submit_buttons', locals: { f: f, current_step: 'branding' } %>
   </div>

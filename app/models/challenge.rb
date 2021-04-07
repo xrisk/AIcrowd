@@ -87,6 +87,10 @@ class Challenge < ApplicationRecord
   validate :other_scores_fieldnames_max
   validate :greater_than_zero
   #validate :banner_color, format: { with: /\A#?(?:[A-F0-9]{3}){1,2}\z/i }
+  attr_accessor :coords_x, :coords_y, :coords_w, :coords_h, :social_media_coords_x,
+    :social_media_coords_y, :social_media_coords_w, :social_media_coords_h, :banner_mobile_coords_x,
+    :banner_mobile_coords_y, :banner_mobile_coords_w, :banner_mobile_coords_h, :banner_coords_x,
+    :banner_coords_y, :banner_coords_w, :banner_coords_h
 
   EVALUATOR_TYPES = {
     'Not Configured' => :not_configured,

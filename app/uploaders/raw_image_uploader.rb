@@ -2,7 +2,7 @@ INFINTY = 100000000
 class RawImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   include CarrierWave::ImageOptimizer
-  process :optimize, :resize_image
+  process :crop_image, :optimize, :resize_image
 
   storage :fog
 
@@ -33,4 +33,56 @@ class RawImageUploader < CarrierWave::Uploader::Base
       end
     end
   end
+
+  def crop_image
+    unless $coords_x.blank?
+      manipulate! do |image|
+        x = $coords_x.to_f
+        y = $coords_y.to_f
+        w = $coords_w.to_f
+        h = $coords_h.to_f
+
+        image.crop([[w, h].join('x'), [x, y].join('+')].join('+'))
+        image
+      end
+    end
+
+    unless $social_media_coords_x.blank?
+      manipulate! do |image|
+        x = $social_media_coords_x.to_f
+        y = $social_media_coords_y.to_f
+        w = $social_media_coords_w.to_f
+        h = $social_media_coords_h.to_f
+
+        image.crop([[w, h].join('x'), [x, y].join('+')].join('+'))
+        image
+      end
+    end
+
+    unless $banner_mobile_coords_x.blank?
+      manipulate! do |image|
+        x = $banner_mobile_coords_x.to_f
+        y = $banner_mobile_coords_y.to_f
+        w = $banner_mobile_coords_w.to_f
+        h = $banner_mobile_coords_h.to_f
+
+        image.crop([[w, h].join('x'), [x, y].join('+')].join('+'))
+        image
+      end
+    end
+
+    unless $banner_coords_x.blank?
+      manipulate! do |image|
+        x = $banner_coords_x.to_f
+        y = $banner_coords_y.to_f
+        w = $banner_coords_w.to_f
+        h = $banner_coords_h.to_f
+
+        image.crop([[w, h].join('x'), [x, y].join('+')].join('+'))
+        image
+      end
+    end
+
+  end
+
 end

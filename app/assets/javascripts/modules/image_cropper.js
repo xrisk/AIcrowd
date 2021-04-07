@@ -16,7 +16,7 @@ $(document).ready(function(){
     if (input.files && input.files[0]) {
       var reader = new FileReader();
       reader.onload = function (e) {
-        $('#image').attr('src', e.target.result);
+        $('#card-image').attr('src', e.target.result);
       }
       reader.readAsDataURL(input.files[0]);
     }
@@ -31,13 +31,12 @@ $(document).ready(function(){
   $coords_h.val('');
   $coords_w.val('');
 
-  var $image = $('#image')[0];
-  var $button = $('#button');
+  var $image = $('#card-image')[0];
   var croppable = false;
   let x;
 
 
-  $('#upload-modal').on('shown.bs.modal', function () {
+  $('.challenge-modal').on('shown.bs.modal', function () {
     x = new Cropper($image, {
     // aspectRatio: 1,
     viewMode: 1,
@@ -52,8 +51,10 @@ $(document).ready(function(){
     x.destroy();
   });
 
-  $("#profile_pic_upload").change(function () {
-    $('#upload-modal').modal('show');
+  $(".crop_image_file").change(function () {
+    $('.challenge-modal').modal('show');
     readURL(this);
   });
+
+
 });

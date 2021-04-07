@@ -9,6 +9,7 @@ class ChallengesController < ApplicationController
   before_action :set_filters, only: [:index]
   before_action :set_organizers_for_select, only: [:new, :create, :edit, :update]
   before_action :set_challenge_leaderboard_list, only: [:edit, :update]
+  before_action :sanitize_fields_params, only: [:create, :update]
 
   respond_to :html, :js
 
@@ -346,6 +347,42 @@ class ChallengesController < ApplicationController
     end
   end
 
+  def sanitize_fields_params
+      $coords_x = 0
+      $coords_y = 0
+      $coords_w = 0
+      $coords_h = 0
+      $social_media_coords_x = 0
+      $social_media_coords_y = 0
+      $social_media_coords_w = 0
+      $social_media_coords_h = 0
+      $banner_mobile_coords_x = 0
+      $banner_mobile_coords_y = 0
+      $banner_mobile_coords_w = 0
+      $banner_mobile_coords_h = 0
+      $banner_coords_x = 0
+      $banner_coords_y = 0
+      $banner_coords_w = 0
+      $banner_coords_h = 0
+
+      $coords_x = params[:challenge][:coords_x]
+      $coords_y = params[:challenge][:coords_y]
+      $coords_w = params[:challenge][:coords_w]
+      $coords_h = params[:challenge][:coords_h]
+      $social_media_coords_x = params[:challenge][:social_media_coords_x]
+      $social_media_coords_y = params[:challenge][:social_media_coords_y]
+      $social_media_coords_w = params[:challenge][:social_media_coords_w]
+      $social_media_coords_h = params[:challenge][:social_media_coords_h]
+      $banner_mobile_coords_x = params[:challenge][:banner_mobile_coords_x]
+      $banner_mobile_coords_y = params[:challenge][:banner_mobile_coords_y]
+      $banner_mobile_coords_w = params[:challenge][:banner_mobile_coords_w]
+      $banner_mobile_coords_h = params[:challenge][:banner_mobile_coords_h]
+      $banner_coords_x = params[:challenge][:banner_coords_x]
+      $banner_coords_y = params[:challenge][:banner_coords_y]
+      $banner_coords_w = params[:challenge][:banner_coords_w]
+      $banner_coords_h = params[:challenge][:banner_coords_h]
+    end
+
   def challenge_params
     params.require(:challenge).permit(
       :challenge,
@@ -406,6 +443,22 @@ class ChallengesController < ApplicationController
       :submission_filter,
       :submission_freezing_order,
       :show_submission,
+      :coords_x,
+      :coords_y,
+      :coords_w,
+      :coords_h,
+      :social_media_coords_x,
+      :social_media_coords_y,
+      :social_media_coords_w,
+      :social_media_coords_h,
+      :banner_mobile_coords_x,
+      :banner_mobile_coords_y,
+      :banner_mobile_coords_w,
+      :banner_mobile_coords_h,
+      :banner_coords_x,
+      :banner_coords_y,
+      :banner_coords_w,
+      :banner_coords_h,
       image_attributes: [
         :id,
         :image,

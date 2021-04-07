@@ -45,6 +45,9 @@
 //= require modules/challenges
 //= require clipboard
 //= require modules/image_cropper
+//= require modules/banner_cropper
+//= require modules/banner_mobile_cropper
+//= require modules/social_media_cropper
 
 // ---------------------- Others --------------------- //
 //= require ahoy
