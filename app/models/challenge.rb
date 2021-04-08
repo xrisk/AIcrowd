@@ -10,9 +10,6 @@ class Challenge < ApplicationRecord
   mount_uploader :social_media_image_file, RawImageUploader
   mount_uploader :banner_file, RawImageUploader
   mount_uploader :banner_mobile_file, RawImageUploader
-  process_in_background :social_media_image_file, ImageUploadJob
-  process_in_background :banner_file, ImageUploadJob
-  process_in_background :banner_mobile_file, ImageUploadJob
 
   belongs_to :clef_task, optional: true
   accepts_nested_attributes_for :clef_task
