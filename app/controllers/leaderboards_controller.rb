@@ -62,6 +62,14 @@ class LeaderboardsController < ApplicationController
     @affiliations = @filter.call('participant_affiliations')
   end
 
+  def recalculate_leaderboard
+    authorize Leaderboard
+    leaderboard = ChallengeLeaderboardExtra.find_by_id(params[:leaderboard_id])
+    challenge_round_id = leaderboard&.challenge_round_id
+    CalculateLeaderboardJob.perform_later(challenge_round_id: challenge_round_id)
+    redirect_to challenge_leaderboards_path, notice: "Leaderboard recalculation is in progress."
+  end
+
   def destroy
     leaderboard = ChallengeLeaderboardExtra.find_by_id(params[:id])
     if !leaderboard.default
