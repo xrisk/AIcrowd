@@ -6,7 +6,7 @@
   </header>
   <div>
     <%
-      users = challenge.challenge_participants.sample(50)
+      users = challenge.challenge_participants.includes(:participant).sample(50)
       users_remaining_count = challenge.challenge_participants.count - 50
     %>
     <% if required_terms_or_rules_path(challenge).present? %>
@@ -54,9 +54,6 @@
 
     <%= link_to 'See all', notebooks_challenge_path(challenge), class: "btn btn-secondary btn-sm" %>
   </header>
-  <%= render 'shared/posts/post_list',  posts: challenge.posts.where(private: false).includes(:participant) %>
+  <%= render 'shared/posts/post_list',  posts: challenge_posts %>
 <% end %>
 
-<% if policy(challenge).show_submissions? && (latest_submissions.present? || @challenge.meta_challenge) %>
-  <%= render 'challenges/show/latest_five_submissions', latest_submissions: latest_submissions, challenge: challenge %>
-<% end %>
