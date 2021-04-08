@@ -54,6 +54,6 @@
 
     <%= link_to 'See all', notebooks_challenge_path(challenge), class: "btn btn-secondary btn-sm" %>
   </header>
-  <%= render 'shared/posts/post_list',  posts: challenge.posts.where(private: false).includes(:participant) %>
+  <%= render 'shared/posts/post_list',  posts: challenge_posts %>
 <% end %>
 

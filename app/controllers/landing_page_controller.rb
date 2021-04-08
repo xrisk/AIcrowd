@@ -22,6 +22,7 @@ class LandingPageController < ApplicationController
         .where(published: true)
         .order(seq: :asc)
         .limit(3)
+        .includes(:participant)
     end
 
     @discourse_topics_fetch = Rails.cache.fetch('discourse-latest-topics', expires_in: 5.minutes) do

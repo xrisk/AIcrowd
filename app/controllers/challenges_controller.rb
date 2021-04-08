@@ -47,6 +47,7 @@ class ChallengesController < ApplicationController
     @challenge_baseline_discussion = Rails.cache.fetch("challenge-baseline-discussions-#{@challenge.discourse_category_id}-#{@challenge.updated_at.to_i}", expires_in: 5.minutes) do
       @challenge.baseline_discussion
     end
+    @challenge_posts = @challenge.posts.where(private: false).includes(:participant).limit(5)
     if @challenge.active_round
       @top_five_leaderboards = @challenge.active_round.leaderboards.where(meta_challenge_id: @meta_challenge, baseline: false, challenge_leaderboard_extra_id: nil).limit(5).includes(:challenge, :team)
     end
