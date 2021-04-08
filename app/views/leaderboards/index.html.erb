@@ -10,6 +10,11 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
+        <% if current_participant.admin? %>
+          <div class="col-12">
+            <a href="<%= challenge_leaderboard_recalculate_leaderboard_path({leaderboard_id: @current_leaderboard.id}) %>" class="float-right"><i class="fa fa-refresh" aria-hidden="true" data-toggle="tooltip" title="Recalculate Leaderboard"></i></a>
+          </div>
+        <% end %>
         <% if @challenge_rounds.size > 1 && !@challenge.meta_challenge %>
           <!-- Challenge Round Pills  -->
           <ul class="nav nav-pills">

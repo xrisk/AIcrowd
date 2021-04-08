@@ -40,6 +40,7 @@ def challenge_routes
   resources :leaderboards, only: [:index, :destroy] do
     get :export, on: :collection
     get :get_affiliation, on: :collection
+    get :recalculate_leaderboard
   end
   resources :votes, only: [:create, :destroy]
   resources :follows, only: [:create, :destroy]

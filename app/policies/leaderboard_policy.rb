@@ -7,6 +7,10 @@ class LeaderboardPolicy < ApplicationPolicy
     true
   end
 
+  def recalculate_leaderboard?
+    participant && participant.admin?
+  end
+
   class Scope
     attr_reader :participant, :scope
 
