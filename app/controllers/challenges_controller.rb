@@ -53,11 +53,6 @@ class ChallengesController < ApplicationController
     end
 
     if @challenge.meta_challenge
-      while @challenge_posts.count < 5
-        @challenge.problems.each do |challenge|
-          @challenge_posts += challenge.posts.where(private: false).includes(:participant).limit(5 - @challenge_posts.count)
-        end
-      end
       params[:meta_challenge_id] = params[:id]
       render template: "challenges/show_meta_challenge"
     end

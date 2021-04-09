@@ -137,13 +137,7 @@ class Submission < ApplicationRecord
   private
 
   def generate_short_url
-    if short_url.blank?
-      short_url = nil
-      begin
-        short_url = SecureRandom.hex(12)
-      end while (Submission.exists?(short_url: short_url))
-      self.short_url = short_url
-    end
+    self.short_url = SecureRandom.uuid
   end
 
   def kramdown_grading_message
