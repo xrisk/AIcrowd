@@ -35,6 +35,7 @@ class LeaderboardsController < ApplicationController
     @challenge_rounds = @challenge.challenge_rounds.started
     @post_challenge   = post_challenge?
     @following        = following?
+    @leaderboards     = @leaderboards.includes(:challenge, :submission)
 
     unless @leaderboards.first&.disentanglement?
       @countries = @filter.call('participant_countries')

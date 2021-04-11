@@ -32,8 +32,7 @@ class PostsController < InheritedResources::Base
   end
 
   def index
-    params[:page] ||= 1
-    @post = Post.paginate(page: params[:page], per_page: 10)
+    @post = Post.all.includes(:participant, :challenge)
   end
 
   def show
