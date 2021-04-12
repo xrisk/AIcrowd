@@ -8,6 +8,7 @@ module Concerns
         before_action :set_challenge_rounds, only: actions
         before_action :set_vote, only: actions
         before_action :set_follow, only: actions
+        before_action :redirect_if_hidden, only: actions
       end
     end
 
@@ -31,6 +32,10 @@ module Concerns
 
     def set_follow
       @follow = @challenge.follows.where(participant_id: current_participant.id).first if current_participant.present?
+    end
+
+    def redirect_if_hidden
+      redirect_to @challenge, notice: "You're not authorized to view this page" unless @challenge.discussions_visible?
     end
   end
 end
