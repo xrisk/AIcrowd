@@ -106,6 +106,10 @@ class SubmissionsController < ApplicationController
   end
 
   def new
+    if @challenge.min_team_participants > 1 && (@challenge.min_team_participants > get_team_participants.count)
+      redirect_to @challenge,
+                  notice: "You need a minimum of #{@challenge.min_team_participants} team members to create a submission"
+    end
     @clef_primary_run_disabled          = clef_primary_run_disabled?
     @submissions_remaining, @reset_dttm = SubmissionsRemainingQuery.new(
       challenge:      @challenge,
@@ -126,6 +130,7 @@ class SubmissionsController < ApplicationController
     @submission.challenge = @challenge
     authorize @submission
 
+    validate_min_members
     validate_submission_file_presence
     if @submission.errors.none? && @submission.save
       SubmissionGraderJob.perform_later(@submission.id)
@@ -461,6 +466,10 @@ class SubmissionsController < ApplicationController
 
   def validate_submission_file_presence
     @submission.errors.add(:base, 'Submission file is required.') if @form_type == :artifact && @submission.submission_files.none?
+  end
+
+  def validate_min_members
+    @submission.errors.add(:base, 'Minimum team members requirement not fulfilled') if (@challenge.min_team_participants > 1 && (@challenge.min_team_participants > get_team_participants.count))
   end
 
   def redirect_or_json(redirect_path, message, status, notice=nil, data=nil)
