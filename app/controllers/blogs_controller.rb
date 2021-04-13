@@ -13,6 +13,7 @@ class BlogsController < ApplicationController
 
   def show
     @blog.record_page_view unless params[:version] # don't record page views on history pages
+    commontator_thread_show(@blog)
   end
 
   private
