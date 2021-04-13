@@ -1,55 +1,88 @@
 <!-- masthead – blog post -->
-<div class="masthead masthead-blog-post">
-  <div class="container-fluid">
+<main>
+  <div class="masthead masthead-blog-post">
+    <div class="container-fluid">
 
-    <!-- title -->
-    <div class="row">
-      <div class="col-12">
-        <h1><%= @blog.title %></h1>
-        <p><%= local_time(@blog.posted_at, "%-d %B %Y") %></p>
-      </div>
-    </div>
-    <!-- /title -->
+      <div class="row">
+        <div class="col-12">
+          <h1>Mark Potanin | AIcrew Stories</h1>
 
-    <!-- author/options -->
-    <div class="row">
-      <div class="col-12 d-flex align-items-center flex-wrap">
-        <div class="author">
-          <span class="mr-2">By</span>
-          <%= render partial: 'participants/get_user_profile', locals: { participant: @blog.participant } %>
-        </div>
+          <div class="masthead-details">
+            <span class="author">
+              <a href="#"><img class="avatar user-rating-4" src="https://d33wubrfki0l68.cloudfront.net/3c8658547f6dc5e7f0c3aae09e33fed5cd7545db/be47c/assets/img/custom-avatar-2.png"></a>
+              <span>By <a href="#">snehananavati</a></span>
+            </span>
 
-        <div class="btn-set" aria-hidden="true">
-          <%= render partial: 'shared/votes/button', locals: { votable: @blog, vote: @vote } %>
+            <span class="masthead-date">09 March 2021</span>
+          </div>
         </div>
       </div>
     </div>
-    <!-- /author/options -->
-
   </div>
-</div>
-<!-- /masthead – blog post -->
+</main>
+  <!-- /masthead – blog post -->
 
-<!-- section -->
 <div class="section-p-md">
   <div class="container-fluid">
     <div class="row">
 
-      <!-- md content -->
-      <div class="col-12">
-        <div class="md-content">
-          <%= sanitize_html(@blog.body) %>
+      <div class="col-2 position-relative">
+        <div class="social-options">
+          <a href="/" class="btn btn-secondary btn-sm" role="button"data-toggle="tooltip" data-placement="right" title="View Comments">
+            <img src="https://d33wubrfki0l68.cloudfront.net/5280a0d099efb51753ec327b9c22af89ce52266e/cabdf/assets/img/icon-comment.svg">&nbsp;4
+          </a>
+
+          <%= render partial: 'shared/votes/button', locals: { votable: @blog, vote: @blog.vote(current_participant) } %>
+
+          <hr>
+
+          <%= publication_social_share('facebook', request.url, @blog.title) %>
+          <%= publication_social_share('twitter', request.url,  @blog.title) %>
+          <%= publication_social_share('linkedin', request.url, @blog.title) %>
         </div>
       </div>
-      <!-- /md content -->
+      <!-- /social-options -->
+      <div class="col-12 col-md-8">
+        <div class="md-content mx-auto">
+          <%= sanitize_html(@blog.body) %>
+        </div>
+
+        <div class="social-options-sm">
+          <button type="button" class="btn btn-secondary btn-sm" >
+            <svg width="12" height="11" xmlns="http://www.w3.org/2000/svg"><path d="M10.8746251 6.14539024L5.97691577 11.0430996 1.07920644 6.14539024C.43154568 5.50196808.03030318 4.61061457.03030318 3.62554576c0-1.96049121 1.58929212-3.54978364 3.54978364-3.54978364.92305599 0 1.76382467.35231416 2.39516959.92980603.63649437-.6044087 1.49691101-.97526512 2.44394586-.97526512 1.96049123 0 3.54978363 1.58929242 3.54978363 3.54978364 0 1.00819292-.4203017 1.91821904-1.0952455 2.56441886z" fill="#F0524D" fill-rule="evenodd"/></svg>&nbsp;36
+          </button>
+
+          <%= publication_social_share('facebook', request.url, @blog.title) %>
+          <%= publication_social_share('twitter', request.url,  @blog.title) %>
+          <%= publication_social_share('linkedin', request.url, @blog.title) %>
+        </div>
+        <!-- /social-options -->
+
+        <div class="about-author">
+          <div class="author">
+            <a href="#"><img class="avatar user-rating-4" src="https://d33wubrfki0l68.cloudfront.net/3c8658547f6dc5e7f0c3aae09e33fed5cd7545db/be47c/assets/img/custom-avatar-2.png"></a>
+            <div class="author-details">
+              <h3>Written by</h3>
+              <a href="#">snehananavati</a>
+            </div>
+            <a id="follow-link-participant-13256" class="btn btn-secondary btn-sm" data-remote="true" rel="nofollow" data-method="post" href="/participants/13256/follows?active_tab=false&amp;other_participant=snehananavati">Follow</a>
+          </div>
+        </div>
+      </div>
 
     </div>
+    <!-- /md content -->
   </div>
 </div>
-<!-- /section -->
+<section class="section-p-md border-top">
+  <div class="container-fluid">
+    <%= commontator_thread(@blog) %>
+  </div>
+</section>
+
 
 <!-- section -->
-<section class="section-pb-md">
+<section class="section-p-md border-top">
 
   <!-- blog post previews -->
   <div class="container-fluid">
