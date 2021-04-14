@@ -28,9 +28,9 @@
 
       <div class="col-2 position-relative">
         <div class="social-options">
-          <a href="/" class="btn btn-secondary btn-sm" role="button"data-toggle="tooltip" data-placement="right" title="View Comments">
-            <img src="https://d33wubrfki0l68.cloudfront.net/5280a0d099efb51753ec327b9c22af89ce52266e/cabdf/assets/img/icon-comment.svg">&nbsp;4
-          </a>
+          <button class="btn btn-secondary btn-sm button-scroll" role="button" data-toggle="tooltip" data-placement="right" title="View Comments" data-controller="blogs" data-action="click->blogs#scrollToComments">
+            <img src="https://d33wubrfki0l68.cloudfront.net/5280a0d099efb51753ec327b9c22af89ce52266e/cabdf/assets/img/icon-comment.svg">&nbsp;<%= CommontatorComment.where(thread_id: CommontatorThread.where(commontable_id: @blog.id, commontable_type: "Blog").first.id).count %>
+          </button>
 
           <%= render partial: 'shared/votes/button', locals: { votable: @blog, vote: @blog.vote(current_participant) } %>
 
@@ -75,7 +75,7 @@
   </div>
 </div>
 <section class="section-p-md border-top">
-  <div class="container-fluid">
+  <div class="container-fluid blog-comments">
     <%= commontator_thread(@blog) %>
   </div>
 </section>
