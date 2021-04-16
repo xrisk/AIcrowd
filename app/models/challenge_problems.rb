@@ -9,7 +9,18 @@ class ChallengeProblems < ApplicationRecord
   validates :challenge_round_id, presence: true, allow_blank: false
   validates :problem_id, presence: true, uniqueness: { scope: :challenge_id }
 
+  after_commit :recalculate_leaderboard, on: [:update]
+
   def problem
     return Challenge.find(problem_id)
   end
+
+  def recalculate_leaderboard
+    if self.challenge_round_id.present?
+      CalculateLeaderboardJob.perform_now(challenge_round_id: self.challenge_round_id)
+    else
+      CalculateLeaderboardJob.perform_now(challenge_round_id: challenge.active_round.id)
+    end
+  end
+
 end
