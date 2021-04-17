@@ -36,9 +36,9 @@
 
           <hr>
 
-          <%= publication_social_share('facebook', request.url, @blog.title) %>
-          <%= publication_social_share('twitter', request.url,  @blog.title) %>
-          <%= publication_social_share('linkedin', request.url, @blog.title) %>
+          <%= blog_social_share('facebook', request.url, @blog.title) %>
+          <%= blog_social_share('twitter', request.url,  @blog.title) %>
+          <%= blog_social_share('linkedin', request.url, @blog.title) %>
         </div>
       </div>
       <!-- /social-options -->
@@ -52,9 +52,9 @@
             <svg width="12" height="11" xmlns="http://www.w3.org/2000/svg"><path d="M10.8746251 6.14539024L5.97691577 11.0430996 1.07920644 6.14539024C.43154568 5.50196808.03030318 4.61061457.03030318 3.62554576c0-1.96049121 1.58929212-3.54978364 3.54978364-3.54978364.92305599 0 1.76382467.35231416 2.39516959.92980603.63649437-.6044087 1.49691101-.97526512 2.44394586-.97526512 1.96049123 0 3.54978363 1.58929242 3.54978363 3.54978364 0 1.00819292-.4203017 1.91821904-1.0952455 2.56441886z" fill="#F0524D" fill-rule="evenodd"/></svg>&nbsp;36
           </button>
 
-          <%= publication_social_share('facebook', request.url, @blog.title) %>
-          <%= publication_social_share('twitter', request.url,  @blog.title) %>
-          <%= publication_social_share('linkedin', request.url, @blog.title) %>
+          <%= blog_social_share('facebook', request.url, @blog.title) %>
+          <%= blog_social_share('twitter', request.url,  @blog.title) %>
+          <%= blog_social_share('linkedin', request.url, @blog.title) %>
         </div>
         <!-- /social-options -->
 
@@ -75,8 +75,14 @@
   </div>
 </div>
 <section class="section-p-md border-top">
-  <div class="container-fluid blog-comments">
-    <%= commontator_thread(@blog) %>
+  <div class="container-fluid">
+    <div class="row justify-content-md-center">
+      <div class="col-12 col-sm-8">
+        <div class="blog-discussion">
+          <%= commontator_thread(@blog) %>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
