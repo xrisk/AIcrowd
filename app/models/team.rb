@@ -30,6 +30,8 @@ class Team < ApplicationRecord
             format: { with:    /\A[a-zA-Z0-9.\-_{}\[\]]+\z/,
                       message: 'may only contain basic letters, numbers, and any of -_.{}[]' }
 
+  after_commit :recalculate_leaderboard, on: [:create, :update]
+
   def to_param
     name
   end
@@ -60,5 +62,11 @@ class Team < ApplicationRecord
 
   def meta_challenge_submissions(challenge)
     Submission.participant_meta_challenge_submissions(challenge.id, participant_ids)
+  end
+
+  def recalculate_leaderboard
+    self.challenge.challenge_rounds.each do |challenge_round|
+      CalculateLeaderboardJob.perform_now(challenge_round_id: challenge_round.id)
+    end
   end
 end

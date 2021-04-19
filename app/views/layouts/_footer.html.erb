@@ -100,9 +100,11 @@
 		</div>
 	</div>
 </footer>
-<!-- custom footer -->
-<% if Setting.footer_record.present? %>
-	<%= footer_text %>
+<% cache_if cache_enabled?, [Setting.first] do%>
+	<!-- custom footer -->
+	<% if Setting.footer_record.present? %>
+		<%= footer_text %>
+	<% end %>
+	<!-- /custom footer -->
 <% end %>
-<!-- /custom footer -->
 <!-- /app footer -->
