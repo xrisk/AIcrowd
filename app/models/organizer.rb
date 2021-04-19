@@ -22,6 +22,8 @@ class Organizer < ApplicationRecord
             presence: true
   before_save :set_api_key
 
+  attr_accessor :coords_x, :coords_y, :coords_w, :coords_h
+
   def approved?
     approved
   end

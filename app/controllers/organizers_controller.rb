@@ -2,6 +2,7 @@ class OrganizersController < ApplicationController
   before_action :authenticate_participant!, except: [:show]
   before_action :set_organizer, only: [:show, :edit, :update, :destroy]
   after_action :verify_authorized
+  before_action :sanitize_fields_params, only: [:update]
 
   def show
     @challenges = if policy(@organizer).update?
@@ -74,6 +75,18 @@ class OrganizersController < ApplicationController
 
   private
 
+  def sanitize_fields_params
+    $coords_x = 0
+    $coords_y = 0
+    $coords_w = 0
+    $coords_h = 0
+
+    $coords_x = params[:organizer][:coords_x]
+    $coords_y = params[:organizer][:coords_y]
+    $coords_w = params[:organizer][:coords_w]
+    $coords_h = params[:organizer][:coords_h]
+  end
+
   def set_organizer
     @organizer = Organizer.friendly.find(params[:id])
     authorize @organizer
@@ -92,6 +105,10 @@ class OrganizersController < ApplicationController
           :tagline,
           :image_file,
           :clef_organizer,
+          :coords_x,
+          :coords_y,
+          :coords_w,
+          :coords_h,
           clef_tasks_attributes: [
             :id,
             :_delete,
