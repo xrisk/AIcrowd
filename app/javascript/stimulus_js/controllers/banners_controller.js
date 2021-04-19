@@ -1,3 +1,5 @@
+import { Controller } from 'stimulus';
+
 $(document).ready(function(){
   function crop_banner_image_load(data) {
     data = data.detail;
@@ -55,6 +57,5 @@ $(document).ready(function(){
     $('.banner-modal').modal('show');
     readURL(this);
   });
-
 
 });

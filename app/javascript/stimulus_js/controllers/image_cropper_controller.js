@@ -1,3 +1,4 @@
+import { Controller } from 'stimulus';
 $(document).ready(function(){
   function crop_image_load(data) {
     data = data.detail;

@@ -1,3 +1,4 @@
+import { Controller } from 'stimulus';
 $(document).ready(function(){
   function crop_banner_mobile_image_load(data) {
     data = data.detail;
@@ -52,7 +53,6 @@ $(document).ready(function(){
   });
 
   $(".crop_banner_mobile_image_file").change(function () {
-    debugger;
     $('.banner-mobile-modal').modal('show');
     readURL(this);
   });
