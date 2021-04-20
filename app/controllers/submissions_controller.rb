@@ -106,10 +106,6 @@ class SubmissionsController < ApplicationController
   end
 
   def new
-    if @challenge.min_team_participants > 1 && (@challenge.min_team_participants > get_team_participants.count)
-      redirect_to @challenge,
-                  notice: "You need a minimum of #{@challenge.min_team_participants} team members to create a submission"
-    end
     @clef_primary_run_disabled          = clef_primary_run_disabled?
     @submissions_remaining, @reset_dttm = SubmissionsRemainingQuery.new(
       challenge:      @challenge,
