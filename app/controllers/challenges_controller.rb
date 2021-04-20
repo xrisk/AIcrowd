@@ -90,25 +90,6 @@ class ChallengesController < ApplicationController
   end
 
   def edit
-    @example_leaderboards = []
-    for rank in 1..4
-      if Participant.count < 10
-        break
-      end
-      @example_leaderboards.append(
-        Leaderboard.new(
-          row_num: rank,
-          score: 9/rank,
-          score_secondary: 3/rank,
-          submitter_type: 'Participant',
-          submitter_id: Participant.all.sample(10)[rank].id,
-          participant: Participant.all.sample(10)[rank],
-          challenge_id: @challenge.id,
-          created_at: Time.new,
-          entries: 10
-        )
-      )
-    end
   end
 
   def update
