@@ -35,7 +35,11 @@ class LeaderboardsController < ApplicationController
     @challenge_rounds = @challenge.challenge_rounds.started
     @post_challenge   = post_challenge?
     @following        = following?
-    @leaderboards     = @leaderboards.includes(:challenge, :submission)
+    @leaderboards     = @leaderboards.includes(:challenge, :submission, :team)
+    @leaderboard_participants = {}
+    @leaderboards.each do |leaderboard|
+      @leaderboard_participants[leaderboard.id] = helpers.leaderboard_participants(leaderboard)
+    end
 
     unless @leaderboards.first&.disentanglement?
       @countries = @filter.call('participant_countries')
