@@ -16,7 +16,7 @@
         <%= form_for resource, as: resource_name, url: registration_path(resource_name), method: :put, html: { class: 'form-rg' }, validate: true do |f| %>
           <div class="form-group">
             <label for="currentPassword">Current password</label>
-            <%= f.text_field :current_password, autocomplete: :off,class: "form-control" %>
+            <%= f.password_field :current_password, autocomplete: :off,class: "form-control" %>
           </div>
 
           <div class="form-group">
