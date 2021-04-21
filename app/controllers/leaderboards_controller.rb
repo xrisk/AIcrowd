@@ -10,6 +10,9 @@ class LeaderboardsController < ApplicationController
 
   def index
     unless @leaderboards.first&.disentanglement?
+      preloader = ActiveRecord::Associations::Preloader.new
+      preloader.preload(@leaderboards.select { |p| p.submitter_type == 'Participant' }, :submitter)
+
       @submitter_submissions = {}
       @leaderboards.each do |leaderboard|
         next if leaderboard.submitter.blank?
@@ -35,10 +38,12 @@ class LeaderboardsController < ApplicationController
     @challenge_rounds = @challenge.challenge_rounds.started
     @post_challenge   = post_challenge?
     @following        = following?
-    @leaderboards     = @leaderboards.includes(:challenge, :submission, :team)
+    @leaderboards     = @leaderboards.includes(:challenge, :submission, :team, :participant)
     @leaderboard_participants = {}
+    @leaderboard_challenges = {}
     @leaderboards.each do |leaderboard|
       @leaderboard_participants[leaderboard.id] = helpers.leaderboard_participants(leaderboard)
+      @leaderboard_challenges[leaderboard.id] = leaderboard.challenge
     end
 
     unless @leaderboards.first&.disentanglement?

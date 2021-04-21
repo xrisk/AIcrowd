@@ -1,7 +1,7 @@
 <% (leaderboards || []).each do |leaderboard| %>
   <%
-    participants = @leaderboard_participants[leaderboard.id]
-    challenge    = leaderboard.challenge
+    participants = @leaderboard_participants[leaderboard.id] || leaderboard_participants(leaderboard)
+    challenge    = @leaderboard_challenges[leaderboard.id] || leaderboard.challenge
     truncate     = truncate.present? ? truncate : false
     sticky_class = sticky_class.present? ? sticky_class : ''
 
