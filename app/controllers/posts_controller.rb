@@ -123,6 +123,21 @@ class PostsController < InheritedResources::Base
     render json: result, status: 200
   end
 
+  def validate_notebook
+    unless File.extname(params[:post][:notebook_file].original_filename) == ".ipynb"
+      render json: {}, status: 422
+      return
+    end
+    result = Notebooks::NotebookFileService.new(params[:post][:notebook_file]).call
+
+    unless result.is_a?(Hash)
+      render json: {}, status: 422
+      return
+    end
+
+    render json: result, status: 200
+  end
+
   private
 
     def post_params

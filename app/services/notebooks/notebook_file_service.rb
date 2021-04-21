@@ -1,14 +1,14 @@
 module Notebooks
-  class NotebookService < NotebookBaseService
+  class NotebookFileService < NotebookBaseService
     include ActiveModel::Model
     include S3FilesHelper
 
-    def initialize(url)
-      @url = url
+    def initialize(notebook_file)
+      @notebook_file = notebook_file
     end
 
     def call
-      notebook_file_path = colab_handler(@url)
+      notebook_file_path = file_handler
       `jupyter nbconvert --template basic --to html #{notebook_file_path}`
       filename = File.basename(notebook_file_path)
       html_filename = filename.chomp(File.extname(filename)) + (".html")
@@ -25,5 +25,13 @@ module Notebooks
 
        return {notebook_s3_url: notebook_s3_url, notebook_html: notebook_html, gist_id: gist_id}
     end
+
+    def file_handler
+      filename = "#{SecureRandom.uuid}.ipynb"
+      notebook_file_path = Rails.root.join('public', 'uploads',filename)
+      File.open(notebook_file_path, 'wb'){ |file| file.write(@notebook_file.read)}
+      return notebook_file_path
+    end
+
   end
 end
