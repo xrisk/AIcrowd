@@ -43,7 +43,7 @@
     </div>
   </header>
   <ul class="list-group list-group-flush-px-0 list-group-achievements">
-    <% participant.badges.each do |badge| %>
+    <% participant.badges.includes(:aicrowd_badge).each do |badge| %>
       <li class="list-group-item">
         <div>
           <div class="award-image">

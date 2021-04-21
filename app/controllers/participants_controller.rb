@@ -8,9 +8,9 @@ class ParticipantsController < ApplicationController
 
   def show
     @page_title   = @participant.name
-    challenge_ids = policy_scope(ParticipantChallenge)
+    challenge_ids = policy_scope(ChallengeParticipant)
                     .where(participant_id: @participant.id)
-                    .pluck('participant_challenges.challenge_id')
+                    .pluck(:challenge_id)
 
     @challenges = if policy(@participant).edit?
                     Challenge.where(id: challenge_ids)
