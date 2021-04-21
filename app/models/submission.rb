@@ -69,7 +69,7 @@ class Submission < ApplicationRecord
     end
   end
 
-  after_commit :render_notebook_from_submission, on: :create
+  after_commit :render_notebook_from_submission, on: [:create, :update]
 
   #TODO: Disabled badge awards
   #after_save :give_awarding_point
