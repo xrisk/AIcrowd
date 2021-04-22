@@ -35,6 +35,7 @@ class Submission < ApplicationRecord
   scope :group_by_created_at, -> { group_by_day(:created_at).count }
   scope :participant_challenge_submissions, ->(challenge_id, p_ids) { where(challenge_id: challenge_id, participant_id: p_ids) }
   scope :participant_meta_challenge_submissions, ->(meta_challenge_id, p_ids) { where(meta_challenge_id: meta_challenge_id, participant_id: p_ids) }
+  after_create :invalidate_cache
 
   after_create do
     if challenge_round_id.blank?
@@ -169,6 +170,12 @@ class Submission < ApplicationRecord
     if self.meta.present? && self.meta["private_generate_notebook_section"].present?
       NotebookRenderingJob.perform_later(self.id)
     end
+  end
+
+  def invalidate_cache
+    Rails.cache.delete("submitter-submissions-#{self.challenge.id}-#{self.participant_id}-Participant")
+    team = participant.teams.where(challenge_id: @challenge.id)&.first
+    Rails.cache.delete("submitter-submissions-#{self.challenge.id}-#{team.id}-Team") if team.present?
   end
 
   class ChallengeRoundIDMissing < StandardError

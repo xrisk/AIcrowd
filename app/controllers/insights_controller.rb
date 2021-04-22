@@ -61,7 +61,12 @@ class InsightsController < ApplicationController
   end
 
   def get_country_wise_data
-    Rails.cache.fetch("country_wise_challenge_data_#{@challenge.id}_#{@challenge.updated_at}") do
+    if @meta_challenge.present?
+      participant_count = @meta_challenge.challenge_participants.count
+    else
+      participant_count = @challenge.challenge_participants.count
+    end
+    Rails.cache.fetch("country_wise_challenge_data_#{@challenge.id}_#{participant_count}") do
       country_data = {}
       @challenge.participants.each do |participant|
         if participant.country_cd == "RU"

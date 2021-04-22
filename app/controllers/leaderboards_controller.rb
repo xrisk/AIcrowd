@@ -12,12 +12,13 @@ class LeaderboardsController < ApplicationController
     unless @leaderboards.first&.disentanglement?
       preloader = ActiveRecord::Associations::Preloader.new
       preloader.preload(@leaderboards.select { |p| p.submitter_type == 'Participant' }, :submitter)
+      preloader.preload(@leaderboards.select { |p| p.submitter_type == 'Team' }, :submitter)
 
       @submitter_submissions = {}
       @leaderboards.each do |leaderboard|
-        next if leaderboard.submitter.blank?
+        next if leaderboard.submitter_id.blank?
 
-        @submitter_submissions.merge!("submitter#{leaderboard.submitter.id}_submissions_by_day": submitter_submissions(leaderboard.submitter).group_by_created_at)
+        @submitter_submissions.merge!("submitter#{leaderboard.submitter.id}_submissions_by_day": submitter_submissions(leaderboard.submitter))
       end
     end
     @top_three_winners = @leaderboards.where(baseline: false).first(3)
@@ -43,7 +44,6 @@ class LeaderboardsController < ApplicationController
     @leaderboard_challenges = {}
     @leaderboards.each do |leaderboard|
       @leaderboard_participants[leaderboard.id] = helpers.leaderboard_participants(leaderboard)
-      @leaderboard_challenges[leaderboard.id] = leaderboard.challenge
     end
 
     unless @leaderboards.first&.disentanglement?
@@ -227,7 +227,10 @@ class LeaderboardsController < ApplicationController
   end
 
   def submitter_submissions(submitter)
-    @challenge.meta_challenge? ? submitter.meta_challenge_submissions(@challenge) : submitter.challenge_submissions(@challenge)
+    Rails.cache.fetch("submitter-submissions-#{@challenge.id}-#{submitter.id}-#{submitter.class}") do
+      submissions = @challenge.meta_challenge? ? submitter.meta_challenge_submissions(@challenge) : submitter.challenge_submissions(@challenge)
+      submissions.group_by_created_at
+    end
   end
 
   def freeze_record_for_organizer
