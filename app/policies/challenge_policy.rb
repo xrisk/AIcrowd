@@ -161,7 +161,7 @@ class ChallengePolicy < ApplicationPolicy
   end
 
   def get_team_participants_count
-    team = participant.teams.where(challenge_id: @record.id).first
+    team = participant.teams.where(challenge_id: @record.id)&.first
     participants = team.team_participants.map(&:participant) if team.present?
     participants = [participant] if participants.blank?
     return participants.count

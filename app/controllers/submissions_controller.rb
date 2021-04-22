@@ -529,7 +529,7 @@ class SubmissionsController < ApplicationController
   end
 
   def get_team_participants(participant=current_participant, model=false)
-    team = participant.teams.where(challenge_id: @challenge.id).first
+    team = participant.teams.where(challenge_id: @challenge.id)&.first
     participants = team.team_participants.map(&:participant) if team.present?
     participants = [participant] if participants.blank?
     if !model
