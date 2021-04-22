@@ -14,6 +14,9 @@ class MembersController < ApplicationController
 
   def create
     participant           = Participant.find_by("lower(email) = ?", strong_params[:email].to_s.downcase)
+    if participant.blank?
+      participant = Participant.find_by("name = ?", strong_params[:email])
+    end
     participant_organizer = ParticipantOrganizer.new(participant: participant, organizer: @organizer)
 
     if participant_organizer.save

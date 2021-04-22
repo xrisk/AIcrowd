@@ -4,8 +4,8 @@
       <div class="col-12">
         <%= form_for :member, url: organizer_members_path, method: :post, html: { class: "form-rg" } do |f| %>
           <div class="form-group">
-            <%= f.label :email, 'Email address' %>
-            <%= f.text_field :email, placeholder: 'Email address', class: 'form-control', 'aria-describedby': 'emailHelp' %>
+            <%= f.label :email, 'Email/Username' %>
+            <%= f.text_field :email, placeholder: 'Email/Username', class: 'form-control', 'aria-describedby': 'emailHelp' %>
             <small id="emailHelp" class="form-text text-muted">Must already have an AIcrowd account</small>
           </div>
           <div class="btn-set">
