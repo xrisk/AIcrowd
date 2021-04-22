@@ -61,20 +61,26 @@ class InsightsController < ApplicationController
   end
 
   def get_country_wise_data
-    country_data = {}
-    @challenge.participants.each do |participant|
-      if participant.country_cd == "RU"
-        country               = ISO3166::Country[participant.country_cd].unofficial_names.first
-      else
-        country               = ISO3166::Country[participant.country_cd]&.name
-      end
-      country               ||= participant.visits.where.not(country: nil).last&.country
-
-      country_data[country] ||= []
-      country_data[country] << participant
+    if @meta_challenge.present?
+      participant_count = @meta_challenge.challenge_participants.count
+    else
+      participant_count = @challenge.challenge_participants.count
     end
+    Rails.cache.fetch("country_wise_challenge_data_#{@challenge.id}_#{participant_count}") do
+      country_data = {}
+      @challenge.participants.each do |participant|
+        if participant.country_cd == "RU"
+          country               = ISO3166::Country[participant.country_cd].unofficial_names.first
+        else
+          country               = ISO3166::Country[participant.country_cd]&.name
+        end
+        country               ||= participant.visits.where.not(country: nil).last&.country
 
-    return country_data
+        country_data[country] ||= []
+        country_data[country] << participant
+      end
+      country_data
+    end
   end
 
   private
