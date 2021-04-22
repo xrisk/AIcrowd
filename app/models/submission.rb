@@ -174,7 +174,7 @@ class Submission < ApplicationRecord
 
   def invalidate_cache
     Rails.cache.delete("submitter-submissions-#{self.challenge.id}-#{self.participant_id}-Participant")
-    team = participant.teams.where(challenge_id: @challenge.id)&.first
+    team = participant.teams.where(challenge_id: self.challenge.id)&.first
     Rails.cache.delete("submitter-submissions-#{self.challenge.id}-#{team.id}-Team") if team.present?
   end
 

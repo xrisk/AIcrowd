@@ -35,7 +35,8 @@ class ChallengeParticipantPolicy < ChallengePolicy
         elsif participant
           scope.where("challenge_id IN #{participant_sql(email: participant.email)}")
         else
-          scope.where("status_cd IN ('running','completed','starting_soon') AND participant_challenges.private_challenge IS FALSE")
+          scope.where("challenge_id IN (select challenges.id from challenges where
+        challenges.status_cd IN ('running','completed','starting_soon') AND challenges.private_challenge IS FALSE)")
         end
       end
     end
