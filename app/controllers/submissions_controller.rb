@@ -126,6 +126,7 @@ class SubmissionsController < ApplicationController
     @submission.challenge = @challenge
     authorize @submission
 
+    validate_min_members
     validate_submission_file_presence
     if @submission.errors.none? && @submission.save
       SubmissionGraderJob.perform_later(@submission.id)
@@ -463,6 +464,10 @@ class SubmissionsController < ApplicationController
     @submission.errors.add(:base, 'Submission file is required.') if @form_type == :artifact && @submission.submission_files.none?
   end
 
+  def validate_min_members
+    @submission.errors.add(:base, 'Minimum team members requirement not fulfilled') if (@challenge.min_team_participants > 1 && (@challenge.min_team_participants > get_team_participants.count))
+  end
+
   def redirect_or_json(redirect_path, message, status, notice=nil, data=nil)
     if is_api_request?
       if data.present?
@@ -524,7 +529,7 @@ class SubmissionsController < ApplicationController
   end
 
   def get_team_participants(participant=current_participant, model=false)
-    team = participant.teams.where(challenge_id: @challenge.id).first
+    team = participant.teams.where(challenge_id: @challenge.id)&.first
     participants = team.team_participants.map(&:participant) if team.present?
     participants = [participant] if participants.blank?
     if !model

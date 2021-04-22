@@ -1,8 +1,13 @@
 <% members = @team.team_participants.includes(:participant) %>
 <% if members.length == 1 && members.first.participant_id == current_participant&.id %>
-  <div class="mb-5">
+  <div class="mb-3">
     <%= t('.team_members_length_1_warning') %>
   </div>
+  <% if @team.challenge.min_team_participants > 1 %>
+    <div class="mb-3">
+      <%= t('.min_team_member_notification', count: @team.challenge.min_team_participants) %>
+    </div>
+  <% end %>
 <% end %>
 <div class="row">
   <div class="col-12">

@@ -360,6 +360,7 @@ class ChallengesController < ApplicationController
       :teams_allowed,
       :hidden_challenge,
       :max_team_participants,
+      :min_team_participants,
       :team_freeze_time,
       :status,
       :featured_sequence,
