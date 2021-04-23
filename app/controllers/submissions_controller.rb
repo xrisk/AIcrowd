@@ -14,6 +14,7 @@ class SubmissionsController < ApplicationController
   before_action :handle_code_based_submissions, only: [:create]
   before_action :handle_artifact_based_submissions, only: [:create]
   before_action :set_admin_variable, only: [:show]
+  before_action :check_restricted_ip, only: [:new, :create]
 
   layout :set_layout
   respond_to :html, :js
@@ -548,5 +549,13 @@ class SubmissionsController < ApplicationController
 
   def set_admin_variable
     @is_organiser_or_author = (current_participant.present? && (policy(@challenge).edit? || helpers.submission_team?(@submission, current_participant)))
+  end
+
+  def check_restricted_ip
+    if @challenge.restricted_ip.present?
+      unless @challenge.restricted_ip.split(",").include?(request.remote_ip)
+        redirect_or_json(helpers.challenge_submissions_path(@challenge), "You are not authorised to make submission from current IP address.", :forbidden)
+      end
+    end
   end
 end
