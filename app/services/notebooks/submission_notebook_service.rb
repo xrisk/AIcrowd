@@ -1,5 +1,5 @@
 module Notebooks
-  class SubmissionNotebookService < BaseService
+  class SubmissionNotebookService < NotebookBaseService
     include ActiveModel::Model
     include S3FilesHelper
 
