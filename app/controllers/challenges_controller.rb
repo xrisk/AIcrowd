@@ -380,6 +380,7 @@ class ChallengesController < ApplicationController
       :big_challenge_card_image,
       :practice_flag,
       :ml_challenge,
+      :restricted_ip,
       :registration_form_fields,
       :submission_window_type_cd,
       :submission_lock_enabled,

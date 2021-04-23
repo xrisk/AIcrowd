@@ -26,6 +26,12 @@
     </div>
   <% end %>
 
+  <h4 class="mt-5">Restricted IP's</h4>
+  <div class="form-group">
+    <span class="label-text">IP's (comma seperated)</span>
+    <%= f.text_field :restricted_ip, class: "form-control" %>
+  </div>
+
   <h4 class="mt-5">Registration Form</h4>
   <div class="form-group">
     <span class="label-text">Field names (comma seperated)</span>
