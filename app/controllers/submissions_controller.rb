@@ -14,7 +14,7 @@ class SubmissionsController < ApplicationController
   before_action :handle_code_based_submissions, only: [:create]
   before_action :handle_artifact_based_submissions, only: [:create]
   before_action :set_admin_variable, only: [:show]
-  before_action :check_restricted_ip, only: [:new, :create]
+  before_action :check_restricted_ip, only: [:create]
 
   layout :set_layout
   respond_to :html, :js
@@ -554,7 +554,7 @@ class SubmissionsController < ApplicationController
   def check_restricted_ip
     if @challenge.restricted_ip.present?
       unless @challenge.restricted_ip.split(",").include?(request.remote_ip)
-        redirect_or_json(helpers.challenge_submissions_path(@challenge), "You are not authorised to make submission from current IP address.", :forbidden)
+        redirect_or_json(helpers.challenge_submissions_path(@challenge), "You are not authorised to make submission from current IP address.", :forbidden, "You are not authorised to make submission from current IP address.")
       end
     end
   end
