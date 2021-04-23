@@ -554,7 +554,7 @@ class SubmissionsController < ApplicationController
   def check_restricted_ip
     if @challenge.restricted_ip.present?
       unless @challenge.restricted_ip.split(",").include?(request.remote_ip)
-        redirect_or_json(helpers.challenge_submissions_path(@challenge), "You're not authorized to perform this action.", :forbidden)
+        redirect_or_json(helpers.challenge_submissions_path(@challenge), "You are not authorised to make submission from current IP address.", :forbidden)
       end
     end
   end
