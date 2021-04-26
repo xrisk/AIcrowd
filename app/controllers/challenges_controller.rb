@@ -90,25 +90,6 @@ class ChallengesController < ApplicationController
   end
 
   def edit
-    @example_leaderboards = []
-    for rank in 1..4
-      if Participant.count < 10
-        break
-      end
-      @example_leaderboards.append(
-        Leaderboard.new(
-          row_num: rank,
-          score: 9/rank,
-          score_secondary: 3/rank,
-          submitter_type: 'Participant',
-          submitter_id: Participant.all.sample(10)[rank].id,
-          participant: Participant.all.sample(10)[rank],
-          challenge_id: @challenge.id,
-          created_at: Time.new,
-          entries: 10
-        )
-      )
-    end
   end
 
   def update
@@ -360,6 +341,7 @@ class ChallengesController < ApplicationController
       :teams_allowed,
       :hidden_challenge,
       :max_team_participants,
+      :min_team_participants,
       :team_freeze_time,
       :status,
       :featured_sequence,
@@ -398,6 +380,7 @@ class ChallengesController < ApplicationController
       :big_challenge_card_image,
       :practice_flag,
       :ml_challenge,
+      :restricted_ip,
       :registration_form_fields,
       :submission_window_type_cd,
       :submission_lock_enabled,

@@ -3,6 +3,7 @@ class BlogsController < ApplicationController
                 except: [:show, :index]
   before_action :set_blog, only: :show
   before_action :set_vote, only: :show
+  before_action :set_follow, only: [:show]
 
   def index
     @blogs = policy_scope(Blog)
@@ -13,6 +14,7 @@ class BlogsController < ApplicationController
 
   def show
     @blog.record_page_view unless params[:version] # don't record page views on history pages
+    commontator_thread_show(@blog)
   end
 
   private
@@ -26,6 +28,10 @@ class BlogsController < ApplicationController
 
   def set_vote
     @vote = @blog.votes.where(participant_id: current_participant.id).first if current_participant.present?
+  end
+
+  def set_follow
+    @follow = @blog.participant.follows.where(participant_id: current_participant.id).first if current_participant.present?
   end
 
   def blog_params

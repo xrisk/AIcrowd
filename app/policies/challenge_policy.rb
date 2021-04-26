@@ -126,6 +126,7 @@ class ChallengePolicy < ApplicationPolicy
 
   def submissions_allowed?
     return false unless @record.online_submissions
+    return false if @record.min_team_participants > 1 && (@record.min_team_participants > get_team_participants_count)
     return true if edit?
     return false if @record.starting_soon? || @record.draft?
 
@@ -157,6 +158,13 @@ class ChallengePolicy < ApplicationPolicy
     else
       return false
     end
+  end
+
+  def get_team_participants_count
+    team = participant.teams.where(challenge_id: @record.id)&.first
+    participants = team.team_participants.map(&:participant) if team.present?
+    participants = [participant] if participants.blank?
+    return participants.count
   end
 
   def create_team?(out_issues_hash = nil)

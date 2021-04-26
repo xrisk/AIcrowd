@@ -14,6 +14,7 @@ class SubmissionsController < ApplicationController
   before_action :handle_code_based_submissions, only: [:create]
   before_action :handle_artifact_based_submissions, only: [:create]
   before_action :set_admin_variable, only: [:show]
+  before_action :check_restricted_ip, only: [:create]
 
   layout :set_layout
   respond_to :html, :js
@@ -126,6 +127,7 @@ class SubmissionsController < ApplicationController
     @submission.challenge = @challenge
     authorize @submission
 
+    validate_min_members
     validate_submission_file_presence
     if @submission.errors.none? && @submission.save
       SubmissionGraderJob.perform_later(@submission.id)
@@ -463,6 +465,10 @@ class SubmissionsController < ApplicationController
     @submission.errors.add(:base, 'Submission file is required.') if @form_type == :artifact && @submission.submission_files.none?
   end
 
+  def validate_min_members
+    @submission.errors.add(:base, 'Minimum team members requirement not fulfilled') if (@challenge.min_team_participants > 1 && (@challenge.min_team_participants > get_team_participants.count))
+  end
+
   def redirect_or_json(redirect_path, message, status, notice=nil, data=nil)
     if is_api_request?
       if data.present?
@@ -524,7 +530,7 @@ class SubmissionsController < ApplicationController
   end
 
   def get_team_participants(participant=current_participant, model=false)
-    team = participant.teams.where(challenge_id: @challenge.id).first
+    team = participant.teams.where(challenge_id: @challenge.id)&.first
     participants = team.team_participants.map(&:participant) if team.present?
     participants = [participant] if participants.blank?
     if !model
@@ -543,5 +549,13 @@ class SubmissionsController < ApplicationController
 
   def set_admin_variable
     @is_organiser_or_author = (current_participant.present? && (policy(@challenge).edit? || helpers.submission_team?(@submission, current_participant)))
+  end
+
+  def check_restricted_ip
+    if @challenge.restricted_ip.present?
+      unless @challenge.restricted_ip.split(",").include?(request.remote_ip)
+        redirect_or_json(helpers.challenge_submissions_path(@challenge), "You are not authorised to make submission from current IP address.", :forbidden, "You are not authorised to make submission from current IP address.")
+      end
+    end
   end
 end

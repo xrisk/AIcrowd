@@ -74,7 +74,7 @@ class Participant < ApplicationRecord
   has_many :participant_challenge_counts,
            class_name: 'ParticipantChallengeCount'
   has_many :challenges,
-           through: :participant_challenges
+           through: :challenge_participants
   has_many :dataset_file_downloads,
            dependent: :destroy
   has_many :task_dataset_file_downloads,
