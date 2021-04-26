@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_23_160025) do
+ActiveRecord::Schema.define(version: 2021_04_26_105327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -208,6 +208,13 @@ ActiveRecord::Schema.define(version: 2021_04_23_160025) do
     t.datetime "updated_at"
     t.integer "submission_id"
     t.boolean "post_challenge"
+  end
+
+  create_table "baselines", force: :cascade do |t|
+    t.integer "challenge_id", null: false
+    t.text "git_url", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "blazer_audits", force: :cascade do |t|

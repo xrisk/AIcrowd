@@ -71,6 +71,7 @@ class Challenge < ApplicationRecord
   has_many :posts
   has_many :locked_submissions
   has_one :challenge_property
+  has_one :baseline
   has_paper_trail
 
   as_enum :status,
