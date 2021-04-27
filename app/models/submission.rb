@@ -167,7 +167,8 @@ class Submission < ApplicationRecord
 
   def render_notebook_from_submission
     return if Post.where(submission_id: self.id, private: true, title: "Solution for submission #{self.id}").exists?
-    if self.meta.present? && self.meta["private_generate_notebook_section"].present?
+    if self.meta.present? && self.meta["private_generate_notebook_section"].present? && self.meta["private_notebook_job_started"].nil?
+      self.meta["private_notebook_job_started"] = true
       NotebookRenderingJob.perform_later(self.id)
     end
   end
