@@ -14,6 +14,8 @@ class Post < ApplicationRecord
   acts_as_commontable
   attr_accessor :notebook_file_path, :notebook_file, :category_names
 
+  validate :submission_notebooks
+
   default_scope { order('created_at DESC') }
   scope :is_public, -> { where(private: false) }
 
@@ -45,5 +47,12 @@ class Post < ApplicationRecord
 
   def should_generate_new_friendly_id?
     title_changed? || super
+  end
+
+  def submission_notebooks
+    if (self.submission_id.present? && self.private == true && self.title == "Solution for submission #{self.submission_id}")
+      return false if Post.where(submission_id: self.submission_id, private: true, title: "Solution for submission #{self.submission_id}").exists?
+    end
+    return true
   end
 end
