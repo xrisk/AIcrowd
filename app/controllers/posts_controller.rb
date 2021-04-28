@@ -32,7 +32,7 @@ class PostsController < InheritedResources::Base
   end
 
   def index
-    @post = Post.all.limit(30).includes(:participant, :challenge)
+    @post = Post.all.where(private: false).limit(30).includes(:participant, :challenge)
   end
 
   def show
