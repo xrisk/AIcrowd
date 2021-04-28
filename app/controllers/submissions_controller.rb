@@ -99,7 +99,7 @@ class SubmissionsController < ApplicationController
       @execute_in_colab_url = @submission.notebook.execute_in_colab_url
     end
 
-    @post = Post.where(submission_id: @submission.id).last
+    @post = Post.where(submission_id: @submission.id)
     @authors = get_team_participants(participant=@submission.participant, model=true)
     setup_tabs
 
