@@ -6,29 +6,28 @@
         <h4><a href="<%= challenge_path(@post.challenge) %>"><%= @post.challenge.challenge %></a></h4>
         <h1><%= @post.title %></h1>
         <p class="masthead-subtitle"><%= @post.tagline %></p>
+      <!-- /title -->
+        <div class="masthead-details">
+          <div class="d-flex align-items-center flex-wrap">
+            <span class="author">
+              <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant, username: 'false' } %>
+              <span>By&nbsp;</span>
+              <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant, avatar: 'false'} %>
+            </span>
+
+            <div class="btn-set ml-2 mt-3" aria-hidden="true">
+              <%= render partial: 'shared/votes/button', locals: { votable: @post, vote: @post.vote(current_participant) } %>
+              <% if !@execute_in_colab_url.nil? %><button type="button" class="btn btn-sm btn-secondary"><a href='<%= @execute_in_colab_url %>' target="_blank" class="text-secondary"><span class="fa fa-cogs mr-1"></span>Open in Colab</a></button><% end %>
+              <% if current_participant.present? && (current_participant.admin? || (@post.participant_id == current_participant.id)) %>
+                <%= button_to 'Edit', edit_post_path(@post), class: "btn btn-secondary btn-sm float-right", method: :get %>
+                <%= button_to 'Delete', post_path(@post), class: "btn btn-secondary btn-sm float-right", method: :delete, data: { confirm: "You are about to delete your contribution. Are you sure?" } %>
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <!-- /title -->
-
-    <div class="row">
-      <div class="col-12 d-flex align-items-center flex-wrap">
-        <div class="author">
-          <span class="mr-2">By</span>
-          <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant } %>
-        </div>
-
-        <div class="btn-set" aria-hidden="true">
-          <%= render partial: 'shared/votes/button', locals: { votable: @post, vote: @post.vote(current_participant) } %>
-          <% if !@execute_in_colab_url.nil? %><button type="button" class="btn btn-sm btn-secondary"><a href='<%= @execute_in_colab_url %>' target="_blank" class="text-secondary"><span class="fa fa-cogs mr-1"></span>Open in Colab</a></button><% end %>
-          <% if current_participant.present? && (current_participant.admin? || (@post.participant_id == current_participant.id)) %>
-            <%= button_to 'Edit', edit_post_path(@post), class: "btn btn-secondary btn-sm float-right", method: :get %>
-            <%= button_to 'Delete', post_path(@post), class: "btn btn-secondary btn-sm float-right", method: :delete, data: { confirm: "You are about to delete your contribution. Are you sure?" } %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <!-- /author/options -->
-
+      <!-- /author/options -->
   </div>
 </div>
 
@@ -95,7 +94,13 @@
   </div>
   <hr/>
   <div class="container-fluid">
-    <%= commontator_thread(@post) %>
+    <div class="row justify-content-md-center">
+      <div class="col-12 col-sm-8">
+        <div class="blog-discussion">
+          <%= commontator_thread(@post) %>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 <!-- /section -->
