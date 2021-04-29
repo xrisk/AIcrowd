@@ -213,6 +213,7 @@ ActiveRecord::Schema.define(version: 2021_04_26_105327) do
   create_table "baselines", force: :cascade do |t|
     t.integer "challenge_id", null: false
     t.text "git_url", null: false
+    t.boolean "default", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

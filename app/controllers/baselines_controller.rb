@@ -3,9 +3,9 @@ class BaselinesController < ApplicationController
 
   def index
     challenge_id = params[:challenge_id]
-    baseline = Baseline.where(challenge_id: challenge_id).first
-    if baseline.present?
-      render json: {baseline: baseline}, status: :ok
+    baselines = Baseline.where(challenge_id: challenge_id)
+    if baselines.present?
+      render json: {baselines: baselines}, status: :ok
     else
       render json: {}, status: :not_found
     end
