@@ -46,12 +46,6 @@
                   <a class="nav-link nav-link-01<%= ' active' if active_tab == 'summary' %>" data-toggle='tab' href="#tab-summary" onclick="return false;">Summary</a>
                 </li>
 
-                <% if @show_status_tab %>
-                  <li class="nav-item" data-controller="mermaid" data-action="click->mermaid#render">
-                    <a class="nav-link nav-link-02<%= ' active' if active_tab == 'status' %>" data-toggle='tab' href="#tab-status" onclick="return false;" data-controller="mermaid" data-action="click->mermaid#render">Evaluation Status&nbsp;<i class="fa fa-lock" aria-hidden="true" data-toggle="tooltip" title="Visible only to you and organizers"></i></a>
-                  </li>
-                <% end%>
-
                 <% if @show_file_tab %>
                   <li class="nav-item">
                     <a class="nav-link nav-link-03<%= ' active' if active_tab == 'files' %>" data-toggle='tab' href="#tab-files" onclick="return false;">Submission Files&nbsp;<i class="fa fa-lock" aria-hidden="true" data-toggle="tooltip" title="Visible only to you and organizers"></i></a>
@@ -72,10 +66,6 @@
           <div class="tab-content" style="margin-top: 20px;">
             <div id="tab-summary" class="tab-pane fade<%= ' show active' if active_tab == 'summary' %>">
               <%= render partial: 'submissions/tabs/summary', locals: { description_markdown: @description_markdown, challenge: @challenge, submission: @submission } %>
-            </div>
-
-            <div id="tab-status" class="tab-pane fade<%= ' show active' if active_tab == 'status' %>">
-              <%= render partial: 'submissions/tabs/evaluation_status', locals: { description_markdown: @description_markdown, challenge: @challenge, submission: @submission, is_organiser_or_author: @is_organiser_or_author } %>
             </div>
 
             <div id="tab-files" class="tab-pane fade<%= ' show active' if active_tab == 'files' %>">
