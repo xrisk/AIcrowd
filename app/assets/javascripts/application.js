@@ -4,6 +4,7 @@
 //= require rails-ujs
 //= require jquery-ui
 //= require jquery.remotipart
+//= require popper
 //= require bootstrap
 //= require cocoon
 //= require isInViewport
