@@ -15,7 +15,7 @@ class SubmissionsController < ApplicationController
   before_action :handle_artifact_based_submissions, only: [:create]
   before_action :set_admin_variable, only: [:show]
   before_action :check_restricted_ip, only: [:create]
-  before_action :validate_min_submissions, only: [:create]
+  # before_action :validate_min_submissions, only: [:create]
 
   layout :set_layout
   respond_to :html, :js
