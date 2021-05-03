@@ -8,9 +8,9 @@
   <div class="mr-4">
     <h4><%= @submission.challenge_round.default_leaderboard&.score_title.presence || "Score" %></h4>
     <% if @submission.challenge_round.default_leaderboard.dynamic_score_field.present? %>
-      <td><%= submission_formatted_value(submission, @submission["meta"][@submission.challenge_round.default_leaderboard.dynamic_score_field].presence || nil) %></td>
+      <span><%= submission_formatted_value(submission, @submission["meta"][@submission.challenge_round.default_leaderboard.dynamic_score_field].presence || nil) %></span>
     <% else %>
-      <td><%= submission_formatted_value(@submission, @submission.score_display) %></td>
+      <span><%= submission_formatted_value(@submission, @submission.score_display) %></span>
     <% end %>
   </div>
 
