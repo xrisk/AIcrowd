@@ -7,7 +7,11 @@
 <div class="d-flex">
   <div class="mr-4">
     <h4><%= @submission.challenge_round.default_leaderboard&.score_title.presence || "Score" %></h4>
-    <span><%= submission_formatted_value(@submission, @submission.score_display) %></span>
+    <% if @submission.challenge_round.default_leaderboard.dynamic_score_field.present? %>
+      <span><%= submission_formatted_value(submission, @submission["meta"][@submission.challenge_round.default_leaderboard.dynamic_score_field].presence || nil) %></span>
+    <% else %>
+      <span><%= submission_formatted_value(@submission, @submission.score_display) %></span>
+    <% end %>
   </div>
 
   <% if !(@submission.challenge_round.default_leaderboard&.secondary_sort_order.present? && @submission.challenge_round.default_leaderboard&.secondary_sort_order == :hidden) %>
