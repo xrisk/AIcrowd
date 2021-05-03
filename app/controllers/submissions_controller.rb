@@ -552,7 +552,6 @@ class SubmissionsController < ApplicationController
     is_owner_or_organizer = current_participant.present? && (policy(@challenge).edit? || helpers.submission_team?(@submission, current_participant))
     @show_file_tab = (@submission.notebook.present? || (@submission.submission_files.present? && (@challenge.submissions_downloadable))) && is_owner_or_organizer
     @show_notebook_tab = @post.is_public.count > 0 ||  is_owner_or_organizer
-    @show_status_tab = @description_markdown.present? && is_owner_or_organizer
   end
 
   def set_admin_variable

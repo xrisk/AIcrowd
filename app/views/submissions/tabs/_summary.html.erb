@@ -1,4 +1,15 @@
-<% cache_if cache_enabled?, [@submission, @submission.challenge_round.default_leaderboard, !(current_participant.present? && (policy(challenge).edit?))] do %>
+<% cache_if cache_enabled?, [@submission, @submission.challenge_round.default_leaderboard, @is_organiser_or_author] do %>
+<% if @description_markdown.present? && @is_organiser_or_author %>
+  <div class="row">
+    <div class="col-md-6" data-controller="submission-mermaid">
+      <div class="md-content w-100">
+        <%= description_markdown %>
+      </div>
+    </div>
+  </div>
+  <hr/>
+<% end %>
+
 <% if submission_view_description(submission) %>
   <div class="mb-5">
     <p><%= @submission.description %></p>
@@ -21,18 +32,18 @@
   </div>
   <% end %>
 
-  <div class="mr-4 p-normal-font">
+  <% if submission_code_link(@submission).present? %>
+    <div class="mr-4">
+      <h4>Codebase</h4>
+      <%= link_to "View here", submission_code_link(@submission), target: "_blank" %>
+    </div>
+  <% end %>
+
+</div><br>
+<div class="mr-4 p-normal-font">
     <h4>Message</h4>
     <span data-controller="linkify-content"><%= @submission.grading_message.to_s.html_safe %></span>
   </div>
-
-</div><br>
-<% if submission_code_link(@submission).present? %>
-  <div class="mr-4">
-    <h4>Codebase</h4>
-    <%= link_to "View here", submission_code_link(@submission), target: "_blank" %>
-  </div>
-<% end %>
 <hr/>
 <div class="row">
 <div class="col-sm-12 col-md-6">
