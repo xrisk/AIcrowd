@@ -4,7 +4,7 @@
   <div class="topic-comment">
     <%= render partial: 'participants/get_user_profile', locals: { participant: participant, username: 'false' } %>
     <div class="discussion-topic-body">
-      <h3><%= link_to discourse_post['topic_title'], discourse_topic_url(discourse_post['topic_slug']) %></h3>
+      <h3><%= link_to discourse_post['topic_title'], discourse_topic_url(discourse_post['topic_slug'], discourse_post['topic_id']) %></h3>
       <span class="discussion-details"><%= discourse_time_ago(discourse_post['created_at']) %></span>
 
       <p><%= sanitize_html(discourse_post['cooked']) %></p>

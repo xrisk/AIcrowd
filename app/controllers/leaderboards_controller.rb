@@ -127,7 +127,7 @@ class LeaderboardsController < ApplicationController
     else
       @challenge.active_round
     end
-    raise ActionController::RoutingError, 'Could not found current round for the challenge' if @current_round.blank?
+    redirect_to @challenge, notice: "Round hasn't started for this challenge" if @current_round.blank?
   end
 
   def set_current_leaderboard
