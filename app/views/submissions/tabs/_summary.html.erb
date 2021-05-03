@@ -1,15 +1,12 @@
 <% cache_if cache_enabled?, [@submission, @submission.challenge_round.default_leaderboard, @is_organiser_or_author] do %>
-<div class="row">
-  <div class="col-md-6" data-controller="submission-mermaid">
-    <% if @description_markdown.present? && @is_organiser_or_author %>
+<% if @description_markdown.present? && @is_organiser_or_author %>
+  <div class="row">
+    <div class="col-md-6" data-controller="submission-mermaid">
       <div class="md-content w-100">
         <%= description_markdown %>
       </div>
-    <% end %>
+    </div>
   </div>
-</div>
-
-<% if @description_markdown.present? && @is_organiser_or_author %>
   <hr/>
 <% end %>
 
