@@ -15,7 +15,7 @@ module Api
       private
 
       def feedback_params
-        params.permit(:message).merge(participant: current_participant)
+        params.permit(:message).merge(participant: current_participant, referred_page: request.env["HTTP_REFERER"])
       end
     end
   end

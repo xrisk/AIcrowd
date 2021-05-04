@@ -1,1 +1,4 @@
 <%= sanitize_html(@feedback.message) %>
+<p>
+  <%= "\nSent from page: #{sanitize_html(@feedback.referred_page)}" %>
+</p>
