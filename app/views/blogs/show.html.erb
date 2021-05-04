@@ -1,55 +1,93 @@
 <!-- masthead – blog post -->
-<div class="masthead masthead-blog-post">
-  <div class="container-fluid">
+<main>
+  <div class="masthead masthead-blog-post">
+    <div class="container-fluid">
 
-    <!-- title -->
-    <div class="row">
-      <div class="col-12">
-        <h1><%= @blog.title %></h1>
-        <p><%= local_time(@blog.posted_at, "%-d %B %Y") %></p>
-      </div>
-    </div>
-    <!-- /title -->
+      <div class="row">
+        <div class="col-12">
+          <h1><%= @blog.title %></h1>
 
-    <!-- author/options -->
-    <div class="row">
-      <div class="col-12 d-flex align-items-center flex-wrap">
-        <div class="author">
-          <span class="mr-2">By</span>
-          <%= render partial: 'participants/get_user_profile', locals: { participant: @blog.participant } %>
-        </div>
+          <div class="masthead-details">
+            <span class="author">
+              <%= render partial: 'participants/get_user_profile', locals: { participant: @blog.participant, username: 'false' } %>
+              <span>By&nbsp;</span>
+              <%= render partial: 'participants/get_user_profile', locals: { participant: @blog.participant, avatar: 'false' } %>
+            </span>
 
-        <div class="btn-set" aria-hidden="true">
-          <%= render partial: 'shared/votes/button', locals: { votable: @blog, vote: @vote } %>
+            <span class="masthead-date"><%= local_time(@blog.posted_at, "%-d %B %Y") %></span>
+          </div>
         </div>
       </div>
     </div>
-    <!-- /author/options -->
-
   </div>
-</div>
-<!-- /masthead – blog post -->
+</main>
+  <!-- /masthead – blog post -->
 
-<!-- section -->
 <div class="section-p-md">
   <div class="container-fluid">
     <div class="row">
 
-      <!-- md content -->
-      <div class="col-12">
-        <div class="md-content">
-          <%= sanitize_html(@blog.body) %>
+      <div class="col-2 position-relative">
+        <div class="social-options">
+          <button class="btn btn-secondary btn-sm button-scroll" role="button" data-toggle="tooltip" data-placement="right" title="View Comments" data-controller="blogs" data-action="click->blogs#scrollToComments">
+            <%= image_tag image_path('img/icon-comment.svg') %>&nbsp;<%= CommontatorComment.where(thread_id: CommontatorThread.where(commontable_id: @blog.id, commontable_type: "Blog").first.id).count %>
+          </button>
+
+          <%= render partial: 'shared/votes/button', locals: { votable: @blog, vote: @blog.vote(current_participant) } %>
+
+          <hr>
+
+          <%= blog_social_share('facebook', request.url, @blog.title) %>
+          <%= blog_social_share('twitter', request.url,  @blog.title) %>
+          <%= blog_social_share('linkedin', request.url, @blog.title) %>
         </div>
       </div>
-      <!-- /md content -->
+      <!-- /social-options -->
+      <div class="col-12 col-md-8">
+        <div class="md-content mx-auto">
+          <%= sanitize_html(@blog.body) %>
+        </div>
+
+        <div class="social-options-sm">
+          <%= render partial: 'shared/votes/button', locals: { votable: @blog, vote: @blog.vote(current_participant) } %>
+
+          <%= blog_social_share('facebook', request.url, @blog.title) %>
+          <%= blog_social_share('twitter', request.url,  @blog.title) %>
+          <%= blog_social_share('linkedin', request.url, @blog.title) %>
+        </div>
+        <!-- /social-options -->
+
+        <div class="about-author">
+          <div class="author">
+            <%= render partial: 'participants/get_user_profile', locals: { participant: @blog.participant, username: 'false' } %>
+            <div class="author-details">
+              <h3>Written by</h3>
+              <%= render partial: 'participants/get_user_profile', locals: { participant: @blog.participant, avatar: 'false' } %>
+            </div>
+            <%= render partial: 'shared/challenges/follow_button', locals: { followable: @blog.participant, follow: @follow, other_participant: @blog.participant, active_tab: false } %>
+          </div>
+        </div>
+      </div>
 
     </div>
+    <!-- /md content -->
   </div>
 </div>
-<!-- /section -->
+<section class="section-p-md border-top">
+  <div class="container-fluid">
+    <div class="row justify-content-md-center">
+      <div class="col-12 col-sm-8">
+        <div class="blog-discussion">
+          <%= commontator_thread(@blog) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <!-- section -->
-<section class="section-pb-md">
+<section class="section-p-md border-top">
 
   <!-- blog post previews -->
   <div class="container-fluid">

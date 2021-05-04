@@ -1,14 +1,11 @@
 <% submissions.each do |submission| %>
-  <% cache_if cache_enabled?, [submission, submission.challenge_round.default_leaderboard], expires_in: 5.minutes do %>
-    <%
-      participant     = submission.participant
-      challenge       = submission.challenge
-      challenge_round = submission.challenge_round
-      if !challenge.show_submission?
-        is_organiser_or_author = (current_participant.present? && (policy(challenge).edit? || helpers.submission_team?(submission, current_participant)))
-      end
-    %>
-
+  <%
+    participant     = submission.participant
+    challenge       = submission.challenge
+    challenge_round = submission.challenge_round
+    is_organiser_or_author = (current_participant.present? && (policy(challenge).edit? || submission_team?(submission, current_participant)))
+  %>
+  <% cache_if cache_enabled?, [@challenge.id, submission, submission.challenge_round.default_leaderboard, is_organiser_or_author], expires_in: 5.minutes do %>
     <tr>
       <td><strong><%= submission.id %></strong></td>
       <td>
@@ -23,7 +20,11 @@
           <%= submission.grading_status_cd %></span>
       </td>
       <% if challenge.show_submission? || is_organiser_or_author %>
-        <td><%= submission_formatted_value(submission, submission.score_display) %></td>
+        <% if challenge_round.default_leaderboard.dynamic_score_field.present? %>
+          <td><%= submission_formatted_value(submission, submission["meta"][challenge_round.default_leaderboard.dynamic_score_field].presence || nil) %></td>
+        <% else %>
+          <td><%= submission_formatted_value(submission, submission.score_display) %></td>
+        <% end %>
       <% else %>
         <td class="text-muted">Hidden</td>
       <% end %>

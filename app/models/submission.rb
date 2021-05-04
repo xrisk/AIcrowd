@@ -35,6 +35,7 @@ class Submission < ApplicationRecord
   scope :group_by_created_at, -> { group_by_day(:created_at).count }
   scope :participant_challenge_submissions, ->(challenge_id, p_ids) { where(challenge_id: challenge_id, participant_id: p_ids) }
   scope :participant_meta_challenge_submissions, ->(meta_challenge_id, p_ids) { where(meta_challenge_id: meta_challenge_id, participant_id: p_ids) }
+  after_create :invalidate_cache
 
   after_create do
     if challenge_round_id.blank?
@@ -69,7 +70,7 @@ class Submission < ApplicationRecord
     end
   end
 
-  after_commit :render_notebook_from_submission, on: :create
+  after_commit :render_notebook_from_submission, on: [:create, :update]
 
   #TODO: Disabled badge awards
   #after_save :give_awarding_point
@@ -137,13 +138,7 @@ class Submission < ApplicationRecord
   private
 
   def generate_short_url
-    if short_url.blank?
-      short_url = nil
-      begin
-        short_url = SecureRandom.hex(12)
-      end while (Submission.exists?(short_url: short_url))
-      self.short_url = short_url
-    end
+    self.short_url = SecureRandom.uuid
   end
 
   def kramdown_grading_message
@@ -172,9 +167,16 @@ class Submission < ApplicationRecord
 
   def render_notebook_from_submission
     return if Post.where(submission_id: self.id, private: true, title: "Solution for submission #{self.id}").exists?
-    if self.meta.present? && self.meta["private_generate_notebook_section"].present?
+    if self.meta.present? && self.meta["private_generate_notebook_section"].present? && self.meta["private_notebook_job_started"].nil?
+      self.meta["private_notebook_job_started"] = true
       NotebookRenderingJob.perform_later(self.id)
     end
+  end
+
+  def invalidate_cache
+    Rails.cache.delete("submitter-submissions-#{self.challenge.id}-#{self.participant_id}-Participant")
+    team = participant.teams.where(challenge_id: self.challenge.id)&.first
+    Rails.cache.delete("submitter-submissions-#{self.challenge.id}-#{team.id}-Team") if team.present?
   end
 
   class ChallengeRoundIDMissing < StandardError

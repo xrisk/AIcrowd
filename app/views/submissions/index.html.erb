@@ -7,19 +7,6 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12">
-          <% if @submissions_remaining.present? %>
-            <div class="md-content">
-              <blockquote>
-                <p>ℹ️
-                  <% if @submissions_remaining[1] %>
-                    You have <%= pluralize(@submissions_remaining[0],'submission') %> remaining until <%= @submissions_remaining[1] %>.
-                  <% else %>
-                    You have <%= pluralize(@submissions_remaining[0],'submission') %> remaining.
-                  <% end %>
-                </p>
-              </blockquote>
-            </div>
-          <% end %>
 
           <% if @challenge.challenge_rounds.count > 1 && !@challenge.meta_challenge %>
             <!-- sub-nav pills -->
@@ -51,6 +38,17 @@
             <a class="" data-toggle="collapse" href="#submissionFilters" role="button" aria-expanded="false" aria-controls="submissionFilters">
               Submission filters
             </a>
+            <% if @submissions_remaining.present? %>
+              <% if @submissions_remaining[1] %>
+                <span class="float-right font-weight-bold"><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="You have <%= pluralize(@submissions_remaining[0],'submission') %> remaining until <%= @submissions_remaining[1] %>."></i>
+                  <%= pluralize(@submissions_remaining[0],'submission') %> remaining.
+                </span>
+              <% else %>
+                <span class="float-right font-weight-bold"><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="You have <%= pluralize(@submissions_remaining[0],'submission') %> remaining."></i></a>
+                  <%= pluralize(@submissions_remaining[0],'submission') %> remaining.
+                </span>
+              <% end %>
+            <% end %>
           </div>
           <div id='submissionFilters' class="collapse <%= current_participant && @my_submissions || @baselines ? 'show' : '' %>">
             <!-- toggle switch -->

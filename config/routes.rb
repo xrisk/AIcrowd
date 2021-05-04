@@ -40,6 +40,7 @@ def challenge_routes
   resources :leaderboards, only: [:index, :destroy] do
     get :export, on: :collection
     get :get_affiliation, on: :collection
+    get :recalculate_leaderboard
   end
   resources :votes, only: [:create, :destroy]
   resources :follows, only: [:create, :destroy]
@@ -249,6 +250,7 @@ Rails.application.routes.draw do
   resources :posts, path: :showcase do
     resources :votes, only: [:create, :destroy]
     post :validate_colab_link, on: :collection
+    post :validate_notebook, on: :collection
   end
   resources :publications, path: :research, only: [:index, :show] do
     get :all, on: :collection
@@ -278,6 +280,7 @@ Rails.application.routes.draw do
   resource :search, only: :show
   resources :daily_practice_goals, only: [:index]
   resources :participant_ml_challenge_goals, only: [:create, :update]
+  resources :baselines, only: [:index]
 
   get '/call-for-challenges/:challenge_call_id/apply' => 'challenge_call_responses#new', :as => 'challenge_call_apply'
   get '/call-for-challenges/:challenge_call_id/applications/:id' => 'challenge_call_responses#show', :as => 'challenge_call_show'

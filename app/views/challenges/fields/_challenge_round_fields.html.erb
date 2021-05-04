@@ -110,7 +110,9 @@
       </div>
 
       <%= f.fields_for :challenge_leaderboard_extras do |f| %>
-        <%= render partial: 'challenges/fields/leaderboard_fields', locals: { f: f } %>
+        <% cache_if cache_enabled?, [f.object] do %>
+          <%= render partial: 'challenges/fields/leaderboard_fields', locals: { f: f } %>
+        <% end %>
       <% end %>
 
       <% if f.object.persisted? %>

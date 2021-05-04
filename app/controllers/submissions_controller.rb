@@ -14,6 +14,8 @@ class SubmissionsController < ApplicationController
   before_action :handle_code_based_submissions, only: [:create]
   before_action :handle_artifact_based_submissions, only: [:create]
   before_action :set_admin_variable, only: [:show]
+  before_action :check_restricted_ip, only: [:create]
+  # before_action :validate_min_submissions, only: [:create]
 
   layout :set_layout
   respond_to :html, :js
@@ -126,6 +128,7 @@ class SubmissionsController < ApplicationController
     @submission.challenge = @challenge
     authorize @submission
 
+    validate_min_members
     validate_submission_file_presence
     if @submission.errors.none? && @submission.save
       SubmissionGraderJob.perform_later(@submission.id)
@@ -418,7 +421,7 @@ class SubmissionsController < ApplicationController
 
     return if params.dig('submission', 'submission_files_attributes', '0', 'submission_type') != 'artifact'
     # TODO: Make this accepted extension list dynamic via evaluations API
-    accepted_formats = [".csv", ".ipynb", ".pt", ".json", ".py", ".c", ".cpp"]
+    accepted_formats = [".csv", ".ipynb", ".pt", ".json", ".py", ".c", ".cpp", ".pth"]
     file_path = params[:submission][:submission_files_attributes]["0"][:submission_file_s3_key]
 
     return if file_path.blank?
@@ -461,6 +464,17 @@ class SubmissionsController < ApplicationController
 
   def validate_submission_file_presence
     @submission.errors.add(:base, 'Submission file is required.') if @form_type == :artifact && @submission.submission_files.none?
+  end
+
+  def validate_min_submissions
+    if @submissions_remaining < 1
+      redirect_or_json(helpers.challenge_submissions_path(@challenge), "Submission limit reached for your account, it will reset at #{@reset_dttm}", :forbidden, "Submission limit reached for your account, it will reset at #{@reset_dttm}")
+      return
+    end
+  end
+
+  def validate_min_members
+    @submission.errors.add(:base, 'Minimum team members requirement not fulfilled') if (@challenge.min_team_participants > 1 && (@challenge.min_team_participants > get_team_participants.count))
   end
 
   def redirect_or_json(redirect_path, message, status, notice=nil, data=nil)
@@ -524,7 +538,7 @@ class SubmissionsController < ApplicationController
   end
 
   def get_team_participants(participant=current_participant, model=false)
-    team = participant.teams.where(challenge_id: @challenge.id).first
+    team = participant.teams.where(challenge_id: @challenge.id)&.first
     participants = team.team_participants.map(&:participant) if team.present?
     participants = [participant] if participants.blank?
     if !model
@@ -538,10 +552,17 @@ class SubmissionsController < ApplicationController
     is_owner_or_organizer = current_participant.present? && (policy(@challenge).edit? || helpers.submission_team?(@submission, current_participant))
     @show_file_tab = (@submission.notebook.present? || (@submission.submission_files.present? && (@challenge.submissions_downloadable))) && is_owner_or_organizer
     @show_notebook_tab = @post.is_public.count > 0 ||  is_owner_or_organizer
-    @show_status_tab = @description_markdown.present? && is_owner_or_organizer
   end
 
   def set_admin_variable
     @is_organiser_or_author = (current_participant.present? && (policy(@challenge).edit? || helpers.submission_team?(@submission, current_participant)))
+  end
+
+  def check_restricted_ip
+    if @challenge.restricted_ip.present?
+      unless @challenge.restricted_ip.split(",").include?(request.remote_ip)
+        redirect_or_json(helpers.challenge_submissions_path(@challenge), "You are not authorised to make submission from current IP address.", :forbidden, "You are not authorised to make submission from current IP address.")
+      end
+    end
   end
 end

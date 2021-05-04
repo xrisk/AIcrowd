@@ -3,11 +3,13 @@
   <div class="container-fluid priority-nav" data-controller="prioritynav">
     <ul class="nav">
       <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Overview', link: challenge_path(challenge)} %>
-      <% if policy(challenge).show_leaderboard? %>
+      <% if policy(challenge).show_leaderboard? && challenge.active_round.present? %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Leaderboard', link: challenge_leaderboards_path(challenge)} %>
       <% end %>
       <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Notebooks', link: notebooks_challenge_path(challenge)} %>
-      <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Discussion', link: challenge_discussion_path(challenge)} %>
+      <% if challenge.discussions_visible? %>
+        <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Discussion', link: challenge_discussion_path(challenge)} %>
+      <% end %>
       <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Insights', link: challenge_insights_path(challenge)} %>
       <% if !challenge.meta_challenge %>
         <%= render partial: 'challenges/show/subnav_link', locals: {text: 'Resources', link: resources_link(challenge)} %>

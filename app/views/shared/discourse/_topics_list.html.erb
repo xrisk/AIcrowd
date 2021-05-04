@@ -15,7 +15,7 @@
         </div>
 
         <div>
-          <%= link_to discourse_topic['title'], discourse_topic_url(discourse_topic['slug']), class: 'topic-title text-link' %>
+          <%= link_to discourse_topic['title'], discourse_topic_url(discourse_topic['slug'], discourse_topic['id']), class: 'topic-title text-link' %>
           <% if author['participant'].present? %>
             <span>By <%= render partial: 'participants/get_user_profile', locals: { participant: author['participant'], avatar: 'false' } %> <%= discourse_time_ago(discourse_topic['created_at']) %></span>
           <% else %>

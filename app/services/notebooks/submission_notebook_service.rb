@@ -1,5 +1,5 @@
 module Notebooks
-  class SubmissionNotebookService < BaseService
+  class SubmissionNotebookService < NotebookBaseService
     include ActiveModel::Model
     include S3FilesHelper
 
@@ -28,13 +28,6 @@ module Notebooks
       File.delete(Rails.root.join('public', 'uploads', "#{@file_name}.zip")) if File.exist?(Rails.root.join('public', 'uploads', "#{@file_name}.zip"))
 
       return {notebook_s3_url: notebook_s3_url, notebook_html: notebook_html, gist_id: gist_id}
-    end
-
-    def upload_to_s3 filepath, filename
-      s3_key          = "colab_notebooks/#{SecureRandom.hex}_#{filename}"
-      s3_obj          = Aws::S3::Resource.new.bucket(ENV['AWS_S3_BUCKET']).object(s3_key)
-      s3_obj.upload_file(filepath, acl: 'public-read')
-      url             = s3_obj.public_url
     end
 
     def process_zip_file

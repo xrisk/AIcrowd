@@ -10,11 +10,15 @@ class LeaderboardsController < ApplicationController
 
   def index
     unless @leaderboards.first&.disentanglement?
+      preloader = ActiveRecord::Associations::Preloader.new
+      preloader.preload(@leaderboards.select { |p| p.submitter_type == 'Participant' }, :submitter)
+      preloader.preload(@leaderboards.select { |p| p.submitter_type == 'Team' }, :submitter)
+
       @submitter_submissions = {}
       @leaderboards.each do |leaderboard|
-        next if leaderboard.submitter.blank?
+        next if leaderboard.submitter_id.blank?
 
-        @submitter_submissions.merge!("submitter#{leaderboard.submitter.id}_submissions_by_day": submitter_submissions(leaderboard.submitter).group_by_created_at)
+        @submitter_submissions.merge!("submitter#{leaderboard.submitter.id}_submissions_by_day": submitter_submissions(leaderboard.submitter))
       end
     end
     @top_three_winners = @leaderboards.where(baseline: false).first(3)
@@ -35,6 +39,12 @@ class LeaderboardsController < ApplicationController
     @challenge_rounds = @challenge.challenge_rounds.started
     @post_challenge   = post_challenge?
     @following        = following?
+    @leaderboards     = @leaderboards.includes(:challenge, :submission, :team, :participant)
+    @leaderboard_participants = {}
+    @leaderboard_challenges = {}
+    @leaderboards.each do |leaderboard|
+      @leaderboard_participants[leaderboard.id] = helpers.leaderboard_participants(leaderboard)
+    end
 
     unless @leaderboards.first&.disentanglement?
       @countries = @filter.call('participant_countries')
@@ -60,6 +70,14 @@ class LeaderboardsController < ApplicationController
 
   def get_affiliation
     @affiliations = @filter.call('participant_affiliations')
+  end
+
+  def recalculate_leaderboard
+    authorize Leaderboard
+    leaderboard = ChallengeLeaderboardExtra.find_by_id(params[:leaderboard_id])
+    challenge_round_id = leaderboard&.challenge_round_id
+    CalculateLeaderboardJob.perform_later(challenge_round_id: challenge_round_id)
+    redirect_to challenge_leaderboards_path, notice: "Leaderboard recalculation is in progress."
   end
 
   def destroy
@@ -109,7 +127,7 @@ class LeaderboardsController < ApplicationController
     else
       @challenge.active_round
     end
-    raise ActionController::RoutingError, 'Could not found current round for the challenge' if @current_round.blank?
+    redirect_to @challenge, notice: "Round hasn't started for this challenge" if @current_round.blank?
   end
 
   def set_current_leaderboard
@@ -209,7 +227,10 @@ class LeaderboardsController < ApplicationController
   end
 
   def submitter_submissions(submitter)
-    @challenge.meta_challenge? ? submitter.meta_challenge_submissions(@challenge) : submitter.challenge_submissions(@challenge)
+    Rails.cache.fetch("submitter-submissions-#{@challenge.id}-#{submitter.id}-#{submitter.class}") do
+      submissions = @challenge.meta_challenge? ? submitter.meta_challenge_submissions(@challenge) : submitter.challenge_submissions(@challenge)
+      submissions.group_by_created_at
+    end
   end
 
   def freeze_record_for_organizer

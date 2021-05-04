@@ -88,4 +88,56 @@ export default class extends Controller {
       });
     }
   }
+
+  validateNotebook(event){
+    const notebook_file = event.target.value;
+    var form = $(event.target.form)
+    var fileForm = document.querySelector('.posts-form')
+    var formData = new FormData(fileForm);
+    var submitButton  = form.find('button[type="submit"]');
+    var loader = form.find('.file-fetch-loader')
+    var greenTick = form.find('.file-green-tick')
+    var previewButton = $('.file-preview-button')
+    var notebookPreviewDiv = document.getElementById('notebook-preview-container')
+
+    submitButton.prop('disabled', true);
+    loader.removeClass('d-none')
+    greenTick.addClass('d-none')
+    previewButton.addClass('d-none')
+    $.ajax({
+        url: '/showcase/validate_notebook',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success:  function(result){
+            form.find('input[name="post[notebook_s3_url]"]').val(result["notebook_s3_url"]);
+            form.find('input[name="post[notebook_html]"]').val(result["notebook_html"]);
+            form.find('input[name="post[gist_id]"]').val(result["gist_id"]);
+            notebookPreviewDiv.insertAdjacentHTML('afterbegin', result["notebook_html"]);
+
+
+            submitButton.prop('disabled', false);
+            loader.addClass('d-none')
+            greenTick.removeClass('d-none')
+            previewButton.removeClass('d-none')
+        },
+
+        error: function(){
+          submitButton.prop('disabled', false);
+          loader.addClass('d-none');
+
+          $(`<div class="alert sticky-top alert-flash alert-dismissible show fade flash-message position-fixed w-100" role="alert">
+              <div class="container-fluid">
+                <center>
+                  Unable to process the notebook. Please check the file and try again.
+                </center>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>`).prependTo('body')
+        }
+    });
+  }
 }

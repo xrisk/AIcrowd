@@ -1,7 +1,7 @@
 class PostsController < InheritedResources::Base
   before_action :authenticate_participant!, except: [:show, :index]
-  before_action :set_post, only: [:show, :edit, :update]
-  before_action :set_my_challenges, only: [:new, :edit, :update]
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_my_challenges, only: [:new, :edit, :update, :create]
 
   def new
     @post = Post.new
@@ -32,8 +32,7 @@ class PostsController < InheritedResources::Base
   end
 
   def index
-    params[:page] ||= 1
-    @post = Post.paginate(page: params[:page], per_page: 10)
+    @post = Post.all.where(private: false).limit(30).includes(:participant, :challenge)
   end
 
   def show
@@ -105,12 +104,30 @@ class PostsController < InheritedResources::Base
   end
 
   def destroy
+    challenge = @post.challenge
+    @post.destroy
+    redirect_to(notebooks_challenge_path(challenge), notice: "The contribution was deleted successfully!")
   end
 
   def validate_colab_link
     url = params[:colab_link]
     return unless url.include?("colab.research.google.com")
     result = Notebooks::NotebookService.new(url).call
+
+    unless result.is_a?(Hash)
+      render json: {}, status: 422
+      return
+    end
+
+    render json: result, status: 200
+  end
+
+  def validate_notebook
+    unless File.extname(params[:post][:notebook_file].original_filename) == ".ipynb"
+      render json: {}, status: 422
+      return
+    end
+    result = Notebooks::NotebookFileService.new(params[:post][:notebook_file]).call
 
     unless result.is_a?(Hash)
       render json: {}, status: 422

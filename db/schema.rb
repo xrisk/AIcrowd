@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_14_124902) do
+ActiveRecord::Schema.define(version: 2021_04_26_105327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -175,9 +175,13 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.text "submission_link"
     t.integer "challenge_leaderboard_extra_id"
     t.index ["challenge_id"], name: "index_base_leaderboards_on_challenge_id"
+    t.index ["challenge_leaderboard_extra_id"], name: "index_base_leaderboards_on_challenge_leaderboard_extra_id"
     t.index ["challenge_round_id"], name: "index_base_leaderboards_on_challenge_round_id"
     t.index ["leaderboard_type_cd"], name: "index_base_leaderboards_on_leaderboard_type_cd"
+    t.index ["meta_challenge_id"], name: "index_base_leaderboards_on_meta_challenge_id"
     t.index ["ml_challenge_id"], name: "index_base_leaderboards_on_ml_challenge_id"
+    t.index ["old_participant_id"], name: "index_base_leaderboards_on_old_participant_id"
+    t.index ["submission_id"], name: "index_base_leaderboards_on_submission_id"
     t.index ["submitter_type", "submitter_id"], name: "index_base_leaderboards_on_submitter_type_and_submitter_id"
   end
 
@@ -204,6 +208,14 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.datetime "updated_at"
     t.integer "submission_id"
     t.boolean "post_challenge"
+  end
+
+  create_table "baselines", force: :cascade do |t|
+    t.integer "challenge_id", null: false
+    t.text "git_url", null: false
+    t.boolean "default", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "blazer_audits", force: :cascade do |t|
@@ -293,6 +305,26 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.index ["challenge_id"], name: "index_category_challenges_on_challenge_id"
   end
 
+  create_table "category_posts", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.bigint "post_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id", "post_id"], name: "index_category_posts_on_category_id_and_post_id", unique: true
+    t.index ["category_id"], name: "index_category_posts_on_category_id"
+    t.index ["post_id"], name: "index_category_posts_on_post_id"
+  end
+
+  create_table "category_publications", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.bigint "publication_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id", "publication_id"], name: "index_category_publications_on_category_id_and_publication_id", unique: true
+    t.index ["category_id"], name: "index_category_publications_on_category_id"
+    t.index ["publication_id"], name: "index_category_publications_on_publication_id"
+  end
+
   create_table "challenge_call_responses", force: :cascade do |t|
     t.bigint "challenge_call_id"
     t.string "email"
@@ -331,7 +363,7 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "challenge_round_id", default: 1, null: false
+    t.integer "challenge_round_id", default: -1, null: false
     t.string "score_title", default: "Score"
     t.string "score_secondary_title", default: "Secondary Score"
     t.string "primary_sort_order_cd", default: "ascending"
@@ -350,6 +382,9 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.text "leaderboard_note_markdown"
     t.text "leaderboard_note"
     t.boolean "default", default: false
+    t.integer "sequence", default: 0
+    t.index ["challenge_id"], name: "index_challenge_leaderboard_extras_on_challenge_id"
+    t.index ["challenge_round_id"], name: "index_challenge_leaderboard_extras_on_challenge_round_id"
   end
 
   create_table "challenge_participants", force: :cascade do |t|
@@ -369,6 +404,7 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.boolean "challenge_rules_additional_checkbox", default: false
     t.jsonb "registration_form_details"
     t.index ["challenge_id"], name: "index_challenge_participants_on_challenge_id"
+    t.index ["clef_task_id"], name: "index_challenge_participants_on_clef_task_id"
     t.index ["participant_id"], name: "index_challenge_participants_on_participant_id"
   end
 
@@ -388,6 +424,16 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.integer "challenge_round_id"
     t.integer "occur_day"
     t.boolean "exclusive", default: true
+    t.index ["challenge_id"], name: "index_challenge_problems_on_challenge_id"
+    t.index ["challenge_round_id"], name: "index_challenge_problems_on_challenge_round_id"
+    t.index ["problem_id"], name: "index_challenge_problems_on_problem_id"
+  end
+
+  create_table "challenge_properties", force: :cascade do |t|
+    t.integer "page_views", default: 0, null: false
+    t.integer "challenge_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "challenge_rounds", force: :cascade do |t|
@@ -410,10 +456,6 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.string "submissions_type_cd", default: "artifact", null: false
     t.integer "debug_submission_limit", default: 0
     t.integer "debug_submission_time"
-    t.string "other_scores_fieldnames"
-    t.string "debug_submission_limit_period_cd"
-    t.boolean "show_leaderboard"
-    t.boolean "media_on_leaderboard"
     t.string "debug_submission_limit_period_cd"
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
   end
@@ -523,9 +565,21 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.boolean "ml_challenge", default: false, null: false
     t.string "social_media_image_file"
     t.string "registration_form_fields"
-    t.string "submission_window_type_cd", default: "rolling_window"
+    t.string "submission_window_type_cd", default: "fixed_window"
+    t.datetime "submission_lock_time"
+    t.boolean "submission_lock_enabled", default: false
+    t.text "submission_filter"
+    t.text "submission_note"
+    t.text "submission_freezing_order", default: "created_at desc"
+    t.boolean "show_submission", default: true
+    t.integer "min_team_participants", default: 1
+    t.string "restricted_ip"
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
+    t.index ["discourse_category_id"], name: "index_challenges_on_discourse_category_id"
+    t.index ["discourse_group_id"], name: "index_challenges_on_discourse_group_id"
+    t.index ["featured_sequence"], name: "index_challenges_on_featured_sequence"
     t.index ["slug"], name: "index_challenges_on_slug", unique: true
+    t.index ["status_cd"], name: "index_challenges_on_status_cd"
   end
 
   create_table "challenges_organizers", force: :cascade do |t|
@@ -571,6 +625,7 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "parent_id"
+    t.integer "vote_count", default: 0
     t.index ["cached_votes_down"], name: "index_commontator_comments_on_cached_votes_down"
     t.index ["cached_votes_up"], name: "index_commontator_comments_on_cached_votes_up"
     t.index ["creator_id", "creator_type", "thread_id"], name: "index_commontator_comments_on_c_id_and_c_type_and_t_id"
@@ -766,6 +821,17 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "locked_submissions", force: :cascade do |t|
+    t.integer "challenge_id", null: false
+    t.integer "submission_id", null: false
+    t.integer "locked_by", null: false
+    t.boolean "deleted", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_locked_submissions_on_challenge_id"
+    t.index ["submission_id"], name: "index_locked_submissions_on_submission_id"
+  end
+
   create_table "mandrill_messages", force: :cascade do |t|
     t.jsonb "res"
     t.jsonb "message"
@@ -808,6 +874,16 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.text "decline_reason"
     t.index ["challenge_id"], name: "index_newsletter_emails_on_challenge_id"
     t.index ["participant_id"], name: "index_newsletter_emails_on_participant_id"
+  end
+
+  create_table "notebooks", force: :cascade do |t|
+    t.integer "notebookable_id"
+    t.string "notebookable_type"
+    t.text "notebook_html"
+    t.text "s3_url"
+    t.string "gist_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -984,7 +1060,7 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.boolean "agreed_to_organizers_newsletter", default: true, null: false
     t.float "fixed_rating"
     t.bigint "gitlab_id"
-    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.uuid "uuid", default: -> { "public.gen_random_uuid()" }, null: false
     t.bigint "referred_by_id"
     t.boolean "trusted", default: false
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
@@ -1023,11 +1099,71 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.string "external_link"
     t.integer "challenge_id"
     t.integer "submission_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.text "thumbnail"
     t.text "notebook_html"
+    t.string "slug"
     t.string "gist_id"
+    t.string "notebook_s3_url"
+    t.integer "participant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "vote_count", default: 0
+    t.text "colab_link"
+    t.boolean "private", default: false
+    t.string "gist_username"
+    t.index ["challenge_id"], name: "index_posts_on_challenge_id"
+    t.index ["created_at"], name: "index_posts_on_created_at"
+    t.index ["participant_id"], name: "index_posts_on_participant_id"
+    t.index ["submission_id"], name: "index_posts_on_submission_id"
+  end
+
+  create_table "publication_authors", force: :cascade do |t|
+    t.string "name"
+    t.integer "participant_id"
+    t.integer "publication_id", null: false
+    t.integer "sequence", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["participant_id"], name: "index_publication_authors_on_participant_id"
+    t.index ["publication_id"], name: "index_publication_authors_on_publication_id"
+  end
+
+  create_table "publication_external_links", force: :cascade do |t|
+    t.string "name"
+    t.text "link", null: false
+    t.integer "publication_id", null: false
+    t.string "icon"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["publication_id"], name: "index_publication_external_links_on_publication_id"
+  end
+
+  create_table "publication_venues", force: :cascade do |t|
+    t.string "venue", null: false
+    t.string "short_name"
+    t.integer "publication_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["publication_id"], name: "index_publication_venues_on_publication_id"
+  end
+
+  create_table "publications", force: :cascade do |t|
+    t.string "thumbnail"
+    t.string "title"
+    t.text "description"
+    t.date "publication_date"
+    t.integer "challenge_id"
+    t.integer "no_of_citations"
+    t.boolean "aicrowd_contributed"
+    t.string "slug"
+    t.integer "sequence", default: 0
+    t.text "cite"
+    t.text "abstract"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["challenge_id"], name: "index_publications_on_challenge_id"
+  end
+
   create_table "redirects", force: :cascade do |t|
     t.string "redirect_url"
     t.string "destination_url"
@@ -1052,6 +1188,7 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.boolean "enable_banner", default: false
     t.text "footer_text"
     t.boolean "enable_footer", default: false
+    t.string "home_page_social_image"
   end
 
   create_table "submission_file_definitions", id: :serial, force: :cascade do |t|
@@ -1127,8 +1264,12 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.integer "ml_challenge_id"
     t.boolean "debug_submission", default: false, null: false
     t.string "submission_received_from", default: "web"
+    t.boolean "deleted", default: false
     t.index ["challenge_id"], name: "index_submissions_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_submissions_on_challenge_round_id"
+    t.index ["created_at"], name: "index_submissions_on_created_at"
+    t.index ["deleted"], name: "index_submissions_on_deleted"
+    t.index ["meta_challenge_id"], name: "index_submissions_on_meta_challenge_id"
     t.index ["ml_challenge_id"], name: "index_submissions_on_ml_challenge_id"
     t.index ["participant_id"], name: "index_submissions_on_participant_id"
   end
@@ -1173,7 +1314,7 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.bigint "team_id", null: false
     t.bigint "invitor_id", null: false
     t.string "status", default: "pending", null: false
-    t.uuid "uuid", default: -> { "gen_random_uuid()" }, null: false
+    t.uuid "uuid", default: -> { "public.gen_random_uuid()" }, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "invitee_type", null: false
@@ -1217,42 +1358,6 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.index ["name", "challenge_id"], name: "index_teams_on_name_and_challenge_id", unique: true
   end
 
-  create_table "trajnet_duplicate_submissions", id: false, force: :cascade do |t|
-    t.integer "challenge_id"
-    t.integer "participant_id"
-    t.float "score"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text "description"
-    t.float "score_secondary"
-    t.string "grading_message"
-    t.string "grading_status_cd"
-    t.text "description_markdown"
-    t.integer "vote_count"
-    t.boolean "post_challenge"
-    t.string "api"
-    t.string "media_large"
-    t.string "media_thumbnail"
-    t.string "media_content_type"
-    t.integer "challenge_round_id"
-    t.json "meta"
-    t.string "short_url"
-    t.text "clef_method_description"
-    t.string "clef_retrieval_type"
-    t.string "clef_run_type"
-    t.boolean "clef_primary_run"
-    t.text "clef_other_info"
-    t.text "clef_additional"
-    t.boolean "online_submission"
-    t.float "score_display"
-    t.float "score_secondary_display"
-    t.boolean "baseline"
-    t.string "baseline_comment"
-    t.integer "meta_challenge_id"
-    t.string "submission_link"
-    t.integer "ml_challenge_id"
-  end
-
   create_table "user_ratings", force: :cascade do |t|
     t.bigint "participant_id"
     t.float "rating"
@@ -1266,7 +1371,8 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.index ["participant_id"], name: "index_user_ratings_on_participant_id"
   end
 
-  create_table "versions", force: :cascade do |t|
+  create_table "versions", id: false, force: :cascade do |t|
+    t.bigserial "id", null: false
     t.string "item_type", null: false
     t.bigint "item_id", null: false
     t.string "event", null: false
@@ -1287,66 +1393,12 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     t.index ["votable_id", "votable_type"], name: "index_votes_on_votable_id_and_votable_type"
   end
 
-  add_foreign_key "aicrowd_badges", "badges_events"
-  add_foreign_key "aicrowd_user_badges", "aicrowd_badges"
-  add_foreign_key "aicrowd_user_badges", "participants"
-  add_foreign_key "base_leaderboards", "challenge_rounds"
-  add_foreign_key "base_leaderboards", "challenges"
-  add_foreign_key "blogs", "participants"
-  add_foreign_key "challenge_call_responses", "challenge_calls"
-  add_foreign_key "challenge_participants", "challenges"
-  add_foreign_key "challenge_participants", "participants"
-  add_foreign_key "challenge_partners", "challenges"
-  add_foreign_key "challenge_rounds", "challenges"
-  add_foreign_key "challenge_rules", "challenges"
-  add_foreign_key "challenges_organizers", "challenges"
-  add_foreign_key "challenges_organizers", "organizers"
-  add_foreign_key "clef_tasks", "organizers"
-  add_foreign_key "commontator_comments", "commontator_comments", column: "parent_id", on_update: :restrict, on_delete: :cascade
-  add_foreign_key "commontator_comments", "commontator_threads", column: "thread_id", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "commontator_subscriptions", "commontator_threads", column: "thread_id", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "dataset_file_downloads", "dataset_files"
-  add_foreign_key "dataset_file_downloads", "participants"
-  add_foreign_key "dataset_folders", "challenges"
-  add_foreign_key "email_invitations", "participants", column: "claimant_id"
-  add_foreign_key "email_invitations", "participants", column: "invitor_id"
-  add_foreign_key "email_preferences", "participants"
   add_foreign_key "feedbacks", "participants"
   add_foreign_key "follows", "participants"
-  add_foreign_key "invitations", "challenges"
-  add_foreign_key "invitations", "participants"
-  add_foreign_key "ml_activity_points", "activity_points"
-  add_foreign_key "ml_activity_points", "challenges"
   add_foreign_key "ml_activity_points", "participants"
-  add_foreign_key "newsletter_emails", "challenges"
-  add_foreign_key "newsletter_emails", "participants"
-  add_foreign_key "notifications", "challenges"
-  add_foreign_key "notifications", "participants"
-  add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
-  add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
-  add_foreign_key "participant_clef_tasks", "clef_tasks"
-  add_foreign_key "participant_clef_tasks", "participants"
-  add_foreign_key "participant_ml_challenge_goals", "challenges"
-  add_foreign_key "participant_ml_challenge_goals", "daily_practice_goals"
-  add_foreign_key "participant_ml_challenge_goals", "participants"
   add_foreign_key "participant_organizers", "organizers"
-  add_foreign_key "participant_organizers", "participants"
-  add_foreign_key "partners", "organizers"
-  add_foreign_key "submission_file_definitions", "challenges"
-  add_foreign_key "submission_files", "submissions"
-  add_foreign_key "submission_grades", "submissions"
-  add_foreign_key "submissions", "challenges"
   add_foreign_key "submissions", "participants"
-  add_foreign_key "task_dataset_files", "clef_tasks"
-  add_foreign_key "team_invitations", "participants", column: "invitor_id"
-  add_foreign_key "team_invitations", "teams"
-  add_foreign_key "team_members", "participants"
-  add_foreign_key "team_participants", "participants"
-  add_foreign_key "team_participants", "teams"
-  add_foreign_key "teams", "challenges"
-  add_foreign_key "user_ratings", "challenge_rounds"
   add_foreign_key "user_ratings", "participants"
-  add_foreign_key "votes", "participants"
 
   create_view "challenge_registrations",  sql_definition: <<-SQL
       SELECT row_number() OVER () AS id,
@@ -1405,6 +1457,80 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
       challenge_rounds r
     WHERE (r.challenge_id = c.id)
     ORDER BY (row_number() OVER ()), c.challenge;
+  SQL
+
+  create_view "leaderboards",  sql_definition: <<-SQL
+      SELECT base_leaderboards.id,
+      base_leaderboards.challenge_id,
+      base_leaderboards.challenge_round_id,
+      base_leaderboards.row_num,
+      base_leaderboards.previous_row_num,
+      base_leaderboards.slug,
+      base_leaderboards.name,
+      base_leaderboards.entries,
+      base_leaderboards.score,
+      base_leaderboards.score_secondary,
+      base_leaderboards.media_large,
+      base_leaderboards.media_thumbnail,
+      base_leaderboards.media_content_type,
+      base_leaderboards.description,
+      base_leaderboards.description_markdown,
+      base_leaderboards.leaderboard_type_cd,
+      base_leaderboards.refreshed_at,
+      base_leaderboards.created_at,
+      base_leaderboards.updated_at,
+      base_leaderboards.submission_id,
+      base_leaderboards.post_challenge,
+      base_leaderboards.seq,
+      base_leaderboards.baseline,
+      base_leaderboards.baseline_comment,
+      base_leaderboards.meta,
+      base_leaderboards.submitter_type,
+      base_leaderboards.submitter_id,
+      base_leaderboards.meta_challenge_id,
+      base_leaderboards.old_participant_id,
+      base_leaderboards.ml_challenge_id,
+      base_leaderboards.submission_link,
+      base_leaderboards.challenge_leaderboard_extra_id
+     FROM base_leaderboards
+    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'leaderboard'::text);
+  SQL
+
+  create_view "ongoing_leaderboards",  sql_definition: <<-SQL
+      SELECT base_leaderboards.id,
+      base_leaderboards.challenge_id,
+      base_leaderboards.challenge_round_id,
+      base_leaderboards.row_num,
+      base_leaderboards.previous_row_num,
+      base_leaderboards.slug,
+      base_leaderboards.name,
+      base_leaderboards.entries,
+      base_leaderboards.score,
+      base_leaderboards.score_secondary,
+      base_leaderboards.media_large,
+      base_leaderboards.media_thumbnail,
+      base_leaderboards.media_content_type,
+      base_leaderboards.description,
+      base_leaderboards.description_markdown,
+      base_leaderboards.leaderboard_type_cd,
+      base_leaderboards.refreshed_at,
+      base_leaderboards.created_at,
+      base_leaderboards.updated_at,
+      base_leaderboards.submission_id,
+      base_leaderboards.post_challenge,
+      base_leaderboards.seq,
+      base_leaderboards.baseline,
+      base_leaderboards.baseline_comment,
+      base_leaderboards.meta,
+      base_leaderboards.submitter_type,
+      base_leaderboards.submitter_id,
+      base_leaderboards.meta_challenge_id,
+      base_leaderboards.old_participant_id,
+      base_leaderboards.ml_challenge_id,
+      base_leaderboards.submission_link,
+      base_leaderboards.challenge_leaderboard_extra_id
+     FROM base_leaderboards
+    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
   SQL
 
   create_view "participant_challenge_counts",  sql_definition: <<-SQL
@@ -1490,84 +1616,6 @@ ActiveRecord::Schema.define(version: 2020_12_14_124902) do
     WHERE (s.participant_id = p.id)
     GROUP BY s.id, s.challenge_id, s.participant_id, p.name, s.grading_status_cd, s.post_challenge, s.score, s.score_secondary, s.created_at
     ORDER BY s.created_at DESC;
-  SQL
-
-  create_view "leaderboards",  sql_definition: <<-SQL
-      SELECT base_leaderboards.id,
-      base_leaderboards.challenge_id,
-      base_leaderboards.challenge_round_id,
-      base_leaderboards.row_num,
-      base_leaderboards.previous_row_num,
-      base_leaderboards.slug,
-      base_leaderboards.name,
-      base_leaderboards.entries,
-      base_leaderboards.score,
-      base_leaderboards.score_secondary,
-      base_leaderboards.media_large,
-      base_leaderboards.media_thumbnail,
-      base_leaderboards.media_content_type,
-      base_leaderboards.description,
-      base_leaderboards.description_markdown,
-      base_leaderboards.leaderboard_type_cd,
-      base_leaderboards.refreshed_at,
-      base_leaderboards.created_at,
-      base_leaderboards.updated_at,
-      base_leaderboards.submission_id,
-      base_leaderboards.post_challenge,
-      base_leaderboards.seq,
-      base_leaderboards.baseline,
-      base_leaderboards.baseline_comment,
-      base_leaderboards.meta,
-      base_leaderboards.submitter_type,
-      base_leaderboards.submitter_id,
-      base_leaderboards.meta_challenge_id,
-      base_leaderboards.ml_challenge_id,
-      base_leaderboards.old_participant_id,
-      base_leaderboards.old_participant_id,
-      base_leaderboards.ml_challenge_id,
-      base_leaderboards.submission_link,
-      base_leaderboards.challenge_leaderboard_extra_id
-     FROM base_leaderboards
-    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'leaderboard'::text);
-  SQL
-
-  create_view "ongoing_leaderboards",  sql_definition: <<-SQL
-      SELECT base_leaderboards.id,
-      base_leaderboards.challenge_id,
-      base_leaderboards.challenge_round_id,
-      base_leaderboards.row_num,
-      base_leaderboards.previous_row_num,
-      base_leaderboards.slug,
-      base_leaderboards.name,
-      base_leaderboards.entries,
-      base_leaderboards.score,
-      base_leaderboards.score_secondary,
-      base_leaderboards.media_large,
-      base_leaderboards.media_thumbnail,
-      base_leaderboards.media_content_type,
-      base_leaderboards.description,
-      base_leaderboards.description_markdown,
-      base_leaderboards.leaderboard_type_cd,
-      base_leaderboards.refreshed_at,
-      base_leaderboards.created_at,
-      base_leaderboards.updated_at,
-      base_leaderboards.submission_id,
-      base_leaderboards.post_challenge,
-      base_leaderboards.seq,
-      base_leaderboards.baseline,
-      base_leaderboards.baseline_comment,
-      base_leaderboards.meta,
-      base_leaderboards.submitter_type,
-      base_leaderboards.submitter_id,
-      base_leaderboards.meta_challenge_id,
-      base_leaderboards.ml_challenge_id,
-      base_leaderboards.old_participant_id,
-      base_leaderboards.old_participant_id,
-      base_leaderboards.ml_challenge_id,
-      base_leaderboards.submission_link,
-      base_leaderboards.challenge_leaderboard_extra_id
-     FROM base_leaderboards
-    WHERE ((base_leaderboards.leaderboard_type_cd)::text = 'ongoing'::text);
   SQL
 
 end

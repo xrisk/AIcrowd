@@ -7,6 +7,7 @@ en:
     teams:
       member_list:
         team_members_length_1_warning: ⚠️ As soon as someone else joins this team, your submissions will show up in the leaderboard under the team name.
+        min_team_member_notification: "🔔 This challenge requires a min of %{count} members for participation."
         members:
           title: Members
           limit: "( %{current} / %{max} )"
