@@ -19,14 +19,20 @@ class PostsController < InheritedResources::Base
   end
 
   def set_my_challenges
-    @my_challenges = ChallengeParticipant.where(participant_id: current_participant.id).map(&:challenge).collect {|c| [ c.challenge, c.id] }
+    all_challenges = ChallengeParticipant.where(participant_id: current_participant.id)
+    meta_challenges = Challenge.where(id: all_challenges.pluck(:challenge_id), meta_challenge: true)
+    @my_challenges = all_challenges.map(&:challenge).collect {|c| [ c.challenge, c.id] }
+    meta_challenges.each do |meta_challenge|
+      @my_challenges += meta_challenge.problems.collect{|c| [c.challenge, c.id] } if meta_challenges.present?
+    end
     if params[:challenge].present?
       challenge = Challenge.friendly.find(params[:challenge])
       if !@my_challenges.include?([challenge.challenge, challenge.id])
         @my_challenges.push([challenge.challenge, challenge.id])
-      end
-      if challenge.meta_challenge?
-        @my_challenges += challenge.problems.collect {|c| [ c.challenge, c.id] }
+
+        if challenge.meta_challenge?
+          @my_challenges += challenge.problems.collect {|c| [ c.challenge, c.id] }
+        end
       end
     end
   end
