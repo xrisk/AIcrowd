@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_26_105327) do
+ActiveRecord::Schema.define(version: 2021_05_04_180128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -757,6 +757,7 @@ ActiveRecord::Schema.define(version: 2021_04_26_105327) do
     t.bigint "participant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "referred_page"
     t.index ["participant_id"], name: "index_feedbacks_on_participant_id"
   end
 
