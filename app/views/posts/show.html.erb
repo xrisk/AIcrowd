@@ -64,7 +64,9 @@
       </div>
       <hr/>
       <div class="ipynb-notebook-container">
-        <%= @post.notebook_html.html_safe %>
+        <% cache_if cache_enabled?, [@post] do %>
+          <%= @post.notebook_html.html_safe %>
+        <% end %>
       </div>
       <div class="text-center col-12 mt-3"><div class="show-more-btn btn btn-primary col-4" data-controller="post" data-action="click->post#expandNotebook">↕️&nbsp;&nbsp;Read More</div></div>
     <% end %>
