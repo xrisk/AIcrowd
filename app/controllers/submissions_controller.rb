@@ -15,7 +15,7 @@ class SubmissionsController < ApplicationController
   before_action :handle_artifact_based_submissions, only: [:create]
   before_action :set_admin_variable, only: [:show]
   before_action :check_restricted_ip, only: [:create]
-  # before_action :validate_min_submissions, only: [:create]
+  before_action :validate_min_submissions, only: [:create]
 
   layout :set_layout
   respond_to :html, :js
@@ -467,8 +467,8 @@ class SubmissionsController < ApplicationController
   end
 
   def validate_min_submissions
-    if @submissions_remaining < 1
-      redirect_or_json(helpers.challenge_submissions_path(@challenge), "Submission limit reached for your account, it will reset at #{@reset_dttm}", :forbidden, "Submission limit reached for your account, it will reset at #{@reset_dttm}")
+    if @submissions_remaining[0].to_i < 1
+      redirect_or_json(helpers.challenge_submissions_path(@challenge), "Submission limit reached for your account.", :forbidden, "Submission limit reached for your account.")
       return
     end
   end
