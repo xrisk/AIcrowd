@@ -39,15 +39,21 @@
               Submission filters
             </a>
             <% if @submissions_remaining.present? %>
-              <% if @submissions_remaining[1] %>
-                <span class="float-right font-weight-bold"><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="You have <%= pluralize(@submissions_remaining[0],'submission') %> remaining until <%= @submissions_remaining[1] %>."></i>
-                  <%= pluralize(@submissions_remaining[0],'submission') %> remaining.
+              <% if @submissions_remaining[0] <= 0 %>
+                <span class="float-right font-weight-bold"><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="No submission remaining."></i>
+                  No submission remaining.
                 </span>
               <% else %>
-                <span class="float-right font-weight-bold"><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="You have <%= pluralize(@submissions_remaining[0],'submission') %> remaining."></i></a>
-                  <%= pluralize(@submissions_remaining[0],'submission') %> remaining.
-                </span>
-              <% end %>
+                <% if @submissions_remaining[1]%>
+                  <span class="float-right font-weight-bold"><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="You have <%= pluralize(@submissions_remaining[0],'submission') %> remaining until <%= @submissions_remaining[1] %>."></i>
+                    <%= pluralize(@submissions_remaining[0],'submission') %> remaining.
+                  </span>
+                <% else %>
+                  <span class="float-right font-weight-bold"><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="You have <%= pluralize(@submissions_remaining[0],'submission') %> remaining."></i></a>
+                    <%= pluralize(@submissions_remaining[0],'submission') %> remaining.
+                  </span>
+                <% end %>
+              <% end%>
             <% end %>
           </div>
           <div id='submissionFilters' class="collapse <%= current_participant && @my_submissions || @baselines ? 'show' : '' %>">
