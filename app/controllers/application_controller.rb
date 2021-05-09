@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :modify_params_for_meta_challenges
   before_action :notifications
   before_action :check_for_redirection
+  before_action :block_ip_addresses
 
   def track_action
     properties         = { request: request.filtered_parameters }
@@ -164,4 +165,11 @@ class ApplicationController < ActionController::Base
       redirect_to destination_url and return
     end
   end
+
+  def block_ip_addresses
+    if ENV['BLOCKED_IP_ADDRESS'].present?
+      not_authorized if ENV['BLOCKED_IP_ADDRESS'].split(",").include?(request.remote_ip)
+    end
+  end
+
 end
