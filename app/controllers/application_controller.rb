@@ -167,7 +167,7 @@ class ApplicationController < ActionController::Base
   end
 
   def block_ip_addresses
-    if ENV['BLOCKED_IP_ADDRESS'].present?
+    if ENV['BLOCKED_IP_ADDRESS'].present? && params.has_key?('challenge_id')
       not_authorized if ENV['BLOCKED_IP_ADDRESS'].split(",").include?(request.remote_ip)
     end
   end
