@@ -67,9 +67,7 @@ module Challenges
 
           # Assign decoded image to associations fields
           challenge.public_send(association_name).each_with_index do |association, index|
-            if !import_params["#{association_name}_attributes"].present? || !import_params["#{association_name}_attributes"][index].present?
-              || !import_params["#{association_name}_attributes"][index][field_name].present? ||
-                !decode_base64_data(import_params["#{association_name}_attributes"][index][field_name]).present?
+            if !import_params["#{association_name}_attributes"].present? || !import_params["#{association_name}_attributes"][index].present? || !import_params["#{association_name}_attributes"][index][field_name].present? || !decode_base64_data(import_params["#{association_name}_attributes"][index][field_name]).present?
               next
             end
             association.public_send("#{field_name}=", decode_base64_data(import_params["#{association_name}_attributes"][index][field_name]))
