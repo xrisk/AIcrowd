@@ -190,11 +190,11 @@ class ChallengesController < ApplicationController
   end
 
   def notebooks
-    @notebooks = @challenge.posts
+    @notebooks = @challenge.posts.where(private: false)
     if @challenge.meta_challenge?
       @notebooks ||= []
       Challenge.where(id: @challenge.challenge_problems.pluck(:problem_id)).each do |challenge|
-        @notebooks = @notebooks + challenge.posts
+        @notebooks = @notebooks + challenge.posts.where(private: false)
       end
     end
 
