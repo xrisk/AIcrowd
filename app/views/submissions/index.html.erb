@@ -40,9 +40,15 @@
             </a>
             <% if @submissions_remaining.present? %>
               <% if @submissions_remaining[0] <= 0 %>
-                <span class="float-right font-weight-bold"><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="No submission remaining."></i>
-                  No submission remaining.
-                </span>
+                <% if @submissions_remaining[1]%>
+                  <span class="float-right font-weight-bold"><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="No submission remaining until <%= @submissions_remaining[1] %>."></i>
+                    No submission remaining.
+                  </span>
+                <% else %>
+                  <span class="float-right font-weight-bold"><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="No submission remaining."></i>
+                    No submission remaining.
+                  </span>
+                <% end %>
               <% else %>
                 <% if @submissions_remaining[1]%>
                   <span class="float-right font-weight-bold"><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" title="You have <%= pluralize(@submissions_remaining[0],'submission') %> remaining until <%= @submissions_remaining[1] %>."></i>
