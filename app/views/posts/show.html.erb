@@ -14,6 +14,7 @@
               <span>By&nbsp;</span>
               <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant, avatar: 'false'} %>
             </span>
+            <span class="masthead-date"><%= local_time(@post.created_at, "%-d %B %Y") %></span>
 
             <div class="btn-set ml-2 mt-3" aria-hidden="true">
               <%= render partial: 'shared/votes/button', locals: { votable: @post, vote: @post.vote(current_participant) } %>
@@ -56,7 +57,7 @@
           <button type="button" class="btn btn-sm btn-link">Notebook</button>
         </div>
         <div class="col-md-0">
-          <button type="button" class="btn btn-sm btn-primary"><a href='<%= s3_expiring_url(@post.notebook_s3_url) %>' target="_blank"><span class="fa fa-download mr-1"></span>Download</a></button>
+          <button type="button" class="btn btn-sm btn-primary"><a href='<%= s3_expiring_url(@download_notebook_url) %>' target="_blank"><span class="fa fa-download mr-1"></span>Download</a></button>
         </div>
         <div class="col-md-1">
           <button type="button" class="btn btn-sm btn-primary"><a href='<%= @execute_in_colab_url %>' target="_blank"><span class="fa fa-cogs mr-1"></span>Open in Colab</a></button>

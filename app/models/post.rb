@@ -45,6 +45,13 @@ class Post < ApplicationRecord
     return colab_url
   end
 
+  def download_notebook_url
+    download_url = nil
+    if self.notebook_s3_url.present?
+      download_url = self.notebook_s3_url.delete_prefix(ENV['AWS_S3_URL'])
+    end
+  end
+
   def should_generate_new_friendly_id?
     title_changed? || super
   end
