@@ -45,6 +45,13 @@ class Post < ApplicationRecord
     return colab_url
   end
 
+  def download_notebook_url
+    download_url = nil
+    if self.notebook_s3_url.present?
+      download_url = self.notebook_s3_url.delete_prefix("https://aicrowd-production.s3.eu-central-1.amazonaws.com/")
+    end
+  end
+
   def should_generate_new_friendly_id?
     title_changed? || super
   end
