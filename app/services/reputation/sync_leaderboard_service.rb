@@ -17,7 +17,7 @@ module Reputation
 
     def sync_data(last_updated_time)
       # base_leaderboards = BaseLeaderboard.where("created_at > ?", last_updated_time))
-      base_leaderboards = BaseLeaderboard.where(challenge_round_id: ChallengeRound.all.pluck(:id), leaderboard_type_cd: "leaderboard").where("submitter_id is not NULL").where("row_num is not NULL")
+      base_leaderboards = BaseLeaderboard.where(challenge_round_id: ChallengeRound.all.pluck(:id), leaderboard_type_cd: "leaderboard").where("meta_challenge_id is NULL")
       base_leaderboards = rename_keys(base_leaderboards.as_json)
       base_leaderboards = base_leaderboards.map do |bl|
         if bl["challenge_round_id"] && bl["rank"] && bl["created_at"] && bl["participant_id"]
