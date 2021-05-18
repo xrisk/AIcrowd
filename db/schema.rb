@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_04_180128) do
+ActiveRecord::Schema.define(version: 2021_05_18_065609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -383,6 +383,7 @@ ActiveRecord::Schema.define(version: 2021_05_04_180128) do
     t.text "leaderboard_note"
     t.boolean "default", default: false
     t.integer "sequence", default: 0
+    t.boolean "ranking_enabled", default: false
     t.index ["challenge_id"], name: "index_challenge_leaderboard_extras_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_challenge_leaderboard_extras_on_challenge_round_id"
   end
