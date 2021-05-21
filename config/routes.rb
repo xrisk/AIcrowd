@@ -255,6 +255,7 @@ Rails.application.routes.draw do
   resources :publications, path: :research, only: [:index, :show] do
     get :all, on: :collection
   end
+  resources :ratings, only: [:index, :create]
 
   match '/contact', to: 'pages#contact', via: :get
   match '/privacy', to: 'pages#privacy', via: :get

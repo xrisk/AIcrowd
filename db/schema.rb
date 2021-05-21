@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_065609) do
+ActiveRecord::Schema.define(version: 2021_05_20_104141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -384,6 +384,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_065609) do
     t.boolean "default", default: false
     t.integer "sequence", default: 0
     t.boolean "ranking_enabled", default: false
+    t.float "weight", default: 0.005
+    t.integer "sub_round_size", default: 1
     t.index ["challenge_id"], name: "index_challenge_leaderboard_extras_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_challenge_leaderboard_extras_on_challenge_round_id"
   end
@@ -1164,6 +1166,16 @@ ActiveRecord::Schema.define(version: 2021_05_18_065609) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["challenge_id"], name: "index_publications_on_challenge_id"
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.integer "challenge_leaderboard_extra_id", null: false
+    t.integer "participant_id", null: false
+    t.integer "rating", null: false
+    t.float "mu"
+    t.float "sigma"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "redirects", force: :cascade do |t|
