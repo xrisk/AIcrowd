@@ -17,3 +17,7 @@ terminate_challenges:
 # sync_leaderboards:
 #   cron: "30 2 * * *" # 2:30 AM every day
 #   class: "Reputation::SyncLeaderboardDataJob"
+
+rating_calculation_job:
+    cron: "0 */6 * * *" # Every 6 hours
+    class: Reputation::RatingCalculationJob

@@ -386,6 +386,10 @@ ActiveRecord::Schema.define(version: 2021_05_20_104141) do
     t.boolean "ranking_enabled", default: false
     t.float "weight", default: 0.005
     t.integer "sub_round_size", default: 1
+    t.boolean "use_for_final_rating", default: false
+    t.boolean "for_weekly_rating", default: false
+    t.datetime "last_calculated_at"
+    t.boolean "rating_calculated", default: false
     t.index ["challenge_id"], name: "index_challenge_leaderboard_extras_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_challenge_leaderboard_extras_on_challenge_round_id"
   end
