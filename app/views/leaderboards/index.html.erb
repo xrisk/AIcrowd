@@ -6,7 +6,7 @@
   class="section-p-sm"
   data-controller="leaderboards"
 >
-<% cache_if cache_enabled?, [@challenge, @challenge_rounds, @current_leaderboard] do %>
+<% cache_if cache_enabled?, [@challenge, @challenge_rounds, @current_leaderboard, (current_participant.present? && policy(@challenge).edit?)] do %>
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
@@ -38,9 +38,11 @@
               </li>
               <% @current_round.extra_leaderboards.order(:sequence).each do |extra_leaderboard| %>
               <li class="nav-item">
-                <%= link_to extra_leaderboard.name,
+                <% if extra_leaderboard.show_leaderboard? || (current_participant.present? && policy(@challenge).edit?) %>
+                  <%= link_to extra_leaderboard.name,
                             challenge_leaderboards_path(@challenge, challenge_round_id: @current_round, challenge_leaderboard_extra_id: extra_leaderboard.id),
                             class: round_pills_tab_classes(extra_leaderboard, @current_leaderboard) %>
+                <% end%>
               </li>
               <% end %>
           </ul>
