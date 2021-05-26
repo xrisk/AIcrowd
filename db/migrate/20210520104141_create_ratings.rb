@@ -6,6 +6,7 @@ class CreateRatings < ActiveRecord::Migration[5.2]
       t.integer :rating, null: false
       t.float   :mu
       t.float   :sigma
+      t.integer :rank
 
       t.timestamps
     end
