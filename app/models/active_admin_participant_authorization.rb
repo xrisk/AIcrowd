@@ -1,7 +1,7 @@
 class ActiveAdminParticipantAuthorization < ActiveAdmin::AuthorizationAdapter
   def authorized?(action, subject = nil)
     if subject.name == "Participant"
-      if ENV["PERMITTED_IDS"].split(',').map(&:to_i).include?(user.id)
+      if user.super_admin?
         return true
       else
         return false

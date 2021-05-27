@@ -115,6 +115,19 @@ class ParticipantsController < ApplicationController
     end
   end
 
+  def impersonate
+    participant = Participant.friendly.find(params[:format])
+    impersonate_participant(participant)
+    flash[:info] = 'Impersonation Started.'
+    redirect_to root_path
+  end
+
+  def stop_impersonating
+    stop_impersonating_participant
+    flash[:info] = 'Impersonation Stopped.'
+    redirect_to root_path
+  end
+
   private
 
   def set_participant

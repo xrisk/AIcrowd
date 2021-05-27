@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include ::ActionController::HttpAuthentication::Token::ControllerMethods
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :not_authorized_or_login
+  impersonates :participant, method: :current_participant, with: ->(id) { Participant.friendly.find(id) }
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_paper_trail_whodunnit
   after_action :track_action

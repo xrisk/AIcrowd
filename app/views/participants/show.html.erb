@@ -56,6 +56,13 @@
       </li>
       <!-- /more dropdown xs -->
     </ul>
+    <% if true_participant.present? && true_participant.super_admin? %>
+      <% if current_participant != true_participant && current_participant == @participant %>
+        <%= link_to "Stop Impersonating", stop_impersonating_participants_path(@participant), class: "btn btn-secondary" %>
+      <% else %>
+        <%= link_to "Impersonate User", impersonate_participants_path(@participant), class: "btn btn-secondary" %>
+      <% end %>
+    <% end %>
   </div>
 </div>
 <!-- /sub-nav bar -->

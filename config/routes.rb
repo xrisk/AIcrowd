@@ -166,6 +166,8 @@ Rails.application.routes.draw do
     get :remove_image
     get :notifications_message
     patch :accept_terms
+    get :impersonate, on: :collection
+    get :stop_impersonating, on: :collection
     get '/read_notification/:id' => 'participants#read_notification', :as => :read_notification
     match '/notifications', to: 'email_preferences#edit', via: :get
     match '/notifications', to: 'email_preferences#update', via: :patch
