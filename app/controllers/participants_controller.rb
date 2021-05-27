@@ -223,7 +223,7 @@ class ParticipantsController < ApplicationController
   end
 
   def check_super_admin
-    if !(current_participant.present? && current_participant.super_admin?)
+    if !(true_participant.present? && true_participant.super_admin?)
       flash[:error] = "You're not authorized to perform this action."
       return redirect_to root_path
     end
