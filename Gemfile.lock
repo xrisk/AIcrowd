@@ -668,6 +668,8 @@ GEM
       ast (~> 2.4.0)
     pg (1.1.3)
     popper_js (1.16.0)
+    pretender (0.3.4)
+      actionpack (>= 4.2)
     prometheus-client (0.8.0)
       quantile (~> 0.2.1)
     pry (0.12.2)
@@ -1050,6 +1052,7 @@ DEPENDENCIES
   paper_trail (~> 10.3, >= 10.3.1)
   parallel_tests
   pg
+  pretender
   prometheus-client
   pry-byebug
   puma (~> 4.3)

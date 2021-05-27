@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_04_180128) do
+ActiveRecord::Schema.define(version: 2021_05_26_120128) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -1064,6 +1064,7 @@ ActiveRecord::Schema.define(version: 2021_05_04_180128) do
     t.uuid "uuid", default: -> { "public.gen_random_uuid()" }, null: false
     t.bigint "referred_by_id"
     t.boolean "trusted", default: false
+    t.boolean "super_admin", default: false
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["name"], name: "index_participants_on_name", unique: true

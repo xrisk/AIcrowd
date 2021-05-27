@@ -77,9 +77,15 @@ Rails.application.routes.draw do
   admin = lambda do |request|
     request.env['warden'].authenticate? && request.env['warden'].user.admin?
   end
+  super_admin = lambda do |request|
+    request.env['warden'].authenticate? && request.env['warden'].user.super_admin?
+  end
+
+  constraints super_admin do
+    mount Blazer::Engine => '/blazer'
+  end
 
   constraints admin do
-    mount Blazer::Engine => '/blazer'
     mount Sidekiq::Web => '/sidekiq'
     begin
       ActiveAdmin.routes(self)
@@ -166,6 +172,8 @@ Rails.application.routes.draw do
     get :remove_image
     get :notifications_message
     patch :accept_terms
+    get :impersonate, on: :collection
+    get :stop_impersonating, on: :collection
     get '/read_notification/:id' => 'participants#read_notification', :as => :read_notification
     match '/notifications', to: 'email_preferences#edit', via: :get
     match '/notifications', to: 'email_preferences#update', via: :patch

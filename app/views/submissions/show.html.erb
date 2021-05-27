@@ -23,16 +23,18 @@
           <div class="col-md-7 d-flex pl-0">
             <h2 class="mr-2">Submission #<%= @submission.id %></h2><span class="badge <%= submission_grade_class(@submission) %>"><%= @submission.grading_status_cd %></span>
           </div>
-          <div class="col-md-5">
-            <div class="pull-right d-flex">
-              <i class="mr-2 pt-2">Submitted by</i>
-              <div class="avatar-group">
-                <% @authors.each do |participant| %>
-                  <%= render partial: 'participants/get_user_profile', locals: { participant: participant, username: 'false' } %>
-                <% end %>
+          <% if @authors.present? %>
+            <div class="col-md-5">
+              <div class="pull-right d-flex">
+                <i class="mr-2 pt-2">Submitted by</i>
+                <div class="avatar-group">
+                  <% @authors.each do |participant| %>
+                    <%= render partial: 'participants/get_user_profile', locals: { participant: participant, username: 'false' } %>
+                  <% end %>
+                </div>
               </div>
             </div>
-          </div>
+          <% end %>
         </div>
 
         <% if !@show_file_tab && !@show_notebook_tab && !@show_status_tab %>
