@@ -3,6 +3,7 @@ class ParticipantsController < ApplicationController
   before_action :set_participant,
                 only: [:show, :edit, :update, :destroy, :set_follow]
   before_action :set_follow, only: [:show]
+  before_action :check_super_admin, only: [:impersonate, :stop_impersonating]
 
   respond_to :html, :js
 
@@ -219,5 +220,12 @@ class ParticipantsController < ApplicationController
 
   def validate_name_length
     @participant.errors.add(:name, 'is too long (maxium is 20 characters)') if @participant.name.to_s.length > 20
+  end
+
+  def check_super_admin
+    if !(current_participant.present? && current_participant.super_admin?)
+      flash[:error] = "You're not authorized to perform this action."
+      return redirect_to root_path
+    end
   end
 end
