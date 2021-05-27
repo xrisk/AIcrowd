@@ -77,9 +77,15 @@ Rails.application.routes.draw do
   admin = lambda do |request|
     request.env['warden'].authenticate? && request.env['warden'].user.admin?
   end
+  super_admin = lambda do |request|
+    request.env['warden'].authenticate? && request.env['warden'].user.super_admin?
+  end
+
+  constraints super_admin do
+    mount Blazer::Engine => '/blazer'
+  end
 
   constraints admin do
-    mount Blazer::Engine => '/blazer'
     mount Sidekiq::Web => '/sidekiq'
     begin
       ActiveAdmin.routes(self)
