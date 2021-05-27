@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   before_action :notifications
   before_action :check_for_redirection
   before_action :block_ip_addresses
+  helper_method :mobile?
 
   def track_action
     properties         = { request: request.filtered_parameters }
@@ -171,6 +172,10 @@ class ApplicationController < ActionController::Base
     if ENV['BLOCKED_IP_ADDRESS'].present? && params.has_key?('challenge_id')
       not_authorized if ENV['BLOCKED_IP_ADDRESS'].split(",").include?(request.remote_ip)
     end
+  end
+
+  def mobile? # has to be in here because it has access to "request"
+    request.user_agent =~ /\b(Android|iPhone|iPad|Windows Phone|Opera Mobi|Kindle|BackBerry|PlayBook)\b/i
   end
 
 end
