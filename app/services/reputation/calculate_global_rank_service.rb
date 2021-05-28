@@ -15,21 +15,17 @@ module Reputation
         global_rank = GlobalRank.where(participant_id: rating.participant_id).first_or_initialize
         global_rank.rating_id = rating.id
         global_rank.rating = rating.rating
+        global_rank.save!
       end
     end
 
     def update_rank
-      GlobalRank.order(:rating).each_with_index do |gr, index|
-        gr.rank = index + 1
-        gr.save!
-      end
-    end
-
-    def update_rating
+      sql = "select rating_id, RANK () OVER (ORDER BY rating desc) FROM global_ranks"
+      rating_ranks = ActiveRecord::Base.connection.execute(sql)
+      rating_ranks_hash = {}
+      rating_ranks_hash = records_array.values.map {|row| rating_ranks_hash[row[0]] = row[1]}
       @ratings.each do |rating|
-        rank = GlobalRank.where(rating_id: rating.id).first.rank
-        rating.rank = rank
-        rating.save!
+        rating.rank = rating_ranks_hash[rating.id]
       end
     end
   end
