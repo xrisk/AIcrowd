@@ -1,6 +1,6 @@
 class ActiveAdminParticipantAuthorization < ActiveAdmin::AuthorizationAdapter
   def authorized?(action, subject = nil)
-    if subject.name == "Participant" || subject.class.to_s == "Participant"
+    if (subject.class.to_s == "Class" && subject.name == "Participant") || subject.class.to_s == "Participant"
       if user.super_admin?
         return true
       else
