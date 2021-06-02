@@ -33,7 +33,7 @@
             <%= image_tag image_path('img/icon-comment.svg') %>&nbsp;<%= CommontatorComment.where(thread_id: CommontatorThread.where(commontable_id: @blog.id, commontable_type: "Blog").first.id).count %>
           </button>
 
-          <%= render partial: 'shared/votes/button', locals: { votable: @blog, vote: @blog.vote(current_participant) } %>
+          <%= render partial: 'shared/votes/button', locals: { votable: @blog, vote: @blog.vote(current_participant), width: 15 } %>
 
           <hr>
 
