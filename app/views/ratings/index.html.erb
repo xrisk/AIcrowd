@@ -1,0 +1,199 @@
+<div class="masthead">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <h1>AIcrowd Leaderboard</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /masthead -->
+<!-- filter -->
+<div class="filter-bar">
+  <div class="container-fluid">
+    <div class="row" style="width: 100%;">
+      <div class="col-6">
+        <div class="leaderboard-srch">
+          <div class="input-group">
+            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" placeholder="Search for any participant,institute,rank etc" style="background-color: white; border-bottom-left-radius: 20px; border-top-left-radius: 20px;">
+            <div class="input-group-append">
+              <button class="btn btn-srch" type="button">
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="btn-filter col-2 float-right">
+          <i class="fa fa-filter" aria-hidden="true" style="vertical-align: -webkit-baseline-middle;"></i>
+          <a href="#" style="vertical-align: -webkit-baseline-middle;">FILTERS</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /filter -->
+
+<!-- filtered text -->
+<div class="container-fluid">
+  <% if params[:status].present? || params[:categories].present? || params[:prizes].present? %>
+    <p class='card-text'>
+      <%= filter_message(params[:status], params[:categories], params[:prizes]) %>
+      <%= link_to 'Clear Filter', challenges_path, class: 'btn btn-sm apply-filter-btn none-underline'  %>
+    </p>
+  <% end %>
+</div>
+<!-- /filtered text -->
+
+
+<div class="container-fluid">
+  <section class="top-rank">
+    <div class="row rankinggrid">
+      <div class="rank-card  mt-5">
+        <div class="rank-card-banner">
+          <h1 class="card-rank mr-4 mt-2">1</h1>
+          <div class="rank-card-name">
+            <h3><%= @rank_1.participant.name %></h3>
+          </div>
+          <div class="rank-card-image">
+            <%= render partial: 'participants/get_user_profile_with_flag', locals: { participant: @rank_1.participant, username: 'false', flag_class: 'profile-image-flag-big' } %>
+          </div>
+        </div>
+        <div class="rank-card-content">
+          <div class="rank-card-recent">
+            <h3 class="rank-card-content-heading">
+              POINTS
+            </h3>
+            <h4 class="clr-theme"><%= number_with_precision(@rank_1.rating, precision: 2) %></h4>
+          </div>
+        </div>
+        <div class="rank-card-submission">
+          <h3 class="rank-card-content-heading">
+            POINTS GRAPH
+          </h3>
+          <div class="rank-card-submission">
+          </div>
+        </div>
+        <tr>
+          <td>
+            <% has = {}; has[Date.today - 2.days] = 110; has[Date.today] = 123; has[Date.today - 1.day]= 143%>
+            <%= line_chart has, width: "200px", height: "100px" %>
+          </td>
+        </tr>
+      </div>
+    </div>
+    <div class="row rankingrow">
+      <div class="rank-card my-3">
+        <div class="rank-card-banner">
+          <h1 class="card-rank mr-4 mt-2">2</h1>
+          <div class="rank-card-name">
+            <h3><%= @rank_2.participant.name %></h3>
+          </div>
+          <div class="rank-card-image">
+            <%= render partial: 'participants/get_user_profile_with_flag', locals: { participant: @rank_2.participant, username: 'false', flag_class: 'profile-image-flag-big' } %>
+          </div>
+        </div>
+        <div class="rank-card-content">
+          <div class="rank-card-recent">
+            <h3 class="rank-card-content-heading">
+              POINTS
+            </h3>
+            <h4 class="clr-theme"><%= number_with_precision(@rank_2.rating, precision: 2) %></h4>
+          </div>
+        </div>
+        <div class="rank-card-submission">
+          <h3 class="rank-card-content-heading">
+            POINTS GRAPH
+          </h3>
+          <div class="rank-card-submission">
+          </div>
+        </div>
+        <tr>
+          <td>
+            <% has = {}; has[Date.today - 2.days] = 110; has[Date.today] = 123; has[Date.today - 1.day]= 143%>
+            <%= line_chart has, width: "200px", height: "100px" %>
+          </td>
+        </tr>
+      </div>
+      <div class="rank-card my-3">
+        <div class="rank-card-banner">
+          <h1 class="card-rank mr-4 mt-2">3</h1>
+          <div class="rank-card-name">
+            <h3><%= @rank_3.participant.name %></h3>
+          </div>
+          <div class="rank-card-image">
+            <%= render partial: 'participants/get_user_profile_with_flag', locals: { participant: @rank_3.participant, username: 'false', flag_class: 'profile-image-flag-big' } %>
+          </div>
+        </div>
+        <div class="rank-card-content">
+          <div class="rank-card-recent">
+            <h3 class="rank-card-content-heading">
+              POINTS
+            </h3>
+            <h4 class="clr-theme"><%= number_with_precision(@rank_3.rating, precision: 2) %></h4>
+          </div>
+        </div>
+        <div class="rank-card-submission">
+          <h3 class="rank-card-content-heading">
+            POINTS GRAPH
+          </h3>
+
+          <div class="rank-card-submission">
+          </div>
+        </div>
+        <tr>
+          <td>
+            <% has = {}; has[Date.today - 2.days] = 110; has[Date.today] = 123; has[Date.today - 1.day]= 143%>
+            <%= line_chart has, width: "200px", height: "100px" %>
+          </td>
+        </tr>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="container-fluid">
+  <section class="rank-leaderboard row">
+    <table class="table-responsive rank-table">
+      <thead>
+        <tr class="table-light">
+          <th scope="col">RANK</th>
+          <!-- <th scope="col">COUNTRY</th> -->
+          <th scope="col">PARTICIPANTS</th>
+          <th scope="col">CROWD KARMA POINTS <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Lorem Ipsum Lorem Ipsum"></i></th>
+          <th scope="col">AI DOMAIN TAG</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @rankings.each_with_index do |ranking, index|%>
+          <tr class="mt-3 rank-leaderboard-tablelist">
+            <div class="col-2"></div>
+            <th scope="row">#<%= index + 4 %></th>
+            <td>
+              <div class="masthead-blog-post" style="padding: 0px;">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-12" style="margin-left: 30%;">
+                      <div>
+                        <span class="author">
+                          <% if ranking.participant.country_cd.blank?%>
+                            <%= render partial: 'participants/get_user_profile', locals: { participant: ranking.participant, username: 'false' } %>
+                          <% else %>
+                            <%= render partial: 'participants/get_user_profile_with_flag', locals: { participant: ranking.participant, username: 'false' } %>
+                          <% end %>
+                          <%= render partial: 'participants/get_user_profile', locals: { participant: ranking.participant, avatar: 'false' } %>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td><%= number_with_precision(ranking.rating, precision: 2) %></td>
+            <td>submission</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </section>
+</div>
