@@ -67,6 +67,9 @@
             </h3>
             <h4 class="clr-theme"><%= number_with_precision(@rank_1.rating, precision: 2) %></h4>
           </div>
+          <div class="col-3" style="align-self: center;background-color: gold;border-radius: 20px;">
+            Tier 1
+          </div>
         </div>
         <div class="rank-card-submission">
           <h3 class="rank-card-content-heading">
@@ -78,7 +81,7 @@
         <tr>
           <td>
             <% has = {}; has[Date.today - 2.days] = 110; has[Date.today] = 123; has[Date.today - 1.day]= 143%>
-            <%= line_chart has, width: "200px", height: "100px" %>
+            <%= line_chart has, width: "280px", height: "100px", library: {scales:  {xAxes: [{ gridLines: { display: false }, ticks: { display: false } }] }} %>
           </td>
         </tr>
       </div>
@@ -101,6 +104,9 @@
             </h3>
             <h4 class="clr-theme"><%= number_with_precision(@rank_2.rating, precision: 2) %></h4>
           </div>
+          <div class="col-3" style="align-self: center;background-color: gold;border-radius: 20px;">
+            Tier 1
+          </div>
         </div>
         <div class="rank-card-submission">
           <h3 class="rank-card-content-heading">
@@ -112,7 +118,7 @@
         <tr>
           <td>
             <% has = {}; has[Date.today - 2.days] = 110; has[Date.today] = 123; has[Date.today - 1.day]= 143%>
-            <%= line_chart has, width: "200px", height: "100px" %>
+            <%= line_chart has, width: "280px", height: "100px", library: { scales: {xAxes: [ display: false] } } %>
           </td>
         </tr>
       </div>
@@ -133,6 +139,9 @@
             </h3>
             <h4 class="clr-theme"><%= number_with_precision(@rank_3.rating, precision: 2) %></h4>
           </div>
+          <div class="col-3" style="align-self: center;background-color: gold;border-radius: 20px;">
+            Tier 1
+          </div>
         </div>
         <div class="rank-card-submission">
           <h3 class="rank-card-content-heading">
@@ -144,8 +153,8 @@
         </div>
         <tr>
           <td>
-            <% has = {}; has[Date.today - 2.days] = 110; has[Date.today] = 123; has[Date.today - 1.day]= 143%>
-            <%= line_chart has, width: "200px", height: "100px" %>
+            <% has = {}; has[Date.today - 2.days] = 310; has[Date.today] = 2223; has[Date.today - 1.day]= 1633%>
+            <%= line_chart has, width: "280px", height: "100px", library: { scales: {xAxes: [ display: false] } } %>
           </td>
         </tr>
       </div>
