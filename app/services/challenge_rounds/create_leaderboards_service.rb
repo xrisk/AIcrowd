@@ -103,7 +103,7 @@ module ChallengeRounds
 
       assign_row_num(users_leaderboards)
 
-      all_leaderboards    = users_leaderboards + baseline_leaderboards
+      all_leaderboards    = baseline_leaderboards + users_leaderboards
       sorted_leaderboards = sort_leaderboards(all_leaderboards)
 
       sorted_leaderboards.each.with_index(1) do |leaderboard, index|
