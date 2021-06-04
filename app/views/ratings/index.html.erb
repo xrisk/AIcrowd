@@ -67,7 +67,7 @@
             </h3>
             <h4 class="clr-theme"><%= number_with_precision(@rank_1.rating, precision: 2) %></h4>
           </div>
-          <div class="col-3" style="align-self: center;background-color: gold;border-radius: 20px;">
+          <div class="col-3" style="align-self: flex-end;background-color: gold;border-radius: 20px; margin-bottom: 23px;">
             Tier 1
           </div>
         </div>
@@ -166,18 +166,23 @@
     <table class="table-responsive rank-table">
       <thead>
         <tr class="table-light">
+          <th></th>
           <th scope="col">RANK</th>
           <!-- <th scope="col">COUNTRY</th> -->
           <th scope="col">PARTICIPANTS</th>
-          <th scope="col">CROWD KARMA POINTS <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Lorem Ipsum Lorem Ipsum"></i></th>
-          <th scope="col">AI DOMAIN TAG</th>
+          <th scope="col">CROWD KARMA POINTS <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-html="true" data-trigger="click" tooltip-html-unsafe='<%= render partial: 'info' %>'>
+          </i></th>
+          <th scope="col">LAST CHALLENGE</th>
         </tr>
       </thead>
       <tbody>
         <% @rankings.each_with_index do |ranking, index|%>
           <tr class="mt-3 rank-leaderboard-tablelist">
-            <div class="col-2"></div>
-            <th scope="row">#<%= index + 4 %></th>
+            <td style="width: 1px;padding: 0px;"><div style="height: 50px;background-color: gold;width: 7px;"></div></td>
+            <th scope="row">
+              #<%= index + 4 %>
+              <%= global_leaderboard_ranking_change(ranking.participant) %>
+            </th>
             <td>
               <div class="masthead-blog-post" style="padding: 0px;">
                 <div class="container-fluid">
@@ -199,7 +204,7 @@
               </div>
             </td>
             <td><%= number_with_precision(ranking.rating, precision: 2) %></td>
-            <td>submission</td>
+            <td><%= link_to ranking.user_rating.challenge_leaderboard_extra.challenge.challenge, challenge_path(ranking.user_rating.challenge_leaderboard_extra.challenge.slug) %></td>
           </tr>
         <% end %>
       </tbody>
