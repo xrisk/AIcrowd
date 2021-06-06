@@ -14604,11 +14604,17 @@ input.width-185 {
 }
 .rank-card-recent{
   margin: 35px 20px 10px 15px;
-  width: 33%;
+  width: 100%;
 }
 .rank-card-recent h4{
   font-weight: 400;
   font-size: 1.3rem;
+}
+
+.rank-card-point {
+  font-weight: 400;
+  font-size: 0.9rem;
+  margin-left: 8%;
 }
 .leaderboard-srch .input-group input{
   height: 35px;
@@ -14679,11 +14685,12 @@ input.width-185 {
     color: gray;
     font-size: 0.8rem;
     font-weight: 400;
+    margin-right: 50%;
 }
 
 .rank-card-content{
   padding: 0px 0px 0px 0px;
-  justify-content: center;
+  justify-content: space-around;
     display: flex;
 }
 .rank-card-submission{
@@ -14864,6 +14871,13 @@ input.width-185 {
   border-radius: 0% !important;
 }
 
+.rank-card-tier{
+  align-self: flex-end;
+  background-color: gold;
+  border-radius: 20px;
+  margin-bottom: 23px;
+  margin-left: 30%;
+}
 
 
 
