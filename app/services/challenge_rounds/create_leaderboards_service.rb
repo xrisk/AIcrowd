@@ -327,14 +327,14 @@ module ChallengeRounds
         end
 
         if @challenge_leaderboard_extra.secondary_sort_order_cd.blank? || @challenge_leaderboard_extra.secondary_sort_order_cd == 'not_used'
-          if next_leaderboard.score == leaderboard.score && next_leaderboard.created_at == leaderboard.created_at
+          if next_leaderboard.score == leaderboard.score
             same_score_count += 1
           else
             current_row_num  += 1 + same_score_count
             same_score_count = 0
           end
         else
-          if next_leaderboard.score == leaderboard.score && next_leaderboard.score_secondary == leaderboard.score_secondary && next_leaderboard.created_at == leaderboard.created_at
+          if next_leaderboard.score == leaderboard.score && next_leaderboard.score_secondary == leaderboard.score_secondary
             same_score_count += 1
           else
             current_row_num  += 1 + same_score_count
