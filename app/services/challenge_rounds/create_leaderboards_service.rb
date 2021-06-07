@@ -278,9 +278,11 @@ module ChallengeRounds
       score_sort_order = sort_map(@challenge_leaderboard_extra.primary_sort_order_cd)
 
       if @challenge_leaderboard_extra.secondary_sort_order_cd.blank? || @challenge_leaderboard_extra.secondary_sort_order_cd == 'not_used'
-        sorted_leaderboards = all_leaderboards.sort_by { |leaderboard| leaderboard.score.to_f }
-        sorted_leaderboards = sorted_leaderboards.sort_by { |leaderboard| leaderboard.created_at }
-        sorted_leaderboards.reverse! if score_sort_order == 'desc'
+        sorted_leaderboards = all_leaderboards.sort_by do |leaderboard|
+          score      = score_sort_order == 'asc' ? leaderboard.score.to_f : leaderboard.score.to_f * -1
+          created_at = leaderboard.created_at
+          [score, created_at]
+        end
 
         return sorted_leaderboards
       end
