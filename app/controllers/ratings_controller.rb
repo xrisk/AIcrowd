@@ -7,6 +7,7 @@ class RatingsController < ApplicationController
 
     @rankings = GlobalRank.order('rating desc').includes(:participant).offset(3).limit(100)
     get_topper_graph_data
+    get_topper_rank_change
   end
 
   def create
@@ -43,6 +44,31 @@ class RatingsController < ApplicationController
       @rank_3_graph[rating.created_at.to_date] = rating.rating
     end
   end
+
+  def get_topper_rank_change
+    @rank_1_change = "+0"
+    @rank_2_change = "+0"
+    @rank_3_change = "+0"
+    if @rank_1.participant.ratings.count > 1
+      rank_1_ratings = @rank_1.participant.ratings.order('created_at desc').limit(2)
+      change = rank_1_ratings.first.rating - rank_1_ratings.second.rating
+      @rank_1_change = change >= 0 ? "+#{change}" : "#{change}"
+    end
+
+    if @rank_2.participant.ratings.count > 1
+      rank_2_ratings = @rank_2.participant.ratings.order('created_at desc').limit(2)
+      change = rank_2_ratings.first.rating - rank_2_ratings.second.rating
+      @rank_2_change = change >= 0 ? "+#{change}" : "#{change}"
+    end
+
+    if @rank_3.participant.ratings.count > 1
+      rank_3_ratings = @rank_3.participant.ratings.order('created_at desc').limit(2)
+      change = rank_3_ratings.first.rating - rank_3_ratings.second.rating
+      @rank_3_change = change >= 0 ? "+#{change}" : "#{change}"
+    end
+  end
+
+
 
 
 end

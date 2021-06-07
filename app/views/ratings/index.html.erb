@@ -67,7 +67,7 @@
             </h3>
             <div class="row">
               <h3 class="rank-card-point"><%= number_with_precision(@rank_1.rating, precision: 2) %></h3>
-              <div style="color: red;font-size: 1rem;margin-top:-2px"><%= "(#{"+300"})"%></div>
+              <div style="color: red;font-size: 1rem;margin-top:-2px"><%= "(#{@rank_1_change})"%></div>
               <div class="col-3 rank-card-tier">
                 Tier 1
               </div>
@@ -84,7 +84,7 @@
         <tr>
           <td>
             <% has = {}; has[Date.today - 2.days] = 110; has[Date.today] = 123; has[Date.today - 1.day]= 143; has[Date.today - 3.days] = 340;has[Date.today - 4.days] = 510%>
-            <%= line_chart has, width: "280px", height: "100px",  colors: ["#F0524D"], discrete: true, library: {scales:  {xAxes: [{ gridLines: { display: false }, ticks: { display: false } }], }} %>
+            <%= line_chart @rank_1_graph, width: "280px", height: "100px",  colors: ["#F0524D"], discrete: true, library: {scales:  {xAxes: [{ gridLines: { display: false }, ticks: { display: false } }], }} %>
           </td>
         </tr>
       </div>
@@ -107,8 +107,8 @@
             </h3>
             <div class="row">
               <h3 class="rank-card-point"><%= number_with_precision(@rank_2.rating, precision: 2) %></h3>
-              <div style="color: red;font-size: 1rem;margin-top:-2px"><%= "(#{"+300"})"%></div>
-              <div class="col-3 rank-card-tier">
+              <div style="color: red;font-size: 1rem;margin-top:-2px"><%= "(#{@rank_2_change})"%></div>
+              <div class="col-3 rank-card-tier" style="background-color: #C0C0C0;">
                 Tier 1
               </div>
             </div>
@@ -124,7 +124,7 @@
         <tr>
           <td>
             <% has = {}; has[Date.today - 2.days] = 110; has[Date.today] = 123; has[Date.today - 1.day]= 143%>
-            <%= line_chart has, width: "280px", height: "100px", colors: ["#F0524D"], library: { scales: {xAxes: [ display: false] } } %>
+            <%= line_chart @rank_2_graph, width: "280px", height: "100px", colors: ["#F0524D"], library: { scales: {xAxes: [ display: false] } } %>
           </td>
         </tr>
       </div>
@@ -145,8 +145,8 @@
             </h3>
             <div class="row">
               <h3 class="rank-card-point"><%= number_with_precision(@rank_3.rating, precision: 2) %></h3>
-              <div style="color: red;font-size: 1rem;margin-top:-2px"><%= "(#{"+300"})"%></div>
-              <div class="col-3 rank-card-tier">
+              <div style="color: red;font-size: 1rem;margin-top:-2px"><%= "(#{@rank_3_change})"%></div>
+              <div class="col-3 rank-card-tier" style="background-color: #CD7532">
                 Tier 1
               </div>
             </div>
@@ -163,7 +163,7 @@
         <tr>
           <td>
             <% has = {}; has[Date.today - 2.days] = 310; has[Date.today] = 2223; has[Date.today - 1.day]= 1633%>
-            <%= line_chart has, width: "280px", height: "100px", colors: ["#F0524D"], library: { scales: {xAxes: [ display: false] } } %>
+            <%= line_chart @rank_3_graph, width: "280px", height: "100px", colors: ["#F0524D"], library: { scales: {xAxes: [ display: false] } } %>
           </td>
         </tr>
       </div>
@@ -186,11 +186,14 @@
       <tbody>
         <% @rankings.each_with_index do |ranking, index|%>
           <tr class="mt-3 rank-leaderboard-tablelist">
-            <!-- <td style="width: 1px;padding: 0px;"><div style="height: 50px;background-color: gold;width: 7px;"></div></td> -->
-            <th scope="row">
-              <div style="height: 38px;background-color: gold;width: 7px;display: inherit;margin-left: -42px;"></div>
-              <div>#<%= index + 4 %></div>
-              <%= global_leaderboard_ranking_change(ranking.participant) %>
+            <th>
+              <div class="row">
+                <div class="rank-list-tier"></div>
+                <div style="margin-left: 10px;align-self: center;">#<%= index + 4 %></div>
+                <div class="ml-2 rank-list-rank">
+                  <%= global_leaderboard_ranking_change(ranking.participant) %>
+                </div>
+              </div>
             </th>
             <td>
               <div class="masthead-blog-post" style="padding: 0px;">
