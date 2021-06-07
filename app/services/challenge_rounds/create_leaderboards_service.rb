@@ -261,7 +261,7 @@ module ChallengeRounds
       end
 
       if @challenge_leaderboard_extra.score_precision.present?
-        score_field = "ROUND(#{score_field}, #{@challenge_leaderboard_extra.score_precision})"
+        score_field = "ROUND(CAST(#{score_field} as numeric), #{@challenge_leaderboard_extra.score_precision})"
       end
 
       score_secondary_field = "score_secondary"
@@ -270,7 +270,7 @@ module ChallengeRounds
       end
 
       if @challenge_leaderboard_extra.score_secondary_precision.present?
-        score_secondary_field = "ROUND(#{score_field}, #{@challenge_leaderboard_extra.score_secondary_precision})"
+        score_secondary_field = "ROUND(CAST(#{score_secondary_field} as numeric), #{@challenge_leaderboard_extra.score_secondary_precision})"
       end
 
       score_sort_order = sort_map(@challenge_leaderboard_extra.primary_sort_order_cd)
