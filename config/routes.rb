@@ -273,7 +273,6 @@ Rails.application.routes.draw do
   match '/crowdai_migration/save', to: 'crowdai_migration#create', via: :post
 
   # Custom Redirect
-  get '/blitz', to: redirect('/challenges/ai-for-good-ai-blitz-3', status: 302)
   get '/food', to: redirect('/challenges/food-recognition-challenge', status: 302)
   get '/derk', to: redirect('/challenges/dr-derk-s-battleground', status: 302)
   get '/flatland', to: redirect('/challenges/neurips-2020-flatland-challenge', status: 302)
