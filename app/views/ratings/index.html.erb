@@ -175,7 +175,6 @@
     <table class="table-responsive rank-table">
       <thead>
         <tr class="table-light">
-          <th></th>
           <th scope="col">RANK</th>
           <!-- <th scope="col">COUNTRY</th> -->
           <th scope="col">PARTICIPANTS</th>
@@ -187,9 +186,10 @@
       <tbody>
         <% @rankings.each_with_index do |ranking, index|%>
           <tr class="mt-3 rank-leaderboard-tablelist">
-            <td style="width: 1px;padding: 0px;"><div style="height: 50px;background-color: gold;width: 7px;"></div></td>
+            <!-- <td style="width: 1px;padding: 0px;"><div style="height: 50px;background-color: gold;width: 7px;"></div></td> -->
             <th scope="row">
-              #<%= index + 4 %>
+              <div style="height: 38px;background-color: gold;width: 7px;display: inherit;margin-left: -42px;"></div>
+              <div>#<%= index + 4 %></div>
               <%= global_leaderboard_ranking_change(ranking.participant) %>
             </th>
             <td>
