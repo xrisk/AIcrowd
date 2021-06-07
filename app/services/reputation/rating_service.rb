@@ -20,8 +20,14 @@ module Reputation
     end
 
     def initiate_rating_for_leaderboard
-      response = HTTP.post("#{ENV['RATING_SANDBOX_URL']}/rate/contest/#{@challenge_leaderboard_extra_id}", body: {return_url: ENV['RATING_RETURN_URL']}.to_json)
+      response = HTTP.post("#{ENV['RATING_SANDBOX_URL']}/rate/contest/#{@challenge_leaderboard_extra_id}", body: {return_url: ENV['RATING_RETURN_URL']}.to_json, headers: {Authorization: "Bearer #{secure_data}"})
       return response.body
+    end
+
+
+    def secure_data
+      payload = {fastapi: "aicrowd", access_key: "aicrowd_reputation_system"}
+      JWT.encode(payload, ENV['REPUTATION_TOKEN'])
     end
 
   end

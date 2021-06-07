@@ -28,7 +28,7 @@ module Reputation
           result << {challenge_leaderboard_extra_id: cle.id, name: cle.challenge_round.challenge_round, created_at: cle.created_at, time_seconds: cle.created_at.to_i}
         end
       end
-      response = HTTP.post("#{ENV['RATING_SANDBOX_URL']}/contest/create", json: result)
+      response = HTTP.post("#{ENV['RATING_SANDBOX_URL']}/contest/create", json: result, headers: {Authorization: "Bearer #{secure_data}"})
       if response.status
         Reputation::SyncLeaderboardService.new.call
       end

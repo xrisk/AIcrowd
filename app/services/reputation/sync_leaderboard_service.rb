@@ -10,7 +10,7 @@ module Reputation
     end
 
     def get_synced_leaderboard_extras
-      response = HTTP.get("#{ENV['RATING_SANDBOX_URL']}/contest/challenge_leaderboard_extras")
+      response = HTTP.get("#{ENV['RATING_SANDBOX_URL']}/contest/challenge_leaderboard_extras", headers: {Authorization: "Bearer #{secure_data}"})
       return JSON.parse(response.body)
     end
 
@@ -42,7 +42,7 @@ module Reputation
           end
         end
       end
-      response = HTTP.post("#{ENV['RATING_SANDBOX_URL']}/standing/create", json: result)
+      response = HTTP.post("#{ENV['RATING_SANDBOX_URL']}/standing/create", json: result, headers: {Authorization: "Bearer #{secure_data}"})
     end
   end
 end
