@@ -260,9 +260,17 @@ module ChallengeRounds
         score_field = "CAST(meta->>'#{@challenge_leaderboard_extra.dynamic_score_field}' as decimal)"
       end
 
+      if @challenge_leaderboard_extra.score_precision.present?
+        score_field = "ROUND(CAST(#{score_field} as numeric), #{@challenge_leaderboard_extra.score_precision})"
+      end
+
       score_secondary_field = "score_secondary"
       if @challenge_leaderboard_extra.dynamic_score_secondary_field.present?
         score_secondary_field = "CAST(meta->>'#{@challenge_leaderboard_extra.dynamic_score_secondary_field}' as decimal)"
+      end
+
+      if @challenge_leaderboard_extra.score_secondary_precision.present?
+        score_secondary_field = "ROUND(CAST(#{score_secondary_field} as numeric), #{@challenge_leaderboard_extra.score_secondary_precision})"
       end
 
       score_sort_order = sort_map(@challenge_leaderboard_extra.primary_sort_order_cd)
