@@ -22,8 +22,11 @@ module Reputation
       sql = "select rating_id, RANK () OVER (ORDER BY rating desc) FROM global_ranks"
       rating_ranks = ActiveRecord::Base.connection.execute(sql)
       rating_ranks_hash = {}
-      rating_ranks_hash = rating_ranks.values.map {|row| rating_ranks_hash[row[0]] = row[1]}
-      @ratings.each do |rating|
+      rating_ranks.values.each do |rating_rank|
+        rating_ranks_hash[rating_rank[0]] = rating_rank[1]
+      end
+      GlobalRank.all.each do |gr|
+        rating = gr.user_rating
         rating.rank = rating_ranks_hash[rating.id]
         rating.save!
       end

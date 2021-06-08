@@ -1,7 +1,7 @@
 module Reputation
   class RatingService
 
-    def initalize(challenge_leaderboard_extra_id)
+    def initialize(challenge_leaderboard_extra_id)
       @challenge_leaderboard_extra_id = challenge_leaderboard_extra_id
     end
 
