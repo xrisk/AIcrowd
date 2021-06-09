@@ -183,7 +183,7 @@ class Submission < ApplicationRecord
 
   def delete_lb_on_submission_deletion
     if self.deleted? && BaseLeaderboard.where(submission_id: self.id).exists?
-      BaseLeaderboard.where(submission_id: self.id).delete_all
+      CalculateLeaderboardJob.perform_later(challenge_round_id: self.challenge_round_id)
     end
   end
 
