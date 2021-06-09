@@ -15,7 +15,7 @@ class NotificationService
   private
 
   def graded
-    score   = @notifiable.score || 0.0
+    score   = submission_score || 0.0
     message = "Your #{@notifiable.challenge.challenge} Challenge submission ##{@notifiable.id} has been graded with a score of #{score}"
     thumb   = @notifiable.challenge.image_file.url
     link    = challenge_submission_url(@notifiable.challenge, @notifiable.id)
@@ -99,5 +99,13 @@ class NotificationService
         notification_url:  link,
         challenge_id:      @notifiable.challenge.id,
         is_new:            true)
+  end
+
+  def submission_score
+    cle = ChallengeLeaderboardExtra.find_by(id: BaseLeaderboard.where(submission_id: @notifiable.id).last&.challenge_leaderboard_extra_id)
+    if cle.present? && cle.dynamic_score_field.present?
+      return @notifiable["meta"][cle.dynamic_score_field].presence || 0.0
+    end
+    return @notifiable.score
   end
 end
