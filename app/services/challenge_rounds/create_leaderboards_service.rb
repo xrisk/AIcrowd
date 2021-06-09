@@ -274,10 +274,10 @@ module ChallengeRounds
       end
 
       score_sort_order = sort_map(@challenge_leaderboard_extra.primary_sort_order_cd)
-      return "#{score_field} #{score_sort_order} NULLS LAST" if @challenge_leaderboard_extra.secondary_sort_order_cd.blank? || @challenge_leaderboard_extra.secondary_sort_order_cd == 'not_used'
+      return "#{score_field} #{score_sort_order} NULLS LAST, created_at asc" if @challenge_leaderboard_extra.secondary_sort_order_cd.blank? || @challenge_leaderboard_extra.secondary_sort_order_cd == 'not_used'
 
       secondary_sort_order = sort_map(@challenge_leaderboard_extra.secondary_sort_order_cd)
-      return "#{score_field} #{score_sort_order} NULLS LAST, #{score_secondary_field} #{secondary_sort_order} NULLS LAST"
+      return "#{score_field} #{score_sort_order} NULLS LAST, #{score_secondary_field} #{secondary_sort_order} NULLS LAST, created_at asc"
     end
 
     def sort_leaderboards(all_leaderboards)
