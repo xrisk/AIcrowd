@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   before_action :notifications
   before_action :check_for_redirection
   before_action :block_ip_addresses
+  before_action :redirect_old_challenge_slugs
   helper_method :mobile?
 
   def track_action
@@ -171,6 +172,19 @@ class ApplicationController < ActionController::Base
   def block_ip_addresses
     if ENV['BLOCKED_IP_ADDRESS'].present? && params.has_key?('challenge_id')
       not_authorized if ENV['BLOCKED_IP_ADDRESS'].split(",").include?(request.remote_ip)
+    end
+  end
+
+  def redirect_old_challenge_slugs
+    split_url = request.path.split('/')
+    if request.get? && split_url[1] == "challenges" &&  split_url.size > 2
+      challenge = Challenge.friendly.find(split_url[2])
+      if challenge.present?
+        if split_url[2].is_a?(Integer) || split_url[2] != challenge.slug
+          redirect_to action: action_name, challenge_id: challenge.slug, status: 301 if params[:challenge_id].present?
+          redirect_to action: action_name, id: challenge.slug, status: 301 if params[:id].present?
+        end
+      end
     end
   end
 
