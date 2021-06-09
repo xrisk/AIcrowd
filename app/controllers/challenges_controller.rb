@@ -1,5 +1,6 @@
 class ChallengesController < ApplicationController
   before_action :authenticate_participant!, except: [:show, :index, :notebooks]
+  before_action :redirect_old_slugs, only: [:show]
   before_action :set_challenge, only: [:show, :edit, :update, :clef_task, :remove_image, :remove_banner, :export, :import, :remove_invited, :remove_social_media_image, :remove_banner_mobile, :notebooks]
   before_action :set_vote, only: [:show, :clef_task, :notebooks]
   before_action :set_follow, only: [:show, :clef_task, :notebooks]
@@ -201,6 +202,13 @@ class ChallengesController < ApplicationController
   end
 
   private
+
+  def redirect_old_slugs
+    challenge = Challenge.friendly.find(params[:id])
+    if challenge.present? && params[:id].is_a?(String) && challenge.slug != params[:id]
+      redirect_to challenge_path(challenge)
+    end
+  end
 
   def set_challenge
     @challenge = Challenge.includes(:organizers).friendly.find(params[:id])
