@@ -177,12 +177,15 @@ class ApplicationController < ActionController::Base
 
   def redirect_old_challenge_slugs
     split_url = request.path.split('/')
+    query_params = request.original_url.split('?')[1]
     if request.get? && split_url[1] == "challenges" &&  split_url.size > 2
       challenge = Challenge.friendly.find(split_url[2])
       if challenge.present?
         if split_url[2].is_a?(Integer) || split_url[2] != challenge.slug
-          redirect_to action: action_name, challenge_id: challenge.slug, status: 301 if params[:challenge_id].present?
-          redirect_to action: action_name, id: challenge.slug, status: 301 if params[:id].present?
+          split_url[2] = challenge.slug
+          new_url = split_url.join('/')
+          new_url = [new_url, query_params].join('?') if query_params.present?
+          redirect_to new_url, status: 301
         end
       end
     end
