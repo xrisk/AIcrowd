@@ -11,7 +11,9 @@
           <div class="d-flex align-items-center flex-wrap">
             <span class="author">
               <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant, username: 'false' } %>
-              <span>By&nbsp;</span>
+              <% if @post.participant.present? %>
+                <span>By&nbsp;</span>
+              <% end %>
               <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant, avatar: 'false'} %>
             </span>
             <span class="masthead-date"><%= local_time(@post.created_at, "%-d %B %Y") %></span>

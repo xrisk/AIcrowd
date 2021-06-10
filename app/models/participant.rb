@@ -58,7 +58,7 @@ class Participant < ApplicationRecord
   has_many :referrals, class_name: 'Participant', foreign_key: :referred_by_id, dependent: :nullify
   has_many :aicrowd_user_badges, dependent: :destroy
   has_many :participant_organizers, dependent: :destroy
-  has_many :organizers, through: :participant_organizers
+  has_many :organizers, through: :participant_organizers, dependent: :destroy
   has_many :submissions, dependent: :nullify
   has_many :votes, dependent: :destroy
   has_many :user_ratings, dependent: :destroy
@@ -68,11 +68,14 @@ class Participant < ApplicationRecord
   has_many :ongoing_leaderboards, class_name: 'OngoingLeaderboard', as: :submitter
   has_many :base_leaderboards, as: :submitter, dependent: :nullify
   has_many :participant_challenges,
-           class_name: 'ParticipantChallenge'
+           class_name: 'ParticipantChallenge',
+           dependent: :destroy
   has_many :challenge_registrations,
-           class_name: 'ChallengeRegistration'
+           class_name: 'ChallengeRegistration',
+           dependent: :destroy
   has_many :participant_challenge_counts,
-           class_name: 'ParticipantChallengeCount'
+           class_name: 'ParticipantChallengeCount',
+           dependent: :destroy
   has_many :challenges,
            through: :challenge_participants
   has_many :dataset_file_downloads,
@@ -83,7 +86,7 @@ class Participant < ApplicationRecord
            dependent: :destroy
   has_many :email_preferences_tokens,
            dependent: :destroy
-  has_many :follows, as: :followable
+  has_many :follows, as: :followable, dependent: :destroy
   has_many :following,
            foreign_key: :participant_id,
            class_name: "Follow",
@@ -106,15 +109,15 @@ class Participant < ApplicationRecord
   has_many :concrete_teams, -> { concrete }, through: :team_participants, source: :team, inverse_of: :participants
   has_many :invitor_team_invitations, class_name: 'TeamInvitation', foreign_key: :invitor_id, inverse_of: :invitor, dependent: :destroy
   has_many :invitee_team_invitations, class_name: 'TeamInvitation', foreign_key: :invitee_id, inverse_of: :invitee_participant, foreign_type: 'Participant', dependent: :destroy
-  has_many :invitor_email_invitations, class_name: 'EmailInvitation', foreign_key: :invitor_id, inverse_of: :invitor
-  has_many :claimant_email_invitations, class_name: 'EmailInvitation', foreign_key: :claimant_id, inverse_of: :claimant
+  has_many :invitor_email_invitations, class_name: 'EmailInvitation', foreign_key: :invitor_id, inverse_of: :invitor, dependent: :nullify
+  has_many :claimant_email_invitations, class_name: 'EmailInvitation', foreign_key: :claimant_id, inverse_of: :claimant, dependent: :nullify
   has_many :newsletter_emails, class_name: 'NewsletterEmail', dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :team_members, dependent: :destroy
   has_many :participant_ml_challenge_goals, dependent: :destroy
-  has_many :ml_activity_points
+  has_many :ml_activity_points, dependent: :destroy
   # has_many :likes, dependent: :destroy
-  has_many :posts
+  has_many :posts, dependent: :nullify
 
   validates :email,
             presence:              true,
