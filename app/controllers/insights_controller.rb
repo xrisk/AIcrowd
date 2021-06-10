@@ -83,6 +83,20 @@ class InsightsController < ApplicationController
     end
   end
 
+  def participant_count
+    @participant_data = {}
+    (@current_round.start_dttm..@current_round.end_dttm).each do |dt|
+      @participant_count = ChallengeParticipant.where(challenge_id: @current_round.challenge_id).where('created_at > ?', dt).where('created_at < ?', dt+1.day).count
+      @participant_data[dt] = participant_count
+    end
+  end
+
+  def total_submissions
+  end
+
+  def failed_vs_graded
+  end
+
   private
 
   def get_running_agg(fn, grouped_collection, precision)
