@@ -318,6 +318,11 @@ module ChallengeRounds
 
         next if next_leaderboard.blank?
 
+        if !@challenge_leaderboard_extra.is_tie_possible
+            current_row_num += 1
+            next
+        end
+
         if @is_borda_ranking
           if next_leaderboard['meta']['private_borda_ranking_rank_sum'] == leaderboard['meta']['private_borda_ranking_rank_sum']
             same_score_count += 1

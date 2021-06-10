@@ -53,7 +53,7 @@
   </div>
   <% submission_meta_hash(@submission).each do |key, value| %>
     <% if (key != 'description_markdown') %>
-      <% if key.start_with?('private') && !(current_participant.present? && (policy(challenge).edit?)) %>
+      <% if key.start_with?('private') && !(current_participant.present? && (policy(challenge).edit?)) && !(@submission.challenge_round.released_private_meta_fields.present? && @submission.challenge_round.released_private_meta_fields.split(',').include?(key)) %>
         <% next %>
       <% end %>
       <div class="d-flex mt-4">

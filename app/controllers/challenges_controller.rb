@@ -413,6 +413,7 @@ class ChallengesController < ApplicationController
         :submissions_type,
         :debug_submission_limit,
         :debug_submission_limit_period,
+        :released_private_meta_fields,
         challenge_leaderboard_extras_attributes: [
           :id,
           :name,
@@ -434,7 +435,8 @@ class ChallengesController < ApplicationController
           :dynamic_score_secondary_field,
           :filter,
           :sequence,
-          :default
+          :default,
+          :is_tie_possible
         ]
       ],
       challenge_rules_attributes: [
