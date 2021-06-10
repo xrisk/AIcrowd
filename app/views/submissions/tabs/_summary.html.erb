@@ -1,4 +1,4 @@
-<% cache_if cache_enabled?, [@submission, @submission.challenge_round.default_leaderboard, @is_organiser_or_author, (current_participant.present? && (policy(challenge).edit?))] do %>
+<% cache_if cache_enabled?, [@submission, @submission.challenge_round.default_leaderboard, @submission.challenge_round, @is_organiser_or_author, (current_participant.present? && (policy(challenge).edit?))] do %>
 <% if @description_markdown.present? && @is_organiser_or_author %>
   <div class="row">
     <div class="col-md-6" data-controller="submission-mermaid">
