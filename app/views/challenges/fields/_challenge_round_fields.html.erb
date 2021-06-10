@@ -100,6 +100,11 @@
           </div>
           <small class="form-text text-muted"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>&nbsp;Valid if you support debug submissions</small>
         </div>
+
+        <div class="form-group col-sm-12 col-md-5">
+           <%= f.label :released_private_meta_fields, "Release Private Meta Fields" %>
+          <%= f.text_field :released_private_meta_fields, class: "form-control" %>
+        </div>
       </div>
 
       <div class="row mt-4" data-controller="challenge-rounds" data-action="click->challenge-rounds#toogleSubtab">
