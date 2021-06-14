@@ -11,7 +11,7 @@
           <span>&#8592; Back to challenge</span>
         <% end %>
         <% if policy(@challenge).edit? %>
-          <div class="pull-right">
+          <div class="float-right">
             <%= link_to 'Edit Submission', edit_challenge_submission_path(@challenge, @submission), {class: "btn btn-primary btn-sm", role:"button"} %>
           </div>
         <% end %>
@@ -25,7 +25,7 @@
           </div>
           <% if @authors.present? %>
             <div class="col-md-5">
-              <div class="pull-right d-flex">
+              <div class="float-right d-flex">
                 <i class="mr-2 pt-2">Submitted by</i>
                 <div class="avatar-group">
                   <% @authors.each do |participant| %>

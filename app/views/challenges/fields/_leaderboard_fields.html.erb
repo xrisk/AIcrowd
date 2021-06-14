@@ -130,6 +130,15 @@
 
 <div class="row align-items-end child <%= hidden %>">
   <div class="form-group col-sm-12 col-md-12">
+    <%= image_tag("/assets/misc/note.png", width: "72") %>
+    <%= f.label :is_tie_possible, class: "toggle-switch toggle-switch-large" do %>
+      <%= f.check_box :is_tie_possible %>
+      <span class="switcher"></span>
+      <span class="label">Tie Possible</span>
+    <% end %>
+  </div>
+
+  <div class="form-group col-sm-12 col-md-12">
 
     <% if f.object.leaderboard_note.blank? %>
       <%= image_tag("/assets/misc/note.png", width: "72") %>
