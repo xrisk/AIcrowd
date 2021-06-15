@@ -87,6 +87,10 @@ class ChallengePolicy < ApplicationPolicy
     true
   end
 
+  def make_notebooks_public?
+    edit?
+  end
+
   def leaderboard_public?
     @record.show_leaderboard == true
   end

@@ -1,6 +1,6 @@
 class ChallengesController < ApplicationController
   before_action :authenticate_participant!, except: [:show, :index, :notebooks]
-  before_action :set_challenge, only: [:show, :edit, :update, :clef_task, :remove_image, :remove_banner, :export, :import, :remove_invited, :remove_social_media_image, :remove_banner_mobile, :notebooks]
+  before_action :set_challenge, only: [:show, :edit, :update, :clef_task, :remove_image, :remove_banner, :export, :import, :remove_invited, :remove_social_media_image, :remove_banner_mobile, :notebooks, :make_notebooks_public]
   before_action :set_vote, only: [:show, :clef_task, :notebooks]
   before_action :set_follow, only: [:show, :clef_task, :notebooks]
   after_action :verify_authorized, except: [:index, :show]
@@ -200,6 +200,11 @@ class ChallengesController < ApplicationController
     return @notebooks
   end
 
+  def make_notebooks_public
+    Post.where(challenge_id: @challenge.id).where('submission_id is not null').update_all(public: true)
+    redirect_to helpers.edit_challenge_path(@challenge, step: :misc), notice: 'Challenge submissions are public now.'
+  end
+
   private
 
   def set_challenge
@@ -387,6 +392,7 @@ class ChallengesController < ApplicationController
       :submission_filter,
       :submission_freezing_order,
       :show_submission,
+      :organizer_notebook_access,
       image_attributes: [
         :id,
         :image,
