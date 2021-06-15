@@ -60,6 +60,7 @@ def challenge_routes
       get 'top_score_vs_time'
       get 'challenge_participants_country'
       get 'participant_count'
+      get 'graded_vs_failed'
     end
   end
 end
