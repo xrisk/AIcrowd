@@ -31,7 +31,11 @@
 
       <% if !@challenge.meta_challenge && challenge_round&.default_leaderboard&.score_secondary_title.present? && challenge_round&.default_leaderboard&.secondary_sort_order != :hidden %>
         <% if challenge.show_submission? || is_organiser_or_author %>
-          <td><%= submission_formatted_value(submission, submission.score_secondary) %></td>
+          <% if challenge_round.default_leaderboard.dynamic_score_secondary_field.present? %>
+            <td><%= submission_formatted_value(submission, submission["meta"][challenge_round.default_leaderboard.dynamic_score_secondary_field].presence || nil) %></td>
+          <% else %>
+            <td><%= submission_formatted_value(submission, submission.score_secondary) %></td>
+          <% end %>
         <% else %>
           <td class="text-muted">Hidden</td>
         <% end %>
