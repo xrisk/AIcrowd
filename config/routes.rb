@@ -162,7 +162,10 @@ Rails.application.routes.draw do
 
   devise_for :participants, controllers: {
     omniauth_callbacks: 'participants/omniauth_callbacks',
-    registrations: 'participants/registrations'
+    registrations: 'participants/registrations',
+    passwords: 'participants/passwords',
+    unlocks: 'participants/unlocks',
+    confirmations: 'participants/confirmations'
   }
 
   resources :participants, only: [:show, :edit, :update, :destroy, :index], id: /[^\/]+/ do
