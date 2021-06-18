@@ -2,6 +2,7 @@ class PostsController < InheritedResources::Base
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :set_my_challenges, only: [:new, :edit, :update, :create]
+  before_action :set_page_view, only: [:show]
 
   def new
     @post = Post.new
@@ -171,6 +172,11 @@ class PostsController < InheritedResources::Base
           @post.errors.messages.merge!(category.errors.messages)
         end
       end
+    end
+
+    def set_page_view
+      sql = "select count(*) from ahoy_events where name LIKE 'Processed posts#show' AND properties -> 'request' ->> 'controller' = 'posts' AND properties -> 'request' ->> 'id' = '#{@post.slug}'"
+      @page_view = ActiveRecord::Base.connection.execute(sql).values[0][0]
     end
 end
 

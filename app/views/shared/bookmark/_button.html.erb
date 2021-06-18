@@ -1,0 +1,17 @@
+<% if current_participant.present? %>
+  <% if bookmark.present? %>
+    <%= link_to post_bookmarks_path+"/#{bookmark.id}?post_id=#{post.id}", id: bookmark_link_id(post), class: "mr-4", style: "align-self: center;", method: :delete, remote: true do %>
+        <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.25 0.75V18L1.44531 17.1094L7 12.9375L12.5547 17.1094L13.75 18V0.75H0.25Z" fill="black"/></svg>
+    <% end %>
+  <% else %>
+    <%= link_to post_bookmarks_path(post_id: post.id), method: :post, id: bookmark_link_id(post), class: "mr-4", style: "align-self: center;", remote: true do %>
+        <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.25 0.75V18L1.44531 17.1094L7 12.9375L12.5547 17.1094L13.75 18V0.75H0.25ZM1.75 2.25H12.25V15L7.44531 11.3906L7 11.0625L6.55469 11.3906L1.75 15V2.25Z" fill="black" fill-rule='evenodd'></svg>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= link_to new_participant_session_path, class: "mr-4", style: "align-self: center;" do %>
+      <svg width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0.25 0.75V18L1.44531 17.1094L7 12.9375L12.5547 17.1094L13.75 18V0.75H0.25ZM1.75 2.25H12.25V15L7.44531 11.3906L7 11.0625L6.55469 11.3906L1.75 15V2.25Z" fill="black" fill-rule='evenodd'>
+      </svg>
+  <% end %>
+<% end %>

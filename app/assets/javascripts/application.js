@@ -94,9 +94,30 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
+    $('.clipboard-btn').tooltip({
+      trigger: 'click',
+      placement: 'bottom'
+    });
 
-  var clipboard = new Clipboard('.clipboard-btn');
-  console.log(clipboard);
+    function setTooltip(btn, message) {
+      $(btn).tooltip('show')
+        .attr('data-original-title', message)
+        .tooltip('show');
+    }
+
+    function hideTooltip(btn) {
+      setTimeout(function() {
+        $(btn).tooltip('hide');
+      }, 1000);
+    }
+
+    var clipboard = new Clipboard('.clipboard-btn');
+
+    clipboard.on('success', function(e) {
+        setTooltip(e.trigger, 'Copied!');
+        hideTooltip(e.trigger);
+    });
+    console.log(clipboard);
 
 });
 

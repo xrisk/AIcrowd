@@ -6,6 +6,7 @@ class Post < ApplicationRecord
   has_many :category_posts, dependent: :destroy
   has_many :categories, through: :category_posts
   has_many :votes, as: :votable
+  has_many :post_bookmarks
 
   belongs_to :participant
   belongs_to :challenge, optional: true
@@ -25,6 +26,10 @@ class Post < ApplicationRecord
 
   def vote(participant)
     self.votes.where(participant_id: participant.id).first if participant.present?
+  end
+
+  def bookmark(participant)
+    self.post_bookmarks.where(participant_id: participant.id).first if participant.present?
   end
 
   def get_random_thumbnail

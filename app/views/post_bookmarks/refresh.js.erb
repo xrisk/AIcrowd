@@ -1,0 +1,8 @@
+function handleBookmarkButtonRefresh() {
+  const bookmarkLinkId       = "*[id*=<%= "#{bookmark_link_id(@post)}" %>]";
+  const refreshedContent = "<%= j render 'shared/bookmark/button', bookmark: @post.bookmark(current_participant), post: @post %>";
+
+  $(bookmarkLinkId).replaceWith(refreshedContent);
+}
+
+handleBookmarkButtonRefresh();
