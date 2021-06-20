@@ -11693,10 +11693,15 @@ body {
   }
 }
 
+.masthead-blog-post-notebook {
+  background: transparent;
+  padding: 48px 0 40px 0;
+}
+
 .masthead-blog-post {
   background: transparent;
   padding: 48px 0 40px 0;
-  text-align: center;
+  text-aling: center;
 }
 
 
@@ -11756,6 +11761,14 @@ body {
   justify-content: center;
 }
 
+.masthead-blog-post-notebook .masthead-details {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+
 @media (max-width: 991.98px) {
   .masthead-challenge p,
   .masthead-blog-post p {
@@ -11779,7 +11792,8 @@ body {
 .masthead-challenge .organizer-attribution,
 .masthead-challenge .author,
 .masthead-blog-post .organizer-attribution,
-.masthead-blog-post .author {
+.masthead-blog-post .author
+.masthead-blog-post-notebook .author{
   display: flex;
   align-items: center;
   flex-shrink: 0;
@@ -11846,6 +11860,11 @@ body {
 }
 
 .masthead-blog-post .masthead-details .masthead-date::before {
+  content: "·";
+  margin: 0 12px;
+}
+
+.masthead-blog-post-notebook .masthead-details .masthead-date::before {
   content: "·";
   margin: 0 12px;
 }

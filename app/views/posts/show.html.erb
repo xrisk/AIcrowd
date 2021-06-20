@@ -1,4 +1,4 @@
-<div class="masthead masthead-contribution masthead-blog-post">
+<div class="masthead masthead-contribution masthead-blog-post-notebook">
   <div class="container-fluid">
 
     <div class="row">
@@ -6,7 +6,7 @@
         <h4><a href="<%= challenge_path(@post.challenge) %>"><%= @post.challenge.challenge %></a></h4>
         <h1 style="font-size: 2rem;"><%= @post.title %></h1>
         <p class="masthead-subtitle"><%= @post.tagline %></p>
-        <div class="masthead-details mr-2">
+        <div class="masthead-details mr-2 mt-3">
           <div class="d-flex align-items-center flex-wrap">
             <span class="author">
               <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant} %>
@@ -15,7 +15,7 @@
 
           </div>
           <div>
-            <div class="btn-set ml-2 mt-3" aria-hidden="true">
+            <div class="btn-set ml-2" aria-hidden="true">
               <% if current_participant.present? && (current_participant.admin? || (@post.participant_id == current_participant.id)) %>
 
                 <%= link_to edit_post_path(@post), class: "float-right mr-4", style: "align-self: center;", method: :get do %>

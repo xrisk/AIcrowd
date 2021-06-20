@@ -96,7 +96,6 @@ export default class extends Controller {
     }
 
     updateActive(index = 0){
-      debugger;
       this.tocLinks.removeClass('active');
       this.selectedLink.addClass('active');
       if (index > 0) {
