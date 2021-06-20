@@ -12622,7 +12622,7 @@ body {
 
 @media (min-width: 0px) and (max-width: 479px) {
   .sub-nav-bar .nav-item {
-    margin-right: 1.5rem;
+    margin-right: 0.5rem;
   }
 }
 
@@ -12664,7 +12664,8 @@ body {
 
 @media (max-width: 575.98px) {
   .sub-nav-bar .nav-link-04,
-  .sub-nav-bar .nav-link-03 {
+  .sub-nav-bar .nav-link-03,
+  .sub-nav-bar .nav-link-07, {
     display: none;
   }
 }
