@@ -178,7 +178,7 @@ class ApplicationController < ActionController::Base
   def redirect_old_challenge_slugs
     split_url = request.path.split('/')
     query_params = request.original_url.split('?')[1]
-    if request.get? && split_url[1] == "challenges" &&  split_url.size > 2
+    if request.get? && split_url[1] == "challenges" &&  split_url.size > 2 && split_url[2] != "new"
       challenge = Challenge.friendly.find(split_url[2])
       if challenge.present?
         if split_url[2].is_a?(Integer) || split_url[2] != challenge.slug
