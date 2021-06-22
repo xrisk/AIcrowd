@@ -55,7 +55,9 @@ class ChallengeCallResponsesController < ApplicationController
 
   def check_captcha
     unless verify_recaptcha
-      redirect_to root_path
+      flash[:alert] = "We are unable to validate this request, in case the error continues please email us at hello@aicrowd.com."
+      @challenge_call_response = @challenge_call.challenge_call_responses.new(challenge_call_response_params)
+      render action: 'new'
     end
   end
 end
