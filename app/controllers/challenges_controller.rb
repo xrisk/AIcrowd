@@ -201,8 +201,8 @@ class ChallengesController < ApplicationController
   end
 
   def make_notebooks_public
-    Post.where(challenge_id: @challenge.id).where('submission_id is not null').update_all(public: true)
-    redirect_to helpers.edit_challenge_path(@challenge, step: :misc), notice: 'Challenge submissions are public now.'
+    Post.where(challenge_id: @challenge.id).where('submission_id is not null').update_all(private: false)
+    redirect_to helpers.edit_challenge_path(@challenge, step: :admin), notice: 'Challenge submissions are public now.'
   end
 
   private
