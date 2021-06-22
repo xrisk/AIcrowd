@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include ::ActionController::HttpAuthentication::Token::ControllerMethods
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :not_authorized_or_login
+  impersonates :participant, method: :current_participant, with: ->(id) { Participant.friendly.find(id) }
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_paper_trail_whodunnit
   after_action :track_action
@@ -11,6 +12,9 @@ class ApplicationController < ActionController::Base
   before_action :modify_params_for_meta_challenges
   before_action :notifications
   before_action :check_for_redirection
+  before_action :block_ip_addresses
+  before_action :redirect_old_challenge_slugs
+  helper_method :mobile?
 
   def track_action
     properties         = { request: request.filtered_parameters }
@@ -164,4 +168,31 @@ class ApplicationController < ActionController::Base
       redirect_to destination_url and return
     end
   end
+
+  def block_ip_addresses
+    if ENV['BLOCKED_IP_ADDRESS'].present? && params.has_key?('challenge_id')
+      not_authorized if ENV['BLOCKED_IP_ADDRESS'].split(",").include?(request.remote_ip)
+    end
+  end
+
+  def redirect_old_challenge_slugs
+    split_url = request.path.split('/')
+    query_params = request.original_url.split('?')[1]
+    if request.get? && split_url[1] == "challenges" &&  split_url.size > 2
+      challenge = Challenge.friendly.find(split_url[2])
+      if challenge.present?
+        if split_url[2].is_a?(Integer) || split_url[2] != challenge.slug
+          split_url[2] = challenge.slug
+          new_url = split_url.join('/')
+          new_url = [new_url, query_params].join('?') if query_params.present?
+          redirect_to new_url, status: 301
+        end
+      end
+    end
+  end
+
+  def mobile? # has to be in here because it has access to "request"
+    request.user_agent =~ /\b(Android|iPhone|iPad|Windows Phone|Opera Mobi|Kindle|BackBerry|PlayBook)\b/i
+  end
+
 end

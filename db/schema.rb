@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_25_145258) do
+
+ActiveRecord::Schema.define(version: 2021_06_10_115246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -390,6 +391,9 @@ ActiveRecord::Schema.define(version: 2021_05_25_145258) do
     t.boolean "for_weekly_rating", default: false
     t.datetime "last_calculated_at"
     t.boolean "rating_calculated", default: false
+    t.boolean "rating_calculated", default: false
+    t.datetime "rank_last_calculated_at"
+    t.boolean "is_tie_possible", default: true
     t.index ["challenge_id"], name: "index_challenge_leaderboard_extras_on_challenge_id"
     t.index ["challenge_round_id"], name: "index_challenge_leaderboard_extras_on_challenge_round_id"
   end
@@ -464,6 +468,7 @@ ActiveRecord::Schema.define(version: 2021_05_25_145258) do
     t.integer "debug_submission_limit", default: 0
     t.integer "debug_submission_time"
     t.string "debug_submission_limit_period_cd"
+    t.text "released_private_meta_fields"
     t.index ["challenge_id"], name: "index_challenge_rounds_on_challenge_id"
   end
 
@@ -1080,6 +1085,7 @@ ActiveRecord::Schema.define(version: 2021_05_25_145258) do
     t.uuid "uuid", default: -> { "public.gen_random_uuid()" }, null: false
     t.bigint "referred_by_id"
     t.boolean "trusted", default: false
+    t.boolean "super_admin", default: false
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["name"], name: "index_participants_on_name", unique: true

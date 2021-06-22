@@ -52,10 +52,24 @@
           <a class="dropdown-item<%= ' active' if active_tab == 'bio' %>" data-toggle='tab' href="#tab-bio" onclick="return false;">Bio</a>
           <a class="dropdown-item<%= ' active' if active_tab == 'posts' %>" data-toggle='tab' href="#tab-posts" onclick="return false;">Posts</a>
           <a class="dropdown-item<%= ' active' if active_tab == 'achievements' %>" data-toggle='tab' href="#tab-achievements" onclick="return false;">Achievements</a>
+          <% if true_participant.present? && true_participant.super_admin? %>
+            <% if current_participant != true_participant && current_participant == @participant %>
+              <%= link_to "Stop Impersonating", stop_impersonating_participants_path(@participant), class: "btn btn-secondary dropdown-item" %>
+            <% else %>
+              <%= link_to "Impersonate User", impersonate_participants_path(@participant), class: "btn btn-secondary dropdown-item" %>
+            <% end %>
+          <% end %>
         </div>
       </li>
       <!-- /more dropdown xs -->
     </ul>
+    <% if true_participant.present? && true_participant.super_admin? && !mobile? %>
+      <% if current_participant != true_participant && current_participant == @participant %>
+        <%= link_to "Stop Impersonating", stop_impersonating_participants_path(@participant), class: "btn btn-secondary" %>
+      <% else %>
+        <%= link_to "Impersonate User", impersonate_participants_path(@participant), class: "btn btn-secondary" %>
+      <% end %>
+    <% end %>
   </div>
 </div>
 <!-- /sub-nav bar -->

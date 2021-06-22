@@ -16,7 +16,7 @@ module Notebooks
         errors.add(:base, "Sorry, the notebook seems to be private. Please make it public and try again.")
         return
       end
-      notebook_gist_url = `gist #{notebook_file_path}`
+      notebook_gist_url = `gist --private #{notebook_file_path}`
       notebook_s3_url = upload_to_s3(notebook_file_path, filename)
       notebook_html = File.read(Rails.root.join('public', 'uploads', html_filename)).html_safe
       gist_id = notebook_gist_url.strip.gsub(ENV['GIST_URL'], "")

@@ -103,7 +103,7 @@ module ChallengeRounds
 
       assign_row_num(users_leaderboards)
 
-      all_leaderboards    = users_leaderboards + baseline_leaderboards
+      all_leaderboards    = baseline_leaderboards + users_leaderboards
       sorted_leaderboards = sort_leaderboards(all_leaderboards)
 
       sorted_leaderboards.each.with_index(1) do |leaderboard, index|
@@ -260,16 +260,24 @@ module ChallengeRounds
         score_field = "CAST(meta->>'#{@challenge_leaderboard_extra.dynamic_score_field}' as decimal)"
       end
 
+      if @challenge_leaderboard_extra.score_precision.present?
+        score_field = "ROUND(CAST(#{score_field} as numeric), #{@challenge_leaderboard_extra.score_precision})"
+      end
+
       score_secondary_field = "score_secondary"
       if @challenge_leaderboard_extra.dynamic_score_secondary_field.present?
         score_secondary_field = "CAST(meta->>'#{@challenge_leaderboard_extra.dynamic_score_secondary_field}' as decimal)"
       end
 
+      if @challenge_leaderboard_extra.score_secondary_precision.present?
+        score_secondary_field = "ROUND(CAST(#{score_secondary_field} as numeric), #{@challenge_leaderboard_extra.score_secondary_precision})"
+      end
+
       score_sort_order = sort_map(@challenge_leaderboard_extra.primary_sort_order_cd)
-      return "#{score_field} #{score_sort_order} NULLS LAST" if @challenge_leaderboard_extra.secondary_sort_order_cd.blank? || @challenge_leaderboard_extra.secondary_sort_order_cd == 'not_used'
+      return "#{score_field} #{score_sort_order} NULLS LAST, created_at asc" if @challenge_leaderboard_extra.secondary_sort_order_cd.blank? || @challenge_leaderboard_extra.secondary_sort_order_cd == 'not_used'
 
       secondary_sort_order = sort_map(@challenge_leaderboard_extra.secondary_sort_order_cd)
-      return "#{score_field} #{score_sort_order} NULLS LAST, #{score_secondary_field} #{secondary_sort_order} NULLS LAST"
+      return "#{score_field} #{score_sort_order} NULLS LAST, #{score_secondary_field} #{secondary_sort_order} NULLS LAST, created_at asc"
     end
 
     def sort_leaderboards(all_leaderboards)
@@ -278,8 +286,11 @@ module ChallengeRounds
       score_sort_order = sort_map(@challenge_leaderboard_extra.primary_sort_order_cd)
 
       if @challenge_leaderboard_extra.secondary_sort_order_cd.blank? || @challenge_leaderboard_extra.secondary_sort_order_cd == 'not_used'
-        sorted_leaderboards = all_leaderboards.sort_by { |leaderboard| leaderboard.score.to_f }
-        sorted_leaderboards.reverse! if score_sort_order == 'desc'
+        sorted_leaderboards = all_leaderboards.sort_by do |leaderboard|
+          score      = score_sort_order == 'asc' ? leaderboard.score.to_f : leaderboard.score.to_f * -1
+          created_at = leaderboard.created_at
+          [score, created_at]
+        end
 
         return sorted_leaderboards
       end
@@ -289,8 +300,9 @@ module ChallengeRounds
       all_leaderboards.sort_by do |leaderboard|
         first_column     = score_sort_order == 'asc' ? leaderboard.score.to_f : leaderboard.score.to_f * -1
         secondary_column = secondary_sort_order == 'asc' ? leaderboard.score_secondary.to_f : leaderboard.score_secondary.to_f * -1
+        created_at = leaderboard.created_at
 
-        [first_column, secondary_column]
+        [first_column, secondary_column, created_at]
       end
     end
 
@@ -305,6 +317,11 @@ module ChallengeRounds
         next_leaderboard    = sorted_leaderboards[index + 1]
 
         next if next_leaderboard.blank?
+
+        if !@challenge_leaderboard_extra.is_tie_possible
+            current_row_num += 1
+            next
+        end
 
         if @is_borda_ranking
           if next_leaderboard['meta']['private_borda_ranking_rank_sum'] == leaderboard['meta']['private_borda_ranking_rank_sum']

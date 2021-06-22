@@ -6,8 +6,10 @@ ActiveAdmin.register_page "Dashboard" do
       tab :Background_Jobs do
         render 'jobs'
       end
-      tab :Analytics_Dashboard do
-        render 'blazer'
+      if current_participant && current_participant.super_admin?
+        tab :Analytics_Dashboard do
+          render 'blazer'
+        end
       end
     end
   end

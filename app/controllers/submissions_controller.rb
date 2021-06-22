@@ -101,7 +101,7 @@ class SubmissionsController < ApplicationController
     end
 
     @post = Post.where(submission_id: @submission.id)
-    @authors = get_team_participants(participant=@submission.participant, model=true)
+    @authors = get_team_participants(participant=@submission.participant, model=true) if @submission.participant.present?
     setup_tabs
 
     render :show

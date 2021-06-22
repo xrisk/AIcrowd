@@ -70,6 +70,8 @@ class Submission < ApplicationRecord
     end
   end
 
+  after_commit :recalculate_lb_on_submission_deletion, on: [:update]
+
   after_commit :render_notebook_from_submission, on: [:create, :update]
 
   #TODO: Disabled badge awards
@@ -177,6 +179,12 @@ class Submission < ApplicationRecord
     Rails.cache.delete("submitter-submissions-#{self.challenge.id}-#{self.participant_id}-Participant")
     team = participant.teams.where(challenge_id: self.challenge.id)&.first
     Rails.cache.delete("submitter-submissions-#{self.challenge.id}-#{team.id}-Team") if team.present?
+  end
+
+  def recalculate_lb_on_submission_deletion
+    if self.deleted? && BaseLeaderboard.where(submission_id: self.id).exists?
+      CalculateLeaderboardJob.perform_later(challenge_round_id: self.challenge_round_id)
+    end
   end
 
   class ChallengeRoundIDMissing < StandardError

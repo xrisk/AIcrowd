@@ -45,6 +45,17 @@ class Post < ApplicationRecord
     return colab_url
   end
 
+  def download_notebook_url
+    download_url = nil
+    if self.notebook_s3_url.present?
+      download_url = self.notebook_s3_url.delete_prefix(ENV['AWS_S3_URL'])
+      s3_file_obj = Aws::S3::Object.new(bucket_name: ENV['AWS_S3_BUCKET'], key: download_url)
+      if s3_file_obj&.key && !s3_file_obj.key.blank?
+        return s3_file_obj.presigned_url(:get, expires_in: 7.days.to_i, response_content_disposition: "attachment; filename=\"#{self.slug}.ipynb\"")
+      end
+    end
+  end
+
   def should_generate_new_friendly_id?
     title_changed? || super
   end

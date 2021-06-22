@@ -74,7 +74,6 @@ class ChallengesController < ApplicationController
 
   def create
     @challenge                = Challenge.new(challenge_params)
-    @challenge.organizers     = current_participant.organizers if current_participant&.admin? == false
     @challenge.clef_challenge = true if @challenge.organizers.any?(&:clef_organizer?)
 
     authorize @challenge
@@ -190,11 +189,11 @@ class ChallengesController < ApplicationController
   end
 
   def notebooks
-    @notebooks = @challenge.posts
+    @notebooks = @challenge.posts.where(private: false)
     if @challenge.meta_challenge?
       @notebooks ||= []
       Challenge.where(id: @challenge.challenge_problems.pluck(:problem_id)).each do |challenge|
-        @notebooks = @notebooks + challenge.posts
+        @notebooks = @notebooks + challenge.posts.where(private: false)
       end
     end
 
@@ -414,6 +413,7 @@ class ChallengesController < ApplicationController
         :submissions_type,
         :debug_submission_limit,
         :debug_submission_limit_period,
+        :released_private_meta_fields,
         challenge_leaderboard_extras_attributes: [
           :id,
           :name,
@@ -435,7 +435,8 @@ class ChallengesController < ApplicationController
           :dynamic_score_secondary_field,
           :filter,
           :sequence,
-          :default
+          :default,
+          :is_tie_possible
         ]
       ],
       challenge_rules_attributes: [

@@ -58,7 +58,7 @@ Doorkeeper.configure do
 
   # Issue access tokens with refresh token (disabled by default)
   #
-  # use_refresh_token
+  use_refresh_token
 
   # Forbids creating/updating applications with arbitrary scopes that are
   # not in configuration, i.e. `default_scopes` or `optional_scopes`.
@@ -164,10 +164,10 @@ Doorkeeper.configure do
   # Under some circumstances you might want to have applications auto-approved,
   # so that the user skips the authorization step.
   # For example if dealing with a trusted application.
-  #
-  # skip_authorization do |resource_owner, client|
-  #   client.superapp? or resource_owner.admin?
-  # end
+
+  skip_authorization do
+    true
+  end
 
   # WWW-Authenticate Realm (default "Doorkeeper").
   #

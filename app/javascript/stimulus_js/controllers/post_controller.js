@@ -93,7 +93,8 @@ export default class extends Controller {
     const notebook_file = event.target.value;
     var form = $(event.target.form)
     var fileForm = document.querySelector('.posts-form')
-    var formData = new FormData(fileForm);
+    var formData = new FormData();
+    formData.append('post[notebook_file]', $('#post_notebook_file')[0].files[0]);
     var submitButton  = form.find('button[type="submit"]');
     var loader = form.find('.file-fetch-loader')
     var greenTick = form.find('.file-green-tick')
