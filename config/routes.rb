@@ -35,6 +35,7 @@ def challenge_routes
     get :reset_locked_submissions, on: :collection
     post :freeze_submission, on: :collection
     get :reevaluate_submission, on: :collection
+    get :mermaid_data, on: :collection
   end
   resources :dynamic_contents, only: [:index]
   resources :leaderboards, only: [:index, :destroy] do
