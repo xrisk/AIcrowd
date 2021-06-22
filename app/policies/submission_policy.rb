@@ -31,6 +31,10 @@ class SubmissionPolicy < ApplicationPolicy
     edit?
   end
 
+  def mermaid_data?
+    show?
+  end
+
   class Scope
     attr_reader :participant, :scope
 

@@ -263,6 +263,7 @@ class SubmissionsController < ApplicationController
 
   def mermaid_data
     @submission = Submission.find_by_id(params[:submission_id].to_i)
+    authorize @submission
 
     if @submission.meta.present? && @submission.meta['description_markdown'].present?
       @description_markdown = Kramdown::Document.new(@submission.meta['description_markdown'], { coderay_line_numbers: nil }).to_html.html_safe
