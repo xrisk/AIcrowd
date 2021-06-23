@@ -15,7 +15,7 @@ module MediaHelper
     return nil if mediable.media_thumbnail.nil? || !mediable.media_thumbnail.include?('.')
 
     media     = mediable.media_thumbnail.split('.')
-    file_type = media[1]
+    file_type = media.last
 
     return 'youtube' if mediable.media_content_type&.split('/')&.last == 'youtube'
     return 'image' if ['png', 'jpg', 'gif'].include?(file_type)
