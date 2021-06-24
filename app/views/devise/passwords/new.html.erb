@@ -22,6 +22,12 @@
             <%= f.text_field :email, placeholder: 'Email address', class: 'form-control' %>
           </div>
 
+          <% if Rails.env.production? %>
+            <div class="form-group form-check mb-4">
+              <%= recaptcha_tags %>
+            </div>
+          <% end %>
+
           <%= f.button 'Send password reset instructions', type: 'submit', class: 'btn btn-primary btn-block'%>
           <% end %>
       </div>
