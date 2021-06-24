@@ -32,7 +32,7 @@ class SubmissionPolicy < ApplicationPolicy
   end
 
   def mermaid_data?
-    participant && ((@record.participant == participant) || (participant.admin? || (participant.organizer_ids & @record.challenge.organizer_ids).any?))
+    participant && (helpers.submission_team?(@record, participant) || (participant.admin? || (participant.organizer_ids & @record.challenge.organizer_ids).any?))
   end
 
   class Scope
