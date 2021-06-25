@@ -110,7 +110,7 @@ class Participant < ApplicationRecord
   has_many :invitor_team_invitations, class_name: 'TeamInvitation', foreign_key: :invitor_id, inverse_of: :invitor, dependent: :destroy
   has_many :invitee_team_invitations, class_name: 'TeamInvitation', foreign_key: :invitee_id, inverse_of: :invitee_participant, foreign_type: 'Participant', dependent: :destroy
   has_many :invitor_email_invitations, class_name: 'EmailInvitation', foreign_key: :invitor_id, inverse_of: :invitor, dependent: :nullify
-  has_many :claimant_email_invitations, class_name: 'EmailInvitation', foreign_key: :claimant_id, inverse_of: :claimant, dependent: :nullify
+  has_many :claimant_email_invitations, class_name: 'EmailInvitation', foreign_key: :claimant_id, dependent: :nullify
   has_many :newsletter_emails, class_name: 'NewsletterEmail', dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :team_members, dependent: :destroy
