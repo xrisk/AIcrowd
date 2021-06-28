@@ -16,6 +16,7 @@ class SubmissionsController < ApplicationController
   before_action :set_admin_variable, only: [:show]
   before_action :check_restricted_ip, only: [:create]
   before_action :validate_min_submissions, only: [:create]
+  before_action :validate_lock_count, only: [:freeze_submission]
 
   layout :set_layout
   respond_to :html, :js
@@ -209,27 +210,22 @@ class SubmissionsController < ApplicationController
 
   def freeze_submission
     if params[:locked_submission][:submission_id].present?
-      unless LockedSubmission.where(submission_id: params[:locked_submission][:submission_id].to_i).exists?
-        team_participant_ids = get_team_participants
-        locked_submission = LockedSubmission.where(locked_by: team_participant_ids).first
+      team_participant_ids = get_team_participants
+      locked_submissions = LockedSubmission.where(locked_by: team_participant_ids)
 
-        if locked_submission.present?
-          if locked_submission.submission_id != params[:locked_submission][:submission_id].to_i
-            locked_submission.submission_id = params[:locked_submission][:submission_id].to_i
-            locked_submission.locked_by = current_participant.id
-            locked_submission.save!
-          end
-        else
-          LockedSubmission.create!(
-            submission_id: params[:locked_submission][:submission_id].to_i,
-            challenge_id: @challenge.id,
-            locked_by: current_participant.id
-            )
-        end
+      if locked_submissions.present?
+        LockedSubmission.where(locked_by: team_participant_ids).destroy_all
       end
-    end
 
-    return redirect_to(lock_challenge_submissions_path(@challenge), flash: { success: 'We have received your submission.' })
+      params[:locked_submission][:submission_id].each do |submission_id|
+        LockedSubmission.create!(
+          submission_id: submission_id.to_i,
+          challenge_id: @challenge.id,
+          locked_by: current_participant.id
+        )
+      end
+      return redirect_to(lock_challenge_submissions_path(@challenge), flash: { success: 'We have received your submission.' })
+    end
   end
 
   def freezed_submission_export
@@ -563,6 +559,13 @@ class SubmissionsController < ApplicationController
       unless @challenge.restricted_ip.split(",").include?(request.remote_ip)
         redirect_or_json(helpers.challenge_submissions_path(@challenge), "You are not authorised to make submission from current IP address.", :forbidden, "You are not authorised to make submission from current IP address.")
       end
+    end
+  end
+
+  def validate_lock_count
+    if @challenge.submission_lock_count != params[:locked_submission][:submission_id].reject(&:blank?).count
+      flash[:alert] = "Please select #{@challenge.submission_lock_count} submissions"
+      redirect_to lock_challenge_submissions_path(@challenge)
     end
   end
 end

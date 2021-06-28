@@ -69,6 +69,11 @@
   </div>
 
   <div class="form-group col-sm-12 col-md-4">
+    <%= f.label :submission_lock_count, 'Number of submissions a participant can lock for this challenge.' %>
+    <%= f.text_field :submission_lock_count, class: "form-control" %>
+  </div>
+
+  <div class="form-group col-sm-12 col-md-4">
     <%= link_to 'Reset Preferences', reset_locked_submissions_challenge_submissions_path(challenge), class: 'btn btn-primary', data: { disable_with: 'Resetting...' } %>
   </div>
 

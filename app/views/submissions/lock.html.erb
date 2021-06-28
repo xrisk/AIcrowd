@@ -23,15 +23,33 @@
           <div class="form-group">
             <span class="label-text">Submission</span>
             <%= f.select :submission_id, @my_submissions,
-                  {prompt: 'Select Submission'}, {class: "select2 form-control", required: true}%>
+                  {}, {class: "select2 form-control", required: true, multiple: true
+                }%>
             <small class="form-text text-muted">🚀 Lock your submission.</span>
           </div>
 
-          <%= f.button 'Submit', type: 'submit', class: "btn btn-primary" %>
+          <%= f.button 'Submit', type: 'submit', class: "btn btn-primary", data: { disable_with: 'Saving...', confirm: "This will override the previous submission that you/your teammates might have locked. Continue?"} %>
         <% end %>
       <% end %>
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+    var last_valid_selection = null
+    $("#locked_submission_submission_id").change(function(event){
+        if ($(this).val().length > parseInt("<%= @challenge.submission_lock_count %>")) {
+          debugger;
+        // $(this).removeAttr();
+        $(this).val().splice(-1, 1)
+        event.stopPropagation();
+        alert("You can select upto <%= @challenge.submission_lock_count %> options only");
+      } else {
+        last_valid_selection = $(this).val();
+      }
+    });
+  });
+</script>
 
 
