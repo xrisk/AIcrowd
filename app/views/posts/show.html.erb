@@ -2,9 +2,15 @@
   <div class="container-fluid">
 
     <div class="row">
-      <div class="col-9">
+      <div class="col-12">
         <h4><a href="<%= challenge_path(@post.challenge) %>"><%= @post.challenge.challenge %></a></h4>
-        <h1 style="font-size: 2rem;"><%= @post.title %></h1>
+        <h1 style="font-size: 2rem;width: 70%;"><%= @post.title %></h1>
+        <% if @post.community_contribution_winner? %>
+        <div class="row float-right notebook-community-contribution">
+            <%= image_tag image_path('misc/notebook_community_prize.svg'), height: "30", class: "ml-4 mt-1" %>
+            <span class="mt-2 col-8" style="font-size: 13px;font-weight: 500;">Community challenge explainer</span>
+        </div>
+        <% end %>
         <p class="masthead-subtitle"><%= @post.tagline %></p>
         <div class="masthead-details mr-2 mt-3">
           <div class="d-flex align-items-center flex-wrap">
@@ -35,20 +41,6 @@
               <% if !@execute_in_colab_url.nil? %><button type="button" class="btn btn-sm btn-primary"><a href='<%= @execute_in_colab_url %>' target="_blank">Open in Colab</a></button><% end %>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="col-3 mt-2">
-        <div class="row mt-4 ml-2" style="font-size: 12px;">
-          <%= image_tag image_path('misc/notebook_community_prize.svg'), height: "30" %>
-          <span class="ml-2" style="align-self: center;">Notebook won community challenge explainer</span>
-        </div>
-        <div class="row mt-4 ml-2" style="font-size: 12px; margin-top: 10px; margin-bottom: 10px;">
-          <%= image_tag image_path('misc/notebook_liked_20.svg'), height: "30" %>
-          <span class="ml-2" style="align-self: center;">Notebook was liked <%= @post.votes.count %> times</span>
-        </div>
-        <div class="row mt-4 ml-2" style="font-size: 12px;">
-          <%= image_tag image_path('misc/notebook_shared_badge.svg'), height: "30" %>
-          <span class="ml-2" style="align-self: center;">Notebook was viewed <%= @page_view%> times</span>
         </div>
       </div>
     </div>
@@ -85,6 +77,7 @@
     <% end %>
   </div>
   <div class="col-lg-3 sub-nav-vertical-container">
+    <h4>Content</h4>
     <ul class="nav flex-column sticky-top-sub-nav" id="table-of-contents" style="font-size: 14px;">
     </ul>
   </div>
@@ -110,7 +103,7 @@
     <div class="row pl-3 mt-6">
       <%= render partial: 'shared/votes/button', locals: { votable: @post, vote: @post.vote(current_participant)} %>
       <i class="fa fa-eye ml-4" aria-hidden="true" style="align-self: center;"></i>
-      <div class="ml-1 mr-4" style="align-self: center;"><%= @page_view %></div>
+      <div class="ml-1 mr-4" style="align-self: center;"><%= @post.page_views %></div>
       <%= render partial: 'shared/bookmark/button', locals: { post: @post, bookmark: @post.bookmark(current_participant) } %>
        <div class="mr-4 cursor-pointer clipboard-btn" data-clipboard-text="<%= request.url%>" data-toggle="tooltip" title="Copy Link" style="align-self: center;"><%= image_tag image_path('misc/notebook_share.svg') %></div></button>
       <% if @download_notebook_url.present? %>

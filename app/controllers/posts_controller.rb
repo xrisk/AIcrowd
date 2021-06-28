@@ -2,7 +2,6 @@ class PostsController < InheritedResources::Base
   before_action :authenticate_participant!, except: [:show, :index]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :set_my_challenges, only: [:new, :edit, :update, :create]
-  before_action :set_page_view, only: [:show]
 
   def new
     @post = Post.new
@@ -50,6 +49,7 @@ class PostsController < InheritedResources::Base
   def show
     @execute_in_colab_url = @post.execute_in_colab_url
     @download_notebook_url = @post.download_notebook_url
+    @post.record_page_view
     unless @post.external_link.present? && @post.external_link.include?("https://colab.research.google.com")
       @external_link = @post.external_link
     end
@@ -117,6 +117,7 @@ class PostsController < InheritedResources::Base
   end
 
   def destroy
+    authorize @post
     challenge = @post.challenge
     @post.destroy
     redirect_to(notebooks_challenge_path(challenge), notice: "The contribution was deleted successfully!")
@@ -177,11 +178,6 @@ class PostsController < InheritedResources::Base
           @post.errors.messages.merge!(category.errors.messages)
         end
       end
-    end
-
-    def set_page_view
-      sql = "select count(*) from ahoy_events where name LIKE 'Processed posts#show' AND properties -> 'request' ->> 'controller' = 'posts' AND properties -> 'request' ->> 'id' = '#{@post.slug}'"
-      @page_view = ActiveRecord::Base.connection.execute(sql).values[0][0]
     end
 end
 

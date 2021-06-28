@@ -28,6 +28,10 @@ class Post < ApplicationRecord
     self.votes.where(participant_id: participant.id).first if participant.present?
   end
 
+   def record_page_view
+    self.update!(page_views: self.page_views.to_i + 1)
+  end
+
   def bookmark(participant)
     self.post_bookmarks.where(participant_id: participant.id).first if participant.present?
   end

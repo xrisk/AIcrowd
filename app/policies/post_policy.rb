@@ -12,4 +12,8 @@ class PostPolicy < ApplicationPolicy
     (participant.present?)
   end
 
+  def destroy?
+    update?
+  end
+
 end
