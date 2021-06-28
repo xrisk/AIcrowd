@@ -1,4 +1,4 @@
-class Participant::UnlocksController < Devise::UnlocksController
+class Participants::UnlocksController < Devise::UnlocksController
   before_action :verify_captcha, only: [:create]
 
   def verify_captcha
