@@ -1,4 +1,4 @@
-class Participant::ConfirmationsController < Devise::ConfirmationsController
+class Participants::ConfirmationsController < Devise::ConfirmationsController
   before_action :verify_captcha, only: [:create]
 
   def verify_captcha
