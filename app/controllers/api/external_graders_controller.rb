@@ -63,6 +63,12 @@ class Api::ExternalGradersController < Api::BaseController
       challenge_participant = challenge
         .challenge_participants
         .find_by(participant_id: participant.id)
+      
+      if meta_challenge.present?
+        challenge_participant = meta_challenge
+          .challenge_participants
+          .find_by(participant_id: participant.id)
+      end
 
       raise TermsNotAcceptedByParticipant if challenge_participant.blank?
 
