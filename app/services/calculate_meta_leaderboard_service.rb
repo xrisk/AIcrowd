@@ -61,8 +61,11 @@ class CalculateMetaLeaderboardService
       seq: rank,
       meta: scores['rank'],
       submitter_type: participant[0],
-      submitter_id: participant[1]
-    }
+      submitter_id: participant[1],
+      media_content_type: scores['media_content_type'],
+      media_thumbnail: scores['media_thumbnail'],
+      media_large: scores['media_large']
+    }    
   end
 
   def create_leaderboard
@@ -76,6 +79,9 @@ class CalculateMetaLeaderboardService
           people[key]['score'] = 0.0
           people[key]['entries'] = 0
           people[key]['submission_id'] = entry['submission_id']
+          people[key]['media_content_type'] = entry['media_content_type'].presence
+          people[key]['media_thumbnail'] = entry['media_thumbnail'].presence
+          people[key]['media_large'] = entry['media_large'].presence
         end
         people[key]['rank'][entry['challenge_round_id']] = {position: entry['row_num'], score: entry['score']}
         people[key]['score'] += ranking_formula(entry['row_num'], entry['challenge_round_id'], entry['submitter_id'])
