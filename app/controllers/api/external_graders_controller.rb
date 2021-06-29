@@ -39,7 +39,20 @@ class Api::ExternalGradersController < Api::BaseController
 
       challenge = Challenge.where(challenge_client_name: params[:challenge_client_name]).first
       raise ChallengeClientNameInvalid if challenge.nil?
-      raise ParticipantDidNotAcceptChallengeRules unless challenge.has_accepted_challenge_rules?(participant)
+      
+      meta_challenge = nil
+      cps = ChallengeProblems.where(problem_id: challenge.id)
+      cps.each do |cp|
+        if cp.exclusive?
+          meta_challenge = Challenge.find(cp.challenge_id)
+        end
+      end
+      
+      if meta_challenge.present?
+        raise ParticipantDidNotAcceptChallengeRules unless meta_challenge.has_accepted_challenge_rules?(participant)
+      else
+        raise ParticipantDidNotAcceptChallengeRules unless challenge.has_accepted_challenge_rules?(participant)
+      end
 
       challenge_round_id = get_challenge_round_id(challenge: challenge, params: params)
 
