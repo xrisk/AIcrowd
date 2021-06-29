@@ -80,7 +80,7 @@ class Api::ExternalGradersController < Api::BaseController
         .create!(
           participant_id:       participant.id,
           challenge_id:         challenge.id,
-          meta_challenge_id:    meta_challenge.present? ? meta_challenge.id : nil
+          meta_challenge_id:    (meta_challenge.present? ? meta_challenge.id : nil),
           challenge_round_id:   challenge_round_id,
           description:          params[:description],
           post_challenge:       post_challenge(challenge, params),
