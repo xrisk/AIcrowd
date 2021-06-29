@@ -77,6 +77,7 @@ class GraderService
     accepted_terms = !challenge.has_accepted_challenge_rules?(participant)
     if meta_challenge.present?
       accepted_terms = !meta_challenge.has_accepted_challenge_rules?(participant)
+      challenge_participant = meta_challenge.challenge_participants.find_by(participant_id: participant.id)
     end
 
     # The participation terms condition should only be checked on submission creation not recomputes
