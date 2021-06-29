@@ -109,12 +109,12 @@
       <% if @download_notebook_url.present? %>
         <a href='<%= @download_notebook_url %>' target="_blank" class="mr-4" style="align-self: center;"><%= image_tag image_path('misc/notebook_download.svg') %></a></button>
       <% end %>
-      <% if !@execute_in_colab_url.nil? %><button type="button" class="btn btn-sm btn-secondary" style="margin-left: 50%;"><a href='<%= @execute_in_colab_url %>' target="_blank" class="text-secondary"><span class="fa fa-cogs mr-1"></span>Open in Colab</a></button><% end %>
+      <% if !@execute_in_colab_url.nil? %><button type="button" class="btn btn-sm btn-secondary" style="margin-left: 45%;"><a href='<%= @execute_in_colab_url %>' target="_blank" class="text-secondary"><span class="fa fa-cogs mr-1"></span>Open in Colab</a></button><% end %>
     </div>
   </div>
   <hr/>
   <div class="container-fluid">
-    <div class="row justify-content-md-center">
+    <div class="row">
       <div class="col-12 col-sm-8">
         <div class="blog-discussion">
           <%= commontator_thread(@post) %>
