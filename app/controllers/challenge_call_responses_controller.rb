@@ -1,5 +1,6 @@
 class ChallengeCallResponsesController < ApplicationController
   before_action :set_challenge_call
+  before_action :check_captcha, only: [:create]
 
   def new
     @challenge_call_response = @challenge_call
@@ -50,5 +51,13 @@ class ChallengeCallResponsesController < ApplicationController
 
   def set_challenge_call
     @challenge_call = ChallengeCall.friendly.find(params[:challenge_call_id])
+  end
+
+  def check_captcha
+    unless verify_recaptcha
+      flash[:alert] = "We are unable to validate this request, in case the error continues please email us at hello@aicrowd.com."
+      @challenge_call_response = @challenge_call.challenge_call_responses.new(challenge_call_response_params)
+      render action: 'new'
+    end
   end
 end

@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 
-ActiveRecord::Schema.define(version: 2021_06_10_115246) do
+ActiveRecord::Schema.define(version: 2021_06_14_121214) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -586,6 +586,7 @@ ActiveRecord::Schema.define(version: 2021_06_10_115246) do
     t.boolean "show_submission", default: true
     t.integer "min_team_participants", default: 1
     t.string "restricted_ip"
+    t.boolean "organizer_notebook_access", default: false
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["discourse_category_id"], name: "index_challenges_on_discourse_category_id"
     t.index ["discourse_group_id"], name: "index_challenges_on_discourse_group_id"

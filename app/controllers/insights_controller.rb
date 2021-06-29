@@ -22,6 +22,7 @@ class InsightsController < ApplicationController
 
   def top_score_vs_time
     return render json: {} if @current_round.blank?
+    result = []
     # Calculate running maximum hash for dates
 
     score              = params[:score].presence || 'score'
@@ -33,16 +34,15 @@ class InsightsController < ApplicationController
                            @current_round.default_leaderboard["secondary_sort_order_cd"]
                          end
 
-    grouped_collection = @collection.group_by_day(:created_at)
+    result << get_leaderboard_data(score, sort_order, precision, @current_round.default_leaderboard)
 
-    return_hash = if sort_order == "descending"
-                    get_running_agg('max', grouped_collection.maximum(score), precision)
-                  else
-                    # sort_order == "ascending" or "not_used"
-                    get_running_agg('min', grouped_collection.minimum(score), precision)
-                  end
+    @current_round.extra_leaderboards.each do |leaderboard|
+      if leaderboard.show_leaderboard? || (current_participant.present? && policy(@challenge).edit?)
+        result << get_leaderboard_data(score, sort_order, precision, leaderboard)
+      end
+    end
 
-    render json: return_hash
+    render json: result
   end
 
   def challenge_participants_country
@@ -81,6 +81,33 @@ class InsightsController < ApplicationController
       end
       country_data
     end
+  end
+
+  def participant_count
+    @participant_data = {}
+    (@current_round.start_dttm.to_date..@current_round.end_dttm.to_date).each do |dt|
+      count = ChallengeParticipant.where(challenge_id: @current_round.challenge_id).where('created_at > ?', dt).where('created_at < ?', dt+1.day).count
+      @participant_data[dt] = count
+    end
+
+    render json: @participant_data
+  end
+
+  def graded_vs_failed
+    graded = @collection.where(grading_status_cd: "graded").group_by_day(:created_at).count
+    failed = @collection.where(grading_status_cd: "failed").group_by_day(:created_at).count
+    result = [
+      {
+        name: "Failed Submissions",
+        data: failed
+      },
+      {
+        name: "Graded Submissions",
+        data: graded
+      }
+    ]
+
+    render json: result
   end
 
   private
@@ -161,5 +188,21 @@ class InsightsController < ApplicationController
 
       check_hit_goal_points(@values[index+1], index+1, num)
     end
+  end
+
+  def get_leaderboard_data(score, sort_order, precision, leaderboard)
+    sort_order  = if score == 'score'
+                    leaderboard.primary_sort_order_cd
+                  else
+                    leaderboard.secondary_sort_order_cd
+                  end
+
+    grouped_collection = BaseLeaderboard.where(challenge_leaderboard_extra_id: leaderboard.id).group_by_day(:created_at)
+    leaderboard_hash = if sort_order == "descending"
+                  get_running_agg('max', grouped_collection.maximum(score), precision)
+                else
+                  get_running_agg('min', grouped_collection.minimum(score), precision)
+                end
+    return {name: leaderboard.name, data: leaderboard_hash}
   end
 end

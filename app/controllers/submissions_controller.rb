@@ -261,6 +261,26 @@ class SubmissionsController < ApplicationController
     return redirect_to(edit_challenge_path(@challenge), flash: { success: 'Revaluation started successfully.' })
   end
 
+  def mermaid_data
+    @submission = Submission.find_by_id(params[:submission_id].to_i)
+    authorize @submission
+
+    if @submission.meta.present? && @submission.meta['description_markdown'].present?
+      @description_markdown = Kramdown::Document.new(@submission.meta['description_markdown'], { coderay_line_numbers: nil }).to_html.html_safe
+      if @description_markdown.include?("<p><code>mermaid")
+        start_index = @description_markdown.index(">mermaid")
+        @description_markdown.remove!("mermaid")
+        @description_markdown.insert(start_index, " class='aicrowd-mermaid'")
+      end
+      @description_markdown = EmojiParser.detokenize(EmojiParser.detokenize(@description_markdown))
+      @description_markdown.gsub!("<h1", "<h2")
+      @description_markdown.gsub!("</h1>", "</h2>")
+      @description_markdown = @description_markdown.html_safe
+    end
+
+    render json: @description_markdown, status: 200
+  end
+
 
   private
 

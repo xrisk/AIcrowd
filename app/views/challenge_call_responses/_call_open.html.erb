@@ -67,6 +67,12 @@
                       <%= f.text_area :other, class: "form-control" %>
                       <small class="form-text text-muted">What prizes can you provide for the winners of the challenge? Do you have additional sponsorships secured? Is this challenge part of a workshop, a series, or anything else that is important to know?</small>
                   </div>
+                  <% if Rails.env.production? %>
+                    <div class="form-group form-check mb-4">
+                      <%= recaptcha_tags %>
+                    </div>
+                  <% end %>
+
                   <%= f.button 'Submit', type: 'submit', class: "btn btn-primary" %>
                 <% end %>
             </div>

@@ -125,10 +125,6 @@ class Api::ExternalGradersController < Api::BaseController
           media_large:        params[:media_large],
           media_thumbnail:    params[:media_thumbnail],
           media_content_type: params[:media_content_type])
-        unless params[:media_content_type] == 'video/youtube' || Rails.env.test?
-          S3Service.new(params[:media_large]).make_public_read
-          S3Service.new(params[:media_thumbnail]).make_public_read
-        end
       end
 
       # Handle `meta` param
