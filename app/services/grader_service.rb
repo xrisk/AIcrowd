@@ -64,9 +64,24 @@ class GraderService
     submission_key = get_submission_key
     team_id        = participant.teams.where(challenge: challenge).first&.id || 'undefined'
     challenge_participant = challenge.challenge_participants.find_by(participant_id: participant.id)
+    
+    # Check if part of meta challenge
+    meta_challenge = nil
+    cps = ChallengeProblems.where(problem_id: challenge.id)
+    cps.each do |cp|
+      if cp.exclusive?
+        meta_challenge = Challenge.find(cp.challenge_id)
+      end
+    end
+
+    accepted_terms = !challenge.has_accepted_challenge_rules?(participant)
+    if meta_challenge.present?
+      accepted_terms = !meta_challenge.has_accepted_challenge_rules?(participant)
+      challenge_participant = meta_challenge.challenge_participants.find_by(participant_id: participant.id)
+    end
 
     # The participation terms condition should only be checked on submission creation not recomputes
-    if @submission.grading_status == 'ready' && (challenge_participant.blank? || !challenge.has_accepted_challenge_rules?(participant))
+    if @submission.grading_status == 'ready' && (challenge_participant.blank? || accepted_terms)
       Submission.update!(
         @submission.id,
         grading_status:  'failed',

@@ -1,4 +1,5 @@
 class SubmissionPolicy < ApplicationPolicy
+  include SubmissionsHelper
   def index?
     true
   end
@@ -29,6 +30,10 @@ class SubmissionPolicy < ApplicationPolicy
 
   def destroy?
     edit?
+  end
+
+  def mermaid_data?
+    participant && (submission_team?(@record, participant) || (participant.admin? || (participant.organizer_ids & @record.challenge.organizer_ids).any?))
   end
 
   class Scope

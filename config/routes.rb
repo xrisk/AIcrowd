@@ -17,6 +17,7 @@ def challenge_routes
     post :import
     get :remove_invited
     get :notebooks
+    get :make_notebooks_public
   end
 
   resources :teams, only: [:create, :show], param: :name, constraints: { name: %r{[^?/]+} }, format: false, controller: 'challenges/teams' do
@@ -35,6 +36,7 @@ def challenge_routes
     get :reset_locked_submissions, on: :collection
     post :freeze_submission, on: :collection
     get :reevaluate_submission, on: :collection
+    get :mermaid_data, on: :collection
   end
   resources :dynamic_contents, only: [:index]
   resources :leaderboards, only: [:index, :destroy] do
@@ -59,6 +61,8 @@ def challenge_routes
       get 'submissions_vs_time'
       get 'top_score_vs_time'
       get 'challenge_participants_country'
+      get 'participant_count'
+      get 'graded_vs_failed'
     end
   end
 end

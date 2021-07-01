@@ -2,22 +2,16 @@
   <%= render partial: 'shared/challenges/masthead', locals: { challenge: @challenge, challenge_rounds: @challenge_rounds, vote: @vote, follow: @follow } %>
   <%= render partial: 'challenges/show/subnav', locals: { challenge: @challenge } %>
 </div>
-<% if @challenge.dynamic_content_url %>
-  <script>
-  function onDynamicFrameLoad(frame) {
-    var metadata = {
-      "participantId": 1,
-      "scores": [
-        1,
-        5,
-        3,
-        5
-      ]
-    }
-    frame.contentWindow.postMessage(metadata, '*');
-  };
-  </script>
-  <div class='responsive-iframe-wrapper'>
-    <iframe class='responsive-iframe' src="<%=@challenge.dynamic_content_url%>" sandbox="allow-scripts allow-pointer-lock" onload="onDynamicFrameLoad(this)"></iframe>
+<div class="section-p-md">
+  <div class="container-fluid">
+    <div class="row" id='dynamic-content'>
+    <% if @challenge.dynamic_content_url.present? %>
+      <div class='responsive-iframe-wrapper w-100 col-12'>
+        <iframe class='responsive-iframe col-12 border-0' src="<%=@challenge.dynamic_content_url%>" sandbox="allow-scripts allow-pointer-lock"></iframe>
+      </div>
+    <% else %>
+      <%= ERB.new(@challenge.dynamic_content).result(OpenStruct.new({challenge: @challenge, current_participant: current_participant}).instance_eval { binding }).html_safe %>
+    <% end %>
+    </div>
   </div>
-<% end %>
+</div>

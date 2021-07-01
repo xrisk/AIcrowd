@@ -42,7 +42,7 @@ module TabsHelper
     when 'winners'
       'Winners'
     when 'dynamic_contents'
-      challenge.dynamic_content_tab
+      @challenge.dynamic_content_tab
     when 'submissions'
       'Submissions'
     when 'clef_tasks'

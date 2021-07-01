@@ -5,6 +5,13 @@
     <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :meta_challenge, text: "Meta Challenge" } %>
     <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :practice_flag, text: "Practice Challenge?" } %>
     <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :ml_challenge, text: "ML Challenge?" } %>
+    <%= render partial: 'challenges/fields/fancy_radio', locals: { f: f, name: :organizer_notebook_access, text: "Allow organizers to view participant notebooks" } %>
+  </div>
+
+  <h4 class="challenges-form__heading">Make Submission Notebooks Public</h4>
+
+  <div class="form-group">
+    <%= link_to 'Make Notebooks Public', make_notebooks_public_challenge_path(challenge), data: { confirm: '⚠️ Warning: Doing this will make all submissons public. Do you want to continue?' }, class: 'btn btn-primary challenges-form__misc-button' %>
   </div>
 
   <div class="form-group">
@@ -19,7 +26,7 @@
 
   <div class="form-group">
     <span class="label-text">Dynamic Content (ERB)</span>
-    <%= f.cktext_area :dynamic_content %>
+    <%= f.text_area :dynamic_content %>
   </div>
 
   <div class="form-group">

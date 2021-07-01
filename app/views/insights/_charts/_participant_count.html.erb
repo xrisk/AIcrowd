@@ -3,15 +3,15 @@
      data-chart-index="<%= index %>"
      data-chart-type="LineChart"
      data-chart-round="<%= challenge.active_round.id %>"
-     data-chart-default-ytitle="Score"
-     data-chart-url="<%= top_score_vs_time_challenge_insights_path(challenge) %>">
+     data-chart-default-ytitle="Participant Count"
+     data-chart-url="<%= participant_count_challenge_insights_path(challenge) %>">
 
   <header class="section-header">
     <div>
       <% if defined?(show_challenge_name) && show_challenge_name %>
-        <h4>Best Score vs Time (<%= challenge.challenge %>)</h4>
+        <h4>Participant Count (<%= challenge.challenge %>)</h4>
       <% else %>
-        <h4>Best Score vs Time</h4>
+        <h4>Participant Count</h4>
       <% end %>
     </div>
       <% challenge_rounds.each do |challenge_round| %>
@@ -47,6 +47,6 @@
     </ul>
     <!-- / Challenge Round Pills  -->
   <% end %>
-  <%= line_chart top_score_vs_time_challenge_insights_path(challenge), xtitle: "Time", ytitle: challenge.active_round.default_leaderboard.get_score_title  %>
+  <%= line_chart participant_count_challenge_insights_path(challenge), xtitle: "Date", ytitle: "Participant Count"  %>
   <progress class="display-none" max="1" value="0" style="width: 100%" data-target="chart.progressBar"></progress>
 </div>

@@ -1,8 +1,8 @@
 <% cache_if cache_enabled?, [@submission, @submission.challenge_round.default_leaderboard, @submission.challenge_round, @is_organiser_or_author, (current_participant.present? && (policy(challenge).edit?))] do %>
 <% if @description_markdown.present? && @is_organiser_or_author %>
   <div class="row">
-    <div class="col-md-6" data-controller="submission-mermaid">
-      <div class="md-content w-100">
+    <div class="col-md-6" id="submission-mermaid-div" data-controller="submission-mermaid" data-submission-mermaid-id="<%= @submission.id %>" data-submission-mermaid-challenge_id="<%= @challenge.slug %>">
+      <div class="md-content w-100" id="mermaid-container" >
         <%= description_markdown %>
       </div>
     </div>
