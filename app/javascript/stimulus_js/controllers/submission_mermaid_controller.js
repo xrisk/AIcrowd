@@ -14,9 +14,18 @@ export default class extends Controller {
   refreshMermaidGraph(){
     const submissionId = this.data.get('id');
     const challengeId = this.data.get('challenge_id')
+    const metaChallengeId = this.data.get('meta_challenge')
+    var mermaidDataPath = null
+    if(metaChallengeId !== ''){
+      mermaidDataPath = "/challenges/" + challengeId + "/problems/" + metaChallengeId + "/submissions/mermaid_data";
+    }
+    else
+    {
+      mermaidDataPath = "/challenges/" + challengeId + "/submissions/mermaid_data"
+    }
     setInterval(function () {
       $.ajax({
-        url: "/challenges/" + challengeId + "/submissions/mermaid_data",
+        url: mermaidDataPath,
         dataType: "JSON",
         data: {submission_id: submissionId},
         method: "GET",
