@@ -6,7 +6,7 @@ class SubmissionsController < ApplicationController
   before_action :set_challenge_rounds, only: [:index, :new, :create, :show, :lock]
   before_action :set_vote, only: [:index, :new, :create, :show, :lock]
   before_action :set_follow, only: [:index, :new, :create, :show, :lock]
-  before_action :check_participation_terms, except: [:show, :index, :export]
+  before_action :check_participation_terms, except: [:show, :index, :export, :mermaid_data]
   before_action :set_s3_direct_post, only: [:new, :new_api, :edit, :create, :update]
   before_action :set_submissions_remaining, except: [:show]
   before_action :set_current_round, only: [:index, :new, :create, :lock, :reevaluate_submission]
