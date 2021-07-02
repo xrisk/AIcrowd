@@ -84,7 +84,7 @@ export default class extends Controller {
 
       if (this.scrollableTabs) {
         this.createTOC();
-        // $('body').scrollspy({target: "#table-of-contents", offset: 64});
+        $('body').scrollspy({target: "#table-of-contents", offset: 64});
         this.updateActive();
       } else {
         this.createTabularTOC();

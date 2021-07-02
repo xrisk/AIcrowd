@@ -14,6 +14,7 @@ class PostPolicy < ApplicationPolicy
 
   def destroy?
     update?
+  end
 
   def allow_organizers participant, challenge
     (participant.organizer_ids & @record.challenge.organizer_ids).any? && challenge.organizer_notebook_access?

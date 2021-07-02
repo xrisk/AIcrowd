@@ -37,7 +37,7 @@
               <% if @download_notebook_url.present? %>
                 <a href='<%= @download_notebook_url %>' target="_blank" class="mr-4" style="align-self: center;"><%= image_tag image_path('misc/notebook_download.svg') %></a></button>
               <% end %>
-              <%= render partial: 'shared/votes/button', locals: { votable: @post, vote: @post.vote(current_participant) } %>
+              <%= render partial: 'shared/votes/white_button', locals: { votable: @post, vote: @post.vote(current_participant) } %>
               <% if !@execute_in_colab_url.nil? %><button type="button" class="btn btn-sm btn-primary"><a href='<%= @execute_in_colab_url %>' target="_blank">Open in Colab</a></button><% end %>
             </div>
           </div>
@@ -69,7 +69,7 @@
   <div class="row">
   <div class="col-9">
     <% if @post.notebook_html.present? %>
-      <div class="ipynb-notebook-container" data-controller="post-overview"data-post-overview-scrollable-tabs="true" data-spy="scroll" data-target="#table-of-contents">
+      <div class="ipynb-notebook-container" data-controller="post-overview"data-post-overview-scrollable-tabs="true">
         <% cache_if cache_enabled?, [@post] do %>
           <%= @post.notebook_html.html_safe %>
         <% end %>
@@ -101,7 +101,7 @@
   </div>
   <div class="container-fluid">
     <div class="row pl-3 mt-6">
-      <%= render partial: 'shared/votes/button', locals: { votable: @post, vote: @post.vote(current_participant)} %>
+      <%= render partial: 'shared/votes/white_button', locals: { votable: @post, vote: @post.vote(current_participant)} %>
       <i class="fa fa-eye ml-4" aria-hidden="true" style="align-self: center;"></i>
       <div class="ml-1 mr-4" style="align-self: center;"><%= @post.page_views %></div>
       <%= render partial: 'shared/bookmark/button', locals: { post: @post, bookmark: @post.bookmark(current_participant) } %>
