@@ -5,7 +5,7 @@
       <div class="col-12">
         <h4><a href="<%= challenge_path(@post.challenge) %>"><%= @post.challenge.challenge %></a></h4>
         <h1 style="font-size: 2rem;width: 70%;"><%= @post.title %></h1>
-        <% if !@post.community_contribution_winner? %>
+        <% if @post.community_contribution_winner? %>
         <div class="row float-right notebook-community-contribution">
             <%= image_tag image_path('misc/notebook_community_prize.svg'), height: "30", class: "ml-4 mt-1" %>
             <span class="col-8" style="font-size: 13px;font-weight: 500;">Community challenge explainer</span>

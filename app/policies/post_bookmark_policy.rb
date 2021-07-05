@@ -1,4 +1,4 @@
-class PostPolicy < ApplicationPolicy
+class PostBookmarkPolicy < ApplicationPolicy
 
   def create?
     (participant.present?)
