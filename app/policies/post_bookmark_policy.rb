@@ -9,4 +9,3 @@ class PostBookmarkPolicy < ApplicationPolicy
   end
 
 end
-`
