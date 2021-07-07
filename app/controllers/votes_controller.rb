@@ -41,7 +41,6 @@ class VotesController < ApplicationController
   end
 
   def white_vote_destroy
-    byebug
     Vote.destroy(params[:id])
 
     @vote = @votable.votes.where(participant_id: current_participant.id).first if current_participant.present?

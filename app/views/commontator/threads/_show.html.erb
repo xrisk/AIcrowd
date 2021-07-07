@@ -24,12 +24,6 @@
         <%= t "commontator.thread.status.#{thread.is_closed? ? 'closed' : 'open'}",
             closer_name: (thread.is_closed? ? Commontator.commontator_name(thread.closer) : '') %>
     <span id="commontator-thread-<%= thread.id %>-actions" class="actions">
-      <span id="commontator-thread-<%= thread.id %>-hide" class="hide commontator-hidden float-right">
-        <%= button_to t('commontator.thread.actions.hide'),
-                    '#',
-                    id: "commontator-thread-#{thread.id}-hide-link",
-                    class: "btn btn-sm btn-secondary"  %>
-      </span>
 
       <% if can_subscribe %>
         <span id="commontator-thread-<%= thread.id %>-subscription" class="subscription float-right">
