@@ -19,8 +19,8 @@ class PostsController < InheritedResources::Base
   end
 
   def set_my_challenges
-    all_challenges = ChallengeParticipant.where(participant_id: current_participant.id)
-    meta_challenges = Challenge.where(id: all_challenges.pluck(:challenge_id), meta_challenge: true)
+    all_challenges = ChallengeParticipant.where(participant_id: current_participant.id).where(hidden_challenge: false)
+    meta_challenges = Challenge.where(id: all_challenges.pluck(:challenge_id), meta_challenge: true).where(hidden_challenge: false)
     @my_challenges = all_challenges.map(&:challenge).collect {|c| [ c.challenge, c.id] }
     meta_challenges.each do |meta_challenge|
       @my_challenges += meta_challenge.problems.collect{|c| [c.challenge, c.id] } if meta_challenges.present?
