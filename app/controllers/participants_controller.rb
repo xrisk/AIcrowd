@@ -32,6 +32,7 @@ class ParticipantsController < ApplicationController
     end
     @achievements_count = 0
     @participant.badges.badges_stat_count.map { |badge_type_id, badge_type_count| @achievements_count += badge_type_count if [1,2,3].include?(badge_type_id) }
+    Mixpanel::SyncJob.perform_later(@participant)
   end
 
   def edit; end
@@ -48,6 +49,7 @@ class ParticipantsController < ApplicationController
 
     if @participant.errors.none? && @participant.save
       flash[:success] = "Profile updated"
+      Mixpanel::SyncJob.perform_later(@participant)
       redirect_to @participant
     else
       flash[:error] = @participant.errors.full_messages.to_sentence

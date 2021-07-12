@@ -11,7 +11,7 @@
     %>
     <% if required_terms_or_rules_path(challenge).present? %>
       <div class="participants floating-button">
-        <%= link_to required_terms_or_rules_path(challenge) do %>
+        <%= link_to required_terms_or_rules_path(challenge), data: { controller: "mixpanel", action: "click->mixpanel#challenge_participation_start" } do %>
           <button type="button" class="btn btn-primary btn-block" data-toggle="Click to register for challenge">🔓 Participate</button>
         <% end %>
       </div>
