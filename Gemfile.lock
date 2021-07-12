@@ -17,17 +17,8 @@ GIT
       rspec-rails (>= 3.0.0)
 
 GEM
-  remote: https://rails-assets.org/
-  specs:
-    rails-assets-isInViewport (3.0.4)
-    rails-assets-jQuery-File-Upload (9.28.0)
-      rails-assets-blueimp-canvas-to-blob (>= 2.1.1)
-      rails-assets-blueimp-load-image (>= 1.13.0)
-      rails-assets-blueimp-tmpl (>= 2.5.4)
-      rails-assets-jquery (>= 1.6)
-
-GEM
   remote: https://rubygems.org/
+  remote: https://rails-assets.org/
   specs:
     CFPropertyList (2.3.6)
     ace-rails-ap (4.3)
@@ -722,6 +713,12 @@ GEM
     rails-assets-blueimp-canvas-to-blob (3.15.0)
     rails-assets-blueimp-load-image (2.23.0)
     rails-assets-blueimp-tmpl (3.12.0)
+    rails-assets-isInViewport (3.0.4)
+    rails-assets-jQuery-File-Upload (9.28.0)
+      rails-assets-blueimp-canvas-to-blob (>= 2.1.1)
+      rails-assets-blueimp-load-image (>= 1.13.0)
+      rails-assets-blueimp-tmpl (>= 2.5.4)
+      rails-assets-jquery (>= 1.6)
     rails-assets-jquery (3.4.1)
     rails-controller-testing (1.0.4)
       actionpack (>= 5.0.1.x)
@@ -1119,4 +1116,4 @@ RUBY VERSION
    ruby 2.5.5p157
 
 BUNDLED WITH
-   2.2.21
+   2.1.4
