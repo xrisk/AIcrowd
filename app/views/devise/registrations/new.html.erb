@@ -25,15 +25,15 @@
       <div class="row">
         <div data-controller="registration-form" class="col-12">
 
-          <%= form_for resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form-rg'}, validate: true do |f| %>
+          <%= form_for resource, as: resource_name, url: registration_path(resource_name), html: {class: 'form-rg', data: { controller: "mixpanel", type: "signupEmail" }}, validate: true do |f| %>
             <!-- social log in buttons -->
             <div class="btn-set-social">
-              <%= link_to participant_github_omniauth_authorize_path, {class: "btn btn-github btn-block"} do %>
+              <%= link_to participant_github_omniauth_authorize_path, {class: "btn btn-github btn-block", data: { controller: "mixpanel", type: "signupGitHub" }} do %>
                 <%= image_tag "/assets/img/icon-github.svg" %>Sign Up with GitHub
               <% end %>
             </div>
             <div class="btn-set-social">
-              <%= link_to participant_google_oauth2_omniauth_authorize_path, {class: "btn btn-google btn-block"} do%>
+              <%= link_to participant_google_oauth2_omniauth_authorize_path, {class: "btn btn-google btn-block", data: { controller: "mixpanel", type: "signupGoogle" }} do%>
                 <%= image_tag "/assets/img/icon-google.svg" %>Sign Up with Google
               <% end %>
             </div>

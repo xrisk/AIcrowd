@@ -31,6 +31,12 @@ class ChallengeParticipantsController < ApplicationController
     accept_non_exclusive_challenge_rules(@challenge_participant.challenge, current_participant)
     accept_participation_terms(current_participant)
     if @challenge_participant.update(challenge_participant_params)
+      Mixpanel::EventJob.perform_later(current_participant, "Challenge Participation Complete", {
+        "Challenge name": @challenge.challenge,
+        "Challenge slug": @challenge.slug,
+        "Challenge rules accepted date": @challenge_participant.challenge_rules_accepted_date.to_s,
+        "Challenge rules accepted version": @challenge_participant.challenge_rules_accepted_version
+      })
       if @challenge_participant.challenge.ml_challenge
         redirect_to daily_practice_goals_path(challenge_id: @challenge_participant.challenge.slug)
       else

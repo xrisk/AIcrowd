@@ -65,9 +65,10 @@
     <%= csrf_meta_tags %>
     <%= javascript_pack_tag 'application' %>
     <%= stylesheet_pack_tag 'application' %>
+    <%= render partial: 'layouts/mixpanel' %>
   </head>
 
-  <body id='<%= body_id %>' data-turbolinks="false">
+  <body id='<%= body_id %>' data-turbolinks="false" data-controller="mixpanel">
     <%= render partial: 'layouts/loader' %>
 
     <% if current_participant.present? %>

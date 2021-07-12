@@ -268,6 +268,16 @@ class Participant < ApplicationRecord
     'Your account has been disabled. Please contact us at help@aicrowd.com' if account_disabled
   end
 
+  def user_type
+    if admin?
+      'Admin'
+    elsif organizers.present?
+      'Organizer'
+    else
+      'Participant'
+    end
+  end
+
   def admin?
     admin
   end
