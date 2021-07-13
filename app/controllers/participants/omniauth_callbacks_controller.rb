@@ -9,7 +9,9 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
     if @user.persisted?
       Mixpanel::SyncJob.perform_later(@user)
       if !@user.confirmed?
-        Mixpanel::EventJob.perform_later(@user, 'Registration Complete')
+        Mixpanel::EventJob.perform_later(@user, 'Registration Complete', {
+          'Registration Method': readable_provider_name(action_name),
+        })
         @user.confirm
         token = @user.send(:set_reset_password_token)
         redirect_to edit_password_path(@user, reset_password_token: token)
