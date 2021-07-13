@@ -9,7 +9,6 @@ class Participants::RegistrationsController < Devise::RegistrationsController
   private
 
   def registration_completion_callback
-    Mixpanel::SyncJob.perform_later(resource)
     Mixpanel::EventJob.perform_later(resource, 'Registration Complete', {
       'Registration Method': 'Email',
     })
