@@ -18,7 +18,7 @@
     <% end %>
     <% if @challenge.present? %>
     mixpanel_visit["Challenge"] = <%= @challenge.id %>
-        mixpanel_visit["Challenge Slug"] = <%= @challenge.slug %>
+        mixpanel_visit["Challenge Slug"] = "<%= @challenge.slug %>";
             <% end %>
             <% if @meta_challenge.present? %>
             mixpanel_visit["Problem"] = mixpanel_visit["Challenge"];
