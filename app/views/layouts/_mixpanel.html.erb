@@ -11,17 +11,14 @@
     }
     <% if current_participant.present? %>
     var mixpanel_person = "<%= current_participant.uuid %>";
-    var mixpanel_person_data = {
-        "$email": "<%= current_participant.email %>"
-    }
     mixpanel_visit["Logged In"] = true;
     <% end %>
     <% if @challenge.present? %>
-    mixpanel_visit["Challenge"] = <%= @challenge.id %>
-        mixpanel_visit["Challenge Slug"] = "<%= @challenge.slug %>";
-            <% end %>
-            <% if @meta_challenge.present? %>
-            mixpanel_visit["Problem"] = mixpanel_visit["Challenge"];
+    mixpanel_visit["Challenge"] = "<%= @challenge.id %>";
+    mixpanel_visit["Challenge Slug"] = "<%= @challenge.slug %>";
+    <% end %>
+    <% if @meta_challenge.present? %>
+    mixpanel_visit["Problem"] = mixpanel_visit["Challenge"];
     mixpanel_visit["Problem Slug"] = mixpanel_visit["Challenge Slug"];
     mixpanel_visit["Challenge"] = "<%= @meta_challenge.id %>";
     mixpanel_visit["Challenge Slug"] = "<%= @meta_challenge.slug %>";
