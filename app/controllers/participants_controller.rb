@@ -32,7 +32,6 @@ class ParticipantsController < ApplicationController
     end
     @achievements_count = 0
     @participant.badges.badges_stat_count.map { |badge_type_id, badge_type_count| @achievements_count += badge_type_count if [1,2,3].include?(badge_type_id) }
-    Mixpanel::SyncJob.perform_later(@participant)
   end
 
   def edit; end
