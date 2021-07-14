@@ -34,7 +34,7 @@
     </ul>
 
     <% if required_terms_or_rules_path(challenge).present? %>
-      <%= link_to 'Participate', required_terms_or_rules_path(challenge), class: "btn btn-primary btn-sm pull-right" %>
+      <%= link_to 'Participate', required_terms_or_rules_path(challenge), class: "btn btn-primary btn-sm pull-right", data: { controller: "mixpanel", action: "click->mixpanel#challenge_participation_start" } %>
     <% else %>
       <%= my_team_view_or_create_button(challenge) %>
       <% if !challenge.meta_challenge %>

@@ -30,6 +30,7 @@ class Participant < ApplicationRecord
   before_save :process_urls
   after_create :set_email_preferences
   after_save :publish_to_prometheus
+  after_save :save_user_profile_to_mixpanel
   after_commit :upsert_discourse_user, on: [:create, :update]
   after_commit :update_gitlab_user, on: [:update, :create]
 
@@ -268,6 +269,16 @@ class Participant < ApplicationRecord
     'Your account has been disabled. Please contact us at help@aicrowd.com' if account_disabled
   end
 
+  def user_type
+    if admin?
+      'Admin'
+    elsif organizers.present?
+      'Organizer'
+    else
+      'Participant'
+    end
+  end
+
   def admin?
     admin
   end
@@ -398,5 +409,9 @@ class Participant < ApplicationRecord
     return unless saved_change_to_attribute?(:name)
 
     Gitlab::UpdateUsernameJob.perform_later(self.id)
+  end
+
+  def save_user_profile_to_mixpanel
+    Mixpanel::SyncJob.perform_later(self)
   end
 end

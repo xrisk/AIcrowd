@@ -87,6 +87,13 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
+    if defined? sign_in_params
+      Mixpanel::EventJob.perform_later(resource, 'Login Complete', {
+        'Login Method': 'Email',
+        'User Type': resource.user_type
+      })
+    end
+
     if resource.name.length > 20
       flash[:alert] = "Maximum length for username is reduced to 20 characters, please change your username #{helpers.link_to '[here]', edit_participant_path(resource), target: '_blank'}"
     end

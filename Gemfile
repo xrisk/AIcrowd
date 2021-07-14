@@ -123,6 +123,8 @@ gem 'irbtools', require: 'irbtools/binding'
 # ACE editor
 gem 'ace-rails-ap'
 
+gem 'mixpanel-ruby'
+
 group :development do
   gem "letter_opener"
   gem 'brakeman', require: false

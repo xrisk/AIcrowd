@@ -21,7 +21,8 @@
       </td>
       <% if challenge.show_submission? || is_organiser_or_author %>
         <% if challenge_round.default_leaderboard.dynamic_score_field.present? %>
-          <td><%= submission_formatted_value(submission, submission["meta"][challenge_round.default_leaderboard.dynamic_score_field].presence || nil) %></td>
+          <% dynamic_score = (submission["meta"][challenge_round.default_leaderboard.dynamic_score_field].presence || nil) rescue nil %>
+          <td><%= submission_formatted_value(submission, dynamic_score) %></td>
         <% else %>
           <td><%= submission_formatted_value(submission, submission.score_display) %></td>
         <% end %>
