@@ -5,8 +5,8 @@ module Reputation
     end
 
     def call
-      last_updated_time = get_last_updated_time
-      sync_data(last_updated_time)
+      # last_updated_time = get_last_updated_time
+      sync_data
     end
 
     def get_synced_leaderboard_extras
@@ -25,9 +25,9 @@ module Reputation
       JWT.encode(payload, ENV['REPUTATION_TOKEN'])
     end
 
-    def sync_data(last_updated_time)
+    def sync_data
       challenge_leaderboard_extra_ids = get_synced_leaderboard_extras
-      base_leaderboards = BaseLeaderboard.where("created_at > ?", last_updated_time).where(leaderboard_type_cd: "leaderboard", challenge_leaderboard_extra_id: challenge_leaderboard_extra_ids).where("meta_challenge_id is not NULL")
+      base_leaderboards = BaseLeaderboard.where(leaderboard_type_cd: "leaderboard", challenge_leaderboard_extra_id: challenge_leaderboard_extra_ids).where("meta_challenge_id is not NULL")
       result = []
       base_leaderboards.each do |bl|
         if ChallengeLeaderboardExtra.where(id: bl.challenge_leaderboard_extra_id).first.challenge_round.present?
