@@ -1,0 +1,26 @@
+<script>
+    var mixpanel_initialized = false;
+    var mixpanel_token = "<%= ENV['MIXPANEL_TOKEN'] %>";
+    var mixpanel_visit = {
+        "Page Module": "<%= controller.controller_name %>",
+        "Page Action": "<%= controller.action_name %>",
+        "Page URL": location.pathname,
+        "Page Full URL": window.location.href,
+        "Version": "v1",
+        "Logged In": false
+    }
+    <% if current_participant.present? %>
+    var mixpanel_person = "<%= current_participant.uuid %>";
+    mixpanel_visit["Logged In"] = true;
+    <% end %>
+    <% if @challenge.present? %>
+    mixpanel_visit["Challenge"] = "<%= @challenge.id %>";
+    mixpanel_visit["Challenge Slug"] = "<%= @challenge.slug %>";
+    <% end %>
+    <% if @meta_challenge.present? %>
+    mixpanel_visit["Problem"] = mixpanel_visit["Challenge"];
+    mixpanel_visit["Problem Slug"] = mixpanel_visit["Challenge Slug"];
+    mixpanel_visit["Challenge"] = "<%= @meta_challenge.id %>";
+    mixpanel_visit["Challenge Slug"] = "<%= @meta_challenge.slug %>";
+    <% end %>
+</script>

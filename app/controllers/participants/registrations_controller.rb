@@ -4,8 +4,18 @@ class Participants::RegistrationsController < Devise::RegistrationsController
   include Recaptcha
   prepend_before_action :check_captcha, only: [:create] # Change this to be any actions you want to protect.
   prepend_before_action :set_referred_by_id, only: [:create]
+  after_action :registration_completion_callback, only: [:create]
 
   private
+
+  def registration_completion_callback
+    user = resource
+    return if user.id.nil?
+
+    Mixpanel::EventJob.perform_later(user, 'Registration Complete', {
+      'Registration Method': 'Email',
+    })
+  end
 
   def check_captcha
     return if !Rails.env.production? || verify_recaptcha

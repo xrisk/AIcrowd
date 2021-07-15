@@ -25,6 +25,7 @@
     "linkifyjs": "^2.1.9",
     "mermaid": "^8.8.4",
     "midi-player-js": "^2.0.3",
+    "mixpanel-browser": "^2.41.0",
     "node-sass": "^4.13",
     "notebookjs": "^0.3.0",
     "path-complete-extname": "^0.1.0",

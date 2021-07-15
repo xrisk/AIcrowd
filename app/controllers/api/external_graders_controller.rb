@@ -39,7 +39,20 @@ class Api::ExternalGradersController < Api::BaseController
 
       challenge = Challenge.where(challenge_client_name: params[:challenge_client_name]).first
       raise ChallengeClientNameInvalid if challenge.nil?
-      raise ParticipantDidNotAcceptChallengeRules unless challenge.has_accepted_challenge_rules?(participant)
+      
+      meta_challenge = nil
+      cps = ChallengeProblems.where(problem_id: challenge.id)
+      cps.each do |cp|
+        if cp.exclusive?
+          meta_challenge = Challenge.find(cp.challenge_id)
+        end
+      end
+      
+      if meta_challenge.present?
+        raise ParticipantDidNotAcceptChallengeRules unless meta_challenge.has_accepted_challenge_rules?(participant)
+      else
+        raise ParticipantDidNotAcceptChallengeRules unless challenge.has_accepted_challenge_rules?(participant)
+      end
 
       challenge_round_id = get_challenge_round_id(challenge: challenge, params: params)
 
@@ -50,6 +63,12 @@ class Api::ExternalGradersController < Api::BaseController
       challenge_participant = challenge
         .challenge_participants
         .find_by(participant_id: participant.id)
+      
+      if meta_challenge.present?
+        challenge_participant = meta_challenge
+          .challenge_participants
+          .find_by(participant_id: participant.id)
+      end
 
       raise TermsNotAcceptedByParticipant if challenge_participant.blank?
 
@@ -61,6 +80,7 @@ class Api::ExternalGradersController < Api::BaseController
         .create!(
           participant_id:       participant.id,
           challenge_id:         challenge.id,
+          meta_challenge_id:    (meta_challenge.present? ? meta_challenge.id : nil),
           challenge_round_id:   challenge_round_id,
           description:          params[:description],
           post_challenge:       post_challenge(challenge, params),

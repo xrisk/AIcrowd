@@ -17,14 +17,14 @@
 			<div class="row">
 				<div class="col-12">
 
-					<%= form_for resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-rg' }, validate: true do |f| %>
+          <%= form_for resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-rg', data: { controller: "mixpanel", type: "loginEmail" }}, validate: true do |f| %>
 
 						<!-- social log in buttons -->
 						<div class="btn-set-social">
-							<%= link_to participant_github_omniauth_authorize_path, {class: "btn btn-github btn-block"} do%>
+              <%= link_to participant_github_omniauth_authorize_path, {class: "btn btn-github btn-block", data: { controller: "mixpanel", type: "loginGitHub" }} do%>
 								<%= image_tag "/assets/img/icon-github.svg" %>Log in with GitHub
 							<% end %>
-                                                        <%= link_to participant_google_oauth2_omniauth_authorize_path, {class: "btn btn-google btn-block"} do%>
+                                                        <%= link_to participant_google_oauth2_omniauth_authorize_path, {class: "btn btn-google btn-block", data: { controller: "mixpanel", type: "loginGoogle" }} do%>
 															<%= image_tag "/assets/img/icon-google.svg" %>Log in with Google
                                                         <% end %>
                                                 </div>

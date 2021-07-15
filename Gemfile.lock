@@ -597,6 +597,7 @@ GEM
     mini_racer (0.2.9)
       libv8 (>= 6.9.411)
     minitest (5.14.1)
+    mixpanel-ruby (2.2.2)
     model_2_factory-rails (0.0.3)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
@@ -1038,6 +1039,7 @@ DEPENDENCIES
   meta_request
   mini_magick
   mini_racer
+  mixpanel-ruby
   model_2_factory-rails
   momentjs-rails (~> 2.9)
   net-ssh
