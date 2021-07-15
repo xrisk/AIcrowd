@@ -20,8 +20,8 @@ module Reputation
       JWT.encode(payload, ENV['REPUTATION_TOKEN'])
     end
 
-    def sync_data
-      challenge_leaderboard_extras = ChallengeLeaderboardExtra.where('created_at > ?', get_last_updated_time).where(ranking_enabled: true).includes(:challenge_round)
+    def sync_data(last_updated_time)
+      challenge_leaderboard_extras = ChallengeLeaderboardExtra.where(ranking_enabled: true).includes(:challenge_round)
       result = []
       challenge_leaderboard_extras.each do |cle|
         if cle.challenge_round
