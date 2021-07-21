@@ -27,7 +27,7 @@ module Reputation
 
     def sync_data
       challenge_leaderboard_extra_ids = get_synced_leaderboard_extras
-      base_leaderboards = BaseLeaderboard.where(leaderboard_type_cd: "leaderboard", challenge_leaderboard_extra_id: challenge_leaderboard_extra_ids).where("meta_challenge_id is not NULL")
+      base_leaderboards = BaseLeaderboard.where(leaderboard_type_cd: "leaderboard", challenge_leaderboard_extra_id: challenge_leaderboard_extra_ids)
       result = []
       base_leaderboards.each do |bl|
         if ChallengeLeaderboardExtra.where(id: bl.challenge_leaderboard_extra_id).first.challenge_round.present?

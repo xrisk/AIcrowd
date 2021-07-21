@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 2021_06_14_121214) do
+ActiveRecord::Schema.define(version: 2021_07_19_075137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -389,8 +388,6 @@ ActiveRecord::Schema.define(version: 2021_06_14_121214) do
     t.integer "sub_round_size", default: 1
     t.boolean "use_for_final_rating", default: false
     t.boolean "for_weekly_rating", default: false
-    t.datetime "last_calculated_at"
-    t.boolean "rating_calculated", default: false
     t.boolean "rating_calculated", default: false
     t.datetime "rank_last_calculated_at"
     t.boolean "is_tie_possible", default: true
@@ -587,6 +584,7 @@ ActiveRecord::Schema.define(version: 2021_06_14_121214) do
     t.integer "min_team_participants", default: 1
     t.string "restricted_ip"
     t.boolean "organizer_notebook_access", default: false
+    t.integer "submission_lock_count", default: 1
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["discourse_category_id"], name: "index_challenges_on_discourse_category_id"
     t.index ["discourse_group_id"], name: "index_challenges_on_discourse_group_id"
@@ -1087,6 +1085,7 @@ ActiveRecord::Schema.define(version: 2021_06_14_121214) do
     t.bigint "referred_by_id"
     t.boolean "trusted", default: false
     t.boolean "super_admin", default: false
+    t.boolean "mixpanel_done", default: false
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["name"], name: "index_participants_on_name", unique: true
@@ -1116,6 +1115,13 @@ ActiveRecord::Schema.define(version: 2021_06_14_121214) do
     t.index ["organizer_id"], name: "index_partners_on_organizer_id"
   end
 
+  create_table "post_bookmarks", force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.integer "participant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.string "tagline"
@@ -1135,6 +1141,8 @@ ActiveRecord::Schema.define(version: 2021_06_14_121214) do
     t.text "colab_link"
     t.boolean "private", default: false
     t.string "gist_username"
+    t.boolean "community_contribution_winner", default: false
+    t.integer "page_views", default: 0
     t.index ["challenge_id"], name: "index_posts_on_challenge_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["participant_id"], name: "index_posts_on_participant_id"
@@ -1191,12 +1199,13 @@ ActiveRecord::Schema.define(version: 2021_06_14_121214) do
   create_table "ratings", force: :cascade do |t|
     t.integer "challenge_leaderboard_extra_id", null: false
     t.integer "participant_id", null: false
-    t.integer "rating", null: false
+    t.float "rating", null: false
     t.float "mu"
     t.float "sigma"
     t.integer "rank"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "contest_id", null: false
   end
 
   create_table "redirects", force: :cascade do |t|
