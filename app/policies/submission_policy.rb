@@ -6,6 +6,7 @@ class SubmissionPolicy < ApplicationPolicy
 
   def show?
     challenge = @record.challenge
+    return false if @record.deleted?
     return true if challenge.show_submission
     participant && ((@record.participant == participant) || (participant.admin? || (participant.organizer_ids & @record.challenge.organizer_ids).any?))
   end
@@ -33,6 +34,7 @@ class SubmissionPolicy < ApplicationPolicy
   end
 
   def mermaid_data?
+    return false if @record.deleted?
     participant && (submission_team?(@record, participant) || (participant.admin? || (participant.organizer_ids & @record.challenge.organizer_ids).any?))
   end
 
