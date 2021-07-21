@@ -14,6 +14,7 @@ module SubmissionsHelper
   end
 
   def submission_formatted_value(submission, value)
+    return value if value.is_a?(String)
     format("%.#{submission.challenge_round.default_leaderboard.score_precision}f", value || 0)
   end
 
