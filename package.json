@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "aicrowd-components-library": "git+https://oauth2:RcGvMB6z2u33_8s7J_Tf@gitlab.aicrowd.com/aicrowd/reinvent/aicrowd-components-library.git",
     "autoprefixer": "^8.0.0",
     "babel-core": "^6.26.0",
     "babel-loader": "7.x",
