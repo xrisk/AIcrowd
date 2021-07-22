@@ -352,6 +352,11 @@ module ChallengesHelper
     path = super(*args)
     meta_challenge(path, args[0])
   end
+  
+  def challenge_challenge_rules_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
 
   def export_challenge_submissions_path(*args)
     path = super(*args)
