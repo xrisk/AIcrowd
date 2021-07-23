@@ -45,6 +45,7 @@
     "sass-loader": "^6.0.6",
     "stimulus": "^1.1.1",
     "stimulus-flatpickr": "^0.4.1",
+    "storybook": "^6.3.5",
     "style-loader": "^0.20.2",
     "uglifyjs-webpack-plugin": "^1.0.0-rc.0",
     "webpack": "3.11.0",
