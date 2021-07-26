@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_14_121214) do
+ActiveRecord::Schema.define(version: 2021_07_26_063828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -140,6 +140,16 @@ ActiveRecord::Schema.define(version: 2021_06_14_121214) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_badges_events_on_name", unique: true
+  end
+
+  create_table "badges_sashes", force: :cascade do |t|
+    t.integer "badge_id"
+    t.integer "sash_id"
+    t.boolean "notified_user", default: false
+    t.datetime "created_at"
+    t.index ["badge_id", "sash_id"], name: "index_badges_sashes_on_badge_id_and_sash_id"
+    t.index ["badge_id"], name: "index_badges_sashes_on_badge_id"
+    t.index ["sash_id"], name: "index_badges_sashes_on_sash_id"
   end
 
   create_table "base_leaderboards", force: :cascade do |t|
@@ -584,6 +594,7 @@ ActiveRecord::Schema.define(version: 2021_06_14_121214) do
     t.integer "min_team_participants", default: 1
     t.string "restricted_ip"
     t.boolean "organizer_notebook_access", default: false
+    t.integer "submission_lock_count", default: 1
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["discourse_category_id"], name: "index_challenges_on_discourse_category_id"
     t.index ["discourse_group_id"], name: "index_challenges_on_discourse_group_id"
@@ -852,6 +863,42 @@ ActiveRecord::Schema.define(version: 2021_06_14_121214) do
     t.integer "participant_id"
   end
 
+  create_table "merit_actions", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "action_method"
+    t.integer "action_value"
+    t.boolean "had_errors", default: false
+    t.string "target_model"
+    t.integer "target_id"
+    t.text "target_data"
+    t.boolean "processed", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["processed"], name: "index_merit_actions_on_processed"
+  end
+
+  create_table "merit_activity_logs", force: :cascade do |t|
+    t.integer "action_id"
+    t.string "related_change_type"
+    t.integer "related_change_id"
+    t.string "description"
+    t.datetime "created_at"
+  end
+
+  create_table "merit_score_points", force: :cascade do |t|
+    t.bigint "score_id"
+    t.bigint "num_points", default: 0
+    t.string "log"
+    t.datetime "created_at"
+    t.index ["score_id"], name: "index_merit_score_points_on_score_id"
+  end
+
+  create_table "merit_scores", force: :cascade do |t|
+    t.bigint "sash_id"
+    t.string "category", default: "default"
+    t.index ["sash_id"], name: "index_merit_scores_on_sash_id"
+  end
+
   create_table "migration_mappings", force: :cascade do |t|
     t.string "source_type"
     t.integer "source_id"
@@ -1075,6 +1122,9 @@ ActiveRecord::Schema.define(version: 2021_06_14_121214) do
     t.bigint "referred_by_id"
     t.boolean "trusted", default: false
     t.boolean "super_admin", default: false
+    t.boolean "mixpanel_done", default: false
+    t.integer "sash_id"
+    t.integer "level", default: 0
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["name"], name: "index_participants_on_name", unique: true
@@ -1104,6 +1154,13 @@ ActiveRecord::Schema.define(version: 2021_06_14_121214) do
     t.index ["organizer_id"], name: "index_partners_on_organizer_id"
   end
 
+  create_table "post_bookmarks", force: :cascade do |t|
+    t.integer "post_id", null: false
+    t.integer "participant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.string "tagline"
@@ -1123,6 +1180,8 @@ ActiveRecord::Schema.define(version: 2021_06_14_121214) do
     t.text "colab_link"
     t.boolean "private", default: false
     t.string "gist_username"
+    t.boolean "community_contribution_winner", default: false
+    t.integer "page_views", default: 0
     t.index ["challenge_id"], name: "index_posts_on_challenge_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["participant_id"], name: "index_posts_on_participant_id"
@@ -1189,6 +1248,11 @@ ActiveRecord::Schema.define(version: 2021_06_14_121214) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_reserved_userhandles_on_name", unique: true
+  end
+
+  create_table "sashes", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "settings", force: :cascade do |t|
