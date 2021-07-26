@@ -81,6 +81,8 @@ module Merit
         challenge_participant.participant.challenge_participants.count == 20
       end
 
+      # Badges for number of submissions
+
       grant_on 'submissions#create', badge: 'submitted-40-submissions', level: 1 do |submission|
         submission.participant.submissions.count == 40
       end
@@ -92,6 +94,81 @@ module Merit
       grant_on 'submissions#create', badge: 'submitted-120-submissions', level: 3 do |submission|
         submission.participant.submissions.count == 120
       end
+
+      # Badges for number of successful submissions
+
+      grant_on 'submissions#create', badge: 'submitted-20-successful-submissions', level: 1 do |submission|
+        submission.participant.submissions.where(grading_status_cd: 'graded').count == 20
+      end
+
+      grant_on 'submissions#create', badge: 'submitted-50-successful-submissions', level: 2 do |submission|
+        submission.participant.submissions.where(grading_status_cd: 'graded').count == 50
+      end
+
+      grant_on 'submissions#create', badge: 'submitted-80-successful-submissions', level: 3 do |submission|
+        submission.participant.submissions.where(grading_status_cd: 'graded').count == 80
+      end
+
+      # Badges for consecutive days submissions
+      # Badges for rank improvement
+      # Badges for score improvement
+      # Badges for inviting users
+
+      # Notebook Related Badges
+
+      grant_on 'posts#create', badge: 'created-3-notebooks', level: 1 do |post|
+        post.participant.posts.count == 3
+      end
+
+      grant_on 'posts#create', badge: 'created-10-notebooks', level: 2 do |post|
+        post.participant.posts.count == 10
+      end
+
+      grant_on 'posts#create', badge: 'created-25-notebooks', level: 3 do |post|
+        post.participant.posts.count == 25
+      end
+
+      grant_on 'posts#update', badge: 'blitz-community-winner', level: 1, to: :participant do |post|
+        post.blitz_community_winner
+      end
+
+      grant_on 'posts#update', badge: 'community-explainer-winner', level: 1, to: :participant do |post|
+        post.community_explainer_winner
+      end
+
+      # Participant liked notebooks n number of times
+
+      grant_on 'votes#create', badge: 'liked-10-notebooks', level: 1 do |vote|
+        vote.participant.votes.where(votable_type: "Post").count == 10
+      end
+
+      grant_on 'votes#create', badge: 'liked-25-notebooks', level: 2 do |vote|
+        vote.participant.votes.where(votable_type: "Challenge").count == 25
+      end
+
+      grant_on 'votes#create', badge: 'liked-40-notebooks', level: 3 do |vote|
+        vote.participant.votes.where(votable_type: "Challenge").count == 40
+      end
+
+      # Participant Notebooks were liked n number of times
+
+      grant_on 'votes#create', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
+        vote.votable.is_a?(Post) && vote.votable.votes.count == 5
+      end
+
+      grant_on 'votes#create', badge: 'notebook-liked-20', level: 2, to: :participant do |vote|
+        vote.votable.is_a?(Post) && vote.votable.votes.count == 20
+      end
+
+      grant_on 'votes#create', badge: 'notebook-liked-35', level: 3, to: :participant do |vote|
+        vote.votable.is_a?(Post) && vote.votable.votes.count == 35
+      end
+
+      # Participant commented on a notebook n number of times
+      # Participant notebooks received n number of comments
+
+      # Download notebooks
+
 
 
 
