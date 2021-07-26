@@ -18,7 +18,7 @@ class RatingsController < ApplicationController
     end
     cle.rank_last_calculated_at = DateTime.now
     cle.save!
-    Reputation::CalculateGlobalRankService.new(ratings).call
+    Reputation::CalculateGlobalRankJob.perform_later(ratings)
 
     # Now send notifications - Challenge end notification
     #
