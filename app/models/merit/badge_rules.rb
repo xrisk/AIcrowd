@@ -45,6 +45,8 @@ module Merit
       #   user.name.length > 4
       # end
 
+      # Liked n number of challenges
+
       grant_on 'votes#create', badge: 'liked-5-challenge-badge', level: 1 do |vote|
         vote.participant.votes.where(votable_type: "Challenge").count == 5
       end
@@ -57,6 +59,8 @@ module Merit
         vote.participant.votes.where(votable_type: "Challenge").count == 20
       end
 
+      # Followed n number of challenges
+
       grant_on 'follows#create', badge: 'followed-5-challenge', level: 1 do |follow|
         Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").count == 5
       end
@@ -68,6 +72,8 @@ module Merit
       grant_on 'follows#create', badge: 'followed-20-challenge', level: 3 do |follow|
         Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").count == 20
       end
+
+      # Participated in n number of challenges
 
       grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'participated-in-5-challenge', level: 1 do |challenge_participant|
         challenge_participant.participant.challenge_participants.count == 5
@@ -109,9 +115,16 @@ module Merit
         submission.participant.submissions.where(grading_status_cd: 'graded').count == 80
       end
 
+      # Badges for winning a challenge
+      # Liked n number of practice problems
+      # Shared n number of practice problems
+      # Followed n number of practice problems
+      # Participate in n number of practice problems
+      # N number of successful submissions
       # Badges for consecutive days submissions
       # Badges for rank improvement
       # Badges for score improvement
+      # Actively participated in one challenge, made 2 submissions and liked 2 challenges.
       # Badges for inviting users
 
       # Notebook Related Badges
@@ -135,6 +148,8 @@ module Merit
       grant_on 'posts#update', badge: 'community-explainer-winner', level: 1, to: :participant do |post|
         post.community_explainer_winner
       end
+
+      # Notebook shared n times
 
       # Participant liked notebooks n number of times
 
@@ -166,8 +181,28 @@ module Merit
 
       # Participant commented on a notebook n number of times
       # Participant notebooks received n number of comments
-
+      # Subscribed n times
+      # N subscribers
       # Download notebooks
+      # Created one notebook, like 3 notebooks, shared 2 notebooks
+      # Created n number of blitz notebooks
+      #
+      #
+      # Created first notebook
+      # Shared first notebook
+      # Notebook was shared first time
+      # Liked 1 notebook
+      # Notebook got first like
+      # Commented on 1 notebook
+      # Notebook got 1 comment
+      # You subscribed to your 1st notebook
+      # Your notebook got 1st subscriber
+      # You downloaded your 1st notebook
+      # Your notebook got its 1st download
+      #
+      # Listing all the first time badges
+      #
+      #
 
 
 
