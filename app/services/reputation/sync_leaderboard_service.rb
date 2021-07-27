@@ -1,7 +1,8 @@
 module Reputation
   class SyncLeaderboardService
 
-    def initialize
+    def initialize cle_id
+      @cle_id = cle_id
     end
 
     def call
@@ -26,11 +27,11 @@ module Reputation
     end
 
     def sync_data
-      challenge_leaderboard_extra_ids = get_synced_leaderboard_extras
-      base_leaderboards = BaseLeaderboard.where(leaderboard_type_cd: "leaderboard", challenge_leaderboard_extra_id: challenge_leaderboard_extra_ids)
+      # challenge_leaderboard_extra_ids = get_synced_leaderboard_extras
+      base_leaderboards = BaseLeaderboard.where(leaderboard_type_cd: "leaderboard", challenge_leaderboard_extra_id: @cle_id)
       result = []
       base_leaderboards.each do |bl|
-        if ChallengeLeaderboardExtra.where(id: bl.challenge_leaderboard_extra_id).first.challenge_round.present?
+        if true
           if bl.challenge_round_id && bl.row_num && bl.created_at && bl.submitter_id
             if bl.submitter_type == "Team"
               TeamParticipant.where(team_id: bl.submitter_id).each do |tp|

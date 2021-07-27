@@ -32,7 +32,7 @@ module Reputation
       end
       response = HTTP.post("#{ENV['RATING_SANDBOX_URL']}/contest/create", json: result, headers: {Authorization: "Bearer #{secure_data}"})
       if response.status
-        Reputation::SyncLeaderboardService.new.call
+        Reputation::SyncLeaderboardService.new(@cle_id).call
       end
     end
 
