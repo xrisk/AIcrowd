@@ -17,7 +17,31 @@ class InsightsController < ApplicationController
   end
 
   def submissions_vs_time
-    render json: @collection.group_by_day(:created_at).count
+    result = []
+    table = CSV.parse(File.read("/Users/sujnesh/Desktop/Slack/rating.csv"), headers: true)
+    table.each do |row|
+      result << row.to_h
+    end
+
+    result.sort_by{|row| row['fide_rating']}
+
+    final_res = []
+    result.each do |res|
+      fr = res["fide_rating"].to_f
+      fr = (fr - (fr%10)).to_i
+      final_res[fr] ||= 0
+      final_res[fr] = final_res[fr] + 1
+    end
+
+    final_hash = {}
+
+    final_res.each_with_index do |fr, idx|
+      if fr.present?
+        final_hash[idx] = fr
+      end
+    end
+
+    render json: final_hash
   end
 
   def top_score_vs_time
