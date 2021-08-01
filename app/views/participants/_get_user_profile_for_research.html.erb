@@ -1,20 +1,8 @@
 <% if participant.present? %>
-  <%
-    avatar           = avatar.present? ? avatar : true
-    span_location_id = location_id(participant)
-    username         = username
-    base_class       = base_class.present? ? base_class : "avatar"
-  %>
-
-  <span id="<%= span_location_id %>">
-    <span data-controller="participants"
-          data-participants-participant="<%= participant&.id %>"
-          data-participants-username="<%= false %>"
-          data-participants-avatar="<%= avatar %>"
-          data-participants-location="<%= span_location_id %>"
-          data-participants-research_name="<%= username %>"
-          data-action="mouseenter->participants#getUserProfile">
-          <%= render partial: 'participants/research_name_avatar', locals: { participant: participant, research_name: username, base_class: base_class } %>
+  <a href="<%= participant_link(participant) %>" target="_blank">
+    <span class="text-link mr-1">
+      <img alt="" class="mr-1 img-sm" src="<%= participant.image_file.url %>">
+        <small><%= username %></small>
     </span>
-  </span>
+  </a>
 <% end %>

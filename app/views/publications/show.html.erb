@@ -1,108 +1,144 @@
 <div class="masthead masthead-challenge">
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-12">
-        <span class="badge badge-success"><img src="https://d3qvx1ggyg4lu1.cloudfront.net/assets/img/icon-time.svg">
-          <%= @publication.publication_date.strftime("%B %Y") %>
-        </span>
-        <% @publication.categories.each do |category| %>
-          <%= link_to all_publications_path(categories: category.name) do %>
-            <span class="badge badge-outline">#<%= category.name %></span>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
 
     <!-- title/description/prizes -->
     <div class="row">
-      <div class="col-sm-12">
-        <%= link_to all_publications_path(venues: @publication.venues.first.short_name) do %>
-          <h4 class="mb-3"><%= @publication.venues.first.venue %></h4>
-        <% end %>
-        <h1 style="max-width: unset;text-transform: capitalize;font-size: 2.25rem;"><%= @publication.title %></h1>
-
-        <div class="avatar-group mt-3 mb-n4 list-group-research-big">
-          <% @publication.authors.each do |author| %>
-            <% if author.participant_id.present? %>
-              <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
+      <div class="col-sm-12 mt-sm1">
+        <% @publication.categories.each_with_index do |category, index| %>
+          <%= link_to all_publications_path(categories: category.name) do %>
+            <% if index == 0 %>
+              <span class="badge  badge-outline-new2 text-muted border ml-1">#<%= category.name %></span>
             <% else %>
-              <a href="#" class="mr-3">
-                <img class="avatar" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg" style="width: 24px;height: 24px;">
-                <span class="text-link"><%= author.name %></span>
-              </a>
+            <span class="badge  badge-outline-new2 text-muted border">#<%= category.name %></span>
             <% end %>
           <% end %>
-        </div>
-        </div>
-          <div class="col-sm-12 col-md-4 col-lg-3">
-          <div class="prizes-breakdown">
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- /title/description/prizes -->
-  </div>
-  <!-- /organizer/stats/options -->
-</div>
-<!-- /masthead - challenge -->
-
-<div class="modal preview-modal" id="preview-modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document" style="max-width: 90%;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="previewModalLabel">Cite</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="research-citation-caontainer" id="citation-preview-container">
-            <%= @publication.cite %>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type ="button" class="btn btn-secondary clipboard-btn" data-clipboard-action="copy" data-clipboard-target="#citation-preview-container">Copy to clipboard</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- sub-nav bar -->
-<div class="sub-nav-bar sticky-top">
-  <div class="container-fluid overflow-hidden">
-    <div class="row col-12 d-flex justify-content-end">
-      <div class="mr-auto btn-set" aria-hidden="true">
-        <% @publication.external_links.each do |external_link| %>
-          <a class="btn btn-primary btn-sm" href="<% external_link.link %>">
-            <% if external_link.icon.present? %>
-              <span class="mr-2 fa <%= external_link.icon %>"></span>
-            <% end %>
-            <%= external_link.name %>
-          </a>
         <% end %>
 
-      </div>
-      <div class="align-self-center">
-        <%= publication_social_share('facebook', request.url, @publication.title) %>
-        <%= publication_social_share('twitter', request.url, @publication.title) %>
-        <%= publication_social_share('linkedin', request.url, @publication.title) %>
-        <button type="button" class="btn btn-secondary btn-sm preview-button" data-toggle="modal" data-target="#preview-modal" style="height: 60%; color:gray !important;">
-          <span class="fa fa-quote-left mr-2"></span>Cite
-        </button>
+        <h1 class="research-head" style="max-width: unset;text-transform: capitalize;"><%= @publication.title %></h1>
+        <div class="avatar-group mt-4 mb-n4 list-group-research-big new-author1 ">
+          <h5 class="px-1">
+            <% @publication.authors[0..5].each do |author| %>
+              <% if author.participant_id.present? %>
+                <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
+              <% else %>
+                <a href="#">
+                  <span class="text-link mr-1">
+                  <img alt="" class="mr-1 img-sm" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg">
+                    <small><%= author.name %></small>
+                  </span>
+                </a>
+              <% end %>
+            <% end %>
+            <% if @publication.authors.length > 6 %>
+              <div class="tab">
+                <% @publication.authors[6..9].each do |author| %>
+                  <% if author.participant_id.present? %>
+                    <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
+                  <% else %>
+                    <a href="#">
+                  <span class="text-link mr-1">
+                  <img alt="" class="mr-1 img-sm" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg">
+                    <small><%= author.name %></small>
+                  </span>
+                    </a>
+                  <% end %>
+                <% end %>
+              </div>
+            <% end %>
+            <% if @publication.authors.length > 10 %>
+              <div class="inline">
+                <div class="inline" data-controller="publications">
+                  <h5 class="collapse multi-collapse px-1" id="multiCollapseExample2">
+                    <% @publication.authors.offset(10).each do |author| %>
+                      <% if author.participant_id.present? %>
+                        <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
+                      <% else %>
+                        <a href="#">
+                        <span class="text-link mr-1">
+                        <img alt="" class="mr-1 img-sm" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg">
+                          <small><%= author.name %></small>
+                        </span>
+                        </a>
+                      <% end %>
+                    <% end %>
+                  </h5>
+                  <a aria-controls="multiCollapseExample2" aria-expanded="false"
+                     class="b small ml-2 hide-button" data-toggle="collapse"
+                     href="#multiCollapseExample2" id="hide-button" role="button">
+                    <i class="fa fa-caret-right mr-2"></i>
+                    <u>
+                      <span data-action="click->publications#toggleAuthors">Show All Authors</span>
+                    </u>
+                  </a>
+                </div>
+              </div>
+            <% end %>
+          </h5>
+        </div>
       </div>
     </div>
   </div>
 </div>
-<!-- /sub-nav bar -->
 
-<!-- section -->
+<div class="sub-nav-bar sticky-top">
+  <div class="container-fluid overflow-hidden">
+    <div class="row col-12 float-left">
+
+      <div class="align-self-center">
+        <% if @publication.cite.present? %>
+          <a class="btn btn-secondary btn-sm preview-button m-1" data-target="#preview-modal" data-toggle="modal"
+             style="height: 60%; color:gray !important;" type="button">
+            <span class="fa fa-quote-left mr-2"></span>Cite
+          </a>
+        <% end %>
+        <div class="float-right ml-2">
+          <%= publication_social_share('facebook', request.url, @publication.title) %>
+          <%= publication_social_share('twitter', request.url, @publication.title) %>
+          <%= publication_social_share('linkedin', request.url, @publication.title) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <section class="section-p-md">
   <div class="container-fluid">
-    <div class="row">
-      <div class="row col-lg-9">
-        <header class="section-header">
-          <h4 class="ml-3">Abstract</h4>
+    <div class="row flex-sm-row-reverse">
+      <div class="col-lg-3 col-md-push-6 mt-sm">
+        <% if @publication.publication_date.present? %>
+          <div class="py-2">
+            <h5 class="red-head">DATE PUBLISHED </h5>
+            <h5 class="grey-head"><%= @publication.publication_date.strftime("%d %b %Y") %></h5>
+            <hr>
+          </div>
+        <% end %>
+        <% if @publication.venues.present? %>
+          <div class="py-2">
+            <h5 class="red-head">VENUE </h5>
+            <%= link_to all_publications_path(venues: @publication.venues.first.short_name) do %>
+              <h5 class="grey-head"><%= @publication.venues.first.venue %></h5>
+            <% end %>
+            <hr>
+          </div>
+        <% end %>
+        <% if @publication.challenge.present? %>
+          <div class="py-2">
+            <h5 class="red-head">Challenge </h5>
+            <h5 class="grey-head"><u><%= @publication.challenge %>></u></h5>
+            <hr>
+          </div>
+        <% end %>
+        <% if @publication.no_of_citations.present? %>
+          <div class="py-2">
+            <h5 class="red-head">Citations</h5>
+            <h5 class="grey-head"><%= @publication.no_of_citations %></h5>
+            <hr>
+          </div>
+        <% end %>
+      </div>
+      <div class="col-lg-9 col-md-pull-6">
+        <header class="mb-2">
+          <h4 class="ml-3 head-new1">Abstract</h4>
         </header>
 
         <!-- md content -->
@@ -113,11 +149,11 @@
                 <%= @publication.abstract.html_safe %>
               </p>
               <% if @publication.description.present? %>
-                <header class="section-header">
-                  <h4 class="mt-4">Description</h4>
+                <header class=" mb-2">
+                  <h4 class="mt-4 head-new1">Description</h4>
                 </header>
                 <p style="max-width: unset;text-align: justify; font-size: 18px;">
-                  <%= @publication.abstract.html_safe %>
+                  <%= @publication.description.html_safe %>
                 </p>
               <% end %>
             </div>
@@ -127,5 +163,29 @@
     </div>
   </div>
 </section>
-<!-- /section -->
 
+<% if @publication.cite.present? %>
+  <div class="modal preview-modal" id="preview-modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 90%;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="previewModalLabel">Cite</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="research-citation-container" id="citation-preview-container">
+            <%= @publication.cite %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary clipboard-btn" data-clipboard-action="copy" data-clipboard-target="#citation-preview-container">Copy
+            to clipboard
+          </button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

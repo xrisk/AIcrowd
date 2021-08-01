@@ -1,84 +1,255 @@
-<div class="col-12">
-  <% publications.each do |publication| %>
+<!--<div class="col-12">-->
+  <%# publications.each do |publication| %>
+<!--    <ul class="list-group list-group-flush-px-0 list-group-contributions">-->
+<!--      <li class="list-group-item py-4 flex-wrap">-->
+<!--        <div class="col-md-10 d-flex mb-2 offset-md-2 pl-0">-->
+          <%# publication.categories.each do |category| %>
+            <%#= link_to all_publications_path(categories: category.name) do %>
+<!--              <span class="badge badge-outline text-muted border">#<%#= category.name %></span>-->
+            <%# end %>
+          <%# end %>
+<!--        </div>-->
+<!--        <div class="contribution-details col-md-2 pl-0">-->
+<!--          <a href="<%#= publication_path(publication) %>">-->
+<!--            <img src="<%#= publication.thumbnail %>" class="img-fluid">-->
+<!--          </a>-->
+<!--        </div>-->
+<!--        <div class="contribution-details col-md-9 pl-0 mb-auto">-->
+<!--          <div class="contribution-text">-->
+<!--            <a class="text-link" href="<%#= publication_path(publication) %>"><%#= publication.title %></a>-->
+<!--            <span class="contribution-subtitle">-->
+<!--            <div class="p-0 d-flex ml-n1 mt-2">-->
+<!--              <span class="ml-1 align-middle">-->
+                <%#= link_to all_publications_path(venues: publication.venues.first.short_name) do %>
+<!--                  <small class="text-link"><%#= publication.venues.first.venue %></small>-->
+                <%# end %>
+<!--              </span>-->
+<!--              <span class="text-muted ml-1">•</span>-->
+<!--              <span class="ml-1 align-middle">-->
+<!--                <small><%#= publication.publication_date.strftime("%B %Y") %></small>-->
+<!--              </span>-->
+<!--            </div>-->
+<!--            <div class="avatar-group mt-2 list-group-research">-->
+              <%# publication.authors.limit(3).each do |author| %>
+                <%# if author.participant_id.present? %>
+<!--                  <span class="mr-2">-->
+<!--                    <small>-->
+                      <%#= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
+<!--                    </small>-->
+<!--                  </span>-->
+                <%# else %>
+<!--                  <a href="#" class="mr-2">-->
+<!--                    <img class="avatar mr-0" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg" style="width: 18px;height: 18px;">-->
+<!--                    <span class="text-link"><small><%#= author.name %></small></span>-->
+<!--                  </a>-->
+                <%# end %>
+              <%# end %>
+              <%# if publication.authors.count > 3 %>
+<!--                <span class="text-link"><small>&amp;</small></span>-->
+<!--                <div class="avatar-group ml-1">-->
+                  <%# publication.authors.offset(3).each do |author| %>
+                    <%# if author.participant_id.present? %>
+                      <%#= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, base_class: "avatar mr-0 border border-white" } %>
+                    <%# else %>
+<!--                      <a href="#">-->
+<!--                        <img class="avatar mr-0 border border-white" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg" style="width: 18px;height: 18px;">-->
+<!--                      </a>-->
+                    <%# end %>
+                  <%# end %>
+<!--                </div>-->
+              <%# end %>
+<!--            </div>-->
+<!--          </span>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-md-1 float-right">-->
+<!--          <div class="float-right">-->
+<!--            <button type="button" class="btn btn-secondary border btn-sm rounded" data-toggle="tooltip" data-placement="top" title="" data-original-title="Citations" style="width: 4rem; cursor: default;">-->
+<!--              <span class="fa fa-star"></span><br><%#= publication.no_of_citations.to_i %>-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="col-md-10 d-flex mt-n4 offset-md-2 pl-0">-->
+<!--          <div class="contribution-user-time small cursor-pointer" data-controller="publications" data-action="click->publications#expandAbstract">-->
+<!--            <span><span class="fa fa-caret-right abstract mr-1"></span>Abstract</span>-->
+<!--            <div class="mt-2 text-justify d-none">-->
+              <%#= publication.abstract.html_safe %>
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--    /list-group-contributions -->
+  <%# end %>
+<!--</div>-->
+
+
+<div class="col-12 px-1">
   <ul class="list-group list-group-flush-px-0 list-group-contributions">
-    <li class="list-group-item py-4 flex-wrap">
-      <div class="col-md-10 d-flex mb-2 offset-md-2 pl-0">
-        <% publication.categories.each do |category| %>
-          <%= link_to all_publications_path(categories: category.name) do %>
-            <span class="badge badge-outline text-muted border">#<%= category.name %></span>
+    <% publications.each_with_index do |publication, idx| %>
+
+      <li class="list-group-item py-4 flex-wrap">
+
+        <div class="col-md-10 d-flex mb-2 offset-md-2 pl-0">
+          <% publication.categories.each_with_index do |category, index| %>
+            <%= link_to all_publications_path(categories: category.name) do %>
+              <% if index == 0 %>
+                <span class="badge  badge-outline-new text-muted border ml-0">#<%= category.name %></span>
+              <% else %>
+                <span class="badge  badge-outline-new text-muted border">#<%= category.name %></span>
+              <% end %>
+            <% end %>
           <% end %>
-        <% end %>
-      </div>
-      <div class="contribution-details col-md-2 pl-0">
-        <a href="<%= publication_path(publication) %>">
-          <img src="<%= publication.thumbnail %>" class="img-fluid">
-        </a>
-      </div>
-      <div class="contribution-details col-md-9 pl-0 mb-auto">
-        <div class="contribution-text">
-          <a class="text-link" href="<%= publication_path(publication)%>"><%= publication.title %></a>
-          <span class="contribution-subtitle">
-            <div class="p-0 d-flex ml-n1 mt-2">
-              <span class="ml-1 align-middle">
-                <%= link_to all_publications_path(venues: publication.venues.first.short_name) do %>
-                  <small class="text-link"><%= publication.venues.first.venue %></small>
-                <% end %>
-              </span>
-              <span class="text-muted ml-1">•</span>
-              <span class="ml-1 align-middle">
-                <small><%= publication.publication_date.strftime("%B %Y") %></small>
-              </span>
-            </div>
-            <div class="avatar-group mt-2 list-group-research">
-              <% publication.authors.limit(3).each do |author| %>
-                <% if author.participant_id.present? %>
-                  <span class="mr-2">
-                    <small>
-                      <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
-                    </small>
-                  </span>
-                <% else %>
-                  <a href="#" class="mr-2">
-                    <img class="avatar mr-0" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg" style="width: 18px;height: 18px;">
-                    <span class="text-link"><small><%= author.name %></small></span>
-                  </a>
-                <% end %>
-              <% end %>
-              <% if publication.authors.count > 3 %>
-                <span class="text-link"><small>&amp;</small></span>
-                <div class="avatar-group ml-1">
-                  <% publication.authors.offset(3).each do |author| %>
-                    <% if author.participant_id.present?%>
-                      <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, base_class: "avatar mr-0 border border-white"} %>
-                    <% else %>
-                      <a href="#">
-                        <img class="avatar mr-0 border border-white" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg" style="width: 18px;height: 18px;">
-                      </a>
-                    <% end %>
-                  <% end %>
-                </div>
-              <% end %>
-            </div>
-          </span>
         </div>
-      </div>
-      <div class="col-md-1 float-right">
+
+        <div class="contribution-details col-md-2 pb-3 mb-2 pl-0">
+          <a href="<%= publication_path(publication) %>">
+            <%= image_tag publication.thumbnail.url, class: "img-fluid img-1 mr-2", alt: "" %>
+          </a>
+        </div>
+
+        <div class="contribution-details details col-md-10 pl-0 mb-auto">
+          <div class="contribution-text">
+
+            <a class="text-link" href="<%= publication_path(publication) %>"><%= publication.title %></a>
+
+            <div class="contribution-subtitle">
+
+              <div class="avatar-group mt-2 list-group-research new-author1">
+
+                <% if publication.authors.present? %>
+                  <% if publication.authors[0].participant_id.present? %>
+                    <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: publication.authors[0].participant, username: publication.authors[0].name } %>
+                  <% else %>
+                    <a href="#">
+                      <span class="text-link mr-1">
+                      <img alt="" class="mr-1 img-sm" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg">
+                        <small><%= publication.authors[0].name %></small>
+                      </span>
+                    </a>
+                  <% end %>
+                <% end %>
+
+                <% if publication.authors.length > 1 %>
+                  <div class="mob">
+                    <% publication.authors[1..3].each do |author| %>
+                      <% if author.participant_id.present? %>
+                        <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
+                      <% else %>
+                        <a href="#">
+                    <span class="text-link mr-1">
+                    <img alt="" class="mr-1 img-sm" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg">
+                      <small><%= author.name %></small>
+                    </span>
+                        </a>
+                      <% end %>
+                    <% end %>
+                    <% if publication.authors.length > 4 %>
+                      <div class="tab">
+                        <% publication.authors[4..6].each do |author| %>
+                          <% if author.participant_id.present? %>
+                            <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
+                          <% else %>
+                            <a href="#">
+                          <span class="text-link mr-1">
+                          <img alt="" class="mr-1 img-sm" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg">
+                            <small><%= author.name %></small>
+                          </span>
+                            </a>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    <% end %>
+                  </div>
+                  <% if publication.authors.length > 6 %>
+                    <div class="new-row">
+                      <a href=""> <span class="small-text mr-new"><small>+<%= publication.authors.offset(6).length %> more</small></span></a>
+                    </div>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-lg-6 col-sm-6">
+                <div class="float-left ">
+                  <p class="p-red">
+                    <%= image_tag "img/icon-calendar.png", class: "img-red" %>
+                    <% if publication.publication_date.present? %>
+                      <%= publication.publication_date.strftime("%b %Y") %>
+                    <% end %>
+                  </p>
+
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-6">
+                <div class="float-left ">
+                  <p class="p-red">
+                    <%= image_tag "img/icon-venue.png", class: "img-red" %>
+                    <% if publication.venues.present? %>
+                      <%= publication.venues.first.venue %>
+                    <% end %>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-sm-6">
+                <div class="float-left ">
+
+                  <p class="p-red p-red1">
+                    <%= image_tag "img/icon-citations.png", class: "img-red" %>
+                    <% if publication.no_of_citations.present? %>
+                      <%= publication.no_of_citations %> Citations
+                    <% end %>
+                  </p>
+                </div>
+              </div>
+              <div class="col-lg-6 col-sm-6">
+                <div class="float-left">
+
+                  <p class="p-red">
+                    <%= image_tag "img/icon-challenge.png", class: "img-red" %>
+                    <% if publication.challenge.present? %>
+                      <%= publication.challenge.challenge %>
+                    <% end %>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      <div class="col-md-1">
         <div class="float-right">
-          <button type="button" class="btn btn-secondary border btn-sm rounded" data-toggle="tooltip" data-placement="top" title="" data-original-title="Citations" style="width: 4rem; cursor: default;">
-            <span class="fa fa-star"></span><br><%= publication.no_of_citations.to_i %>
-          </button>
+
         </div>
       </div>
       <div class="col-md-10 d-flex mt-n4 offset-md-2 pl-0">
-        <div class="contribution-user-time small cursor-pointer" data-controller="publications" data-action="click->publications#expandAbstract">
-          <span><span class="fa fa-caret-right abstract mr-1"></span>Abstract</span>
-            <div class="mt-2 text-justify d-none">
-              <%= publication.abstract.html_safe %>
+        <div class="contribution-user-time small cursor-pointer"
+             data-action="click->publications#expandAbstract"
+             data-controller="publications">
+          <p>
+            <a aria-controls="multiCollapseExample1" aria-expanded="false" class="b small"
+               data-toggle="collapse"
+               href="#multiCollapseExample<%= idx %>" role="button"><i
+              class="fa fa-caret-right mr-2"></i><u>Abstract</u></a>
+          </p>
+          <div class="row">
+            <div class="col">
+              <div class="collapse multi-collapse" id="multiCollapseExample<%= idx %>">
+                <div class="">
+                  <%= publication.abstract.html_safe %>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
       </div>
-    </li>
+
+      </li>
+
+    <% end %>
   </ul>
-  <!-- /list-group-contributions -->
-  <% end %>
+    <!-- /list-group-contributions -->
 </div>
