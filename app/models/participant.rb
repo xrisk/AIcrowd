@@ -207,9 +207,9 @@ class Participant < ApplicationRecord
     AicrowdUserBadge.find_by(aicrowd_badges_id: badge_id, participant_id: id).destroy
   end
 
-  def badges
-    aicrowd_user_badges
-  end
+  # def badges
+  #   aicrowd_user_badges
+  # end
   def user_rating_history
     user_rating = UserRating.joins("left outer join challenge_rounds on (challenge_rounds.id=challenge_round_id)").joins("left outer join challenges c on (c.id=challenge_rounds.challenge_id)").where(participant_id: self.id).where('rating is not null').reorder('user_ratings.created_at::date + user_ratings.updated_at::time, user_ratings.id').pluck('user_ratings.created_at::date + user_ratings.updated_at::time', 'rating - 3 * variation as final_rating',  'concat(challenge, challenge_round)')
     final_ratings = []
