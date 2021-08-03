@@ -100,7 +100,11 @@
           <% challenge.organizers.each do |organizer| %>
             <%= link_to organizer_path(organizer) do %>
               <%= image_tag organizer.image_file_url %>
-              <span title="<%= organizer.organizer %>"><%= organizer.organizer %></span>
+              <% if challenge.organizers.count == 1%>
+                <span style="position: absolute;width: 90%;" title="<%= organizer.organizer %>"><%= organizer.organizer %></span>
+              <% else %>
+                <span title="<%= organizer.organizer %>"><%= organizer.organizer %></span>
+              <% end %>
             <% end %>
           <% end %>
         </div>
