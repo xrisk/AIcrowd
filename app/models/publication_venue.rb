@@ -1,3 +1,3 @@
 class PublicationVenue < ApplicationRecord
-  belongs_to :publication, optional: true
+  has_and_belongs_to_many :publications
 end
