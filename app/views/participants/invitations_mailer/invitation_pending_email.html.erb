@@ -1,24 +1,27 @@
 <div>
-  <p>Hi <%= @participant.name %>,</p>
+  <p>Hello <%= @participant.name %>,</p>
   <br/>
-  <p>You’ve been invited to join Team <%= invitation_team_link(@team) %>!</p>
+  <p><%= link_to @invitor.name, participant_url(@invitor), target: '_blank' %> has invited you to join their team [Team Name]! Join [sender username] in solving [challenge name].</p>
+
   <p>
-    Participant <%= link_to @invitor.name, participant_url(@invitor), target: '_blank' %> has invited you to collaborate on Challenge
-    <%= link_to @team.challenge.challenge, challenge_url(@team.challenge), target: '_blank' %>. The team currently has <%= invitation_team_members(@team) %>.
+    You only need an AIcrowd account to join the [sender username] team. You can create an account using this link [account creation hyperlink]. Next, click here to join the team [claim email hyperlink].
   </p>
-  <p>Accepting this invitation will have the following effects <b>for this challenge only</b>:</p>
-  <ul>
-    <li>You will be a member of Team <%= invitation_team_link(@team) %> for the duration of the challenge</li>
-    <li>All team members will share equal leaderboard spots and prizes</li>
-    <li>You may only be a member of a single team per challenge</li>
-    <li>If you accept this invitation, then all other invitations to you from other teams for this challenge will be cancelled</li>
-    <li>If you have not already, you will need to agree to the AIcrowd Participation Terms and Challenge Rules before joining the challenge</li>
-  </ul>
+
+  <p>If you have an AIcrowd account, click here to join the team [ claim email hyperlink ]. Your unique invitation code is [ INVITE CODE ].</p>
+
   <p style="text-align: center;">
     <%= invitation_button('Join!', @team_invitation, @invitee, true, 'invite') %>
     <span style="margin-right: 20px"></span>
     <%= invitation_button('Decline', @team_invitation, @invitee, false, 'decline') %>
   </p>
+
+  <p>By accepting the invitation you are agreeing to the following terms and conditions:</p>
+  <ul>
+    <li>You will become a member of Team [Team Name] for the entire duration of [Challenge Name].</li>
+    <li>All team members will share equal spots on the leaderboard</li>
+    <li>If you stand to win a prize in this challenge, the team leader will be solely responsible for distribution.</li>
+    <li>If you accept this invitation, all other subsequent invitations to you from other teams for this challenge will be cancelled.</li>
+  </ul>
   <% if @invitee.is_a?(EmailInvitation) %>
     <p>
       Note: To join, you'll need an AIcrowd acccount. If you already have an account with us, you'll need to link it with this invitation by claiming this email. Your unique code to do so is:
