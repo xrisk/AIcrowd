@@ -41,13 +41,13 @@ class RatingsController < ApplicationController
     @rank_1_graph = {}
     @rank_2_graph = {}
     @rank_3_graph = {}
-    @rank_1.participant.ratings.each do |rating|
+    @rank_1.participant.ratings.order('created_at desc').limit(5).each do |rating|
       @rank_1_graph[rating.created_at.to_date] = rating.rating
     end
-    @rank_2.participant.ratings.each do |rating|
+    @rank_2.participant.ratings.order('created_at desc').limit(5).each do |rating|
       @rank_2_graph[rating.created_at.to_date] = rating.rating
     end
-    @rank_3.participant.ratings.each do |rating|
+    @rank_3.participant.ratings.order('created_at desc').limit(5).each do |rating|
       @rank_3_graph[rating.created_at.to_date] = rating.rating
     end
   end
