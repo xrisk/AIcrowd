@@ -44,10 +44,12 @@ export default class extends Controller {
     let country = this.participantCountryTarget.selectedOptions[0].value
     let postChallenge = $('#post_challenge').val()
     let challengeRoundID = $('#challenge_round_id').val()
+    let challengeLeaderboardExtraID = $('#challenge_leaderboard_extra_id').val()
     let affiliation = this.participantAffiliationTarget.selectedOptions[0].value
     let countryPresent = country !== ''
     let affiliationPresent = affiliation !== ''
     let challengeRoundIDPresent = challengeRoundID !== ''
+    let challengeLeaderboardExtraIDPresent = challengeLeaderboardExtraID !== ''
     let postChallengePresent = postChallenge !== 'false'
 
     if(affiliationPresent){
@@ -60,6 +62,10 @@ export default class extends Controller {
       {
         params = params.concat('&challenge_round_id=', challengeRoundID);
       }
+      if(challengeLeaderboardExtraIDPresent)
+      {
+        params = params.concat('&challenge_leaderboard_extra_id=', challengeLeaderboardExtraID);
+      }
       if(postChallengePresent)
       {
         params = params.concat('&post_challenge=', postChallenge);
@@ -70,12 +76,20 @@ export default class extends Controller {
       {
         params = params.concat('&challenge_round_id=', challengeRoundID);
       }
+      if(challengeLeaderboardExtraIDPresent)
+      {
+        params = params.concat('&challenge_leaderboard_extra_id=', challengeLeaderboardExtraID);
+      }
       if(postChallengePresent)
       {
         params = params.concat('&post_challenge=', postChallenge);
       }
     }else if(challengeRoundIDPresent) {
       params = params.concat('challenge_round_id=', challengeRoundID);
+      if(challengeLeaderboardExtraIDPresent)
+      {
+        params = params.concat('&challenge_leaderboard_extra_id=', challengeLeaderboardExtraID);
+      }
       if(postChallengePresent)
       {
         params = params.concat('&post_challenge=', postChallenge);
