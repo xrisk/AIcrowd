@@ -25,6 +25,7 @@
     font-size: 120%;
     font-weight: bold;
     font-style: normal;
+    margin-bottom: 0px;
   }
 
   .comment-list {
@@ -90,13 +91,11 @@
 
   .field textarea {
     width: 100%;
-
-    padding: 0;
-
     overflow: auto;
   }
 
   .submit {
+    float: right;
     margin: 10px 0;
   }
 }
