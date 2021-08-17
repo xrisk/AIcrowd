@@ -3,9 +3,9 @@ class Publication < ApplicationRecord
   include FriendlyId
   friendly_id :title, use: :slugged
 
-  has_many :authors, foreign_key: :publication_id, class_name: "PublicationAuthor", dependent: :destroy
+  has_and_belongs_to_many :authors, class_name: "PublicationAuthor"
   has_many :external_links, foreign_key: :publication_id, class_name: "PublicationExternalLink", dependent: :destroy
-  has_many :venues, foreign_key: :publication_id, class_name: "PublicationVenue", dependent: :destroy
+  has_and_belongs_to_many :venues, class_name: "PublicationVenue"
   has_many :category_publications, dependent: :destroy
   has_many :categories, through: :category_publications
 
