@@ -3,4 +3,4 @@
   comment
 %>
 
-<%= commontator_simple_format comment.body %>
+<%= Kramdown::Document.new(comment.body, { coderay_line_numbers: nil }).to_html.html_safe %>

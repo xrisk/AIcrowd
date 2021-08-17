@@ -5,7 +5,7 @@
   # page
   # show_all
 
-  can_subscribe = thread.can_subscribe?(user)
+  can_subscribe = false
   can_edit = thread.can_be_edited_by?(user)
   comments = thread.paginated_comments(page, nil, show_all)
   nested_comments = thread.nested_comments_for(user, comments, show_all)
@@ -66,8 +66,6 @@
     </header>
   </div>
 
-  <%= render partial: 'commontator/threads/reply', locals: { thread: thread, user: user } %>
-
   <div id="commontator-thread-<%= thread.id %>-comment-list" class="comment-list">
     <%=
       render partial: 'commontator/comments/list', locals: {
@@ -75,6 +73,9 @@
       }
     %>
   </div>
+
+  <%= render partial: 'commontator/threads/reply', locals: { thread: thread, user: user } %>
+
 </div>
 
 <script type="text/javascript">
