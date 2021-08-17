@@ -51,35 +51,7 @@
 
 <section class="section">
   <div class="row">
-  <div class="col-9">
-    <div class="ipynb-notebook-container">
-    <div class="cell border-box-sizing text_cell rendered">
-      <div class="prompt input_prompt">
-      </div>
-      <div class="inner_cell">
-        <div class="text_cell_render border-box-sizing rendered_html md-content">
-          <% if @post.description.present? %>
-            <%= @post.description.html_safe %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-    </div>
-    <% if @post.notebook_html.present? %>
-      <div class="ipynb-notebook-container" data-controller="post-overview"data-post-overview-scrollable-tabs="true">
-        <% cache_if cache_enabled?, [@post] do %>
-          <%= @post.notebook_html.html_safe %>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-  <div class="col-lg-3 sub-nav-vertical-container">
-    <div class="sticky-top-sub-nav mt-4 blog-toc">
-      <h4>Content</h4>
-      <ul class="nav flex-column" id="table-of-contents" style="font-size: 14px;">
-      </ul>
-    </div>
-  </div>
+    <%= render partial: 'posts/show_notebook', locals: { post: @post } %>
   </div>
   <div class="container-fluid">
     <% if @external_link.present? %>
@@ -108,14 +80,14 @@
       <% if @download_notebook_url.present? %>
         <a href='<%= @download_notebook_url %>' target="_blank" class="mr-4" style="align-self: center;"><%= image_tag image_path('misc/notebook_download.svg') %></a></button>
       <% end %>
-      <% if !@execute_in_colab_url.nil? %><button type="button" class="btn btn-sm btn-secondary" style="margin-left: 45%;"><a href='<%= @execute_in_colab_url %>' target="_blank" class="text-secondary"></span>Open in Colab</a></button><% end %>
+      <% if !@execute_in_colab_url.nil? %><button type="button" class="btn btn-sm btn-primary" style="margin-left: 45%;"><a href='<%= @execute_in_colab_url %>' target="_blank">Open in Colab</a></button><% end %>
     </div>
   </div>
   <hr/>
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 col-sm-8">
-        <div class="blog-discussion">
+        <div class="blog-discussion" id="comments-section">
           <%= commontator_thread(@post) %>
         </div>
       </div>
@@ -124,6 +96,8 @@
 </section>
 </div>
 <!-- /section -->
+
+<div class="d-none execute-button-on-hover"><a href="<%= @execute_in_colab_url %>" target="_href"><span class="fa fa-cogs mr-1"></span>Execute</a></div>
 
 <script>
 $(document).ready(function(){

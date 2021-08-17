@@ -117,7 +117,6 @@ $(document).ready(function(){
         setTooltip(e.trigger, 'Copied!');
         hideTooltip(e.trigger);
     });
-    console.log(clipboard);
 
 });
 

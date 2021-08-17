@@ -14639,6 +14639,41 @@ input.width-185 {
   margin-left: -10px;
 }
 
+.execute-button-on-hover {
+  cursor: pointer;
+  position: relative;
+  float: right;
+  color: #F0524D;
+  font-weight: bold;
+  margin-top: 10px;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+.execute-button-on-hover a {
+  color: #F0524D;
+  font-weight: bold;
+}
+
+.output_text::-webkit-scrollbar-track
+{
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  background-color: #eee;
+}
+
+.output_text::-webkit-scrollbar
+{
+  width: 12px;
+  background-color: #eee;
+}
+
+.output_text::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+  background-color: #f0514d;
+}
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';

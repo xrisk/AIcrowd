@@ -1,0 +1,29 @@
+    <div class="notebook-content col-9">
+    <% if @post.description.present? %>
+      <div class="ipynb-notebook-container">
+      <div class="cell border-box-sizing text_cell rendered">
+        <div class="prompt input_prompt">
+        </div>
+        <div class="inner_cell">
+          <div class="text_cell_render border-box-sizing rendered_html md-content">
+            <%= @post.description.html_safe %>
+          </div>
+        </div>
+      </div>
+      </div>
+    <% end %>
+    <% if @post.notebook_html.present? %>
+      <div class="ipynb-notebook-container" data-controller="post-overview" data-post-overview-scrollable-tabs="true">
+        <% cache_if cache_enabled?, [@post] do %>
+          <%= @post.notebook_html.html_safe %>
+        <% end %>
+      </div>
+    <% end %>
+    </div>
+    <div class="col-lg-3 sub-nav-vertical-container">
+      <div class="sticky-top-sub-nav mt-4 blog-toc">
+        <h4>Content</h4>
+        <ul class="nav flex-column" id="table-of-contents" style="font-size: 14px;">
+        </ul>
+      </div>
+    </div>
