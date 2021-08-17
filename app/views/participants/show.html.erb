@@ -45,6 +45,9 @@
       <li class="nav-item">
         <a class="nav-link nav-link-06<%= ' active' if active_tab == 'articles' %>" data-toggle='tab' href="#tab-articles" onclick="return false;">Notebooks</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link nav-link-07<%= ' active' if active_tab == 'bookmarks' %>" data-toggle='tab' href="#tab-bookmarks" onclick="return false;">Bookmarks</a>
+      </li>
       <!-- more dropdown xs -->
       <li class="nav-item dropdown more-xs">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><svg width="16" height="4" xmlns="http://www.w3.org/2000/svg"><path d="M2 0C.9 0 0 .9 0 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM8 0C6.9 0 6 .9 6 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="#5D5F60" fill-rule="nonzero"/></svg></a>
@@ -52,6 +55,8 @@
           <a class="dropdown-item<%= ' active' if active_tab == 'bio' %>" data-toggle='tab' href="#tab-bio" onclick="return false;">Bio</a>
           <a class="dropdown-item<%= ' active' if active_tab == 'posts' %>" data-toggle='tab' href="#tab-posts" onclick="return false;">Posts</a>
           <a class="dropdown-item<%= ' active' if active_tab == 'achievements' %>" data-toggle='tab' href="#tab-achievements" onclick="return false;">Achievements</a>
+          <a class="dropdown-item<%= ' active' if active_tab == 'articles' %>" data-toggle='tab' href="#tab-articles" onclick="return false;">Notebooks</a>
+          <a class="dropdown-item<%= ' active' if active_tab == 'bookmarks' %>" data-toggle='tab' href="#tab-bookmarks" onclick="return false;">Bookmarks</a>
           <% if true_participant.present? && true_participant.super_admin? %>
             <% if current_participant != true_participant && current_participant == @participant %>
               <%= link_to "Stop Impersonating", stop_impersonating_participants_path(@participant), class: "btn btn-secondary dropdown-item" %>
@@ -206,5 +211,8 @@
   </div>
   <div id="tab-articles" class="tab-pane fade<%= ' show active' if active_tab == 'articles' %>">
     <%= render partial: 'articles_list', locals: { posts: @participant.posts } %>
+  </div>
+  <div id="tab-bookmarks" class="tab-pane fade<%= ' show active' if active_tab == 'bookmarks' %>">
+    <%= render partial: 'articles_list', locals: { posts: @participant.post_bookmarks.map(&:post) } %>
   </div>
 </div>

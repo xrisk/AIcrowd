@@ -8,6 +8,7 @@
   <%= form_with url: challenge_leaderboards_path(challenge_id: @challenge.friendly_id), method: :get, local: true, data: { controller: 'leaderboards' } do %>
     <input type='hidden' name='challenge_round_id' id='challenge_round_id' value=<%= @current_round&.id %>>
     <input type='hidden' name='post_challenge' id='post_challenge' value=<%= @post_challenge %>>
+    <input type='hidden' name='challenge_leaderboard_extra_id' id='challenge_leaderboard_extra_id' value=<%= @current_leaderboard&.id %>>
 
     <div class="form-group">
       <select class="form-control" name="country_name" data-target='leaderboards.participantCountry' data-challenge-id="<%= @challenge.friendly_id %>" id="participant-country" data-action='change->leaderboards#getAffiliations'>
@@ -27,14 +28,14 @@
       </select>
     </div>
     <button type="submit" class="btn btn-secondary" data-action='click->leaderboards#filterURL'>Filter</button>
-    <%= link_to 'Clear Filter', challenge_leaderboards_path(@challenge, post_challenge: @post_challenge ? @post_challenge : nil, challenge_round_id: @current_round&.id), class: 'btn btn-sm apply-filter-btn none-underline' %>
+    <%= link_to 'Clear Filter', challenge_leaderboards_path(@challenge, post_challenge: @post_challenge ? @post_challenge : nil, challenge_round_id: @current_round&.id, challenge_leaderboard_extra_id: @current_leaderboard&.id), class: 'btn btn-sm apply-filter-btn none-underline' %>
   <% end %>
 
   <!-- toggle switch -->
   <% if @challenge.status == :completed && @current_round.present? && !@challenge.meta_challenge? && !@current_leaderboard.freeze_flag %>
     <div class="my-2">
       <label class="toggle-switch" style="width: max-content;">
-        <%= link_to challenge_leaderboards_path(challenge_round_id: @current_round, post_challenge: @post_challenge.blank?, country_name: params[:country_name], affiliation: params[:affiliation], challenge_id: @challenge.friendly_id) do %>
+        <%= link_to challenge_leaderboards_path(challenge_round_id: @current_round, challenge_leaderboard_extra_id: @current_leaderboard, post_challenge: @post_challenge.blank?, country_name: params[:country_name], affiliation: params[:affiliation], challenge_id: @challenge.friendly_id) do %>
           <input id="post-challenge-switch" type="checkbox" <%= "checked" if @post_challenge %> >
           <span class="switcher mr-2"></span>
           <span class="label">Include post-challenge submissions</span>
@@ -54,7 +55,7 @@
   <% if current_participant.present? %>
     <div class="my-2">
       <label class="toggle-switch" style="width: max-content;">
-        <%= link_to challenge_leaderboards_path(challenge_round_id: @current_round, post_challenge: @post_challenge.blank?, country_name: params[:country_name], affiliation: params[:affiliation], challenge_id: @challenge.friendly_id, following: @following.blank?) do %>
+        <%= link_to challenge_leaderboards_path(challenge_round_id: @current_round, challenge_leaderboard_extra_id: @current_leaderboard, post_challenge: @post_challenge.blank?, country_name: params[:country_name], affiliation: params[:affiliation], challenge_id: @challenge.friendly_id, following: @following.blank?) do %>
           <input id="post-challenge-switch" type="checkbox" <%= "checked" if @following.present? %> >
           <span class="switcher mr-2"></span>
           <span class="label">Show Friends</span>

@@ -17,23 +17,14 @@
 %>
 
 <div class="topic-comment">
-  <%= render partial: 'participants/get_user_profile', locals: { participant: creator, username: 'false' } %>
+  <div class="mr-4"><%= render partial: 'participants/get_user_profile', locals: { participant: creator, username: 'false' } %></div>
   <div class="discussion-topic-body">
-    <span class="discussion-details">By <div style="display: inline-flex;"><%= render partial: 'participants/get_user_profile', locals: { participant: creator, avatar: 'false' } %></div> <small><%= discourse_time_ago(comment.created_timestamp) %></small></span>
+    <span class="discussion-details"><div style="display: inline-flex;"><%= render partial: 'participants/get_user_profile', locals: { participant: creator, avatar: 'false', bold: 'true' } %></div> <small><%= discourse_time_ago(comment.created_timestamp) %></small></span>
 
-    <p class="md-content"><%= render partial: 'commontator/comments/body', locals: { comment: comment } %></p>
+    <div class="md-content width-100"><%= render partial: 'commontator/comments/body', locals: { comment: comment } %></div>
 
     <div class="comment-footer d-flex">
     <%= render partial: 'shared/votes/button', locals: { votable: CommontatorComment.find(comment.id), vote: votes_on_comment(comment, current_participant), show_users: true } %>
-    <%=
-      button_to(
-        t('commontator.comment.actions.edit'),
-        commontator.edit_comment_path(comment),
-        id: "commontator-comment-#{comment.id}-edit",
-        class: 'edit btn btn-sm btn-secondary float-right ml-1',
-        remote: true
-      ) if comment.can_be_edited_by?(user)
-    %>
 
     <% if comment.can_be_deleted_by?(user) %>
       <% is_deleted = comment.is_deleted? %>

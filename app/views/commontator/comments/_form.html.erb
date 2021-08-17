@@ -25,8 +25,9 @@
 <% end %>
 
 <div class="topic-add-comment">
+ <div class="mr-4">
   <%= render partial: 'participants/get_user_profile', locals: { participant: current_participant, username: 'false' } %>
-
+</div>
 
 <%= form_for([commontator, thread, comment], remote: !no_remote) do |form| %>
   <%= form.hidden_field :parent_id %>
@@ -48,7 +49,7 @@
   </div>
 
   <div class="submit">
-    <%= form.submit( t("commontator.comment.actions.#{new_record ? 'create' : 'update'}"), class: 'btn btn-primary') %>
+    <%= form.submit( t("commontator.comment.actions.#{new_record ? 'create' : 'update'}"), class: 'btn btn-secondary') %>
     <%=
       form.submit(
         t('commontator.comment.actions.cancel'), name: 'cancel', class: 'btn btn-secondary'

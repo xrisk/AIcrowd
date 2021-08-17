@@ -33,6 +33,7 @@ function loadMathJax() {
     );
   }
 }
+
 export default class extends Controller {
     selectedLink;
     tocLinks;
@@ -53,6 +54,18 @@ export default class extends Controller {
       this.showTOC();
       // Linkify links inside challenge description
       this.el.html(linkifyHtml(this.el.html()));
+
+      // Show execute button on input areas
+      this.executeButtonDynamic();
+    }
+
+    executeButtonDynamic() {
+      $(".input_area").on("mouseover", function () {
+        var e = $('.execute-button-on-hover');
+        e.detach();
+        e.removeClass('d-none');
+        $(this).delay(500).prepend(e);
+      });
     }
 
     updateContent(content) {
@@ -74,17 +87,18 @@ export default class extends Controller {
       this.toc = $("#table-of-contents");
       this.firstChild = this.el.children().first();
 
-      // If the first child is an h2 there is no "Updates" Text
-      if (this.firstChild.is('h2') ) {
-        $(this.el).find('h2').first().addClass('mt-2');
+      // If the first child is an h1 there is no "Updates" Text
+      if (this.firstChild.is('h1') ) {
+        $(this.el).find('h1').first().addClass('mt-2');
       }
-      this.headings = this.el.find("h2").get();
+      this.headings = this.el.find("h1").get();
       // Clear TOC
       this.toc.empty();
 
       if (this.scrollableTabs) {
         this.createTOC();
-        $('body').scrollspy({target: "#table-of-contents", offset: 64});
+        $('body').scrollspy({target: "#table-of-contents"});
+        this.updateActive();
       } else {
         this.createTabularTOC();
         this.updateActive();
@@ -116,9 +130,16 @@ export default class extends Controller {
         const link = $('<a/>', {
             class: 'nav-link text-capitalize cursor-pointer',
             href: `#` + urlFriendly,
-            text: _.capitalize($(heading).text()) }).appendTo(li);
+            text: _.capitalize($(heading).text().replace(/¶/g, '')) }).appendTo(li);
 
       });
+
+      // comments-section
+      const li = $('<li/>', { class: 'nav-item'}).appendTo(this.toc);
+      const link = $('<a/>', {
+          class: 'nav-link text-capitalize cursor-pointer font-weight-bold',
+          href: `#comments-section`,
+          text: "Comments" }).appendTo(li);
 
       this.tocLinks = this.toc.find('a');
       this.selectedLink = this.tocLinks.first();
@@ -158,7 +179,7 @@ export default class extends Controller {
       let content = "";
 
       $(start)
-        .nextUntil(' h2 ')
+        .nextUntil(' h1 ')
         .addBack() // Add selected heading to content
         .each( (i,x) => content += x.outerHTML );
 
