@@ -1,5 +1,4 @@
 class PublicationsController < InheritedResources::Base
-  before_action :authenticate_participant!, except: [:show, :index]
   before_action :set_publication, only: [:show]
   before_action :set_filters, only: [:all]
 
