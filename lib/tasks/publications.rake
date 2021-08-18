@@ -55,7 +55,7 @@ namespace :publications do
       publication.venues << (db_venues.empty? ? PublicationVenue.create!(venue: venue, short_name: venue) : db_venues.first)
 
       # Assign links to publication, create a new link in database if does not exist
-      PublicationExternalLink.create!(name: "Download", link: paper_link, publication: publication, icon:) if paper_link != ""
+      PublicationExternalLink.create!(name: "Download", link: paper_link, publication: publication, icon: "download") if paper_link != ""
 
       # Assign categories to publication, create a new category in database if does not exist
       tags.each do |category|
