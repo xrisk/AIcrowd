@@ -55,11 +55,13 @@
 					<li class="nav-item">
 						<%= link_to 'Blog', blogs_path, {:class => "nav-link"} %>
 					</li>
+                                        <% if ENV['DISCOURSE_DOMAIN_NAME'].present? %>
+                                        <li class="nav-item">
+                                                <a class="nav-link" href="<%= URI.escape(ENV['DISCOURSE_DOMAIN_NAME']) %>">Forums</a>
+                                        </li>
+                                        <% end %>
 					<li class="nav-item">
 						<%= link_to 'Contact', contact_path, {:class => "nav-link"} %>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="https://github.com/AIcrowd/AIcrowd">GitHub<%= image_tag("img/icon-external-link.svg", :alt => "GitHub") %></a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="http://gitlab.aicrowd.com/">GitLab<%= image_tag("img/icon-external-link.svg", :alt => "GitLab") %></a>
@@ -67,11 +69,9 @@
 					<li class="nav-item">
 						<a class="nav-link" href="https://twitter.com/AIcrowdHQ">Twitter<%= image_tag("img/icon-external-link.svg", :alt => "Twitter") %></a>
 					</li>
-					<% if ENV['DISCOURSE_DOMAIN_NAME'].present? %>
-					<li class="nav-item">
-						<a class="nav-link" href="<%= URI.escape(ENV['DISCOURSE_DOMAIN_NAME']) %>">Discourse<%= image_tag("img/icon-external-link.svg", :alt => "Discourse") %></a>
-					</li>
-					<% end %>
+                                        <li class="nav-item">
+                                                <a class="nav-link" href="https://discord.gg/CtwK47EdKg">Discord<%= image_tag("img/icon-external-link.svg", :alt => "Discord") %></a>
+                                        </li>
 				</ul>
 			</div>
 			<!-- /connect -->
