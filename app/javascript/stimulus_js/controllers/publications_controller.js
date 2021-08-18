@@ -53,4 +53,13 @@ export default class extends Controller {
 
     window.location.href = url.concat('?').concat(params);
   }
+
+  clearFilter(){
+    window.location.replace(window.location.origin + window.location.pathname)
+  }
+
+  toggleAuthors(event){
+    let element = event.target;
+    element.innerHTML = (element.innerHTML === 'Show All Authors' ? 'Hide Authors' : 'Show All Authors');
+  }
 }

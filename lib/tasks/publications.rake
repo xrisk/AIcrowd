@@ -30,7 +30,7 @@ namespace :publications do
 
       # Extract data from csv file
       authors = row["Author"].to_s.split(",").map!(&:strip)
-      paper_link = row["Paper Title"].to_s.strip
+      paper_link = row["Paper Link"].to_s.strip
       publication_date = Date.parse(row["Publication Date"].to_s.strip)
       venue = row["Venue"].to_s.strip
       citations = row["Citation"].to_s.strip.to_i
@@ -42,21 +42,25 @@ namespace :publications do
       publication = Publication.create!(title: title, publication_date: publication_date, challenge_id: challenge_id, no_of_citations: citations, aicrowd_contributed: aicrowd_contributed, abstract: abstract)
 
       # Assign authors to publication, create a new author in database if does not exist
+      seq = 0
       authors.each do |author|
-        publication.authors << PublicationAuthor.where(name: author).first_or_create!
+        publication_author = PublicationAuthor.where(name: author, publication: publication).first_or_create!
+        publication_author.sequence = seq
+        publication_author.save!
+        seq += 1
       end
 
       # Assign venues to publication, create a new venue in database if does not exist
       db_venues = PublicationVenue.where(venue: venue)
       publication.venues << (db_venues.empty? ? PublicationVenue.create!(venue: venue, short_name: venue) : db_venues.first)
 
+      # Assign links to publication, create a new link in database if does not exist
+      PublicationExternalLink.create!(name: "Download", link: paper_link, publication: publication, icon:) if paper_link != ""
+
       # Assign categories to publication, create a new category in database if does not exist
       tags.each do |category|
         publication.categories << Category.where(name: category).first_or_create!
       end
-
-      # Assign links to publication, create a new link in database if does not exist
-      publication.external_links << PublicationExternalLink.create!(name: "Link", link: paper_link) if paper_link != ""
     end
 
   end

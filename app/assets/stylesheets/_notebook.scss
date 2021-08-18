@@ -3153,7 +3153,9 @@ kbd,
     overflow: auto;
 }
 
-.ipynb-notebook-container .cell .output_text pre {
+.ipynb-notebook-container .cell .output_text pre,
+.ipynb-notebook-container .cell .output_text span,
+.ipynb-notebook-container .cell .output_text a {
     font-size: 0.75rem !important;
 }
 
