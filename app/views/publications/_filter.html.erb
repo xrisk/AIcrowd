@@ -4,7 +4,7 @@
     <div class="pr-2">
       <div class="dropdown">
         <div aria-expanded="false" aria-haspopup="true"
-             class="filter dropdown-toggle m-2 p-1 pl-3" data-toggle="dropdown"
+             class="filter dropdown-toggle m-2 p-1 pl-3 <% if params[:categories].present? %>filter-active<% end %>" data-toggle="dropdown"
              id="publication-categories"
              style="width: 100%;">
           Tags <i class="fa fa-chevron-down float-right py-1"></i>
@@ -24,7 +24,7 @@
 
     <div class="pr-2">
       <div class="dropdown">
-        <div aria-expanded="false" aria-haspopup="true" class="filter dropdown-toggle m-2 p-1 pl-3"
+        <div aria-expanded="false" aria-haspopup="true" class="filter dropdown-toggle m-2 p-1 pl-3 <% if params[:years].present? %>filter-active<% end %>"
              data-toggle="dropdown" id="publication-years" style="width: 100%;">
           Year <i class="fa fa-chevron-down float-right py-1"></i>
         </div>
@@ -44,7 +44,7 @@
 
     <div class="mr-auto pr-2">
       <div class="dropdown">
-        <div aria-expanded="false" aria-haspopup="true" class="filter dropdown-toggle m-2 p-1 pl-3"
+        <div aria-expanded="false" aria-haspopup="true" class="filter dropdown-toggle m-2 p-1 pl-3 <% if params[:venues].present? %>filter-active<% end %>"
              data-toggle="dropdown" id="publication-venues" style="width: 100%;">
           Venue <i class="fa fa-chevron-down float-right py-1"></i>
         </div>

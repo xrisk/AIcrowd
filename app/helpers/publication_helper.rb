@@ -5,8 +5,8 @@ module PublicationHelper
   end
 
   def check_selected_venue(venue)
-    return false unless params[:venue].present?
-    params[:venue].split(',').include?(venue)
+    return false unless params[:venues].present?
+    params[:venues].split(',').include?(venue)
   end
 
   def publication_social_share(site, url, title)
