@@ -1,7 +1,7 @@
-<%= form_with url: path, local: true, method: :get, enforce_utf8: false, data: {controller: "publications" }, class: 'filter-dropdown-form', id: 'filterForm' do |f| %>
-  <div class="row">
+<%= form_with url: path, local: true, method: :get, enforce_utf8: false, data: {controller: "publications" }, class: 'filter-dropdown-form col-12', id: 'filterForm' do |f| %>
+  <div class="d-flex col-12">
 
-    <div class="col-lg-3 col-md-6">
+    <div class="pr-2">
       <div class="dropdown">
         <div aria-expanded="false" aria-haspopup="true"
              class="filter dropdown-toggle m-2 p-1 pl-3" data-toggle="dropdown"
@@ -10,11 +10,11 @@
           Tags <i class="fa fa-chevron-down float-right py-1"></i>
         </div>
         <div class="dropdown-menu form-dropdown">
-          <% @categories.each do |category| %>
+          <% @categories.uniq.sort.each do |category| %>
             <div class="form-check">
               <%= label_tag do %>
                 <%= f.check_box :category, { checked: check_selected_category(category), class: 'form-check-input' }, category.name %>
-                <%= category.name.humanize %>
+                <%= category.name %>
               <% end %>
             </div>
           <% end %>
@@ -22,14 +22,14 @@
       </div>
     </div>
 
-    <div class="col-lg-3 col-md-6">
+    <div class="pr-2">
       <div class="dropdown">
         <div aria-expanded="false" aria-haspopup="true" class="filter dropdown-toggle m-2 p-1 pl-3"
              data-toggle="dropdown" id="publication-years" style="width: 100%;">
           Year <i class="fa fa-chevron-down float-right py-1"></i>
         </div>
         <div class="dropdown-menu form-dropdown">
-          <% @years.each do |year| %>
+          <% @years.uniq.sort.each do |year| %>
             <div class="form-check">
               <%= label_tag do %>
                 <%= f.check_box :year, { checked: check_selected_year(year), class: 'form-check-input' }, year %>
@@ -42,18 +42,18 @@
 
     </div>
 
-    <div class="col-lg-3 col-md-12">
+    <div class="mr-auto pr-2">
       <div class="dropdown">
         <div aria-expanded="false" aria-haspopup="true" class="filter dropdown-toggle m-2 p-1 pl-3"
              data-toggle="dropdown" id="publication-venues" style="width: 100%;">
           Venue <i class="fa fa-chevron-down float-right py-1"></i>
         </div>
         <div class="dropdown-menu form-dropdown">
-          <% @venues.each do |venue| %>
+          <% @venues.sort.uniq.each do |venue| %>
             <div class="form-check">
               <%= label_tag do %>
                 <%= f.check_box :venue, { checked: check_selected_venue(venue), class: 'form-check-input' }, venue %>
-                <%= venue.humanize %>
+                <%= venue %>
               <% end %>
             </div>
           <% end %>
@@ -62,20 +62,14 @@
       </div>
     </div>
 
-    <div class="col-lg-3 col-md-12">
+    <div class="ml-2">
+      <input class="btn btn-red-submit mt-1" data-action="click->publications#filterUrl" data-disable-with="Apply"
+             type="submit" value="Apply Filters">
 
     </div>
-
-    <div class="row mb-3 mx-5">
-      <div class="col-lg-6">
-        <input class="btn   btn-red-submit " data-action="click->publications#filterUrl" data-disable-with="Apply"
-               type="submit" value="Apply Filters">
-
-      </div>
-      <div class="col-lg-6">
-        <input class="btn  btn-white-submit " data-action="click->publications#clearFilter" data-disable-with="Clear"
-               type="reset" value="Clear Filters">
-      </div>
+    <div class="ml-2">
+      <input class="btn btn-white-submit mt-1" data-action="click->publications#clearFilter" data-disable-with="Clear"
+             type="reset" value="Clear Filters">
     </div>
 
   </div>

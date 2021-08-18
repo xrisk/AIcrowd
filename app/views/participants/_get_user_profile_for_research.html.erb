@@ -1,7 +1,7 @@
 <% if participant.present? %>
   <a href="<%= participant_link(participant) %>" target="_blank">
     <span class="text-link mr-1">
-      <img alt="" class="mr-1 img-sm" src="<%= participant.image_file.url %>">
+      <img class="avatar mr-1 img-sm" src="<%= participant.image_file.url %>">
         <small><%= username %></small>
     </span>
   </a>

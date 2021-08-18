@@ -1,10 +1,8 @@
 <div class="col-12 px-1">
-  <ul class="list-group list-group-flush-px-0 list-group-contributions">
+  <ul class="list-group list-group-flush-px-1 list-group-contributions list-group-publications">
     <% publications.each_with_index do |publication, idx| %>
-      <% if idx != 0 %>
     <div class="col-12 px-1">
-      <% end %>
-      <li class="list-group-item py-4 flex-wrap">
+      <li class="list-group-item py-4 flex-wrap <% if idx == publications.size - 1 %>border-0<% end %>">
 
         <div class="col-md-10 d-flex mb-2 offset-md-2 pl-0">
           <% publication.categories.each_with_index do |category, index| %>
@@ -20,12 +18,16 @@
 
         <div class="contribution-details col-md-2 pb-3 mb-2 pl-0">
           <a href="<%= publication_path(publication) %>">
-            <%= image_tag publication.thumbnail.url, class: "img-fluid img-1 mr-2", alt: "" %>
+            <% if publication.thumbnail.present? %>
+              <%= image_tag publication.thumbnail.url, class: "img-fluid img-1 mr-2", alt: "" %>
+            <% else %>
+              <%= image_tag '/assets/img/user-avatar-default.svg', class: 'img-fluid img-1 mr-2' %>
+            <% end %>
           </a>
         </div>
 
-        <div class="details col-md-10 pl-0 mb-auto">
-          <div class="contribution-text">
+        <div class="contribution-details details col-md-10 pl-0 mb-auto">
+          <div class="contribution-text col-12 pl-0">
             <span class="contribution-subtitle">
             <a class="text-link" href="<%= publication_path(publication) %>"><%= publication.title %></a>
 
@@ -35,49 +37,43 @@
                   <% if publication.authors[0].participant_id.present? %>
                     <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: publication.authors[0].participant, username: publication.authors[0].name } %>
                   <% else %>
-                    <a href="#">
                       <span class="text-link mr-new1">
-                      <img alt="" class="mr-1 img-sm" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg">
+                      <%= image_tag '/assets/img/user-avatar-default.svg', class: 'mr-1 img-sm avatar' %>
                         <small><%= publication.authors[0].name %></small>
                       </span>
-                    </a>
                   <% end %>
                 <% end %>
 
                 <% if publication.authors.length > 1 %>
                   <div class="mob">
-                    <% publication.authors[1..3].each do |author| %>
+                    <% publication.authors[1..2].each do |author| %>
                       <% if author.participant_id.present? %>
                         <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
                       <% else %>
-                        <a href="#">
-                    <span class="text-link mr-new">
-                    <img alt="" class="mr-1 img-sm" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg">
-                      <small><%= author.name %></small>
-                    </span>
-                        </a>
+                        <span class="text-link mr-new">
+                        <%= image_tag '/assets/img/user-avatar-default.svg', class: 'mr-1 img-sm avatar' %>
+                          <small><%= author.name %></small>
+                        </span>
                       <% end %>
                     <% end %>
-                    <% if publication.authors.length > 4 %>
+                    <% if publication.authors.length > 3 %>
                       <div class="tab">
-                        <% publication.authors[4..6].each do |author| %>
+                        <% publication.authors[3..4].each do |author| %>
                           <% if author.participant_id.present? %>
                             <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
                           <% else %>
-                            <a href="#">
                           <span class="text-link mr-new">
-                          <img alt="" class="mr-1 img-sm" src="https://d33wubrfki0l68.cloudfront.net/7d408ce7a8c9ff4ca58268ca1886ff021b5412e7/e1c11/assets/img/user-avatar-default.svg">
+                          <%= image_tag '/assets/img/user-avatar-default.svg', class: 'mr-1 img-sm avatar' %>
                             <small><%= author.name %></small>
                           </span>
-                            </a>
                           <% end %>
                         <% end %>
                       </div>
                     <% end %>
                   </div>
-                  <% if publication.authors.length > 6 %>
+                  <% if publication.authors.length > 5 %>
                     <div class="new-row">
-                      <a href=""> <span class="small-text mr-new"><small>+<%= publication.authors.offset(6).length %> more</small></span></a>
+                      <span class="small-text mr-new"><small>+<%= publication.authors.offset(5).length %> more</small></span>
                     </div>
                   <% end %>
                 <% end %>
@@ -97,10 +93,12 @@
               </div>
               <div class="col-lg-6 col-sm-6">
                 <div class="float-left ">
-                  <p class="p-red">
+                  <p class="p-red d-flex">
                     <%= image_tag "img/icon-venue.png", class: "img-red" %>
                     <% if publication.venues.present? %>
-                      <%= publication.venues.first.venue %>
+                      <%= link_to all_publications_path(venues: publication.venues.first.short_name), style: 'text-decoration: none;font-weight: normal;line-height: initial;' do %>
+                        <%= publication.venues.first.venue %>
+                      <% end %>
                     <% end %>
                   </p>
                 </div>
@@ -120,13 +118,12 @@
               </div>
               <div class="col-lg-6 col-sm-6">
                 <div class="float-left">
-
-                  <p class="p-red">
+                  <% if publication.challenge.present? %>
+                  <p class="p-red d-flex">
                     <%= image_tag "img/icon-challenge.png", class: "img-red" %>
-                    <% if publication.challenge.present? %>
-                      <%= publication.challenge.challenge %>
-                    <% end %>
+                      <%= link_to publication.challenge.challenge, challenge_path(publication.challenge), style: 'text-decoration: none;font-weight: normal;line-height: initial;' %>
                   </p>
+                  <% end %>
                 </div>
               </div>
             </div>
@@ -162,9 +159,7 @@
       </div>
 
       </li>
-      <% if idx != 0 %>
     </div>
-        <% end %>
     <% end %>
   </ul>
     <!-- /list-group-contributions -->

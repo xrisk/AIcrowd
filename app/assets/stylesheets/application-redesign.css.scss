@@ -221,6 +221,10 @@ a:not([href]):not([tabindex]):focus {
   outline: 0;
 }
 
+a.text-decoration-none {
+  text-decoration: none;
+}
+
 pre,
 code,
 kbd,
@@ -601,6 +605,17 @@ small,
 .list-group-contributions .contribution-details .contribution-text .contribution-user-time {
   font-size: 0.875rem;
   font-weight: 400;
+}
+
+.list-group-contributions .contribution-details img {
+  border-radius: 3px;
+  height: auto;
+  width: 100%;
+  height: 100%;
+}
+
+.list-group-contributions .contribution-details .avatar {
+  border-radius: 100%;
 }
 
 mark,
@@ -3170,6 +3185,8 @@ input[type="button"].btn-block {
 .dropdown .form-dropdown {
   min-width: 240px;
   padding: 1rem 0 .75rem 0;
+  max-height: 500px;
+  overflow: scroll;
 }
 
 .dropdown form .form-check {
@@ -14492,6 +14509,11 @@ input.width-185 {
     margin-right: 6px;
 }
 
+.list-group-research-big .text-link {
+    margin-bottom: 5px;
+    margin-right: 10px !important;
+    cursor: default;
+}
 
 .list-group-research img.avatar.user-rating-0, .list-group-research img.avatar.user-rating-1, .list-group-research img.avatar.user-rating-2, .list-group-research img.avatar.user-rating-3, .list-group-research img.avatar.user-rating-4, .list-group-research img.avatar.user-rating-5 {
     box-shadow: none;

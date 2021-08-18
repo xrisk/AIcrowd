@@ -4,11 +4,12 @@
       <div class="col-xs-12 col-sm-12 col-lg-6">
         <div class="mt-lg-5">
           <h1><span class="text-primary mb-5">AI</span>crowd Research</h1>
-          <p class="sub-head mt-4">AIcrowd enables data science experts and enthusiasts to collaboratively solve real-world problems, <b>through research experiments and paper writing</b>.</p>
+          <p class="sub-head mt-4">From advances in reinforcement learning to applications of ML in scientific research, <b><span class="text-primary">AI</span>crowd</b> Community tackles some of the most diverse and interesting problems in AI.
+.</p>
         </div>
       </div>
       <div class="col-xs-12 col-sm-12 col-lg-6 mt-lg-n5 mb-lg-n5">
-        <img class="w-100" src="https://i.imgur.com/NVHoE2X.png">
+        <%= image_tag image_path('misc/publication-masthead.svg'), class: "w-100" %>
       </div>
     </div>
   </div>
@@ -21,27 +22,27 @@
         <div class="col-lg-4 col-md-6">
           <div class="card my-2">
             <div class="card-body">
-              <h5 class="card-title"><i class="fa float-l-fa fa-code mr-2"></i> CODE <div class="float-right float-r-fa d-none"><i class="fa fa-long-arrow-right"></i></div></h5>
+              <h5 class="card-title"><i class="fa float-l-fa fa-rocket mr-2"></i> CHALLENGE <div class="float-right float-r-fa d-none"><i class="fa fa-long-arrow-right"></i></div></h5>
               <hr>
-              <p class="card-text">Help in cutting edge research with your coding skills. </p>
+              <p class="card-text">Participate in challenges and see your contributions turn into published research papers.</p>
             </div>
           </div>
         </div>
         <div class="col-lg-4 col-md-6">
           <div class="card my-2">
             <div class="card-body">
-              <h5 class="card-title"><i class="fa float-l-fa fa-pencil-square-o mr-2"></i> WRITE <div class="float-right float-r-fa d-none"><i class="fa fa-long-arrow-right"></i></div></h5>
+              <h5 class="card-title"><i class="fa float-l-fa fa-pencil-square-o mr-2"></i> BUILD <div class="float-right float-r-fa d-none"><i class="fa fa-long-arrow-right"></i></div></h5>
               <hr>
-              <p class="card-text">Help by reporting the research experiments systematically. </p>
+              <p class="card-text">Contribute with your engineering or writing skills to AIcrowd’s ongoing research projects.</p>
             </div>
           </div>
         </div>
         <div class="col-lg-4 col-md-12">
           <div class="card my-2">
             <div class="card-body">
-              <h5 class="card-title"><i class="fa float-l-fa fa-comment-o mr-2"></i> PARTICIPATE <div class="float-right float-r-fa d-none"><i class="fa fa-long-arrow-right"></i></div></h5>
+              <h5 class="card-title"><i class="fa float-l-fa fa-comment-o mr-2"></i> DISCUSS <div class="float-right float-r-fa d-none"><i class="fa fa-long-arrow-right"></i></div></h5>
               <hr>
-              <p class="card-text">Push the benchmark scores by participating in AIcrowd challenges. </p>
+              <p class="card-text">Jump into ongoing research discussions and share your ideas with the AIcrowd community.</p>
             </div>
           </div>
         </div>
@@ -50,10 +51,10 @@
   </div>
   <div class="container-fluid">
     <div class="my-5">
-      <p class="short-head my-4">FEATURED PUBLICATIONS <button class="btn-white-submit2 float-right">See all</button></p>
+      <p class="short-head my-4">FEATURED PUBLICATIONS <button class="btn-white-submit2 float-right" onclick="location.href='/research/all'">See all</button></p>
     </div>
     <div class="col-12 px-1">
-      <%= render partial: 'publication_list', locals: {publications: Publication.all} %>
+      <%= render partial: 'publication_list', locals: {publications: Publication.limit(6).order('sequence asc') } %>
     </div>
   </div>
 
