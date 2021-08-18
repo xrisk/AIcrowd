@@ -176,9 +176,14 @@ color: #292C2D;
 }
 .new-author1 .tab{
     display: inline-flex;
+    align-items: center !important;
+}
+.masthead .new-author1 .tab{
+    align-items: unset !important;
 }
 .new-author1 .mob{
     display: inline-flex;
+    align-items: center !important;
 }
 .masthead{
     background-color: #f8f9f9!important;

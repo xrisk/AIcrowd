@@ -23,9 +23,13 @@ module PublicationHelper
   end
 
   def social_share_link(site, data_url)
+    btncls = "new-btn1"
+    if site == "facebook"
+      btncls = "new-btn"
+    end
     link_to "<span class='fa fa-#{site.downcase} #{site.downcase}' style='color: gray;'></span>".html_safe, '#',
       {
-        class: "btn btn-secondary new-btn btn-sm mr-1 float-left m-1 #{site.downcase}",
+        class: "btn btn-secondary #{btncls} btn-sm mr-1 float-left m-1 #{site.downcase}",
         data: {
                 url:       "#{data_url}?utm_source=AIcrowd&utm_medium=#{site.humanize}",
                 site:      site,
