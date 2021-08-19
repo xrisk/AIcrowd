@@ -20,6 +20,7 @@ class Notification < ApplicationRecord
     'Leaderboard'    => :leaderboard,
     'Article'        => :article,
     'Discourse'      => :discourse
+    'Badge'          => :badge
   }.freeze
 
   def read?
