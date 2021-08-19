@@ -169,7 +169,8 @@ Rails.application.routes.draw do
     registrations: 'participants/registrations',
     passwords: 'participants/passwords',
     unlocks: 'participants/unlocks',
-    confirmations: 'participants/confirmations'
+    confirmations: 'participants/confirmations',
+    sessions: 'participants/sessions'
   }
 
   resources :participants, only: [:show, :edit, :update, :destroy, :index], id: /[^\/]+/ do

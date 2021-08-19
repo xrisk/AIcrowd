@@ -7,7 +7,7 @@ class Participants::OmniauthCallbacksController < Devise::OmniauthCallbacksContr
     @user = from_omniauth(request.env['omniauth.auth'])
 
     if @user.persisted?
-      Mixpanel::SyncJob.perform_later(@user)
+      Mixpanel::SyncJob.perform_later(@user, request.remote_ip)
       if !@user.confirmed?
         Mixpanel::EventJob.perform_later(@user, 'Registration Complete', {
           'Registration Method': readable_provider_name(action_name),

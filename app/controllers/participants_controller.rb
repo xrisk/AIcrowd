@@ -48,7 +48,7 @@ class ParticipantsController < ApplicationController
 
     if @participant.errors.none? && @participant.save
       flash[:success] = "Profile updated"
-      Mixpanel::SyncJob.perform_later(@participant)
+      Mixpanel::SyncJob.perform_later(@participant, request.remote_ip)
       redirect_to @participant
     else
       flash[:error] = @participant.errors.full_messages.to_sentence
