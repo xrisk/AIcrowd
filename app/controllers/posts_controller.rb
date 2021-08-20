@@ -38,12 +38,18 @@ class PostsController < InheritedResources::Base
   end
 
   def index
-    @post = Post.all.where(private: false).limit(30).includes(:participant, :challenge)
+    if params[:private].present?
+      @post = Post.all.where(private: true).limit(30).includes(:participant, :challenge)
+      @private_checked = true
+    else
+      @post = Post.all.where(private: false).limit(30).includes(:participant, :challenge)
+    end
   end
 
   def show
     @execute_in_colab_url = @post.execute_in_colab_url
     @download_notebook_url = @post.download_notebook_url
+    @post.record_page_view
     unless @post.external_link.present? && @post.external_link.include?("https://colab.research.google.com")
       @external_link = @post.external_link
     end
@@ -111,6 +117,7 @@ class PostsController < InheritedResources::Base
   end
 
   def destroy
+    authorize @post
     challenge = @post.challenge
     @post.destroy
     redirect_to(notebooks_challenge_path(challenge), notice: "The contribution was deleted successfully!")

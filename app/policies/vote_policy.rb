@@ -14,4 +14,8 @@ class VotePolicy < ApplicationPolicy
   def destroy?
     edit?
   end
+
+  def white_vote_create?
+    create?
+  end
 end

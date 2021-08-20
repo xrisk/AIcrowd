@@ -169,7 +169,8 @@ Rails.application.routes.draw do
     registrations: 'participants/registrations',
     passwords: 'participants/passwords',
     unlocks: 'participants/unlocks',
-    confirmations: 'participants/confirmations'
+    confirmations: 'participants/confirmations',
+    sessions: 'participants/sessions'
   }
 
   resources :participants, only: [:show, :edit, :update, :destroy, :index], id: /[^\/]+/ do
@@ -263,13 +264,17 @@ Rails.application.routes.draw do
   resources :team_members, path: "our_team", only: [:index]
   resources :practice, only: [:index]
   resources :posts, path: :showcase do
-    resources :votes, only: [:create, :destroy]
+    resources :votes, only: [:create, :destroy] do
+      post :white_vote_create, on: :collection
+      delete :white_vote_destroy, on: :collection
+    end
     post :validate_colab_link, on: :collection
     post :validate_notebook, on: :collection
   end
   resources :publications, path: :research, only: [:index, :show] do
     get :all, on: :collection
   end
+  resources :post_bookmarks, only: [:create, :destroy]
 
   match '/contact', to: 'pages#contact', via: :get
   match '/privacy', to: 'pages#privacy', via: :get

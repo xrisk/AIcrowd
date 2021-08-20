@@ -1,30 +1,44 @@
-<div class="masthead masthead-contribution masthead-blog-post">
-  <div class="container-fluid">
+<div class="masthead masthead-contribution masthead-blog-post-notebook">
+  <div class="container-fluid ml-0 ml-md-7">
 
     <div class="row">
       <div class="col-12">
         <h4><a href="<%= challenge_path(@post.challenge) %>"><%= @post.challenge.challenge %></a></h4>
-        <h1><%= @post.title %></h1>
+        <h1 style="font-size: 2rem;width: 70%;"><%= @post.title %></h1>
+        <% if @post.community_contribution_winner? %>
+        <div class="row float-right notebook-community-contribution">
+            <%= image_tag image_path('misc/notebook_community_prize.svg'), height: "30", class: "ml-4 mt-1" %>
+            <span class="col-8" style="font-size: 13px;font-weight: 500;">Community challenge explainer</span>
+        </div>
+        <% end %>
         <p class="masthead-subtitle"><%= @post.tagline %></p>
-      <!-- /title -->
-        <div class="masthead-details">
+        <div class="masthead-details mr-2 mt-5">
           <div class="d-flex align-items-center flex-wrap">
             <span class="author">
-              <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant, username: 'false' } %>
-              <% if @post.participant.present? %>
-                <span>By&nbsp;</span>
-              <% end %>
-              <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant, avatar: 'false'} %>
+              <%= render partial: 'participants/get_user_profile', locals: { participant: @post.participant} %>
             </span>
             <span class="masthead-date"><%= local_time(@post.created_at, "%-d %B %Y") %></span>
 
-            <div class="btn-set ml-2 mt-3" aria-hidden="true">
-              <%= render partial: 'shared/votes/button', locals: { votable: @post, vote: @post.vote(current_participant) } %>
-              <% if !@execute_in_colab_url.nil? %><button type="button" class="btn btn-sm btn-secondary"><a href='<%= @execute_in_colab_url %>' target="_blank" class="text-secondary"><span class="fa fa-cogs mr-1"></span>Open in Colab</a></button><% end %>
+          </div>
+          <div>
+            <div class="btn-set ml-2" aria-hidden="true">
               <% if current_participant.present? && (current_participant.admin? || (@post.participant_id == current_participant.id)) %>
-                <%= button_to 'Edit', edit_post_path(@post), class: "btn btn-secondary btn-sm float-right", method: :get %>
-                <%= button_to 'Delete', post_path(@post), class: "btn btn-secondary btn-sm float-right", method: :delete, data: { confirm: "You are about to delete your contribution. Are you sure?" } %>
+
+                <%= link_to edit_post_path(@post), class: "float-right mr-2", style: "align-self: center;", method: :get do %>
+                  <%= image_tag image_path('misc/edit.svg') %>
+                <% end %>
+                <%= link_to post_path(@post), class: "float-right mr-4", style: "align-self: center;", method: :delete, data: { confirm: "You are about to delete your contribution. Are you sure?" }  do %>
+                  <%= image_tag image_path('misc/delete-button.svg') %>
+                <% end %>
               <% end %>
+
+              <%= render partial: 'shared/bookmark/button', locals: { post: @post, bookmark: @post.bookmark(current_participant) } %>
+               <div class="mr-4 cursor-pointer clipboard-btn" data-clipboard-text="<%= request.url%>" data-toggle="tooltip" title="Copy Link" style="align-self: center;"><%= image_tag image_path('misc/notebook_share.svg') %></div></button>
+              <% if @download_notebook_url.present? %>
+                <a href='<%= @download_notebook_url %>' target="_blank" class="mr-4" style="align-self: center;"><%= image_tag image_path('misc/notebook_download.svg') %></a></button>
+              <% end %>
+              <%= render partial: 'shared/votes/white_button', locals: { votable: @post, vote: @post.vote(current_participant) } %>
+              <% if !@execute_in_colab_url.nil? %><button type="button" class="btn btn-sm btn-primary"><a href='<%= @execute_in_colab_url %>' target="_blank">Open in Colab</a></button><% end %>
             </div>
           </div>
         </div>
@@ -33,50 +47,11 @@
       <!-- /author/options -->
   </div>
 </div>
-
-<!-- section -->
-<section class="section">
-  <div class="container-fluid">
-    <div class="row">
-      <!-- md content -->
-      <div class="col-md-7 posts-form mt-4">
-        <div class="col-md-12 md-content">
-          <% if @post.description.present? %>
-            <%= @post.description.html_safe %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<div>
 
 <section class="section">
-  <div class="container-fluid">
-    <% if @post.notebook_html.present? %>
-      <hr/>
-      <div class="row">
-        <div class="col-md-9">
-          <button type="button" class="btn btn-sm btn-link">Notebook</button>
-        </div>
-        <% if @download_notebook_url.present? %>
-          <div class="col-md-0">
-            <button type="button" class="btn btn-sm btn-primary"><a href='<%= @download_notebook_url %>' target="_blank"><span class="fa fa-download mr-1"></span>Download</a></button>
-          </div>
-        <% end %>
-        <% if @execute_in_colab_url.present? %>
-          <div class="col-md-1">
-            <button type="button" class="btn btn-sm btn-primary"><a href='<%= @execute_in_colab_url %>' target="_blank"><span class="fa fa-cogs mr-1"></span>Open in Colab</a></button>
-          </div>
-        <% end %>
-      </div>
-      <hr/>
-      <div class="ipynb-notebook-container">
-        <% cache_if cache_enabled?, [@post] do %>
-          <%= @post.notebook_html.html_safe %>
-        <% end %>
-      </div>
-      <div class="text-center col-12 mt-3"><div class="show-more-btn btn btn-primary col-4" data-controller="post" data-action="click->post#expandNotebook">↕️&nbsp;&nbsp;Read More</div></div>
-    <% end %>
+  <div class="row">
+    <%= render partial: 'posts/show_notebook', locals: { post: @post } %>
   </div>
   <div class="container-fluid">
     <% if @external_link.present? %>
@@ -95,36 +70,37 @@
       </div>
     <% end %>
   </div>
-  <hr/>
   <div class="container-fluid">
-    <div class="row pl-3">
-      <%= render partial: 'shared/votes/button', locals: { votable: @post, vote: @post.vote(current_participant), show_users: true } %>
+    <div class="row pl-3 mt-6">
+      <%= render partial: 'shared/votes/white_button', locals: { votable: @post, vote: @post.vote(current_participant)} %>
+      <i class="fa fa-eye ml-4" aria-hidden="true" style="align-self: center;"></i>
+      <div class="ml-1 mr-4" style="align-self: center;"><%= @post.page_views %></div>
+      <%= render partial: 'shared/bookmark/button', locals: { post: @post, bookmark: @post.bookmark(current_participant) } %>
+       <div class="mr-4 cursor-pointer clipboard-btn" data-clipboard-text="<%= request.url%>" data-toggle="tooltip" title="Copy Link" style="align-self: center;"><%= image_tag image_path('misc/notebook_share.svg') %></div></button>
+      <% if @download_notebook_url.present? %>
+        <a href='<%= @download_notebook_url %>' target="_blank" class="mr-4" style="align-self: center;"><%= image_tag image_path('misc/notebook_download.svg') %></a></button>
+      <% end %>
+      <% if !@execute_in_colab_url.nil? %><button type="button" class="btn btn-sm btn-primary" style="margin-left: 45%;"><a href='<%= @execute_in_colab_url %>' target="_blank">Open in Colab</a></button><% end %>
     </div>
   </div>
   <hr/>
   <div class="container-fluid">
-    <div class="row justify-content-md-center">
+    <div class="row">
       <div class="col-12 col-sm-8">
-        <div class="blog-discussion">
+        <div class="blog-discussion" id="comments-section">
           <%= commontator_thread(@post) %>
         </div>
       </div>
     </div>
   </div>
 </section>
+</div>
 <!-- /section -->
+
+<div class="d-none execute-button-on-hover"><a href="<%= @execute_in_colab_url %>" target="_href"><span class="fa fa-cogs mr-1"></span>Execute</a></div>
 
 <script>
 $(document).ready(function(){
   $(".posts-form img").filter(function(){return this.title.match(/:*:/);}).attr('width', '24px');
 })
 </script>
-<style>
-.btn-primary a {
-  color: white;
-}
-.avatar {
-  width: 32px;
-  height: 32px;
-}
-</style>

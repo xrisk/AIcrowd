@@ -30,7 +30,6 @@ class Participant < ApplicationRecord
   before_save :process_urls
   after_create :set_email_preferences
   after_save :publish_to_prometheus
-  after_save :save_user_profile_to_mixpanel
   after_commit :upsert_discourse_user, on: [:create, :update]
   after_commit :update_gitlab_user, on: [:update, :create]
 
@@ -117,6 +116,7 @@ class Participant < ApplicationRecord
   has_many :team_members, dependent: :destroy
   has_many :participant_ml_challenge_goals, dependent: :destroy
   has_many :ml_activity_points, dependent: :destroy
+  has_many :post_bookmarks, dependent: :destroy
   # has_many :likes, dependent: :destroy
   has_many :posts, dependent: :nullify
 
@@ -409,9 +409,5 @@ class Participant < ApplicationRecord
     return unless saved_change_to_attribute?(:name)
 
     Gitlab::UpdateUsernameJob.perform_later(self.id)
-  end
-
-  def save_user_profile_to_mixpanel
-    Mixpanel::SyncJob.perform_later(self)
   end
 end

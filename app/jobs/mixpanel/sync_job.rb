@@ -14,7 +14,7 @@ class Mixpanel::SyncJob < ApplicationJob
     end
   end
 
-  def perform(participant)
+  def perform(participant, current_ip)
     if participant.present?
       @user = participant
       fields = {
@@ -34,7 +34,7 @@ class Mixpanel::SyncJob < ApplicationJob
         'Email Subscription': get_value_in_profile("agreed_to_marketing"),
         'User Type': get_value_in_profile("user_type")
       }
-      Tracker.people.set(@user.uuid, fields)
+      Tracker.people.set(@user.uuid, fields, current_ip)
     end
   end
 

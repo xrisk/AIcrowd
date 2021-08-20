@@ -28,6 +28,31 @@ class VotesController < ApplicationController
     end
   end
 
+  def white_vote_create
+    @vote             = @votable.votes.find_or_create_by(participant: current_participant)
+    authorize @vote
+    @vote.save
+    @votable.update(vote_count: @votable.votes.count)
+    Rails.logger.debug("updated: #{@votable.id}")
+
+    respond_to do |format|
+      format.js { render :refresh_white }
+    end
+  end
+
+  def white_vote_destroy
+    Vote.destroy(params[:id])
+
+    @vote = @votable.votes.where(participant_id: current_participant.id).first if current_participant.present?
+    @votable.update(vote_count: @votable.votes.count)
+
+    Rails.logger.debug "rendering destroy #{@votable}"
+
+    respond_to do |format|
+      format.js { render :refresh_white }
+    end
+  end
+
   private
 
   def set_votable

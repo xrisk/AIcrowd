@@ -105,7 +105,7 @@ export default class extends Controller {
     createTOC() {
       $.each(this.headings, (index, heading) => {
         // URL friendly id
-        var urlFriendly = $(heading).text().replace(/(^\W*)|(\W*$)/g, '').replace(' ', '-').toLowerCase();
+        var urlFriendly = $(heading).text().replace(/(^\W*)|(\W*$)/g, '').replace(/ /g, '-').toLowerCase();
         // Add id
         $(heading).attr('id', urlFriendly);
 
@@ -127,7 +127,7 @@ export default class extends Controller {
     createTabularTOC() {
       $.each(this.headings, (index, heading) => {
         // URL friendly id
-        var urlFriendly = $(heading).text().replace(/(^\W*)|(\W*$)/g, '').replace(' ', '-').toLowerCase();
+        var urlFriendly = $(heading).text().replace(/(^\W*)|(\W*$)/g, '').replace(/ /g, '-').toLowerCase();
         // Add id
         $(heading).attr('id', urlFriendly);
 

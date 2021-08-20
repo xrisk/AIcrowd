@@ -1,0 +1,19 @@
+<div class="col-12">
+  <a class="" data-toggle="collapse" href="#leaderboardFilters" role="button" aria-expanded="false" aria-controls="leaderboardFilters" style="color: dimgrey">
+    <i class="fa fa-filter" aria-hidden="true"></i>&nbsp;Filters
+  </a>
+</div>
+
+<div class="leaderboard-filters col-12 collapse <%= params[:private].present? ? 'show' : '' %>" id="leaderboardFilters">
+  <!-- toggle switch -->
+  <div class="my-2">
+    <label class="toggle-switch" style="width: max-content;">
+      <%= link_to posts_path(private: true) do %>
+        <input id="post-challenge-switch" type="checkbox" <%= "checked" if @private_checked %> >
+        <span class="switcher mr-2"></span>
+        <span class="label">Private</span>
+      <% end %>
+    </label>
+  </div>
+  <!-- /toggle switch -->
+</div>

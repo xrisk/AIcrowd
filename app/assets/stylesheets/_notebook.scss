@@ -1088,6 +1088,11 @@ Browsers not listed, including Safari, are supported via the styling under the
   /* Use default cursor */
   cursor: default;
 }
+@media (max-width: 767.98px) {
+  .ipynb-notebook-container .prompt {
+    display: none;
+  }
+}
 .ipynb-notebook-container div.inner_cell {
   min-width: 0;
   /* Old browsers */
@@ -1530,7 +1535,6 @@ Adapted from GitHub theme
   box-flex: 1;
   /* Modern browsers */
   flex: 1;
-  max-width: calc(100% - 14ex);
 }
 .ipynb-notebook-container div.output_scroll div.output_subarea {
   overflow-x: visible;
@@ -1543,6 +1547,7 @@ Adapted from GitHub theme
   color: #000;
   /* This has to match that of the the CodeMirror class line-height below */
   line-height: 1.21429em;
+  border: 1px solid #eee;
 }
 /* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
 .ipynb-notebook-container div.output_stderr {
@@ -3149,6 +3154,36 @@ kbd,
 }
 
 .output_text {
-    max-height: 200px;
-    overflow: scroll;
+    max-height: 300px;
+    overflow: auto;
+    overflow-y: auto;
+}
+
+.ipynb-notebook-container .cell .output_text pre,
+.ipynb-notebook-container .cell .output_text span,
+.ipynb-notebook-container .cell .output_text a {
+    font-size: 0.75rem !important;
+}
+
+.ipynb-notebook-container .cell p,
+.ipynb-notebook-container .cell span,
+.ipynb-notebook-container .cell li,
+.ipynb-notebook-container .cell pre,
+.ipynb-notebook-container .cell code,
+.ipynb-notebook-container .cell td,
+.ipynb-notebook-container .cell a {
+    font-size: 0.9rem !important;
+    line-height: 1.2rem !important;
+}
+
+.ipynb-notebook-container .cell h3 {
+    font-size: 1rem !important;
+}
+
+.ipynb-notebook-container .cell h2 {
+    font-size: 1.15rem !important;
+}
+
+.ipynb-notebook-container .cell h1 {
+    font-size: 1.25rem !important;
 }

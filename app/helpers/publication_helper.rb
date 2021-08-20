@@ -5,8 +5,8 @@ module PublicationHelper
   end
 
   def check_selected_venue(venue)
-    return false unless params[:venue].present?
-    params[:venue].split(',').include?(venue)
+    return false unless params[:venues].present?
+    params[:venues].split(',').include?(venue)
   end
 
   def publication_social_share(site, url, title)
@@ -23,9 +23,13 @@ module PublicationHelper
   end
 
   def social_share_link(site, data_url)
-    link_to "<span class='fa fa-#{site.downcase}' style='color: gray;'></span>".html_safe, '#',
+    btncls = "new-btn1"
+    if site == "facebook"
+      btncls = "new-btn"
+    end
+    link_to "<span class='fa fa-#{site.downcase} #{site.downcase}' style='color: gray;'></span>".html_safe, '#',
       {
-        class: "btn btn-secondary btn-sm mr-1",
+        class: "btn btn-secondary #{btncls} btn-sm mr-1 float-left m-1 #{site.downcase}",
         data: {
                 url:       "#{data_url}?utm_source=AIcrowd&utm_medium=#{site.humanize}",
                 site:      site,

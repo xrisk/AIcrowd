@@ -20,4 +20,16 @@ module VotesHelper
   def votes_link_id(votable)
     "vote-link-#{votable.model_name.param_key}-#{votable.id}"
   end
+
+  def white_votes_create_vote_path(votable)
+    url_helper_method_name = "white_vote_create_#{votable.model_name.param_key}_votes_path"
+
+    Rails.application.routes.url_helpers.public_send(url_helper_method_name, votable.id)
+  end
+
+  def white_votes_destroy_vote_path(votable, vote_id)
+    url_helper_method_name = "white_vote_destroy_#{votable.model_name.param_key}_votes_path"
+
+    Rails.application.routes.url_helpers.public_send(url_helper_method_name, votable.id, {id: vote_id})
+  end
 end

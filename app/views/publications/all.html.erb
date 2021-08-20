@@ -8,12 +8,19 @@
   </div>
 </div>
 <div class="filter-bar">
-  <div class="container-fluid mt-2">
+  <div class="container">
+    <div class="row mt-3 mb-3">
     <%= render partial: 'filter', locals: { years: @years, categories: @categories, venues: @venues, path: all_publications_path} %>
+    </div>
   </div>
 </div>
-<div class="section-p-md">
-  <div class="container-fluid">
+<div>
+  <div class="container">
     <%= render partial: 'publication_list', locals: {publications: @publications} %>
+    <p class="mt-5 mb-5 text-muted">
+      <%= link_to publications_path, class: 'text-decoration-none' do %>
+        <small><span class="fa fa-chevron-left mr-1"></span>Back to AIcrowd Research</small>
+      <% end %>
+    </p>
   </div>
 </div>

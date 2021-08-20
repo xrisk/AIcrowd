@@ -1,5 +1,4 @@
 class PublicationsController < InheritedResources::Base
-  before_action :authenticate_participant!, except: [:show, :index]
   before_action :set_publication, only: [:show]
   before_action :set_filters, only: [:all]
 
@@ -39,7 +38,7 @@ class PublicationsController < InheritedResources::Base
   end
 
   def set_filters
-    @categories = Category.all
+    @categories = Category.where(id: CategoryPublication.all.pluck(:category_id))
     @years      = Publication.all.pluck(:publication_date).map(&:year)
     @venues     = PublicationVenue.all.pluck(:short_name)
   end
