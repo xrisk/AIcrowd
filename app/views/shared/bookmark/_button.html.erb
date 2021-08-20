@@ -2,7 +2,7 @@
   <% if bookmark.present? %>
     <% if defined?(toast) %>
     <div class="growl growl-large ontop">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="$('.growl').hide();">
         <span aria-hidden="true">&times;</span>
       </button>
       <div class="growl-notice">
@@ -16,7 +16,7 @@
   <% else %>
     <% if defined?(toast) %>
       <div class="growl growl-large ontop">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="$('.growl').hide();">
           <span aria-hidden="true">&times;</span>
         </button>
         <div class="growl-notice">

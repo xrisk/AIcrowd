@@ -2772,6 +2772,10 @@ fieldset:disabled a.btn {
   box-shadow: 0px 2px 5px 0px rgba(240, 82, 77, 0.12);
 }
 
+.btn-primary a {
+  color: #fff;
+}
+
 .btn-primary:active, .btn-primary:focus, .btn-primary:hover {
   color: #fff;
   background-color: #ee403a;
@@ -5601,6 +5605,7 @@ video {
   align-items: center;
 }
 
+.author .avatar,
 .list-group-teams .avatar,
 .list-group-challenge-teams .avatar,
 .list-group-team-members .avatar,

@@ -1088,6 +1088,11 @@ Browsers not listed, including Safari, are supported via the styling under the
   /* Use default cursor */
   cursor: default;
 }
+@media (max-width: 767.98px) {
+  .ipynb-notebook-container .prompt {
+    display: none;
+  }
+}
 .ipynb-notebook-container div.inner_cell {
   min-width: 0;
   /* Old browsers */
@@ -3151,6 +3156,7 @@ kbd,
 .output_text {
     max-height: 300px;
     overflow: auto;
+    overflow-y: auto;
 }
 
 .ipynb-notebook-container .cell .output_text pre,
