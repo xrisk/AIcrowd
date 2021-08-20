@@ -1,7 +1,7 @@
 <div class="avatar-group mt-2 list-group-insights">
   <div class="avatar-group ml-1">
     <% participants[0..3].each do |participant| %>
-      <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: participant, base_class: "avatar mr-0 border border-white"} %>
+      <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: participant, base_class: "avatar mr-0 border border-white", joined_avatar: true} %>
     <% end %>
     <% if participants.count > 4 %>
       <span class="avatar text-center user-rating-0">
