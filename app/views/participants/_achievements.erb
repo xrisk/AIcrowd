@@ -17,9 +17,10 @@
 
 <div class="container-fluid">
   <div class="row">
-    <% participant.badges.includes(:aicrowd_badge).each do |badge| %>
+    <% participant.badges.each do |badge| %>
+      <% aicrowd_badge =  AicrowdBadge.where(name: badge.name).order(:level)%>
       <div class="column">
-        <%= react_component("organisms/AchievementListItem/index", { icon: 'https://ui-storybook.aicrowd.com/assets/badges/notebook/creation_active_gold.svg', progress: 3, target: {bronze_count: 5, silver_count: 10, gold_count: 25}, title: "sdfjsdfjkhnsd", description: "dsfjksdhfjsdnfsdfjlsdkjf" }) %>
+        <%= react_component("organisms/AchievementListItem/index", { icon: 'https://ui-storybook.aicrowd.com/assets/badges/notebook/creation_active_gold.svg', progress: participant.points(category: aicrowd_badge.name), target: {bronze_count: aicrowd_badge.last.target, silver_count: aicrowd_badge.second.target, gold_count: aicrowd_badge.first.target}, title: aicrowd_badge.name, description: aicrowd_badge.description }) %>
       </div>
     <% end %>
   </div>
