@@ -80,15 +80,15 @@ module Merit
 
       # Badges for consecutive days submissions
 
-      score 1, :on => 'submissions#create', category: 'submitted-40-submissions', do |submission|
+      score 1, :on => 'submissions#create', category: 'submitted-40-submissions' do |submission|
         submission.participant.submissions.count == 40
       end
 
-      score 1, :on => 'submissions#create', category: 'submitted-80-submissions', do |submission|
+      score 1, :on => 'submissions#create', category: 'submitted-80-submissions' do |submission|
         submission.participant.submissions.count == 80
       end
 
-      score 1, :on => 'submissions#create', category: 'submitted-120-submissions', do |submission|
+      score 1, :on => 'submissions#create', category: 'submitted-120-submissions' do |submission|
         submission.participant.submissions.count == 120
       end
 
@@ -111,11 +111,11 @@ module Merit
 
       # Participant liked notebooks n number of times
 
-      score 1, :on => 'votes#create', category: 'liked-10-notebooks', do |vote|
+      score 1, :on => 'votes#create', category: 'liked-10-notebooks' do |vote|
         vote.votable_type == "Post"
       end
 
-      score -11, :on => 'votes#destroy', category: 'liked-10-notebooks', do |vote|
+      score -1, :on => 'votes#destroy', category: 'liked-10-notebooks' do |vote|
         vote.votable_type == "Post"
       end
 
@@ -157,6 +157,6 @@ module Merit
       # You downloaded your 1st notebook
       # Your notebook got its 1st download
       # Listing all the first time badges
-
+    end
   end
 end

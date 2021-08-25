@@ -81,7 +81,7 @@
                 <header>
                   <h4>Badges</h4>
                 </header>
-                <div class="badge badge-achievement-gold" style = "margin-right: 5px;"><%= participant.badges.badges_stat_count[BadgeType.gold&.id].to_i %></div><div class="badge badge-achievement-silver" style = "margin-right: 5px;"><%= participant.badges.badges_stat_count[BadgeType.silver&.id].to_i %></div><div class="badge badge-achievement-bronze" style = "margin-right: 5px;"><%= participant.badges.badges_stat_count[ BadgeType.bronze&.id].to_i %></div>
+                <div class="badge badge-achievement-gold" style = "margin-right: 5px;"><%= participant.aicrowd_user_badges.badges_stat_count[BadgeType.gold&.id].to_i %></div><div class="badge badge-achievement-silver" style = "margin-right: 5px;"><%= participant.aicrowd_user_badges.badges_stat_count[BadgeType.silver&.id].to_i %></div><div class="badge badge-achievement-bronze" style = "margin-right: 5px;"><%= participant.aicrowd_user_badges.badges_stat_count[ BadgeType.bronze&.id].to_i %></div>
               </div>
 
               <% if participant.twitter.present? || participant.github.present? || participant.linkedin.present? || participant.website.present? %>

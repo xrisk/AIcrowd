@@ -14,7 +14,7 @@ const ButtonDefault = ({ type, text, disabled, hidden, iconClass, to, handleClic
   return (
     <div>
       {/* Show button with icon */}
-      {iconClass.length > 0 ? (
+      {iconClass && iconClass.length > 0 ? (
         <div>
           <Link href={to || '/'} passHref={true}>
             <button

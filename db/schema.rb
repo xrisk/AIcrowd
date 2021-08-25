@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_26_063828) do
+ActiveRecord::Schema.define(version: 2021_08_23_184318) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -112,8 +112,10 @@ ActiveRecord::Schema.define(version: 2021_07_26_063828) do
     t.text "code"
     t.bigint "badges_event_id"
     t.string "image"
+    t.integer "level"
+    t.integer "target"
+    t.text "social_message"
     t.index ["badges_event_id"], name: "index_aicrowd_badges_on_badges_event_id"
-    t.index ["name"], name: "index_aicrowd_badges_on_name", unique: true
   end
 
   create_table "aicrowd_user_badges", force: :cascade do |t|
@@ -1191,12 +1193,16 @@ ActiveRecord::Schema.define(version: 2021_07_26_063828) do
   create_table "publication_authors", force: :cascade do |t|
     t.string "name"
     t.integer "participant_id"
-    t.integer "publication_id", null: false
     t.integer "sequence", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "publication_id"
     t.index ["participant_id"], name: "index_publication_authors_on_participant_id"
-    t.index ["publication_id"], name: "index_publication_authors_on_publication_id"
+  end
+
+  create_table "publication_authors_publications", id: false, force: :cascade do |t|
+    t.bigint "publication_id", null: false
+    t.bigint "publication_author_id", null: false
   end
 
   create_table "publication_external_links", force: :cascade do |t|
@@ -1212,10 +1218,13 @@ ActiveRecord::Schema.define(version: 2021_07_26_063828) do
   create_table "publication_venues", force: :cascade do |t|
     t.string "venue", null: false
     t.string "short_name"
-    t.integer "publication_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["publication_id"], name: "index_publication_venues_on_publication_id"
+  end
+
+  create_table "publication_venues_publications", id: false, force: :cascade do |t|
+    t.bigint "publication_id", null: false
+    t.bigint "publication_venue_id", null: false
   end
 
   create_table "publications", force: :cascade do |t|

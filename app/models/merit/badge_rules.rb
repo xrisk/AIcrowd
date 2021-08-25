@@ -47,88 +47,88 @@ module Merit
 
       # Liked n number of challenges
 
-      grant_on 'votes#create', badge: 'liked-5-challenge-badge', level: 1 do |vote|
+      grant_on 'votes#create', badge: 'Liked Challenge', level: 1, temporary: true do |vote|
         vote.participant.votes.where(votable_type: "Challenge").count == 5
       end
 
-      grant_on 'votes#create', badge: 'liked-10-challenge-badge', level: 2 do |vote|
+      grant_on 'votes#create', badge: 'Liked Challenge', level: 2, temporary: true do |vote|
         vote.participant.votes.where(votable_type: "Challenge").count == 10
       end
 
-      grant_on 'votes#create', badge: 'liked-20-challenge-badge', level: 3 do |vote|
+      grant_on 'votes#create', badge: 'Liked Challenge', level: 3, temporary: true do |vote|
         vote.participant.votes.where(votable_type: "Challenge").count == 20
       end
 
       # Followed n number of challenges
 
-      grant_on 'follows#create', badge: 'followed-5-challenge', level: 1 do |follow|
+      grant_on 'follows#create', badge: 'Followed Challenge', level: 1, temporary: true do |follow|
         Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").count == 5
       end
 
-      grant_on 'follows#create', badge: 'followed-10-challenge', level: 2 do |follow|
+      grant_on 'follows#create', badge: 'Followed Challenge', level: 2, temporary: true do |follow|
         Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").count == 10
       end
 
-      grant_on 'follows#create', badge: 'followed-20-challenge', level: 3 do |follow|
+      grant_on 'follows#create', badge: 'Followed Challenge', level: 3, temporary: true do |follow|
         Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").count == 20
       end
 
       # Participated in n number of challenges
 
-      grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'participated-in-5-challenge', level: 1 do |challenge_participant|
+      grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'Participated Challenge', level: 1 do |challenge_participant|
         challenge_participant.participant.challenge_participants.count == 5
       end
 
-      grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'participated-in-10-challenge', level: 2 do |challenge_participant|
+      grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'Participated Challenge', level: 2 do |challenge_participant|
         challenge_participant.participant.challenge_participants.count == 10
       end
 
-      grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'participated-in-20-challenge', level: 3 do |challenge_participant|
+      grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'Participated Challenge', level: 3 do |challenge_participant|
         challenge_participant.participant.challenge_participants.count == 20
       end
 
       # Badges for number of submissions
 
-      grant_on 'submissions#create', badge: 'submitted-40-submissions', level: 1 do |submission|
+      grant_on 'submissions#create', badge: 'Made Submission', level: 1 do |submission|
         submission.participant.submissions.count == 40
       end
 
-      grant_on 'submissions#create', badge: 'submitted-80-submissions', level: 2 do |submission|
+      grant_on 'submissions#create', badge: 'Made Submission', level: 2 do |submission|
         submission.participant.submissions.count == 80
       end
 
-      grant_on 'submissions#create', badge: 'submitted-120-submissions', level: 3 do |submission|
+      grant_on 'submissions#create', badge: 'Made Submission', level: 3 do |submission|
         submission.participant.submissions.count == 120
       end
 
       # Badges for number of successful submissions
 
-      grant_on 'submissions#create', badge: 'submitted-20-successful-submissions', level: 1 do |submission|
+      grant_on 'submissions#create', badge: 'Made Successful Submission', level: 1 do |submission|
         submission.participant.submissions.where(grading_status_cd: 'graded').count == 20
       end
 
-      grant_on 'submissions#create', badge: 'submitted-50-successful-submissions', level: 2 do |submission|
+      grant_on 'submissions#create', badge: 'Made Successful Submission', level: 2 do |submission|
         submission.participant.submissions.where(grading_status_cd: 'graded').count == 50
       end
 
-      grant_on 'submissions#create', badge: 'submitted-80-successful-submissions', level: 3 do |submission|
+      grant_on 'submissions#create', badge: 'Made Successful Submission', level: 3 do |submission|
         submission.participant.submissions.where(grading_status_cd: 'graded').count == 80
       end
 
       # Badges for winning a challenge
       # Liked n number of practice problems
 
-      grant_on 'votes#create', badge: 'liked-10-practice-problems', level: 1 do |vote|
+      grant_on 'votes#create', badge: 'Liked Practice Challenge', level: 1 do |vote|
         challenge_ids = vote.participant.votes.where(votable_type: "Challenge").pluck(:votable_id)
         Challenge.where(id: challenge_ids, practice_flag: true).count == 10
       end
 
-      grant_on 'votes#create', badge: 'liked-20-practice-problems', level: 2 do |vote|
+      grant_on 'votes#create', badge: 'Liked Practice Challenge', level: 2 do |vote|
         challenge_ids = vote.participant.votes.where(votable_type: "Challenge").pluck(:votable_id)
         Challenge.where(id: challenge_ids, practice_flag: true).count == 20
       end
 
-      grant_on 'votes#create', badge: 'liked-30-practice-problems', level: 3 do |vote|
+      grant_on 'votes#create', badge: 'Liked Practice Challenge', level: 3 do |vote|
         challenge_ids = vote.participant.votes.where(votable_type: "Challenge").pluck(:votable_id)
         Challenge.where(id: challenge_ids, practice_flag: true).count == 30
       end
@@ -136,53 +136,53 @@ module Merit
       # Shared n number of practice problems
       # Followed n number of practice problems
 
-      grant_on 'follows#create', badge: 'followed-10-practice-problems', level: 1 do |follow|
+      grant_on 'follows#create', badge: 'Followed Practice Challenge', level: 1 do |follow|
         followable_ids = Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").pluck(:followable_id)
         Challenge.where(id: followable_ids, practice_flag: true).count == 10
       end
 
-      grant_on 'follows#create', badge: 'followed-20-practice-problems', level: 2 do |follow|
+      grant_on 'follows#create', badge: 'Followed Practice Challenge', level: 2 do |follow|
         followable_ids = Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").pluck(:followable_id)
         Challenge.where(id: followable_ids, practice_flag: true).count == 20
       end
 
-      grant_on 'follows#create', badge: 'followed-40-practice-problems', level: 3 do |follow|
+      grant_on 'follows#create', badge: 'Followed Practice Challenge', level: 3 do |follow|
         followable_ids = Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").pluck(:followable_id)
         Challenge.where(id: followable_ids, practice_flag: true).count == 40
       end
 
       # Participate in n number of practice problems
 
-      grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'participated-in-10-practice-problems', level: 1 do |challenge_participant|
+      grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'Participated Practice Challenge', level: 1 do |challenge_participant|
         challenge_ids = challenge_participant.participant.challenge_participants.pluck(:challenge_id)
         Challenge.where(id: challenge_ids, practice_flag: true).count == 10
       end
 
-      grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'participated-in-20-practice-problems', level: 2 do |challenge_participant|
+      grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'Participated Practice Challenge', level: 2 do |challenge_participant|
         challenge_ids = challenge_participant.participant.challenge_participants.pluck(:challenge_id)
         Challenge.where(id: challenge_ids, practice_flag: true).count == 20
       end
 
-      grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'participated-in-30-practice-problems', level: 3 do |challenge_participant|
+      grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'Participated Practice Challenge', level: 3 do |challenge_participant|
         challenge_ids = challenge_participant.participant.challenge_participants.pluck(:challenge_id)
         Challenge.where(id: challenge_ids, practice_flag: true).count == 30
       end
 
       # N number of successful submissions in practice problems
 
-      grant_on 'submissions#create', badge: 'submitted-20-successful-practice-problems', level: 1 do |submission|
+      grant_on 'submissions#create', badge: 'Made Successful Practice Submission', level: 1 do |submission|
         challenge_ids = submission.participant.challenge_participants.pluck(:challenge_id)
         challenge_ids = Challenge.where(id: challenge_ids, practice_flag: true).pluck(:id)
         submission.participant.submissions.where(grading_status_cd: 'graded', challenge_id: challenge_ids).count == 20
       end
 
-      grant_on 'submissions#create', badge: 'submitted-50-successful-practice-problems', level: 2 do |submission|
+      grant_on 'submissions#create', badge: 'Made Successful Practice Submission', level: 2 do |submission|
         challenge_ids = submission.participant.challenge_participants.pluck(:challenge_id)
         challenge_ids = Challenge.where(id: challenge_ids, practice_flag: true).pluck(:id)
         submission.participant.submissions.where(grading_status_cd: 'graded', challenge_id: challenge_ids).count == 50
       end
 
-      grant_on 'submissions#create', badge: 'submitted-80-successful-practice-problems', level: 3 do |submission|
+      grant_on 'submissions#create', badge: 'Made Successful Practice Submission', level: 3 do |submission|
         challenge_ids = submission.participant.challenge_participants.pluck(:challenge_id)
         challenge_ids = Challenge.where(id: challenge_ids, practice_flag: true).pluck(:id)
         submission.participant.submissions.where(grading_status_cd: 'graded', challenge_id: challenge_ids).count == 80
@@ -190,17 +190,17 @@ module Merit
 
       # Badges for consecutive days submissions
 
-      grant_on 'submissions#create', badge: 'submitted-40-submissions', level: 1 do |submission|
-        submission.participant.submissions.count == 40
-      end
+      # grant_on 'submissions#create', badge: 'submitted-40-submissions', level: 1 do |submission|
+      #   submission.participant.submissions.count == 40
+      # end
 
-      grant_on 'submissions#create', badge: 'submitted-80-submissions', level: 2 do |submission|
-        submission.participant.submissions.count == 80
-      end
+      # grant_on 'submissions#create', badge: 'submitted-80-submissions', level: 2 do |submission|
+      #   submission.participant.submissions.count == 80
+      # end
 
-      grant_on 'submissions#create', badge: 'submitted-120-submissions', level: 3 do |submission|
-        submission.participant.submissions.count == 120
-      end
+      # grant_on 'submissions#create', badge: 'submitted-120-submissions', level: 3 do |submission|
+      #   submission.participant.submissions.count == 120
+      # end
 
       # Badges for rank improvement
       # Badges for score improvement
@@ -212,142 +212,138 @@ module Merit
 
       # Create Notebook Badges
 
-      grant_on 'posts#create', badge: 'created-3-notebooks', level: 1 do |post|
-        post.participant.posts.count == 3
-      end
+      # grant_on 'posts#create', badge: 'created-3-notebooks', level: 1 do |post|
+      #   post.participant.posts.count == 3
+      # end
 
-      grant_on 'posts#create', badge: 'created-10-notebooks', level: 2 do |post|
-        post.participant.posts.count == 10
-      end
+      # grant_on 'posts#create', badge: 'created-10-notebooks', level: 2 do |post|
+      #   post.participant.posts.count == 10
+      # end
 
-      grant_on 'posts#create', badge: 'created-25-notebooks', level: 3 do |post|
-        post.participant.posts.count == 25
-      end
+      # grant_on 'posts#create', badge: 'created-25-notebooks', level: 3 do |post|
+      #   post.participant.posts.count == 25
+      # end
 
-      grant_on 'posts#update', badge: 'blitz-community-winner', level: 1, to: :participant do |post|
-        post.blitz_community_winner
-      end
+      # grant_on 'posts#update', badge: 'blitz-community-winner', level: 1, to: :participant do |post|
+      #   post.blitz_community_winner
+      # end
 
-      grant_on 'posts#update', badge: 'community-explainer-winner', level: 1, to: :participant do |post|
-        post.community_explainer_winner
-      end
+      # grant_on 'posts#update', badge: 'community-explainer-winner', level: 1, to: :participant do |post|
+      #   post.community_explainer_winner
+      # end
 
       # Notebook shared n times
 
       # Participant liked notebooks n number of times
 
-      grant_on 'votes#create', badge: 'liked-10-notebooks', level: 1 do |vote|
-        vote.participant.votes.where(votable_type: "Post").count == 10
-      end
+      # grant_on 'votes#create', badge: 'liked-10-notebooks', level: 1 do |vote|
+      #   vote.participant.votes.where(votable_type: "Post").count == 10
+      # end
 
-      grant_on 'votes#create', badge: 'liked-25-notebooks', level: 2 do |vote|
-        vote.participant.votes.where(votable_type: "Challenge").count == 25
-      end
+      # grant_on 'votes#create', badge: 'liked-25-notebooks', level: 2 do |vote|
+      #   vote.participant.votes.where(votable_type: "Challenge").count == 25
+      # end
 
-      grant_on 'votes#create', badge: 'liked-40-notebooks', level: 3 do |vote|
-        vote.participant.votes.where(votable_type: "Challenge").count == 40
-      end
+      # grant_on 'votes#create', badge: 'liked-40-notebooks', level: 3 do |vote|
+      #   vote.participant.votes.where(votable_type: "Challenge").count == 40
+      # end
 
-      # Participant Notebooks were liked n number of times
+      # # Participant Notebooks were liked n number of times
 
-      grant_on 'votes#create', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
-        vote.votable.is_a?(Post) && vote.votable.votes.count == 5
-      end
+      # grant_on 'votes#create', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
+      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 5
+      # end
 
-      grant_on 'votes#create', badge: 'notebook-liked-20', level: 2, to: :participant do |vote|
-        vote.votable.is_a?(Post) && vote.votable.votes.count == 20
-      end
+      # grant_on 'votes#create', badge: 'notebook-liked-20', level: 2, to: :participant do |vote|
+      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 20
+      # end
 
-      grant_on 'votes#create', badge: 'notebook-liked-35', level: 3, to: :participant do |vote|
-        vote.votable.is_a?(Post) && vote.votable.votes.count == 35
-      end
+      # grant_on 'votes#create', badge: 'notebook-liked-35', level: 3, to: :participant do |vote|
+      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 35
+      # end
 
-      # Participant commented on a notebook n number of times
-      # Participant notebooks received n number of comments
-      # Subscribed n times
-      # N subscribers
-      # Download notebooks
-      # Created one notebook, like 3 notebooks, shared 2 notebooks
-      # Created n number of blitz notebooks
-
-
-      # Created first notebook
-      grant_on 'posts#create', badge: 'created-first-notebooks', level: 1 do |post|
-        post.participant.posts.count == 1
-      end
-
-      # Shared first notebook
-      # Notebook was shared first time
-
-      # Liked 1 notebook
-      grant_on 'votes#create', badge: 'liked-first-notebooks', level: 1 do |vote|
-        vote.participant.votes.where(votable_type: "Post").count == 1
-      end
-
-      # Notebook got first like
-
-      grant_on 'votes#create', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
-        vote.votable.is_a?(Post) && vote.votable.votes.count == 1
-      end
-
-      # Commented on 1 notebook
-      # Notebook got 1 comment
-      # You subscribed to your 1st notebook
-      # Your notebook got 1st subscriber
-      # You downloaded your 1st notebook
-      # Your notebook got its 1st download
-      # Listing all the first time badges
-
-      # Sign Up
-      grant_on 'participants/registrations#create', badge: 'participant-signed-up', level: 1 do
-      end
-
-      # Complete Bio/Profile
-      grant_on 'participants#update', badge: 'participant-completed-bio', level: 1 do |participant|
-        participant.bio.present?
-      end
-
-      # Fill up details on country
-      grant_on 'participants#update', badge: 'participant-country-filled', level: 1 do |participant|
-        participant.country_cd.present?
-      end
-
-      # Filling up details on portfolio/links
-      grant_on 'participants#update', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
-        vote.votable.is_a?(Post) && vote.votable.votes.count == 1
-      end
-
-      # Followed their first Aicrew member
-      grant_on 'follows#create', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
-
-      end
+      # # Participant commented on a notebook n number of times
+      # # Participant notebooks received n number of comments
+      # # Subscribed n times
+      # # N subscribers
+      # # Download notebooks
+      # # Created one notebook, like 3 notebooks, shared 2 notebooks
+      # # Created n number of blitz notebooks
 
 
-      # Got their first AIcrew follower
-      grant_on 'participants#update', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
-        vote.votable.is_a?(Post) && vote.votable.votes.count == 1
-      end
+      # # Created first notebook
+      # grant_on 'posts#create', badge: 'created-first-notebooks', level: 1 do |post|
+      #   post.participant.posts.count == 1
+      # end
 
-      # Liked a blogpost
-      grant_on 'participants#update', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
-        vote.votable.is_a?(Post) && vote.votable.votes.count == 1
-      end
+      # # Shared first notebook
+      # # Notebook was shared first time
 
-      # Reported their first feedback
-      grant_on 'participants#update', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
-        vote.votable.is_a?(Post) && vote.votable.votes.count == 1
-      end
+      # # Liked 1 notebook
+      # grant_on 'votes#create', badge: 'liked-first-notebooks', level: 1 do |vote|
+      #   vote.participant.votes.where(votable_type: "Post").count == 1
+      # end
 
-      # Attended their first townhall/workshop/live-event
+      # # Notebook got first like
 
-      # Made their first team
-      grant_on 'participants#update', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
-        vote.votable.is_a?(Post) && vote.votable.votes.count == 1
-      end
+      # grant_on 'votes#create', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
+      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 1
+      # end
+
+      # # Commented on 1 notebook
+      # # Notebook got 1 comment
+      # # You subscribed to your 1st notebook
+      # # Your notebook got 1st subscriber
+      # # You downloaded your 1st notebook
+      # # Your notebook got its 1st download
+      # # Listing all the first time badges
+
+      # # Sign Up
+      # grant_on 'participants/registrations#create', badge: 'participant-signed-up', level: 1 do
+      # end
+
+      # # Complete Bio/Profile
+      # grant_on 'participants#update', badge: 'participant-completed-bio', level: 1 do |participant|
+      #   participant.bio.present?
+      # end
+
+      # # Fill up details on country
+      # grant_on 'participants#update', badge: 'participant-country-filled', level: 1 do |participant|
+      #   participant.country_cd.present?
+      # end
+
+      # # Filling up details on portfolio/links
+      # grant_on 'participants#update', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
+      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 1
+      # end
+
+      # # Followed their first Aicrew member
+      # grant_on 'follows#create', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
+
+      # end
 
 
+      # # Got their first AIcrew follower
+      # grant_on 'participants#update', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
+      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 1
+      # end
 
+      # # Liked a blogpost
+      # grant_on 'participants#update', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
+      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 1
+      # end
 
+      # # Reported their first feedback
+      # grant_on 'participants#update', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
+      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 1
+      # end
+
+      # # Attended their first townhall/workshop/live-event
+
+      # # Made their first team
+      # grant_on 'participants#update', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
+      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 1
+      # end
     end
   end
 end

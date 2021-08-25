@@ -102,7 +102,7 @@ class NotificationService
   end
 
   def badge
-    message = @notifiable.message
+    message = @notifiable.description
     thumb = @notifiable.image
     link = participant_path(@participant)
 

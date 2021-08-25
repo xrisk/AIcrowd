@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {styles} from './achievementPopup.module.scss';
+import styles from './achievementPopup.module.scss';
 import ButtonDefault from 'src/components/atoms/Button/ButtonDefault';
 const {
   main,
@@ -30,9 +30,9 @@ const AchievementPopup = ({ title, description, icon, handleClick }) => {
         <div className={descriptionText}>{description}</div>
         <div className={socialText}>Share with your friends: </div>
         <div className={socialIconWrapper}>
-          <img src="/assets/social/twitter.svg" alt="twitter logo"></img>
-          <img src="/assets/social/linkedin.svg" alt="linkedin logo"></img>
-          <img src="/assets/social/github.svg" alt="github logo"></img>
+          <img src="https://ui-storybook.aicrowd.com/assets/social/twitter.svg" alt="twitter logo"></img>
+          <img src="https://ui-storybook.aicrowd.com/assets/social/linkedin.svg" alt="linkedin logo"></img>
+          <img src="https://ui-storybook.aicrowd.com/assets/social/github.svg" alt="github logo"></img>
         </div>
         <ButtonDefault type="primary" text="Continue" handleClick={handleClick}/>
       </div>
