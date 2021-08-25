@@ -1,6 +1,6 @@
 class ReputationChangeObserver
   def update(changed_data)
-    byebug
+
     return if changed_data[:merit_object].is_a?(Merit::Score::Point)
 
     description = changed_data[:description]
