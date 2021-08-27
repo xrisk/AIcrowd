@@ -21,7 +21,7 @@ const ButtonDefault = ({ type, text, disabled, hidden, iconClass, to, handleClic
               type="button"
               className={`${styles[`btn-${type}`]} ${largeButton} ${wideButton}`}
               disabled={disabled}
-              onClick={handleClick}>
+              onClick={window.hideBadgesModal}>
               {text}
               &nbsp;
               <i className={`las la-${iconClass}`} style={{ color: iconColor }} />
@@ -34,7 +34,7 @@ const ButtonDefault = ({ type, text, disabled, hidden, iconClass, to, handleClic
             type="button"
             className={`${styles[`btn-${type}`]} ${largeButton} ${wideButton}`}
             disabled={disabled}
-            onClick={handleClick}>
+            onClick={window.hideBadgesModal}>
             {text}
           </button>
         </Link>

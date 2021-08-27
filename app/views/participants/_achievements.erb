@@ -18,9 +18,12 @@
 <div class="container-fluid">
   <div class="row">
     <% participant.badges.each do |badge| %>
-      <% aicrowd_badge =  AicrowdBadge.where(name: "Liked Challenge").order(target: :desc) %>
+      <% aicrowd_badges =  AicrowdBadge.where(name: badge.name).order(target: :desc) %>
+      <% next if aicrowd_badges.first.target.blank? %>
+
+      <% current_aicrowd_badge = active_badge(aicrowd_badges) %>
       <div class="column">
-        <%= react_component("organisms/AchievementListItem/index", { icon: 'https://ui-storybook.aicrowd.com/assets/badges/notebook/creation_active_gold.svg', progress: participant.points(category: aicrowd_badge.name), target: {bronze_count: aicrowd_badge.last.target, silver_count: aicrowd_badge.second.target, gold_count: aicrowd_badge.first.target}, title: aicrowd_badge.first.name, description: aicrowd_badge.first.description }) %>
+        <%= react_component("organisms/AchievementListItem/index", { icon: "/assets/challenge_badges/#{current_aicrowd_badge.image}.png", progress: participant.points(category: current_aicrowd_badge.name).to_i, target: {bronze_count: aicrowd_badges.last.target, silver_count: aicrowd_badges.second.target, gold_count: aicrowd_badges.first.target}, title: aicrowd_badges.first.name, description: aicrowd_badges.first.description }) %>
       </div>
     <% end %>
   </div>
