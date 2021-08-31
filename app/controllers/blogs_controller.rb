@@ -9,7 +9,7 @@ class BlogsController < ApplicationController
     @blogs = policy_scope(Blog)
       .order(seq: :asc, posted_at: :desc)
       .per_page_kaminari(params[:page])
-      .per(20)
+      .per(100)
   end
 
   def show
