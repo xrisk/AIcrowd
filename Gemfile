@@ -111,6 +111,7 @@ gem 'clipboard-rails'
 gem 'puma_worker_killer'
 gem 'pretender'
 gem 'merit'
+gem 'react-rails'
 
 # HTTP clients
 gem 'faraday', '~> 1.0'
