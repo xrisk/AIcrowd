@@ -78,8 +78,8 @@
     <% if @challenge.meta_challenge || @challenge.ml_challenge %>
       <td class="<%= cls ||= '' %>">
         <% unless leaderboard.disentanglement? %>
-          <% if leaderboard.submitter_id.present? %>
-            <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter_id: leaderboard.submitter_id, challenge: challenge, width: '200px', id: leaderboard.submitter_id } %>
+          <% if leaderboard.submitter.present? %>
+            <%= render partial: 'leaderboards/participant_submission_graph', locals: { submitter_id: leaderboard.submitter.id, challenge: challenge, width: '200px', id: leaderboard.submitter.id } %>
           <% end %>
         <% end %>
       </td>
