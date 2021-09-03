@@ -18,7 +18,9 @@ class LeaderboardsController < ApplicationController
       @leaderboards.each do |leaderboard|
         next if leaderboard.submitter_id.blank?
 
-        @submitter_submissions.merge!("submitter#{leaderboard.submitter.id}_submissions_by_day": submitter_submissions(leaderboard.submitter))
+        if leaderboard.submitter.present?
+          @submitter_submissions.merge!("submitter#{leaderboard.submitter.id}_submissions_by_day": submitter_submissions(leaderboard.submitter))
+        end
       end
     end
     @top_three_winners = @leaderboards.where(baseline: false).first(3)
