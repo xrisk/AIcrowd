@@ -37,7 +37,7 @@ module FreezeRecord
     def freeze_time(ch_round)
       return false if ch_round.end_dttm.nil? || (ch_round.end_dttm - Time.now.utc).negative?
 
-      ch_round.end_dttm - Time.now.utc < ch_round.freeze_duration * 60 * 60
+      ch_round.end_dttm - Time.now.utc < ch_round&.default_leaderboard&.freeze_duration.to_i.hours * 60 * 60
     end
   end
 end
