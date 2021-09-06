@@ -1,7 +1,7 @@
 {
   "presets": [
     [
-      "env",
+      "@babel/env",
       {
         "modules": false,
         "targets": {
@@ -11,7 +11,8 @@
         "useBuiltIns": true
       }
     ],
-    "react"
+    "@babel/react",
+    "@babel/es2015"
   ],
   "plugins": [
     "syntax-dynamic-import",
