@@ -1,6 +1,5 @@
 module.exports = {
   test: /\.js(\.erb)?$/,
   exclude: /node_modules/,
-  loader: 'babel-loader',
-  corejs: '3'
+  loader: 'babel-loader'
 }
