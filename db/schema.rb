@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_28_104922) do
+ActiveRecord::Schema.define(version: 2021_08_18_012816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -577,7 +577,6 @@ ActiveRecord::Schema.define(version: 2021_06_28_104922) do
     t.integer "min_team_participants", default: 1
     t.string "restricted_ip"
     t.boolean "organizer_notebook_access", default: false
-    t.integer "submission_lock_count", default: 1
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["discourse_category_id"], name: "index_challenges_on_discourse_category_id"
     t.index ["discourse_group_id"], name: "index_challenges_on_discourse_group_id"
@@ -1139,6 +1138,7 @@ ActiveRecord::Schema.define(version: 2021_06_28_104922) do
     t.integer "sequence", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "publication_id"
     t.index ["participant_id"], name: "index_publication_authors_on_participant_id"
   end
 

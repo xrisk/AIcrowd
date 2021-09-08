@@ -18,4 +18,8 @@ class PagesController < ApplicationController
   def cookies_info
     @page_title = "Cookies"
   end
+
+  def community_guidelines
+    @page_title = "Community Guidelines"
+  end
 end
