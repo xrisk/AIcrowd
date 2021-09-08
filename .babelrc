@@ -15,6 +15,9 @@
     "@babel/react"
   ],
   "plugins": [
+    ["@babel/plugin-transform-runtime", {
+      "regenerator": true
+    }],
     "syntax-dynamic-import",
     [
       "transform-class-properties",
