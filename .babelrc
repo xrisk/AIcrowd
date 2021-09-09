@@ -4,31 +4,20 @@
       "@babel/preset-env",
       {
         "modules": false,
-        corejs: '3',
         "targets": {
-          "browsers": "> 1%",
-          "node": true
-        },
-        "useBuiltIns": "entry"
+          "node": "current"
+        }
       }
     ],
     "@babel/react"
   ],
   "plugins": [
-    [
-      "@babel/plugin-transform-runtime",
-      {
-        "regenerator": true,
-        "corejs": 3
-      }
-    ],
     "syntax-dynamic-import",
     [
       "transform-class-properties",
       {
         "spec": true
       }
-    ],
-    ["transform-async-to-generator"]
+    ]
   ]
 }
