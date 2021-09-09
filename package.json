@@ -67,7 +67,8 @@
     "prop-types": "15.6.2"
   },
   "engines": {
-    "yarn": "1.22.0"
+    "yarn": "1.22.0",
+    "node": "15.1.0"
   },
   "name": "aicrowd",
   "version": "1.0.0",
