@@ -9,13 +9,19 @@
           "browsers": "> 1%",
           "uglify": true
         },
-        "useBuiltIns": "entry"
+        "useBuiltIns": "usage"
       }
     ],
     "@babel/react"
   ],
   "plugins": [
-    ["@babel/transform-runtime"],
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "regenerator": true,
+        "corejs": 3
+      }
+    ],
     "syntax-dynamic-import",
     [
       "transform-class-properties",
