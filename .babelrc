@@ -7,8 +7,7 @@
         corejs: '3',
         "targets": {
           "browsers": "> 1%",
-          "uglify": true,
-          "node": "current"
+          "node": "10"
         },
         "useBuiltIns": "usage"
       }
@@ -29,6 +28,7 @@
       {
         "spec": true
       }
-    ]
+    ],
+    ["transform-async-to-generator"]
   ]
 }
