@@ -3,7 +3,8 @@
 require('datatables');
 require('chartkick');
 require("chart.js");
-import "@babel/polyfill"
+
+import 'regenerator-runtime/runtime'
 
 import '../react_components/index.js';
 import '../stimulus_js/index.js';
