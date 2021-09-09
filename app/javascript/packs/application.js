@@ -3,6 +3,7 @@
 require('datatables');
 require('chartkick');
 require("chart.js");
+import "@babel/polyfill"
 
 import '../react_components/index.js';
 import '../stimulus_js/index.js';
