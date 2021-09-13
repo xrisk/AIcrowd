@@ -47,29 +47,29 @@ module Merit
 
       # Liked n number of challenges
 
-      grant_on 'votes#create', badge: 'Liked Challenge', level: 1, temporary: true do |vote|
+      grant_on 'votes#create', badge: 'Liked Challenge', level: 1 do |vote|
         vote.participant.votes.where(votable_type: "Challenge").count == 5
       end
 
-      grant_on 'votes#create', badge: 'Liked Challenge', level: 2, temporary: true do |vote|
+      grant_on 'votes#create', badge: 'Liked Challenge', level: 2 do |vote|
         vote.participant.votes.where(votable_type: "Challenge").count == 10
       end
 
-      grant_on 'votes#create', badge: 'Liked Challenge', level: 3, temporary: true do |vote|
+      grant_on 'votes#create', badge: 'Liked Challenge', level: 3 do |vote|
         vote.participant.votes.where(votable_type: "Challenge").count == 20
       end
 
       # Followed n number of challenges
 
-      grant_on 'follows#create', badge: 'Followed Challenge', level: 1, temporary: true do |follow|
+      grant_on 'follows#create', badge: 'Followed Challenge', level: 1 do |follow|
         Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").count == 5
       end
 
-      grant_on 'follows#create', badge: 'Followed Challenge', level: 2, temporary: true do |follow|
+      grant_on 'follows#create', badge: 'Followed Challenge', level: 2 do |follow|
         Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").count == 10
       end
 
-      grant_on 'follows#create', badge: 'Followed Challenge', level: 3, temporary: true do |follow|
+      grant_on 'follows#create', badge: 'Followed Challenge', level: 3 do |follow|
         Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").count == 20
       end
 
@@ -212,63 +212,117 @@ module Merit
 
       # Create Notebook Badges
 
-      # grant_on 'posts#create', badge: 'created-3-notebooks', level: 1 do |post|
-      #   post.participant.posts.count == 3
-      # end
+      grant_on 'posts#create', badge: 'Created Notebook', level: 1 do |post|
+        post.participant.posts.count == 3
+      end
 
-      # grant_on 'posts#create', badge: 'created-10-notebooks', level: 2 do |post|
-      #   post.participant.posts.count == 10
-      # end
+      grant_on 'posts#create', badge: 'Created Notebook', level: 2 do |post|
+        post.participant.posts.count == 10
+      end
 
-      # grant_on 'posts#create', badge: 'created-25-notebooks', level: 3 do |post|
-      #   post.participant.posts.count == 25
-      # end
+      grant_on 'posts#create', badge: 'Created Notebook', level: 3 do |post|
+        post.participant.posts.count == 25
+      end
 
-      # grant_on 'posts#update', badge: 'blitz-community-winner', level: 1, to: :participant do |post|
-      #   post.blitz_community_winner
-      # end
+      grant_on 'posts#update', badge: 'Won Blitz Community Explainer', level: 1, to: :participant do |post|
+        post.blitz_community_winner
+      end
 
-      # grant_on 'posts#update', badge: 'community-explainer-winner', level: 1, to: :participant do |post|
-      #   post.community_explainer_winner
-      # end
+      grant_on 'posts#update', badge: 'Won Challenge Community Explainer', level: 1, to: :participant do |post|
+        post.community_explainer_winner
+      end
 
       # Notebook shared n times
 
       # Participant liked notebooks n number of times
 
-      # grant_on 'votes#create', badge: 'liked-10-notebooks', level: 1 do |vote|
-      #   vote.participant.votes.where(votable_type: "Post").count == 10
+      grant_on ['votes#create', 'votes#white_vote_create'], badge: 'Liked Notebook', level: 1 do |vote|
+        vote.participant.votes.where(votable_type: "Post").count == 10
+      end
+
+      grant_on ['votes#create', 'votes#white_vote_create'], badge: 'Liked Notebook', level: 2 do |vote|
+        byebug
+        vote.participant.votes.where(votable_type: "Post").count == 25
+      end
+
+      grant_on ['votes#create', 'votes#white_vote_create'], badge: 'Liked Notebook', level: 3 do |vote|
+        vote.participant.votes.where(votable_type: "Post").count == 40
+      end
+
+      # Participant Notebooks were liked n number of times
+
+      grant_on ['votes#create', 'votes#white_vote_create'], badge: 'Notebook Was Liked', level: 1, to: :participant do |vote|
+        vote.votable.is_a?(Post) && vote.votable.votes.count == 5
+      end
+
+      grant_on ['votes#create', 'votes#white_vote_create'], badge: 'Notebook Was Liked', level: 2, to: :participant do |vote|
+        vote.votable.is_a?(Post) && vote.votable.votes.count == 20
+      end
+
+      grant_on ['votes#create', 'votes#white_vote_create'], badge: 'Notebook Was Liked', level: 3, to: :participant do |vote|
+        vote.votable.is_a?(Post) && vote.votable.votes.count == 35
+      end
+
+      # Participant commented on a notebook n number of times
+      grant_on ['commontator/comments#create'], badge: 'Commented On Notebook', model_name: 'CommontatorThread', level: 1 do |comment|
+        comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count == 5
+      end
+
+      grant_on ['commontator/comments#create'], badge: 'Commented On Notebook', model_name: 'CommontatorThread', level: 2 do |comment|
+        comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count == 15
+      end
+
+      grant_on ['commontator/comments#create'], badge: 'Commented On Notebook', model_name: 'CommontatorThread', level: 3 do |comment|
+        comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count == 35
+      end
+
+      # Participant notebooks received n number of comments
+
+      # grant_on ['commontator/comments#create'], badge: 'Commented On Notebook', model_name: 'CommontatorThread' level: 1 do |comment|
+      #   if comment.commontable_type == "Post"
+      #     Post.where()
+      #   end
       # end
 
-      # grant_on 'votes#create', badge: 'liked-25-notebooks', level: 2 do |vote|
-      #   vote.participant.votes.where(votable_type: "Challenge").count == 25
+      # grant_on ['commontator/comments#create'], badge: 'Commented On Notebook', model_name: 'CommontatorThread' level: 2 do |comment|
+      #   comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count == 15
       # end
 
-      # grant_on 'votes#create', badge: 'liked-40-notebooks', level: 3 do |vote|
-      #   vote.participant.votes.where(votable_type: "Challenge").count == 40
+      # grant_on ['commontator/comments#create'], badge: 'Commented On Notebook', model_name: 'CommontatorThread' level: 3 do |comment|
+      #   comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count == 35
       # end
 
-      # # Participant Notebooks were liked n number of times
+      # Subscribed n times
+      #
+      grant_on 'post_bookmarks#create', badge: 'Bookmarked Notebook', level: 1, model_name: 'Post' do |post|
+        post.post_bookmarks.count == 5
+      end
 
-      # grant_on 'votes#create', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
-      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 5
-      # end
+      grant_on 'post_bookmarks#create', badge: 'Bookmarked Notebook', level: 2, model_name: 'Post' do |post|
+        post.post_bookmarks.count == 15
+      end
 
-      # grant_on 'votes#create', badge: 'notebook-liked-20', level: 2, to: :participant do |vote|
-      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 20
-      # end
+      grant_on 'post_bookmarks#create', badge: 'Bookmarked Notebook', level: 3, model_name: 'Post' do |post|
+        post.post_bookmarks.count == 35
+      end
 
-      # grant_on 'votes#create', badge: 'notebook-liked-35', level: 3, to: :participant do |vote|
-      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 35
-      # end
+      # N subscribers
 
-      # # Participant commented on a notebook n number of times
-      # # Participant notebooks received n number of comments
-      # # Subscribed n times
-      # # N subscribers
-      # # Download notebooks
-      # # Created one notebook, like 3 notebooks, shared 2 notebooks
-      # # Created n number of blitz notebooks
+      grant_on 'post_bookmarks#create', badge: 'Bookmarked Notebook', level: 1, model_name: 'Post', to: :participant do |post|
+        post.post_bookmarks.count == 3
+      end
+
+      grant_on 'post_bookmarks#create', badge: 'Bookmarked Notebook', level: 1, model_name: 'Post', to: :participant do |post|
+        post.post_bookmarks.count == 15
+      end
+
+      grant_on 'post_bookmarks#create', badge: 'Bookmarked Notebook', level: 1, model_name: 'Post', to: :participant do |post|
+        post.post_bookmarks.count == 30
+      end
+
+      # Download notebooks
+      # Created one notebook, like 3 notebooks, shared 2 notebooks
+      # Created n number of blitz notebooks
 
 
       # # Created first notebook
