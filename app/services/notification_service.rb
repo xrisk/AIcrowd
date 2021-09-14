@@ -103,7 +103,6 @@ class NotificationService
 
   def badge
     message = @notifiable.description
-    thumb = @notifiable.image
     link = participant_path(@participant)
 
     return if @participant.notifications.exists?(notification_type: 'badge', message: message)
@@ -114,7 +113,6 @@ class NotificationService
         notifiable:        @notifiable,
         notification_type: @notification_type,
         message:           message,
-        thumbnail_url:     thumb,
         notification_url:  link,
         is_new:            true)
   end

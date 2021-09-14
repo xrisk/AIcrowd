@@ -22,7 +22,7 @@
       <% next if aicrowd_badges.first.target.blank? %>
       <% current_aicrowd_badge = active_badge(aicrowd_badges) %>
       <div class="column">
-        <%= react_component("organisms/AchievementListItem/index", { icon: "/assets/challenge_badges/#{current_aicrowd_badge.image}.png", progress: participant.points(category: current_aicrowd_badge.name).to_i, target: {bronze_count: aicrowd_badges.last.target, silver_count: aicrowd_badges.second.target, gold_count: aicrowd_badges.first.target}, title: aicrowd_badges.first.name, description: aicrowd_badges.first.description }) %>
+        <%= react_component("organisms/AchievementListItem/index", { icon: current_aicrowd_badge.image, progress: participant.points(category: current_aicrowd_badge.name).to_i, target: {bronze_count: aicrowd_badges.last.target, silver_count: aicrowd_badges.second.target, gold_count: aicrowd_badges.first.target}, title: aicrowd_badges.first.name, description: aicrowd_badges.first.description }) %>
       </div>
     <% end %>
   </div>

@@ -325,18 +325,18 @@ module Merit
       # Created n number of blitz notebooks
 
 
-      # # Created first notebook
-      # grant_on 'posts#create', badge: 'created-first-notebooks', level: 1 do |post|
-      #   post.participant.posts.count == 1
-      # end
+      # Created first notebook
+      grant_on 'posts#create', badge: 'created-first-notebooks', level: 4 do |post|
+        post.participant.posts.count == 1
+      end
 
       # # Shared first notebook
       # # Notebook was shared first time
 
       # # Liked 1 notebook
-      # grant_on 'votes#create', badge: 'liked-first-notebooks', level: 1 do |vote|
-      #   vote.participant.votes.where(votable_type: "Post").count == 1
-      # end
+      grant_on 'votes#create', badge: 'liked-first-notebooks', level: 4 do |vote|
+        vote.participant.votes.where(votable_type: "Post").count == 1
+      end
 
       # # Notebook got first like
 
@@ -356,36 +356,35 @@ module Merit
       # grant_on 'participants/registrations#create', badge: 'participant-signed-up', level: 1 do
       # end
 
-      # # Complete Bio/Profile
-      # grant_on 'participants#update', badge: 'participant-completed-bio', level: 1 do |participant|
-      #   participant.bio.present?
-      # end
+      # Complete Bio/Profile
+      grant_on 'participants#update', badge: 'Completed Bio-Profile', level: 4 do |participant|
+        participant.bio.present?
+      end
 
-      # # Fill up details on country
-      # grant_on 'participants#update', badge: 'participant-country-filled', level: 1 do |participant|
-      #   participant.country_cd.present?
-      # end
+      # Fill up details on country
+      grant_on 'participants#update', badge: 'Completed Country', level: 4 do |participant|
+        participant.country_cd.present?
+      end
 
-      # # Filling up details on portfolio/links
-      # grant_on 'participants#update', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
-      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 1
-      # end
+      # Filling up details on portfolio/links
+      grant_on 'participants#update', badge: 'Completed Portfolio/Links', level: 4 do |participant|
+        participant.website.present? && participant.github.present? && participant.linkedin.present? && participant.twitter.present? && participant.bio.present?
+      end
 
-      # # Followed their first Aicrew member
-      # grant_on 'follows#create', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
+      # Followed their first Aicrew member
+      grant_on 'follows#create', badge: 'Followed First Member', level: 4 do |follow|
+        Follow.following.where(followable_type: "Participant").count == 1
+      end
 
-      # end
 
+      grant_on 'follows#create', badge: 'Got First Follower', level: 4, to: :followable do |follow|
+        Follow.where(followable_id: follow.followable_id, followable_type: "Participant").count == 1
+      end
 
-      # # Got their first AIcrew follower
-      # grant_on 'participants#update', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
-      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 1
-      # end
-
-      # # Liked a blogpost
-      # grant_on 'participants#update', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
-      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 1
-      # end
+      # Liked a blogpost
+      grant_on 'votes#create', badge: 'Liked First Blog', level: 4 do |vote|
+        vote.votable.is_a?(Blog) && vote.participant.votes.where(votable_type: "Blog").count == 1
+      end
 
       # # Reported their first feedback
       # grant_on 'participants#update', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
