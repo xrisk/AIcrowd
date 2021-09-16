@@ -30,7 +30,7 @@ module ChallengeRounds
         score_field = 'private_borda_ranking_score_' + i.to_s
         rank_field = 'private_borda_ranking_rank_' + i.to_s
         @submissions.each do |submission|
-          submission['meta'][score_field] = submission['meta'][score_field].to_i
+          submission['meta'][score_field] = submission['meta'][score_field].to_f
         end
         @submissions = @submissions.sort_by {|obj| obj['meta'][score_field]}.reverse
         last_value = 1e10.to_f
