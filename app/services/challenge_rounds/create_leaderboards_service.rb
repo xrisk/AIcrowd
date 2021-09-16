@@ -59,7 +59,7 @@ module ChallengeRounds
 
     def populate_borda_field_if_required
       # Magically populate borda ranks when enabled
-      first_submission = @submissions.first
+      first_submission = dynamic_filters(@submissions).first
       if !first_submission.nil? && !first_submission['meta'].nil? && !first_submission['meta']['private_borda_ranking_enabled'].nil?
         @is_borda_ranking = true
         ChallengeRounds::PopulateBordaFieldsService.new(challenge_round_id: @challenge_round.id).call
