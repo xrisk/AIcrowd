@@ -185,9 +185,6 @@ color: #292C2D;
     display: inline-flex;
     align-items: center !important;
 }
-.masthead{
-    background-color: #f8f9f9!important;
-}
 .btn-red-submit{
 	font-size: 0.9rem;
 	font-weight: 600;
