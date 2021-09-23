@@ -130,6 +130,15 @@ class ParticipantsController < ApplicationController
     redirect_to root_path
   end
 
+  def switch_tab
+    tab = params[:tab]
+    tab.slice!('achievement_tab_')
+    @participant_badge_data = helpers.all_badges_participant_data(current_participant, tab)
+    respond_to do |format|
+      format.js { render :refresh}
+    end
+  end
+
   private
 
   def set_participant

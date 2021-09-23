@@ -241,7 +241,6 @@ module Merit
       end
 
       grant_on ['votes#create', 'votes#white_vote_create'], badge: 'Liked Notebook', level: 2 do |vote|
-        byebug
         vote.participant.votes.where(votable_type: "Post").count == 25
       end
 
@@ -308,15 +307,15 @@ module Merit
 
       # N subscribers
 
-      grant_on 'post_bookmarks#create', badge: 'Bookmarked Notebook', level: 1, model_name: 'Post', to: :participant do |post|
+      grant_on 'post_bookmarks#create', badge: 'Notebook Was Bookmarked', level: 1, model_name: 'Post', to: :participant do |post|
         post.post_bookmarks.count == 3
       end
 
-      grant_on 'post_bookmarks#create', badge: 'Bookmarked Notebook', level: 1, model_name: 'Post', to: :participant do |post|
+      grant_on 'post_bookmarks#create', badge: 'Notebook Was Bookmarked', level: 1, model_name: 'Post', to: :participant do |post|
         post.post_bookmarks.count == 15
       end
 
-      grant_on 'post_bookmarks#create', badge: 'Bookmarked Notebook', level: 1, model_name: 'Post', to: :participant do |post|
+      grant_on 'post_bookmarks#create', badge: 'Notebook Was Bookmarked', level: 1, model_name: 'Post', to: :participant do |post|
         post.post_bookmarks.count == 30
       end
 
@@ -326,7 +325,7 @@ module Merit
 
 
       # Created first notebook
-      grant_on 'posts#create', badge: 'created-first-notebooks', level: 4 do |post|
+      grant_on 'posts#create', badge: 'Created First Notebook', level: 4 do |post|
         post.participant.posts.count == 1
       end
 
@@ -334,15 +333,15 @@ module Merit
       # # Notebook was shared first time
 
       # # Liked 1 notebook
-      grant_on 'votes#create', badge: 'liked-first-notebooks', level: 4 do |vote|
+      grant_on 'votes#create', badge: 'Liked First Notebook', level: 4, to: :participant do |vote|
         vote.participant.votes.where(votable_type: "Post").count == 1
       end
 
       # # Notebook got first like
 
-      # grant_on 'votes#create', badge: 'notebook-liked-5', level: 1, to: :participant do |vote|
-      #   vote.votable.is_a?(Post) && vote.votable.votes.count == 1
-      # end
+      grant_on 'votes#create', badge: 'Notebook got first like', level: 4 do |vote|
+        vote.participant.votes.where(votable_type: "Post").count == 1
+      end
 
       # # Commented on 1 notebook
       # # Notebook got 1 comment
@@ -373,12 +372,12 @@ module Merit
 
       # Followed their first Aicrew member
       grant_on 'follows#create', badge: 'Followed First Member', level: 4 do |follow|
-        Follow.following.where(followable_type: "Participant").count == 1
+        follow.following.where(followable_type: "Participant").count == 1
       end
 
 
       grant_on 'follows#create', badge: 'Got First Follower', level: 4, to: :followable do |follow|
-        Follow.where(followable_id: follow.followable_id, followable_type: "Participant").count == 1
+        follow.where(followable_id: follow.followable_id, followable_type: "Participant").count == 1
       end
 
       # Liked a blogpost

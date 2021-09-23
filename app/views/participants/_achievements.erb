@@ -5,9 +5,13 @@
     <!-- sub-nav pills -->
     <ul class="nav nav-pills">
 
-      <% ["Notebook", "Challenge", "Discussion", "First"].each do |challenge_round| %>
+      <% ["Challenge", "Notebook", "Discussion", "First"].each do |challenge_round| %>
         <li class="nav-item mr-4">
-          <%= link_to challenge_round, challenges_path, class: round_pills_tab_classes(nil, nil) %>
+          <% if challenge_round == "Challenge" %>
+            <a id="achievement_tab_<%= challenge_round.downcase %>" class="nav-link active" href="#" data-controller="participant" data-participant-participant-id="<%= current_participant.id %>" data-participant-current-tab-id="achievement_tab_<%= challenge_round.downcase %>" data-action="click->participant#achievementTabClick"><%= challenge_round %></a>
+          <% else %>
+            <a id="achievement_tab_<%= challenge_round.downcase %>" class="nav-link" href="#" data-controller="participant" data-participant-participant-id="<%= current_participant.id %>" data-participant-current-tab-id="achievement_tab_<%= challenge_round.downcase %>" data-action="click->participant#achievementTabClick"><%= challenge_round %></a>
+          <% end %>
         </li>
       <% end %>
     </ul>
@@ -15,15 +19,4 @@
   </div>
 </section>
 
-<div class="container-fluid">
-  <div class="row">
-    <% participant.badges.each do |badge| %>
-      <% aicrowd_badges =  AicrowdBadge.where(name: badge.name).order(target: :desc) %>
-      <% next if aicrowd_badges.first.target.blank? %>
-      <% current_aicrowd_badge = active_badge(aicrowd_badges) %>
-      <div class="column">
-        <%= react_component("organisms/AchievementListItem/index", { icon: current_aicrowd_badge.image, progress: participant.points(category: current_aicrowd_badge.name).to_i, target: {bronze_count: aicrowd_badges.last.target, silver_count: aicrowd_badges.second.target, gold_count: aicrowd_badges.first.target}, title: aicrowd_badges.first.name, description: aicrowd_badges.first.description }) %>
-      </div>
-    <% end %>
-  </div>
-</div>
+<%= render partial: 'achievement_partial', locals: {participant_badge_data: all_badges_participant_data} %>

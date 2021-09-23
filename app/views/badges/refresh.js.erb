@@ -1,0 +1,11 @@
+function handlepopUpRefresh() {
+  const badgePopupId       = "#badges-popup";
+  const refreshedContent = "<%= j render 'shared/badge_popup' %>";
+
+  if(refreshedContent != "\n"){
+    $(badgePopupId).replaceWith(refreshedContent);
+    ReactRailsUJS.mountComponents();
+  }
+}
+
+handlepopUpRefresh();

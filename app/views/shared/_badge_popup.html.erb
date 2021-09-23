@@ -1,3 +1,4 @@
+<div id="badges-popup">
 <% if current_participant&.awaiting_toasts.present? %>
   <% aicrowd_badge = current_participant&.awaiting_toasts.last %>
   <div class="modal badges-modal" id="badges-modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
@@ -11,8 +12,39 @@
 
   <script>
     $(document).ready(function(){
-      $('#badges-modal').modal('show');
+      $('#badges-modal').appendTo("body").modal('show');
     })
   </script>
+  <% current_participant&.toggle_toasts %>
 <% end %>
-<% current_participant&.toggle_toasts %>
+</div>
+
+<% if defined?(show_popup) && show_popup %>
+  <script>
+  $(document).ready(function () {
+      setIntervalX(function () {
+          refreshPartial()
+      }, 3000, 1);
+
+  });
+
+  // calls action refreshing the partial
+  function refreshPartial() {
+    $.ajax({
+      url: "/badges"
+   })
+  }
+
+  function setIntervalX(callback, delay, repetitions) {
+    var x = 0;
+    var intervalID = window.setInterval(function () {
+
+       callback();
+
+       if (++x === repetitions) {
+           window.clearInterval(intervalID);
+       }
+    }, delay);
+  }
+  </script>
+<% end%>
