@@ -5,12 +5,12 @@ import AchievementProgress from 'src/components/molecules/AchievementProgress';
 import styles from './achievementListItem.module.scss';
 const { main, shareText } = styles;
 
-const AchievementListItem = ({ icon, progress, target, title, description }) => {
+const AchievementListItem = ({ icon, progress, target, title, description, hideFirst, hideBronze }) => {
   return (
     <div>
       <div className={main}>
         <img src={icon}></img>
-        <AchievementProgress progress={progress} target={target} />
+        <AchievementProgress progress={progress} target={target} hideFirst={hideFirst} hideBronze={hideBronze} />
         <div style={{ paddingTop: '27px' }}>
           <AchievementDetail title={title} description={description} />
         </div>

@@ -8,14 +8,32 @@ $line-width: 260px;
   height: 4px;
   border-radius: 2px;
   background-color: #e7e7e7;
+  background: linear-gradient(
+    90deg,
+    #dd4944 0%,
+    #d0322d 32.78%,
+    #c4632b 34.9%,
+    #b35a28 66.62%,
+    #a2a3a3 68.75%,
+    #8e8f8f 100%
+  );
   position: relative;
+  display: flex;
+  flex-direction: row-reverse;
+
+  @include media-query("small") {
+    width: 160px;
+  }
+  @include media-query("x-small") {
+    width: 115px;
+  }
 }
 
 .fill {
-  border-radius: 2px;
-  width: 50%;
+  width: 100%;
   height: 4px;
-  background: linear-gradient(141.18deg, #de4b46, #cb2a24, #cd672d, #a35224, #a2a3a3, #8a8a8a);
+  display: flex;
+  background-color: #e7e7e7;
 }
 
 .dot {
@@ -27,30 +45,55 @@ $line-width: 260px;
   display: flex;
   align-items: center;
   justify-content: center;
+  @include media-query("small") {
+    width: 8px;
+    height: 8px;
+    top: -2px;
+  }
 }
 
 .first {
-  background: linear-gradient(141.18deg, #de4b46 14.89%, #cb2a24 85.66%);
+  background: #de4b46;
+  left: 0%;
 }
 
 .bronze {
   left: 31%;
-  background: linear-gradient(141.18deg, #cd672d 14.89%, #a35224 85.66%);
+  // background: linear-gradient(141.18deg, #cd672d 14.89%, #a35224 85.66%);
+  background-color: #a35224;
+  border: 2px solid #a35224;
+  @include media-query("small") {
+    border: 1px solid #a35224;
+  }
 }
 .silver {
   left: 64%;
-  background: linear-gradient(141.18deg, #a2a3a3 14.89%, #8a8a8a 85.66%);
+  // background: linear-gradient(141.18deg, #a2a3a3 14.89%, #8a8a8a 85.66%);
+  background-color: #8a8a8a;
+  border: 2px solid #8a8a8a;
+  @include media-query("small") {
+    border: 1px solid #a35224;
+  }
 }
 .gold {
   left: 98%;
-  background: linear-gradient(141.18deg, #dba614 14.89%, #be8d1e 85.66%);
+  // background: linear-gradient(141.18deg, #dba614 14.89%, #be8d1e 85.66%);
+  background-color: #be8d1e;
+  border: 2px solid #be8d1e;
+  @include media-query("small") {
+    border: 1px solid #a35224;
+  }
 }
 
 .redempty {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   background-color: #fdedec;
+  @include media-query("small") {
+    width: 8px;
+    height: 8px;
+  }
 }
 
 .bronzeempty {
@@ -73,5 +116,10 @@ $line-width: 260px;
   text-align: right;
   padding-bottom: 10px;
   width: $line-width + 10px;
-
+  @include media-query("small") {
+    width: 170px;
+  }
+  @include media-query("x-small") {
+    width: 125px;
+  }
 }

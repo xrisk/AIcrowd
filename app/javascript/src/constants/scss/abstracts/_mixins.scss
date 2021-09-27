@@ -46,11 +46,90 @@
   }
 }
 
-$gradient-color: linear-gradient(141.26295deg, #f0524d, #f04d7e, #ec4cb1, #e94be4, #bc4be9, #894be9, #884be9);
+$gradient-color: linear-gradient(168.26295deg, #f0524d, #f04d7e, #ec4cb1, #e94be4, #bc4be9, #894be9, #884be9);
 
 @mixin gradient-text {
-  background-image: linear-gradient(141.26295deg, #f0524d, #f04d7e, #ec4cb1, #e94be4, #bc4be9, #894be9, #884be9);
+  background-image: $gradient-color;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+// mixin for custom scrollbar
+@mixin customScrollbar($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
+  // For Google Chrome
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+  }
+
+  // For Internet Explorer
+  & {
+    scrollbar-face-color: $foreground-color;
+    scrollbar-track-color: $background-color;
+  }
+
+  // For Firefox
+  scrollbar-width: $size;
+  scrollbar-color: $foreground-color $background-color;
+}
+
+// mixins for typography
+
+// Headings
+@mixin heading-1 {
+  font-size: $font-xx-large;
+  line-height: 53px;
+  font-weight: $font-weight-semibold;
+}
+@mixin heading-2 {
+  font-size: $font-x-large;
+  line-height: 40px;
+  font-weight: $font-weight-medium;
+}
+@mixin heading-3 {
+  font-size: $font-large;
+  line-height: 30px;
+  font-weight: $font-weight-semibold;
+}
+@mixin heading-4 {
+  font-size: $font-medium;
+  line-height: 24px;
+  font-weight: $font-weight-medium;
+}
+@mixin heading-5 {
+  font-size: $font-small;
+  line-height: 21px;
+  font-weight: $font-weight-semibold;
+}
+@mixin heading-6 {
+  font-size: $font-x-small;
+  line-height: 19px;
+  font-weight: $font-weight-semibold;
+}
+
+// Body text
+@mixin body-text-large {
+  font-size: $font-medium;
+  line-height: 30px;
+}
+@mixin body-text-medium {
+  font-size: $font-small;
+  line-height: 25px;
+}
+@mixin body-text-normal {
+  font-size: $font-x-small;
+  line-height: 20px;
+}
+@mixin body-text-small {
+  font-size: $font-xx-small;
+  line-height: 16px;
 }

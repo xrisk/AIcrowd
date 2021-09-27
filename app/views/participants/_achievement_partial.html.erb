@@ -3,9 +3,9 @@
     <% participant_badge_data.each do |badge, result| %>
       <div class="column" style="margin-bottom: 10%; margin-right: 1%;">
         <% if result[:badges].count == 3 %>
-          <%= react_component("organisms/AchievementListItem/index", { icon: result[:icon], progress: result[:current_points].to_i, target: {bronze_count: result[:badges].first.target, silver_count: result[:badges].second.target, gold_count: result[:badges].third.target}, title: badge, description: (result[:active_badge].description rescue 'This Badge is currently locked. Try to perform more of this action to unlock this page.')}) %>
+          <%= react_component("organisms/AchievementListItem/index", { icon: result[:icon], progress: result[:current_points].to_i, target: {bronze_count: result[:badges].first.target, silver_count: result[:badges].second.target, gold_count: result[:badges].third.target}, title: badge, description: (result[:active_badge].description rescue 'This Badge is currently locked. Try to perform more of this action to unlock this page.'), hideFirst: false, hideBronze: false}) %>
         <% elsif result[:badges].count == 1%>
-          <%= react_component("organisms/AchievementListItem/index", { icon: result[:icon], progress: result[:current_points].to_i, target: {bronze_count: result[:badges].first.target, silver_count: result[:badges].first.target, gold_count: result[:badges].first.target}, title: badge, description: (result[:active_badge].description rescue 'This Badge is currently locked. Try to perform more of this action to unlock this page.')}) %>
+          <%= react_component("organisms/AchievementListItem/index", { icon: result[:icon], progress: result[:current_points].to_i, target: {bronze_count: result[:badges].first.target, silver_count: result[:badges].first.target, gold_count: result[:badges].first.target}, title: badge, description: (result[:active_badge].description rescue 'This Badge is currently locked. Try to perform more of this action to unlock this page.'), hideFirst: false, hideBronze: true}) %>
         <% end %>
       </div>
     <% end %>
