@@ -10,6 +10,7 @@ class DiscourseBadgesDailyJob < ApplicationJob
         if participant
           badge = AicrowdBadge.find_by(id: discourse_initial_id.to_i + user_badge['badge_id'].to_i )
           participant.add_badge(badge.name)
+          NotificationService.new(participant.id, badge, 'badge').call
         end
       end
       last_id = user_badges.last['id']

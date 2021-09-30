@@ -182,6 +182,7 @@ Rails.application.routes.draw do
     patch :accept_terms
     get :impersonate, on: :collection
     get :stop_impersonating, on: :collection
+    get 'switch_tab/:tab' => 'participants#switch_tab', :as => :switch_tab
     get '/read_notification/:id' => 'participants#read_notification', :as => :read_notification
     match '/notifications', to: 'email_preferences#edit', via: :get
     match '/notifications', to: 'email_preferences#update', via: :patch
@@ -276,6 +277,7 @@ Rails.application.routes.draw do
   end
 
   resources :post_bookmarks, only: [:create, :destroy]
+  resources :badges, only: [:index]
 
   resources :ratings, only: [:index, :create] do
     get :search, on: :collection

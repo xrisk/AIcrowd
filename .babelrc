@@ -1,17 +1,17 @@
 {
   "presets": [
     [
-      "env",
+      "@babel/preset-env",
       {
         "modules": false,
         "targets": {
-          "browsers": "> 1%",
-          "uglify": true
+          "node": "current"
         },
-        "useBuiltIns": true
+        useBuiltIns: 'entry'
       }
     ],
-    "react"
+    "@babel/react",
+    "@babel/preset-flow"
   ],
   "plugins": [
     "syntax-dynamic-import",
