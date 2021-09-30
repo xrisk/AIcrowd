@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 2021_08_18_012816) do
+=======
+ActiveRecord::Schema.define(version: 2021_07_19_075137) do
+>>>>>>> reputation_system
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -577,6 +581,7 @@ ActiveRecord::Schema.define(version: 2021_08_18_012816) do
     t.integer "min_team_participants", default: 1
     t.string "restricted_ip"
     t.boolean "organizer_notebook_access", default: false
+    t.integer "submission_lock_count", default: 1
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["discourse_category_id"], name: "index_challenges_on_discourse_category_id"
     t.index ["discourse_group_id"], name: "index_challenges_on_discourse_group_id"
@@ -784,6 +789,15 @@ ActiveRecord::Schema.define(version: 2021_08_18_012816) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  create_table "global_ranks", force: :cascade do |t|
+    t.integer "rank"
+    t.integer "participant_id"
+    t.integer "rating_id"
+    t.float "rating"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "invitations", force: :cascade do |t|
@@ -1184,6 +1198,18 @@ ActiveRecord::Schema.define(version: 2021_08_18_012816) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["challenge_id"], name: "index_publications_on_challenge_id"
+  end
+
+  create_table "ratings", force: :cascade do |t|
+    t.integer "challenge_leaderboard_extra_id", null: false
+    t.integer "participant_id", null: false
+    t.float "rating", null: false
+    t.float "mu"
+    t.float "sigma"
+    t.integer "rank"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "contest_id", null: false
   end
 
   create_table "redirects", force: :cascade do |t|
