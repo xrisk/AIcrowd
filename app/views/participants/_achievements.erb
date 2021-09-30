@@ -8,9 +8,9 @@
       <% ["Challenge", "Notebook", "Discussion", "First"].each do |challenge_round| %>
         <li class="nav-item mr-4">
           <% if challenge_round == "Challenge" %>
-            <a id="achievement_tab_<%= challenge_round.downcase %>" class="nav-link active" href="#" data-controller="participant" data-participant-participant-id="<%= current_participant.id %>" data-participant-current-tab-id="achievement_tab_<%= challenge_round.downcase %>" data-action="click->participant#achievementTabClick"><%= challenge_round %></a>
+            <a id="achievement_tab_<%= challenge_round.downcase %>" class="nav-link active" href="#" data-controller="participant" data-participant-participant-id="<%= participant.id %>" data-participant-current-tab-id="achievement_tab_<%= challenge_round.downcase %>" data-action="click->participant#achievementTabClick"><%= challenge_round %></a>
           <% else %>
-            <a id="achievement_tab_<%= challenge_round.downcase %>" class="nav-link" href="#" data-controller="participant" data-participant-participant-id="<%= current_participant.id %>" data-participant-current-tab-id="achievement_tab_<%= challenge_round.downcase %>" data-action="click->participant#achievementTabClick"><%= challenge_round %></a>
+            <a id="achievement_tab_<%= challenge_round.downcase %>" class="nav-link" href="#" data-controller="participant" data-participant-participant-id="<%= participant.id %>" data-participant-current-tab-id="achievement_tab_<%= challenge_round.downcase %>" data-action="click->participant#achievementTabClick"><%= challenge_round %></a>
           <% end %>
         </li>
       <% end %>
@@ -19,4 +19,4 @@
   </div>
 </section>
 
-<%= render partial: 'achievement_partial', locals: {participant_badge_data: all_badges_participant_data} %>
+<%= render partial: 'achievement_partial', locals: {participant_badge_data: all_badges_participant_data(participant)} %>

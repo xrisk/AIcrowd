@@ -1,5 +1,5 @@
 class ParticipantsController < ApplicationController
-  before_action :authenticate_participant!, except: [:show, :index]
+  before_action :authenticate_participant!, except: [:show, :index, :switch_tab]
   before_action :set_participant,
                 only: [:show, :edit, :update, :destroy, :set_follow]
   before_action :set_follow, only: [:show]
@@ -133,7 +133,8 @@ class ParticipantsController < ApplicationController
   def switch_tab
     tab = params[:tab]
     tab.slice!('achievement_tab_')
-    @participant_badge_data = helpers.all_badges_participant_data(current_participant, tab)
+    participant = Participant.find_by_id(params[:participant_id])
+    @participant_badge_data = helpers.all_badges_participant_data(participant, tab)
     respond_to do |format|
       format.js { render :refresh}
     end

@@ -31,7 +31,7 @@ module BadgesHelper
       current_points = participant.points(category: name)
       active_badge = active_badge(badges, participant)
       icon = active_badge.is_a?(AicrowdBadge) ? active_badge.image : ENV['BADGE_LOCKED_PATH']
-      next_badge = next_badge(badges)
+      next_badge = next_badge(badges, participant)
 
       badge_results[name] =  {badges: badges, current_points: current_points, active_badge: active_badge, icon: icon, next_badge: next_badge}
     end
