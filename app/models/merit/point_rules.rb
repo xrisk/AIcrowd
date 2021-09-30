@@ -31,10 +31,17 @@ module Merit
         vote.votable_type == "Challenge"
       end
 
+      score -1, :on => 'votes#destroy', category: 'Liked Challenge' do |vote|
+        vote.votable_type == "Challenge"
+      end
 
       # Followed n number of challenges
 
       score 1, :on => 'follows#create', category: 'Followed Challenge' do |follow|
+        follow.followable_type == "Challenge"
+      end
+
+      score -1, :on => 'follows#destroy', category: 'Followed Challenge' do |follow|
         follow.followable_type == "Challenge"
       end
 
@@ -57,15 +64,24 @@ module Merit
       # Liked n number of practice problems
 
       score 1, :on => 'votes#create', category: 'Liked Practice Challenge' do |vote|
-        vote.votable_type == "Challenge" && Challenge.find_by_id(vote.votable_id).practice_flag == true
+        vote.votable_type == "Challenge" && vote.votable.practice_flag == true
+      end
+
+      score -1, :on => 'votes#destroy', category: 'Liked Practice Challenge' do |vote|
+        vote.votable_type == "Challenge" && vote.votable.practice_flag == true
       end
 
       # Shared n number of practice problems
       # Followed n number of practice problems
 
       score 1, :on => 'follows#create', category: 'Followed Practice Challenge' do |follow|
-        follow.followable_type == "Challenge" && Challenge.find_by_id(follow.followable_id).practice_flag == true
+        follow.followable_type == "Challenge" && follow.followable.practice_flag == true
       end
+
+      score -1, :on => 'follows#destroy', category: 'Followed Practice Challenge' do |follow|
+        follow.followable_type == "Challenge" && follow.followable.practice_flag == true
+      end
+
 
       # Participate in n number of practice problems
 
@@ -105,6 +121,8 @@ module Merit
 
       score 1, :on => 'posts#create', category: 'Created Notebook'
 
+      score -1, :on => 'posts#destroy', category: 'Created Notebook'
+
       score 1, :on => 'posts#update', category: 'Won Blitz Community Explainer', to: :participant do |post|
         post.blitz_community_winner
       end
@@ -121,9 +139,17 @@ module Merit
         vote.votable_type == "Post"
       end
 
+      score -1, :on => ['votes#destroy', 'votes#white_vote_destroy'], category: 'Liked Notebook' do |vote|
+        vote.votable_type == "Post"
+      end
+
       # Participant Notebooks were liked n number of times
 
       score 1, :on => ['votes#create', 'votes#white_vote_create'], category: 'Notebook Was Liked', to: :participant do |vote|
+        vote.votable_type == "Post"
+      end
+
+      score -1, :on => ['votes#destroy', 'votes#white_vote_destroy'], category: 'Notebook Was Liked', to: :participant do |vote|
         vote.votable_type == "Post"
       end
 
@@ -161,9 +187,13 @@ module Merit
       #
       score 1, :on => 'post_bookmarks#create', category: 'Bookmarked Notebook'
 
+      score -1, :on => 'post_bookmarks#destroy', category: 'Bookmarked Notebook'
+
       # N subscribers
 
       score 1, :on => 'post_bookmarks#create', category: 'Notebook Was Bookmarked', to: :participant
+
+      score -1, :on => 'post_bookmarks#destroy', category: 'Notebook Was Bookmarked', to: :participant
 
       # Download notebooks
       # Created one notebook, like 3 notebooks, shared 2 notebooks
