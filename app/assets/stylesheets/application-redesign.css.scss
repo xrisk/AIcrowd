@@ -12023,8 +12023,8 @@ body {
 
 .masthead-user .avatar {
   flex-shrink: 0;
-  width: 180px;
-  height: 180px;
+  width: 142px;
+  height: 142px;
   margin-right: 28px;
 }
 
@@ -12062,7 +12062,6 @@ body {
 
 .masthead-user .masthead-info {
   display: flex;
-  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -14676,6 +14675,24 @@ input.width-185 {
 .execute-button-on-hover a {
   color: #F0524D;
   font-weight: bold;
+}
+
+.participant_masthead_username {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 36px;
+  line-height: 44px;
+  color: #292C2D;
+}
+
+.participant_masthead_name {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  color: #292C2D;
 }
 
 .output_text::-webkit-scrollbar-track

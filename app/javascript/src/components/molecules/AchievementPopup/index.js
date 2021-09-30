@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './achievementPopup.module.scss';
 import ButtonDefault from 'src/components/atoms/Button/ButtonDefault';
@@ -17,7 +18,7 @@ const AchievementPopup = ({ title, description, icon, handleClick }) => {
   return (
     <div>
       <div className={main}>
-        <i className="las la-times"></i>
+        <i className="las la-times" onClick={handleClick}></i>
         <div className={iconWrapper}>
           {/* Show shining animation after badge popup animation */}
           <div className={shineWrapper}>
@@ -34,10 +35,16 @@ const AchievementPopup = ({ title, description, icon, handleClick }) => {
           <img src="https://ui-storybook.aicrowd.com/assets/social/linkedin.svg" alt="linkedin logo"></img>
           <img src="https://ui-storybook.aicrowd.com/assets/social/github.svg" alt="github logo"></img>
         </div>
-        <ButtonDefault type="primary" text="Continue" handleClick={handleClick}/>
+        <ButtonDefault type="primary" text="Continue" handleClick={handleClick} />
       </div>
     </div>
   );
+};
+
+AchievementPopup.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  icon: PropTypes.string,
 };
 
 export default AchievementPopup;

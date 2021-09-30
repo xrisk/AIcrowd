@@ -4,23 +4,27 @@
     <div class="row">
       <div class="col-12">
         <div class="d-flex">
-          <div class="column" style="align-self: flex-end;margin-right: 40px;">
-            <div class="row"><%= participant_avatar participant %></div>
+          <div class="column" style="margin-right: 40px;">
 
-            <div class="row ml-3 mt-3"><%= @participant.followers_participant_count %> Follower</div>
-            <div class="row ml-3"><%= @participant.following_participant_count %> Following</div>
-            <% if current_participant.present? && current_participant != participant %>
-              <div class="masthead-info-item follow-participant row ml-2 mt-2">
-                <%= render partial: 'shared/challenges/follow_button', locals: { followable: participant, follow: @follow, other_participant: participant, active_tab: false } %>
-              </div>
-            <% end %>
+            <div class="row"><%= participant_avatar participant %></div>
+            <div style="text-align: center; justify-content: center;">
+              <div class="row ml-4 mt-3"><%= @participant.followers_participant_count %> Follower</div>
+              <div class="row ml-3"><%= @participant.following_participant_count %> Following</div>
+              <% if current_participant.present? && current_participant != participant %>
+                <div class="masthead-info-item follow-participant row ml-2 mt-2">
+                  <%= render partial: 'shared/challenges/follow_button', locals: { followable: participant, follow: @follow, other_participant: participant, active_tab: false } %>
+                </div>
+              <% end %>
+            </div>
           </div>
           <div class="masthead-content">
             <div class="column">
-              <div class="row"><h1><%= participant.name %></h1></div>
-              <% if participant.first_name.present? || participant.last_name.present? %>
-                <div class="row"><h3><%= participant.first_name %> <%= participant.last_name %></h3></div>
-              <% end %>
+              <div style="margin-left: 13px;">
+                <div class="row participant_masthead_username" style="margin-bottom: 8px;><%= participant.name %></div>
+                <% if participant.first_name.present? || participant.last_name.present? %>
+                  <div class="row participant_masthead_name"><%= participant.first_name %> <%= participant.last_name %></div>
+                <% end %>
+              </div>
             </div>
 
             <div class="masthead-info">
