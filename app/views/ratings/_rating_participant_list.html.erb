@@ -27,7 +27,7 @@
               <div class="masthead-blog-post" style="padding: 0px;">
                 <div class="container-fluid">
                   <div class="row">
-                    <div class="col-12" style="margin-left: 30%;">
+                    <div class="col-12">
                       <div>
                         <span class="author">
                           <% if ranking.participant.country_cd.blank?%>
@@ -35,7 +35,6 @@
                           <% else %>
                             <%= render partial: 'participants/get_user_profile_with_flag', locals: { participant: ranking.participant, username: 'false' } %>
                           <% end %>
-                          <%= render partial: 'participants/get_user_profile', locals: { participant: ranking.participant, avatar: 'false' } %>
                         </span>
                       </div>
                     </div>

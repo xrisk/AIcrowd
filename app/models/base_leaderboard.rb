@@ -9,7 +9,7 @@ class BaseLeaderboard < ApplicationRecord
   belongs_to :submission, optional: true
 
   as_enum :leaderboard_type,
-          [:leaderboard, :ongoing, :disentanglement],
+          [:leaderboard, :ongoing, :disentanglement, :reputation],
           map: :string
 
   scope :by_country, ->(country_name) { where(participants: { country_cd: Participant.country_cd(country_name) }) }

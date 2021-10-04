@@ -28,7 +28,7 @@ module Reputation
 
     def sync_data
       # challenge_leaderboard_extra_ids = get_synced_leaderboard_extras
-      base_leaderboards = BaseLeaderboard.where(leaderboard_type_cd: "leaderboard", challenge_leaderboard_extra_id: @cle_id)
+      base_leaderboards = BaseLeaderboard.where(leaderboard_type_cd: "reputation", challenge_leaderboard_extra_id: @cle_id)
       result = []
       base_leaderboards.each do |bl|
         if true

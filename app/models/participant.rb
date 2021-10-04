@@ -226,14 +226,15 @@ class Participant < ApplicationRecord
     self.rating.to_i - 3*self.variation.to_i
   end
 
-  def badges_stats
-    badges_stat_count = aicrowd_user_badges.badges_stat_count
-    bronze_badges = aicrowd_user_badges.individual_badges(BadgeType.bronze).select_display_fields.limit(5)
-    silver_badges = aicrowd_user_badges.individual_badges(BadgeType.silver).select_display_fields.limit(5)
-    gold_badges = aicrowd_user_badges.individual_badges(BadgeType.gold).select_display_fields.limit(5)
-    badges = {Gold: gold_badges, Silver: silver_badges, Bronze: bronze_badges}
-    return badges_stat_count, badges
+  def badge_stats
+    badge_ids = aicrowd_user_badges.pluck(:aicrowd_badge_id)
+    bronze_badge_count = AicrowdBadge.where(id: badge_ids, level: 1).count
+    silver_badge_count = AicrowdBadge.where(id: badge_ids, level: 2).count
+    gold_badge_count = AicrowdBadge.where(id: badge_ids, level: 3).count
+
+    return [bronze_badge_count, silver_badge_count, gold_badge_count]
   end
+
   def badges_tab_stats
     badges_summary = aicrowd_user_badges.badges_stat_count
     bronze_badges_stats = aicrowd_user_badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count

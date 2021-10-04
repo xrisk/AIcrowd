@@ -58,19 +58,19 @@ class RatingsController < ApplicationController
     @rank_3_change = "+0"
     if @rank_1.participant.ratings.count > 1
       rank_1_ratings = @rank_1.participant.ratings.order('created_at desc').limit(2)
-      change = rank_1_ratings.first.rating - rank_1_ratings.second.rating
+      change = (rank_1_ratings.first.rating - rank_1_ratings.second.rating).to_i
       @rank_1_change = change >= 0 ? "+#{change}" : "#{change}"
     end
 
     if @rank_2.participant.ratings.count > 1
       rank_2_ratings = @rank_2.participant.ratings.order('created_at desc').limit(2)
-      change = rank_2_ratings.first.rating - rank_2_ratings.second.rating
+      change = (rank_2_ratings.first.rating - rank_2_ratings.second.rating).to_i
       @rank_2_change = change >= 0 ? "+#{change}" : "#{change}"
     end
 
     if @rank_3.participant.ratings.count > 1
       rank_3_ratings = @rank_3.participant.ratings.order('created_at desc').limit(2)
-      change = rank_3_ratings.first.rating - rank_3_ratings.second.rating
+      change = (rank_3_ratings.first.rating - rank_3_ratings.second.rating).to_i
       @rank_3_change = change >= 0 ? "+#{change}" : "#{change}"
     end
   end

@@ -14712,7 +14712,7 @@ input.width-185 {
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
   background-color: #f0514d;
 }
-=======
+
 .leaderboard-srch{
 }
 .btn-srch {
@@ -14733,9 +14733,10 @@ input.width-185 {
 }
 
 .rank-card-point {
-  font-weight: 400;
-  font-size: 0.9rem;
-  margin-left: 8%;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
 }
 .leaderboard-srch .input-group input{
   height: 35px;
@@ -14764,10 +14765,12 @@ input.width-185 {
     height: 320px;
 }
 .card-rank{
-  font-weight: bold;
-    font-family: 'Merriweather', serif;
-    font-size: 7.0rem;
-    color: white;
+  font-family: Merriweather;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 120px;
+  line-height: 151px;
+  color: white;
 }
 .rank-card-banner{
   height: 24%;
@@ -14803,17 +14806,22 @@ input.width-185 {
   font-weight: 200;
 }
 .rank-card-content-heading {
-    color: gray;
-    font-size: 0.8rem;
-    font-weight: 400;
-    margin-right: 50%;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: -webkit-left;
+  margin-left: 10%;
 }
 
 .rank-card-content{
   padding: 0px 0px 0px 0px;
   justify-content: space-around;
-    display: flex;
+  display: flex;
+  margin-top: -15px;
 }
+
 .rank-card-submission{
   justify-content: center;
     display: flex;
@@ -14978,7 +14986,7 @@ input.width-185 {
 .profile-image-flag {
   position: absolute;
   top: 20px;
-  left: -14px;
+  left: 29%;
   width: 20px !important;
   height: 15px !important;
 }
@@ -15015,6 +15023,73 @@ input.width-185 {
   align-self: center;
 }
 
+.bronze-badge-bg {
+  background: #F5ECE6;
+  mix-blend-mode: normal;
+  border-radius: 12px;
+  height: 18px;
+  width: 45px;
+}
+
+.silver-badge-bg {
+  background: #F1F1F1;
+  mix-blend-mode: normal;
+  border-radius: 12px;
+  height: 18px;
+  width: 45px;
+}
+
+.gold-badge-bg {
+  background: #fbefd0;
+  mix-blend-mode: normal;
+  border-radius: 12px;
+  height: 18px;
+  width: 45px;
+}
+
+.gold-badge {
+  background: linear-gradient(141.18deg, #DBA614 14.89%, #BE8D1E 85.66%);
+  height: 12px;
+  width: 12px;
+  border-radius: 12px;
+  margin-left: 2px;
+  margin-top: 2px;
+}
+
+.silver-badge {
+  background: linear-gradient(141.18deg, #A2A3A3 14.89%, #8A8A8A 85.66%);
+  height: 12px;
+  width: 12px;
+  border-radius: 12px;
+  margin-left: 2px;
+  margin-top: 2px;
+}
+
+.bronze-badge{
+  background: linear-gradient(141.18deg, #CD672D 14.89%, #A35224 85.66%);
+  height: 12px;
+  width: 12px;
+  border-radius: 12px;
+  margin-left: 2px;
+  margin-top: 2px;
+}
+
+.rank-change {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  color: #F0524D;
+}
+
+.rank-card-badge-points {
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: 0.3125px;
+  margin-top: -15px;
+  margin-left: 12px;
+}
+
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
@@ -15030,6 +15105,6 @@ input.width-185 {
 @import '_notebook.scss';
 @import 'publications/publication';
 @import 'https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap';
-@import 'https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap'
+@import 'https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap';
 @import 'index.scss';
 @import '_fonts.scss'
