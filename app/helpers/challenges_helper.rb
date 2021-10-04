@@ -362,6 +362,21 @@ module ChallengesHelper
     path = super(*args)
     meta_challenge(path, args[0])
   end
+  
+  def reset_locked_submissions_challenge_submissions_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+  
+  def freezed_submission_export_challenge_submissions_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+  
+  def freeze_submission_challenge_submissions_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
 
   def edit_challenge_submission_path(*args)
     path = super(*args)
