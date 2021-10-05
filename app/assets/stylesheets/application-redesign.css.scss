@@ -11828,6 +11828,12 @@ body {
   margin-right: 8px;
 }
 
+.leaderboard-profile-img img{
+  width: 42px;
+  height: 42px;
+  margin-right: 8px;
+}
+
 .masthead-challenge .organizer-attribution span a,
 .masthead-challenge .author span a,
 .masthead-blog-post .organizer-attribution span a,
@@ -14762,7 +14768,7 @@ input.width-185 {
   text-align: center;
   box-shadow: 1px 1px 5px 6px #00000012;
     width: 300px;
-    height: 320px;
+    height: 340px;
 }
 .card-rank{
   font-family: Merriweather;
@@ -14985,10 +14991,10 @@ input.width-185 {
 }
 .profile-image-flag {
   position: absolute;
-  top: 20px;
+  top: 30px;
   left: 29%;
-  width: 20px !important;
-  height: 15px !important;
+  width: 24px !important;
+  height: 18px !important;
 }
 
 .profile-image-flag-big {

@@ -4,7 +4,7 @@
     <div class="row rankinggrid">
       <div class="rank-card  mt-5">
         <div class="rank-card-banner">
-          <h1 class="card-rank mr-4">1</h1>
+          <h1 class="card-rank mr-4" style="text-shadow: 1px 1px white, -1px -1px #e5e5e5;">1</h1>
           <div class="rank-card-name">
             <h3><%= @rank_1.participant.name %></h3>
           </div>
@@ -19,27 +19,7 @@
             </h3>
             <div class="row" style="margin-left: 10%;">
               <h3></h3>
-              <div class="gold-badge-bg mr-2">
-                <div class="gold-badge">
-                </div>
-                <div class="rank-card-badge-points">
-                  <%= @rank_1.participant.badge_stats.first %>
-                </div>
-              </div>
-              <div class="silver-badge-bg mr-2">
-                <div class="silver-badge">
-                </div>
-                <div class="rank-card-badge-points">
-                  <%= @rank_1.participant.badge_stats.second %>
-                </div>
-              </div>
-              <div class="bronze-badge-bg">
-                <div class="bronze-badge">
-                </div>
-                <div class="rank-card-badge-points">
-                  <%= @rank_1.participant.badge_stats.last %>
-                </div>
-              </div>
+              <div class="badge badge-achievement-gold" style = "margin-right: 5px;"><%= @rank_1.participant.badge_stats.first.to_i %></div><div class="badge badge-achievement-silver" style = "margin-right: 5px;"><%= @rank_1.participant.badge_stats.second.to_i %></div><div class="badge badge-achievement-bronze" style = "margin-right: 5px;"><%= @rank_1.participant.badge_stats.third.to_i %></div>
             </div>
           </div>
         </div>
@@ -65,7 +45,7 @@
     <div class="row rankingrow">
       <div class="rank-card my-3">
         <div class="rank-card-banner">
-          <h1 class="card-rank mr-4">2</h1>
+          <h1 class="card-rank mr-4" style="text-shadow: 1px 1px white, -1px -1px #e5e5e5;">2</h1>
           <div class="rank-card-name">
             <h3><%= @rank_2.participant.name %></h3>
           </div>
@@ -79,28 +59,7 @@
               Badges
             </h3>
             <div class="row" style="margin-left: 10%;">
-              <h3></h3>
-              <div class="gold-badge-bg mr-2">
-                <div class="gold-badge">
-                </div>
-                <div class="rank-card-badge-points">
-                  <%= @rank_2.participant.badge_stats.first %>
-                </div>
-              </div>
-              <div class="silver-badge-bg mr-2">
-                <div class="silver-badge">
-                </div>
-                <div class="rank-card-badge-points">
-                  <%= @rank_2.participant.badge_stats.second %>
-                </div>
-              </div>
-              <div class="bronze-badge-bg">
-                <div class="bronze-badge">
-                </div>
-                <div class="rank-card-badge-points">
-                  <%= @rank_2.participant.badge_stats.last %>
-                </div>
-              </div>
+              <div class="badge badge-achievement-gold" style = "margin-right: 5px;"><%= @rank_2.participant.badge_stats.first.to_i %></div><div class="badge badge-achievement-silver" style = "margin-right: 5px;"><%= @rank_2.participant.badge_stats.second.to_i %></div><div class="badge badge-achievement-bronze" style = "margin-right: 5px;"><%= @rank_2.participant.badge_stats.third.to_i %></div>
             </div>
           </div>
         </div>
@@ -124,7 +83,7 @@
       </div>
       <div class="rank-card my-3">
         <div class="rank-card-banner">
-          <h1 class="card-rank mr-4">3</h1>
+          <h1 class="card-rank mr-4" style="text-shadow: 1px 1px white, -1px -1px #e5e5e5;">3</h1>
           <div class="rank-card-name">
             <h3><%= @rank_3.participant.name %></h3>
           </div>
@@ -138,28 +97,7 @@
               Badges
             </h3>
             <div class="row" style="margin-left: 10%;">
-              <h3></h3>
-              <div class="gold-badge-bg mr-2">
-                <div class="gold-badge">
-                </div>
-                <div class="rank-card-badge-points">
-                  <%= @rank_3.participant.badge_stats.first %>
-                </div>
-              </div>
-              <div class="silver-badge-bg mr-2">
-                <div class="silver-badge">
-                </div>
-                <div class="rank-card-badge-points">
-                  <%= @rank_3.participant.badge_stats.second %>
-                </div>
-              </div>
-              <div class="bronze-badge-bg">
-                <div class="bronze-badge">
-                </div>
-                <div class="rank-card-badge-points">
-                  <%= @rank_3.participant.badge_stats.last %>
-                </div>
-              </div>
+              <div class="badge badge-achievement-gold" style = "margin-right: 5px;"><%= @rank_3.participant.badge_stats.first.to_i %></div><div class="badge badge-achievement-silver" style = "margin-right: 5px;"><%= @rank_3.participant.badge_stats.second.to_i %></div><div class="badge badge-achievement-bronze" style = "margin-right: 5px;"><%= @rank_3.participant.badge_stats.third.to_i %></div>
             </div>
           </div>
         </div>
