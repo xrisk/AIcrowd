@@ -12,6 +12,7 @@
         <%= image_tag "/assets/img/showcase-description.png", class: 'w-100' %>
       </div>
     </div>
+    <%= render 'shared/posts/filters' %>
     <%= render partial: 'shared/posts/index',  locals: { posts: @post } %>
   </div>
 </div>
