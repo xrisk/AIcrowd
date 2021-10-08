@@ -6,8 +6,8 @@ export default class extends Controller {
     const currentTab = this.data.get('current-tab-id')
     const challengeTab = $('#achievement_tab_challenge')
     const notebookTab = $('#achievement_tab_notebook')
-    const discussionTab = $('#achievement_tab_discussion')
-    const firstTab = $('#achievement_tab_first')
+    const discussionTab = $('#achievement_tab_community')
+    const firstTab = $('#achievement_tab_induction')
     const participant_id = this.data.get('participant-id')
 
     $.ajax({
