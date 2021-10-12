@@ -13,37 +13,9 @@ module Merit
     include Merit::PointRulesMethods
 
     def initialize
-      # score 10, :on => 'users#create' do |user|
-      #   user.bio.present?
-      # end
-      #
-      # score 15, :on => 'reviews#create', :to => [:reviewer, :reviewed]
-      #
-      # score 20, :on => [
-      #   'comments#create',
-      #   'photos#create'
-      # ]
-      #
-      # score -10, :on => 'comments#destroy'
+      ### CHALLENGE BADGE POINTS
 
-
-      score 1, :on => 'votes#create', category: 'Liked Challenge' do |vote|
-        vote.votable_type == "Challenge"
-      end
-
-      score -1, :on => 'votes#destroy', category: 'Liked Challenge' do |vote|
-        vote.votable_type == "Challenge"
-      end
-
-      # Followed n number of challenges
-
-      score 1, :on => 'follows#create', category: 'Followed Challenge' do |follow|
-        follow.followable_type == "Challenge"
-      end
-
-      score -1, :on => 'follows#destroy', category: 'Followed Challenge' do |follow|
-        follow.followable_type == "Challenge"
-      end
+      # Shared challenge
 
       # Participated in n number of challenges
 
@@ -53,66 +25,30 @@ module Merit
 
       score 1, :on => 'submissions#create', category: 'Made Submission'
 
-      # Badges for number of successful submissions
-
-      score 1, :on => 'submissions#create', category: 'Made Successful Submission' do |submission|
-        submission.grading_status_cd == 'graded'
-      end
-
-
-      # Badges for winning a challenge
-      # Liked n number of practice problems
-
-      score 1, :on => 'votes#create', category: 'Liked Practice Challenge' do |vote|
-        vote.votable_type == "Challenge" && vote.votable.practice_flag == true
-      end
-
-      score -1, :on => 'votes#destroy', category: 'Liked Practice Challenge' do |vote|
-        vote.votable_type == "Challenge" && vote.votable.practice_flag == true
-      end
-
-      # Shared n number of practice problems
-      # Followed n number of practice problems
-
-      score 1, :on => 'follows#create', category: 'Followed Practice Challenge' do |follow|
-        follow.followable_type == "Challenge" && follow.followable.practice_flag == true
-      end
-
-      score -1, :on => 'follows#destroy', category: 'Followed Practice Challenge' do |follow|
-        follow.followable_type == "Challenge" && follow.followable.practice_flag == true
-      end
-
+      # Finished in top 20 percentile
+      # Finished in top 10 percentile
+      # Finished in top 5 percentile
+      # Shared Practice Problem
 
       # Participate in n number of practice problems
 
-      score 1, :on => ['challenge_participants#create', 'challenge_participants#update'], category: 'Participated Practice Challenge' do |challenge_participant|
+      score 1, :on => ['challenge_participants#create', 'challenge_participants#update'], category: 'Participated In Practice Challenge' do |challenge_participant|
         challenge_participant.challenge.practice_flag == true
       end
 
-      # N number of successful submissions in practice problems
-
-      score 1, :on => 'submissions#create', category: 'Made Successful Practice Submission' do |submission|
-        submission.challenge.practice_flag == true
+      # Submission Streak
+      # Need to discuss this
+      score 1, :on => 'submissions#create', category: 'Submission Streak' do |submission|
+        submission.participant_streak_days >=
       end
 
-      # Badges for consecutive days submissions
-
-      # score 1, :on => 'submissions#create', category: 'submitted-40-submissions' do |submission|
-      #   submission.participant.submissions.count == 40
-      # end
-
-      # score 1, :on => 'submissions#create', category: 'submitted-80-submissions' do |submission|
-      #   submission.participant.submissions.count == 80
-      # end
-
-      # score 1, :on => 'submissions#create', category: 'submitted-120-submissions' do |submission|
-      #   submission.participant.submissions.count == 120
-      # end
-
-      # Badges for rank improvement
-      # Badges for score improvement
-      # Actively participated in one challenge, made 2 submissions and liked 2 challenges.
-      # Badges for inviting users
+      # Leaderboard Ninja
+      # Improved Score
+      # Participated in one challenge, made 2 submissions and liked 2 challenges.
+      # Invited User
+      score 1, :on => 'team_invitations/acceptances#create', category: 'Invited User', model_name: "Invitation" do |invitation|
+        invitaiton.status == 'accepted'
+      end
 
 
       # Notebook Related Badges
@@ -131,17 +67,8 @@ module Merit
         post.community_explainer_winner
       end
 
-      # Notebook shared n times
-
-      # Participant liked notebooks n number of times
-
-      score 1, :on => ['votes#create', 'votes#white_vote_create'], category: 'Liked Notebook' do |vote|
-        vote.votable_type == "Post"
-      end
-
-      score -1, :on => ['votes#destroy', 'votes#white_vote_destroy'], category: 'Liked Notebook' do |vote|
-        vote.votable_type == "Post"
-      end
+      # Shared Notebook
+      # Notebook Was Shared
 
       # Participant Notebooks were liked n number of times
 
@@ -167,69 +94,51 @@ module Merit
         comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count == 35
       end
 
-      # Participant notebooks received n number of comments
+      # Notebook Received Comment
+      score 1, :on => ['commontator/comments#create'], category: 'Notebook Received Comment', model_name: 'CommontatorThread', to: :post_user do |comment|
+        comment.commontable_type == "Post"
+      end
 
-      # score 1, :on => ['commontator/comments#create'], category: 'Commented On Notebook', model_name: 'CommontatorThread do |comment|
-      #   if comment.commontable_type == "Post"
-      #     Post.where()
-      #   end
-      # end
+      # Bookmarked Notebook
 
-      # score 1, :on => ['commontator/comments#create'], category: 'Commented On Notebook', model_name: 'CommontatorThread do |comment|
-      #   comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count == 15
-      # end
-
-      # score 1, :on => ['commontator/comments#create'], category: 'Commented On Notebook', model_name: 'CommontatorThread do |comment|
-      #   comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count == 35
-      # end
-
-      # Subscribed n times
-      #
       score 1, :on => 'post_bookmarks#create', category: 'Bookmarked Notebook'
 
       score -1, :on => 'post_bookmarks#destroy', category: 'Bookmarked Notebook'
 
-      # N subscribers
+      # Notebook Received Bookmark
 
       score 1, :on => 'post_bookmarks#create', category: 'Notebook Was Bookmarked', to: :participant
 
       score -1, :on => 'post_bookmarks#destroy', category: 'Notebook Was Bookmarked', to: :participant
 
-      # Download notebooks
+      # Executed Notebook
+      # Notebook Was Executed
       # Created one notebook, like 3 notebooks, shared 2 notebooks
-      # Created n number of blitz notebooks
+      # Created Blitz Notebook
 
+
+      # INDUCTION BADGES
+
+      # Sign Up
+      score 1, :on => 'participants/registrations#create', category: 'Sign Up'
 
       # Created first notebook
       score 1, :on => 'posts#create', category: 'Created First Notebook' do |post|
         participant.points(category: 'Created First Notebook') == 0
       end
 
-      # # Shared first notebook
-      # # Notebook was shared first time
+      # Liked 1 notebook
 
-      # # Liked 1 notebook
       score 1, :on => 'votes#create', category: 'Liked First Notebook' do |vote|
         vote.votable_type == "Post" && participant.points(category: 'Liked First Notebook') == 0
       end
 
-      # # Notebook got first like
+      # Notebook got first like
 
       score 1, :on => 'votes#create', category: 'Notebook got first like', to: :participant do |vote|
         vote.votable_type == "Post" && participant.points(category: 'Notebook got first like') == 0
       end
 
-      # # Commented on 1 notebook
-      # # Notebook got 1 comment
-      # # You subscribed to your 1st notebook
-      # # Your notebook got 1st subscriber
-      # # You downloaded your 1st notebook
-      # # Your notebook got its 1st download
-      # # Listing all the first time badges
-
-      # # Sign Up
-      # score 1, :on => 'participants/registrations#create', category: 'participant-signed-up' do
-      # end
 
       # Complete Bio/Profile
       score 1, :on => 'participants#update', category: 'Completed Bio-Profile' do |participant|
@@ -265,6 +174,97 @@ module Merit
       score 1, :on => 'votes#create', category: 'Liked First Blog' do |vote|
         vote.votable.is_a?(Blog) && participant.points(category: 'Liked First Blog') == 0
       end
+
+      # Logged First Feedback
+
+      score 1, :on => 'feedbacks#create', category: 'Logged First Feedback' do |feedback|
+        Feedback.where(participant_id: feedback.participant_id).count == 1
+      end
+
+      # Attended First Townhall/Workshop
+
+      # Made their first team
+      score 1, :on => 'challenges/teams#create', category: 'Created First Team' do |team|
+        TeamParticipant.where(team_id: team.id).count  == 1
+      end
+
+      # Liked First Challenge
+      score 1, :on => 'votes#create', category: 'Liked Challenge' do |vote|
+        vote.participant.votes.where(votable_type: "Challenge").count == 1
+      end
+
+      # Shared First Challenge
+
+      # Followed First Challenge
+      score 1, :on => 'follows#create', category: 'Followed Challenge' do |follow|
+        Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").count == 1
+      end
+
+      # Accepted Rules
+
+      # Participated In First Challenge
+      score 1, :on => ['challenge_participants#create', 'challenge_participants#update'], category: 'Participated Challenge' do |challenge_participant|
+        challenge_participant.participant.challenge_participants.count == 1
+      end
+
+      # First Submission
+      score 1, :on => 'submissions#create', category: 'Made Submission' do |submission|
+        submission.participant.submissions.count == 1
+      end
+
+      # First Submission With Baseline
+
+      # First Successful Submission
+      score 1, :on => 'submissions#create', category: 'Made Submission' do |submission|
+        submission.participant.submissions.where(grading_status_cd: 'graded').count == 1
+      end
+
+      # Liked First Practice Problem
+      score 1, :on => 'votes#create', category: 'Liked First Practice Problem' do |vote|
+        challenge_ids = vote.participant.votes.where(votable_type: "Challenge").pluck(:votable_id)
+        Challenge.where(id: challenge_ids, practice_flag: true).count == 1
+      end
+
+      # Shared First Practice Problem
+
+      # Followed First Practice Problem
+       score 1, :on => 'follows#create', category: 'Followed Practice Challenge' do |follow|
+        followable_ids = Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").pluck(:followable_id)
+        Challenge.where(id: followable_ids, practice_flag: true).count == 1
+      end
+
+      # Participated In First Practice Problem
+      score 1, :on => ['challenge_participants#create', 'challenge_participants#update'], category: 'Participated In First Practice Problem' do |challenge_participant|
+        challenge_participant.participant.challenge_participants.count == 1
+      end
+
+      # Shared First Notebook
+      # Notebook Was Shared First Time
+
+      # Commented on Notebook
+      score 1, :on => ['commontator/comments#create'], category: 'Commented On Notebook', model_name: 'CommontatorThread' do |comment|
+        comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count == 1
+      end
+
+      # Notebook Received First Comment
+      score 1, :on => ['commontator/comments#create'], category: 'Notebook Received Comment', model_name: 'CommontatorThread', to: :post_user do |comment|
+        comment.commontable_type == "Post"
+      end
+
+
+      # Bookmarked First Notebook
+      score 1, :on => 'post_bookmarks#create', category: 'Bookmarked First Notebook', model_name: 'Post' do |post|
+        post.post_bookmarks.count == 1
+      end
+
+      # Notebook Received Bookmark
+      score 1, :on => 'post_bookmarks#create', category: 'Notebook Received Bookmarked', model_name: 'Post', to: :participant do |post|
+        post.post_bookmarks.count == 1
+      end
+
+      # Downloaded First Notebook
+      # Notebook Received Download"
+
     end
   end
 end

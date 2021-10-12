@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_22_121611) do
+ActiveRecord::Schema.define(version: 2021_10_08_105824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 2021_09_22_121611) do
     t.integer "target"
     t.text "social_message"
     t.text "sub_module"
+    t.boolean "active", default: true
     t.index ["badges_event_id"], name: "index_aicrowd_badges_on_badges_event_id"
   end
 

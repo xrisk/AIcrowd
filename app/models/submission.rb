@@ -192,4 +192,29 @@ class Submission < ApplicationRecord
       super
     end
   end
+
+  PARTICIPANT_STREAK_DAYS_SQL = <<-SQL
+    SELECT (CURRENT_DATE - series_date::date) AS days
+    FROM generate_series(
+          ( SELECT created_at::date FROM submissions
+            WHERE submissions.participant_id = :participant_id
+            ORDER BY created_at ASC
+            LIMIT 1
+          ),
+          CURRENT_DATE,
+          '1 day'
+        ) AS series_date
+    LEFT OUTER JOIN submissions ON submissions.participant_id = :participant_id AND
+                             submissions.created_at::date = series_date
+    GROUP BY series_date
+    HAVING COUNT(submissions.id) = 0
+    ORDER BY series_date DESC
+    LIMIT 1
+  SQL
+
+  def participant_streak_days
+    sql = sanitize_sql [ PARTICIPANT_STREAK_DAYS_SQL, { participant_id: self.participant_id } ]
+    result_value = connection.select_value(sql)
+    Integer(result_value) rescue 0
+  end
 end
