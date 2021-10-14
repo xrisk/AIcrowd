@@ -193,11 +193,11 @@ module Merit
         post.post_bookmarks.count == 3
       end
 
-      grant_on 'post_bookmarks#create', badge: 'Notebook Received Bookmarked', level: 1, model_name: 'Post', to: :participant do |post|
+      grant_on 'post_bookmarks#create', badge: 'Notebook Received Bookmarked', level: 2, model_name: 'Post', to: :participant do |post|
         post.post_bookmarks.count == 15
       end
 
-      grant_on 'post_bookmarks#create', badge: 'Notebook Received Bookmarked', level: 1, model_name: 'Post', to: :participant do |post|
+      grant_on 'post_bookmarks#create', badge: 'Notebook Received Bookmarked', level: 3, model_name: 'Post', to: :participant do |post|
         post.post_bookmarks.count == 30
       end
 

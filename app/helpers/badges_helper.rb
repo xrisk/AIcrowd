@@ -23,7 +23,7 @@ module BadgesHelper
   end
 
   def all_badges_participant_data(participant=current_participant, sub_module='challenge')
-    badge_names = AicrowdBadge.where('level is not NULL').where(sub_module: sub_module).pluck(:name).uniq
+    badge_names = AicrowdBadge.where('level is not NULL').where(active: true, sub_module: sub_module).pluck(:name).uniq
     badge_results = {}
 
     badge_names.each do |name|

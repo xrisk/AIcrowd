@@ -39,7 +39,7 @@ module Merit
       # Submission Streak
       # Need to discuss this
       score 1, :on => 'submissions#create', category: 'Submission Streak' do |submission|
-        submission.participant_streak_days >=
+        false
       end
 
       # Leaderboard Ninja
