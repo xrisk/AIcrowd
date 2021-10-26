@@ -211,7 +211,7 @@ class SubmissionsController < ApplicationController
     if params[:locked_submission][:submission_id].present?
       unless LockedSubmission.where(submission_id: params[:locked_submission][:submission_id].to_i).exists?
         team_participant_ids = get_team_participants
-        locked_submission = LockedSubmission.where(locked_by: team_participant_ids).first
+        locked_submission = LockedSubmission.where(locked_by: team_participant_ids, challenge_id: @challenge.id).first
 
         if locked_submission.present?
           if locked_submission.submission_id != params[:locked_submission][:submission_id].to_i
@@ -540,7 +540,7 @@ class SubmissionsController < ApplicationController
       if team.present?
         locked_participants = team.team_participants.pluck(:participant_id)
         team_participant_ids = team.team_participants.pluck(:participant_id)
-        next if LockedSubmission.where(locked_by: locked_participants).exists? || (locked_submission_hash.keys & (locked_participants)).present?
+        next if LockedSubmission.where(locked_by: locked_participants, challenge_id: @challenge_id).exists? || (locked_submission_hash.keys & (locked_participants)).present?
       end
       team_participant_ids = participant.id if team_participant_ids.blank?
 
