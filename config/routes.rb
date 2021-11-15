@@ -277,7 +277,11 @@ Rails.application.routes.draw do
   end
 
   resources :post_bookmarks, only: [:create, :destroy]
-  resources :badges, only: [:index]
+  resources :badges, only: [:index] do
+    post :shared_notebook, on: :collection
+    post :downloaded_notebook, on: :collection
+    post :executed_notebook, on: :collection
+  end
 
   resources :ratings, only: [:index, :create] do
     get :search, on: :collection

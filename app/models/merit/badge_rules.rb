@@ -132,7 +132,30 @@ module Merit
       end
 
       # Shared Notebook
+      grant_on 'badges#shared_notebook', badge: 'Shared Notebook', model_name: 'Post', level: 1 do |post|
+        current_participant.points(category: 'Shared Notebook') == 10
+      end
+
+      grant_on 'badges#shared_notebook', badge: 'Shared Notebook', model_name: 'Post', level: 2 do |post|
+        current_participant.points(category: 'Shared Notebook') == 25
+      end
+
+      grant_on 'badges#shared_notebook', badge: 'Shared Notebook', model_name: 'Post', level: 3 do |post|
+        current_participant.points(category: 'Shared Notebook') == 40
+      end
+
       # Notebook Was Shared
+      grant_on 'badges#shared_notebook', badge: 'Notebook Was Shared', model_name: 'Post', to: :participant, level: 1 do |post|
+        current_participant.points(category: 'Notebook Was Shared') == 3
+      end
+
+      grant_on 'badges#shared_notebook', badge: 'Notebook Was Shared', model_name: 'Post', to: :participant, level: 2 do |post|
+        current_participant.points(category: 'Notebook Was Shared') == 15
+      end
+
+      grant_on 'badges#shared_notebook', badge: 'Notebook Was Shared', model_name: 'Post', to: :participant, level: 3 do |post|
+        current_participant.points(category: 'Notebook Was Shared') == 30
+      end
 
       # Notebook Was Liked
       grant_on ['votes#create', 'votes#white_vote_create'], badge: 'Notebook Was Liked', level: 1, to: :participant do |vote|
@@ -188,21 +211,32 @@ module Merit
       end
 
       # Notebook Received Bookmark
-
-      grant_on 'post_bookmarks#create', badge: 'Notebook Received Bookmarked', level: 1, model_name: 'Post', to: :participant do |post|
+      grant_on 'post_bookmarks#create', badge: 'Notebook Received Bookmark', level: 1, model_name: 'Post', to: :participant do |post|
         post.post_bookmarks.count == 3
       end
 
-      grant_on 'post_bookmarks#create', badge: 'Notebook Received Bookmarked', level: 2, model_name: 'Post', to: :participant do |post|
+      grant_on 'post_bookmarks#create', badge: 'Notebook Received Bookmark', level: 2, model_name: 'Post', to: :participant do |post|
         post.post_bookmarks.count == 15
       end
 
-      grant_on 'post_bookmarks#create', badge: 'Notebook Received Bookmarked', level: 3, model_name: 'Post', to: :participant do |post|
+      grant_on 'post_bookmarks#create', badge: 'Notebook Received Bookmark', level: 3, model_name: 'Post', to: :participant do |post|
         post.post_bookmarks.count == 30
       end
 
       # Executed Notebook
       # Notebook Was Executed
+      grant_on 'badges#executed_notebook', badge: 'Notebook Was Executed', model_name: 'Post', to: :participant, level: 1 do |post|
+        current_participant.points(category:'Notebook Was Executed') == 5
+      end
+
+      grant_on 'badges#executed_notebook', badge: 'Notebook Was Executed', model_name: 'Post', to: :participant, level: 2 do |post|
+        current_participant.points(category: 'Notebook Was Executed') == 15
+      end
+
+      grant_on 'badges#executed_notebook', badge: 'Notebook Was Executed', model_name: 'Post', to: :participant, level: 3 do |post|
+        current_participant.points(category: 'Notebook Was Executed') == 35
+      end
+
       # Created one notebook, like 3 notebooks, shared 2 notebooks
       # Created Blitz Notebook
 
@@ -274,7 +308,7 @@ module Merit
       end
 
       # Liked First Challenge
-      grant_on 'votes#create', badge: 'Liked Challenge', level: 4 do |vote|
+      grant_on 'votes#create', badge: 'Liked First Challenge', level: 4 do |vote|
         vote.participant.votes.where(votable_type: "Challenge").count == 1
       end
 
@@ -288,19 +322,20 @@ module Merit
       # Accepted Rules
 
       # Participated In First Challenge
-      grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'Participated Challenge', level: 4 do |challenge_participant|
+      grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'Participated In First Challenge', level: 4 do |challenge_participant|
         challenge_participant.participant.challenge_participants.count == 1
       end
 
       # First Submission
-      grant_on 'submissions#create', badge: 'Made Submission', level: 4 do |submission|
+      grant_on 'submissions#create', badge: 'First Submission', level: 4 do |submission|
         submission.participant.submissions.count == 1
       end
 
       # First Submission With Baseline
 
       # First Successful Submission
-      grant_on 'submissions#create', badge: 'Made Submission', level: 4 do |submission|
+      # Check this
+      grant_on 'submissions#create', badge: 'First Successful Submission', level: 4 do |submission|
         submission.participant.submissions.where(grading_status_cd: 'graded').count == 1
       end
 
@@ -342,12 +377,18 @@ module Merit
       end
 
       # Notebook Received Bookmark
-      grant_on 'post_bookmarks#create', badge: 'Notebook Received Bookmarked', level: 4, model_name: 'Post', to: :participant do |post|
+      grant_on 'post_bookmarks#create', badge: 'Notebook Received Bookmark', level: 4, model_name: 'Post', to: :participant do |post|
         post.post_bookmarks.count == 1
       end
 
       # Downloaded First Notebook
+      grant_on 'badges#downloaded_notebook', badge: 'Downloaded First Notebook', model_name: 'Post', level: 4 do |post|
+      end
+
       # Notebook Received Download"
+      grant_on 'badges#downloaded_notebook', badge: 'Notebook Received Download', model_name: 'Post', to: :participant, level: 4 do |post|
+      end
+
     end
   end
 end

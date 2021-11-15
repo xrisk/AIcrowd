@@ -27,7 +27,7 @@ module BadgesHelper
     badge_results = {}
 
     badge_names.each do |name|
-      badges = AicrowdBadge.where(name: name).order(:target)
+      badges = AicrowdBadge.where(name: name, active: true, sub_module: sub_module).order(:target)
       current_points = participant.points(category: name)
       active_badge = active_badge(badges, participant)
       icon = active_badge.is_a?(AicrowdBadge) ? active_badge.image : ENV['BADGE_LOCKED_PATH']

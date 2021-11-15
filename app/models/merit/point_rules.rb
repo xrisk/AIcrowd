@@ -18,11 +18,9 @@ module Merit
       # Shared challenge
 
       # Participated in n number of challenges
-
       score 1, :on => ['challenge_participants#create'], category: 'Participated Challenge'
 
       # Badges for number of submissions
-
       score 1, :on => 'submissions#create', category: 'Made Submission'
 
       # Finished in top 20 percentile
@@ -31,7 +29,6 @@ module Merit
       # Shared Practice Problem
 
       # Participate in n number of practice problems
-
       score 1, :on => ['challenge_participants#create', 'challenge_participants#update'], category: 'Participated In Practice Challenge' do |challenge_participant|
         challenge_participant.challenge.practice_flag == true
       end
@@ -54,7 +51,6 @@ module Merit
       # Notebook Related Badges
 
       # Create Notebook Badges
-
       score 1, :on => 'posts#create', category: 'Created Notebook'
 
       score -1, :on => 'posts#destroy', category: 'Created Notebook'
@@ -68,7 +64,12 @@ module Merit
       end
 
       # Shared Notebook
+      score 1, :on => 'badges#shared_notebook', category: 'Shared Notebook', model_name: 'Post' do |post|
+      end
+
       # Notebook Was Shared
+      score 1, :on => 'badges#shared_notebook', category: 'Shared Notebook', model_name: 'Post', to: :participant do |post|
+      end
 
       # Participant Notebooks were liked n number of times
 
@@ -100,19 +101,20 @@ module Merit
       end
 
       # Bookmarked Notebook
-
       score 1, :on => 'post_bookmarks#create', category: 'Bookmarked Notebook'
 
       score -1, :on => 'post_bookmarks#destroy', category: 'Bookmarked Notebook'
 
       # Notebook Received Bookmark
-
       score 1, :on => 'post_bookmarks#create', category: 'Notebook Was Bookmarked', to: :participant
 
       score -1, :on => 'post_bookmarks#destroy', category: 'Notebook Was Bookmarked', to: :participant
 
       # Executed Notebook
       # Notebook Was Executed
+      score 1, :on => 'badges#executed_notebook', category: 'Notebook Was Executed', model_name: 'Post', to: :participant do |post|
+      end
+
       # Created one notebook, like 3 notebooks, shared 2 notebooks
       # Created Blitz Notebook
 
@@ -263,7 +265,14 @@ module Merit
       end
 
       # Downloaded First Notebook
-      # Notebook Received Download"
+      score 1, :on => 'badges#downloaded_notebook', category: 'Downloaded First Notebook', model_name: 'Post' do |post|
+        current_participant.points(category: 'Downloaded First Notebook') == 0
+      end
+
+      # Notebook Received Download
+      score 1, :on => 'badges#downloaded_notebook', category: 'Notebook Received Download', model_name: 'Post', to: :participant do |post|
+        current_participant.points(category: 'Notebook Received Download') == 0
+      end
 
     end
   end
