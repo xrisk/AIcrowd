@@ -14,7 +14,7 @@ const {
   shineWrapper,
 } = styles;
 
-const AchievementPopup = ({ title, description, icon, handleClick }) => {
+const AchievementPopup = ({ title, description, icon, handleClick, url, badgeTitle, socialMessage }) => {
   return (
     <div>
       <div className={main}>
@@ -31,9 +31,8 @@ const AchievementPopup = ({ title, description, icon, handleClick }) => {
         <div className={descriptionText}>{description}</div>
         <div className={socialText}>Share with your friends: </div>
         <div className={socialIconWrapper}>
-          <img src="https://ui-storybook.aicrowd.com/assets/social/twitter.svg" alt="twitter logo"></img>
-          <img src="https://ui-storybook.aicrowd.com/assets/social/linkedin.svg" alt="linkedin logo"></img>
-          <img src="https://ui-storybook.aicrowd.com/assets/social/github.svg" alt="github logo"></img>
+          <img src="/assets/misc/badge-twitter.svg" alt="twitter logo" onClick={()=>window.shareBadgeTwitter(url, socialMessage)}></img>
+          <img src="/assets/misc/badge-linkedin.svg" alt="linkedin logo" onClick={()=>window.shareBadgeLinkedin(url, badgeTitle, socialMessage)}></img>
         </div>
         <ButtonDefault type="primary" text="Continue" handleClick={handleClick} />
       </div>
