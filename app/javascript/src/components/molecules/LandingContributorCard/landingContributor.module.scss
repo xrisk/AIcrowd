@@ -1,0 +1,46 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../styles/base/__base-dir.scss";
+
+.mainWrapper {
+  width: 303px;
+  height: 56px;
+  box-shadow: 0px 4px 24px rgba(163, 163, 163, 0.25);
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  padding: $spacing-xxx-small;
+  align-items: center;
+  @include media-query("small") {
+    height: 48px;
+    max-width: 288px;
+    margin-top: $spacing-x-small;
+    margin-bottom: $spacing-x-small;
+  }
+
+  .titleText {
+    font-family: Archivo;
+    font-style: normal;
+    font-size: $font-x-small;
+    line-height: 24px;
+    color: $color-text-dark;
+    padding-left: $spacing-xx-small;
+    @include media-query("small") {
+      font-size: 14px;
+    }
+  }
+
+  .countText {
+    font-family: Archivo;
+    font-size: $font-xx-small;
+    line-height: 19px;
+    color: $color-grey;
+  }
+
+  .subWrapper {
+    display: flex;
+    align-items: center;
+  }
+  // @include media-query("small") {
+  //   width: 100%;
+  // }
+}

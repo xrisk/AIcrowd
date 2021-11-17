@@ -1,0 +1,92 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../styles/base/__base-dir.scss";
+
+$gradient-color: linear-gradient(to right, #f0524d, #d3403b);
+
+@mixin gradient-text {
+  background-image: $gradient-color;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-family: Inter;
+
+  .registerButtonWrapper {
+    display: flex;
+    flex-direction: column;
+    button {
+      margin-bottom: 16px;
+    }
+  }
+
+  .titleText {
+    font-size: $font-xx-large;
+    font-weight: 700;
+    line-height: 64px;
+    padding-bottom: 8px;
+    @include gradient-text;
+
+    @include media-query("x-large") {
+      font-weight: 600;
+      font-size: 40px;
+      line-height: 48px;
+      padding-bottom: 8px;
+    }
+
+    @include media-query("small") {
+      font-size: 28px;
+      line-height: 40px;
+      letter-spacing: 0.1px;
+      font-weight: 500;
+    }
+  }
+
+  .heroTitle {
+    font-weight: 500;
+    font-size: 72px;
+    line-height: 96px;
+    letter-spacing: -0.5px;
+    @include gradient-text;
+
+    @include media-query("x-large") {
+      font-weight: 700;
+      font-size: 48px;
+      line-height: 64px;
+      padding-bottom: 24px;
+    }
+
+    @include media-query("small") {
+      font-size: 28px;
+      line-height: 40px;
+      letter-spacing: 0.1px;
+      padding-bottom: 16px;
+    }
+  }
+
+  .buttonWrapper {
+    display: flex;
+  }
+
+  .descriptionText {
+    font-size: 19px;
+    line-height: 32px;
+    color: $color-secondary;
+    padding-bottom: 24px;
+    padding-top: 0px;
+
+    @include media-query("x-large") {
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    @include media-query("small") {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+}

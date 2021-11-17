@@ -1,0 +1,61 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../styles/base/__base-dir.scss";
+
+.mainWrapper {
+  width: 496px;
+  height: 80px;
+  background: #f4f4f4;
+  border-radius: 13px;
+  padding: $spacing-xx-small;
+  justify-content: center;
+  font-family: Inter;
+}
+
+.titleText {
+  font-size: $font-small;
+  line-height: 24px;
+  color: $color-text-dark;
+}
+
+.descriptionText {
+  font-size: $font-x-small;
+  line-height: 24px;
+  color: $color-text-light;
+}
+
+.mainWrapper {
+  display: flex;
+  flex-direction: column;
+
+  .textWrapper {
+    flex: 1;
+    display: flex;
+  }
+  .imgWrapper {
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+  }
+  .subWrapper {
+    display: flex;
+    align-items: center;
+  }
+  .statusWrapper {
+    align-items: center;
+  }
+
+  .commentWrapper {
+    cursor: pointer;
+    .count {
+      margin-left: $spacing-xxx-small;
+    }
+
+    i {
+      font-size: $font-small;
+      color: $color-text-light;
+      &:hover {
+        color: #747474;
+      }
+    }
+  }
+}

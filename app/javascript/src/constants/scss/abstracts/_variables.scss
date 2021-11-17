@@ -4,22 +4,106 @@
 
 // Breakpoints
 $breakpoints: (
+  "wide": (
+    max-width: 1600px,
+  ),
   "x-large": (
-    max-width: 1439.98px,
+    max-width: 1440px,
   ),
   "large": (
-    max-width: 1199.98px,
+    max-width: 1200px,
   ),
   "medium": (
-    max-width: 991.98px,
+    max-width: 992px,
   ),
   "small-medium": (
-    max-width: 639.98px,
+    max-width: 640px,
   ),
   "small": (
-    max-width: 575.98px,
+    max-width: 576px,
   ),
   "x-small": (
-    max-width: 399.98px,
+    max-width: 400px,
   ),
 ) !default;
+
+//
+// Color Variables
+//
+
+// Brand Colors
+$color-primary: #f0524d;
+$color-secondary: #252627;
+
+// Grey Colors
+$color-grey: #5d5f60;
+$color-border: #cdcdcd;
+$color-border-light: #e7e7e7;
+$color-bg-light: #ffffff;
+$color-bg-dark: #f4f4f4;
+
+// Text Colors
+$color-text-dark: #1f1f1f;
+$color-text-light: #747474;
+$color-text-info-bar: #604322;
+$color-text-accent: #d3413c;
+
+// State Colors
+$color-link: #1f1f1f;
+$color-success: #44b174;
+$color-info-bar: #ffc582;
+$color-error: #eb5757;
+
+// Tier Colors
+$color-tier-legend: #240f05;
+$color-tier-master: #cb1d12;
+$color-tier-pro: #f58116;
+$color-tier-elite: #701a72;
+$color-tier-veteran: #195193;
+$color-tier-rookie: #628e2f;
+
+// Badge Colors
+$color-badge-gold: linear-gradient(141.18deg, #dba614 14.89%, #be8d1e 85.66%);
+$color-badge-silver: linear-gradient(141.18deg, #a2a3a3 14.89%, #8a8a8a 85.66%);
+$color-badge-bronze: linear-gradient(141.18deg, #cd672d 14.89%, #a35224 85.66%);
+$color-badge-first: linear-gradient(141.18deg, #de4b46 14.89%, #cb2a24 85.66%);
+
+// Badge icon Colors
+$color-badge-icon-gold: linear-gradient(180deg, #fffaeb 0%, #fffaeb 100%);
+$color-badge-icon-silver: #f5f5f5;
+$color-badge-icon-bronze: #f8eae2;
+$color-badge-icon-first: #fdedec;
+
+//
+// Font sizes
+//
+$font-xx-large: 48px;
+$font-x-large: 36px;
+$font-large: 24px;
+$font-medium: 19px;
+$font-small: 17px;
+$font-x-small: 15px;
+$font-xx-small: 12px;
+
+// Font weight
+$font-weight-semibold: 600;
+$font-weight-medium: 500;
+
+// Radius
+$radius-normal: 4px;
+$radius-circle: 50%;
+
+// Box shadow
+$shadow: 0px 8px 24px rgba(0, 0, 0, 0.12);
+
+// Spacing
+$spacing-xxx-small: 8px;
+$spacing-xx-small: 16px;
+$spacing-x-small: 24px;
+$spacing-small: 32px;
+$spacing-medium: 40px;
+$spacing-large: 56px;
+$spacing-x-large: 72px;
+$spacing-xx-large: 80px;
+$spacing-xxx-large: 96px;
+$spacing-huge: 120px;

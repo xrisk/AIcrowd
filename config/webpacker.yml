@@ -51,6 +51,7 @@ default: &default
     - .gif
     - .jpeg
     - .jpg
+    - .tsx
 
 development:
   <<: *default

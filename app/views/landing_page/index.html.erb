@@ -1,237 +1,217 @@
-<div data-controller="landing-page">
-  <div class="masthead masthead-home bg-white">
-    <div class="container-fluid">
-      <div class="row">
+<%
+  unity = '/assets/new_logos/partner-logo-unity.svg';
+  sbb = '/assets/new_logos/partner-logo-sbb.svg';
+  uber = '/assets/new_logos/partner-logo-uber.svg';
+  openai = '/assets/new_logos/partner-logo-openai.svg';
+  stanford = '/assets/new_logos/partner-logo-stanford.png';
+  firmenich = '/assets/new_logos/partner-logo-firmenich.svg';
+  spotify = '/assets/new_logos/partner-logo-spotify.svg';
+  aws = '/assets/new_logos/partner-logo-aws.svg';
 
-        <div class="col-lg-12 col-xl-6">
-          <h1><span class="text-primary">Crowdsourcing AI</span> to solve real-world problems</h1>
-          <p>AIcrowd enables data science experts and enthusiasts to collaboratively solve real-world problems, through challenges.</p>
-            <%= link_to "Organize a challenge", landing_page_host_path , :class=>"btn btn-secondary mt-4"%>
-        </div>
+  card02 = "assets/new_logos/neu ui cards-02.png";
+  card04 = "assets/new_logos/neu ui cards-04.png";
+  card06 = "assets/new_logos/neu ui cards-06.png";
+  card08 = "assets/new_logos/neu ui cards-08.png";
+  card10 = "assets/new_logos/neu ui cards-10.png";
+  card12 = "assets/new_logos/neu ui cards-12.png";
+  card14 = "assets/new_logos/neu ui cards-14.png";
 
-        <% if @partners.present? %>
-          <div class="col-lg-12 col-xl-6">
-            <div class="logos-organizers">
-              <% @partners.each_with_index do |partner,index| %>
-              <div class="logo-organizer">
-                <%= image_tag partner.image_file.url, class: "img-fluid" %>
-              </div>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
+  customAvatar1 = "/assets/new_logos/custom-avatar-1.png";
+  customAvatar2 = "/assets/new_logos/custom-avatar-2.png";
+  customAvatar3 = "/assets/new_logos/custom-avatar-3.png";
+  customAvatar4 = "/assets/new_logos/custom-avatar-4.png";
+  customAvatar5 = "/assets/new_logos/custom-avatar-5.png";
 
-  <!-- section -->
-  <section class="section-p-md bg-light">
+  notebookImage = "/assets/new_logos/notebook.png";
 
-    <!-- challenge cards -->
-    <div class="container-fluid">
-      <div class="row">
-        <!-- section header -->
-        <div class="col-12">
-          <header class="section-header">
-            <div>
-              <h4>Featured challenges</h4>
-            </div>
+  challengeImage = '/assets/new_logos/challenge-banner-image-example.png';
 
-            <%= link_to 'See all',
-              challenges_path,
-              class: "btn btn-secondary btn-sm" %>
+%>
 
-          </header>
-        </div>
-      </div>
-      <!-- /section header -->
-      <div class='row challenge-list'>
-        <%= render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>
-      </div>
-    </div>
-    <!-- /challenge cards -->
-  </section>
-  <!-- section -->
+<%
 
-  <!-- section -->
-  <section class="section-p-md border-top">
-    <div class="container-fluid">
-      <div class="row">
+  landingChallengeCard1 = {
+    prize: 'Winner to speak at AMLD 2021',
 
-        <!-- testimonial carousel -->
-        <div class="col-sm-12 col-md-8">
+    users: [
+      { id: 1, image: customAvatar1, tier: 4 },
+      { id: 2, image: customAvatar2, tier: 2 },
+      { id: 3, image: customAvatar3, tier: 5 },
+      { id: 4, image: customAvatar4, tier: 0 },
+      { id: 5, image: customAvatar5, tier: 1 },
+    ],
+    loading: false,
+    onCard: false,
+    size: 'default',
 
-          <div id="carouselTestimonial" class="carousel carousel-testimonials slide carousel-fade" data-ride="carousel">
-            <ol class="carousel-indicators">
-              <li data-target="#carouselTestimonial" data-slide-to="0" class="active"></li>
-              <li data-target="#carouselTestimonial" data-slide-to="1"></li>
-            </ol>
+    cardBadge: true,
+    badgeColor: '#44B174',
+    challengeEndDate: '2021/10/30',
 
-            <div class="carousel-inner">
+    organizers: [
+      {
+        name: 'ADDI',
+        logo: '/assets/new_logos/addi-logo.png',
+        link: '',
+      },
+    ],
+    image: card02,
+    name: 'MineRL Diamond',
+    color: '#FFFFFF',
+  }
 
-              <!-- testimonial -->
-              <div id="testimonial-1" class="carousel-item active">
-                <blockquote class="blockquote-testimonial">
-                  <img class="avatar" src="/assets/img/testimonial-1.jpeg">
-                  <p class="mb-0">"Crowdsourcing far exceeded our expectations - you not only get new solutions, but also a deeper insight to the problem you are trying to solve."</p>
-                  <footer class="blockquote-footer">Erik Nygren, Deep Learning and Artificial Intelligence Research, SBB CFF FFS</footer>
-                </blockquote>
-              </div>
-              <!-- /testimonial -->
+  landingChallengeCard2 = {
+    image: challengeImage,
+    name: 'Flatland AMLD 2021 Competition',
+    prize: 'Winner to speak at AMLD 2021',
 
-              <!-- testimonial -->
-              <div id="testimonial-2" class="carousel-item">
-                <blockquote class="blockquote-testimonial">
-                  <img class="avatar" src="/assets/img/testimonial-2.jpeg">
-                  <p class="mb-0">Thanks to the agile structure of the platform, it was easy to design an ML challenge outside of the standard framework of the training/test data challenges. For new challenges, I would choose AIcrowd over other platforms.</p>
-                  <footer class="blockquote-footer">Łukasz Kidziński, Postdoctoral Researcher, Stanford</footer>
-                </blockquote>
-              </div>
-              <!-- /testimonial -->
-            </div>
-          </div>
-        </div>
-        <!-- /testimonial carousel -->
+    users: [
+      { id: 1, image: customAvatar1, tier: 4 },
+      { id: 2, image: customAvatar2, tier: 2 },
+      { id: 3, image: customAvatar3, tier: 5 },
+      { id: 4, image: customAvatar4, tier: 0 },
+      { id: 5, image: customAvatar5, tier: 1 },
+    ],
+    loading: false,
+    onCard: false,
+    size: 'default',
 
-        <!-- top rated participants -->
-        <div class="col-sm-12 col-md-4">
-          <header class="section-header">
-            <div>
-              <h4>
-                <%= link_to 'Top Participants', leaderboard_path, {:class => "nav-link"} %>
-              </h4>
-            </div>
-          </header>
+    color: '#0F2F90',
 
-          <div class="card">
-            <ul class="list-group list-group-flush list-group-latest-contributors">
-              <% @participants.each do |participant| %>
-                <li class="list-group-item">
-                  <%= render partial: 'participants/get_user_profile', locals: { participant: participant, truncate: 'true' } %>
-                  <%= render partial: 'participants/show_reputation', locals: { participant: participant } %>
-                </li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-        <!-- /top rated participants -->
+    cardBadge: true,
+    badgeColor: '#44B174',
+    challengeEndDate: '2021/10/30',
 
-      </div>
-    </div>
-  </section>
-  <!-- /section -->
+    organizers: [
+      {
+        name: 'ADDI',
+        logo: '/assets/new_logos/addi-logo.png',
+        link: '',
+      },
+    ],
+  }
 
-  <% if ENV['DISCOURSE_DOMAIN_NAME'].present? %>
-  <!-- section -->
-  <section class="section-p-md border-top">
-    <div class="container-fluid">
-      <div class="row">
-        <!-- discourse latest posts list -->
-        <div class="col-sm-12 col-md-4">
-          <header class="section-header">
-            <div>
-              <h4>Latest Discussions</h4>
-            </div>
+  landingChallengeCard3 = {
+    image: challengeImage,
+    name: 'Flatland AMLD 2021 Competition',
+    prize: 'Winner to speak at AMLD 2021',
 
-            <%= link_to 'See all', ENV['DISCOURSE_DOMAIN_NAME'], class: "btn btn-secondary btn-sm" %>
-          </header>
+    users: [
+      { id: 1, image: customAvatar1, tier: 4 },
+      { id: 2, image: customAvatar2, tier: 2 },
+      { id: 3, image: customAvatar3, tier: 5 },
+      { id: 4, image: customAvatar4, tier: 0 },
+      { id: 5, image: customAvatar5, tier: 1 },
+    ],
+    loading: false,
+    onCard: false,
+    size: 'default',
 
-          <% if @discourse_topics_fetch.success? %>
-            <%= render partial: 'shared/discourse/topics_list', locals: { discourse_topics: @discourse_topics } %>
-          <% else %>
-            <p><%= @discourse_topics_fetch.value %></p>
-          <% end %>
-        </div>
+    color: '#0F2F90',
 
-        <!-- /discourse latest posts list -->
-        <!-- Top posts list -->
-        <div class="col-sm-12 col-md-4">
-          <header class="section-header">
-            <div>
-              <h4>AIcrowd Showcase</h4>
-            </div>
+    cardBadge: true,
+    badgeColor: '#44B174',
+    challengeEndDate: '2021/10/30',
 
-            <%= link_to 'See all', posts_path, class: "btn btn-secondary btn-sm" %>
-          </header>
-
-          <% if @top_posts.count > 0 %>
-            <%= render partial: 'shared/posts/post_list', locals: { posts: @top_posts } %>
-          <% else %>
-            <p><%= @discourse_topics_fetch.value %></p>
-          <% end %>
-        </div>
-        <!-- /top latest posts list -->
+    organizers: [
+      {
+        name: 'ADDI',
+        logo: '/assets/new_logos/addi-logo.png',
+        link: '',
+      },
+    ],
+  }
 
 
-        <div class="col-sm-12 col-md-4">
-          <header class="section-header">
-            <div>
-              <h4>Top Community Contributors</h4>
-            </div>
-          </header>
+  notebookCardData = [
+    {
+      title: 'Welcome to NetHack and the NetHack Learning Environment!',
+      description: 'Welcome to NetHack and the NetHack Learning Environment!',
+      lastUpdated: '6 hours ago',
+      image: notebookImage,
+      author: 'John Doe',
+    },
 
-          <% if @discourse_top_contributors_fetch.success? %>
-            <%= render partial: 'discourse_top_contributors', locals: { discourse_top_contributors: @discourse_top_contributors } %>
-          <% else %>
-            <p><%= @discourse_top_contributors_fetch.value %></p>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- /section -->
-  <% end %>
+    {
+      title: 'Welcome to NetHack and the NetHack Learning Environment!',
+      description: 'Welcome to NetHack and the NetHack Learning Environment!',
+      lastUpdated: '6 hours ago',
+      image: notebookImage,
+      author: 'John Doe',
+    },
 
-  <!-- section -->
-  <section class="section-p-md border-top">
+    {
+      title: 'Welcome to NetHack and the NetHack Learning Environment!',
+      description: 'Welcome to NetHack and the NetHack Learning Environment!',
+      lastUpdated: '6 hours ago',
+      image: notebookImage,
+      author: 'John Doe',
+    },
 
-    <!-- blog post previews -->
-    <div class="container-fluid">
-      <div class="row">
+    {
+      title: 'Welcome to NetHack and the NetHack Learning Environment!',
+      description: 'Welcome to NetHack and the NetHack Learning Environment!',
+      lastUpdated: '6 hours ago',
+      image: notebookImage,
+      author: 'John Doe',
+    }
+  ]
 
-        <!-- section header -->
-        <div class="col-12">
-          <header class="section-header">
-            <div>
-              <h4>From the blog</h4>
-            </div>
-            <%= button_to 'See all', blogs_path, class: "btn btn-secondary btn-sm", method: :get %>
-          </header>
-        </div>
-        <!-- /section header -->
-        <% @blog_posts.each do |post| %>
-              <%= render partial: 'blog_post', locals: {post: post} %>
-        <% end %>
-      </div>
-    </div>
-    <!-- /blog post previews -->
-  </section>
-  <!-- /section -->
+  contributorCardData = [
+    {
+      username: 'A_user_name',
+      count: '5,054',
+      image: '/assets/new_logos/custom-avatar-3.png',
+      onCard: false,
+    },
+    {
+      username: 'A_user_name',
+      count: '5,054',
+      image: '/assets/new_logos/custom-avatar-3.png',
+      onCard: false,
+    },
+    {
+      username: 'A_user_name',
+      count: '5,054',
+      image: '/assets/new_logos/custom-avatar-3.png',
+      onCard: false,
+    }
+  ]
 
-  <!-- section -->
-  <section class="section-p-md bg-light border-top">
-    <div class="logo-grid">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <header class="section-header">
-              <div>
-                <h4>Thank you</h4>
-              </div>
-            </header>
-          </div>
-          <div class="col-sm-12 col-md-6">
-            <% if @partners.present? %>
-                <% @partners.each_with_index do |partner,index| %>
-                  <div class="logo">
-                    <%= image_tag partner.image_file.url, class: "img-fluid" %>
-                  </div>
-                <% end %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- /section -->
-</div>
+  cardBadge = {
+    cardBadge: true,
+    badgeColor: '#44B174',
+    challengeEndDate: '2021/10/30',
+  }
+
+  communityMembersList = [
+      {
+        lat: '77.23',
+        lon: '28.61',
+        image: 'https://images.aicrowd.com/images/participants/image_file/2/dp_official_cool.jpg',
+        name: 'shivam',
+      },
+      {
+        lat: '130.23',
+        lon: '-20.61',
+        image: 'https://images.aicrowd.com/images/participants/image_file/10266/8032688.jpeg',
+        name: 'dipam_chakraborty',
+      },
+      {
+        lat: '-30.23',
+        lon: '75.61',
+        image: 'https://images.aicrowd.com/images/participants/image_file/3397/IMG_8290.JPG',
+        name: 'ashivani',
+      },
+      {
+        lat: '2.23',
+        lon: '10.61',
+        image: 'https://images.aicrowd.com/images/participants/image_file/7848/profile-cut.png',
+        name: 'yoogottamk',
+      },
+    ]
+%>
+
+
+<%= react_component("pages/Landing/index", {loading: false, logos: [unity, sbb, uber, openai, stanford, firmenich, spotify, aws], challengeListData: @challenge_list_data, @stat_list_data: statListData, moreMenuItem: @more_menu_item, communityMenuItem: @community_menu_item, challengesMenuItem: @challenges_menu_item, communityMap: @community_map, communityMapAvatar: @community_map_avatar, landingChallengeCard1: landingChallengeCard1, landingChallengeCard2: landingChallengeCard2, landingChallengeCard3: landingChallengeCard3, notebookCardData: notebookCardData, submissionCardData: @submission_card_data, contributorCardData: contributorCardData, quotes: @quotes, cardBadge: cardBadge, communityMembersList: communityMembersList}) %>
+

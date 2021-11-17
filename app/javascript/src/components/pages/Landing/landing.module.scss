@@ -1,0 +1,314 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../styles/base/__base-dir.scss";
+
+$section-gap: 150px;
+
+.mastheadCard {
+  padding-top: 156px;
+  padding-bottom: 50px;
+
+  @include media-query("x-large") {
+    padding-bottom: 97px;
+  }
+
+  @include media-query("small") {
+    padding-bottom: 64px;
+  }
+}
+
+.landing-main {
+  font-family: Inter;
+  section {
+    display: flex;
+    // border-top: 1px solid var(--color-border-light);
+  }
+  .sectionGap {
+    padding-top: $section-gap;
+    @include media-query("small") {
+      padding: 64px 0px 0px 0px;
+    }
+  }
+
+  .challengesWrapper {
+    // padding-top: 150px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+
+    @include media-query("small") {
+      flex-direction: column;
+    }
+
+    .glowDecor1 {
+      position: absolute;
+      width: 488px;
+      height: 320px;
+      left: 20px;
+      top: 0px;
+      background: linear-gradient(
+        141.26deg,
+        rgba(240, 82, 77, 0.1) 15.43%,
+        rgba(240, 77, 126, 0.1) 26.83%,
+        rgba(236, 76, 177, 0.1) 44.12%,
+        rgba(233, 75, 228, 0.1) 58.28%,
+        rgba(188, 75, 233, 0.1) 70.32%,
+        rgba(137, 75, 233, 0.5) 84.76%
+      );
+      mix-blend-mode: normal;
+      opacity: 0.9;
+      filter: blur(80px);
+      transform: rotate(-180deg);
+      z-index: -1;
+
+      @include media-query("small") {
+        display: none;
+      }
+    }
+
+    .glowDecor2 {
+      position: absolute;
+      width: 488px;
+      height: 320px;
+      right: 20px;
+      top: 0px;
+      z-index: -1;
+
+      background: linear-gradient(
+        141.26deg,
+        rgba(240, 82, 77, 0.1) 15.43%,
+        rgba(240, 77, 126, 0.1) 26.83%,
+        rgba(236, 76, 177, 0.1) 44.12%,
+        rgba(233, 75, 228, 0.1) 58.28%,
+        rgba(188, 75, 233, 0.1) 70.32%,
+        rgba(137, 75, 233, 0.5) 84.76%
+      );
+      mix-blend-mode: normal;
+      opacity: 0.9;
+      filter: blur(80px);
+
+      @include media-query("small") {
+        display: none;
+      }
+    }
+  }
+
+  .notebookCardWrapper {
+    position: relative;
+    width: 700px;
+    height: 100%;
+    top: 0%;
+    @include media-query("small") {
+      position: unset;
+      width: 100%;
+    }
+
+    [data-notebook="1"] {
+      position: absolute;
+      @include media-query("small") {
+        position: unset;
+        margin-top: $spacing-x-small;
+      }
+    }
+    [data-notebook="2"] {
+      position: absolute;
+      left: 45%;
+      top: 38%;
+      z-index: 2;
+      @include media-query("small") {
+        position: unset;
+      }
+    }
+    [data-notebook="3"] {
+      position: absolute;
+      top: 65%;
+      left: -20%;
+      @include media-query("small") {
+        display: none;
+      }
+    }
+    [data-notebook="4"] {
+      position: absolute;
+      top: 100%;
+      left: 25%;
+      @include media-query("small") {
+        display: none;
+      }
+    }
+  }
+
+  .submissionCardWrapper {
+    display: flex;
+    justify-content: flex-end;
+
+    @include media-query("x-large") {
+      justify-content: flex-start;
+    }
+
+    @include media-query("small") {
+      padding-top: 50px;
+    }
+
+    .submissionCard {
+      padding-bottom: $spacing-x-small;
+      &:nth-child(even) {
+        padding-left: 130px;
+      }
+      @include media-query("small") {
+        display: none;
+      }
+    }
+  }
+
+  .topCommunity {
+    @include media-query("x-large") {
+      display: flex;
+      align-items: center;
+      padding-top: $spacing-x-small;
+    }
+    @include media-query("small") {
+      display: unset;
+      padding-top: $spacing-xxx-small;
+    }
+
+    h6 {
+      font-weight: $font-weight-medium;
+      font-size: $font-medium;
+      line-height: 32px;
+      color: #343434;
+      padding-bottom: $spacing-xx-small;
+      padding-left: 50px;
+      @include media-query("x-large") {
+        padding-bottom: 0px;
+        padding-left: 0px;
+        padding-right: $spacing-xxx-small;
+        font-size: $font-small;
+      }
+    }
+    .topCommunityCardWrapper {
+      display: flex;
+
+      @include media-query("small") {
+        display: unset;
+        margin-top: $spacing-x-small;
+      }
+      .contributorCard {
+        padding-right: $spacing-xx-small;
+        @include media-query("x-large") {
+          padding-right: $spacing-xxx-small;
+        }
+        @include media-query("small") {
+          margin: $spacing-xx-small auto;
+        }
+      }
+    }
+  }
+
+  .researchImageWrapper {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    margin-bottom: 130px;
+
+    @include media-query("small") {
+      height: 260px;
+    }
+
+    img {
+      @include media-query("x-large") {
+        width: 50%;
+      }
+
+      @include media-query("small") {
+        width: 50%;
+      }
+      &:nth-child(1) {
+        position: absolute;
+        right: 10%;
+        @include media-query("x-large") {
+          right: 10%;
+        }
+        @include media-query("small") {
+          left: 0%;
+          transform: translateX(0%);
+        }
+      }
+      &:nth-child(2) {
+        z-index: 3;
+        position: absolute;
+        top: 55%;
+        right: 0%;
+        @include media-query("x-large") {
+          right: 0;
+          width: 40%;
+        }
+        @include media-query("small") {
+          top: 20%;
+        }
+      }
+      &:nth-child(3) {
+        z-index: 3;
+        position: absolute;
+        top: 200px;
+        left: 15%;
+        width: 358px;
+        @include media-query("x-large") {
+          width: 40%;
+          left: 15%;
+          top: 120px;
+        }
+        @include media-query("small") {
+          top: 100px;
+        }
+      }
+      &:nth-child(4) {
+        z-index: 2;
+        position: absolute;
+        left: 5%;
+        @include media-query("x-large") {
+          width: 40%;
+          left: 0%;
+        }
+        @include media-query("small") {
+          top: 100px;
+        }
+      }
+    }
+  }
+
+  .aicrowdLargeLogo {
+    padding-top: 20px;
+    width: 100%;
+  }
+
+  .organizerLogos1 {
+    img {
+      width: 150px;
+      justify-self: center;
+    }
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    // column-gap: 170px;
+    row-gap: 106px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .organizerLogos2 {
+    img {
+      width: 150px;
+      justify-self: center;
+    }
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    // column-gap: 186px;
+    row-gap: 106px;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .partnerLogo {
+      width: 150px;
+    }
+  }
+}

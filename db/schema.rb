@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_08_105824) do
+ActiveRecord::Schema.define(version: 2021_11_17_220521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -599,6 +599,9 @@ ActiveRecord::Schema.define(version: 2021_10_08_105824) do
     t.string "restricted_ip"
     t.boolean "organizer_notebook_access", default: false
     t.integer "submission_lock_count", default: 1
+    t.boolean "feature_challenge_1", default: false
+    t.boolean "feature_challenge_2", default: false
+    t.boolean "feature_challenge_3", default: false
     t.index ["clef_task_id"], name: "index_challenges_on_clef_task_id"
     t.index ["discourse_category_id"], name: "index_challenges_on_discourse_category_id"
     t.index ["discourse_group_id"], name: "index_challenges_on_discourse_group_id"
@@ -1195,6 +1198,7 @@ ActiveRecord::Schema.define(version: 2021_10_08_105824) do
     t.string "gist_username"
     t.boolean "community_contribution_winner", default: false
     t.integer "page_views", default: 0
+    t.boolean "featured", default: false
     t.index ["challenge_id"], name: "index_posts_on_challenge_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["participant_id"], name: "index_posts_on_participant_id"

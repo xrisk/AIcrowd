@@ -1,45 +1,140 @@
-import React from 'react';
-import Link from 'next/link';
+import React, { useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
 
 import styles from './buttonDefault.module.scss';
 
-const ButtonDefault = ({ type, text, disabled, hidden, iconClass, to, handleClick, size, iconColor }) => {
+const ButtonDefault = ({
+  type,
+  text,
+  disabled,
+  hidden,
+  iconClass,
+  handleClick,
+  size,
+  iconColor,
+  fontWeight,
+  paddingRight,
+  paddingTop,
+  paddingBottom,
+  paddingLeft,
+  hoverBorder,
+  iconLeft,
+  iconSize,
+  transparent,
+  buttonType,
+  disableAnimation,
+  fontSize,
+}) => {
+  const [hoverStyle, setHoverStyle] = useState({
+    border: null,
+  });
+
+  const handleMouseEnter = useCallback(() => {
+    setHoverStyle({
+      border: hoverBorder,
+    });
+  }, [setHoverStyle, hoverBorder]);
+  const handleMouseLeave = useCallback(() => {
+    setHoverStyle({
+      border: null,
+    });
+  }, [setHoverStyle]);
+
   const largeButton = size === 'large' ? styles.large : '';
   const wideButton = size === 'wide' ? styles.wide : '';
 
   // Do not show button if hidden is true
   if (hidden) {
-    return <div></div>;
+    return <></>;
   }
   return (
-    <div>
+    <>
       {/* Show button with icon */}
       {iconClass && iconClass.length > 0 ? (
-        <div>
-          <Link href={to || '/'} passHref={true}>
-            <button
-              type="button"
-              className={`${styles[`btn-${type}`]} ${largeButton} ${wideButton}`}
-              disabled={disabled}
-              onClick={window.hideBadgesModal}>
-              {text}
-              &nbsp;
-              <i className={`las la-${iconClass}`} style={{ color: iconColor }} />
-            </button>
-          </Link>
-        </div>
-      ) : (
-        <Link href={to || '/'} passHref={true}>
+        <>
           <button
-            type="button"
+            // eslint-disable-next-line react/button-has-type
+            type={buttonType}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
             className={`${styles[`btn-${type}`]} ${largeButton} ${wideButton}`}
             disabled={disabled}
-            onClick={window.hideBadgesModal}>
+            whileTap={{ scale: disableAnimation ? 1 : 0.98 }}
+            layout="position"
+            style={{
+              fontWeight: fontWeight,
+              paddingRight: paddingRight,
+              paddingLeft: paddingLeft,
+              paddingTop: paddingTop,
+              paddingBottom: paddingBottom,
+              border: hoverStyle.border,
+              flexDirection: iconLeft && 'row-reverse',
+              background: transparent && 'transparent',
+              fontSize,
+            }}
+            onClick={handleClick}>
             {text}
+            &nbsp;
+            <i
+              className={`las la-${iconClass}`}
+              style={{
+                color: iconColor,
+                paddingRight: iconLeft && '8px',
+                paddingLeft: iconLeft && '0px',
+                fontSize: iconSize,
+              }}
+            />
           </button>
-        </Link>
+        </>
+      ) : (
+        <button
+          // eslint-disable-next-line react/button-has-type
+          type={buttonType}
+          className={`${styles[`btn-${type}`]} ${largeButton} ${wideButton}`}
+          disabled={disabled}
+          onClick={handleClick}
+          whileTap={{ scale: disableAnimation ? 1 : 0.98 }}
+          layout="position"
+          style={{
+            fontWeight: fontWeight,
+            paddingRight: paddingRight,
+            paddingLeft: paddingLeft,
+            paddingTop: paddingTop,
+            paddingBottom: paddingBottom,
+            border: hoverStyle.border,
+            flexDirection: iconLeft && 'row-reverse',
+            background: transparent && 'transparent',
+            fontSize,
+          }}>
+          {text}
+        </button>
       )}
-    </div>
+    </>
   );
 };
+
+ButtonDefault.propTypes = {
+  type: PropTypes.string,
+  text: PropTypes.string.isRequired,
+  disabled: PropTypes.bool,
+  hidden: PropTypes.bool,
+  iconClass: PropTypes.string,
+  handleClick: PropTypes.func,
+  size: PropTypes.string,
+  iconColor: PropTypes.string,
+  fontWeight: PropTypes.string,
+  paddingRight: PropTypes.string,
+  paddingTop: PropTypes.string,
+  paddingBottom: PropTypes.string,
+  paddingLeft: PropTypes.string,
+  hoverBorder: PropTypes.string,
+  iconLeft: PropTypes.bool,
+  iconSize: PropTypes.string,
+  transparent: PropTypes.bool,
+  buttonType: PropTypes.string,
+  fontSize: PropTypes.string,
+  disableAnimation: PropTypes.bool,
+};
+
 export default ButtonDefault;
