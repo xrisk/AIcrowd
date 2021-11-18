@@ -1,12 +1,5 @@
 class LandingPageController < ApplicationController
   def index
-
-    customAvatar1 = "/assets/new_logos/custom-avatar-1.png";
-    customAvatar2 = "/assets/new_logos/custom-avatar-2.png";
-    customAvatar3 = "/assets/new_logos/custom-avatar-3.png";
-    customAvatar4 = "/assets/new_logos/custom-avatar-4.png";
-    customAvatar5 = "/assets/new_logos/custom-avatar-5.png";
-
     get_challenge_list_data
     get_featured_challenges
     get_featured_notebooks
@@ -28,6 +21,12 @@ class LandingPageController < ApplicationController
   private
 
   def get_challenge_list_data
+    customAvatar1 = "/assets/new_logos/custom-avatar-1.png";
+    customAvatar2 = "/assets/new_logos/custom-avatar-2.png";
+    customAvatar3 = "/assets/new_logos/custom-avatar-3.png";
+    customAvatar4 = "/assets/new_logos/custom-avatar-4.png";
+    customAvatar5 = "/assets/new_logos/custom-avatar-5.png";
+
     @challenge_list_data = []
     challenges = Challenge
         .includes(:organizers)
@@ -97,20 +96,20 @@ class LandingPageController < ApplicationController
 
   def get_featured_notebooks
     @notebook_card_data = {}
-    posts = Post.where(visible: true)
-      .where.not(image_file: nil)
-      .order(seq: :asc)
-      .where(featured: true).limit(4)
+    # posts = Post.where(visible: true)
+    #   .where.not(image_file: nil)
+    #   .order(seq: :asc)
+    #   .where(featured: true).limit(4)
 
-    posts.each do |post|
-      @notebook_card_data << {
-        title: post.name,
-        description: post.tagline,
-        lastUpdated: helpers.discourse_time_ago(post.updated_at),
-        image: post.thumbnail,
-        author: post.participant.name
-      }
-    end
+    # posts.each do |post|
+    #   @notebook_card_data << {
+    #     title: post.name,
+    #     description: post.tagline,
+    #     lastUpdated: helpers.discourse_time_ago(post.updated_at),
+    #     image: post.thumbnail,
+    #     author: post.participant.name
+    #   }
+    # end
   end
 
   def get_menu_items
