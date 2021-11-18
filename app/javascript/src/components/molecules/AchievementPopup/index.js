@@ -33,6 +33,8 @@ const AchievementPopup = ({ title, description, icon, handleClick, url, badgeTit
         <div className={socialIconWrapper}>
           <img src="/assets/misc/badge-twitter.svg" alt="twitter logo" onClick={()=>window.shareBadgeTwitter(url, socialMessage)}></img>
           <img src="/assets/misc/badge-linkedin.svg" alt="linkedin logo" onClick={()=>window.shareBadgeLinkedin(url, badgeTitle, socialMessage)}></img>
+          <img src="/assets/misc/badge-facebook.svg" alt="facebook logo" onClick={()=>window.shareBadgefb(url, socialMessage)}></img>
+
         </div>
         <ButtonDefault type="primary" text="Continue" handleClick={handleClick} />
       </div>
