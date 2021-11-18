@@ -4,6 +4,9 @@ class LandingPageController < ApplicationController
     get_featured_challenges
     get_featured_notebooks
     get_menu_items
+    get_stat_list_data
+    get_quotes
+    get_discourse_data
 
   end
 
