@@ -89,6 +89,10 @@
   display: none !important;
 }
 
+.v-none {
+  visibility: hidden !important;
+}
+
 // Embed video
 .embed-responsive {
   position: relative;

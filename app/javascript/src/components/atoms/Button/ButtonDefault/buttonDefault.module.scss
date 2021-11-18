@@ -3,7 +3,7 @@
 
 .btn-outline {
   align-items: center;
-  background-color: transparent;
+  background-color: white;
   border: 1px solid #fff;
   border-radius: 24px;
   color: #fff;
@@ -80,7 +80,7 @@
 
 .btn-secondary {
   align-items: center;
-  background-color: transparent;
+  background-color: white;
   border: 1px solid var(--color-border);
   border-radius: 24px;
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.08);
@@ -96,6 +96,7 @@
   text-align: center;
   text-decoration: none;
   user-select: none;
+  border-image-slice: 1;
 
   @include transition;
   @include media-query("large") {
@@ -117,6 +118,7 @@
     border: 1px solid #c9c9c9;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.16);
   }
+
   &.disabled,
   &:disabled {
     opacity: 0.6;
@@ -148,4 +150,18 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  i {
+    font-size: 20px;
+    padding-left: 8px;
+  }
+}
+
+.hoverStyling {
+  &:hover {
+    // gradient on border not supported when radius is applied
+    // border-image: $gradient-color;
+    // border-image-slice: 1;
+    border: 1px solid #f04d7e;
+  }
 }

@@ -22,6 +22,7 @@ const PartnerBarLanding = ({ logos, color }: PartnerBarLandingProps) => (
             />
           </div>
         ))}
+        <div className={styles['text']}>& more</div>
       </HorizontalScroll>
     </div>
   </>

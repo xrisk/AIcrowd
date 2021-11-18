@@ -10,6 +10,7 @@ import { sizes } from 'src/constants/screenSizes';
 import useBoolean from '../../../hooks/useBoolean';
 import useHoverDropdown from 'src/hooks/useHoverDropdown';
 import styles from './landingNavBar.module.scss';
+import AvatarWithTier from 'src/components/atoms/AvatarWithTier';
 const {
   main,
   navMenuIcon,
@@ -28,8 +29,13 @@ export type LandingNavBarProps = {
   isMenuOpen: boolean;
   setMenu: (value: boolean) => void;
   moreMenuItem: Array<{ name: string; link: string }>;
-  challengesMenuItem: Array<{ name: string; link: string }>;
+  profileMenuItem: Array<{ name: string; link: string }>;
+  challengesMenuItem: { name: string; link: string };
   communityMenuItem: Array<{ name: string; link: string }>;
+  tier: number;
+  image: string;
+  loading: boolean;
+  isLoggedIn: boolean;
 };
 
 const LandingNavBar = ({
@@ -39,6 +45,11 @@ const LandingNavBar = ({
   moreMenuItem,
   challengesMenuItem,
   communityMenuItem,
+  profileMenuItem,
+  tier,
+  image,
+  loading,
+  isLoggedIn,
 }: LandingNavBarProps) => {
   const isM = useMediaQuery(sizes.medium);
   const router = useRouter();
@@ -55,10 +66,10 @@ const LandingNavBar = ({
   const handleMouseEnter = useCallback(
     menuName => {
       switch (menuName) {
-        case 'challenges':
+        case 'profile':
           setNavItemHovered({
             hoveredOn: menuName,
-            menuItems: challengesMenuItem,
+            menuItems: profileMenuItem,
           });
           break;
         case 'community':
@@ -85,6 +96,10 @@ const LandingNavBar = ({
   useEffect(() => {
     setDropdown(show);
   }, [show]);
+
+  const isCommunityHovered = hoveredOn === 'community';
+  const isMoreHovered = hoveredOn === 'more';
+  const isProfileHovered = hoveredOn === 'profile';
 
   return (
     <>
@@ -113,7 +128,8 @@ const LandingNavBar = ({
               <LandingDropdownMenu
                 menu={menuItems}
                 top="50px"
-                left={hoveredOn === 'community' && '129px'}
+                left={isCommunityHovered && '129px'}
+                right={isMoreHovered && isLoggedIn ? '50px' : isMoreHovered ? '250px' : isProfileHovered ? '0px' : null}
                 setIsOpen={setDropdown}
                 showSocial={hoveredOn === 'more'}
                 enterMenu={enterMenu}
@@ -123,8 +139,10 @@ const LandingNavBar = ({
             )}
 
             <div className={dropdownNavItemWrapper} onMouseLeave={leaveButton}>
-              <div className={navItem} onMouseEnter={() => handleMouseEnter('challenges')}>
-                Challenges
+              <div className={navItem}>
+                <Link href={challengesMenuItem.link}>
+                  <a>Challenges</a>
+                </Link>
               </div>
               <div className={navItem} onMouseEnter={() => handleMouseEnter('community')}>
                 Community
@@ -132,20 +150,31 @@ const LandingNavBar = ({
               <div className={moreText} onMouseEnter={() => handleMouseEnter('more')}>
                 More
               </div>
+              {isLoggedIn ? (
+                <div style={{ paddingLeft: '40px' }} onMouseEnter={() => handleMouseEnter('profile')}>
+                  <AvatarWithTier tier={tier} image={image} loading={loading} />
+                </div>
+              ) : (
+                <>
+                  <Link href="/login">
+                    <a className={loginText}>Log in</a>
+                  </Link>
+                  <ButtonDefault
+                    text="Sign Up"
+                    type="secondary"
+                    size="large"
+                    iconClass="arrow-right"
+                    iconColor="#F0524D"
+                    fontWeight="500"
+                    fontFamily="Inter"
+                    hoverBorder="1px solid #f04d7e"
+                    paddingTop="8px"
+                    paddingBottom="8px"
+                    handleClick={() => router.push('/signup')}
+                  />
+                </>
+              )}
             </div>
-            <Link href="/login">
-              <a className={loginText}>Log in</a>
-            </Link>
-            <ButtonDefault
-              text="Sign Up"
-              type="secondary"
-              size="large"
-              iconClass="arrow-right"
-              iconColor="#F0524D"
-              fontWeight="500"
-              hoverBorder="1px solid #f04d7e"
-              handleClick={() => router.push('/signup')}
-            />
           </div>
         )}
       </div>

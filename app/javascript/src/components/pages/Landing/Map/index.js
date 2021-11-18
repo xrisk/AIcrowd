@@ -27,8 +27,14 @@ const Map = ({ communityMembersList }) => {
   });
 
   useEffect(() => {
-    setData(worldMap);
-    if (canvasRef && communityMemberRef && communityMembersMapRef) {
+    var filteredFeatures = data.features.filter(function(feature) {
+      return feature.id !== 'ATA';
+    });
+
+    // setData(worldMap);
+    setData({ type: 'FeatureCollection', features: filteredFeatures });
+
+    if (canvasRef && communityMemberRef && communityMembersMapRef && data) {
       const mapContainer = communityMembersMapRef.current;
       let canvas = canvasRef.current;
 

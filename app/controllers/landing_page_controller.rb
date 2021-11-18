@@ -146,16 +146,10 @@ class LandingPageController < ApplicationController
       }
     ]
 
-    @challenges_menu_item = [
-      {
-        name: 'Ongoing Challenges',
-        link: '/ongoing-challenges',
-      },
-      {
-        name: 'Practice Problems',
-        link: '/practice-problems',
-      }
-    ]
+    @challenges_menu_item = {
+      name: 'challenges',
+      link: challenges_path,
+    }
 
     @community_map = '/assets/new_logos/map.svg'
     @community_map_avatar = '/assets/new_logos/map-avatar.png'

@@ -10,9 +10,22 @@
   justify-content: space-between;
   align-items: center;
 
+  @include media-query("small") {
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
   img {
     width: 101px;
     padding-bottom: 18px;
+
+    @include media-query("small") {
+      width: 60px;
+    }
+    @include media-query("x-small") {
+      width: 50px;
+    }
   }
 
   .shareText {

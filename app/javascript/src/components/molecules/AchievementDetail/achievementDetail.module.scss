@@ -18,4 +18,11 @@
   line-height: 19px;
   color: #747474;
   width: 269px;
+
+  @include media-query("small") {
+    width: 160px;
+  }
+  @include media-query("x-small") {
+    width: 130px;
+  }
 }

@@ -17,22 +17,10 @@
 
   .glowDecor {
     position: absolute;
-    width: 431px;
-    height: 453px;
-    left: 470px;
+    width: 331px;
+    height: 353px;
+    left: 1048.17px;
     top: 250px;
-
-    @include media-query("x-large") {
-      padding-top: 80px;
-      left: 700px;
-      top: 200px;
-    }
-
-    @include media-query("small") {
-      left: 80px;
-      top: 100px;
-      display: none;
-    }
 
     background: linear-gradient(
       141.26deg,
@@ -44,45 +32,73 @@
       rgba(137, 75, 233, 0.5) 84.76%
     );
     mix-blend-mode: normal;
-    filter: blur(250px);
+    filter: blur(100px);
     transform: rotate(15.12deg);
+
+    @include media-query("x-large") {
+      padding-top: 80px;
+      left: 700px;
+      top: 200px;
+    }
+
+    @include media-query("medium") {
+      width: 231px;
+      height: 253px;
+      left: 400px;
+      top: 200px;
+    }
+
+    @include media-query("small") {
+      width: 231px;
+      height: 253px;
+      left: 100px;
+      top: 200px;
+    }
+    @include media-query("x-small") {
+      width: 200px;
+      height: 200px;
+      left: 80px;
+      top: 200px;
+    }
   }
 
   .cardWrapper {
     position: relative;
-    left: 20%;
+    left: 2%;
 
     @include media-query("x-large") {
-      left: 0%;
+      left: 8%;
     }
 
     [data-card="card1"] {
       position: absolute;
       top: 5%;
+      z-index: 6;
 
       &:hover {
-        z-index: 5;
+        z-index: 9;
       }
     }
     [data-card="card2"] {
       position: absolute;
       top: 35%;
-      left: -60%;
-      z-index: 6;
+      left: -70%;
+      z-index: 4;
       @include media-query("x-large") {
         z-index: 5;
       }
       &:hover {
-        z-index: 5;
+        z-index: 9;
       }
     }
     [data-card="card3"] {
       position: absolute;
       top: 55%;
-      left: -18%;
+      left: -21%;
+      z-index: 5;
       @include media-query("x-large") {
         top: 55%;
-        left: -9%;
+        left: -20%;
       }
       &:hover {
         z-index: 9;

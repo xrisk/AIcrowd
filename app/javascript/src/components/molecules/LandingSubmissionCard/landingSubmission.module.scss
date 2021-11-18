@@ -21,6 +21,10 @@
   font-size: $font-x-small;
   line-height: 24px;
   color: $color-text-light;
+  width: 350px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .mainWrapper {

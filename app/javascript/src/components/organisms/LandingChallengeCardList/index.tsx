@@ -16,18 +16,20 @@ const LandingChallengeCardList = ({ challengeListData, loading }: LandingChallen
         const { image, name, prize, users, color, badgeColor, challengeEndDate, cardBadge, organizers } = item;
         return (
           <div className={cardWrapper} key={i}>
-            <LandingChallengeCard
-              image={image}
-              name={name}
-              prize={prize}
-              users={users}
-              color={color}
-              loading={loading}
-              badgeColor={badgeColor}
-              challengeEndDate={challengeEndDate}
-              cardBadge={cardBadge}
-              organizers={organizers}
-            />
+            <div data-challenge={i + 1}>
+              <LandingChallengeCard
+                image={image}
+                name={name}
+                prize={prize}
+                users={users}
+                color={color}
+                loading={loading}
+                badgeColor={badgeColor}
+                challengeEndDate={challengeEndDate}
+                cardBadge={cardBadge}
+                organizers={organizers}
+              />
+            </div>
           </div>
         );
       })}

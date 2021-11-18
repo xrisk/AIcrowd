@@ -26,6 +26,9 @@ import { sizes } from 'src/constants/screenSizes';
 const {
   challengesWrapper,
   sectionGap,
+  sectionGapOrganizers,
+  sectionGapReview,
+  sectionGapCommunity,
   researchImageWrapper,
   glowDecor1,
   glowDecor2,
@@ -40,6 +43,7 @@ const {
   organizerLogos1,
   aicrowdLargeLogo,
   partnerLogo,
+  organizerText,
 } = styles;
 
 type LandingProps = {
@@ -50,7 +54,8 @@ type LandingProps = {
   communityMap: string;
   communityMapAvatar: string;
   moreMenuItem: Array<{ name: string; link: string }>;
-  challengesMenuItem: Array<{ name: string; link: string }>;
+  profileMenuItem: Array<{ name: string; link: string }>;
+  challengesMenuItem: { name: string; link: string };
   communityMenuItem: Array<{ name: string; link: string }>;
   landingChallengeCard1: LandingChallengeCardProps;
   landingChallengeCard2: LandingChallengeCardProps;
@@ -63,6 +68,9 @@ type LandingProps = {
   challengeEndDate: string;
   cardBadge: boolean;
   communityMembersList: [{ lat: string; lon: string; image: string; name: string }];
+  tier: number;
+  image: string;
+  isLoggedIn: boolean;
 };
 
 const Landing = ({
@@ -75,6 +83,7 @@ const Landing = ({
   moreMenuItem,
   challengesMenuItem,
   communityMenuItem,
+  profileMenuItem,
   landingChallengeCard1,
   landingChallengeCard2,
   landingChallengeCard3,
@@ -85,25 +94,27 @@ const Landing = ({
   badgeColor,
   challengeEndDate,
   cardBadge,
-  communityMembersList
+  communityMembersList,
+  tier: loggedInUserTier,
+  image: loggedInUserImage,
+  isLoggedIn,
 }: LandingProps) => {
   const isS = useMediaQuery(sizes.small);
   const isXL = useMediaQuery(sizes.xLarge);
+  const isM = useMediaQuery(sizes.medium);
   const { value: isMenuOpen, toggle, setValue: setMenu } = useBoolean();
 
   const challengeDescription = `AIcrowd consistently pushes the state of art in AI with impactful real-world challenges - ranging from advances in Reinforcement learning to applications of ML in scientific research`;
 
-  const notebookDescription = `Browse winning solutions created with ❤️ by the community. Learn, discuss and grow your AI skills.`;
+  const notebookDescription = `Browse winning solutions created with`;
+  const notebookDescription2 = `by the community. Learn, discuss and grow your AI skills.`;
 
   const discussionsDescription = `Join our vibrant community of problem solvers like you. Partner with AIcrew members to solve unique challenges or find co-authors for your next research project.  
 `;
 
-  const researchDescriptionPara1 = `AIcrowd Research explores scientific curiosities through challenges by engaging a diverse group of intellectuals.`;
+  const researchDescriptionPara1 = `At AIcrowd Research, we explore our scientific curiosities through challenges while engaging a diverse group of researchers.`;
 
-  const researchDescriptionPara2 = `Led by the principles of Open Research and Reproducible Science, we document these creative solutions for real-world problems. AIcrowd’s community-led research lab publishes papers that consistently push the state-of-the-art in AI.`;
-
-  // const globalDescription = `The AIcrowd community tackles the most diverse and interesting problems in AI,
-  // from research advances. The AIcrowd community tackles the.`;
+  const researchDescriptionPara2 = `Led by the principles of Open Science and Reproducible Research, we document these creative solutions for real-world problems. AIcrowd’s community-led research lab publishes papers that consistently push the state-of-the-art in AI.`;
 
   return (
     <>
@@ -114,9 +125,14 @@ const Landing = ({
         moreMenuItem={moreMenuItem}
         challengesMenuItem={challengesMenuItem}
         communityMenuItem={communityMenuItem}
+        profileMenuItem={profileMenuItem}
+        tier={loggedInUserTier}
+        image={loggedInUserImage}
+        loading={loading}
+        isLoggedIn={isLoggedIn}
       />
+      {isMenuOpen && <LandingMenu />}
       <div className="container-center">
-        {isMenuOpen && <LandingMenu />}
         <div className={mastheadCard}>
           <MastHeadLanding
             statListData={statListData}
@@ -135,7 +151,7 @@ const Landing = ({
                 <LandingHeaderContent
                   title="Our Challenges"
                   description={challengeDescription}
-                  buttonText="Explore challenges"
+                  buttonText="Explore Challenges"
                   descriptionWidth={isS ? '288px' : isXL ? '389px' : '560px'}
                 />
                 {/* aicrowd large logo */}
@@ -164,11 +180,19 @@ const Landing = ({
               <LandingChallengeCardList challengeListData={challengeListData} loading={loading} />
             </section>
             {/* Your solutions */}
-            <section className={cx(challengesWrapper, sectionGap)}>
+            <section className={cx(challengesWrapper, sectionGap)} style={{ paddingBottom: isM ? '64px' : '200px' }}>
               <div>
                 <LandingHeaderContent
                   title="Your Solutions"
-                  description={notebookDescription}
+                  description={[
+                    notebookDescription,
+                    ' ',
+                    <span role="img" aria-label="sheep" key={'heart'}>
+                      ❤️
+                    </span>,
+                    ' ',
+                    [notebookDescription2],
+                  ]}
                   buttonText="Explore Notebooks"
                   descriptionWidth={isS ? '288px' : isXL ? '481px' : '560px'}
                 />
@@ -205,7 +229,7 @@ const Landing = ({
             </section>
 
             {/* The Community */}
-            <section className={cx(challengesWrapper, sectionGap)} style={{ paddingTop: '220px' }}>
+            <section className={cx(challengesWrapper, sectionGapCommunity)}>
               <div>
                 <LandingHeaderContent
                   title="The Community"
@@ -295,8 +319,11 @@ const Landing = ({
             )} */}
 
             {/* AIcrowd Banner  */}
-            <section className={cx(challengesWrapper, sectionGap)}>
-              <img src="/assets/new_logos/aicrowdBanner.svg" alt="aicrowd banner" width="100%"></img>
+            <section className={cx(challengesWrapper)}>
+              <img
+                src={`/assets/new_logos/${isS ? 'aicrowdBannerMobile' : 'aicrowdBanner'}.png`}
+                alt="aicrowd banner"
+                width="100%"></img>
             </section>
 
             {/* AIcrowd Research  */}
@@ -304,7 +331,12 @@ const Landing = ({
               <div>
                 <LandingHeaderContent
                   title="Research"
-                  description={[researchDescriptionPara1, <br />, <br />, researchDescriptionPara2]}
+                  description={[
+                    researchDescriptionPara1,
+                    <br key={'br1'} />,
+                    <br key={'br2'} />,
+                    researchDescriptionPara2,
+                  ]}
                   buttonText="Research Papers"
                   logo
                   descriptionWidth={isS ? '288px' : isXL ? '541px' : '560px'}
@@ -321,8 +353,8 @@ const Landing = ({
                 )} */}
               </div>
               <div className={researchImageWrapper}>
-                <img src="/assets/new_logos/techcrunch-nethack.png"></img>
-                <img src="/assets/new_logos/basalt-news.png"></img>
+                <img src="/assets/new_logos/learning_run.gif"></img>
+                <img src="/assets/new_logos/mars_demo.gif"></img>
                 <img src="/assets/new_logos/flatland.gif"></img>
                 <img src="/assets/new_logos/bill-gates-tweet.png"></img>
               </div>
@@ -330,15 +362,15 @@ const Landing = ({
 
             {/* Quotations */}
             <section
-              className={cx(challengesWrapper, sectionGap)}
-              style={{ display: 'flex', justifyContent: 'center' }}>
+              className={cx(challengesWrapper, sectionGapReview)}
+              style={{ display: 'flex', justifyContent: 'center', marginTop: '221px' }}>
               <LandingCarousel {...quotes} />
               <span className={glowDecor1}></span>
               <span className={glowDecor2}></span>
             </section>
 
             {/* Join Our Global community  */}
-            <section className={cx(challengesWrapper, sectionGap)}>
+            <section className={cx(challengesWrapper)}>
               <div>
                 <LandingHeaderContent
                   title="Join our Global Community"
@@ -354,44 +386,46 @@ const Landing = ({
             </section>
 
             {/* Organizers logos section */}
-            <section style={{ display: 'flex', justifyContent: 'flex-end' }} className={cx(sectionGap)}>
-              <div className={organizerLogos1}>
-                <img src="/assets/new_logos/partner-logo-unity.svg"></img>
-                <img src="/assets/new_logos/partner-logo-uber.svg"></img>
-                <img src="/assets/new_logos/partner-logo-spotify.svg"></img>
-                <img src="/assets/new_logos/partner-logo-sbb.svg"></img>
-                <img src="/assets/new_logos/partner-logo-openai.svg"></img>
-                <img src="/assets/new_logos/partner-logo-firmenich.svg"></img>
-                <img src="/assets/new_logos/partner-logo-unity.svg"></img>
-                <img src="/assets/new_logos/partner-logo-uber.svg"></img>
-                <img src="/assets/new_logos/partner-logo-spotify.svg"></img>
-                <img src="/assets/new_logos/partner-logo-sbb.svg"></img>
+            <section
+              style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: '54px' }}
+              className={cx(sectionGap)}>
+              <div>
+                <div className={organizerText}>
+                  From Fortune 500 to Start-ups, we have worked with every brilliant idea
+                </div>
+                <div className={organizerLogos1}>
+                  <img src="/assets/new_logos/stanford-logo.png"></img>
+                  <img src="/assets/new_logos/openai-logo.png"></img>
+                  <img src="/assets/new_logos/novartis-logo.png"></img>
+                  <img src="/assets/new_logos/sncf-logo.png"></img>
+                  <img src="/assets/new_logos/facebook-logo.png"></img>
+                  <img src="/assets/new_logos/whofull-logo.png"></img>
+                  <img src="/assets/new_logos/spotify-logo.png"></img>
+                  <img src="/assets/new_logos/unity-logo.png"></img>
+                  <img src="/assets/new_logos/amazon-logo.png"></img>
+                  <img src="/assets/new_logos/microsoft-logo.png"></img>
+                  <img src="/assets/new_logos/iit-logo.png"></img>
+                  <img src="/assets/new_logos/eth-logo.png"></img>
+                </div>
               </div>
             </section>
             {/* Host a Challenge */}
-            <section className={cx(challengesWrapper, sectionGap)} style={{ paddingTop: '105px' }}>
+            <section className={cx(challengesWrapper, sectionGap)} style={{ paddingTop: '56px' }}>
               <LandingHeaderContent
                 title="Host a Challenge"
                 description="Have an interesting out-of-box problem you want to solve?
-Get in touch to host a customised challenge and unlock an array of exclusive features."
+Get in touch to host a customized challenge and unlock an array of exclusive features."
                 buttonText="Get In Touch"
                 buttonType="primary"
                 descriptionWidth={isS ? '288px' : '496px'}
               />
               <div className={organizerLogos2}>
-                <div
-                  style={{
-                    width: '100px',
-                    height: '100px',
-                    background: 'grey',
-                    borderRadius: '50%',
-                    justifySelf: 'center',
-                  }}></div>
-                <img src="/assets/new_logos/partner-logo-uber.svg"></img>
-                <img src="/assets/new_logos/partner-logo-spotify.svg"></img>
-                <img src="/assets/new_logos/partner-logo-sbb.svg"></img>
-                <img src="/assets/new_logos/partner-logo-openai.svg"></img>
-                <img src="/assets/new_logos/partner-logo-firmenich.svg"></img>
+                <img src="/assets/new_logos/uber-logo.png"></img>
+                <img src="/assets/new_logos/db-logo.png"></img>
+                <img src="/assets/new_logos/sony-logo.png"></img>
+                <img src="/assets/new_logos/mit-logo.png"></img>
+                <img src="/assets/new_logos/sbb-logo.png"></img>
+                <img src="/assets/new_logos/who-logo.png"></img>
               </div>
             </section>
           </div>

@@ -25,10 +25,10 @@
 
 // styling for onCard avatars
 .onCardAvatar {
-  width: 30px;
-  height: 30px;
+  width: 23px;
+  height: 23px;
   border-radius: 50%;
-  border: 2px solid white;
+  border: 3px solid white;
   overflow: hidden;
   @include media-query("x-small") {
     height: 23px;

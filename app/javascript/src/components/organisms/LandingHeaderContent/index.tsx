@@ -46,7 +46,14 @@ const LandingHeaderContent = ({
         )}
         {!hero && (
           <div>
-            {logo && <AicrowdLogo type="text" size={isXL ? 40 : 48} fontFamily="Inter" fontWeight={600} />}{' '}
+            {logo && (
+              <AicrowdLogo
+                type="text"
+                size={isS ? 28 : isXL ? 40 : 48}
+                fontFamily="Inter"
+                fontWeight={isS ? 500 : 600}
+              />
+            )}{' '}
             <span className={titleText} style={{ width: descriptionWidth }}>
               {title}
             </span>
@@ -58,7 +65,7 @@ const LandingHeaderContent = ({
         <div className={buttonWrapper}>
           {/* Show in hero only */}
           {hero && (
-            <div style={{ paddingRight: '43px' }}>
+            <div style={{ paddingRight: '26px' }}>
               <ButtonDefault
                 text="Our Challenges"
                 iconClass="arrow-right"
@@ -67,6 +74,7 @@ const LandingHeaderContent = ({
                 paddingTop="8px"
                 paddingBottom="8px"
                 iconSize="18px"
+                fontFamily="Inter"
               />
             </div>
           )}
@@ -82,6 +90,7 @@ const LandingHeaderContent = ({
               paddingTop="8px"
               paddingBottom="8px"
               iconSize="18px"
+              fontFamily="Inter"
             />
           )}
         </div>
@@ -100,6 +109,7 @@ const LandingHeaderContent = ({
               iconLeft
               fontSize="12px"
               fontWeight="500"
+              fontFamily="Inter"
             />
           </div>
         )}

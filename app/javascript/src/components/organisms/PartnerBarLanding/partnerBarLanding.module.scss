@@ -9,6 +9,11 @@
   justify-content: center;
   flex-direction: column;
 
+  .text {
+    @include body-text-normal;
+    color: $color-text-light;
+  }
+
   .title {
     @include heading-5;
   }
@@ -23,9 +28,14 @@
 
   .partners-bar-item {
     padding-right: 0px;
+
+    @include media-query("medium") {
+      padding-right: 40px;
+    }
+
     img {
-      width: 107px;
-      min-width: 107px;
+      width: 80px;
+      min-width: 80px;
 
       @include media-query("small") {
         width: 65px;

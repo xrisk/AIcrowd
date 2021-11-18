@@ -29,6 +29,7 @@ const MastHeadLanding = ({
 }: MastHeadLandingProps) => {
   const isS = useMediaQuery(sizes.small);
   const isXL = useMediaQuery(sizes.xLarge);
+  const isM = useMediaQuery(sizes.medium);
 
   const description = `enables data science experts and enthusiasts 
   to collaboratively solve real-world problems, through challenges `;
@@ -41,14 +42,14 @@ const MastHeadLanding = ({
             hero
             description={description}
             buttonText="Host a Challenge"
-            descriptionWidth={isS ? '288px' : '624px'}
+            descriptionWidth={isS ? '288px' : isM ? '500px' : '624px'}
           />
           <div className={statListContainer}>
             <LandingStatList statListData={statListData} />
           </div>
           <div className={glowDecor}></div>
         </div>
-        {!isS && (
+        {!isM && (
           <div className={cardWrapper}>
             <div data-card="card1">
               <LandingChallengeCard loading={loading} {...landingChallengeCard2} />

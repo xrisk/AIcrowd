@@ -53,7 +53,7 @@ const LandingChallengeCard = ({
   const isWhite = color === '#FFFFFF';
 
   // Detects the dark color
-  const isDark = isDarkColor('#FFFFFF');
+  const isDark = isDarkColor(color);
   const invertedColor = isDark ? '#ffffff' : '#1f1f1f';
 
   return (

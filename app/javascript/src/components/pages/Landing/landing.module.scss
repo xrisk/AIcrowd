@@ -28,14 +28,32 @@ $section-gap: 150px;
       padding: 64px 0px 0px 0px;
     }
   }
+  .sectionGapOrganizers {
+    margin-top: 80px;
+    margin-bottom: 151px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .sectionGapReview {
+    margin-top: 221px;
+    margin-bottom: 133px;
+  }
+  .sectionGapCommunity {
+    margin-top: 120px;
+    margin-bottom: 80px;
+
+    @include media-query("small") {
+      margin-top: 64px;
+      margin-bottom: 64px;
+    }
+  }
 
   .challengesWrapper {
-    // padding-top: 150px;
     display: flex;
     justify-content: space-between;
     position: relative;
 
-    @include media-query("small") {
+    @include media-query("medium") {
       flex-direction: column;
     }
 
@@ -97,6 +115,14 @@ $section-gap: 150px;
     width: 700px;
     height: 100%;
     top: 0%;
+
+    @include media-query("medium") {
+      display: flex;
+      flex-direction: column;
+      position: unset;
+      width: 100%;
+    }
+
     @include media-query("small") {
       position: unset;
       width: 100%;
@@ -104,9 +130,16 @@ $section-gap: 150px;
 
     [data-notebook="1"] {
       position: absolute;
-      @include media-query("small") {
+      &:hover {
+        z-index: 9;
+      }
+      @include media-query("medium") {
         position: unset;
         margin-top: $spacing-x-small;
+      }
+      @include media-query("small") {
+        position: unset;
+        margin-top: 0px;
       }
     }
     [data-notebook="2"] {
@@ -114,15 +147,26 @@ $section-gap: 150px;
       left: 45%;
       top: 38%;
       z-index: 2;
+      &:hover {
+        z-index: 9;
+      }
+      @include media-query("medium") {
+        position: unset;
+        margin-top: $spacing-x-small;
+      }
       @include media-query("small") {
         position: unset;
+        margin-top: 0px;
       }
     }
     [data-notebook="3"] {
       position: absolute;
       top: 65%;
       left: -20%;
-      @include media-query("small") {
+      &:hover {
+        z-index: 9;
+      }
+      @include media-query("medium") {
         display: none;
       }
     }
@@ -130,6 +174,12 @@ $section-gap: 150px;
       position: absolute;
       top: 100%;
       left: 25%;
+      &:hover {
+        z-index: 9;
+      }
+      @include media-query("medium") {
+        display: none;
+      }
       @include media-query("small") {
         display: none;
       }
@@ -145,7 +195,7 @@ $section-gap: 150px;
     }
 
     @include media-query("small") {
-      padding-top: 50px;
+      padding-top: 0px;
     }
 
     .submissionCard {
@@ -211,11 +261,14 @@ $section-gap: 150px;
 
     @include media-query("small") {
       height: 260px;
+      margin-bottom: 0px;
+      margin-top: 64px;
     }
 
     img {
+      border-radius: 4px;
       @include media-query("x-large") {
-        width: 50%;
+        width: 30%;
       }
 
       @include media-query("small") {
@@ -223,9 +276,9 @@ $section-gap: 150px;
       }
       &:nth-child(1) {
         position: absolute;
-        right: 10%;
+        right: 0%;
         @include media-query("x-large") {
-          right: 10%;
+          right: 0%;
         }
         @include media-query("small") {
           left: 0%;
@@ -233,43 +286,40 @@ $section-gap: 150px;
         }
       }
       &:nth-child(2) {
-        z-index: 3;
+        z-index: 2;
         position: absolute;
         top: 55%;
-        right: 0%;
+        left: 10%;
         @include media-query("x-large") {
-          right: 0;
+          left: 0;
           width: 40%;
         }
         @include media-query("small") {
-          top: 20%;
         }
       }
       &:nth-child(3) {
         z-index: 3;
         position: absolute;
-        top: 200px;
-        left: 15%;
+        top: 220px;
+        right: 15%;
         width: 358px;
         @include media-query("x-large") {
           width: 40%;
-          left: 15%;
-          top: 120px;
+          top: 140px;
         }
         @include media-query("small") {
-          top: 100px;
+          // top: 100px;
         }
       }
       &:nth-child(4) {
         z-index: 2;
         position: absolute;
-        left: 5%;
+        right: 35%;
         @include media-query("x-large") {
           width: 40%;
-          left: 0%;
         }
         @include media-query("small") {
-          top: 100px;
+          right: 10%;
         }
       }
     }
@@ -278,37 +328,73 @@ $section-gap: 150px;
   .aicrowdLargeLogo {
     padding-top: 20px;
     width: 100%;
+
+    @include media-query("medium") {
+      display: none;
+    }
+  }
+
+  .organizerText {
+    @include heading-6;
+    color: $color-text-light;
+    padding-bottom: 3px;
+    font-weight: 500;
   }
 
   .organizerLogos1 {
     img {
-      width: 150px;
-      justify-self: center;
+      width: 100%;
+      justify-self: flex-start;
+      @include media-query("medium") {
+        width: 100px;
+        justify-self: center;
+      }
+      @include media-query("small") {
+        width: 70px;
+        justify-self: center;
+      }
     }
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    // column-gap: 170px;
-    row-gap: 106px;
+    grid-template-columns: repeat(6, 1fr);
+    row-gap: 56px;
     justify-content: space-between;
     align-items: center;
     width: 100%;
+
+    @include media-query("medium") {
+      grid-template-columns: repeat(4, 1fr);
+      row-gap: 50px;
+    }
+    @include media-query("small") {
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: 50px;
+    }
   }
 
   .organizerLogos2 {
+    @include media-query("medium") {
+      display: none;
+    }
+    width: 50%;
     img {
-      width: 150px;
-      justify-self: center;
+      width: 100%;
+      justify-self: flex-start;
+      @include media-query("small") {
+        width: 80px;
+        justify-self: center;
+      }
     }
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    // column-gap: 186px;
-    row-gap: 106px;
+    row-gap: 28px;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
 
     .partnerLogo {
       width: 150px;
+      @include media-query("small") {
+        width: 80px;
+      }
     }
   }
 }

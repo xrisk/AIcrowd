@@ -14,9 +14,9 @@ const {
   shineWrapper,
 } = styles;
 
-const AchievementPopup = ({ title, description, icon, handleClick, url, badgeTitle, socialMessage }) => {
+const AchievementPopup = ({ title, description, icon, handleClick }) => {
   return (
-    <div>
+    <>
       <div className={main}>
         <i className="las la-times" onClick={handleClick}></i>
         <div className={iconWrapper}>
@@ -38,7 +38,7 @@ const AchievementPopup = ({ title, description, icon, handleClick, url, badgeTit
         </div>
         <ButtonDefault type="primary" text="Continue" handleClick={handleClick} />
       </div>
-    </div>
+    </>
   );
 };
 

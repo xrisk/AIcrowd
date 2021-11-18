@@ -133,7 +133,7 @@ const AchievementProgress = ({ target, progress, hideFirst, hideBronze }: Achiev
   }, [target, progress, totalProgress, setTotalProgress, hideFirst]);
 
   return (
-    <div>
+    <>
       <div>
         <div className={targetText}>
           {progress}/{gold_count}
@@ -152,7 +152,7 @@ const AchievementProgress = ({ target, progress, hideFirst, hideBronze }: Achiev
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

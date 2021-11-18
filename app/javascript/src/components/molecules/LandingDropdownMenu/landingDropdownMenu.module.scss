@@ -14,8 +14,6 @@
 .main {
   display: flex;
   flex-direction: column;
-  padding: 32px;
-  padding-bottom: 0px;
   max-width: 350px;
   box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.14);
   border-radius: 6px;
@@ -28,6 +26,8 @@
   .socialIconWrapper {
     display: flex;
     padding-bottom: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
     width: 250px;
     justify-content: space-between;
     img {
@@ -38,6 +38,7 @@
 
   ul {
     padding: 0px;
+
     li {
       padding-bottom: 32px;
       font-size: 16px;
@@ -45,6 +46,12 @@
       letter-spacing: 0.15px;
       font-weight: 400;
       list-style: none;
+      padding: 16px 32px;
+      transition: 0.2s ease-in-out all;
+      cursor: pointer;
+      &:hover {
+        background: $color-bg-dark;
+      }
     }
   }
 }

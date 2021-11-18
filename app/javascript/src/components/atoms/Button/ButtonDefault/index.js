@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';
 
 import styles from './buttonDefault.module.scss';
 
@@ -25,6 +25,7 @@ const ButtonDefault = ({
   buttonType,
   disableAnimation,
   fontSize,
+  fontFamily,
 }) => {
   const [hoverStyle, setHoverStyle] = useState({
     border: null,
@@ -72,6 +73,7 @@ const ButtonDefault = ({
               flexDirection: iconLeft && 'row-reverse',
               background: transparent && 'transparent',
               fontSize,
+              fontFamily,
             }}
             onClick={handleClick}>
             {text}
@@ -106,6 +108,7 @@ const ButtonDefault = ({
             flexDirection: iconLeft && 'row-reverse',
             background: transparent && 'transparent',
             fontSize,
+            fontFamily,
           }}>
           {text}
         </button>
@@ -135,6 +138,7 @@ ButtonDefault.propTypes = {
   buttonType: PropTypes.string,
   fontSize: PropTypes.string,
   disableAnimation: PropTypes.bool,
+  fontFamily: PropTypes.string,
 };
 
 export default ButtonDefault;

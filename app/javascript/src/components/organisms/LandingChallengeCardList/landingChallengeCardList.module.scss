@@ -5,10 +5,18 @@
   // max-width: 700px;
   // background-color: red;
   display: grid;
+  grid-template-rows:  1fr 1fr 1fr;
   grid-template-columns: repeat(3, 1fr);
   column-gap: $spacing-x-small;
   row-gap: $spacing-x-small;
   // border: 1px solid red;
+
+  @include media-query("medium") {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: $spacing-small;
+    margin-top: $spacing-small;
+  }
 
   @include media-query("small") {
     display: grid;
@@ -19,6 +27,26 @@
   }
 
   .cardWrapper {
+    position: relative;
+    [data-challenge="4"]{
+    position: absolute;
+    left: -128px;
+    top: 0px;
+    @include media-query("medium") {position:unset;}
+  }
+    [data-challenge="5"]{
+    position: absolute;
+    left: -128px;
+    top: 0px;
+    @include media-query("medium") {position:unset;}
+  }
+    [data-challenge="6"]{
+    position: absolute;
+    left: -128px;
+    top: 0px;
+    @include media-query("medium") {position:unset;}
+  }
+
     &:nth-child(4) {
       // border: 3px solid green;
       // padding-right: 60px;
@@ -35,6 +63,7 @@
       //   position: unset;
       //   padding-right: 0;
       // }
+
     }
     &:nth-child(5) {
       // padding-left: 60px;

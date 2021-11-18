@@ -8,8 +8,8 @@ export type AvatarWithTierProps = {
   id?: number;
   tier: number;
   image: string;
-  size?: 'sm' | 'lg' | 'md' | 'ml';
   loading: boolean;
+  size?: 'sm' | 'lg' | 'md' | 'ml';
   onCard?: boolean;
   borderColor?: string;
 };
@@ -23,7 +23,7 @@ const AvatarWithTier = ({ tier, image, size, loading, onCard, borderColor }: Ava
             <Skeleton circle={true} width={34} height={34} />
           </div>
         ) : (
-          <div style={{ width: '40px' }}>
+          <div style={{ width: '32px' }}>
             <img className={onCardAvatar} src={image} alt="User avatar" style={{ borderColor: borderColor }}></img>
           </div>
         )}
