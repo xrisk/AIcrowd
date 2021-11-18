@@ -77,9 +77,6 @@
     "@webpack-cli/serve": "^1.5.2",
     "webpack-dev-server": "^4.1.0"
   },
-  "resolutions": {
-    "prop-types": "15.6.2"
-  },
   "engines": {
     "yarn": "1.22.0",
     "node": "15.1.0"
