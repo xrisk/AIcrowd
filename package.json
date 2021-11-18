@@ -29,7 +29,7 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.6",
     "flatpickr": "^4.5.0",
-    "framer-motion": "^5.3.0",
+    "framer-motion": "^4.1.17",
     "glob": "^7.1.2",
     "is-dark-color": "^1.2.0",
     "jquery": "^3.5.0",
