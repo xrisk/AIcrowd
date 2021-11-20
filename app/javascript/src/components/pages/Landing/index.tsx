@@ -149,6 +149,7 @@ const Landing = ({
             <section className={cx(challengesWrapper, sectionGap)}>
               <div>
                 <LandingHeaderContent
+                  url="/challenges"
                   title="Our Challenges"
                   description={challengeDescription}
                   buttonText="Explore Challenges"
@@ -157,7 +158,7 @@ const Landing = ({
                 {/* aicrowd large logo */}
                 {!isS && (
                   <img
-                    src="/assets/new_logos/landingAicrowdLogo.svg"
+                    src="https://images.aicrowd.com/images/landing_page/landingAicrowdLogo.svg"
                     alt="aicrowd logo"
                     className={aicrowdLargeLogo}
                     width="100%"></img>
@@ -184,6 +185,7 @@ const Landing = ({
               <div>
                 <LandingHeaderContent
                   title="Your Solutions"
+                  url="/showcase"
                   description={[
                     notebookDescription,
                     ' ',
@@ -211,10 +213,11 @@ const Landing = ({
                 {/* Notebook cards */}
                 <div className={notebookCardWrapper}>
                   {notebookCardData.map((item, i) => {
-                    const { title, description, lastUpdated, image, author } = item;
+                    const { slug, title, description, lastUpdated, image, author } = item;
                     return (
                       <div key={i} data-notebook={i + 1}>
                         <LandingNotebookCard
+                          slug={slug}
                           title={title}
                           description={description}
                           lastUpdated={lastUpdated}
@@ -233,6 +236,7 @@ const Landing = ({
               <div>
                 <LandingHeaderContent
                   title="The Community"
+                  url="//discourse.aicrowd.com"
                   description={[discussionsDescription, <br />, <br />, 'On AIcrowd forums, find your AI tribe.']}
                   buttonText="Explore Discussions"
                   descriptionWidth={isS ? '288px' : isXL ? '541px' : '621px'}
@@ -321,7 +325,7 @@ const Landing = ({
             {/* AIcrowd Banner  */}
             <section className={cx(challengesWrapper)}>
               <img
-                src={`/assets/new_logos/${isS ? 'aicrowdBannerMobile' : 'aicrowdBanner'}.png`}
+                src={`https://images.aicrowd.com/images/landing_page/${isS ? 'aicrowdBannerMobile' : 'aicrowdBanner'}.png`}
                 alt="aicrowd banner"
                 width="100%"></img>
             </section>
@@ -331,6 +335,7 @@ const Landing = ({
               <div>
                 <LandingHeaderContent
                   title="Research"
+                  url="/research"
                   description={[
                     researchDescriptionPara1,
                     <br key={'br1'} />,
@@ -353,10 +358,10 @@ const Landing = ({
                 )} */}
               </div>
               <div className={researchImageWrapper}>
-                <img src="/assets/new_logos/learning_run.gif"></img>
-                <img src="/assets/new_logos/mars_demo.gif"></img>
-                <img src="/assets/new_logos/flatland.gif"></img>
-                <img src="/assets/new_logos/bill-gates-tweet.png"></img>
+                <img src="https://images.aicrowd.com/images/landing_page/learning_run.gif"></img>
+                <img src="https://images.aicrowd.com/images/landing_page/mars_demo.gif"></img>
+                <img src="https://images.aicrowd.com/images/landing_page/flatland.gif"></img>
+                <img src="https://images.aicrowd.com/images/landing_page/bill-gates-tweet.png"></img>
               </div>
             </section>
 
@@ -394,18 +399,18 @@ const Landing = ({
                   From Fortune 500 to Start-ups, we have worked with every brilliant idea
                 </div>
                 <div className={organizerLogos1}>
-                  <img src="/assets/new_logos/stanford-logo.png"></img>
-                  <img src="/assets/new_logos/openai-logo.png"></img>
-                  <img src="/assets/new_logos/novartis-logo.png"></img>
-                  <img src="/assets/new_logos/sncf-logo.png"></img>
-                  <img src="/assets/new_logos/facebook-logo.png"></img>
-                  <img src="/assets/new_logos/whofull-logo.png"></img>
-                  <img src="/assets/new_logos/spotify-logo.png"></img>
-                  <img src="/assets/new_logos/unity-logo.png"></img>
-                  <img src="/assets/new_logos/amazon-logo.png"></img>
-                  <img src="/assets/new_logos/microsoft-logo.png"></img>
-                  <img src="/assets/new_logos/iit-logo.png"></img>
-                  <img src="/assets/new_logos/eth-logo.png"></img>
+                  <img src="https://images.aicrowd.com/images/landing_page/stanford-logo.png"></img>
+                  <img src="https://images.aicrowd.com/images/landing_page/openai-logo.png"></img>
+                  <img src="https://images.aicrowd.com/images/landing_page/novartis-logo.png"></img>
+                  <img src="https://images.aicrowd.com/images/landing_page/sncf-logo.png"></img>
+                  <img src="https://images.aicrowd.com/images/landing_page/facebook-logo.png"></img>
+                  <img src="https://images.aicrowd.com/images/landing_page/whofull-logo.png"></img>
+                  <img src="https://images.aicrowd.com/images/landing_page/spotify-logo.png"></img>
+                  <img src="https://images.aicrowd.com/images/landing_page/unity-logo.png"></img>
+                  <img src="https://images.aicrowd.com/images/landing_page/amazon-logo.png"></img>
+                  <img src="https://images.aicrowd.com/images/landing_page/microsoft-logo.png"></img>
+                  <img src="https://images.aicrowd.com/images/landing_page/iit-logo.png"></img>
+                  <img src="https://images.aicrowd.com/images/landing_page/eth-logo.png"></img>
                 </div>
               </div>
             </section>
@@ -413,6 +418,7 @@ const Landing = ({
             <section className={cx(challengesWrapper, sectionGap)} style={{ paddingTop: '56px' }}>
               <LandingHeaderContent
                 title="Host a Challenge"
+                url="landing_page/host"
                 description="Have an interesting out-of-box problem you want to solve?
 Get in touch to host a customized challenge and unlock an array of exclusive features."
                 buttonText="Get In Touch"
@@ -420,12 +426,12 @@ Get in touch to host a customized challenge and unlock an array of exclusive fea
                 descriptionWidth={isS ? '288px' : '496px'}
               />
               <div className={organizerLogos2}>
-                <img src="/assets/new_logos/uber-logo.png"></img>
-                <img src="/assets/new_logos/db-logo.png"></img>
-                <img src="/assets/new_logos/sony-logo.png"></img>
-                <img src="/assets/new_logos/mit-logo.png"></img>
-                <img src="/assets/new_logos/sbb-logo.png"></img>
-                <img src="/assets/new_logos/who-logo.png"></img>
+                <img src="https://images.aicrowd.com/images/landing_page/uber-logo.png"></img>
+                <img src="https://images.aicrowd.com/images/landing_page/db-logo.png"></img>
+                <img src="https://images.aicrowd.com/images/landing_page/sony-logo.png"></img>
+                <img src="https://images.aicrowd.com/images/landing_page/mit-logo.png"></img>
+                <img src="https://images.aicrowd.com/images/landing_page/sbb-logo.png"></img>
+                <img src="https://images.aicrowd.com/images/landing_page/who-logo.png"></img>
               </div>
             </section>
           </div>

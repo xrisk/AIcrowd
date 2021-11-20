@@ -36,7 +36,7 @@ const LandingCommunityMap = ({ communityMap, communityMapAvatar }: LandingCommun
     <>
       <div ref={mapRef} className={communityMapWrapper} style={{ backgroundImage: `url(${communityMap})` }}>
         <img src={communityMapAvatar} style={{ opacity: 0 }}></img>
-        <img src="./assets/home/map-empty.png"></img>
+        <img src="https://images.aicrowd.com/images/landing_page/map-empty.png"></img>
       </div>
     </>
   );

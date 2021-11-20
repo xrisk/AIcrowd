@@ -26,6 +26,7 @@ const {
 import { Users } from 'src/types';
 
 export type LandingChallengeCardProps = {
+  slug: string;
   image: string;
   name: string;
   prize: string;
@@ -39,6 +40,7 @@ export type LandingChallengeCardProps = {
 };
 
 const LandingChallengeCard = ({
+  slug,
   image,
   name,
   prize,
@@ -58,6 +60,7 @@ const LandingChallengeCard = ({
 
   return (
     <>
+      <a href= {`/challenges/${slug}`}>
       <div className={container}>
         <div className={main} style={{ background: color }}>
           <div className={cardBadgeWrapper}>
@@ -97,6 +100,7 @@ const LandingChallengeCard = ({
           })}
         </div>
       </div>
+      </a>
     </>
   );
 };

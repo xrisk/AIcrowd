@@ -34,7 +34,7 @@ const ActionButton = ({ type, size, disableAnimation, fontFamily }: ActionButton
         {type === 'add' && <PlusIcon className={styles['las']} />}
         {type === 'rerun' && <UndoAltIcon className={styles['las']} />}
         {type === 'github' && <GithubIcon className={styles['lab']} />}
-        {type === 'google' && <img src="/assets/new_logos/google.svg" width="24" height="24" alt="google logo"></img>}
+        {type === 'google' && <img src="https://images.aicrowd.com/images/landing_page/google.svg" width="24" height="24" alt="google logo"></img>}
         {buttonText[type]}
       </motion.button>
     </>

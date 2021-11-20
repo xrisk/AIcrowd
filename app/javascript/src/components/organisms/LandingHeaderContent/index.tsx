@@ -11,6 +11,7 @@ import ActionButton from 'src/components/atoms/Button/ActionButton';
 const { main, titleText, descriptionText, heroTitle, buttonWrapper, registerButtonWrapper } = styles;
 
 export type LandingHeaderContentProps = {
+  url?: string
   title?: string;
   description: any;
   buttonText: string;
@@ -21,6 +22,7 @@ export type LandingHeaderContentProps = {
 };
 
 const LandingHeaderContent = ({
+  url,
   title,
   description,
   buttonText,
@@ -82,6 +84,7 @@ const LandingHeaderContent = ({
           {(hero && isS) || isJoinCommunity ? (
             <></>
           ) : (
+            <a href={url}>
             <ButtonDefault
               text={buttonText}
               iconClass="arrow-right"
@@ -92,13 +95,19 @@ const LandingHeaderContent = ({
               iconSize="18px"
               fontFamily="Inter"
             />
+            </a>
           )}
         </div>
         {/* Show only on join our community section */}
         {isJoinCommunity && (
           <div className={registerButtonWrapper}>
-            <ActionButton type="google" size="large" fontFamily="Inter" />
-            <ActionButton type="github" size="large" fontFamily="Inter" />
+            <a href="/participants/auth/github" style={{marginBottom: '16px'}}>
+              <ActionButton type="google" size="large" fontFamily="Inter" />
+            </a>
+            <a href="/participants/auth/google_oauth2" style={{marginBottom: "16px"}}>
+              <ActionButton type="github" size="large" fontFamily="Inter" />
+            </a>
+            <a href="/participants/sign_up">
             <ButtonDefault
               text="Sign Up With Email"
               iconClass="envelope"
@@ -111,6 +120,7 @@ const LandingHeaderContent = ({
               fontWeight="500"
               fontFamily="Inter"
             />
+            </a>
           </div>
         )}
       </div>

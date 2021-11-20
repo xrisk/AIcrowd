@@ -140,9 +140,7 @@ const LandingNavBar = ({
 
             <div className={dropdownNavItemWrapper} onMouseLeave={leaveButton}>
               <div className={navItem}>
-                <Link href={challengesMenuItem.link}>
-                  <a>Challenges</a>
-                </Link>
+                <a href={challengesMenuItem.link}>Challenges</a>
               </div>
               <div className={navItem} onMouseEnter={() => handleMouseEnter('community')}>
                 Community

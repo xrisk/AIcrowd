@@ -40,6 +40,7 @@ const MastHeadLanding = ({
         <div style={{ position: 'relative' }}>
           <LandingHeaderContent
             hero
+            url="/landing_page/host"
             description={description}
             buttonText="Host a Challenge"
             descriptionWidth={isS ? '288px' : isM ? '500px' : '624px'}

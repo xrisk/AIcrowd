@@ -42,11 +42,9 @@ const LandingDropdownMenu = ({
         <ul>
           {menu?.map(item => {
             return (
-              <Link href={item.link} key={item.name}>
-                <li>
-                  <a>{item.name}</a>
-                </li>
-              </Link>
+              <li>
+                <a href={item.link}>{item.name}</a>
+              </li>
             );
           })}
         </ul>

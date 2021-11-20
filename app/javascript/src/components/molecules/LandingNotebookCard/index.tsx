@@ -5,6 +5,7 @@ import styles from './landingNotebook.module.scss';
 const { mainWrapper, titleText, subWrapper, textWrapper, statusWrapper, time, imgWrapper } = styles;
 
 export type LandingNotebookCardProps = {
+  slug: string
   title: string;
   description: string;
   lastUpdated: string;
@@ -12,9 +13,10 @@ export type LandingNotebookCardProps = {
   author: string;
 };
 
-const LandingNotebookCard = ({ title, image, author }: LandingNotebookCardProps) => {
+const LandingNotebookCard = ({ slug, title, image, author }: LandingNotebookCardProps) => {
   return (
     <>
+      <a href={`/showcase/${slug}`}>
       <div className={mainWrapper}>
         <div className={subWrapper}>
           <div className={imgWrapper}>
@@ -29,6 +31,7 @@ const LandingNotebookCard = ({ title, image, author }: LandingNotebookCardProps)
         </div>
         {/* <div className={descriptionText}>{description}</div> */}
       </div>
+      </a>
     </>
   );
 };

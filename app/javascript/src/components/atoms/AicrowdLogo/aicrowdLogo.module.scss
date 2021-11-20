@@ -2,7 +2,7 @@
 @import "../../../styles/base/__base-dir.scss";
 
 .brand {
-  background: url("/assets/images/logo-aicrowd.svg") no-repeat;
+  background: url("https://images.aicrowd.com/images/landing_page/logo-aicrowd.svg") no-repeat;
   background-size: cover;
   display: block;
   height: 24px;
@@ -22,13 +22,13 @@
 
 [data-theme="dark"] {
   .brand {
-    background: url("/assets/images/logo-aicrowd-dark.svg") no-repeat;
+    background: url("https://images.aicrowd.com/images/landing_page/logo-aicrowd-dark.svg") no-repeat;
     background-size: contain;
   }
 }
 
 .logomark {
-  background: url("/assets/images/logomark-aicrowd.svg") no-repeat;
+  background: url("https://images.aicrowd.com/images/landing_page/logomark-aicrowd.svg") no-repeat;
   background-size: contain;
   display: block;
   height: 24px;
