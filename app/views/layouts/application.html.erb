@@ -84,7 +84,9 @@
 
       <%= yield %>
     </div>
-    <%= render partial: 'layouts/footer' %>
+    <% unless controller_name == "landing_page" && action_name == "index" %>
+      <%= render partial: 'layouts/footer' %>
+    <% end %>
     <%= render partial: 'layouts/google_analytics_body' %>
     <%= render partial: 'shared/badge_popup' %>
   </body>

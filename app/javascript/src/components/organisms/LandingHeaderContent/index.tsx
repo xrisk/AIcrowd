@@ -37,6 +37,7 @@ const LandingHeaderContent = ({
   const isXL = useMediaQuery(xLarge);
 
   const isJoinCommunity = title === 'Join our Global Community';
+  const isWelcomeAicrowd = title === 'Welcome to AIcrowd Community'
   return (
     <>
       <div className={main}>
@@ -83,7 +84,7 @@ const LandingHeaderContent = ({
             </div>
           )}
           {/* Hide button for hero in small screen */}
-          {(hero && isS) || isJoinCommunity ? (
+          {(hero && isS) || isJoinCommunity || isWelcomeAicrowd ? (
             <></>
           ) : (
             <a href={url}>
@@ -125,6 +126,47 @@ const LandingHeaderContent = ({
             </a>
           </div>
         )}
+        {isWelcomeAicrowd && (
+          <div className={registerButtonWrapper}>
+            <a href="/challenges" style={{marginBottom: '16px'}}>
+              <ButtonDefault
+                text="Explore Challenges"
+                iconClass="arrow-right"
+                iconColor={buttonType === 'primary' ? '#fffff' : '#F0524D'}
+                type={buttonType || 'secondary'}
+                paddingTop="8px"
+                paddingBottom="8px"
+                iconSize="18px"
+                fontFamily="Inter"
+              />
+            </a>
+            <a href='/showcase' style={{marginBottom: '16px'}}>
+            <ButtonDefault
+              text='Explore Notebooks'
+              iconClass="arrow-right"
+              iconColor={buttonType === 'primary' ? '#fffff' : '#F0524D'}
+              type={buttonType || 'secondary'}
+              paddingTop="8px"
+              paddingBottom="8px"
+              iconSize="18px"
+              fontFamily="Inter"
+            />
+            </a>
+            <a href='//discourse.aicrowd.com'>
+            <ButtonDefault
+              text='Explore Discussions'
+              iconClass="arrow-right"
+              iconColor={buttonType === 'primary' ? '#fffff' : '#F0524D'}
+              type={buttonType || 'secondary'}
+              paddingTop="8px"
+              paddingBottom="8px"
+              iconSize="18px"
+              fontFamily="Inter"
+            />
+            </a>
+          </div>
+        )}
+
       </div>
     </>
   );

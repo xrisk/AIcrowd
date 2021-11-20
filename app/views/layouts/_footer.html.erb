@@ -11,7 +11,98 @@
 <% end %>
 
 <!-- app footer -->
-<%= react_component("organisms/SiteFooter/index", {SiteFooter: {control: {options: [],}}}) %>
+<footer class="app-footer">
+	<div class="container-fluid">
+		<div class="row">
+
+			<!-- app brand -->
+			<div class="app-brand col-3 col-lg-4">
+				<div class="app-brand">
+					<a class="logo-aicrowd-light" href="/">
+						<span>AIcrowd</span>
+					</a>
+				</div>
+			</div>
+			<!-- /app brand -->
+
+			<!-- platform -->
+			<div class="col-6 col-sm-4 col-md-3 col-lg-2">
+				<h4>Platform</h4>
+				<ul class="nav flex-column">
+					<li class="nav-item">
+						<%= link_to 'Challenges', challenges_path, {:class => "nav-link"} %>
+					</li>
+					<li class="nav-item">
+						<%= link_to 'Organize a Challenge', landing_page_host_path, {:class => "nav-link"} %>
+					</li>
+					<li class="nav-item">
+						<%= link_to 'FAQ', faq_path, {:class => "nav-link"} %>
+					</li>
+					<li class="nav-item">
+						<%= link_to 'Our Team', team_members_path, {:class => "nav-link"} %>
+					</li>
+					<li class="nav-item">
+						<%= link_to 'We are Hiring!', job_postings_path, {:class => "nav-link"} %>
+					</li>
+				</ul>
+			</div>
+			<!-- /platform -->
+
+			<!-- connect -->
+			<div class="col-6 col-sm-4 col-md-3 col-lg-2">
+				<h4>Connect</h4>
+				<ul class="nav flex-column">
+					<li class="nav-item">
+						<%= link_to 'Blog', blogs_path, {:class => "nav-link"} %>
+					</li>
+                                        <% if ENV['DISCOURSE_DOMAIN_NAME'].present? %>
+                                        <li class="nav-item">
+                                                <a class="nav-link" href="<%= URI.escape(ENV['DISCOURSE_DOMAIN_NAME']) %>">Forums</a>
+                                        </li>
+                                        <% end %>
+					<li class="nav-item">
+						<%= link_to 'Contact', contact_path, {:class => "nav-link"} %>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="http://gitlab.aicrowd.com/">GitLab<%= image_tag("img/icon-external-link.svg", :alt => "GitLab") %></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="https://twitter.com/AIcrowdHQ">Twitter<%= image_tag("img/icon-external-link.svg", :alt => "Twitter") %></a>
+					</li>
+                                        <li class="nav-item">
+                                                <a class="nav-link" href="https://discord.gg/CtwK47EdKg">Discord<%= image_tag("img/icon-external-link.svg", :alt => "Discord") %></a>
+                                        </li>
+				</ul>
+			</div>
+			<!-- /connect -->
+
+			<!-- legal -->
+			<div class="section-legal col-12 col-sm-4 col-md-3 col-lg-4">
+				<h4>Legal</h4>
+				<ul class="nav flex-column">
+					<li class="nav-item">
+						<%= link_to 'Cookie consent', cookies_path, {:class => "nav-link"} %>
+					</li>
+					<li class="nav-item">
+						<%= link_to 'Terms of Use', terms_path, {:class => "nav-link"} %>
+					</li>
+					<li class="nav-item">
+						<%= link_to 'Participation Terms', participation_terms_path, {:class => "nav-link"} %>
+					</li>
+					<li class="nav-item">
+						<%= link_to 'Privacy', privacy_path, {:class => "nav-link"} %>
+					</li>
+          <li class="nav-item">
+            <%= link_to 'Community Guidelines', community_guidelines_path, {:class => "nav-link"} %>
+          </li>
+				</ul>
+				<p>&#169; <%= Date.today.year %> AIcrowd. All rights reserved.</p>
+			</div>
+			<!-- /legal -->
+
+		</div>
+	</div>
+</footer>
 <% cache_if cache_enabled?, [Setting.first] do%>
 	<!-- custom footer -->
 	<% if Setting.footer_record.present? %>

@@ -256,10 +256,12 @@ const Landing = ({
                 <div className={submissionCardWrapper}>
                   <div>
                     {submissionCardData.map((item, i) => {
-                      const { title, description, comment_count, tier, image, loading, borderColor } = item;
+                      const { url, title, description, comment_count, tier, image, loading, borderColor } = item;
                       return (
                         <div key={i} data-submission={i + 1} className={submissionCard}>
+                        <a href={url}>
                           <LandingSubmissionCard
+                            url={url}
                             title={title}
                             description={description}
                             comment_count={comment_count}
@@ -268,6 +270,7 @@ const Landing = ({
                             loading={loading}
                             borderColor={borderColor}
                           />
+                          </a>
                         </div>
                       );
                     })}
@@ -377,12 +380,18 @@ const Landing = ({
             {/* Join Our Global community  */}
             <section className={cx(challengesWrapper)}>
               <div>
-                <LandingHeaderContent
+                {isLoggedIn && (<LandingHeaderContent
+                  title="Welcome to AIcrowd Community"
+                  description=""
+                  buttonText="Join Now"
+                  descriptionWidth={isS ? '288px' : '496px'}
+                />)}
+                {!isLoggedIn && (<LandingHeaderContent
                   title="Join our Global Community"
                   description=""
                   buttonText="Join Now"
                   descriptionWidth={isS ? '288px' : '496px'}
-                />
+                />)}
               </div>
               {/* <LandingCommunityMap communityMap={communityMap} communityMapAvatar={communityMapAvatar} /> */}
               <div style={{ paddingTop: isS && '64px', width: '100%' }}>

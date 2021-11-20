@@ -16,6 +16,7 @@ const {
 } = styles;
 
 export type LandingSubmissionCardProps = {
+  url: string
   title: string;
   description: string;
   comment_count: number;

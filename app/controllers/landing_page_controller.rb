@@ -58,7 +58,7 @@ class LandingPageController < ApplicationController
         image: challenge.image_url,
         slug: challenge.slug,
         name: challenge.challenge,
-        prize: challenge.prize_misc,
+        prize: challenge.landing_card_prize,
         users: users,
         loading: false,
         onCard: false,
@@ -99,7 +99,7 @@ class LandingPageController < ApplicationController
       image: challenge_1.image_url,
       slug: challenge_1.slug,
       name: challenge_1.challenge,
-      prize: challenge_1.prize_misc,
+      prize: challenge_1.landing_card_prize,
 
       users: users,
       loading: false,
@@ -140,7 +140,7 @@ class LandingPageController < ApplicationController
       image: challenge_2.image_url,
       slug: challenge_2.slug,
       name: challenge_2.challenge,
-      prize: challenge_2.prize_misc,
+      prize: challenge_2.landing_card_prize,
 
       users: users,
       loading: false,
@@ -181,7 +181,7 @@ class LandingPageController < ApplicationController
       image: challenge_3.image_url,
       slug: challenge_3.slug,
       name: challenge_3.challenge,
-      prize: challenge_3.prize_misc,
+      prize: challenge_3.landing_card_prize,
 
       users: users,
       loading: false,
@@ -270,29 +270,24 @@ class LandingPageController < ApplicationController
   end
 
   def get_discourse_data
-    @discourse_topics_fetch = Rails.cache.fetch('discourse-latest-topics', expires_in: 5.minutes) do
-      Discourse::FetchLatestTopicsService.new.call
-    end
+    @discourse_topics = Discourse::FetchLatestTopicsService.new.call
 
-    @discourse_top_contributors_fetch = Rails.cache.fetch('discourse-top-contributors', expires_in: 5.minutes) do
-      Discourse::FetchTopContributorsService.new.call
-    end
-
-    @discourse_topics           = @discourse_topics_fetch.value
+    @discourse_top_contributors_fetch = Discourse::FetchTopContributorsService.new.call
     @discourse_top_contributors = @discourse_top_contributors_fetch.value
 
 
     @submission_card_data = []
     @discourse_topics.each do |val|
       @submission_card_data << {
-        title: val["title"],
-        description: val["excerpt"], #point_down,
-        comment_count: val["posts_count"],
+        url: "//discourse.aicrowd.com/t/#{val[1]}/#{val[0]}",
+        title: val[2],
+        description: val[3],
+        comment_count: val[4],
         isComment: true,
-        image: (Participant.find_by_name(val["name"]).image_file.url rescue 'https://images.aicrowd.com/images/landing_page/custom-avatar-3.png'),
+        image: (Participant.find_by_name(val[5]).image_file.url rescue 'https://images.aicrowd.com/images/landing_page/custom-avatar-3.png'),
         onCard: true,
         borderColor: '#fff',
-        tier: 2
+        tier: 0
       }
     end
   end
