@@ -50,7 +50,7 @@ class LandingPageController < ApplicationController
         }
       end
       users = []
-      Challenge.first.challenge_participants.sample(5).map(&:participant).each do |participant|
+      challenge.challenge_participants.sample(5).map(&:participant).each do |participant|
         users << {id: participant.id, image: participant.image_url, tier: 0}
       end
 

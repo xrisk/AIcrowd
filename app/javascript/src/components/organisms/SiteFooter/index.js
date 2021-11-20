@@ -10,29 +10,29 @@ const SiteFooter = ({ removeMargin }) => {
   const router = useRouter();
 
   const platformLinks = [
-    { name: 'Challenges', link: '' },
-    { name: 'Practice', link: '' },
-    { name: 'Organize a Challenge', link: '' },
+    { name: 'Challenges', link: '/challenges' },
+    { name: 'Practice', link: '/challenges' },
+    { name: 'Organize a Challenge', link: '/landing_page/host' },
     { name: 'User Rankings', link: '' },
-    { name: 'FAQ', link: '' },
-    { name: 'Our Team', link: '' },
-    { name: 'Jobs', link: '' },
+    { name: 'FAQ', link: '/faq' },
+    { name: 'Our Team', link: '/our_team' },
+    { name: 'Jobs', link: '/jobs' },
   ];
 
   const connectLinks = [
-    { name: 'Blog', link: '', icon: false },
-    { name: 'Contact', link: '', icon: false },
-    { name: 'Discourse', link: '', icon: true },
+    { name: 'Blog', link: '/blogs', icon: false },
+    { name: 'Contact', link: '/contact', icon: false },
+    { name: 'Discourse', link: '//discourse.aicrowd.com', icon: true },
     { name: 'Github', link: '', icon: true },
-    { name: 'GitLab', link: '', icon: true },
-    { name: 'Twitter', link: '', icon: true },
+    { name: 'GitLab', link: '//gitlab.aicrowd.com', icon: true },
+    { name: 'Twitter', link: '//twitter.com/AIcrowdHQ', icon: true },
   ];
 
   const legalLinks = [
-    { name: 'Cookie consent', link: '' },
-    { name: 'Participation Terms', link: '' },
-    { name: 'Privacy Policy', link: '' },
-    { name: 'Terms of Use', link: '' },
+    { name: 'Cookie consent', link: '/cookies' },
+    { name: 'Participation Terms', link: 'participation_terms' },
+    { name: 'Privacy Policy', link: '/privacy' },
+    { name: 'Terms of Use', link: '/terms' },
   ];
 
   const languages = [

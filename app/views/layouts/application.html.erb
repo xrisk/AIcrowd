@@ -73,7 +73,9 @@
     <%= render partial: 'layouts/loader' %>
 
     <div class='content'>
-      <%= render partial: 'layouts/header' %>
+      <% unless controller_name == "landing_page" && action_name == "index" %>
+        <%= render partial: 'layouts/header' %>
+      <% end %>
 
       <div id="flash-messages-wrapper">
         <%= content_for :flash_messages %>

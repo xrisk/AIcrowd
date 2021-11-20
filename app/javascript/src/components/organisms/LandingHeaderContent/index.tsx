@@ -68,6 +68,7 @@ const LandingHeaderContent = ({
           {/* Show in hero only */}
           {hero && (
             <div style={{ paddingRight: '26px' }}>
+              <a href="/challenges">
               <ButtonDefault
                 text="Our Challenges"
                 iconClass="arrow-right"
@@ -78,6 +79,7 @@ const LandingHeaderContent = ({
                 iconSize="18px"
                 fontFamily="Inter"
               />
+              </a>
             </div>
           )}
           {/* Hide button for hero in small screen */}
