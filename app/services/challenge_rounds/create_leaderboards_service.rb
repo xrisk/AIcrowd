@@ -6,6 +6,7 @@ module ChallengeRounds
       @submissions           = @challenge_round.submissions.reorder(created_at: :desc)
       @meta_challenge_id     = meta_challenge_id
       @ml_challenge_id       = ml_challenge_id
+      @reputation_freeze_time= reputation_freeze_time
       @challenge_leaderboard_extra = challenge_leaderboard_extra
       if challenge_leaderboard_extra.nil?
         @challenge_leaderboard_extra = @challenge_round.default_leaderboard
@@ -366,7 +367,7 @@ module ChallengeRounds
     end
 
     def freeze_time
-      return reputation_freeze_time if reputation_freeze_time
+      return @reputation_freeze_time if @reputation_freeze_time
       @is_freeze ? freeze_dttm : Time.current
     end
 
