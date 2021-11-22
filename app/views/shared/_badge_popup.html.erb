@@ -1,21 +1,22 @@
 <div id="badges-popup">
 <% if current_participant&.awaiting_toasts.present? %>
   <% aicrowd_badge = current_participant&.awaiting_toasts.last %>
-  <div class="modal badges-modal" id="badges-modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="max-width: 30%;">
-      <div class="modal-content" style="max-width: 94%; margin-top: 30%;">
-        <%= react_component("molecules/AchievementPopup/index", { icon: aicrowd_badge.image, title: "Congratulations!", description: aicrowd_badge.description, url: request.original_url, badgeTitle: aicrowd_badge.name, socialMessage: aicrowd_badge.social_message }) %>
+    <% if aicrowd_badge.present? %>
+      <div class="modal badges-modal" id="badges-modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width: 30%;">
+          <div class="modal-content" style="max-width: 94%; margin-top: 30%;">
+            <%= react_component("molecules/AchievementPopup/index", { icon: aicrowd_badge.image, title: "Congratulations!", description: aicrowd_badge.description, url: request.original_url, badgeTitle: aicrowd_badge.name, socialMessage: aicrowd_badge.social_message }) %>
 
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-
-  <script>
-    $(document).ready(function(){
-      $('#badges-modal').appendTo("body").modal('show');
-    })
-  </script>
-  <% current_participant&.toggle_toasts %>
+    <script>
+      $(document).ready(function(){
+        $('#badges-modal').appendTo("body").modal('show');
+      })
+    </script>
+    <% current_participant&.toggle_toasts %>
+  <% end %>
 <% end %>
 </div>
 
