@@ -112,6 +112,7 @@ gem 'puma_worker_killer'
 gem 'pretender'
 gem 'merit'
 gem 'react-rails'
+gem 'geocoder'
 
 # HTTP clients
 gem 'faraday', '~> 1.0'

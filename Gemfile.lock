@@ -1034,6 +1034,7 @@ DEPENDENCIES
   font-awesome-rails
   friendly_id (~> 5.1.0)
   gemoji-parser
+  geocoder
   gibbon
   gist
   gitlab-styles (~> 2.8)

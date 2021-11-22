@@ -367,6 +367,7 @@ class ChallengesController < ApplicationController
       :other_scores_fieldnames,
       :description,
       :prize_cash,
+      :landing_card_prize,
       :prize_travel,
       :prize_academic,
       :prize_misc,

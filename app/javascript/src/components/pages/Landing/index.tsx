@@ -104,7 +104,7 @@ const Landing = ({
   const isM = useMediaQuery(sizes.medium);
   const { value: isMenuOpen, toggle, setValue: setMenu } = useBoolean();
 
-  const challengeDescription = `AIcrowd consistently pushes the state of art in AI with impactful real-world challenges - ranging from advances in Reinforcement learning to applications of ML in scientific research`;
+  const challengeDescription = `AIcrowd hosts challenges that tackle diverse problems in Artificial Intelligence with real-world impact. AIcrowd Community spearheads the state of the art, be it advanced RL innovation or applications of ML in scientific research. There is an interesting problem for everyone.`;
 
   const notebookDescription = `Browse winning solutions created with`;
   const notebookDescription2 = `by the community. Learn, discuss and grow your AI skills.`;
@@ -405,7 +405,7 @@ const Landing = ({
               className={cx(sectionGap)}>
               <div>
                 <div className={organizerText}>
-                  From Fortune 500 to Start-ups, we have worked with every brilliant idea
+                  From Fortune 500 companies to unicorn startups, we have implemented diverse and unique ideas
                 </div>
                 <div className={organizerLogos1}>
                   <img src="https://images.aicrowd.com/images/landing_page/stanford-logo.png"></img>

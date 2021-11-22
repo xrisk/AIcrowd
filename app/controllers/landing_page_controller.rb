@@ -1,14 +1,34 @@
 class LandingPageController < ApplicationController
   def index
-    get_challenge_list_data
-    get_featured_challenge_1
-    get_featured_challenge_2
-    get_featured_challenge_3
-    get_featured_notebooks
+    Rails.cache.fetch('challenge-list-data', expires_in: 5.minutes) do
+      get_challenge_list_data
+    end
+
+    Rails.cache.fetch('featured-challenge-1', expires_in: 5.minutes) do
+      get_featured_challenge_1
+    end
+
+    Rails.cache.fetch('featured-challenge-2', expires_in: 5.minutes) do
+      get_featured_challenge_2
+    end
+
+    Rails.cache.fetch('featured-challenge-3', expires_in: 5.minutes) do
+      get_featured_challenge_3
+    end
+
+    Rails.cache.fetch('featured-notebooks', expires_in: 5.minutes) do
+      get_featured_notebooks
+    end
+
     get_menu_items
     get_stat_list_data
     get_quotes
-    get_discourse_data
+
+    Rails.cache.fetch('featured-discussions', expires_in: 5.minutes) do
+      get_discourse_data
+    end
+
+    get_community_members_list
 
   end
 
@@ -257,7 +277,11 @@ class LandingPageController < ApplicationController
       },
       {
         name: 'Account Setting',
-        link: edit_participant_registration_path,
+        link: current_participant.present? ? edit_participant_registration_path : '/'
+      },
+      {
+        name: 'Notifications',
+        link: current_participant.present? ? participant_notifications_message_path(current_participant): '/'
       },
       {
         name: 'Sign Out',
@@ -348,13 +372,31 @@ class LandingPageController < ApplicationController
         },
         {
           count: '60',
-          statText: 'Research Papers',
+          statText: 'Research Papers Published',
         },
         {
           count: '12 TB',
           statText: 'Codes, Models & Datasets',
         },
       ]
+  end
+
+  def get_community_members_list
+    sql = "select country_cd, id from (select distinct on (country_cd) country_cd, id, random() as rank, name, image_file from participants where country_cd IN (select distinct country_cd from participants where country_cd is not null and country_cd!='') and image_file is not null and image_file !='' order by country_cd, rank desc) data order by random() limit 15"
+    participants = ActiveRecord::Base.connection.execute(sql)
+
+    @community_members_list = []
+    participants.each do |p|
+      user = Participant.find_by_id(p["id"])
+      lon, lat = Geocoder.search(p["country_cd"]).first.coordinates
+
+      @community_members_list << {
+        lat: lat.to_s,
+        lon: lon.to_s,
+        image: user.image_url,
+        name: user.name
+      }
+    end
   end
 
 end

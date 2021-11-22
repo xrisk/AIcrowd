@@ -24,6 +24,12 @@
       <span class="label-text">Prize Money</span>
       <%= f.text_field :prize_cash, class: "form-control" %>
     </div>
+    <% if current_participant.admin? %>
+      <div class="form-group">
+        <span class="label-text">Landing Page Prize Money</span>
+        <%= f.text_field :landing_card_prize, class: "form-control" %>
+      </div>
+    <% end %>
 
     <div class="form-group">
       <span class="label-text">Travel Grants</span>
