@@ -51,8 +51,8 @@ module ChallengeRounds
 
         create_leaderboards(ongoing_leaderboards, previous_ongoing_leaderboards)
 
-        if reputation_freeze_time.present?
-          reputation_leaderboard = build_base_leaderboards('reputation', [true, false], reputation_freeze_time)
+        if @reputation_freeze_time.present?
+          reputation_leaderboard = build_base_leaderboards('reputation', [true, false], @reputation_freeze_time)
           create_reputation_leaderboard(reputation_leaderboard)
         end
       end
