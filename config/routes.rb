@@ -12,6 +12,7 @@ def challenge_routes
     get :remove_social_media_image
     get :remove_banner
     get :remove_banner_mobile
+    get :remove_square_image
     get :clef_task
     get :export
     post :import

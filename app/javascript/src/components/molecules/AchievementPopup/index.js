@@ -14,7 +14,7 @@ const {
   shineWrapper,
 } = styles;
 
-const AchievementPopup = ({ title, description, icon, handleClick }) => {
+const AchievementPopup = ({ title, description, icon, handleClick, url, badgeTitle, socialMessage  }) => {
   return (
     <>
       <div className={main}>

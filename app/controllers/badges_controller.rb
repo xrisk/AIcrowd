@@ -1,5 +1,5 @@
 class BadgesController < ApplicationController
-
+  before_action :authenticate_participant!
   before_action :set_post, except: [:index]
 
   def index
@@ -23,7 +23,7 @@ class BadgesController < ApplicationController
   private
 
   def set_post
-    @post = Post.find_by_id(params[:post_id])
+    @post = Post.find_by_id(params[:id])
   end
 
 end

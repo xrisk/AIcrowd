@@ -235,15 +235,6 @@ class Participant < ApplicationRecord
     return [bronze_badge_count, silver_badge_count, gold_badge_count]
   end
 
-  def badges_tab_stats
-    badges_summary = aicrowd_user_badges.badges_stat_count
-    bronze_badges_stats = aicrowd_user_badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
-    silver_badges_stats = aicrowd_user_badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
-    gold_badges_stats = aicrowd_user_badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
-    other_badges_stats = aicrowd_user_badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
-    return badges_summary, bronze_badges_stats, silver_badges_stats, gold_badges_stats, other_badges_stats
-  end
-
   def awaiting_toasts
     aicrowd_user_badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').select('ab.name', 'ab.description', 'ab.image').where(toast_shown: false)
   end

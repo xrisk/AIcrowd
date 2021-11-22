@@ -55,7 +55,7 @@ class LandingPageController < ApplicationController
       end
 
       @challenge_list_data << {
-        image: challenge.image_url,
+        image: challenge.landing_square_image_file.url,
         slug: challenge.slug,
         name: challenge.challenge,
         prize: challenge.landing_card_prize,
@@ -96,7 +96,7 @@ class LandingPageController < ApplicationController
     end
 
     @landing_challenge_card_1 = {
-      image: challenge_1.image_url,
+      image: challenge_1.landing_square_image_file.url,
       slug: challenge_1.slug,
       name: challenge_1.challenge,
       prize: challenge_1.landing_card_prize,
@@ -137,7 +137,7 @@ class LandingPageController < ApplicationController
     end
 
     @landing_challenge_card_2 = {
-      image: challenge_2.image_url,
+      image: challenge_2.landing_square_image_file.url,
       slug: challenge_2.slug,
       name: challenge_2.challenge,
       prize: challenge_2.landing_card_prize,
@@ -178,7 +178,7 @@ class LandingPageController < ApplicationController
     end
 
     @landing_challenge_card_3 = {
-      image: challenge_3.image_url,
+      image: challenge_3.landing_square_image_file.url,
       slug: challenge_3.slug,
       name: challenge_3.challenge,
       prize: challenge_3.landing_card_prize,
@@ -253,7 +253,7 @@ class LandingPageController < ApplicationController
     @profile_menu_item = [
       {
         name: 'Profile',
-        link: participant_path(current_participant),
+        link: current_participant.present? ? participant_path(current_participant) : '/'
       },
       {
         name: 'Account Setting',
@@ -261,7 +261,7 @@ class LandingPageController < ApplicationController
       },
       {
         name: 'Sign Out',
-        link: '/signout???????????',
+        link: current_participant.present? ? destroy_participant_session_path : '/'
       },
     ]
 

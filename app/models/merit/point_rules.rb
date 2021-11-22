@@ -36,7 +36,9 @@ module Merit
       # Submission Streak
       # Need to discuss this
       score 1, :on => 'submissions#create', category: 'Submission Streak' do |submission|
-        false
+        points = current_participant.points(category: 'Submission Streak')
+        current_participant.subtract_points(points, category: 'Submission Streak')
+        current_participant.add_points(points, category: 'Submission Streak')
       end
 
       # Leaderboard Ninja

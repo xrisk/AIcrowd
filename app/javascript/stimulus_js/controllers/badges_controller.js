@@ -6,7 +6,7 @@ export default class extends Controller {
     $.ajax({
         url: '/badges/shared_notebook',
         type: 'POST',
-        data: {post_id: postId},
+        data: {id: postId},
         success:  function(result){},
         error: function(){}
     });
@@ -17,7 +17,7 @@ export default class extends Controller {
     $.ajax({
         url: '/badges/downloaded_notebook',
         type: 'POST',
-        data: {post_id: postId},
+        data: {id: postId},
         success:  function(result){},
         error: function(){}
     });
@@ -28,7 +28,7 @@ export default class extends Controller {
     $.ajax({
         url: '/badges/executed_notebook',
         type: 'POST',
-        data: {post_id: postId},
+        data: {id: postId},
         success:  function(result){},
         error: function(){}
     });

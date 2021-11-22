@@ -18,7 +18,7 @@ end
 
 # Create application badges (uses https://github.com/norman/ambry)
 Rails.application.reloader.to_prepare do
-  if Merit::Badge.count == 0
+  if Merit::Badge.count == 0 && AicrowdBadge.column_names.include?('level')
     AicrowdBadge.where('level is not null').each do |badge|
       Merit::Badge.create!(id: badge.id, name: badge.name, description: badge.description, level: badge.level)
     end

@@ -28,7 +28,7 @@ class RatingsController < ApplicationController
     participant_ids = Participant.where('name ILIKE ? OR first_name ILIKE ? OR city ILIKE ? OR affiliation ILIKE ?', "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%").pluck(:id)
     country_code = ISO3166::Country.find_country_by_name(params[:q])&.map(&:alpha2)
     participant_ids + Participant.where(country_cd: country_code).pluck(:id)
-    @rankings = GlobalRank.order('rating desc').where(participant_id: participant_ids).includes(:participant).limit(100)
+    @rankings = GlobalRank.order('rating desc').where(participant_id: participant_ids).includes(:participant).limit(10)
   end
 
   private

@@ -154,9 +154,8 @@ const LandingNavBar = ({
                 </div>
               ) : (
                 <>
-                  <Link href="/login">
-                    <a className={loginText}>Log in</a>
-                  </Link>
+                  <a href="/participants/sign_in" className={loginText}>Log in</a>
+                  <a href="/participants/sign_up">
                   <ButtonDefault
                     text="Sign Up"
                     type="secondary"
@@ -170,6 +169,7 @@ const LandingNavBar = ({
                     paddingBottom="8px"
                     handleClick={() => router.push('/signup')}
                   />
+                  </a>
                 </>
               )}
             </div>
