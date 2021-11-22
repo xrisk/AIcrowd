@@ -18,7 +18,7 @@
       <% end %>
 
       <% if submission_locking_enabled?(@challenge) %>
-        <%= form_with model: @locked_submission, url: freeze_submission_challenge_submissions_path do |f| %>
+        <%= form_with model: @locked_submission, url: freeze_submission_challenge_submissions_path(@challenge) do |f| %>
 
           <div class="form-group">
             <span class="label-text">Submission</span>

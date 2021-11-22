@@ -184,6 +184,10 @@ module ChallengesHelper
         if challenge.has_key?(:challenge_id) && (challenge[:challenge_id] != params['meta_challenge_id'])
           return true
         end
+      elsif challenge.is_a?(Integer)
+        if challenge != Challenge.friendly.find(params['meta_challenge_id']).id
+          return true
+        end
       elsif challenge.slug != Challenge.friendly.find(params['meta_challenge_id']).slug
         return true
       end
@@ -359,6 +363,21 @@ module ChallengesHelper
   end
 
   def export_challenge_leaderboards_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+  
+  def reset_locked_submissions_challenge_submissions_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+  
+  def freezed_submission_export_challenge_submissions_path(*args)
+    path = super(*args)
+    meta_challenge(path, args[0])
+  end
+  
+  def freeze_submission_challenge_submissions_path(*args)
     path = super(*args)
     meta_challenge(path, args[0])
   end
