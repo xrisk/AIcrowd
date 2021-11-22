@@ -1,22 +1,22 @@
 class LandingPageController < ApplicationController
   def index
-    Rails.cache.fetch('challenge-list-data', expires_in: 5.minutes) do
+    @challenge_list_data = Rails.cache.fetch('challenge-list-data', expires_in: 5.minutes) do
       get_challenge_list_data
     end
 
-    Rails.cache.fetch('featured-challenge-1', expires_in: 5.minutes) do
+    @landing_challenge_card_1 = Rails.cache.fetch('featured-challenge-1', expires_in: 5.minutes) do
       get_featured_challenge_1
     end
 
-    Rails.cache.fetch('featured-challenge-2', expires_in: 5.minutes) do
+    @landing_challenge_card_2 = Rails.cache.fetch('featured-challenge-2', expires_in: 5.minutes) do
       get_featured_challenge_2
     end
 
-    Rails.cache.fetch('featured-challenge-3', expires_in: 5.minutes) do
+    @landing_challenge_card_3 = Rails.cache.fetch('featured-challenge-3', expires_in: 5.minutes) do
       get_featured_challenge_3
     end
 
-    Rails.cache.fetch('featured-notebooks', expires_in: 5.minutes) do
+    @notebook_card_data = Rails.cache.fetch('featured-notebooks', expires_in: 5.minutes) do
       get_featured_notebooks
     end
 
@@ -24,7 +24,7 @@ class LandingPageController < ApplicationController
     get_stat_list_data
     get_quotes
 
-    Rails.cache.fetch('featured-discussions', expires_in: 5.minutes) do
+    @submission_card_data = Rails.cache.fetch('featured-discussions', expires_in: 5.minutes) do
       get_discourse_data
     end
 
@@ -52,7 +52,7 @@ class LandingPageController < ApplicationController
     customAvatar4 = "https://images.aicrowd.com/images/landing_page/custom-avatar-4.png"
     customAvatar5 = "https://images.aicrowd.com/images/landing_page/custom-avatar-5.png"
 
-    @challenge_list_data = []
+    challenge_list_data = []
     challenges = Challenge
         .includes(:organizers)
         .where(private_challenge: false)
@@ -74,7 +74,7 @@ class LandingPageController < ApplicationController
         users << {id: participant.id, image: participant.image_url, tier: 0}
       end
 
-      @challenge_list_data << {
+      challenge_list_data << {
         image: challenge.landing_square_image_file.url,
         slug: challenge.slug,
         name: challenge.challenge,
@@ -90,6 +90,7 @@ class LandingPageController < ApplicationController
         organizers: challenge_organizers
       }
     end
+    return challenge_list_data
   end
 
   def get_featured_challenge_1
@@ -115,7 +116,7 @@ class LandingPageController < ApplicationController
       }
     end
 
-    @landing_challenge_card_1 = {
+    landing_challenge_card_1 = {
       image: challenge_1.landing_square_image_file.url,
       slug: challenge_1.slug,
       name: challenge_1.challenge,
@@ -156,7 +157,7 @@ class LandingPageController < ApplicationController
       }
     end
 
-    @landing_challenge_card_2 = {
+    landing_challenge_card_2 = {
       image: challenge_2.landing_square_image_file.url,
       slug: challenge_2.slug,
       name: challenge_2.challenge,
@@ -197,7 +198,7 @@ class LandingPageController < ApplicationController
       }
     end
 
-    @landing_challenge_card_3 = {
+    landing_challenge_card_3 = {
       image: challenge_3.landing_square_image_file.url,
       slug: challenge_3.slug,
       name: challenge_3.challenge,
@@ -218,12 +219,12 @@ class LandingPageController < ApplicationController
 
 
   def get_featured_notebooks
-    @notebook_card_data = []
+    notebook_card_data = []
     posts = Post.where.not(thumbnail: nil)
       .where(featured: true).limit(4)
 
     posts.each do |post|
-      @notebook_card_data << {
+      notebook_card_data << {
         slug: post.slug,
         title: post.title,
         description: post.tagline,
@@ -232,6 +233,7 @@ class LandingPageController < ApplicationController
         author: post.participant.name
       }
     end
+    return notebook_card_data
   end
 
   def get_menu_items
@@ -300,9 +302,9 @@ class LandingPageController < ApplicationController
     @discourse_top_contributors = @discourse_top_contributors_fetch.value
 
 
-    @submission_card_data = []
+    submission_card_data = []
     @discourse_topics.each do |val|
-      @submission_card_data << {
+      submission_card_data << {
         url: "//discourse.aicrowd.com/t/#{val[1]}/#{val[0]}",
         title: val[2],
         description: val[3],
@@ -314,6 +316,7 @@ class LandingPageController < ApplicationController
         tier: 0
       }
     end
+    return submission_card_data
   end
 
   def get_quotes
