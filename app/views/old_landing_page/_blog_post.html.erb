@@ -1,0 +1,14 @@
+<!-- blog post -->
+<div class="col-sm-12 col-md-4">
+  <div class="card card-blog-post">
+    <div class="card-body">
+      <h5 class="card-title"><%= link_to post.title, blog_path(post) %></h5>
+      <p class="card-text"><%= local_time(post.posted_at, "%-d %B %Y") %></p>
+    </div>
+
+    <div class="card-footer">
+      <%= render partial: 'participants/get_user_profile', locals: { participant: post.participant } %>
+    </div>
+  </div>
+</div>
+<!-- /blog post -->

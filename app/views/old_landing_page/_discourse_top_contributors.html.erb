@@ -1,0 +1,20 @@
+<!-- top contributors -->
+<div class="card">
+  <ul class="list-group list-group-flush list-group-latest-contributors">
+    <% discourse_top_contributors.each do |top_contributor| %>
+      <!-- user -->
+      <li class="list-group-item">
+        <% if top_contributor['participant'].present? %>
+          <%= render partial: 'participants/get_user_profile', locals: { participant: top_contributor['participant'], truncate: 'true' } %>
+        <% end %>
+
+        <div class="community-info">
+          <span>&nbsp;</span>
+          <span class="reputation-score" data-toggle="tooltip" data-placement="top" title="" data-original-title="Community Contributions">  <%= top_contributor['score'] %></span>
+        </div>
+      </li>
+      <!-- /user -->
+    <% end %>
+  </ul>
+</div>
+<!-- /top contributors -->

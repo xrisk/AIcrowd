@@ -194,7 +194,7 @@ Rails.application.routes.draw do
 
   resources :job_postings, path: "jobs", only: [:index, :show]
   resources :gdpr_exports, only: [:create]
-  resources :landing_page, only: [:index]
+  match '/landing_page/home', to: 'landing_page#index', via: :get
   match '/landing_page/host', to: 'landing_page#host', via: :get
 
   resources :organizer_applications, only: [:create]
@@ -322,7 +322,7 @@ Rails.application.routes.draw do
     get code, controller: :errors, action: :show, code: code
   end
 
-  root 'landing_page#index'
+  root 'old_landing_page#index'
 
   # catch all
   get '*short', to: 'short_urls#show'
