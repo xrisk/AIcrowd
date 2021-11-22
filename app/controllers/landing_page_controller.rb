@@ -63,7 +63,7 @@ class LandingPageController < ApplicationController
         loading: false,
         onCard: false,
         size: 'default',
-        color: '#0F2F90',
+        color: '#FFFFFF',
         cardBadge: true,
         badgeColor: '#44B174',
         challengeEndDate: challenge.active_round.end_dttm,
@@ -105,9 +105,9 @@ class LandingPageController < ApplicationController
       loading: false,
       onCard: false,
       size: 'default',
-      color: '#0F2F90',
+      color: challenge_1.banner_color.presence ||'#FFFFFF',
       cardBadge: true,
-      badgeColor: challenge_1.banner_color.presence || '#44B174',
+      badgeColor: '#44B174',
       challengeEndDate: challenge_1.active_round.end_dttm,
       organizers: challenge_organizers
     }
@@ -146,9 +146,9 @@ class LandingPageController < ApplicationController
       loading: false,
       onCard: false,
       size: 'default',
-      color: '#0F2F90',
+      color: challenge_2.banner_color.presence || '#FFFFFF',
       cardBadge: true,
-      badgeColor: challenge_2.banner_color.presence || '#44B174',
+      badgeColor: '#44B174',
       challengeEndDate: challenge_2.active_round.end_dttm,
       organizers: challenge_organizers
     }
@@ -187,9 +187,9 @@ class LandingPageController < ApplicationController
       loading: false,
       onCard: false,
       size: 'default',
-      color: '#0F2F90',
+      color: challenge_3.banner_color.presence || '#FFF',
       cardBadge: true,
-      badgeColor: challenge_3.banner_color.presence || '#44B174',
+      badgeColor: '#44B174',
       challengeEndDate: challenge_3.active_round.end_dttm,
       organizers: challenge_organizers
     }
