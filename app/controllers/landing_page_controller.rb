@@ -63,7 +63,7 @@ class LandingPageController < ApplicationController
         loading: false,
         onCard: false,
         size: 'default',
-        color: '#FFFFFF',
+        color: challenge.banner_color.presence ||'#FFFFFF',
         cardBadge: true,
         badgeColor: '#44B174',
         challengeEndDate: challenge.active_round.end_dttm,
