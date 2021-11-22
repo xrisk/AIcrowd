@@ -376,7 +376,7 @@ class LandingPageController < ApplicationController
         },
         {
           count: '12 TB',
-          statText: 'Codes, Models & Datasets',
+          statText: 'Codes, Models & Datasets Hosted',
         },
       ]
   end
