@@ -28,15 +28,15 @@
             </div>
 
             <div class="masthead-info">
-              <% if participant %>
+              <% if participant && participant.admin? %>
                 <div class="masthead-info-item">
                   <header>
                     <h4>Rating</h4>
                   </header>
-                  <span>560</span>
+                  <span>participant.rating</span>
                 </div>
               <% end %>
-              <% if participant %>
+              <% if participant && participant.admin? %>
                 <div class="masthead-info-item">
                   <header>
                     <h4>Global Rank</h4>
