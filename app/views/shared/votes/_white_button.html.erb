@@ -4,6 +4,7 @@
 %>
 <% if current_participant.present? %>
   <% if vote.present? %>
+    <%= render partial: 'shared/badge_popup', locals: {show_popup: true} %>
     <%= link_to white_votes_destroy_vote_path(votable, vote.id), id: votes_link_id(votable), method: :delete, remote: true do %>
       <button type='button' class='btn btn-secondary btn-sm'>
         <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">

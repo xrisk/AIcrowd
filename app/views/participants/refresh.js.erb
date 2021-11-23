@@ -1,0 +1,9 @@
+function switchTab() {
+  const achievementTabId = "#achievement-tab";
+  const refreshedContent = "<%= j render 'participants/achievement_partial', participant_badge_data: @participant_badge_data %>";
+
+  $(achievementTabId).replaceWith(refreshedContent);
+}
+
+switchTab();
+ReactRailsUJS.mountComponents()

@@ -1,0 +1,105 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../styles/base/__base-dir.scss";
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  padding: 20px 40px;
+  width: 100%;
+  top: 0px;
+  background-color: #fff;
+  z-index: 10;
+  left: 50%;
+  font-family: Inter;
+  max-width: 1680px;
+  transform: translateX(-50%);
+
+  .navLinkWrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    .dropdownNavItemWrapper {
+      display: flex;
+      align-items: center;
+      padding-right: 0px;
+      padding: 10px 0px;
+
+      .navItem {
+        padding-right: 48px;
+        font-size: 16px;
+        line-height: 24px;
+        letter-spacing: 0.15px;
+        cursor: pointer;
+      }
+
+      .moreText {
+        border-right: 1px solid #e7e7e7;
+        padding-right: 40px;
+        cursor: pointer;
+      }
+    }
+
+    .loginText {
+      padding-left: 40px;
+      padding-right: 32px;
+    }
+  }
+
+  .logo {
+    display: none;
+  }
+  .fullLogo {
+    display: block;
+  }
+
+  .iconWrapper {
+    padding: 5px;
+    cursor: pointer;
+
+    .navMenuIcon {
+      height: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.4s;
+      cursor: pointer;
+
+      span {
+        width: 28px;
+        height: 2px;
+        background-color: #1f1f1f;
+      }
+    }
+
+    .cross {
+      height: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      span {
+        width: 28px;
+        height: 2px;
+        background-color: #1f1f1f;
+        transition: transform 0.4s;
+        &:nth-child(1) {
+          transition-delay: 7ms;
+          transform: translateY(3px) rotate(135deg);
+        }
+        &:nth-child(2) {
+          transform: translateY(-3px) rotate(-135deg);
+        }
+      }
+    }
+  }
+
+  @include media-query("small") {
+    padding: 30px 20px;
+    .logo {
+      display: block;
+    }
+  }
+}

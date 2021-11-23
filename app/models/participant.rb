@@ -1,4 +1,6 @@
 class Participant < ApplicationRecord
+  has_merit
+
   include FriendlyId
   include ApiKey
   include Countries
@@ -115,6 +117,9 @@ class Participant < ApplicationRecord
   has_many :notifications, dependent: :destroy
   has_many :team_members, dependent: :destroy
   has_many :participant_ml_challenge_goals, dependent: :destroy
+  has_many :ml_activity_points
+  has_many :posts
+  has_many :ratings
   has_many :ml_activity_points, dependent: :destroy
   has_many :post_bookmarks, dependent: :destroy
   # has_many :likes, dependent: :destroy
@@ -195,19 +200,7 @@ class Participant < ApplicationRecord
     end
     return dates
   end
-  def add_badge(name, custom_fields={})
-    badge_id = AicrowdBadge.find_by(name: name).id
-    AicrowdUserBadge.create!(aicrowd_badge_id: badge_id, participant_id: id, custom_fields: custom_fields)
-  end
 
-  def rm_badge(name)
-    badge_id = AicrowdBadge.find_by(name: name).id
-    AicrowdUserBadge.find_by(aicrowd_badges_id: badge_id, participant_id: id).destroy
-  end
-
-  def badges
-    aicrowd_user_badges
-  end
   def user_rating_history
     user_rating = UserRating.joins("left outer join challenge_rounds on (challenge_rounds.id=challenge_round_id)").joins("left outer join challenges c on (c.id=challenge_rounds.challenge_id)").where(participant_id: self.id).where('rating is not null').reorder('user_ratings.created_at::date + user_ratings.updated_at::time, user_ratings.id').pluck('user_ratings.created_at::date + user_ratings.updated_at::time', 'rating - 3 * variation as final_rating',  'concat(challenge, challenge_round)')
     final_ratings = []
@@ -233,29 +226,21 @@ class Participant < ApplicationRecord
     self.rating.to_i - 3*self.variation.to_i
   end
 
-  def badges_stats
-    badges_stat_count = badges.badges_stat_count
-    bronze_badges = badges.individual_badges(BadgeType.bronze).select_display_fields.limit(5)
-    silver_badges = badges.individual_badges(BadgeType.silver).select_display_fields.limit(5)
-    gold_badges = badges.individual_badges(BadgeType.gold).select_display_fields.limit(5)
-    badges = {Gold: gold_badges, Silver: silver_badges, Bronze: bronze_badges}
-    return badges_stat_count, badges
-  end
-  def badges_tab_stats
-    badges_summary = badges.badges_stat_count
-    bronze_badges_stats = badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
-    silver_badges_stats = badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
-    gold_badges_stats = badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
-    other_badges_stats = badges.individual_badges(BadgeType.bronze).group('aicrowd_badge_id').count
-    return badges_summary, bronze_badges_stats, silver_badges_stats, gold_badges_stats, other_badges_stats
+  def badge_stats
+    badge_ids = aicrowd_user_badges.pluck(:aicrowd_badge_id)
+    bronze_badge_count = AicrowdBadge.where(id: badge_ids, level: 1).count
+    silver_badge_count = AicrowdBadge.where(id: badge_ids, level: 2).count
+    gold_badge_count = AicrowdBadge.where(id: badge_ids, level: 3).count
+
+    return [bronze_badge_count, silver_badge_count, gold_badge_count]
   end
 
   def awaiting_toasts
-    badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').select('ab.name', 'ab.description').where(toast_shown: false)
+    aicrowd_user_badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').select('ab.id', 'ab.name', 'ab.description', 'ab.image', 'ab.social_message').where(toast_shown: false)
   end
 
   def toggle_toasts
-    badges.where(toast_shown: false).update_all(toast_shown: true)
+    aicrowd_user_badges.where(toast_shown: false).update_all(toast_shown: true)
   end
 
   def final_temporary_rating
@@ -310,7 +295,7 @@ class Participant < ApplicationRecord
 
   def get_default_image
     num = id % 8
-    "users/AIcrowd-DarkerBG (#{num}).png"
+    "https://images.aicrowd.com/images/landing_page/custom-avatar-3.png"
   end
 
   def process_urls

@@ -1,0 +1,203 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../styles/base/__base-dir.scss";
+
+.main {
+  height: 270px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 6px;
+  border: 1px solid #e7e7e7;
+  box-sizing: border-box;
+  transition: 0.2s ease;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+
+  &:hover {
+    box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.14);
+  }
+
+  @include media-query("small") {
+    flex-direction: column;
+    width: 100%;
+    height: 385px;
+  }
+
+  @include media-query("x-small") {
+    margin: 10px auto;
+    width: 95%;
+  }
+
+  .leftImg {
+    border-right: 1px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
+    display: grid;
+    place-items: center;
+    width: 191px;
+    border-radius: 6px 0px 0px 6px;
+    @include media-query("small") {
+      border-radius: 6px 6px 0px 0px;
+      width: 100%;
+      height: 158px;
+    }
+  }
+  .rightContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+    padding-left: 32px;
+    padding-bottom: 0px;
+    @include media-query("x-large") {
+      padding-left: 12px;
+    }
+    @include media-query("small") {
+      padding: 8px;
+    }
+  }
+  .challengeImage {
+    width: 150px;
+    height: 150px;
+  }
+  .statsBox {
+    display: flex;
+    div {
+      &:nth-last-child(1) {
+        // remove organizers padding right
+        padding-right: 0px;
+      }
+    }
+  }
+
+  .textWrapper {
+    max-width: 498px;
+    @include media-query("x-large") {
+      max-width: 498px;
+    }
+    @include media-query("small") {
+      max-width: 100%;
+    }
+  }
+
+  .titleText {
+    font-size: 24px;
+    color: #5c4f4f;
+    line-height: 31px;
+    font-weight: 400;
+    padding-bottom: 5px;
+    @include media-query("x-large") {
+      font-size: 18px;
+      padding-bottom: 2px;
+    }
+
+    @include media-query("small") {
+      line-height: 25px;
+    }
+    @include media-query("x-small") {
+      font-size: 18px;
+    }
+  }
+
+  .descriptionText {
+    font-size: 16px;
+    line-height: 21px;
+    letter-spacing: 0.25px;
+    color: #747474;
+    margin-bottom: 10px;
+    @include media-query("small") {
+      font-size: 12px;
+      margin-bottom: 7px;
+      line-height: 18px;
+    }
+    @include media-query("x-small") {
+      font-size: 12px;
+      line-height: 15px;
+    }
+  }
+  .descriptionBox {
+    width: 100%;
+  }
+
+  .submissioncountText {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0.15px;
+    color: #1f1f1f;
+    @include media-query("small") {
+      font-size: 16px;
+    }
+  }
+
+  .statTitleText {
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 15px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #747474;
+    @include media-query("small") {
+      font-size: 8px;
+      line-height: 10px;
+      letter-spacing: 1px;
+    }
+  }
+
+  .submissionText {
+    @include media-query("x-small") {
+      display: none;
+    }
+  }
+  .prizeText {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+    color: #1f1f1f;
+    padding-bottom: 10px;
+    @include media-query("small") {
+      margin-left: 0;
+      font-size: 14px;
+    }
+  }
+
+  .hashtagText {
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0.4px;
+    margin-bottom: 2px;
+    color: #747474;
+  }
+
+  .participantsWrapper {
+    display: flex;
+    padding-bottom: 8px;
+
+    .circleValue {
+      margin-left: -16px;
+    }
+  }
+}
+
+.cardItemWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-right: 70px;
+
+  @include media-query("x-large") {
+    padding-right: 20px;
+  }
+
+  @include media-query("small") {
+    padding-right: 40px;
+  }
+  @include media-query("x-small") {
+    padding-right: 20px;
+  }
+}
+
+.cardBadgeWrapper {
+  position: absolute;
+  top: 16px;
+  left: -13px;
+}

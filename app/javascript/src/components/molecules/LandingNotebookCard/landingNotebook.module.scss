@@ -1,0 +1,73 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../styles/base/__base-dir.scss";
+
+.mainWrapper {
+  width: 368px;
+  height: 105px;
+  background: #ffffff;
+  box-shadow: 0px 4px 24px rgba(163, 163, 163, 0.25);
+  border-radius: 8px;
+  padding: $spacing-xx-small;
+  transition: 0.2s ease-in-out all;
+
+  &:hover {
+    transform: translate(0, -5px);
+    box-shadow: $shadow;
+  }
+  @include media-query("small") {
+    width: 100%;
+    height: 108px;
+    padding: $spacing-xx-small;
+    margin-top: $spacing-x-small;
+    margin-bottom: $spacing-x-small;
+  }
+}
+
+.titleText {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: $font-weight-medium;
+  font-size: 16px;
+  line-height: 24px;
+  color: $color-text-dark;
+  margin-left: $spacing-xxx-small;
+  width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  @include media-query("small") {
+    font-size: 14px;
+  }
+}
+
+.mainWrapper {
+  .subWrapper {
+    display: flex;
+  }
+  img {
+    width: 73px;
+    height: 73px;
+    @include media-query("small") {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  .time {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 19px;
+    color: $color-text-light;
+  }
+
+  .statusWrapper {
+    display: flex;
+    align-items: center;
+    margin-left: $spacing-xxx-small;
+    column-gap: $spacing-xxx-small;
+    margin-top: 5px;
+  }
+}

@@ -1,0 +1,179 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+
+.user-rating {
+  cursor: pointer;
+  height: 36px;
+  width: 36px;
+  @include media-query("small-medium") {
+    height: 32px;
+    width: 32px;
+  }
+  .avatar {
+    box-shadow: 0px 0px 0px 1px rgba(255, 255, 255, 1);
+    height: 30px;
+    width: 30px;
+    margin: 3px;
+    overflow: hidden;
+    z-index: 5;
+    border-radius: 50%;
+    @include media-query("small-medium") {
+      height: 26px;
+      width: 26px;
+    }
+  }
+}
+
+// styling for onCard avatars
+.onCardAvatar {
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  border: 3px solid white;
+  overflow: hidden;
+  @include media-query("x-small") {
+    height: 23px;
+    width: 23px;
+  }
+}
+
+.user-rating-0 {
+  @extend .user-rating;
+  background-color: var(--color-border-light);
+  border-radius: 50%;
+  cursor: default;
+}
+
+.user-rating-1 {
+  @extend .user-rating;
+  background: url("https://images.aicrowd.com/images/landing_page/bg-user-rating-1.svg") no-repeat;
+  background-size: cover;
+}
+
+.user-rating-2 {
+  @extend .user-rating;
+  background: url("https://images.aicrowd.com/images/landing_page/bg-user-rating-2.svg") no-repeat;
+  background-size: cover;
+}
+
+.user-rating-3 {
+  @extend .user-rating;
+  background: url("https://images.aicrowd.com/images/landing_page/bg-user-rating-3.svg") no-repeat;
+  background-size: cover;
+}
+
+.user-rating-4 {
+  @extend .user-rating;
+  background: url("https://images.aicrowd.com/images/landing_page/bg-user-rating-4.svg") no-repeat;
+  background-size: cover;
+}
+
+.user-rating-5 {
+  @extend .user-rating;
+  background: url("https://images.aicrowd.com/images/landing_page/bg-user-rating-5.svg") no-repeat;
+  background-size: cover;
+}
+// Small
+.user-rating-sm {
+  height: 30px;
+  width: 30px;
+  @include media-query("small-medium") {
+    height: 30px;
+    width: 30px;
+  }
+  .avatar {
+    box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 1);
+    height: 30px;
+    margin: 3px;
+    overflow: hidden;
+    width: 29px;
+    z-index: 5;
+    @include media-query("small-medium") {
+      height: 30px;
+      width: 30px;
+    }
+  }
+}
+
+// Medium
+.user-rating-md {
+  height: 48px;
+  width: 48px;
+  @include media-query("small-medium") {
+    height: 40px;
+    width: 40px;
+  }
+  .avatar {
+    box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 1);
+    height: 40px;
+    margin: 4px;
+    overflow: hidden;
+    width: 40px;
+    z-index: 5;
+    border-radius: 50%;
+    @include media-query("small-medium") {
+      height: 32px;
+      width: 32px;
+    }
+  }
+}
+
+// Medium-Large
+.user-rating-ml {
+  height: 68px;
+  width: 68px;
+  @include media-query("x-large") {
+    height: 60px;
+    width: 60px;
+  }
+  @include media-query("medium") {
+    height: 48px;
+    width: 48px;
+  }
+  .avatar {
+    box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 1);
+    height: 68px;
+    margin: 0px;
+    overflow: hidden;
+    width: 68px;
+    z-index: 5;
+    @include media-query("x-large") {
+      height: 60px;
+      width: 60px;
+    }
+    @include media-query("medium") {
+      height: 40px;
+      width: 40px;
+      margin: 4px;
+    }
+  }
+}
+
+// Large
+.user-rating-lg {
+  height: 109px;
+  width: 109px;
+  @include media-query("medium") {
+    height: 92px;
+    width: 92px;
+  }
+  @include media-query("small-medium") {
+    height: 80px;
+    width: 80px;
+  }
+  .avatar {
+    box-shadow: 0px 0px 0px 2px rgba(255, 255, 255, 1);
+    height: 99px;
+    margin: 5px;
+    overflow: hidden;
+    width: 99px;
+    z-index: 5;
+    @include media-query("medium") {
+      height: 82px;
+      width: 82px;
+    }
+    @include media-query("small-medium") {
+      height: 70px;
+      width: 70px;
+    }
+  }
+}

@@ -124,4 +124,25 @@ function hidegrowl(){
     $('.growl').hide()
 };
 
+window.hideBadgesModal = function(badgeId) {
+    $(badgeId).modal('hide');
+    $('#badges-modal').modal('hide');
+}
+
+window.openShareBadgesModal = function(badgeId) {
+    $(badgeId).modal('show');
+};
+
+window.shareBadgefb = function(url){
+    window.open(encodeURI(`https://www.facebook.com/sharer.php?u=${url}`))
+}
+
+window.shareBadgeTwitter = function(url, text){
+    window.open(encodeURI(`https://twitter.com/intent/tweet?url=${url}&text=${text}`))
+}
+
+window.shareBadgeLinkedin = function(url, title, text){
+    window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(text)}&source=AIcrowd`)
+}
+
 setInterval(hidegrowl, 15000);

@@ -1,0 +1,82 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../styles/base/__base-dir.scss";
+
+// Elements
+.container {
+  max-width: 85rem;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+
+  @include media-query("x-large") {
+    max-width: 1080px;
+  }
+
+  @include media-query("large") {
+    max-width: 55rem;
+  }
+
+  @include media-query("medium") {
+    max-width: 35rem;
+  }
+
+  @include media-query("small-medium") {
+    max-width: 33rem;
+  }
+
+  @include media-query("small") {
+    max-width: 23rem;
+  }
+
+  @include media-query("x-small") {
+    max-width: 15rem;
+  }
+}
+
+// Main
+.main {
+  font-size: 100%;
+  font-size-adjust: 100%;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  .scroll {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    cursor: default;
+    overflow: scroll hidden;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0px 1.25rem;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &:active {
+      cursor: grab;
+      cursor: -webkit-grab;
+    }
+  }
+}
+
+// mouse horizontal scroll stylings
+
+.scrollContainer {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  position: relative;
+  padding: 20px;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

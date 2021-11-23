@@ -33,12 +33,12 @@
               <% end %>
 
               <%= render partial: 'shared/bookmark/button', locals: { post: @post, bookmark: @post.bookmark(current_participant) } %>
-               <div class="mr-4 cursor-pointer clipboard-btn" data-clipboard-text="<%= request.url%>" data-toggle="tooltip" title="Copy Link" style="align-self: center;"><%= image_tag image_path('misc/notebook_share.svg') %></div></button>
+               <div class="mr-4 cursor-pointer clipboard-btn" data-clipboard-text="<%= request.url%>" data-toggle="tooltip" title="Copy Link" data-controller="badges" data-action="click->badges#sharedNotebook" data-badges-post-id="<%= @post.id %>" data-badges-participant-id="<%= current_participant.id %>" style="align-self: center;"><%= image_tag image_path('misc/notebook_share.svg') %></div></button>
               <% if @download_notebook_url.present? %>
-                <a href='<%= @download_notebook_url %>' target="_blank" class="mr-4" style="align-self: center;"><%= image_tag image_path('misc/notebook_download.svg') %></a></button>
+                <a href='<%= @download_notebook_url %>' target="_blank" class="mr-4" data-controller="badges" data-action="click->badges#downloadNotebook" data-badges-post-id="<%= @post.id %>" data-badges-participant-id="<%= current_participant.id %>" style="align-self: center;"><%= image_tag image_path('misc/notebook_download.svg') %></a></button>
               <% end %>
               <%= render partial: 'shared/votes/white_button', locals: { votable: @post, vote: @post.vote(current_participant) } %>
-              <% if !@execute_in_colab_url.nil? %><button type="button" class="btn btn-sm btn-primary"><a href='<%= @execute_in_colab_url %>' target="_blank">Open in Colab</a></button><% end %>
+              <% if !@execute_in_colab_url.nil? %><button type="button" class="btn btn-sm btn-primary" data-controller="badges" data-action="click->badges#executedNotebook" data-badges-post-id="<%= @post.id %>"><a href='<%= @execute_in_colab_url %>' target="_blank" >Open in Colab</a></button><% end %>
             </div>
           </div>
         </div>
