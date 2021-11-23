@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import onClickOutside from 'react-onclickoutside';
 
 import styles from './landingDropdownMenu.module.scss';
 import SocialButtons from 'src/components/atoms/Button/SocialButtons';
@@ -25,13 +24,9 @@ const LandingDropdownMenu = ({
   left,
   right,
   bottom,
-  setIsOpen,
   enterMenu,
   leaveMenu,
 }: LandingDropdownMenuProps) => {
-  // @ts-ignore
-  LandingDropdownMenu.handleClickOutside = () => setIsOpen(false);
-
   return (
     <>
       <div
@@ -66,9 +61,4 @@ const LandingDropdownMenu = ({
   );
 };
 
-const clickOutsideConfig = {
-  // @ts-ignore
-  handleClickOutside: () => LandingDropdownMenu.handleClickOutside,
-};
-
-export default onClickOutside(LandingDropdownMenu, clickOutsideConfig);
+export default LandingDropdownMenu;

@@ -134,7 +134,6 @@ const LandingNavBar = ({
                 showSocial={hoveredOn === 'more'}
                 enterMenu={enterMenu}
                 leaveMenu={leaveMenu}
-                disableOnClickOutside={true}
               />
             )}
 

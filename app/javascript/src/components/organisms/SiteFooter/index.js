@@ -13,7 +13,6 @@ const SiteFooter = ({ removeMargin }) => {
     { name: 'Challenges', link: '/challenges' },
     { name: 'Practice', link: '/challenges' },
     { name: 'Organize a Challenge', link: '/landing_page/host' },
-    { name: 'User Rankings', link: '' },
     { name: 'FAQ', link: '/faq' },
     { name: 'Our Team', link: '/our_team' },
     { name: 'Jobs', link: '/jobs' },
@@ -23,7 +22,7 @@ const SiteFooter = ({ removeMargin }) => {
     { name: 'Blog', link: '/blogs', icon: false },
     { name: 'Contact', link: '/contact', icon: false },
     { name: 'Discourse', link: '//discourse.aicrowd.com', icon: true },
-    { name: 'Github', link: '', icon: true },
+    { name: 'Github', link: '//github.com/aicrowd/', icon: true },
     { name: 'GitLab', link: '//gitlab.aicrowd.com', icon: true },
     { name: 'Twitter', link: '//twitter.com/AIcrowdHQ', icon: true },
   ];
