@@ -236,7 +236,7 @@ class Participant < ApplicationRecord
   end
 
   def awaiting_toasts
-    aicrowd_user_badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').select('ab.name', 'ab.description', 'ab.image', 'ab.social_message').where(toast_shown: false)
+    aicrowd_user_badges.joins('left outer join aicrowd_badges as ab on ab.id=aicrowd_badge_id').select('ab.id', 'ab.name', 'ab.description', 'ab.image', 'ab.social_message').where(toast_shown: false)
   end
 
   def toggle_toasts

@@ -36,9 +36,9 @@ module Merit
       # Submission Streak
       # Need to discuss this
       score 1, :on => 'submissions#create', category: 'Submission Streak' do |submission|
-        points = current_participant.points(category: 'Submission Streak')
-        current_participant.subtract_points(points, category: 'Submission Streak')
-        current_participant.add_points(points, category: 'Submission Streak')
+        points = submission.participant.points(category: 'Submission Streak')
+        submission.participant.subtract_points(points, category: 'Submission Streak')
+        submission.participant.add_points(points, category: 'Submission Streak')
       end
 
       # Leaderboard Ninja
@@ -66,12 +66,10 @@ module Merit
       end
 
       # Shared Notebook
-      score 1, :on => 'badges#shared_notebook', category: 'Shared Notebook', model_name: 'Post' do |post|
-      end
+      score 1, :on => 'badges#shared_notebook', category: 'Shared Notebook'
 
       # Notebook Was Shared
-      score 1, :on => 'badges#shared_notebook', category: 'Shared Notebook', model_name: 'Post', to: :participant do |post|
-      end
+      score 1, :on => 'badges#notebook_was_shared', category: 'Notebook Was Shared', model_name: 'Post', to: :participant
 
       # Participant Notebooks were liked n number of times
 
@@ -114,8 +112,7 @@ module Merit
 
       # Executed Notebook
       # Notebook Was Executed
-      score 1, :on => 'badges#executed_notebook', category: 'Notebook Was Executed', model_name: 'Post', to: :participant do |post|
-      end
+      score 1, :on => 'badges#executed_notebook', category: 'Notebook Was Executed', model_name: 'Post', to: :participant
 
       # Created one notebook, like 3 notebooks, shared 2 notebooks
       # Created Blitz Notebook
@@ -128,19 +125,19 @@ module Merit
 
       # Created first notebook
       score 1, :on => 'posts#create', category: 'Created First Notebook' do |post|
-        participant.points(category: 'Created First Notebook') == 0
+        post.participant.points(category: 'Created First Notebook') == 0
       end
 
       # Liked 1 notebook
 
       score 1, :on => 'votes#create', category: 'Liked First Notebook' do |vote|
-        vote.votable_type == "Post" && participant.points(category: 'Liked First Notebook') == 0
+        vote.votable_type == "Post" && vote.participant.points(category: 'Liked First Notebook') == 0
       end
 
       # Notebook got first like
 
       score 1, :on => 'votes#create', category: 'Notebook got first like', to: :participant do |vote|
-        vote.votable_type == "Post" && participant.points(category: 'Notebook got first like') == 0
+        vote.votable_type == "Post" && vote.votable.participant.points(category: 'Notebook got first like') == 0
       end
 
 
@@ -166,17 +163,17 @@ module Merit
 
       # Followed their first Aicrew member
       score 1, :on => 'follows#create', category: 'Followed First Member' do |follow|
-        follow.followable_type == "Participant" && participant.points(category: 'Followed First Member') == 0
+        follow.followable_type == "Participant" && follow.participant.points(category: 'Followed First Member') == 0
       end
 
 
       score 1, :on => 'follows#create', category: 'Got First Follower', to: :followable do |follow|
-        follow.followable_type == "Participant" && participant.points(category: 'Got First Follower') == 0
+        follow.followable_type == "Participant" && follow.followable.points(category: 'Got First Follower') == 0
       end
 
       # Liked a blogpost
       score 1, :on => 'votes#create', category: 'Liked First Blog' do |vote|
-        vote.votable.is_a?(Blog) && participant.points(category: 'Liked First Blog') == 0
+        vote.votable.is_a?(Blog) && vote.participant.points(category: 'Liked First Blog') == 0
       end
 
       # Logged First Feedback
@@ -267,13 +264,13 @@ module Merit
       end
 
       # Downloaded First Notebook
-      score 1, :on => 'badges#downloaded_notebook', category: 'Downloaded First Notebook', model_name: 'Post' do |post|
-        current_participant.points(category: 'Downloaded First Notebook') == 0
+      score 1, :on => 'badges#downloaded_notebook', category: 'Downloaded First Notebook', model_name: 'Participant' do |participant|
+        participant.points(category: 'Downloaded First Notebook') == 0
       end
 
       # Notebook Received Download
-      score 1, :on => 'badges#downloaded_notebook', category: 'Notebook Received Download', model_name: 'Post', to: :participant do |post|
-        current_participant.points(category: 'Notebook Received Download') == 0
+      score 1, :on => 'badges#notebook_received_download', category: 'Notebook Received Download', model_name: 'Post', to: :participant do |post|
+        post.participant.points(category: 'Notebook Received Download') == 0
       end
 
     end

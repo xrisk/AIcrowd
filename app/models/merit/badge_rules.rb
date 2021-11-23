@@ -132,29 +132,29 @@ module Merit
       end
 
       # Shared Notebook
-      grant_on 'badges#shared_notebook', badge: 'Shared Notebook', model_name: 'Post', level: 1 do |post|
-        current_participant.points(category: 'Shared Notebook') >= 10
+      grant_on 'badges#shared_notebook', badge: 'Shared Notebook', model_name: 'Participant', level: 1 do |participant|
+        participant.points(category: 'Shared Notebook') >= 10
       end
 
-      grant_on 'badges#shared_notebook', badge: 'Shared Notebook', model_name: 'Post', level: 2 do |post|
-        current_participant.points(category: 'Shared Notebook') >= 25
+      grant_on 'badges#shared_notebook', badge: 'Shared Notebook', model_name: 'Participant', level: 2 do |participant|
+        participant.points(category: 'Shared Notebook') >= 25
       end
 
-      grant_on 'badges#shared_notebook', badge: 'Shared Notebook', model_name: 'Post', level: 3 do |post|
-        current_participant.points(category: 'Shared Notebook') >= 40
+      grant_on 'badges#shared_notebook', badge: 'Shared Notebook', model_name: 'Participant', level: 3 do |participant|
+        participant.points(category: 'Shared Notebook') >= 40
       end
 
       # Notebook Was Shared
-      grant_on 'badges#shared_notebook', badge: 'Notebook Was Shared', model_name: 'Post', to: :participant, level: 1 do |post|
-        current_participant.points(category: 'Notebook Was Shared') >= 3
+      grant_on 'badges#notebook_was_shared', badge: 'Notebook Was Shared', model_name: 'Post', to: :participant, level: 1 do |post|
+        post.participant.points(category: 'Notebook Was Shared') >= 3
       end
 
-      grant_on 'badges#shared_notebook', badge: 'Notebook Was Shared', model_name: 'Post', to: :participant, level: 2 do |post|
-        current_participant.points(category: 'Notebook Was Shared') >= 15
+      grant_on 'badges#notebook_was_shared', badge: 'Notebook Was Shared', model_name: 'Post', to: :participant, level: 2 do |post|
+        post.participant.points(category: 'Notebook Was Shared') >= 15
       end
 
-      grant_on 'badges#shared_notebook', badge: 'Notebook Was Shared', model_name: 'Post', to: :participant, level: 3 do |post|
-        current_participant.points(category: 'Notebook Was Shared') >= 30
+      grant_on 'badges#notebook_was_shared', badge: 'Notebook Was Shared', model_name: 'Post', to: :participant, level: 3 do |post|
+        post.participant.points(category: 'Notebook Was Shared') >= 30
       end
 
       # Notebook Was Liked
@@ -226,15 +226,15 @@ module Merit
       # Executed Notebook
       # Notebook Was Executed
       grant_on 'badges#executed_notebook', badge: 'Notebook Was Executed', model_name: 'Post', to: :participant, level: 1 do |post|
-        current_participant.points(category:'Notebook Was Executed') >= 5
+        post.participant.points(category:'Notebook Was Executed') >= 5
       end
 
       grant_on 'badges#executed_notebook', badge: 'Notebook Was Executed', model_name: 'Post', to: :participant, level: 2 do |post|
-        current_participant.points(category: 'Notebook Was Executed') >= 15
+        post.participant.points(category: 'Notebook Was Executed') >= 15
       end
 
       grant_on 'badges#executed_notebook', badge: 'Notebook Was Executed', model_name: 'Post', to: :participant, level: 3 do |post|
-        current_participant.points(category: 'Notebook Was Executed') >= 35
+        post.participant.points(category: 'Notebook Was Executed') >= 35
       end
 
       # Created one notebook, like 3 notebooks, shared 2 notebooks
@@ -382,12 +382,10 @@ module Merit
       end
 
       # Downloaded First Notebook
-      grant_on 'badges#downloaded_notebook', badge: 'Downloaded First Notebook', model_name: 'Post', level: 4 do |post|
-      end
+      grant_on 'badges#downloaded_notebook', badge: 'Downloaded First Notebook', level: 4
 
       # Notebook Received Download"
-      grant_on 'badges#downloaded_notebook', badge: 'Notebook Received Download', model_name: 'Post', to: :participant, level: 4 do |post|
-      end
+      grant_on 'badges#notebook_received_download', badge: 'Notebook Received Download', model_name: 'Post', to: :participant, level: 4
 
     end
   end

@@ -6,7 +6,7 @@
           <div class="modal" id='<%= "show-badges-modal-#{result[:active_badge].id}" %>' tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document" style="max-width: 30%;">
               <div class="modal-content" style="max-width: 94%; margin-top: 30%;">
-                <%= react_component("molecules/AchievementPopup/index", { icon: result[:active_badge].image, title: "Congratulations!", description: result[:active_badge].description, url: request.original_url, badgeTitle: result[:active_badge].name, socialMessage: result[:active_badge].social_message}) %>
+                <%= react_component("molecules/AchievementPopup/index", { icon: result[:active_badge].image, title: "Congratulations!", description: result[:active_badge].description, url: request.original_url, badgeTitle: result[:active_badge].name, socialMessage: result[:active_badge].social_message, badgeId: "#show-badges-modal-#{result[:active_badge].id}"}) %>
               </div>
             </div>
           </div>

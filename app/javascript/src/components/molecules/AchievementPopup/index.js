@@ -14,11 +14,12 @@ const {
   shineWrapper,
 } = styles;
 
-const AchievementPopup = ({ title, description, icon, handleClick, url, badgeTitle, socialMessage  }) => {
+const AchievementPopup = ({ title, description, icon, handleClick, url, badgeTitle, socialMessage, badgeId }) => {
+  debugger;
   return (
     <>
       <div className={main}>
-        <i className="las la-times" onClick={handleClick}></i>
+        <i className="las la-times" onClick={()=>window.hideBadgesModal(badgeId)}></i>
         <div className={iconWrapper}>
           {/* Show shining animation after badge popup animation */}
           <div className={shineWrapper}>
@@ -36,7 +37,7 @@ const AchievementPopup = ({ title, description, icon, handleClick, url, badgeTit
           <img src="/assets/misc/badge-facebook.svg" alt="facebook logo" onClick={()=>window.shareBadgefb(url, socialMessage)}></img>
 
         </div>
-        <ButtonDefault type="primary" text="Continue" handleClick={handleClick} />
+        <ButtonDefault type="primary" text="Continue" handleClick={()=>window.hideBadgesModal(badgeId)} />
       </div>
     </>
   );

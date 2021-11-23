@@ -124,7 +124,8 @@ function hidegrowl(){
     $('.growl').hide()
 };
 
-window.hideBadgesModal = function() {
+window.hideBadgesModal = function(badgeId) {
+    $(badgeId).modal('hide');
     $('#badges-modal').modal('hide');
 }
 
