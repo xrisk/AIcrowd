@@ -245,8 +245,7 @@ module Merit
 
       # Sign Up
 
-      grant_on 'participants/registrations#create', badge: 'Sign Up', level: 1 do
-      end
+      grant_on 'participants/registrations#create', badge: 'Sign Up', level: 1
 
 
       # Created first notebook
@@ -303,7 +302,7 @@ module Merit
       # Attended First Townhall/Workshop
 
       # Made their first team
-      grant_on 'challenges/teams#create', badge: 'Created First Team', level: 4 do |team|
+      grant_on 'challenges/teams#create', model_name: 'Team', badge: 'Created First Team', level: 4 do |team|
         TeamParticipant.where(team_id: team.id).count  >= 1
       end
 

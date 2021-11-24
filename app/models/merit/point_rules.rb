@@ -178,7 +178,7 @@ module Merit
       # Attended First Townhall/Workshop
 
       # Made their first team
-      score 1, :on => 'challenges/teams#create', category: 'Created First Team' do |team|
+      score 1, :on => 'challenges/teams#create', model_name: 'Team', category: 'Created First Team' do |team|
         TeamParticipant.where(team_id: team.id).count  == 1
       end
 
