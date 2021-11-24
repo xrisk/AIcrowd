@@ -171,11 +171,11 @@ module Merit
       end
 
       # Commented On Notebook
-      grant_on ['commontator/comments#create'], badge: 'Commented On Post', model_name: 'CommontatorThread', level: 1 do |comment|
+      grant_on ['commontator/comments#create'], badge: 'Commented On Notebook', model_name: 'CommontatorThread', level: 1 do |comment|
         comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count >= 5
       end
 
-      grant_on ['commontator/comments#create'], badge: 'Commented On Post', model_name: 'CommontatorThread', level: 2 do |comment|
+      grant_on ['commontator/comments#create'], badge: 'Commented On Notebook', model_name: 'CommontatorThread', level: 2 do |comment|
         comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count >= 15
       end
 
@@ -362,7 +362,7 @@ module Merit
       # Notebook Was Shared First Time
 
       # Commented on Notebook
-      grant_on ['commontator/comments#create'], badge: 'Commented On Notebook', model_name: 'CommontatorThread', level: 4 do |comment|
+      grant_on ['commontator/comments#create'], badge: 'Commented on Notebook', model_name: 'CommontatorThread', level: 4 do |comment|
         comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count >= 1
       end
 
@@ -377,7 +377,7 @@ module Merit
       end
 
       # Notebook Received Bookmark
-      grant_on 'post_bookmarks#create', badge: 'Notebook Received Bookmark', level: 4, model_name: 'Post', to: :participant do |post|
+      grant_on 'post_bookmarks#create', badge: 'Notebook Received First Bookmark', level: 4, model_name: 'Post', to: :participant do |post|
         post.post_bookmarks.count >= 1
       end
 

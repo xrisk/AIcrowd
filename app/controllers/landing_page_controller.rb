@@ -330,7 +330,7 @@ class LandingPageController < ApplicationController
       quotes: [
         {
           quote:
-            'Crowdsourcing far exceeded our expectations - you not only get $new solutions$, but also a $deeper insight to the problem$ you are trying to $solve$.',
+            'Crowdsourcing far exceeded our expectations - you not only get #new solutions#, but also a #deeper insight to the problem# you are trying to #solve#.',
           author: 'John Keats',
           post: 'Postdoctoral Researcher, Stanford',
         },
