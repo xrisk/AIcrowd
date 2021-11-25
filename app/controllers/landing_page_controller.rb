@@ -71,7 +71,7 @@ class LandingPageController < ApplicationController
       end
       users = []
       challenge.challenge_participants.sample(20).map(&:participant).sample(5).each do |participant|
-        users << {id: participant.id, image: participant.image_url, tier: 0}
+        users << {id: participant.id, image: helpers.image_tag(participant.image_url), tier: 0}
       end
 
       challenge_list_data << {
