@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_22_101523) do
+ActiveRecord::Schema.define(version: 2021_11_24_074500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -1201,6 +1201,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_101523) do
     t.boolean "community_contribution_winner", default: false
     t.integer "page_views", default: 0
     t.boolean "featured", default: false
+    t.boolean "blitz_community_winner", default: false
     t.index ["challenge_id"], name: "index_posts_on_challenge_id"
     t.index ["created_at"], name: "index_posts_on_created_at"
     t.index ["participant_id"], name: "index_posts_on_participant_id"

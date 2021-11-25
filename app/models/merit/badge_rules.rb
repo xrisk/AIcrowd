@@ -171,11 +171,11 @@ module Merit
       end
 
       # Commented On Notebook
-      grant_on ['commontator/comments#create'], badge: 'Commented On Post', model_name: 'CommontatorThread', level: 1 do |comment|
+      grant_on ['commontator/comments#create'], badge: 'Commented On Notebook', model_name: 'CommontatorThread', level: 1 do |comment|
         comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count >= 5
       end
 
-      grant_on ['commontator/comments#create'], badge: 'Commented On Post', model_name: 'CommontatorThread', level: 2 do |comment|
+      grant_on ['commontator/comments#create'], badge: 'Commented On Notebook', model_name: 'CommontatorThread', level: 2 do |comment|
         comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count >= 15
       end
 
@@ -245,8 +245,7 @@ module Merit
 
       # Sign Up
 
-      grant_on 'participants/registrations#create', badge: 'Sign Up', level: 1 do
-      end
+      grant_on 'participants/registrations#create', badge: 'Sign Up', level: 1
 
 
       # Created first notebook
@@ -303,7 +302,7 @@ module Merit
       # Attended First Townhall/Workshop
 
       # Made their first team
-      grant_on 'challenges/teams#create', badge: 'Created First Team', level: 4 do |team|
+      grant_on 'challenges/teams#create', model_name: 'Team', badge: 'Created First Team', level: 4 do |team|
         TeamParticipant.where(team_id: team.id).count  >= 1
       end
 
@@ -362,7 +361,7 @@ module Merit
       # Notebook Was Shared First Time
 
       # Commented on Notebook
-      grant_on ['commontator/comments#create'], badge: 'Commented On Notebook', model_name: 'CommontatorThread', level: 4 do |comment|
+      grant_on ['commontator/comments#create'], badge: 'Commented on Notebook', model_name: 'CommontatorThread', level: 4 do |comment|
         comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count >= 1
       end
 
@@ -377,7 +376,7 @@ module Merit
       end
 
       # Notebook Received Bookmark
-      grant_on 'post_bookmarks#create', badge: 'Notebook Received Bookmark', level: 4, model_name: 'Post', to: :participant do |post|
+      grant_on 'post_bookmarks#create', badge: 'Notebook Received First Bookmark', level: 4, model_name: 'Post', to: :participant do |post|
         post.post_bookmarks.count >= 1
       end
 

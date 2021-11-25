@@ -14,8 +14,6 @@ const {
   post,
   mySlides,
   dotContainer,
-  leftContainer,
-  rightContainer,
   authorContainer,
   avatarImg,
   dot,
@@ -60,16 +58,15 @@ const LandingCarousel = ({ tier, image, loading, borderColor, quotes }) => {
     </>
   );
   function Slide({ quote }) {
-    // Select words which are in between $
+    // Select words which are in between #
     const quoteWithStyling = regexifyString({
-      pattern: /\$([^$]+)\$/gm,
+      pattern: /\#([^#]+)\#/gm,
       // eslint-disable-next-line react/display-name
       decorator: (match, index) => {
-        // console.log('=========>>>', match);
         return (
           <>
             {/* eslint-disable-next-line react/destructuring-assignment */}
-            {/* <span style={{ color: '#F0524D' }}>{match.replaceAll('$', '')}</span> */}
+            <span style={{ color: '#F0524D' }}>{match?.replace(/#/g, '')}</span>
           </>
         );
       },
@@ -86,7 +83,7 @@ const LandingCarousel = ({ tier, image, loading, borderColor, quotes }) => {
           </div>
         </AnimatePresence>
         <div className={authorContainer}>
-          <div className={leftContainer}>
+          <div>
             <AvatarWithTier
               tier={tier}
               image={image}
@@ -96,7 +93,7 @@ const LandingCarousel = ({ tier, image, loading, borderColor, quotes }) => {
               className={avatarImg}
             />
           </div>
-          <div className={rightContainer}>
+          <div>
             <p className={author}>{quote.author}</p>
             <p className={post}>{quote.post}</p>
           </div>

@@ -294,8 +294,8 @@ class Participant < ApplicationRecord
   end
 
   def get_default_image
-    num = id % 8
-    "https://images.aicrowd.com/images/landing_page/custom-avatar-3.png"
+    num = id % 5
+    "users/AIcrowd-DarkerBG (#{num}).png"
   end
 
   def process_urls

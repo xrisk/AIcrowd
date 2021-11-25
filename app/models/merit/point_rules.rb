@@ -38,7 +38,10 @@ module Merit
       score 1, :on => 'submissions#create', category: 'Submission Streak' do |submission|
         points = submission.participant.points(category: 'Submission Streak')
         submission.participant.subtract_points(points, category: 'Submission Streak')
-        submission.participant.add_points(points, category: 'Submission Streak')
+
+        new_points = submission.participant_streak_days
+        current_points = [points, new_points].max
+        submission.participant.add_points(current_points, category: 'Submission Streak')
       end
 
       # Leaderboard Ninja
@@ -81,18 +84,8 @@ module Merit
         vote.votable_type == "Post"
       end
 
-
-      # Participant commented on a notebook n number of times
-      score 1, :on => ['commontator/comments#create'], category: 'Commented On Notebook', model_name: 'CommontatorThread' do |comment|
-        comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count == 5
-      end
-
-      score 1, :on => ['commontator/comments#create'], category: 'Commented On Notebook', model_name: 'CommontatorThread' do |comment|
-        comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count == 15
-      end
-
-      score 1, :on => ['commontator/comments#create'], category: 'Commented On Notebook', model_name: 'CommontatorThread' do |comment|
-        comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count == 35
+      score 1, :on => ['commontator/comments#create'], badge: 'Commented On Notebook', model_name: 'CommontatorThread', level: 2 do |comment|
+        comment.commontable_type == "Post"
       end
 
       # Notebook Received Comment
@@ -106,9 +99,9 @@ module Merit
       score -1, :on => 'post_bookmarks#destroy', category: 'Bookmarked Notebook'
 
       # Notebook Received Bookmark
-      score 1, :on => 'post_bookmarks#create', category: 'Notebook Was Bookmarked', to: :participant
+      score 1, :on => 'post_bookmarks#create', category: 'Notebook Received Bookmark', to: :participant
 
-      score -1, :on => 'post_bookmarks#destroy', category: 'Notebook Was Bookmarked', to: :participant
+      score -1, :on => 'post_bookmarks#destroy', category: 'Notebook Received Bookmark', to: :participant
 
       # Executed Notebook
       # Notebook Was Executed
@@ -134,31 +127,31 @@ module Merit
         vote.votable_type == "Post" && vote.participant.points(category: 'Liked First Notebook') == 0
       end
 
-      # Notebook got first like
+      # Notebook Received Like
 
-      score 1, :on => 'votes#create', category: 'Notebook got first like', to: :participant do |vote|
-        vote.votable_type == "Post" && vote.votable.participant.points(category: 'Notebook got first like') == 0
+      score 1, :on => 'votes#create', category: 'Notebook Received Like', to: :participant do |vote|
+        vote.votable_type == "Post" && vote.votable.participant.points(category: 'Notebook Received Like') == 0
       end
 
 
       # Complete Bio/Profile
-      score 1, :on => 'participants#update', category: 'Completed Bio-Profile' do |participant|
-        participant.bio.present? && participant.points(category: 'Completed Bio-Profile') == 0
+      score 1, :on => 'participants#update', category: 'Completed Profile' do |participant|
+        participant.bio.present? && participant.points(category: 'Completed Profile') <= 3
       end
 
       # Fill up details on country
-      score 1, :on => 'participants#update', category: 'Completed Country' do |participant|
-        participant.country_cd.present? && participant.points(category: 'Completed Country') == 0
+      score 1, :on => 'participants#update', category: 'Completed Profile' do |participant|
+        participant.country_cd.present? && participant.points(category: 'Completed Profile') <= 3
       end
 
       # Filling up details on portfolio/links
-      score 1, :on => 'participants#update', category: 'Completed Portfolio/Links' do |participant|
+      score 1, :on => 'participants#update', category: 'Completed Profile' do |participant|
         participant.website.present? &&
         participant.github.present? &&
         participant.linkedin.present? &&
         participant.twitter.present? &&
         participant.bio.present? &&
-        participant.points(category: 'Completed Portfolio/Links') == 0
+        participant.points(category: 'Completed Profile') <= 3
       end
 
       # Followed their first Aicrew member
@@ -185,12 +178,12 @@ module Merit
       # Attended First Townhall/Workshop
 
       # Made their first team
-      score 1, :on => 'challenges/teams#create', category: 'Created First Team' do |team|
+      score 1, :on => 'challenges/teams#create', model_name: 'Team', category: 'Created First Team' do |team|
         TeamParticipant.where(team_id: team.id).count  == 1
       end
 
       # Liked First Challenge
-      score 1, :on => 'votes#create', category: 'Liked Challenge' do |vote|
+      score 1, :on => 'votes#create', category: 'Liked First Challenge' do |vote|
         vote.participant.votes.where(votable_type: "Challenge").count == 1
       end
 
@@ -204,19 +197,19 @@ module Merit
       # Accepted Rules
 
       # Participated In First Challenge
-      score 1, :on => ['challenge_participants#create', 'challenge_participants#update'], category: 'Participated Challenge' do |challenge_participant|
+      score 1, :on => ['challenge_participants#create', 'challenge_participants#update'], category: 'Participated In First Challenge' do |challenge_participant|
         challenge_participant.participant.challenge_participants.count == 1
       end
 
       # First Submission
-      score 1, :on => 'submissions#create', category: 'Made Submission' do |submission|
+      score 1, :on => 'submissions#create', category: 'First Submission' do |submission|
         submission.participant.submissions.count == 1
       end
 
       # First Submission With Baseline
 
       # First Successful Submission
-      score 1, :on => 'submissions#create', category: 'Made Submission' do |submission|
+      score 1, :on => 'submissions#create', category: 'First Successful Submission' do |submission|
         submission.participant.submissions.where(grading_status_cd: 'graded').count == 1
       end
 
@@ -243,12 +236,12 @@ module Merit
       # Notebook Was Shared First Time
 
       # Commented on Notebook
-      score 1, :on => ['commontator/comments#create'], category: 'Commented On Notebook', model_name: 'CommontatorThread' do |comment|
+      score 1, :on => ['commontator/comments#create'], category: 'Commented on Notebook', model_name: 'CommontatorThread' do |comment|
         comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count == 1
       end
 
       # Notebook Received First Comment
-      score 1, :on => ['commontator/comments#create'], category: 'Notebook Received Comment', model_name: 'CommontatorThread', to: :post_user do |comment|
+      score 1, :on => ['commontator/comments#create'], category: 'Notebook Received First Comment', model_name: 'CommontatorThread', to: :post_user do |comment|
         comment.commontable_type == "Post"
       end
 
@@ -259,7 +252,7 @@ module Merit
       end
 
       # Notebook Received Bookmark
-      score 1, :on => 'post_bookmarks#create', category: 'Notebook Received Bookmarked', model_name: 'Post', to: :participant do |post|
+      score 1, :on => 'post_bookmarks#create', category: 'Notebook Received First Bookmark', model_name: 'Post', to: :participant do |post|
         post.post_bookmarks.count == 1
       end
 

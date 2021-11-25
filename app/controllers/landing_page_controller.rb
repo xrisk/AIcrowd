@@ -87,7 +87,8 @@ class LandingPageController < ApplicationController
         cardBadge: true,
         badgeColor: '#44B174',
         challengeEndDate: challenge.active_round.end_dttm,
-        organizers: challenge_organizers
+        organizers: challenge_organizers,
+        isOngoing: (challenge.status_cd == "running")
       }
     end
     return challenge_list_data
@@ -130,7 +131,8 @@ class LandingPageController < ApplicationController
       cardBadge: true,
       badgeColor: '#44B174',
       challengeEndDate: challenge_1.active_round.end_dttm,
-      organizers: challenge_organizers
+      organizers: challenge_organizers,
+      isOngoing: (challenge_1.status_cd == "running")
     }
   end
 
@@ -171,7 +173,8 @@ class LandingPageController < ApplicationController
       cardBadge: true,
       badgeColor: '#44B174',
       challengeEndDate: challenge_2.active_round.end_dttm,
-      organizers: challenge_organizers
+      organizers: challenge_organizers,
+      isOngoing: (challenge_2.status_cd == "running")
     }
   end
 
@@ -212,7 +215,8 @@ class LandingPageController < ApplicationController
       cardBadge: true,
       badgeColor: '#44B174',
       challengeEndDate: challenge_3.active_round.end_dttm,
-      organizers: challenge_organizers
+      organizers: challenge_organizers,
+      isOngoing: (challenge_3.status_cd == "running")
     }
   end
 
@@ -330,7 +334,7 @@ class LandingPageController < ApplicationController
       quotes: [
         {
           quote:
-            'Crowdsourcing far exceeded our expectations - you not only get $new solutions$, but also a $deeper insight to the problem$ you are trying to $solve$.',
+            'Crowdsourcing far exceeded our expectations - you not only get #new solutions#, but also a #deeper insight to the problem# you are trying to #solve#.',
           author: 'John Keats',
           post: 'Postdoctoral Researcher, Stanford',
         },

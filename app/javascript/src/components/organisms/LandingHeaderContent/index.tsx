@@ -104,10 +104,10 @@ const LandingHeaderContent = ({
         {/* Show only on join our community section */}
         {isJoinCommunity && (
           <div className={registerButtonWrapper}>
-            <a href="/participants/auth/github" style={{marginBottom: '16px'}}>
+            <a href="/participants/auth/google_oauth2" style={{marginBottom: '16px'}}>
               <ActionButton type="google" size="large" fontFamily="Inter" />
             </a>
-            <a href="/participants/auth/google_oauth2" style={{marginBottom: "16px"}}>
+            <a href="/participants/auth/github" style={{marginBottom: "16px"}}>
               <ActionButton type="github" size="large" fontFamily="Inter" />
             </a>
             <a href="/participants/sign_up">
