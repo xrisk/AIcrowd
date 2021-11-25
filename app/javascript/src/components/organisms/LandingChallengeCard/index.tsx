@@ -37,6 +37,7 @@ export type LandingChallengeCardProps = {
   challengeEndDate: string;
   cardBadge: boolean;
   organizers: [{ name: string; logo: string; link: string }];
+  isOngoing: boolean;
 };
 
 const LandingChallengeCard = ({
@@ -51,6 +52,7 @@ const LandingChallengeCard = ({
   challengeEndDate,
   cardBadge,
   organizers,
+  isOngoing,
 }: LandingChallengeCardProps) => {
   const isWhite = color === '#FFFFFF';
 
@@ -63,9 +65,11 @@ const LandingChallengeCard = ({
       <a href= {`/challenges/${slug}`}>
       <div className={container}>
         <div className={main} style={{ background: color }}>
-          <div className={cardBadgeWrapper}>
+        { isOngoing &&
+          (<div className={cardBadgeWrapper}>
             <CardBadge badgeColor={badgeColor} challengeEndDate={challengeEndDate} cardBadge={cardBadge} />
-          </div>
+          </div>)
+        }
           <img src={image} className={challengeImage}></img>
           <div className={cardBottomWrapper}>
             <div className={titleText} style={{ color: invertedColor }}>

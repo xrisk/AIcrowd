@@ -103,7 +103,7 @@ const SiteFooter = ({ removeMargin }) => {
                   );
                 })}
               </ul>
-              <span className={styles['site-footer-text']}>&copy; 2020 AIcrowd. All Rights Reserved.</span>
+              <span className={styles['site-footer-text']}>&copy; 2021 AIcrowd. All Rights Reserved.</span>
             </div>
             {/* Language change */}
             <div className={styles['site-footer-language']}>
