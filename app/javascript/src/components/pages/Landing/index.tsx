@@ -427,7 +427,7 @@ const Landing = ({
             <section className={cx(challengesWrapper, sectionGap)} style={{ paddingTop: '56px' }}>
               <LandingHeaderContent
                 title="Host a Challenge"
-                url="landing_page/host"
+                url="/landing_page/host"
                 description="Have an interesting out-of-box problem you want to solve?
 Get in touch to host a customized challenge and unlock an array of exclusive features."
                 buttonText="Get In Touch"
