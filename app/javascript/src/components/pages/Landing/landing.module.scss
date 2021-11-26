@@ -12,7 +12,8 @@ $section-gap: 150px;
   }
 
   @include media-query("small") {
-    padding-bottom: 64px;
+    padding-bottom: 55px;
+    padding-top: 100px;
   }
 }
 
@@ -25,26 +26,7 @@ $section-gap: 150px;
   .sectionGap {
     padding-top: $section-gap;
     @include media-query("small") {
-      padding: 64px 0px 0px 0px;
-    }
-  }
-  .sectionGapOrganizers {
-    margin-top: 80px;
-    margin-bottom: 151px;
-    margin-left: 0;
-    margin-right: 0;
-  }
-  .sectionGapReview {
-    margin-top: 221px;
-    margin-bottom: 133px;
-  }
-  .sectionGapCommunity {
-    margin-top: 120px;
-    margin-bottom: 80px;
-
-    @include media-query("small") {
-      margin-top: 64px;
-      margin-bottom: 64px;
+      padding: 40px 0px 0px 0px;
     }
   }
 
@@ -110,6 +92,31 @@ $section-gap: 150px;
     }
   }
 
+  .sectionGapReview {
+    margin-top: 221px;
+    margin-bottom: 133px;
+    justify-content: center;
+
+    @include media-query("small") {
+      margin-top: 150px;
+      margin-bottom: 40px;
+    }
+
+    @include media-query("x-small") {
+      margin-top: 90px;
+      margin-bottom: 40px;
+    }
+  }
+  .sectionGapCommunity {
+    margin-top: 120px;
+    margin-bottom: 80px;
+
+    @include media-query("small") {
+      margin-top: 0px;
+      margin-bottom: 40px;
+    }
+  }
+
   .notebookCardWrapper {
     position: relative;
     width: 700px;
@@ -156,7 +163,7 @@ $section-gap: 150px;
       }
       @include media-query("small") {
         position: unset;
-        margin-top: 0px;
+        margin-top: $spacing-xx-small;
       }
     }
     [data-notebook="3"] {
@@ -209,50 +216,6 @@ $section-gap: 150px;
     }
   }
 
-  .topCommunity {
-    @include media-query("x-large") {
-      display: flex;
-      align-items: center;
-      padding-top: $spacing-x-small;
-    }
-    @include media-query("small") {
-      display: unset;
-      padding-top: $spacing-xxx-small;
-    }
-
-    h6 {
-      font-weight: $font-weight-medium;
-      font-size: $font-medium;
-      line-height: 32px;
-      color: #343434;
-      padding-bottom: $spacing-xx-small;
-      padding-left: 50px;
-      @include media-query("x-large") {
-        padding-bottom: 0px;
-        padding-left: 0px;
-        padding-right: $spacing-xxx-small;
-        font-size: $font-small;
-      }
-    }
-    .topCommunityCardWrapper {
-      display: flex;
-
-      @include media-query("small") {
-        display: unset;
-        margin-top: $spacing-x-small;
-      }
-      .contributorCard {
-        padding-right: $spacing-xx-small;
-        @include media-query("x-large") {
-          padding-right: $spacing-xxx-small;
-        }
-        @include media-query("small") {
-          margin: $spacing-xx-small auto;
-        }
-      }
-    }
-  }
-
   .researchImageWrapper {
     position: relative;
     width: 100%;
@@ -262,7 +225,7 @@ $section-gap: 150px;
     @include media-query("small") {
       height: 260px;
       margin-bottom: 0px;
-      margin-top: 64px;
+      margin-top: 20px;
     }
 
     img {
@@ -275,19 +238,26 @@ $section-gap: 150px;
         width: 50%;
       }
       &:nth-child(1) {
+        width: 227px;
         position: absolute;
         right: 0%;
         @include media-query("x-large") {
           right: 0%;
         }
         @include media-query("small") {
-          left: 0%;
+          right: 20%;
+          bottom: -40%;
+          width: 40%;
           transform: translateX(0%);
+        }
+        @include media-query("x-small") {
+          bottom: -12%;
         }
       }
       &:nth-child(2) {
         z-index: 2;
         position: absolute;
+        width: 365px;
         top: 55%;
         left: 10%;
         @include media-query("x-large") {
@@ -295,6 +265,9 @@ $section-gap: 150px;
           width: 40%;
         }
         @include media-query("small") {
+          left: 0;
+          top: 0;
+          width: 60%;
         }
       }
       &:nth-child(3) {
@@ -308,10 +281,16 @@ $section-gap: 150px;
           top: 140px;
         }
         @include media-query("small") {
-          // top: 100px;
+          width: 45%;
+          top: 140px;
+          left: 0px;
+        }
+        @include media-query("x-small") {
+          top: 100px;
         }
       }
       &:nth-child(4) {
+        width: 304px;
         z-index: 2;
         position: absolute;
         right: 35%;
@@ -320,6 +299,8 @@ $section-gap: 150px;
         }
         @include media-query("small") {
           right: 10%;
+          width: 45%;
+          top: 10%;
         }
       }
     }
@@ -327,7 +308,11 @@ $section-gap: 150px;
 
   .aicrowdLargeLogo {
     padding-top: 20px;
-    width: 100%;
+    width: 75%;
+
+    @include media-query("x-large") {
+      width: 100%;
+    }
 
     @include media-query("medium") {
       display: none;
@@ -350,13 +335,14 @@ $section-gap: 150px;
         justify-self: center;
       }
       @include media-query("small") {
-        width: 70px;
+        width: 100%;
         justify-self: center;
       }
     }
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    row-gap: 56px;
+    row-gap: 40px;
+    column-gap: 16px;
     justify-content: space-between;
     align-items: center;
     width: 100%;
@@ -367,7 +353,7 @@ $section-gap: 150px;
     }
     @include media-query("small") {
       grid-template-columns: repeat(3, 1fr);
-      row-gap: 50px;
+      row-gap: 0px;
     }
   }
 
@@ -375,7 +361,6 @@ $section-gap: 150px;
     @include media-query("medium") {
       display: none;
     }
-    width: 50%;
     img {
       width: 100%;
       justify-self: flex-start;
@@ -387,14 +372,8 @@ $section-gap: 150px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     row-gap: 28px;
+    column-gap: 16px;
     align-items: center;
     justify-content: space-between;
-
-    .partnerLogo {
-      width: 150px;
-      @include media-query("small") {
-        width: 80px;
-      }
-    }
   }
 }

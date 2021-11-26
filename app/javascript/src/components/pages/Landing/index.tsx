@@ -104,7 +104,7 @@ const Landing = ({
   const isM = useMediaQuery(sizes.medium);
   const { value: isMenuOpen, toggle, setValue: setMenu } = useBoolean();
 
-  const challengeDescription = `AIcrowd hosts challenges that tackle diverse problems in Artificial Intelligence with real-world impact. AIcrowd Community spearheads the state of the art, be it advanced RL innovation or applications of ML in scientific research. There is an interesting problem for everyone.`;
+  const challengeDescription = `AIcrowd hosts challenges that tackle diverse problems in Artificial Intelligence with real-world impact.  AIcrowd Community spearheads the state of the art, be it advanced RL innovation or applications of ML in scientific research. There is an interesting problem for everyone.`;
 
   const notebookDescription = `Browse winning solutions created with`;
   const notebookDescription2 = `by the community. Learn, discuss and grow your AI skills.`;
@@ -158,7 +158,7 @@ const Landing = ({
                 {/* aicrowd large logo */}
                 {!isS && (
                   <img
-                    src="https://images.aicrowd.com/images/landing_page/landingAicrowdLogo.svg"
+                    src="/assets/misc/landingAicrowdSketch.png"
                     alt="aicrowd logo"
                     className={aicrowdLargeLogo}
                     width="100%"></img>
@@ -428,11 +428,14 @@ const Landing = ({
               <LandingHeaderContent
                 title="Host a Challenge"
                 url="/landing_page/host"
-                description="Have an interesting out-of-box problem you want to solve?
-Get in touch to host a customized challenge and unlock an array of exclusive features."
+                description={[
+                  'Have an interesting out-of-box problem you want to solve?',
+                  <br key={'br1'} />,
+                  'Get in touch to host a customized challenge and unlock an array of exclusive features.',
+                ]}
                 buttonText="Get In Touch"
                 buttonType="primary"
-                descriptionWidth={isS ? '288px' : '496px'}
+                descriptionWidth={isS ? '288px' : '752px'}
               />
               <div className={organizerLogos2}>
                 <img src="https://images.aicrowd.com/images/landing_page/uber-logo.png"></img>

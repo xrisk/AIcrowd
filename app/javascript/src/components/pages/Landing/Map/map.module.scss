@@ -1,3 +1,6 @@
+@import "../../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../../styles/base/__base-dir.scss";
+
 .community-members {
   // min-height: 400px;
   position: relative;
@@ -9,6 +12,10 @@
   height: 100%;
   min-height: 300px;
   width: 100%;
+
+  @include media-query("small") {
+    min-height: 100%;
+  }
 }
 
 .community-members .community-members-map canvas {
@@ -63,6 +70,13 @@
   height: 32px;
   position: relative;
   z-index: 1;
+
+  @include media-query("small") {
+    width: 16px;
+    height: 16px;
+    margin-left: -3px;
+    margin-top: -11px;
+  }
 }
 
 .community-member:after {
@@ -80,6 +94,13 @@
   -moz-animation: blink-animation 3s infinite;
   -webkit-animation: blink-animation 3s infinite;
   -ms-animation: blink-animation 3s infinite;
+
+  @include media-query("small") {
+    width: 60px;
+    height: 60px;
+    left: -25px;
+    top: -25px;
+  }
 }
 
 @keyframes blink-animation {

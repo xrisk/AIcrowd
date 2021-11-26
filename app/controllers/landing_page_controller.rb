@@ -71,14 +71,14 @@ class LandingPageController < ApplicationController
       end
       users = []
       challenge.challenge_participants.sample(20).map(&:participant).sample(5).each do |participant|
-        users << {id: participant.id, image: participant.image_url, tier: 0}
+        users << {id: participant.id, image: helpers.image_tag(participant.image_url), tier: 0}
       end
 
       challenge_list_data << {
         image: challenge.landing_square_image_file.url,
         slug: challenge.slug,
         name: challenge.challenge,
-        prize: challenge.landing_card_prize,
+        prize: [challenge.landing_card_prize],
         users: users,
         loading: false,
         onCard: false,
@@ -121,7 +121,7 @@ class LandingPageController < ApplicationController
       image: challenge_1.landing_square_image_file.url,
       slug: challenge_1.slug,
       name: challenge_1.challenge,
-      prize: challenge_1.landing_card_prize,
+      prize: [challenge_1.landing_card_prize],
 
       users: users,
       loading: false,
@@ -163,7 +163,7 @@ class LandingPageController < ApplicationController
       image: challenge_2.landing_square_image_file.url,
       slug: challenge_2.slug,
       name: challenge_2.challenge,
-      prize: challenge_2.landing_card_prize,
+      prize: [challenge_2.landing_card_prize],
 
       users: users,
       loading: false,
@@ -205,7 +205,7 @@ class LandingPageController < ApplicationController
       image: challenge_3.landing_square_image_file.url,
       slug: challenge_3.slug,
       name: challenge_3.challenge,
-      prize: challenge_3.landing_card_prize,
+      prize: [challenge_3.landing_card_prize],
 
       users: users,
       loading: false,

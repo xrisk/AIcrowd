@@ -29,7 +29,7 @@ export type LandingChallengeCardProps = {
   slug: string;
   image: string;
   name: string;
-  prize: string;
+  prize: [string];
   users: [Users];
   color: string;
   loading: boolean;
@@ -76,7 +76,14 @@ const LandingChallengeCard = ({
               {name}
             </div>
             <div className={prizeText} style={{ color: isWhite ? '#747474' : invertedColor }}>
-              {prize}
+              {/* {prize} */}
+              {prize.map((priz, i) => {
+                return (
+                  <span key={i} style={{ color: isWhite ? '#747474' : invertedColor }}>
+                    {priz} {i + 1 < prize.length && '•'}&nbsp;
+                  </span>
+                );
+              })}
             </div>
           </div>
 
