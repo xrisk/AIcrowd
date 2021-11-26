@@ -28,7 +28,7 @@ class LandingPageController < ApplicationController
       get_discourse_data
     end
 
-    @community_members_list = Rails.cache.fetch('featured-discussions', expires_in: 2.minutes) do
+    @community_members_list = Rails.cache.fetch('community-members-list', expires_in: 2.minutes) do
       get_community_members_list
     end
 
@@ -80,7 +80,7 @@ class LandingPageController < ApplicationController
         image: challenge.landing_square_image_file.url,
         slug: challenge.slug,
         name: challenge.challenge,
-        prize: [challenge.landing_card_prize],
+        prize: challenge.landing_card_prize.split(', '),
         users: users,
         loading: false,
         onCard: false,
@@ -123,7 +123,7 @@ class LandingPageController < ApplicationController
       image: challenge_1.landing_square_image_file.url,
       slug: challenge_1.slug,
       name: challenge_1.challenge,
-      prize: [challenge_1.landing_card_prize],
+      prize: challenge_1.landing_card_prize.split(', '),
 
       users: users,
       loading: false,
@@ -165,7 +165,7 @@ class LandingPageController < ApplicationController
       image: challenge_2.landing_square_image_file.url,
       slug: challenge_2.slug,
       name: challenge_2.challenge,
-      prize: [challenge_2.landing_card_prize],
+      prize: challenge_2.landing_card_prize.split(', '),
 
       users: users,
       loading: false,
@@ -207,7 +207,7 @@ class LandingPageController < ApplicationController
       image: challenge_3.landing_square_image_file.url,
       slug: challenge_3.slug,
       name: challenge_3.challenge,
-      prize: [challenge_3.landing_card_prize],
+      prize: challenge_3.landing_card_prize.split(', '),
 
       users: users,
       loading: false,
