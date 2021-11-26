@@ -28,7 +28,9 @@ class LandingPageController < ApplicationController
       get_discourse_data
     end
 
-    get_community_members_list
+    @community_members_list = Rails.cache.fetch('featured-discussions', expires_in: 2.minutes) do
+      get_community_members_list
+    end
 
   end
 
@@ -70,8 +72,8 @@ class LandingPageController < ApplicationController
         }
       end
       users = []
-      challenge.challenge_participants.sample(20).map(&:participant).sample(5).each do |participant|
-        users << {id: participant.id, image: helpers.image_tag(participant.image_url), tier: 0}
+      challenge.challenge_participants.includes(:participant).sample(20).map(&:participant).sample(5).each do |participant|
+        users << {id: participant.id, image: participant.image_url, tier: 0}
       end
 
       challenge_list_data << {
@@ -225,7 +227,9 @@ class LandingPageController < ApplicationController
   def get_featured_notebooks
     notebook_card_data = []
     posts = Post.where.not(thumbnail: nil)
-      .where(featured: true).limit(4)
+      .where(featured: true)
+      .includes(:participant)
+      .limit(4)
 
     posts.each do |post|
       notebook_card_data << {
@@ -370,11 +374,11 @@ class LandingPageController < ApplicationController
           statText: 'Completed Challenges',
         },
         {
-          count: '25k',
+          count: '47k',
           statText: 'Community Members',
         },
         {
-          count: '$250k',
+          count: '$500k',
           statText: 'Awarded in Prizes',
         },
         {
@@ -392,18 +396,19 @@ class LandingPageController < ApplicationController
     sql = "select country_cd, id from (select distinct on (country_cd) country_cd, id, random() as rank, name, image_file from participants where country_cd IN (select distinct country_cd from participants where country_cd is not null and country_cd!='') and image_file is not null and image_file !='' order by country_cd, rank desc) data order by random() limit 15"
     participants = ActiveRecord::Base.connection.execute(sql)
 
-    @community_members_list = []
+    community_members_list = []
     participants.each do |p|
       user = Participant.find_by_id(p["id"])
       lon, lat = Geocoder.search(p["country_cd"]).first.coordinates
 
-      @community_members_list << {
+      community_members_list << {
         lat: lat.to_s,
         lon: lon.to_s,
         image: user.image_url,
         name: user.name
       }
     end
+    return community_members_list
   end
 
 end

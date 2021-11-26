@@ -37,34 +37,7 @@
     challengeEndDate: '2021/10/30',
   }
 
-  communityMembersList = [
-      {
-        lat: '77.23',
-        lon: '28.61',
-        image: 'https://images.aicrowd.com/images/participants/image_file/2/dp_official_cool.jpg',
-        name: 'shivam',
-      },
-      {
-        lat: '130.23',
-        lon: '-20.61',
-        image: 'https://images.aicrowd.com/images/participants/image_file/10266/8032688.jpeg',
-        name: 'dipam_chakraborty',
-      },
-      {
-        lat: '-30.23',
-        lon: '75.61',
-        image: 'https://images.aicrowd.com/images/participants/image_file/3397/IMG_8290.JPG',
-        name: 'ashivani',
-      },
-      {
-        lat: '35.00074',
-        lon: '104.999927',
-        image: 'https://images.aicrowd.com/images/participants/image_file/7848/profile-cut.png',
-        name: 'yoogottamk',
-      },
-    ]
-
-    image_url = current_participant.present? ? current_participant.image_url : ''
+  image_url = current_participant.present? ? current_participant.image_url : ''
 %>
 
 <% if current_participant %>
@@ -73,5 +46,4 @@
 <% else %>
   <%= react_component("pages/Landing/index", {loading: false, logos: [org_1, org_2, org_3, org_4, org_5, org_6, org_7], challengeListData: @challenge_list_data, statListData: @stat_list_data, moreMenuItem: @more_menu_item, communityMenuItem: @community_menu_item, challengesMenuItem: @challenges_menu_item, communityMap: @community_map, communityMapAvatar: @community_map_avatar, landingChallengeCard1: @landing_challenge_card_1, landingChallengeCard2: @landing_challenge_card_2, landingChallengeCard3: @landing_challenge_card_3, notebookCardData: @notebook_card_data, submissionCardData: @submission_card_data, contributorCardData: contributorCardData, quotes: @quotes, cardBadge: cardBadge, communityMembersList: @community_members_list, profileMenuItem: @profile_menu_item, tier: 0, image: image_url, isLoggedIn: false}) %>
 <% end %>
-<%= react_component("organisms/SiteFooter/index", {SiteFooter: {control: {options: [],}}}) %>
 
