@@ -11,7 +11,7 @@
     box-shadow: $shadow;
   }
 
-  @include media-query("small") {
+  @include media-query("large") {
     width: 100%;
   }
 
@@ -62,6 +62,9 @@
     border: 1px solid $color-border-light;
     border-bottom: none;
     position: relative;
+    @include media-query("large") {
+      width: 100%;
+    }
     @include media-query("small") {
       width: 100%;
       height: 272px;
@@ -83,16 +86,7 @@
       }
     }
 
-    // @include media-query("x-large") {
-    //   width: 278px;
-
-    //   .challengeImage {
-    //     width: 220px;
-    //   }
-    // }
-
     .titleText {
-      width: 208px;
       text-align: center;
       color: #fff;
       font-size: 16px;
@@ -105,9 +99,6 @@
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
-      // @include media-query("x-large") {
-      //   font-size: 18px;
-      // }
 
       @include media-query("small") {
         font-size: 16px;
@@ -119,7 +110,6 @@
 
     .prizeText {
       text-align: center;
-      width: 224px;
       font-size: 14px;
       line-height: 24px;
       color: $color-text-light;
@@ -130,6 +120,7 @@
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+
       @include media-query("small") {
         font-size: 14px;
         margin-bottom: 10px;
@@ -142,6 +133,11 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      width: 224px;
+
+      @include media-query("large") {
+        width: 100%;
+      }
     }
 
     .participantsWrapper {
