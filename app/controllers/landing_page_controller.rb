@@ -318,7 +318,7 @@ class LandingPageController < ApplicationController
         description: val[3],
         comment_count: val[4],
         isComment: true,
-        image: (Participant.find_by_name(val[5]).image_file.url rescue 'https://images.aicrowd.com/images/landing_page/custom-avatar-3.png'),
+        image: (Participant.find_by_name(val[5]).image_url),
         onCard: true,
         borderColor: '#fff',
         tier: 0
