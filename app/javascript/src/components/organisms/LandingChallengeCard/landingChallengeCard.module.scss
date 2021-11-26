@@ -10,6 +10,11 @@
     transform: translate(0, -5px);
     box-shadow: $shadow;
   }
+
+  @include media-query("small") {
+    width: 100%;
+  }
+
   .cardFooter {
     width: 100%;
     height: 32px;
@@ -58,7 +63,7 @@
     border-bottom: none;
     position: relative;
     @include media-query("small") {
-      max-width: 288px;
+      width: 100%;
       height: 272px;
       align-items: left;
     }
@@ -93,27 +98,42 @@
       font-size: 16px;
       line-height: 24px;
       font-weight: $font-weight-medium;
-      padding-bottom: 8px;
+      margin-bottom: 8px;
+      // show ellipsis after 2 lines
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       // @include media-query("x-large") {
       //   font-size: 18px;
       // }
+
       @include media-query("small") {
         font-size: 16px;
         font-weight: $font-weight-semibold;
         line-height: 24px;
+        width: 100%;
       }
     }
 
     .prizeText {
       text-align: center;
-      width: 208px;
+      width: 224px;
       font-size: 14px;
       line-height: 24px;
       color: $color-text-light;
-      padding-bottom: 8px;
+      margin-bottom: 8px;
+      // show ellipsis after 2 lines
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
       @include media-query("small") {
         font-size: 14px;
-        padding-bottom: 10px;
+        margin-bottom: 10px;
+        width: 100%;
       }
     }
 

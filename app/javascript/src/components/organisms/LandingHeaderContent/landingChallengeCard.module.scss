@@ -69,6 +69,7 @@ $gradient-color: linear-gradient(to right, #f0524d, #d3403b);
     }
 
     @include media-query("small") {
+      font-weight: 500;
       font-size: 28px;
       line-height: 40px;
       letter-spacing: 0.1px;
@@ -95,6 +96,7 @@ $gradient-color: linear-gradient(to right, #f0524d, #d3403b);
     @include media-query("small") {
       font-size: 16px;
       line-height: 24px;
+      padding-bottom: 16px;
     }
   }
 }

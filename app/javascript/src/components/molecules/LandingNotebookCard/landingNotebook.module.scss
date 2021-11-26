@@ -17,9 +17,8 @@
   @include media-query("small") {
     width: 100%;
     height: 108px;
-    padding: $spacing-xx-small;
-    margin-top: $spacing-x-small;
-    margin-bottom: $spacing-x-small;
+    padding: $spacing-xxx-small;
+    height: auto;
   }
 }
 
@@ -38,20 +37,23 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   @include media-query("small") {
-    font-size: 14px;
+    // font-size: 14px;
+    font-weight: 400;
+    width: 100%;
   }
 }
 
 .mainWrapper {
   .subWrapper {
     display: flex;
+    align-items: center;
   }
   img {
     width: 73px;
     height: 73px;
     @include media-query("small") {
-      width: 32px;
-      height: 32px;
+      width: 48px;
+      height: 48px;
     }
   }
 
@@ -69,5 +71,10 @@
     margin-left: $spacing-xxx-small;
     column-gap: $spacing-xxx-small;
     margin-top: 5px;
+
+    @include media-query("small") {
+      margin: 0px;
+      margin-left: $spacing-xxx-small;
+    }
   }
 }

@@ -24,6 +24,11 @@
   @include media-query("small") {
     grid-template-columns: repeat(3, 1fr);
     row-gap: $spacing-x-small;
-    column-gap: 34px;
+    column-gap: 16px;
+  }
+  @include media-query("x-small") {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: $spacing-x-small;
+    column-gap: 12px;
   }
 }

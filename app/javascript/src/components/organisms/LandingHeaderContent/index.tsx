@@ -35,16 +35,24 @@ const LandingHeaderContent = ({
 
   const isS = useMediaQuery(small);
   const isXL = useMediaQuery(xLarge);
+  const isXS = useMediaQuery(xSmall);
 
   const isJoinCommunity = title === 'Join our Global Community';
   const isWelcomeAicrowd = title === 'Welcome to AIcrowd Community'
   return (
     <>
       <div className={main}>
-        {hero && (
+        {hero && !isXS && (
           <div className={heroTitle}>
             Crowdsourcing AI <br />
             to Solve Real-World Problems
+          </div>
+        )}
+        {/* Show only on small screen */}
+        {hero && isXS && (
+          <div className={heroTitle}>
+            Crowdsourcing AI to <br />
+            Solve Real-World Problems
           </div>
         )}
         {!hero && (
@@ -112,13 +120,13 @@ const LandingHeaderContent = ({
             </a>
             <a href="/participants/sign_up">
             <ButtonDefault
-              text="Sign Up With Email"
-              iconClass="envelope"
+              text={isS ? 'Register Now' : 'Sign Up With Email'}
+              iconClass={isS ? 'arrow-right' : 'envelope'}
               iconColor="#F0524D"
               type="secondary"
               iconSize="24px"
               size="large"
-              iconLeft
+              iconLeft={!isS}
               fontSize="12px"
               fontWeight="500"
               fontFamily="Inter"
