@@ -115,7 +115,7 @@ class LandingPageController < ApplicationController
       challenge_organizers << {
         name: organizer.organizer,
         logo: organizer.image_file.url,
-        link: organizer_path(organizer.id),
+        link: organizer_path(organizer),
       }
     end
 
@@ -157,7 +157,7 @@ class LandingPageController < ApplicationController
       challenge_organizers << {
         name: organizer.organizer,
         logo: organizer.image_file.url,
-        link: organizer_path(organizer.id),
+        link: organizer_path(organizer),
       }
     end
 
@@ -199,7 +199,7 @@ class LandingPageController < ApplicationController
       challenge_organizers << {
         name: organizer.organizer,
         logo: organizer.image_file.url,
-        link: organizer_path(organizer.id),
+        link: organizer_path(organizer),
       }
     end
 
