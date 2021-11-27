@@ -117,9 +117,9 @@ module Merit
       score 1, :on => 'participants/registrations#create', category: 'Sign Up'
 
       # Created first notebook
-      score 1, :on => 'posts#create', category: 'Created First Notebook' do |post|
-        post.participant.points(category: 'Created First Notebook') == 0
-      end
+      # score 1, :on => 'posts#create', category: 'Created First Notebook' do |post|
+      #   post.participant.points(category: 'Created First Notebook') == 0
+      # end
 
       # Liked 1 notebook
 

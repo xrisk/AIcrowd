@@ -37,7 +37,7 @@ class Post < ApplicationRecord
   end
 
   def get_random_thumbnail
-    images = ["post-img-1.jpg", "post-img-2.jpg"]
+    images = ["post-img-1.png", "post-img-2.png", "post-img-3.png"]
     img = images.sample
     upload_image_file = ActionDispatch::Http::UploadedFile.new({
       filename: img,
