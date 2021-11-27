@@ -20,7 +20,11 @@
               <%= image_tag notification.thumbnail_url if notification.thumbnail_url.present? %>
             </div>
             <div>
-              <span><strong><%= notification.notifiable_type %></strong> <%= notification.message %></span><br>
+              <% if notification.notifiable_type == "AicrowdBadge"%>
+                <span><strong><%= notification.notifiable.name %></strong> <%= notification.message %></span><br>
+              <% else %>
+                <span><strong><%= notification.notifiable_type %></strong> <%= notification.message %></span><br>
+              <% end %>
               <span class="text-muted"><%= notification_time(notification.created_at) %></span>
             </div>
           <% end %>
