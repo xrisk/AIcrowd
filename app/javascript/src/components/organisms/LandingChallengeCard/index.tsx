@@ -31,6 +31,7 @@ export type LandingChallengeCardProps = {
   name: string;
   prize: [string];
   users: [Users];
+  userCount: number;
   color: string;
   loading: boolean;
   badgeColor: string;
@@ -46,6 +47,7 @@ const LandingChallengeCard = ({
   name,
   prize,
   users,
+  userCount,
   color,
   loading,
   badgeColor,
@@ -90,7 +92,8 @@ const LandingChallengeCard = ({
           <div className={participantsWrapper}>
             <AvatarGroup users={users} size="sm" onCard={true} borderColor={color} loading={loading} />
             <div className={circleValue}>
-              <CircleValue value={25} size="sm" onCard={true} borderColor={color} />
+              <a>{userCount}</a>
+              <CircleValue value={userCount} size="sm" onCard={true} borderColor={color} />
             </div>
           </div>
         </div>

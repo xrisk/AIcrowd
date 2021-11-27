@@ -13,7 +13,7 @@ const LandingChallengeCardList = ({ challengeListData, loading }: LandingChallen
   <>
     <div className={main}>
       {challengeListData.map((item, i) => {
-        const { slug, image, name, prize, users, color, badgeColor, challengeEndDate, cardBadge, organizers, isOngoing } = item;
+        const { slug, image, name, prize, users, userCount, color, badgeColor, challengeEndDate, cardBadge, organizers, isOngoing } = item;
         return (
           <div className={cardWrapper} key={i}>
             <div data-challenge={i + 1}>
@@ -23,6 +23,7 @@ const LandingChallengeCardList = ({ challengeListData, loading }: LandingChallen
                 name={name}
                 prize={prize}
                 users={users}
+                userCount={userCount}
                 color={color}
                 loading={loading}
                 badgeColor={badgeColor}

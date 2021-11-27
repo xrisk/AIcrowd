@@ -82,6 +82,7 @@ class LandingPageController < ApplicationController
         name: challenge.challenge,
         prize: challenge.landing_card_prize.split(', '),
         users: users,
+        userCount: challenge.challenge_participants.count,
         loading: false,
         onCard: false,
         size: 'default',
@@ -126,6 +127,7 @@ class LandingPageController < ApplicationController
       prize: challenge_1.landing_card_prize.split(', '),
 
       users: users,
+      userCount: challenge_1.challenge_participants.count,
       loading: false,
       onCard: false,
       size: 'default',
@@ -168,6 +170,7 @@ class LandingPageController < ApplicationController
       prize: challenge_2.landing_card_prize.split(', '),
 
       users: users,
+      userCount: challenge_2.challenge_participants.count,
       loading: false,
       onCard: false,
       size: 'default',
@@ -210,6 +213,7 @@ class LandingPageController < ApplicationController
       prize: challenge_3.landing_card_prize.split(', '),
 
       users: users,
+      userCount: challenge_3.challenge_participants.count,
       loading: false,
       onCard: false,
       size: 'default',
