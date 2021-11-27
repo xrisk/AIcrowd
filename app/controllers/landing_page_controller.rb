@@ -370,7 +370,7 @@ class LandingPageController < ApplicationController
   def get_stat_list_data
     @stat_list_data = [
         {
-          count: 80,
+          count: 230,
           statText: 'Completed Challenges',
         },
         {

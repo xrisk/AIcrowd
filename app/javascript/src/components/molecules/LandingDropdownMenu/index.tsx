@@ -38,7 +38,8 @@ const LandingDropdownMenu = ({
           {menu?.map(item => {
             return (
               <li>
-                <a href={item.link}>{item.name}</a>
+                {item.name === "Sign Out" && <a data-method="delete" href={item.link}>{item.name}</a>}
+                {item.name != "Sign Out" && <a href={item.link}>{item.name}</a>}
               </li>
             );
           })}
