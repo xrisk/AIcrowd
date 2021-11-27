@@ -86,7 +86,7 @@ const LandingCarousel = ({ tier, image, loading, borderColor, quotes }) => {
           <div>
             <AvatarWithTier
               tier={tier}
-              image={image}
+              image={quote.image}
               loading={loading}
               size="md"
               borderColor={borderColor}
