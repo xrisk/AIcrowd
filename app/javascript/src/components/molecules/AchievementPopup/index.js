@@ -15,7 +15,6 @@ const {
 } = styles;
 
 const AchievementPopup = ({ title, description, icon, handleClick, url, badgeTitle, socialMessage, badgeId }) => {
-  debugger;
   return (
     <>
       <div className={main}>
