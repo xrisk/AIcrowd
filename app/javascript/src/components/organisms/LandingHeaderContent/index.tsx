@@ -121,7 +121,7 @@ const LandingHeaderContent = ({
             <a href="/participants/sign_up">
             <ButtonDefault
               text={isS ? 'Register Now' : 'Sign Up With Email'}
-              iconClass={isS ? 'arrow-right' : 'envelope'}
+              iconClass={isS ? '' : 'envelope'}
               iconColor="#F0524D"
               type="secondary"
               iconSize="24px"
