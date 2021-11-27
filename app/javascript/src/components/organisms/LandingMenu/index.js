@@ -5,33 +5,38 @@ import styles from './landingMenu.module.scss';
 import SocialButtons from 'src/components/atoms/Button/SocialButtons';
 const { main, menuWrapper, loginText, socialIconWrapper } = styles;
 
-const LandingMenu = () => (
+const LandingMenu = ({isLoggedIn, profileMenuItem}) => (
   <>
     <div className={main}>
       <div className={menuWrapper}>
-        <Link href="/host-a-Challenge">
+        <Link href="/landing_page/host">
           <a>Host a Challenge</a>
         </Link>
         <Link href="/challenges">
           <a>Challenges</a>
         </Link>
-        <Link href="/community">
-          <a>Community</a>
+        <Link href="https://discourse.aicrowd.com/">
+          <a>Forum</a>
         </Link>
-        <Link href="/team">
-          <a>Our Team</a>
+        <Link href="https://blog.aicrowd.com/">
+          <a>Blog</a>
         </Link>
-        <Link href="/jobs">
-          <a>Jobs</a>
-        </Link>
-        <div className={loginText}>
-          <Link href="/login">
-            <a>Log In</a>
-          </Link>
-        </div>
-        <Link href="/signup">
-          <a>Signup</a>
-        </Link>
+
+        {isLoggedIn ? (profileMenuItem.map(item => {
+            if(item.name === "Profile") {
+              return <div className={loginText}><a href={item.link}>{item.name}</a></div>
+            } else if(item.name === "Sign Out") {
+              return <a data-method="delete" href={item.link}>{item.name}</a>
+            }
+            return <a href={item.link}>{item.name}</a>
+        })) :
+        (<>
+          <div className={loginText}>
+            <a href="/participants/sign_in">Log In</a>
+          </div>
+          <a href="/participants/sign_up">Signup</a>
+        </>
+        )}
         <div className={socialIconWrapper}>
           <SocialButtons socialType="facebook" iconType="outline" link="https://www.facebook.com/AIcrowdHQ/" />
           <SocialButtons socialType="twitter" iconType="outline" link="https://twitter.com/AIcrowdHQ" />
@@ -41,7 +46,7 @@ const LandingMenu = () => (
             iconType="outline"
             link="https://www.youtube.com/channel/UCUWbe23kxbwpaAP9AlzZQbQ"
           />
-          <SocialButtons socialType="discord" iconType="outline" link="/" />
+          <SocialButtons socialType="discord" iconType="outline" link="http://discord.com/invite/XEa56FP" />
         </div>
       </div>
     </div>

@@ -267,7 +267,7 @@ class LandingPageController < ApplicationController
     @community_menu_item = [
       {
         name: 'Blog',
-        link: blogs_path,
+        link: "https://blog.aicrowd.com/",
       },
       {
         name: 'Forum',

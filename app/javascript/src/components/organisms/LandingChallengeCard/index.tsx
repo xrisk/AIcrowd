@@ -92,7 +92,6 @@ const LandingChallengeCard = ({
           <div className={participantsWrapper}>
             <AvatarGroup users={users} size="sm" onCard={true} borderColor={color} loading={loading} />
             <div className={circleValue}>
-              <a>{userCount}</a>
               <CircleValue value={userCount} size="sm" onCard={true} borderColor={color} />
             </div>
           </div>

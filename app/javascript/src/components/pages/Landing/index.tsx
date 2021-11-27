@@ -131,7 +131,7 @@ const Landing = ({
         loading={loading}
         isLoggedIn={isLoggedIn}
       />
-      {isMenuOpen && <LandingMenu />}
+      {isMenuOpen && <LandingMenu isLoggedIn={isLoggedIn} profileMenuItem={profileMenuItem} />}
       <div className="container-center">
         <div className={mastheadCard}>
           <MastHeadLanding

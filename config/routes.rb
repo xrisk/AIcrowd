@@ -322,7 +322,7 @@ Rails.application.routes.draw do
     get code, controller: :errors, action: :show, code: code
   end
 
-  root 'old_landing_page#index'
+  root 'landing_page#index'
 
   # catch all
   get '*short', to: 'short_urls#show'
