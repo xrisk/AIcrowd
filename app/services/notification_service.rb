@@ -103,7 +103,7 @@ class NotificationService
 
   def badge
     message = @notifiable.description
-    link = participant_path(@participant)
+    link = participant_path(@participant, tab: 'achievements')
     thumb = @notifiable.image
 
     return if @participant.notifications.exists?(notification_type: 'badge', message: message)
