@@ -11,7 +11,13 @@
 
   <div class="form-group">
       <span class="label-text">Organizers</span>
-      <%= f.select :organizer_ids, @organizers_for_select, {}, {class: "select2 form-control", multiple: true, disabled: !(current_participant&.admin?) } %>
+      <% if current_participant.admin? %>
+        <%= f.select :organizer_ids, @organizers_for_select, {}, {class: "select2 form-control", multiple: true, disabled: !(current_participant&.admin?) } %>
+      <% elsif params[:organizer_id].present? %>
+        <%= f.text_field :organizer_ids, value: params[:organizer_id], disabled: true, class: "form-control d-none" %>
+      <% else %>
+        <%= f.text_field :organizer_ids, disabled: true, class: "form-control d-none" %>    
+      <% end %>
   </div>
 
   <div class="form-group">
