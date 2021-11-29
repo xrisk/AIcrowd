@@ -109,17 +109,17 @@ module Merit
       ### NOTEBOOK BADGES
 
       # Create Notebook Badges
-      # grant_on 'posts#create', badge: 'Created Notebook', level: 1 do |post|
-      #   post.participant.posts.count >= 3
-      # end
+      grant_on 'posts#create', badge: 'Created Notebook', model_name: 'Post', level: 1 do |post|
+        post.participant.posts.count >= 3
+      end
 
-      # grant_on 'posts#create', badge: 'Created Notebook', level: 2 do |post|
-      #   post.participant.posts.count >= 10
-      # end
+      grant_on 'posts#create', badge: 'Created Notebook', model_name: 'Post', level: 2 do |post|
+        post.participant.posts.count >= 10
+      end
 
-      # grant_on 'posts#create', badge: 'Created Notebook', level: 3 do |post|
-      #   post.participant.posts.count >= 25
-      # end
+      grant_on 'posts#create', badge: 'Created Notebook', model_name: 'Post', level: 3 do |post|
+        post.participant.posts.count >= 25
+      end
 
       # Won Blitz Community Explainer
       grant_on 'posts#update', badge: 'Won Blitz Community Explainer', level: 1, to: :participant do |post|
@@ -249,9 +249,9 @@ module Merit
 
 
       # Created first notebook
-      # grant_on 'posts#create', badge: 'Created First Notebook', level: 4 do |post|
-      #   post.participant.posts.count >= 1
-      # end
+      grant_on 'posts#create', badge: 'Created First Notebook', model_name: 'Post', level: 4 do |post|
+        post.participant.posts.count >= 1
+      end
 
       # Liked 1 notebook
       grant_on 'votes#create', badge: 'Liked First Notebook', level: 4, to: :participant do |vote|
@@ -354,7 +354,8 @@ module Merit
 
       # Participated In First Practice Problem
       grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'Participated In First Practice Problem', level: 4 do |challenge_participant|
-        challenge_participant.participant.challenge_participants.count >= 1
+        challenge = challenge_participant.challenge
+        challenge.practice_flag == true
       end
 
       # Shared First Notebook

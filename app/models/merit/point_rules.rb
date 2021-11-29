@@ -117,9 +117,9 @@ module Merit
       score 1, :on => 'participants/registrations#create', category: 'Sign Up'
 
       # Created first notebook
-      # score 1, :on => 'posts#create', category: 'Created First Notebook' do |post|
-      #   post.participant.points(category: 'Created First Notebook') == 0
-      # end
+      score 1, :on => 'posts#create', category: 'Created First Notebook' do |post|
+        post.participant.points(category: 'Created First Notebook') == 0
+      end
 
       # Liked 1 notebook
 
@@ -198,7 +198,8 @@ module Merit
 
       # Participated In First Challenge
       score 1, :on => ['challenge_participants#create', 'challenge_participants#update'], category: 'Participated In First Challenge' do |challenge_participant|
-        challenge_participant.participant.challenge_participants.count == 1
+        challenge_ids = Challenge.where(practice_flag: true).pluck(:id)
+        challenge_participant.participant.challenge_participants.where(challenge_id: challenge_ids).count == 1
       end
 
       # First Submission
