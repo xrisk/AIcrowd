@@ -260,8 +260,8 @@ module Merit
 
       # Notebook got first like
 
-      grant_on 'votes#create', badge: 'Notebook Received Like', level: 4 do |vote|
-        vote.participant.votes.where(votable_type: "Post").count >= 1
+      grant_on 'votes#create', badge: 'Notebook Received Like', to: :post_user, level: 4 do |vote|
+        vote.votable_type == "Post" &&  Vote.where(votable_type: "Post", votable_id: vote.votable.participant.posts.pluck(:id)).count == 1
       end
 
       # Complete Bio/Profile

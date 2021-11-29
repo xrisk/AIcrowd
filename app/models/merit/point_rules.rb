@@ -130,7 +130,7 @@ module Merit
       # Notebook Received Like
 
       score 1, :on => 'votes#create', category: 'Notebook Received Like', to: :participant do |vote|
-        vote.votable_type == "Post" && vote.votable.participant.points(category: 'Notebook Received Like') == 0
+        vote.votable_type == "Post" && Vote.where(votable_type: "Post", votable_id: vote.votable.participant.posts.pluck(:id)).count == 1
       end
 
 
