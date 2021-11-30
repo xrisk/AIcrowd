@@ -68,7 +68,7 @@ class LandingPageController < ApplicationController
         challenge_organizers << {
           name: organizer.organizer,
           logo: organizer.image_file.url,
-          link: organizer_path(organizer.id),
+          link: organizer_path(organizer),
         }
       end
       users = []
@@ -83,6 +83,7 @@ class LandingPageController < ApplicationController
         name: challenge.challenge,
         prize: challenge.landing_card_prize.split(', '),
         users: users,
+        userCount: challenge.challenge_participants.count,
         loading: false,
         onCard: false,
         size: 'default',
@@ -116,7 +117,7 @@ class LandingPageController < ApplicationController
       challenge_organizers << {
         name: organizer.organizer,
         logo: organizer.image_file.url,
-        link: organizer_path(organizer.id),
+        link: organizer_path(organizer),
       }
     end
 
@@ -128,6 +129,7 @@ class LandingPageController < ApplicationController
       prize: challenge_1.landing_card_prize.split(', '),
 
       users: users,
+      userCount: challenge_1.challenge_participants.count,
       loading: false,
       onCard: false,
       size: 'default',
@@ -159,7 +161,7 @@ class LandingPageController < ApplicationController
       challenge_organizers << {
         name: organizer.organizer,
         logo: organizer.image_file.url,
-        link: organizer_path(organizer.id),
+        link: organizer_path(organizer),
       }
     end
 
@@ -171,6 +173,7 @@ class LandingPageController < ApplicationController
       prize: challenge_2.landing_card_prize.split(', '),
 
       users: users,
+      userCount: challenge_2.challenge_participants.count,
       loading: false,
       onCard: false,
       size: 'default',
@@ -202,7 +205,7 @@ class LandingPageController < ApplicationController
       challenge_organizers << {
         name: organizer.organizer,
         logo: organizer.image_file.url,
-        link: organizer_path(organizer.id),
+        link: organizer_path(organizer),
       }
     end
 
@@ -214,6 +217,7 @@ class LandingPageController < ApplicationController
       prize: challenge_3.landing_card_prize.split(', '),
 
       users: users,
+      userCount: challenge_3.challenge_participants.count,
       loading: false,
       onCard: false,
       size: 'default',
@@ -267,7 +271,7 @@ class LandingPageController < ApplicationController
     @community_menu_item = [
       {
         name: 'Blog',
-        link: blogs_path,
+        link: "https://blog.aicrowd.com/",
       },
       {
         name: 'Forum',
@@ -348,29 +352,15 @@ class LandingPageController < ApplicationController
         {
           quote:
             'Crowdsourcing far exceeded our expectations - you not only get #new solutions#, but also a #deeper insight to the problem# you are trying to #solve#.',
-          author: 'John Keats',
-          post: 'Postdoctoral Researcher, Stanford',
+          author: 'Erik Nygren',
+          post: 'Deep Learning and Artificial Intelligence Research, SBB CFF FFS',
+          image: 'https://www.aicrowd.com/assets/img/testimonial-1.jpeg',
         },
         {
-          quote: "I have not failed. I've just found 10,000 ways that won't work.",
-          author: 'Thomas A. Edison',
+          quote: 'Thanks to the #agile structure# of the platform, it was #easy to design# an ML challenge #outside of the standard# framework of the training/test data challenges. For new challenges, I would #choose AIcrowd# over other platforms.',
+          author: 'Łukasz Kidziński',
           post: 'Postdoctoral Researcher, Stanford',
-        },
-        {
-          quote: 'But man is not made for defeat. A man can be destroyed but not defeated.',
-          author: 'Ernest Hemingway',
-          post: 'Postdoctoral Researcher, Stanford',
-        },
-        {
-          quote:
-            'The world as we have created it is a process of our thinking. It cannot be changed without changing our thinking.',
-          author: 'Albert Einstein',
-          post: 'Postdoctoral Researcher, Stanford',
-        },
-        {
-          quote: 'The person, be it gentleman or lady, who has not pleasure in a good novel, must be intolerably stupid.',
-          author: 'Jane Austen',
-          post: 'Postdoctoral Researcher, Stanford',
+          image: 'https://www.aicrowd.com/assets/img/testimonial-2.jpeg',
         },
       ],
     }

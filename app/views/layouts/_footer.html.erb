@@ -32,6 +32,9 @@
 					<li class="nav-item">
 						<%= link_to 'Challenges', challenges_path, {:class => "nav-link"} %>
 					</li>
+                                        <li class="nav-item">
+                                                <%= link_to 'AIcrowd Research', publications_path, {:class => "nav-link"} %>
+                                        </li>
 					<li class="nav-item">
 						<%= link_to 'Organize a Challenge', landing_page_host_path, {:class => "nav-link"} %>
 					</li>
@@ -53,7 +56,7 @@
 				<h4>Connect</h4>
 				<ul class="nav flex-column">
 					<li class="nav-item">
-						<%= link_to 'Blog', blogs_path, {:class => "nav-link"} %>
+						<%= link_to 'Blog', "https://blog.aicrowd.com/", {:class => "nav-link"} %>
 					</li>
                                         <% if ENV['DISCOURSE_DOMAIN_NAME'].present? %>
                                         <li class="nav-item">

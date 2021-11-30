@@ -9,23 +9,17 @@ const LandingMenu = ({ profileMenuItem, isLoggedIn }) => (
   <>
     <div className={main}>
       <div className={menuWrapper}>
-        <Link href="/host-a-Challenge">
+        <Link href="/landing_page/host">
           <a>Host a Challenge</a>
         </Link>
         <Link href="/challenges">
           <a>Challenges</a>
         </Link>
-        <Link href="/community">
-          <a>Community</a>
+        <Link href="https://discourse.aicrowd.com/">
+          <a>Forum</a>
         </Link>
         <Link href="/research">
           <a>Research</a>
-        </Link>
-        <Link href="/forum">
-          <a>Forum</a>
-        </Link>
-        <Link href="/blog">
-          <a>Blog</a>
         </Link>
         {!isLoggedIn && (
           <>
@@ -52,6 +46,25 @@ const LandingMenu = ({ profileMenuItem, isLoggedIn }) => (
             );
           })}
 
+        <Link href="https://blog.aicrowd.com/">
+          <a>Blog</a>
+        </Link>
+
+        {isLoggedIn ? (profileMenuItem.map(item => {
+            if(item.name === "Profile") {
+              return <div className={loginText}><a href={item.link}>{item.name}</a></div>
+            } else if(item.name === "Sign Out") {
+              return <a data-method="delete" href={item.link}>{item.name}</a>
+            }
+            return <a href={item.link}>{item.name}</a>
+        })) :
+        (<>
+          <div className={loginText}>
+            <a href="/participants/sign_in">Log In</a>
+          </div>
+          <a href="/participants/sign_up">Signup</a>
+        </>
+        )}
         <div className={socialIconWrapper}>
           <SocialButtons socialType="facebook" iconType="outline" link="https://www.facebook.com/AIcrowdHQ/" />
           <SocialButtons socialType="twitter" iconType="outline" link="https://twitter.com/AIcrowdHQ" />
@@ -61,7 +74,7 @@ const LandingMenu = ({ profileMenuItem, isLoggedIn }) => (
             iconType="outline"
             link="https://www.youtube.com/channel/UCUWbe23kxbwpaAP9AlzZQbQ"
           />
-          <SocialButtons socialType="discord" iconType="outline" link="/" />
+          <SocialButtons socialType="discord" iconType="outline" link="http://discord.com/invite/XEa56FP" />
         </div>
       </div>
     </div>
