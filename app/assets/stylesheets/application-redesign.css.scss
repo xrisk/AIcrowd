@@ -15096,6 +15096,9 @@ input.width-185 {
   margin-left: 12px;
 }
 
+.border-bottom-dotted {
+  border-bottom-style: dotted !important;
+}
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
