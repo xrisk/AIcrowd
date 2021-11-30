@@ -18,18 +18,6 @@
   box-sizing: inherit;
 }
 
-/* // Selection */
-
-::selection {
-  background-color: #ffe500;
-  color: #000;
-}
-
-::-moz-selection {
-  background-color: #ffe500;
-  color: #000;
-}
-
 :root {
   --color-page-bg: #ffffff;
   --color-accent: #f0524d;
