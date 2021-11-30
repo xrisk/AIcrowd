@@ -19,6 +19,7 @@ export type LandingHeaderContentProps = {
   descriptionWidth?: string;
   logo?: boolean;
   buttonType?: string;
+  isLoggedIn?: boolean;
 };
 
 const LandingHeaderContent = ({
@@ -30,6 +31,7 @@ const LandingHeaderContent = ({
   descriptionWidth,
   logo,
   buttonType,
+  isLoggedIn,
 }: LandingHeaderContentProps) => {
   const { wide, xLarge, xSmall, small, medium, large, smallMedium } = sizes;
 
@@ -115,70 +117,72 @@ const LandingHeaderContent = ({
         {/* Show only on join our community section */}
         {isJoinCommunity && (
           <div className={registerButtonWrapper}>
-            <a href="/participants/auth/google_oauth2" style={{marginBottom: '16px'}}>
-              <ActionButton type="google" size="large" fontFamily="Inter" />
-            </a>
-            <a href="/participants/auth/github" style={{marginBottom: "16px"}}>
-              <ActionButton type="github" size="large" fontFamily="Inter" />
-            </a>
-            <a href="/participants/sign_up">
-            <ButtonDefault
-              text={isS ? 'Register Now' : 'Sign Up With Email'}
-              iconClass={isS ? '' : 'envelope'}
-              iconColor="#F0524D"
-              type="secondary"
-              iconSize="24px"
-              size="large"
-              iconLeft
-              fontSize="12px"
-              fontWeight="500"
-              fontFamily="Inter"
-              justifyContent="flex-end"
-            />
-            </a>
-          </div>
-        )}
-        {isWelcomeAicrowd && (
-          <div className={registerButtonWrapper}>
-            <a href="/challenges" style={{marginBottom: '16px'}}>
-              <ButtonDefault
-                text="Explore Challenges"
-                iconClass="arrow-right"
-                iconColor={buttonType === 'primary' ? '#fffff' : '#F0524D'}
-                type={buttonType || 'secondary'}
-                paddingTop="8px"
-                paddingBottom="8px"
-                iconSize="18px"
-                fontFamily="Inter"
-              />
-            </a>
-            <a href='/showcase' style={{marginBottom: '16px'}}>
-            <ButtonDefault
-              text='Explore Notebooks'
-              iconClass="arrow-right"
-              iconColor={buttonType === 'primary' ? '#fffff' : '#F0524D'}
-              type={buttonType || 'secondary'}
-              paddingTop="8px"
-              paddingBottom="8px"
-              iconSize="18px"
-              fontFamily="Inter"
-            />
-            </a>
-            <a href='//discourse.aicrowd.com'>
-            <ButtonDefault
-              text='Explore Discussions'
-              iconClass="arrow-right"
-              iconColor={buttonType === 'primary' ? '#fffff' : '#F0524D'}
-              type={buttonType || 'secondary'}
-              paddingTop="8px"
-              paddingBottom="8px"
-              iconSize="18px"
-              fontFamily="Inter"
-            />
-            </a>
-          </div>
-        )}
+            {!isLoggedIn && (
+              <>
+                <a href="/participants/auth/google_oauth2" style={{marginBottom: '16px'}}>
+                  <ActionButton type="google" size="large" fontFamily="Inter" />
+                </a>
+                <a href="/participants/auth/github" style={{marginBottom: "16px"}}>
+                  <ActionButton type="github" size="large" fontFamily="Inter" />
+                </a>
 
+                <ButtonDefault
+                  text="Sign Up With Email"
+                  iconClass="envelope"
+                  iconColor="#F0524D"
+                  type="secondary"
+                  iconSize="24px"
+                  size="large"
+                  iconLeft
+                  fontSize="12px"
+                  fontWeight="500"
+                  fontFamily="Inter"
+                  justifyContent="flex-end"
+                />
+              </>
+            )}
+            {isLoggedIn && (
+              <>
+                <ButtonDefault
+                  text="Explore Challenges"
+                  iconClass="arrow-right"
+                  iconColor="#F0524D"
+                  type="secondary"
+                  iconSize="24px"
+                  size="large"
+                  fontSize="12px"
+                  fontWeight="500"
+                  fontFamily="Inter"
+                  justifyContent="flex-end"
+                />
+                <ButtonDefault
+                  text="Explore Notebooks"
+                  iconClass="arrow-right"
+                  iconColor="#F0524D"
+                  type="secondary"
+                  iconSize="24px"
+                  size="large"
+                  fontSize="12px"
+                  fontWeight="500"
+                  fontFamily="Inter"
+                  justifyContent="flex-end"
+                />
+                <ButtonDefault
+                  text="Explore Discussions"
+                  iconClass="arrow-right"
+                  iconColor="#F0524D"
+                  type="secondary"
+                  iconSize="24px"
+                  size="large"
+                  fontSize="12px"
+                  fontWeight="500"
+                  fontFamily="Inter"
+                  justifyContent="flex-end"
+                />
+              </>
+            )}
+          </div>
+        )}
       </div>
     </>
   );
