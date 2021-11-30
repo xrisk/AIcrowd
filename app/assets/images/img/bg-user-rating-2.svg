@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36" viewBox="0 0 36 36">
+  <defs>
+    <circle id="bg-user-rating-2-a" cx="18" cy="18" r="18"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <mask id="bg-user-rating-2-b" fill="#fff">
+      <use xlink:href="#bg-user-rating-2-a"/>
+    </mask>
+    <use fill="#CDCDCD" xlink:href="#bg-user-rating-2-a"/>
+    <polygon fill="#E18D2B" points="18 0 18 18 31 36 36 36 36 0" mask="url(#bg-user-rating-2-b)"/>
+  </g>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36" viewBox="0 0 36 36">
+  <defs>
+    <circle id="bg-user-rating-5-a" cx="18" cy="18" r="18"/>
+  </defs>
+  <use fill="#F0524D" fill-rule="evenodd" xlink:href="#bg-user-rating-5-a"/>
+</svg>
