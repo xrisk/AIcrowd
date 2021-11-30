@@ -5,7 +5,7 @@ import styles from './landingMenu.module.scss';
 import SocialButtons from 'src/components/atoms/Button/SocialButtons';
 const { main, menuWrapper, loginText, socialIconWrapper } = styles;
 
-const LandingMenu = () => (
+const LandingMenu = ({ profileMenuItem, isLoggedIn }) => (
   <>
     <div className={main}>
       <div className={menuWrapper}>
@@ -18,20 +18,40 @@ const LandingMenu = () => (
         <Link href="/community">
           <a>Community</a>
         </Link>
-        <Link href="/team">
-          <a>Our Team</a>
+        <Link href="/research">
+          <a>Research</a>
         </Link>
-        <Link href="/jobs">
-          <a>Jobs</a>
+        <Link href="/forum">
+          <a>Forum</a>
         </Link>
-        <div className={loginText}>
-          <Link href="/login">
-            <a>Log In</a>
-          </Link>
-        </div>
-        <Link href="/signup">
-          <a>Signup</a>
+        <Link href="/blog">
+          <a>Blog</a>
         </Link>
+        {!isLoggedIn && (
+          <>
+            <div className={loginText}>
+              <Link href="/login">
+                <a>Log In</a>
+              </Link>
+            </div>
+            <Link href="/signup">
+              <a>Signup</a>
+            </Link>
+          </>
+        )}
+
+        {isLoggedIn &&
+          profileMenuItem.map(item => {
+            const { name, link } = item;
+            return (
+              <div className={name === 'Profile' ? loginText : ''} key={name}>
+                <Link href={link}>
+                  <a>{name}</a>
+                </Link>
+              </div>
+            );
+          })}
+
         <div className={socialIconWrapper}>
           <SocialButtons socialType="facebook" iconType="outline" link="https://www.facebook.com/AIcrowdHQ/" />
           <SocialButtons socialType="twitter" iconType="outline" link="https://twitter.com/AIcrowdHQ" />

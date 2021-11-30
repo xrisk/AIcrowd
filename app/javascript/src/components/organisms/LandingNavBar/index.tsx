@@ -31,11 +31,13 @@ export type LandingNavBarProps = {
   moreMenuItem: Array<{ name: string; link: string }>;
   profileMenuItem: Array<{ name: string; link: string }>;
   challengesMenuItem: { name: string; link: string };
+  researchMenuItem: { name: string; link: string };
   communityMenuItem: Array<{ name: string; link: string }>;
   tier: number;
   image: string;
   loading: boolean;
   isLoggedIn: boolean;
+  notificationData: any;
 };
 
 const LandingNavBar = ({
@@ -46,9 +48,11 @@ const LandingNavBar = ({
   challengesMenuItem,
   communityMenuItem,
   profileMenuItem,
+  researchMenuItem,
   tier,
   image,
   loading,
+  notificationData,
   isLoggedIn,
 }: LandingNavBarProps) => {
   const isM = useMediaQuery(sizes.medium);
@@ -66,6 +70,12 @@ const LandingNavBar = ({
   const handleMouseEnter = useCallback(
     menuName => {
       switch (menuName) {
+        case 'notification':
+          setNavItemHovered({
+            hoveredOn: menuName,
+            menuItems: [],
+          });
+          break;
         case 'profile':
           setNavItemHovered({
             hoveredOn: menuName,
@@ -100,6 +110,7 @@ const LandingNavBar = ({
   const isCommunityHovered = hoveredOn === 'community';
   const isMoreHovered = hoveredOn === 'more';
   const isProfileHovered = hoveredOn === 'profile';
+  const isNotificationHovered = hoveredOn === 'notification';
 
   return (
     <>
@@ -126,12 +137,24 @@ const LandingNavBar = ({
           <div className={navLinkWrapper}>
             {isDropdown && (
               <LandingDropdownMenu
+                notificationData={notificationData}
                 menu={menuItems}
                 top="50px"
                 left={isCommunityHovered && '129px'}
-                right={isMoreHovered && isLoggedIn ? '50px' : isMoreHovered ? '250px' : isProfileHovered ? '0px' : null}
+                right={
+                  isMoreHovered && isLoggedIn
+                    ? '150px'
+                    : isMoreHovered
+                    ? '250px'
+                    : isProfileHovered
+                    ? '0px'
+                    : isNotificationHovered
+                    ? '50px'
+                    : null
+                }
                 setIsOpen={setDropdown}
-                showSocial={hoveredOn === 'more'}
+                showSocial={isMoreHovered}
+                isNotification={isNotificationHovered}
                 enterMenu={enterMenu}
                 leaveMenu={leaveMenu}
               />
@@ -143,6 +166,11 @@ const LandingNavBar = ({
               </div>
               <div className={navItem} onMouseEnter={() => handleMouseEnter('community')}>
                 Community
+              </div>
+              <div className={navItem}>
+                <a href={researchMenuItem.link}>
+                  Research
+                </a>
               </div>
               <div className={moreText} onMouseEnter={() => handleMouseEnter('more')}>
                 More
@@ -163,7 +191,6 @@ const LandingNavBar = ({
                     iconColor="#F0524D"
                     fontWeight="500"
                     fontFamily="Inter"
-                    hoverBorder="1px solid #f04d7e"
                     paddingTop="8px"
                     paddingBottom="8px"
                     handleClick={() => router.push('/signup')}

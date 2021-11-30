@@ -12,7 +12,7 @@ const CircleValue = ({ value, size, onCard, borderColor }) => {
       <div
         className={cx(styles['circle-value'], { [styles.md]: size === 'md', [styles.onCardCircle]: onCard })}
         style={{ borderColor: borderColor, backgroundColor: invertColor, color: invertTextColor }}>
-        <span className={styles['circle-value-content']}> {value}k</span>
+        <span className={styles['circle-value-content']}> {value > 999 ? Math.round(value / 1000) + 'k' : value}</span>
       </div>
     </>
   );

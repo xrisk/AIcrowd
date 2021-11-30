@@ -21,9 +21,11 @@ const {
   organizerName,
   organizerLogo,
   organizerWrapper,
+  logoWrapper,
 } = styles;
 
 import { Users } from 'src/types';
+import Tooltip from 'src/components/atoms/Tooltip';
 
 export type LandingChallengeCardProps = {
   slug: string;
@@ -37,6 +39,7 @@ export type LandingChallengeCardProps = {
   challengeEndDate: string;
   cardBadge: boolean;
   organizers: [{ name: string; logo: string; link: string }];
+  userCount: number;
   isOngoing: boolean;
 };
 
@@ -52,6 +55,7 @@ const LandingChallengeCard = ({
   challengeEndDate,
   cardBadge,
   organizers,
+  userCount,
   isOngoing,
 }: LandingChallengeCardProps) => {
   const isWhite = color === '#FFFFFF';
@@ -90,19 +94,21 @@ const LandingChallengeCard = ({
           <div className={participantsWrapper}>
             <AvatarGroup users={users} size="sm" onCard={true} borderColor={color} loading={loading} />
             <div className={circleValue}>
-              <CircleValue value={25} size="sm" onCard={true} borderColor={color} />
+              <CircleValue value={userCount} size="sm" onCard={true} borderColor={color} />
             </div>
           </div>
         </div>
         <div className={cardFooter}>
           {organizers.map(organizer => {
-            const name = organizer.name
-            const logo = organizer.logo
-            const link = organizer.link
+            const { name, logo, link } = organizer;
             return (
               <a href={link} key={name}>
                 <div className={organizerWrapper}>
-                  <img src={logo} className={organizerLogo}></img>
+                  <Tooltip position="down" label={name}>
+                    <div className={logoWrapper}>
+                      <img src={logo} className={organizerLogo}></img>
+                    </div>
+                  </Tooltip>
                   {/* Hide names if organizers are more then 1 */}
                   {organizers?.length < 2 ? <div className={organizerName}>{name}</div> : <></>}
                 </div>

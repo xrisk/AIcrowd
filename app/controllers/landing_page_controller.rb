@@ -77,6 +77,7 @@ class LandingPageController < ApplicationController
       end
 
       challenge_list_data << {
+        userCount: challenge.challenge_participants.count,
         image: challenge.landing_square_image_file.url,
         slug: challenge.slug,
         name: challenge.challenge,
@@ -120,6 +121,7 @@ class LandingPageController < ApplicationController
     end
 
     landing_challenge_card_1 = {
+      userCount: challenge_1.challenge_participants.count,
       image: challenge_1.landing_square_image_file.url,
       slug: challenge_1.slug,
       name: challenge_1.challenge,
@@ -162,6 +164,7 @@ class LandingPageController < ApplicationController
     end
 
     landing_challenge_card_2 = {
+      userCount: challenge_2.challenge_participants.count,
       image: challenge_2.landing_square_image_file.url,
       slug: challenge_2.slug,
       name: challenge_2.challenge,
@@ -204,6 +207,7 @@ class LandingPageController < ApplicationController
     end
 
     landing_challenge_card_3 = {
+      userCount: challenge_3.challenge_participants.count,
       image: challenge_3.landing_square_image_file.url,
       slug: challenge_3.slug,
       name: challenge_3.challenge,
@@ -278,6 +282,11 @@ class LandingPageController < ApplicationController
     @challenges_menu_item = {
       name: 'challenges',
       link: challenges_path,
+    }
+
+    @research_menu_item = {
+      name: 'Research',
+      link: publications_path,
     }
 
     @profile_menu_item = [

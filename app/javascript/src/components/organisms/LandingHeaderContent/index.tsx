@@ -36,6 +36,7 @@ const LandingHeaderContent = ({
   const isS = useMediaQuery(small);
   const isXL = useMediaQuery(xLarge);
   const isXS = useMediaQuery(xSmall);
+  const isL = useMediaQuery(large);
 
   const isJoinCommunity = title === 'Join our Global Community';
   const isWelcomeAicrowd = title === 'Welcome to AIcrowd Community'
@@ -60,9 +61,9 @@ const LandingHeaderContent = ({
             {logo && (
               <AicrowdLogo
                 type="text"
-                size={isS ? 28 : isXL ? 40 : 48}
+                size={isS ? 28 : isL ? 34 : isXL ? 40 : 48}
                 fontFamily="Inter"
-                fontWeight={isS ? 500 : 600}
+                fontWeight={isL ? 500 : 600}
               />
             )}{' '}
             <span className={titleText} style={{ width: descriptionWidth }}>
@@ -87,6 +88,7 @@ const LandingHeaderContent = ({
                 paddingBottom="8px"
                 iconSize="18px"
                 fontFamily="Inter"
+                handleClick={() => {}}
               />
               </a>
             </div>
@@ -99,12 +101,13 @@ const LandingHeaderContent = ({
             <ButtonDefault
               text={buttonText}
               iconClass="arrow-right"
-              iconColor={buttonType === 'primary' ? '#fffff' : '#F0524D'}
+              iconColor={buttonType === 'primary' ? '#ffffff' : '#F0524D'}
               type={buttonType || 'secondary'}
               paddingTop="8px"
               paddingBottom="8px"
               iconSize="18px"
               fontFamily="Inter"
+              handleClick={() => {}}
             />
             </a>
           )}
@@ -126,10 +129,11 @@ const LandingHeaderContent = ({
               type="secondary"
               iconSize="24px"
               size="large"
-              iconLeft={!isS}
+              iconLeft
               fontSize="12px"
               fontWeight="500"
               fontFamily="Inter"
+              justifyContent="flex-end"
             />
             </a>
           </div>

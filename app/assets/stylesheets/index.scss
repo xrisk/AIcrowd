@@ -20,7 +20,7 @@
 
 /* // Selection */
 
-::selection {
+/* ::selection {
   background-color: #ffe500;
   color: #000;
 }
@@ -28,7 +28,7 @@
 ::-moz-selection {
   background-color: #ffe500;
   color: #000;
-}
+} */
 
 :root {
   --color-page-bg: #ffffff;
@@ -290,13 +290,15 @@ body {
   font-family: "Archivo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   scroll-behavior: smooth !important;
-  /* display: flex !important;
-  flex-direction: column;
-  height: 100% !important; */
-  /* padding: 40px; */
-  /* background-color: white !important; */
-  /* opacity: 1; */
 }
+/* body::-webkit-scrollbar {
+  display: none !important;
+} */
+
+/* html,
+body {
+  overflow-x: hidden;
+} */
 
 /**
  * Render the `main` element consistently in IE.

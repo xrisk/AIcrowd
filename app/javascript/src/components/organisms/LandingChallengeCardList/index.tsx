@@ -13,12 +13,26 @@ const LandingChallengeCardList = ({ challengeListData, loading }: LandingChallen
   <>
     <div className={main}>
       {challengeListData.map((item, i) => {
-        const { slug, image, name, prize, users, color, badgeColor, challengeEndDate, cardBadge, organizers, isOngoing } = item;
+        const {
+          slug,
+          image,
+          name,
+          prize,
+          users,
+          color,
+          badgeColor,
+          challengeEndDate,
+          cardBadge,
+          organizers,
+          userCount,
+          isOngoing
+        } = item;
         return (
           <div className={cardWrapper} key={i}>
             <div data-challenge={i + 1}>
               <LandingChallengeCard
                 slug={slug}
+                userCount={userCount}
                 image={image}
                 name={name}
                 prize={prize}
