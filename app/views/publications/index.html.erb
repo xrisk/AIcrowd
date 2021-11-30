@@ -56,7 +56,7 @@ Check out the research we're proud to facilitate below.</p>
     <div class="col-12 px-1">
       <%= render partial: 'publication_list', locals: {publications: Publication.limit(6).order('sequence asc') } %>
     </div>
-    <a class="pb-1 border-bottom border-bottom-dotted ml-3">See all Publications →</a>
+    <a class="pb-1 border-bottom border-bottom-dotted ml-3" href="/research/all">See all Publications →</a>
   </div>
 
 </div>
