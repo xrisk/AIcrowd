@@ -361,7 +361,7 @@ const Landing = ({
                 ]}
                 buttonText="Get In Touch"
                 buttonType="primary"
-                descriptionWidth={isL ? '100%' : '752px'}
+                descriptionWidth={isL ? '100%' : isXL ? '541px' : '752px'}
               />
               {/* Organizers logo2  */}
               <div className={organizerLogos2}>

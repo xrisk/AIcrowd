@@ -406,6 +406,11 @@ $section-gap: 150px;
     img {
       width: 100%;
       justify-self: flex-start;
+
+      @include media-query("x-large") {
+        width: 187px;
+      }
+
       @include media-query("large") {
         width: 100%;
         justify-self: center;
@@ -440,6 +445,11 @@ $section-gap: 150px;
     img {
       width: 100%;
       justify-self: flex-start;
+
+      @include media-query("x-large") {
+        width: 187px;
+      }
+
       @include media-query("small") {
         width: 80px;
         justify-self: center;
