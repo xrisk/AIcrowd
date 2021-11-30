@@ -117,9 +117,9 @@ module Merit
       score 1, :on => 'participants/registrations#create', category: 'Sign Up'
 
       # Created first notebook
-      # score 1, :on => 'posts#create', category: 'Created First Notebook' do |post|
-      #   post.participant.points(category: 'Created First Notebook') == 0
-      # end
+      score 1, :on => 'posts#create', category: 'Created First Notebook' do |post|
+        post.participant.points(category: 'Created First Notebook') == 0
+      end
 
       # Liked 1 notebook
 
@@ -129,8 +129,9 @@ module Merit
 
       # Notebook Received Like
 
-      score 1, :on => 'votes#create', category: 'Notebook Received Like', to: :participant do |vote|
-        vote.votable_type == "Post" && vote.votable.participant.points(category: 'Notebook Received Like') == 0
+      score 1, :on => 'votes#create', category: 'Notebook Received Like', to: :post_user do |vote|
+        byebug
+        vote.votable_type == "Post" && Vote.where(votable_type: "Post", votable_id: vote.votable.participant.posts.pluck(:id)).count >= 1
       end
 
 
@@ -172,51 +173,52 @@ module Merit
       # Logged First Feedback
 
       score 1, :on => 'feedbacks#create', category: 'Logged First Feedback' do |feedback|
-        Feedback.where(participant_id: feedback.participant_id).count == 1
+        Feedback.where(participant_id: feedback.participant_id).count >= 1
       end
 
       # Attended First Townhall/Workshop
 
       # Made their first team
       score 1, :on => 'challenges/teams#create', model_name: 'Team', category: 'Created First Team' do |team|
-        TeamParticipant.where(team_id: team.id).count  == 1
+        TeamParticipant.where(team_id: team.id).count  >= 1
       end
 
       # Liked First Challenge
       score 1, :on => 'votes#create', category: 'Liked First Challenge' do |vote|
-        vote.participant.votes.where(votable_type: "Challenge").count == 1
+        vote.participant.votes.where(votable_type: "Challenge").count >= 1
       end
 
       # Shared First Challenge
 
       # Followed First Challenge
       score 1, :on => 'follows#create', category: 'Followed Challenge' do |follow|
-        Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").count == 1
+        Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").count >= 1
       end
 
       # Accepted Rules
 
       # Participated In First Challenge
       score 1, :on => ['challenge_participants#create', 'challenge_participants#update'], category: 'Participated In First Challenge' do |challenge_participant|
-        challenge_participant.participant.challenge_participants.count == 1
+        challenge_ids = Challenge.where(practice_flag: true).pluck(:id)
+        challenge_participant.participant.challenge_participants.where(challenge_id: challenge_ids).count >= 1
       end
 
       # First Submission
       score 1, :on => 'submissions#create', category: 'First Submission' do |submission|
-        submission.participant.submissions.count == 1
+        submission.participant.submissions.count >= 1
       end
 
       # First Submission With Baseline
 
       # First Successful Submission
       score 1, :on => 'submissions#create', category: 'First Successful Submission' do |submission|
-        submission.participant.submissions.where(grading_status_cd: 'graded').count == 1
+        submission.participant.submissions.where(grading_status_cd: 'graded').count >= 1
       end
 
       # Liked First Practice Problem
       score 1, :on => 'votes#create', category: 'Liked First Practice Problem' do |vote|
         challenge_ids = vote.participant.votes.where(votable_type: "Challenge").pluck(:votable_id)
-        Challenge.where(id: challenge_ids, practice_flag: true).count == 1
+        Challenge.where(id: challenge_ids, practice_flag: true).count >= 1
       end
 
       # Shared First Practice Problem
@@ -224,12 +226,12 @@ module Merit
       # Followed First Practice Problem
        score 1, :on => 'follows#create', category: 'Followed Practice Challenge' do |follow|
         followable_ids = Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").pluck(:followable_id)
-        Challenge.where(id: followable_ids, practice_flag: true).count == 1
+        Challenge.where(id: followable_ids, practice_flag: true).count >= 1
       end
 
       # Participated In First Practice Problem
       score 1, :on => ['challenge_participants#create', 'challenge_participants#update'], category: 'Participated In First Practice Problem' do |challenge_participant|
-        challenge_participant.participant.challenge_participants.count == 1
+        challenge_participant.participant.challenge_participants.count >= 1
       end
 
       # Shared First Notebook
@@ -237,7 +239,7 @@ module Merit
 
       # Commented on Notebook
       score 1, :on => ['commontator/comments#create'], category: 'Commented on Notebook', model_name: 'CommontatorThread' do |comment|
-        comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count == 1
+        comment.commontable_type == "Post" && CommontatorComment.where(thread_id: comment.id).count >= 1
       end
 
       # Notebook Received First Comment
@@ -248,12 +250,12 @@ module Merit
 
       # Bookmarked First Notebook
       score 1, :on => 'post_bookmarks#create', category: 'Bookmarked First Notebook', model_name: 'Post' do |post|
-        post.post_bookmarks.count == 1
+        post.post_bookmarks.count >= 1
       end
 
       # Notebook Received Bookmark
       score 1, :on => 'post_bookmarks#create', category: 'Notebook Received First Bookmark', model_name: 'Post', to: :participant do |post|
-        post.post_bookmarks.count == 1
+        post.post_bookmarks.count >= 1
       end
 
       # Downloaded First Notebook

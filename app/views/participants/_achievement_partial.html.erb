@@ -11,7 +11,7 @@
             </div>
           </div>
         <% end %>
-        <% show_share = result[:active_badge].is_a?(Integer) ? false : true %>
+        <% show_share = (result[:active_badge].is_a?(Integer) || current_participant != participant) ? false : true %>
         <% badgeId = result[:active_badge].is_a?(Integer) ?  nil : "#show-badges-modal-#{result[:active_badge].id}"%>
         <% if result[:badges].count == 3 %>
           <%= react_component("organisms/AchievementListItem/index", { icon: result[:icon], progress: result[:current_points].to_i, target: {bronze_count: result[:badges].first.target, silver_count: result[:badges].second.target, gold_count: result[:next_badge].target}, title: badge, description: (result[:active_badge].description rescue 'Please perform more actions to unlock this badge.'), hideFirst: false, hideBronze: false, showShare: show_share, badgeId: badgeId}) %>

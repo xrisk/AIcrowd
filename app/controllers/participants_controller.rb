@@ -31,6 +31,7 @@ class ParticipantsController < ApplicationController
       @categories = {'No category information' => 1}
     end
     @achievements_count = 0
+    @current_tab = params[:tab].presence || 'insights'
     @participant.aicrowd_user_badges.badges_stat_count.map { |badge_type_id, badge_type_count| @achievements_count += badge_type_count if [1,2,3].include?(badge_type_id) }
   end
 
@@ -133,8 +134,8 @@ class ParticipantsController < ApplicationController
   def switch_tab
     tab = params[:tab]
     tab.slice!('achievement_tab_')
-    participant = Participant.find_by_id(params[:participant_id])
-    @participant_badge_data = helpers.all_badges_participant_data(participant, tab)
+    @user = Participant.find_by_id(params[:participant_id])
+    @participant_badge_data = helpers.all_badges_participant_data(@user, tab)
     respond_to do |format|
       format.js { render :refresh}
     end
