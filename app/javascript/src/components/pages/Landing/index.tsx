@@ -195,7 +195,7 @@ const Landing = ({
                     notebookDescription,
                     ' ',
                     <span role="img" aria-label="sheep" key={'heart'}>
-                      ❤️
+                      ❤{'\u2764\uFE0F'}
                     </span>,
                     ' ',
                     [notebookDescription2],
