@@ -130,7 +130,6 @@ module Merit
       # Notebook Received Like
 
       score 1, :on => 'votes#create', category: 'Notebook Received Like', to: :post_user do |vote|
-        byebug
         vote.votable_type == "Post" && Vote.where(votable_type: "Post", votable_id: vote.votable.participant.posts.pluck(:id)).count >= 1
       end
 
