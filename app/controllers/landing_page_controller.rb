@@ -78,7 +78,7 @@ class LandingPageController < ApplicationController
 
       challenge_list_data << {
         image: challenge.landing_square_image_file.url,
-        slug: challenge.slug,
+        url: "/challenges/" + challenge.slug,
         name: challenge.challenge,
         prize: challenge.landing_card_prize.split(', '),
         users: users,
@@ -122,7 +122,7 @@ class LandingPageController < ApplicationController
 
     landing_challenge_card_1 = {
       image: challenge_1.landing_square_image_file.url,
-      slug: challenge_1.slug,
+      url: "/challenges/" + challenge_1.slug,
       name: challenge_1.challenge,
       prize: challenge_1.landing_card_prize.split(', '),
 
@@ -165,7 +165,7 @@ class LandingPageController < ApplicationController
 
     landing_challenge_card_2 = {
       image: challenge_2.landing_square_image_file.url,
-      slug: challenge_2.slug,
+      url: "/challenges/" +challenge_2.slug,
       name: challenge_2.challenge,
       prize: challenge_2.landing_card_prize.split(', '),
 
@@ -208,7 +208,7 @@ class LandingPageController < ApplicationController
 
     landing_challenge_card_3 = {
       image: challenge_3.landing_square_image_file.url,
-      slug: challenge_3.slug,
+      url: "/challenges/" + challenge_3.slug,
       name: challenge_3.challenge,
       prize: challenge_3.landing_card_prize.split(', '),
 
@@ -237,7 +237,7 @@ class LandingPageController < ApplicationController
 
     posts.each do |post|
       notebook_card_data << {
-        slug: post.slug,
+        url: "/showcase/" + post.slug,
         title: post.title,
         description: post.tagline,
         lastUpdated: helpers.discourse_time_ago(post.updated_at),
@@ -299,12 +299,25 @@ class LandingPageController < ApplicationController
       },
       {
         name: 'Sign Out',
-        link: current_participant.present? ? destroy_participant_session_path : '/'
+        link: current_participant.present? ? destroy_participant_session_path + '?key=' + Digest::MD5.hexdigest(current_participant.confirmation_token) : '/'
       },
     ]
 
     @community_map = 'https://images.aicrowd.com/images/landing_page/map.svg'
     @community_map_avatar = 'https://images.aicrowd.com/images/landing_page/map-avatar.png'
+
+    @research_menu_item = {
+      name: 'Research',
+      link: '/research'
+    }
+
+
+    @notification_data = []
+    if @notifications.present?
+      @notifications[0..5].each do |notification|
+         @notification_data << {text: "<b>" + (notification.notifiable_type || '') + "</b> " + (notification.message || ''), image: notification.thumbnail_url, date: notification.created_at, url: notification.notification_url}
+      end
+    end
   end
 
   def get_discourse_data

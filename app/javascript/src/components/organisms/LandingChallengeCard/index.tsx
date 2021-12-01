@@ -78,7 +78,7 @@ const LandingChallengeCard = ({
               <div className={cardBadgeWrapper}>
                 <CardBadge badgeColor={badgeColor} challengeEndDate={challengeEndDate} cardBadge={cardBadge} />
               </div>
-              <Image
+              <img
                 src={image}
                 placeholder="blur"
                 blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="

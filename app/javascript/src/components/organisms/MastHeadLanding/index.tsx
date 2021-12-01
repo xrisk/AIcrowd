@@ -45,7 +45,7 @@ const MastHeadLanding = ({
             hero
             description={description}
             buttonText="Host a Challenge"
-            url="/challenges"
+            url="/landing_page/host"
             descriptionWidth={isXS ? '288px' : isS ? '368px' : isL ? '581px' : '624px'}
           />
           <div className={statListContainer}>

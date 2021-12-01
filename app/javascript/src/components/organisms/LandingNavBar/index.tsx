@@ -195,7 +195,7 @@ const LandingNavBar = ({
                   </div>
                 ) : (
                   <>
-                    <a href="/login">
+                    <a href="/participants/sign_in">
                       <a className={loginText}>Log in</a>
                     </a>
                     <ButtonDefault
@@ -208,7 +208,7 @@ const LandingNavBar = ({
                       fontFamily="Inter"
                       paddingTop="8px"
                       paddingBottom="8px"
-                      handleClick={() => router.push('/signup')}
+                      handleClick={() => (window.location.href='/participants/sign_up')}
                     />
                   </>
                 )}

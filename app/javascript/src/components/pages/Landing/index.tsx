@@ -201,7 +201,7 @@ const Landing = ({
                     [notebookDescription2],
                   ]}
                   buttonText="Explore Notebooks"
-                  url="/notebooks"
+                  url="/showcase"
                   descriptionWidth={isL ? '100%' : isXL ? '481px' : '560px'}
                 />
               </div>
@@ -330,7 +330,7 @@ const Landing = ({
                   <div className={organizerLogos1}>
                     {organizerLogoList1.map(fileName => {
                       return (
-                        <Image
+                        <img
                           src={`https://images.aicrowd.com/images/landing_page/${fileName}`}
                           placeholder="blur"
                           blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
@@ -348,7 +348,7 @@ const Landing = ({
                     {allOrganizerLogos.map(fileName => {
                       // return <img src={`https://images.aicrowd.com/images/landing_page/${fileName}`} key={fileName}></img>;
                       return (
-                        <Image
+                        <img
                           src={`https://images.aicrowd.com/images/landing_page/${fileName}`}
                           placeholder="blur"
                           blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
@@ -372,7 +372,7 @@ const Landing = ({
                   'Get in touch to host a customized challenge and unlock an array of exclusive features.',
                 ]}
                 buttonText="Get In Touch"
-                url="/"
+                url="/landing_page/host"
                 buttonType="primary"
                 descriptionWidth={isL ? '100%' : isXL ? '541px' : '752px'}
               />
@@ -381,7 +381,7 @@ const Landing = ({
                 {organizerLogoList2.map(fileName => {
                   // return <img src={`https://images.aicrowd.com/images/landing_page/${fileName}`} key={fileName}></img>;
                   return (
-                    <Image
+                    <img
                       src={`https://images.aicrowd.com/images/landing_page/${fileName}`}
                       placeholder="blur"
                       blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="

@@ -9,32 +9,32 @@ const LandingMenu = ({ profileMenuItem, isLoggedIn }) => (
   <>
     <div className={main}>
       <div className={menuWrapper}>
-        <Link href="/host-a-Challenge">
+        <Link href="/landing_page/host">
           <a>Host a Challenge</a>
         </Link>
         <Link href="/challenges">
           <a>Challenges</a>
         </Link>
-        <Link href="/community">
-          <a>Community</a>
+        <Link href="/showcase">
+          <a>Showcase</a>
         </Link>
         <Link href="/research">
           <a>Research</a>
         </Link>
-        <Link href="/forum">
+        <Link href="https://discourse.aicrowd.com/">
           <a>Forum</a>
         </Link>
-        <Link href="/blog">
+        <Link href="https://blog.aicrowd.com/">
           <a>Blog</a>
         </Link>
         {!isLoggedIn && (
           <>
             <div className={loginText}>
-              <Link href="/login">
+              <Link href="/participants/sign_in">
                 <a>Log In</a>
               </Link>
             </div>
-            <Link href="/signup">
+            <Link href="/participants/sign_up">
               <a>Signup</a>
             </Link>
           </>

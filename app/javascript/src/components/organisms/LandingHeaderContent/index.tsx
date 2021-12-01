@@ -90,7 +90,7 @@ const LandingHeaderContent = ({
                 paddingBottom="8px"
                 iconSize="18px"
                 fontFamily="Inter"
-                handleClick={() => router.push('/challenges')}
+                handleClick={() => (window.location.href='/challenges')}
               />
             </div>
           )}
@@ -107,7 +107,7 @@ const LandingHeaderContent = ({
               paddingBottom="8px"
               iconSize="18px"
               fontFamily="Inter"
-              handleClick={() => router.push(url || '/')}
+              handleClick={() => (window.location.href=url || '/')}
             />
           )}
         </div>
@@ -116,8 +116,8 @@ const LandingHeaderContent = ({
           <div className={registerButtonWrapper}>
             {!isLoggedIn && (
               <>
-                <ActionButton type="google" size="large" fontFamily="Inter" handleClick={() => router.push('/')} />
-                <ActionButton type="github" size="large" fontFamily="Inter" handleClick={() => router.push('/')} />
+                <ActionButton type="google" size="large" fontFamily="Inter" handleClick={() => (window.location.href='/participants/auth/google_oauth2')} />
+                <ActionButton type="github" size="large" fontFamily="Inter" handleClick={() => (window.location.href='/participants/auth/github')} />
                 <ButtonDefault
                   text="Sign Up With Email"
                   iconClass="envelope"
@@ -130,7 +130,7 @@ const LandingHeaderContent = ({
                   fontWeight="500"
                   fontFamily="Inter"
                   justifyContent="flex-end"
-                  handleClick={() => router.push('/register')}
+                  handleClick={() => (window.location.href='/participants/sign_up')}
                 />
               </>
             )}
@@ -147,7 +147,7 @@ const LandingHeaderContent = ({
                   fontWeight="500"
                   fontFamily="Inter"
                   justifyContent="flex-end"
-                  handleClick={() => router.push('/challenges')}
+                  handleClick={() => (window.location.href='/challenges')}
                 />
                 <ButtonDefault
                   text="Explore Notebooks"
@@ -160,7 +160,7 @@ const LandingHeaderContent = ({
                   fontWeight="500"
                   fontFamily="Inter"
                   justifyContent="flex-end"
-                  handleClick={() => router.push('/notebooks')}
+                  handleClick={() => (window.location.href='/showcase')}
                 />
                 <ButtonDefault
                   text="Explore Discussions"
@@ -173,7 +173,7 @@ const LandingHeaderContent = ({
                   fontWeight="500"
                   fontFamily="Inter"
                   justifyContent="flex-end"
-                  handleClick={() => router.push('/discussions')}
+                  handleClick={() => (window.location.href='https://discourse.aicrowd.com/')}
                 />
               </>
             )}
