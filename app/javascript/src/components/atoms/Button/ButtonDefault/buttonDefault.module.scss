@@ -138,9 +138,10 @@
   }
 
   @include media-query("small") {
-    padding: 20px 23px;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 500;
+    height: 32px;
+    padding: 0 14px;
   }
 }
 
@@ -153,6 +154,12 @@
   i {
     font-size: 20px;
     padding-left: 8px;
+  }
+  @include media-query("small") {
+    font-size: 13px;
+    font-weight: 500;
+    height: 32px;
+    padding: 0 14px;
   }
 }
 
