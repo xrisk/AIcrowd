@@ -126,19 +126,21 @@ const LandingHeaderContent = ({
                   <ActionButton type="github" size="large" fontFamily="Inter" />
                 </a>
 
-                <ButtonDefault
-                  text="Sign Up With Email"
-                  iconClass="envelope"
-                  iconColor="#F0524D"
-                  type="secondary"
-                  iconSize="24px"
-                  size="large"
-                  iconLeft
-                  fontSize="12px"
-                  fontWeight="500"
-                  fontFamily="Inter"
-                  justifyContent="flex-end"
-                />
+                <a href="/participants/sign_up" style={{marginBottom: "16px"}}>
+                  <ButtonDefault
+                    text="Sign Up With Email"
+                    iconClass="envelope"
+                    iconColor="#F0524D"
+                    type="secondary"
+                    iconSize="24px"
+                    size="large"
+                    iconLeft
+                    fontSize="12px"
+                    fontWeight="500"
+                    fontFamily="Inter"
+                    justifyContent="flex-end"
+                  />
+                </a>
               </>
             )}
           </div>
