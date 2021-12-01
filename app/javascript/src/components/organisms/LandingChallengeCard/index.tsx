@@ -67,40 +67,37 @@ const LandingChallengeCard = ({
 
   return (
     <>
-      <a href= {`/challenges/${slug}`}>
       <div className={container}>
-        <div className={main} style={{ background: color }}>
-        { isOngoing &&
-          (<div className={cardBadgeWrapper}>
-            <CardBadge badgeColor={badgeColor} challengeEndDate={challengeEndDate} cardBadge={cardBadge} />
-          </div>)
-        }
-          <img src={image} className={challengeImage}></img>
-          <div className={cardBottomWrapper}>
-            <div className={titleText} style={{ color: invertedColor }}>
-              {name}
+        <a href= {`/challenges/${slug}`}>
+          <div className={main} style={{ background: color }}>
+            <div className={cardBadgeWrapper}>
+              <CardBadge badgeColor={badgeColor} challengeEndDate={challengeEndDate} cardBadge={cardBadge} />
             </div>
-            <div className={prizeText} style={{ color: isWhite ? '#747474' : invertedColor }}>
-              {/* {prize} */}
-              {prize.map((priz, i) => {
-                return (
-                  <span key={i} style={{ color: isWhite ? '#747474' : invertedColor }}>
-                    {priz} {i + 1 < prize.length && '•'}&nbsp;
-                  </span>
-                );
-              })}
+            <img src={image} className={challengeImage}></img>
+            <div className={cardBottomWrapper}>
+              <div className={titleText} style={{ color: invertedColor }}>
+                {name}
+              </div>
+              <div className={prizeText} style={{ color: isWhite ? '#747474' : invertedColor }}>
+                {/* {prize} */}
+                {prize.map((priz, i) => {
+                  return (
+                    <span key={i} style={{ color: isWhite ? '#747474' : invertedColor }}>
+                      {priz} {i + 1 < prize.length && '•'}&nbsp;
+                    </span>
+                  );
+                })}
+              </div>
             </div>
-          </div>
 
-              <div className={participantsWrapper}>
-                <AvatarGroup users={users} size="sm" onCard={true} borderColor={color} loading={loading} />
-                <div className={circleValue}>
-                  <CircleValue value={userCount} size="sm" onCard={true} borderColor={color} />
-                </div>
+            <div className={participantsWrapper}>
+              <AvatarGroup users={users} size="sm" onCard={true} borderColor={color} loading={loading} />
+              <div className={circleValue}>
+                <CircleValue value={userCount} size="sm" onCard={true} borderColor={color} />
               </div>
             </div>
           </div>
-        </div>
+        </a>
         <div className={cardFooter}>
           {organizers.map(organizer => {
             const { name, logo, link } = organizer;
@@ -126,7 +123,6 @@ const LandingChallengeCard = ({
           })}
         </div>
       </div>
-      </a>
     </>
   );
 };
