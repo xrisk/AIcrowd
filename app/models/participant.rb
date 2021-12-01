@@ -51,6 +51,8 @@ class Participant < ApplicationRecord
 
   default_scope { order('participants.name ASC') }
 
+  attr_accessor :full_name
+
   scope :rated_users_count, -> { Participant.where("ranking > 0").count }
   scope :admins, -> { where(admin: true) }
   scope :with_every_email_preference, -> { joins(:email_preferences).where(email_preferences: { email_frequency_cd: :every }) }
