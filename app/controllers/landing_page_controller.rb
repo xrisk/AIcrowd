@@ -398,7 +398,8 @@ class LandingPageController < ApplicationController
     community_members_list = []
     participants.each do |p|
       user = Participant.find_by_id(p["id"])
-      lon, lat = Geocoder.search(p["country_cd"]).first.coordinates
+      lon, lat = Geocoder.search(p["country_cd"]).first.coordinates rescue nil
+      next if lon.blank?
 
       community_members_list << {
         lat: lat.to_s,
