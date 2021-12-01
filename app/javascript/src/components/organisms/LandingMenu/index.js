@@ -40,14 +40,13 @@ const LandingMenu = ({ profileMenuItem, isLoggedIn }) => (
         {isLoggedIn &&
           profileMenuItem.map(item => {
             const { name, link } = item;
-            return (
-              <div className={name === 'Profile' ? loginText : ''} key={name}>
-                <a href={link}>
-                  {name}
-                </a>
-              </div>
-            );
-          })}
+            if(item.name === "Profile") {
+              return <div className={loginText}><a href={link}>{name}</a></div>
+            } else if(item.name === "Sign Out") {
+              return <a data-method="delete" href={link}>{name}</a>
+            }
+            return <a href={link}>{name}</a>
+        })}
 
         <div className={socialIconWrapper}>
           <SocialButtons socialType="facebook" iconType="outline" link="https://www.facebook.com/AIcrowdHQ/" />

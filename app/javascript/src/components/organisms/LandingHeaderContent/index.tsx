@@ -141,46 +141,46 @@ const LandingHeaderContent = ({
                 />
               </>
             )}
-            {isLoggedIn && (
-              <>
-                <ButtonDefault
-                  text="Explore Challenges"
-                  iconClass="arrow-right"
-                  iconColor="#F0524D"
-                  type="secondary"
-                  iconSize="24px"
-                  size="large"
-                  fontSize="12px"
-                  fontWeight="500"
-                  fontFamily="Inter"
-                  justifyContent="flex-end"
-                />
-                <ButtonDefault
-                  text="Explore Notebooks"
-                  iconClass="arrow-right"
-                  iconColor="#F0524D"
-                  type="secondary"
-                  iconSize="24px"
-                  size="large"
-                  fontSize="12px"
-                  fontWeight="500"
-                  fontFamily="Inter"
-                  justifyContent="flex-end"
-                />
-                <ButtonDefault
-                  text="Explore Discussions"
-                  iconClass="arrow-right"
-                  iconColor="#F0524D"
-                  type="secondary"
-                  iconSize="24px"
-                  size="large"
-                  fontSize="12px"
-                  fontWeight="500"
-                  fontFamily="Inter"
-                  justifyContent="flex-end"
-                />
-              </>
-            )}
+          </div>
+        )}
+        {isWelcomeAicrowd && (
+          <div className={registerButtonWrapper}>
+            <a href="/challenges" style={{marginBottom: '16px'}}>
+              <ButtonDefault
+                text="Explore Challenges"
+                iconClass="arrow-right"
+                iconColor={buttonType === 'primary' ? '#fffff' : '#F0524D'}
+                type={buttonType || 'secondary'}
+                paddingTop="8px"
+                paddingBottom="8px"
+                iconSize="18px"
+                fontFamily="Inter"
+              />
+            </a>
+            <a href='/showcase' style={{marginBottom: '16px'}}>
+            <ButtonDefault
+              text='Explore Notebooks'
+              iconClass="arrow-right"
+              iconColor={buttonType === 'primary' ? '#fffff' : '#F0524D'}
+              type={buttonType || 'secondary'}
+              paddingTop="8px"
+              paddingBottom="8px"
+              iconSize="18px"
+              fontFamily="Inter"
+            />
+            </a>
+            <a href='//discourse.aicrowd.com'>
+            <ButtonDefault
+              text='Explore Discussions'
+              iconClass="arrow-right"
+              iconColor={buttonType === 'primary' ? '#fffff' : '#F0524D'}
+              type={buttonType || 'secondary'}
+              paddingTop="8px"
+              paddingBottom="8px"
+              iconSize="18px"
+              fontFamily="Inter"
+            />
+            </a>
           </div>
         )}
       </div>
