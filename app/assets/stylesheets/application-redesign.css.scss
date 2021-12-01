@@ -15100,6 +15100,627 @@ input.width-185 {
   border-bottom-style: dotted !important;
 }
 
+
+.body1{
+
+    background:  url(/assets/img/Background.png);
+    background-size: cover;
+
+}
+.modal-separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.modal-separator::before,
+.modal-separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #888888;
+}
+
+.modal-separator:not(:empty)::before {
+  margin-right: .25em;
+}
+.ms-t{
+    margin-top: 8px;
+}
+.ms-t1{
+    margin-top: 9px;
+}
+.modal-separator:not(:empty)::after {
+  margin-left: .25em;
+}
+.btn-modal-login{
+  outline: none;
+  font-size: 0.8rem;
+    width: 100%;
+    background: none;
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 8px 1px 8px 0px;
+}
+.btn-modal-login:focus{
+  outline: none;
+}
+.btn-modal-login-img{
+  width: 5%;
+}
+.clr-white{
+  color: white;
+}
+.details-modal{
+   margin:0 2%;
+    width: 60%;
+    text-align: center;
+    padding:0 40px;
+    box-shadow: 0px 0px 14px rgb(65, 13, 12);
+
+
+}
+.details-form .form-control{
+  background-color: white;
+  font-size: 0.8rem;
+  border:1px solid #888888;
+}
+.form-field{
+  margin-top: 0.6rem;
+}
+#login-modal{
+    display: block;
+   margin: 2%;
+    width: 40%;
+    text-align: center;
+    padding: 40px 80px;
+    box-shadow: 0px 0px 14px rgb(65, 13, 12);
+    background-color: white;
+}
+
+
+#login-signup-modal{
+    display: none;
+      margin: 2%;
+    width: 40%;
+    text-align: center;
+    padding: 40px 80px;
+    box-shadow: 0px 0px 14px rgb(65, 13, 12);
+    background-color: white;
+}
+
+#signup-modal{
+    display: block;
+      margin: 2%;
+    width: 40%;
+    text-align: center;
+    padding: 40px 80px;
+    box-shadow: 0px 0px 14px rgb(65, 13, 12);
+    background-color: white;
+}
+
+#signup-login-modal{
+    display: none;
+      margin: 2%;
+    width: 40%;
+    text-align: center;
+    padding: 40px 80px;
+    box-shadow: 0px 0px 14px rgb(65, 13, 12);
+    background-color: white;
+}
+
+
+#detail-modal{
+    display: block;
+   margin: 5%;
+    width: 65%;
+    text-align: center;
+    padding: 0px 25px;
+    box-shadow: 0px 0px 14px rgb(65, 13, 12);
+    background-color: white;
+    position: relative;
+
+}
+#detail-modal2{
+    display: block;
+   margin: 5%;
+    width: 65%;
+    text-align: center;
+    padding:0 25px;
+    box-shadow: 0px 0px 14px rgb(65, 13, 12);
+    background-color: white;
+    position: relative;
+}
+
+.page{
+  display: flex;
+  justify-content: center;
+}
+.sub{
+    color:#77797A;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.newbutton{
+    width: 50%;
+    text-align: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 16px;
+}
+.login-form .form-control{
+  background-color:#f1f3f3b7 !important;
+}
+.detail-form{
+    width: 55%;
+    justify-content: center;
+    margin: 20px auto;
+}
+.detail-form2{
+    width: 70%;
+    justify-content: center;
+    margin:20px auto;
+}
+input::placeholder{
+font-size: 14px;
+color: #909293;
+border: 1px solid #F1F3F3, 100%;
+}
+.red{
+    color: #DE4B46;
+}
+.f-14{
+    font-size: 16px;
+}
+.modal-newaccount{
+  margin-top: 20px;
+    font-size: 16px;
+}
+.modal-newaccount p{
+  font-size: 0.8rem;
+}
+.modal-oldaccount{
+  margin-top: 20px;
+    font-size: 16px;
+}
+
+.modal-oldaccount p{
+  font-size: 0.8rem;
+}
+.modal-styling{
+  font-size: 0.8rem;
+  color: black;
+  font-weight:600;
+}
+.btn-red-small-submit{
+  font-size: 0.8rem;
+  font-weight: 500;
+    color: white;
+    background: #DE4B46;
+    width: 40%;
+}
+.btn-red-submit{
+  font-size: 0.9rem;
+  font-weight: 500;
+    color: white;
+    background: #DE4B46;
+    width: 100%;
+}
+.btn-red-submit2{
+  font-size: 0.9rem;
+  font-weight: 500;
+    color: white;
+    background: #DE4B46;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.btn-white-submit{
+  font-size: 0.8rem;
+  border:1px solid black;
+  font-weight: 500;
+    color: black;
+    background: white;
+    width: 40%;
+}
+.btn-white-submit2{
+  font-size: 0.9rem;
+  border:1px solid black;
+  font-weight: 500;
+    color: black;
+    background: white;
+    width: 100%;
+    border-radius: 1.5rem;
+}
+
+.btn-ex-small{
+  width: 25%;
+}
+.detail-submit {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+.detail-submit button{
+  margin-left: 1rem;
+}
+.field-icon {
+  margin-right: 5px;
+    float: right;
+    margin-left: -25px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
+}
+.field-icon-pre{
+  margin-left: 5px;
+    float: left;
+    margin-right: -25px;
+    margin-top: -25px;
+    position: relative;
+    z-index: 2;
+}
+.icon-github{
+  background-repeat: no-repeat;
+  background-size: 15px 15px;
+  padding-right: 15px;
+  background-image: url("../../assets/img/github-icon.png");
+}
+.left{
+    float: left;
+}
+.top{
+    position:relative;
+    top: -30px;
+    background-color: white;
+    display:inline;
+    border-radius: 50%;
+    padding: 20px;
+    box-shadow: 0px 0px 14px rgb(65, 13, 12);
+}
+.cross{
+    position: relative;
+    top: 30px;
+    float: right;
+    right: 10px;
+    font-size: 1.5rem;
+}
+.dot1 {
+    height: 151px;
+    width: 151px;
+    background: #F2F2F2;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    top: 30px;
+    left: 20px;
+
+  }
+  .dot11 {
+    height: 141px;
+    width: 141px;
+    background: #F2F2F2;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    top: 60px;
+    left: 50px;
+
+  }
+  .dot22 {
+    height: 90px;
+    width: 90px;
+    background: #F2F2F2;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dot2 {
+    height: 90px;
+    width: 90px;
+    background: #F2F2F2;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    top: 50px;
+    right: 30px;
+
+  }.dot3 {
+    height: 18px;
+    width: 18px;
+    background: #F2F2F2;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .dot4 {
+    height: 81px;
+    width: 81px;
+    background: #F2F2F2;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    top: 70px;
+    right: 40px;
+  }
+  .dot5 {
+    height: 31px;
+    width: 31px;
+    background: #F2F2F2;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .f_14{
+      font-size: 14px;
+  }
+  .img-right{
+      position: absolute;
+      left: 20px;
+      bottom: 50px;
+      width: 20%;
+  }
+.img-left{
+    float: right;
+    position: absolute;
+    right: 20px;
+  bottom: 50px;
+  width: 20%;
+}
+.img-left2{
+    float: right;
+    position: absolute;
+    right: 20px;
+  bottom: 30px;
+  width: 15%;
+}
+.img-right2{
+    position: absolute;
+    left: 20px;
+    bottom: 30px;
+    width: 15%;
+}
+.py-new{
+    padding: 7px auto;
+}
+@media only screen and (max-width: 1200px){
+    .dot1 {
+        height: 141px;
+        width: 141px;
+        background: #F2F2F2;
+        border-radius: 50%;
+        display: inline-block;
+        position: absolute;
+        top: 20px;
+        left: 10px;
+
+      }
+      .dot11 {
+        height: 101px;
+        width: 101px;
+        background: #F2F2F2;
+        border-radius: 50%;
+        display: inline-block;
+        position: absolute;
+        top: 30px;
+        left: 30px;
+
+      }
+      .dot22 {
+        height: 90px;
+        width: 90px;
+        background: #F2F2F2;
+        border-radius: 50%;
+        display: inline-block;
+      }
+
+}
+@media only screen and (max-width: 992px){
+    .ms-t1{
+        margin-top: 10px;
+    }
+    .img-right{
+        position: absolute;
+        left: 10px;
+        bottom: 20px;
+        width: 20%;
+    }
+  .img-left{
+      float: right;
+      position: absolute;
+      right: 10px;
+    bottom: 20px;
+    width: 20%;
+  }
+    #login-modal{
+        display: block;
+       margin: 2%;
+        width: 45%;
+        text-align: center;
+        padding: 40px;
+        box-shadow: 0px 0px 14px rgb(65, 13, 12);
+    }
+    #signup-modal{
+        display: none;
+          margin: 2%;
+        width: 45%;
+        text-align: center;
+        padding: 40px;
+        box-shadow: 0px 0px 14px rgb(65, 13, 12);
+
+    }
+    .dot1, .dot4, .dot11{
+        display: none;
+    }
+    #detail-modal2{
+        display: block;
+       margin: 5%;
+        width: 65%;
+        text-align: center;
+        padding:0 30px;
+        box-shadow: 0px 0px 14px rgb(65, 13, 12);
+        background-color: white;
+    }
+    .detail-form2{
+        width: 80%;
+        justify-content: center;
+        margin:20px auto;
+    }
+    #detail-modal{
+        display: block;
+       margin: 5%;
+        width: 65%;
+        text-align: center;
+        padding: 0px 30px;
+        box-shadow: 0px 0px 14px rgb(65, 13, 12);
+        background-color: white;
+    }
+    .detail-form{
+        width: 80%;
+        justify-content: center;
+        margin: 20px auto;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    .ms-t1{
+        margin-top: 12px;
+    }
+    .modal-welcome h5{
+        font-size: 18px;
+    }
+  .login-modal {
+    margin: 5%;
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    box-shadow: 1px 1px 8px #767676;
+}
+.modal-welcome h5{
+  font-size: 1rem;
+}
+.modal-styling{
+  font-size: 0.7rem;
+}
+label .float-left{
+    font-size: 14px;
+}
+.btn-modal-login {
+    outline: none;
+    font-size: 0.8rem;
+    width: 100%;
+    background: none;
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 5px 1px 5px 0px;
+}
+.login-form-submit label{
+  font-size: 0.8rem;
+}
+.modal-newaccount p{
+  font-size: 0.8rem;
+}
+.login-form .form-control{
+  font-size: 0.8rem;
+}
+.details-modal{
+   margin: 2%;
+    width: 100%;
+    text-align: center;
+    padding: 40px;
+    box-shadow: 0px 0px 14px rgb(65, 13, 12);
+
+}
+.form-field{
+  margin-top: 0rem;
+}
+.btn-ex-small{
+  width: 100%;
+}
+.detail-submit {
+  flex-flow: column;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+.detail-submit button{
+  margin-top:0.5rem;
+  margin-left: 0rem;
+}
+.modal-newaccount{
+    margin-top:10%;
+    font-size: 0.8rem;
+}
+.modal-oldaccount p {
+    font-size: 0.8rem;
+}
+#login-modal{
+    display: block;
+   margin: 10px;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0px 0px 14px rgb(65, 13, 12);
+}
+#signup-modal{
+    display: none;
+      margin: 10px;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0px 0px 14px rgb(65, 13, 12);
+
+}
+.newbutton{
+    width: 60%;
+    text-align: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 16px;
+}
+#detail-modal2{
+    display: block;
+   margin: 10% 1%;
+    width: 100%;
+    text-align: center;
+    padding:0 20px;
+    box-shadow: 0px 0px 14px rgb(65, 13, 12);
+    background-color: white;
+}
+.detail-form2{
+    width: 100%;
+    justify-content: center;
+    margin:20px auto;
+}
+#detail-modal{
+    display: block;
+   margin: 10% 1%;
+    width: 100%;
+    text-align: center;
+    padding: 0px 20px;
+    box-shadow: 0px 0px 14px rgb(65, 13, 12);
+    background-color: white;
+}
+.detail-form{
+    width: 100%;
+    justify-content: center;
+    margin: 20px auto;
+}
+.right-margin{
+    float: left;
+    margin-left: 90px;
+    margin-top: 10px;
+}
+.img-right{
+    display: none;
+}
+.img-left{
+    display: none;}
+.img-left2{
+    display: none;
+}
+.img-right2{
+display: none;
+}
+}
+
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';
