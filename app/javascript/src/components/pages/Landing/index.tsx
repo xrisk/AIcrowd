@@ -168,10 +168,10 @@ const Landing = ({
             <section className={cx(challengesWrapper, sectionGap)}>
               <div>
                 <LandingHeaderContent
-                  url="/challenges"
                   title="Our Challenges"
                   description={challengeDescription}
                   buttonText="Explore Challenges"
+                  url="/challenges"
                   descriptionWidth={isL ? '100%' : isXL ? '389px' : '560px'}
                 />
                 {/* aicrowd large logo */}
@@ -190,17 +190,17 @@ const Landing = ({
               <div>
                 <LandingHeaderContent
                   title="Your Solutions"
-                  url="/showcase"
                   description={[
                     notebookDescription,
                     ' ',
                     <span role="img" aria-label="sheep" key={'heart'}>
-                      ❤{'\u2764\uFE0F'}
+                      {'\u2764\uFE0F'}
                     </span>,
                     ' ',
                     [notebookDescription2],
                   ]}
                   buttonText="Explore Notebooks"
+                  url="/showcase"
                   descriptionWidth={isL ? '100%' : isXL ? '481px' : '560px'}
                 />
               </div>
@@ -309,18 +309,13 @@ const Landing = ({
             {/* Join Our Global community  */}
             <section className={cx(challengesWrapper)}>
               <div>
-                {isLoggedIn && (<LandingHeaderContent
-                  title="Welcome to AIcrowd Community"
+                <LandingHeaderContent
+                  title={isLoggedIn ? 'Welcome to AIcrowd Community' : 'Join our Global Community'}
                   description=""
                   buttonText="Join Now"
                   descriptionWidth={isS ? '288px' : '496px'}
-                />)}
-                {!isLoggedIn && (<LandingHeaderContent
-                  title="Join our Global Community"
-                  description=""
-                  buttonText="Join Now"
-                  descriptionWidth={isS ? '288px' : '496px'}
-                />)}
+                  isLoggedIn={isLoggedIn}
+                />
               </div>
               <div style={{ paddingTop: isS && '64px', width: '100%' }}>
                 <LandingCommunityMap communityMembersList={communityMembersList} />
@@ -361,16 +356,13 @@ const Landing = ({
                 ]}
                 buttonText="Get In Touch"
                 buttonType="primary"
-                descriptionWidth={isL ? '100%' : isXL ? '541px' : '752px'}
+                descriptionWidth={isL ? '100%' : isXL ? '541px' : '833px'}
               />
               {/* Organizers logo2  */}
               <div className={organizerLogos2}>
-                <img src="https://images.aicrowd.com/images/landing_page/uber-logo.png"></img>
-                <img src="https://images.aicrowd.com/images/landing_page/db-logo.png"></img>
-                <img src="https://images.aicrowd.com/images/landing_page/sony-logo.png"></img>
-                <img src="https://images.aicrowd.com/images/landing_page/mit-logo.png"></img>
-                <img src="https://images.aicrowd.com/images/landing_page/sbb-logo.png"></img>
-                <img src="https://images.aicrowd.com/images/landing_page/who-logo.png"></img>
+                {organizerLogoList2.map(fileName => {
+                  return <img src={`https://images.aicrowd.com/images/landing_page/${fileName}`} key={fileName}></img>;
+                })}
               </div>
             </section>
           </div>
