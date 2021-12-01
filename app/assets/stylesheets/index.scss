@@ -84,7 +84,7 @@ button[aria-label][data-balloon-pos] {
   padding: 0.5em 0.75em;
   position: absolute;
   white-space: nowrap;
-  z-index: 10;
+  z-index: 9999;
 }
 [aria-label][data-balloon-pos]:before {
   width: 0;
@@ -96,7 +96,7 @@ button[aria-label][data-balloon-pos] {
   transition: all 0.18s ease-out 0.18s;
   content: "";
   position: absolute;
-  z-index: 10;
+  z-index: 9999;
 }
 [aria-label][data-balloon-pos]:hover:before,
 [aria-label][data-balloon-pos]:hover:after,

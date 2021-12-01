@@ -58,7 +58,7 @@ const LandingMenu = ({ profileMenuItem, isLoggedIn }) => (
             iconType="outline"
             link="https://www.youtube.com/channel/UCUWbe23kxbwpaAP9AlzZQbQ"
           />
-          <SocialButtons socialType="discord" iconType="outline" link="http://discord.com/invite/XEa56FP" />
+          <SocialButtons socialType="discord" iconType="outline" link="/" />
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import isDarkColor from 'is-dark-color';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import AvatarGroup from 'src/components/molecules/AvatarGroup';
 import CircleValue from 'src/components/atoms/CircleValue';
@@ -91,10 +92,12 @@ const LandingChallengeCard = ({
             </div>
           </div>
 
-          <div className={participantsWrapper}>
-            <AvatarGroup users={users} size="sm" onCard={true} borderColor={color} loading={loading} />
-            <div className={circleValue}>
-              <CircleValue value={userCount} size="sm" onCard={true} borderColor={color} />
+              <div className={participantsWrapper}>
+                <AvatarGroup users={users} size="sm" onCard={true} borderColor={color} loading={loading} />
+                <div className={circleValue}>
+                  <CircleValue value={userCount} size="sm" onCard={true} borderColor={color} />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -110,7 +113,13 @@ const LandingChallengeCard = ({
                     </div>
                   </Tooltip>
                   {/* Hide names if organizers are more then 1 */}
-                  {organizers?.length < 2 ? <div className={organizerName}>{name}</div> : <></>}
+                  {organizers?.length < 2 ? (
+                    <Tooltip position="down" label={name}>
+                      <div className={organizerName}>{name}</div>{' '}
+                    </Tooltip>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </a>
             );

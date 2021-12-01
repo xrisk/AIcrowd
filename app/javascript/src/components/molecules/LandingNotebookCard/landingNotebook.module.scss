@@ -37,11 +37,7 @@
   color: $color-text-dark;
   margin-left: $spacing-xxx-small;
   width: 250px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  @include truncateMulti(2);
   @include media-query("small") {
     // font-size: 14px;
     font-weight: 400;
