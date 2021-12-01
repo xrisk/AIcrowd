@@ -395,6 +395,10 @@ $section-gap: 150px;
     padding-bottom: 3px;
     font-weight: 500;
     padding-top: 54px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 19px;
+    color: #1f1f1f;
 
     @include media-query("large") {
       max-width: 523px;
