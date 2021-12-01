@@ -15,7 +15,6 @@ enabled_components = [
   "molecules/LandingDropdownMenu",
   "molecules/LandingStatItem",
   "molecules/LandingNotebookCard",
-  "molecules/AchievementPopup",
   "molecules/LandingFeatureItem",
   "molecules/notificationItem",
   "atoms/AicrowdLogo",
@@ -33,7 +32,6 @@ enabled_components = [
   "organisms/LandingMenu",
   "organisms/LandingChallengeCard",
   "organisms/LandingChallengeCardList",
-  "organisms/AchievementListItem",
   "organisms/LandingStatList",
   "organisms/MastHeadLanding",
   "organisms/LandingNavBar",
@@ -110,7 +108,7 @@ def sync_folders(localstream, upstream):
 
                 if "type=\"github\"" in line and "handleClick" in line:
                     line = line.replace("'/'", "'/participants/auth/github'")
-                
+
                 last_line = line
                         
                 if not skip:

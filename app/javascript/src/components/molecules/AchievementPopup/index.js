@@ -14,16 +14,14 @@ const {
   shineWrapper,
 } = styles;
 
-const AchievementPopup = ({ title, description, icon, handleClick }) => {
+const AchievementPopup = ({ title, description, icon, handleClick, url, badgeTitle, socialMessage, badgeId }) => {
   return (
     <>
       <div className={main}>
-        <i className="las la-times" onClick={handleClick}></i>
+        <i className="las la-times" onClick={()=>window.hideBadgesModal(badgeId)}></i>
         <div className={iconWrapper}>
           {/* Show shining animation after badge popup animation */}
           <div className={shineWrapper}>
-            <span></span>
-            <span></span>
           </div>
           <img src={icon} alt="badge icon" className={badgeIcon}></img>
         </div>
@@ -31,17 +29,12 @@ const AchievementPopup = ({ title, description, icon, handleClick }) => {
         <div className={descriptionText}>{description}</div>
         <div className={socialText}>Share with your friends: </div>
         <div className={socialIconWrapper}>
-          <a href="">
-            <img src="https://images.aicrowd.com/images/landing_page/twitter.svg" alt="twitter logo"></img>
-          </a>
-          <a href="">
-            <img src="https://images.aicrowd.com/images/landing_page/linkedin.svg" alt="linkedin logo"></img>
-          </a>
-          <a href="">
-            <img src="https://images.aicrowd.com/images/landing_page/facebook.svg" alt="facebook logo"></img>
-          </a>
+          <img src="/assets/misc/badge-twitter.svg" alt="twitter logo" onClick={()=>window.shareBadgeTwitter(url, socialMessage)}></img>
+          <img src="/assets/misc/badge-linkedin.svg" alt="linkedin logo" onClick={()=>window.shareBadgeLinkedin(url, badgeTitle, socialMessage)}></img>
+          <img src="/assets/misc/badge-facebook.svg" alt="facebook logo" onClick={()=>window.shareBadgefb(url, socialMessage)}></img>
+
         </div>
-        <ButtonDefault type="primary" text="Continue" handleClick={handleClick} />
+        <ButtonDefault type="primary" text="Continue" handleClick={()=>window.hideBadgesModal(badgeId)} />
       </div>
     </>
   );
