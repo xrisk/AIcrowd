@@ -57,14 +57,14 @@ const MastHeadLanding = ({
           {!isM && (
             <>
               <div data-card="card1">
-                <LandingChallengeCard loading={loading} {...landingChallengeCard2} />
+                <LandingChallengeCard loading={loading} {...landingChallengeCard2} priority />
               </div>
 
               <div data-card="card2">
-                <LandingChallengeCard loading={loading} {...landingChallengeCard1} />
+                <LandingChallengeCard loading={loading} {...landingChallengeCard1} priority />
               </div>
               <div data-card="card3">
-                <LandingChallengeCard loading={loading} {...landingChallengeCard3} />
+                <LandingChallengeCard loading={loading} {...landingChallengeCard3} priority />
               </div>
             </>
           )}

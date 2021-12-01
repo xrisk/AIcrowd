@@ -116,8 +116,8 @@ const LandingHeaderContent = ({
           <div className={registerButtonWrapper}>
             {!isLoggedIn && (
               <>
-                <ActionButton type="google" size="large" fontFamily="Inter" />
-                <ActionButton type="github" size="large" fontFamily="Inter" />
+                <ActionButton type="google" size="large" fontFamily="Inter" handleClick={() => router.push('/')} />
+                <ActionButton type="github" size="large" fontFamily="Inter" handleClick={() => router.push('/')} />
                 <ButtonDefault
                   text="Sign Up With Email"
                   iconClass="envelope"

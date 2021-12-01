@@ -10,9 +10,10 @@ export type ActionButtonProps = {
   type: 'add' | 'rerun' | 'github' | 'google';
   disableAnimation?: boolean;
   fontFamily?: string;
+  handleClick: () => void;
 };
 
-const ActionButton = ({ type, size, disableAnimation, fontFamily }: ActionButtonProps) => {
+const ActionButton = ({ type, size, disableAnimation, fontFamily, handleClick }: ActionButtonProps) => {
   const largeButton = size === 'large' ? styles.large : '';
   const wideButton = size === 'wide' ? styles.wide : '';
 
@@ -30,7 +31,8 @@ const ActionButton = ({ type, size, disableAnimation, fontFamily }: ActionButton
         className={cx(styles[`btn-${type}`], largeButton, wideButton)}
         type="button"
         whileTap={{ scale: disableAnimation ? 1 : 0.98 }}
-        layout="position">
+        layout="position"
+        onClick={handleClick}>
         {type === 'add' && <PlusIcon className={styles['las']} />}
         {type === 'rerun' && <UndoAltIcon className={styles['las']} />}
         {type === 'github' && <GithubIcon className={styles['lab']} />}

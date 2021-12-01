@@ -43,9 +43,11 @@
       padding-right: 40px;
     }
 
-    img {
-      width: 80px;
+    .partners-bar-image {
+      position: relative;
       min-width: 80px;
+      width: 80px;
+      height: 100px;
 
       @include media-query("small") {
         width: 65px;

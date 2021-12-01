@@ -20,7 +20,7 @@ const AvatarWithTier = ({ tier, image, size, loading, onCard, borderColor }: Ava
       <>
         {loading ? (
           <div>
-            <Skeleton circle={true} width={34} height={34} />
+            <Skeleton circle={true} width={23} height={23} />
           </div>
         ) : (
           <div style={{ width: '32px' }}>

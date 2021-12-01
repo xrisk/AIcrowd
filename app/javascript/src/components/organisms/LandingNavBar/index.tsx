@@ -22,6 +22,7 @@ const {
   loginText,
   dropdownNavItemWrapper,
   navItem,
+  subWrapper,
 } = styles;
 
 export type LandingNavBarProps = {
@@ -115,104 +116,106 @@ const LandingNavBar = ({
   return (
     <>
       <div className={main}>
-        <a href="/">
-          {/* Aicrowd logo*/}
-          <div className={fullLogo}>
-            <AicrowdLogo type="full" />
-          </div>
-        </a>
-
-        {/* Hamburger icon Show only on small screens */}
-        {isM && (
-          <div className={iconWrapper} onClick={handleMenu} onMouseEnter={() => setMenu(true)}>
-            <div className={isMenuOpen ? cross : navMenuIcon}>
-              <span></span>
-              <span></span>
+        <div className={subWrapper}>
+          <a href="/">
+            {/* Aicrowd logo*/}
+            <div className={fullLogo}>
+              <AicrowdLogo type="full" />
             </div>
-          </div>
-        )}
-
-        {/* Show only on large screens */}
-        {!isM && (
-          <div className={navLinkWrapper}>
-            {isDropdown && (
-              <LandingDropdownMenu
-                notificationData={notificationData}
-                menu={menuItems}
-                top="50px"
-                left={isCommunityHovered && '129px'}
-                right={
-                  isMoreHovered && isLoggedIn
-                    ? '150px'
-                    : isMoreHovered
-                    ? '250px'
-                    : isProfileHovered
-                    ? '0px'
-                    : isNotificationHovered
-                    ? '50px'
-                    : null
-                }
-                setIsOpen={setDropdown}
-                showSocial={isMoreHovered}
-                isNotification={isNotificationHovered}
-                enterMenu={enterMenu}
-                leaveMenu={leaveMenu}
-              />
-            )}
-
-            <div className={dropdownNavItemWrapper} onMouseLeave={leaveButton}>
-              <div className={navItem}>
-                <a href={challengesMenuItem.link}>
-                  <a>Challenges</a>
-                </a>
+          </a>
+          
+          {/* Hamburger icon Show only on small screens */}
+          {isM && (
+            <div className={iconWrapper} onClick={handleMenu} onMouseEnter={() => setMenu(true)}>
+              <div className={isMenuOpen ? cross : navMenuIcon}>
+                <span></span>
+                <span></span>
               </div>
-              <div className={navItem} onMouseEnter={() => handleMouseEnter('community')}>
-                Community
-              </div>
-              <div className={navItem}>
-                <a href={researchMenuItem.link}>
-                  <a>Research</a>
-                </a>
-              </div>
-              <div className={moreText} onMouseEnter={() => handleMouseEnter('more')}>
-                More
-              </div>
-              {isLoggedIn ? (
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <button
-                    className={styles['btn-notifications']}
-                    onMouseEnter={() => handleMouseEnter('notification')}
-                    type="button">
-                    <i className="las la-bell"></i>
-                    <span className={styles['alert-notification']}></span>
-                    <span className="sr-only">Notifications icon</span>
-                  </button>
-                  <div style={{ paddingLeft: '40px' }} onMouseEnter={() => handleMouseEnter('profile')}>
-                    <AvatarWithTier tier={tier} image={image} loading={loading} />
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <a href="/login">
-                    <a className={loginText}>Log in</a>
-                  </a>
-                  <ButtonDefault
-                    text="Sign Up"
-                    type="secondary"
-                    size="large"
-                    iconClass="arrow-right"
-                    iconColor="#F0524D"
-                    fontWeight="500"
-                    fontFamily="Inter"
-                    paddingTop="8px"
-                    paddingBottom="8px"
-                    handleClick={() => router.push('/signup')}
-                  />
-                </>
+            </div>
+          )}
+          
+          {/* Show only on large screens */}
+          {!isM && (
+            <div className={navLinkWrapper}>
+              {isDropdown && (
+                <LandingDropdownMenu
+                  notificationData={notificationData}
+                  menu={menuItems}
+                  top="50px"
+                  left={isCommunityHovered && '129px'}
+                  right={
+                    isMoreHovered && isLoggedIn
+                      ? '150px'
+                      : isMoreHovered
+                      ? '250px'
+                      : isProfileHovered
+                      ? '0px'
+                      : isNotificationHovered
+                      ? '50px'
+                      : null
+                  }
+                  setIsOpen={setDropdown}
+                  showSocial={isMoreHovered}
+                  isNotification={isNotificationHovered}
+                  enterMenu={enterMenu}
+                  leaveMenu={leaveMenu}
+                />
               )}
+          
+              <div className={dropdownNavItemWrapper} onMouseLeave={leaveButton}>
+                <div className={navItem}>
+                  <a href={challengesMenuItem.link}>
+                    <a>Challenges</a>
+                  </a>
+                </div>
+                <div className={navItem} onMouseEnter={() => handleMouseEnter('community')}>
+                  Community
+                </div>
+                <div className={navItem}>
+                  <a href={researchMenuItem.link}>
+                    <a>Research</a>
+                  </a>
+                </div>
+                <div className={moreText} onMouseEnter={() => handleMouseEnter('more')}>
+                  More
+                </div>
+                {isLoggedIn ? (
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <button
+                      className={styles['btn-notifications']}
+                      onMouseEnter={() => handleMouseEnter('notification')}
+                      type="button">
+                      <i className="las la-bell"></i>
+                      <span className={styles['alert-notification']}></span>
+                      <span className="sr-only">Notifications icon</span>
+                    </button>
+                    <div style={{ paddingLeft: '40px' }} onMouseEnter={() => handleMouseEnter('profile')}>
+                      <AvatarWithTier tier={tier} image={image} loading={loading} />
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <a href="/login">
+                      <a className={loginText}>Log in</a>
+                    </a>
+                    <ButtonDefault
+                      text="Sign Up"
+                      type="secondary"
+                      size="large"
+                      iconClass="arrow-right"
+                      iconColor="#F0524D"
+                      fontWeight="500"
+                      fontFamily="Inter"
+                      paddingTop="8px"
+                      paddingBottom="8px"
+                      handleClick={() => router.push('/signup')}
+                    />
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </>
   );

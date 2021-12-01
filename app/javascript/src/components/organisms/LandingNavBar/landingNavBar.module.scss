@@ -2,19 +2,42 @@
 @import "../../../styles/base/__base-dir.scss";
 
 .main {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   position: fixed;
   padding: 20px 40px;
   width: 100%;
   top: 0px;
   background-color: #fff;
-  z-index: 10;
   left: 50%;
-  font-family: Inter;
-  max-width: 1680px;
+  height: 98px;
   transform: translateX(-50%);
+  z-index: 99;
+
+  @include media-query("small") {
+    padding: 20px 20px;
+    height: 60px;
+  }
+
+  .subWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    padding: 20px 40px;
+    width: 100%;
+    top: 0px;
+    background-color: #fff;
+    left: 50%;
+    font-family: Inter;
+    max-width: 1680px;
+    transform: translateX(-50%);
+
+    @include media-query("small") {
+      padding: 20px 20px;
+      .logo {
+        display: block;
+      }
+    }
+  }
 
   .navLinkWrapper {
     display: flex;
@@ -116,13 +139,6 @@
           transform: translateY(-3px) rotate(-135deg);
         }
       }
-    }
-  }
-
-  @include media-query("small") {
-    padding: 30px 20px;
-    .logo {
-      display: block;
     }
   }
 }

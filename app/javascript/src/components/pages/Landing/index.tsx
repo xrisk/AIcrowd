@@ -1,5 +1,6 @@
 import React from 'react';
 import cx from 'classnames';
+import Image from 'next/image';
 
 import LandingNavBar from 'src/components/organisms/LandingNavBar/index';
 import MastHeadLanding from 'src/components/organisms/MastHeadLanding/index';
@@ -321,14 +322,23 @@ const Landing = ({
             </section>
 
             {/* Organizers logos section */}
-            <div className={organizerText}>Trusted and Used by</div>
+            <div className={organizerText}>Trusted and used by</div>
             <section className={cx(sectionGapOrganizerLogos)}>
               <div>
                 {/* Organizers logo1  */}
                 {!isL && (
                   <div className={organizerLogos1}>
                     {organizerLogoList1.map(fileName => {
-                      return <img src={`https://images.aicrowd.com/images/landing_page/${fileName}`} key={fileName}></img>;
+                      return (
+                        <Image
+                          src={`https://images.aicrowd.com/images/landing_page/${fileName}`}
+                          placeholder="blur"
+                          blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                          key={fileName}
+                          width={isXL ? 187 : 240}
+                          height={isXL ? 124 : 160}
+                        />
+                      );
                     })}
                   </div>
                 )}
@@ -336,7 +346,17 @@ const Landing = ({
                 {isL && (
                   <div className={organizerLogos1}>
                     {allOrganizerLogos.map(fileName => {
-                      return <img src={`https://images.aicrowd.com/images/landing_page/${fileName}`} key={fileName}></img>;
+                      // return <img src={`https://images.aicrowd.com/images/landing_page/${fileName}`} key={fileName}></img>;
+                      return (
+                        <Image
+                          src={`https://images.aicrowd.com/images/landing_page/${fileName}`}
+                          placeholder="blur"
+                          blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                          key={fileName}
+                          width={isXL ? 187 : 240}
+                          height={isXL ? 124 : 160}
+                        />
+                      );
                     })}
                   </div>
                 )}
@@ -359,7 +379,17 @@ const Landing = ({
               {/* Organizers logo2  */}
               <div className={organizerLogos2}>
                 {organizerLogoList2.map(fileName => {
-                  return <img src={`https://images.aicrowd.com/images/landing_page/${fileName}`} key={fileName}></img>;
+                  // return <img src={`https://images.aicrowd.com/images/landing_page/${fileName}`} key={fileName}></img>;
+                  return (
+                    <Image
+                      src={`https://images.aicrowd.com/images/landing_page/${fileName}`}
+                      placeholder="blur"
+                      blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                      key={fileName}
+                      width={isXL ? 187 : 240}
+                      height={isXL ? 124 : 160}
+                    />
+                  );
                 })}
               </div>
             </section>

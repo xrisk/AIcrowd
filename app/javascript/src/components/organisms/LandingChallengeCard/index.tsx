@@ -6,6 +6,8 @@ import Link from 'src/components/atoms/Link';
 import AvatarGroup from 'src/components/molecules/AvatarGroup';
 import CircleValue from 'src/components/atoms/CircleValue';
 import CardBadge from 'src/components/atoms/CardBadge';
+import useMediaQuery from 'src/hooks/useMediaQuery';
+import { sizes } from 'src/constants/screenSizes';
 
 import styles from './landingChallengeCard.module.scss';
 const {
@@ -41,6 +43,7 @@ export type LandingChallengeCardProps = {
   organizers: [{ name: string; logo: string; link: string }];
   userCount: number;
   url: string;
+  priority?: boolean;
 };
 
 const LandingChallengeCard = ({
@@ -56,7 +59,10 @@ const LandingChallengeCard = ({
   organizers,
   userCount,
   url,
+  priority,
 }: LandingChallengeCardProps) => {
+  const { wide, xLarge, xSmall, small, medium, large, smallMedium } = sizes;
+  const isS = useMediaQuery(small);
   const isWhite = color === '#FFFFFF';
 
   // Detects the dark color
@@ -72,7 +78,15 @@ const LandingChallengeCard = ({
               <div className={cardBadgeWrapper}>
                 <CardBadge badgeColor={badgeColor} challengeEndDate={challengeEndDate} cardBadge={cardBadge} />
               </div>
-              <img src={image} className={challengeImage}></img>
+              <Image
+                src={image}
+                placeholder="blur"
+                blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                width={isS ? 112 : 180}
+                height={isS ? 112 : 180}
+                className={challengeImage}
+                priority={priority}
+              />
               <div className={cardBottomWrapper}>
                 <div className={titleText} style={{ color: invertedColor }}>
                   {name}
