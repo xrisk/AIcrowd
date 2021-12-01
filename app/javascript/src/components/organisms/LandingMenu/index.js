@@ -27,11 +27,11 @@ const LandingMenu = ({ profileMenuItem, isLoggedIn }) => (
         {!isLoggedIn && (
           <>
             <div className={loginText}>
-              <Link href="/login">
+              <Link href="/participants/sign_in">
                 <a>Log In</a>
               </Link>
             </div>
-            <Link href="/signup">
+            <Link href="/participants/sign_up">
               <a>Signup</a>
             </Link>
           </>
@@ -42,9 +42,9 @@ const LandingMenu = ({ profileMenuItem, isLoggedIn }) => (
             const { name, link } = item;
             return (
               <div className={name === 'Profile' ? loginText : ''} key={name}>
-                <Link href={link}>
-                  <a>{name}</a>
-                </Link>
+                <a href={link}>
+                  {name}
+                </a>
               </div>
             );
           })}
