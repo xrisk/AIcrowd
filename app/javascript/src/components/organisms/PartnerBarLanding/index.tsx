@@ -15,12 +15,13 @@ export type PartnerBarLandingProps = {
 const PartnerBarLanding = ({ logos, color }: PartnerBarLandingProps) => {
   const isXS = useMediaQuery(xSmall);
   const isS = useMediaQuery(small);
+  const isL = useMediaQuery(large);
 
   return (
     <>
       <div className={styles['partners-bar']}>
         <div className={styles['title']}>Trusted By</div>
-        <HorizontalScroll paddingTop={isS ? '32px' : '67px'} paddingLeft="0px" paddingRight="0px">
+        <HorizontalScroll paddingTop={isS ? '32px' : isL ? '44px' : '67px'} paddingLeft="0px" paddingRight="0px">
           {logos.map(logo => (
             <div className={styles['partners-bar-item']} key={logo}>
               <img

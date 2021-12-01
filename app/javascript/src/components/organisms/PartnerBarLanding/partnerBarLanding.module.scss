@@ -16,10 +16,20 @@
 
   .title {
     @include heading-5;
+    font-family: "Inter";
+    @include media-query("small") {
+      @include body-text-normal;
+      font-weight: normal;
+    }
   }
 
   @include media-query("x-large") {
     padding: 82px 12px;
+  }
+
+  @include media-query("large") {
+    padding-bottom: 18px;
+    padding-top: 64px;
   }
 
   @include media-query("small") {

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import Link from 'next/link';
+import Link from 'src/components/atoms/Link';
 import { useRouter } from 'next/router';
 
 import AicrowdLogo from 'src/components/atoms/AicrowdLogo';
@@ -31,11 +31,13 @@ export type LandingNavBarProps = {
   moreMenuItem: Array<{ name: string; link: string }>;
   profileMenuItem: Array<{ name: string; link: string }>;
   challengesMenuItem: { name: string; link: string };
+  researchMenuItem: { name: string; link: string };
   communityMenuItem: Array<{ name: string; link: string }>;
   tier: number;
   image: string;
   loading: boolean;
   isLoggedIn: boolean;
+  notificationData: any;
 };
 
 const LandingNavBar = ({
@@ -46,9 +48,11 @@ const LandingNavBar = ({
   challengesMenuItem,
   communityMenuItem,
   profileMenuItem,
+  researchMenuItem,
   tier,
   image,
   loading,
+  notificationData,
   isLoggedIn,
 }: LandingNavBarProps) => {
   const isM = useMediaQuery(sizes.medium);
@@ -66,6 +70,12 @@ const LandingNavBar = ({
   const handleMouseEnter = useCallback(
     menuName => {
       switch (menuName) {
+        case 'notification':
+          setNavItemHovered({
+            hoveredOn: menuName,
+            menuItems: [],
+          });
+          break;
         case 'profile':
           setNavItemHovered({
             hoveredOn: menuName,
@@ -100,16 +110,17 @@ const LandingNavBar = ({
   const isCommunityHovered = hoveredOn === 'community';
   const isMoreHovered = hoveredOn === 'more';
   const isProfileHovered = hoveredOn === 'profile';
+  const isNotificationHovered = hoveredOn === 'notification';
 
   return (
     <>
       <div className={main}>
-        <Link href="/">
+        <a href="/">
           {/* Aicrowd logo*/}
           <div className={fullLogo}>
             <AicrowdLogo type="full" />
           </div>
-        </Link>
+        </a>
 
         {/* Hamburger icon Show only on small screens */}
         {isM && (
@@ -126,12 +137,24 @@ const LandingNavBar = ({
           <div className={navLinkWrapper}>
             {isDropdown && (
               <LandingDropdownMenu
+                notificationData={notificationData}
                 menu={menuItems}
                 top="50px"
                 left={isCommunityHovered && '129px'}
-                right={isMoreHovered && isLoggedIn ? '50px' : isMoreHovered ? '250px' : isProfileHovered ? '0px' : null}
+                right={
+                  isMoreHovered && isLoggedIn
+                    ? '150px'
+                    : isMoreHovered
+                    ? '250px'
+                    : isProfileHovered
+                    ? '0px'
+                    : isNotificationHovered
+                    ? '50px'
+                    : null
+                }
                 setIsOpen={setDropdown}
-                showSocial={hoveredOn === 'more'}
+                showSocial={isMoreHovered}
+                isNotification={isNotificationHovered}
                 enterMenu={enterMenu}
                 leaveMenu={leaveMenu}
               />
@@ -139,22 +162,40 @@ const LandingNavBar = ({
 
             <div className={dropdownNavItemWrapper} onMouseLeave={leaveButton}>
               <div className={navItem}>
-                <a href={challengesMenuItem.link}>Challenges</a>
+                <a href={challengesMenuItem.link}>
+                  <a>Challenges</a>
+                </a>
               </div>
               <div className={navItem} onMouseEnter={() => handleMouseEnter('community')}>
                 Community
+              </div>
+              <div className={navItem}>
+                <a href={researchMenuItem.link}>
+                  <a>Research</a>
+                </a>
               </div>
               <div className={moreText} onMouseEnter={() => handleMouseEnter('more')}>
                 More
               </div>
               {isLoggedIn ? (
-                <div style={{ paddingLeft: '40px' }} onMouseEnter={() => handleMouseEnter('profile')}>
-                  <AvatarWithTier tier={tier} image={image} loading={loading} />
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <button
+                    className={styles['btn-notifications']}
+                    onMouseEnter={() => handleMouseEnter('notification')}
+                    type="button">
+                    <i className="las la-bell"></i>
+                    <span className={styles['alert-notification']}></span>
+                    <span className="sr-only">Notifications icon</span>
+                  </button>
+                  <div style={{ paddingLeft: '40px' }} onMouseEnter={() => handleMouseEnter('profile')}>
+                    <AvatarWithTier tier={tier} image={image} loading={loading} />
+                  </div>
                 </div>
               ) : (
                 <>
-                  <a href="/participants/sign_in" className={loginText}>Log in</a>
-                  <a href="/participants/sign_up">
+                  <a href="/login">
+                    <a className={loginText}>Log in</a>
+                  </a>
                   <ButtonDefault
                     text="Sign Up"
                     type="secondary"
@@ -163,12 +204,10 @@ const LandingNavBar = ({
                     iconColor="#F0524D"
                     fontWeight="500"
                     fontFamily="Inter"
-                    hoverBorder="1px solid #f04d7e"
                     paddingTop="8px"
                     paddingBottom="8px"
                     handleClick={() => router.push('/signup')}
                   />
-                  </a>
                 </>
               )}
             </div>

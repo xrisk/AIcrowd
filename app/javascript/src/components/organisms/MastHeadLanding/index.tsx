@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import cx from 'classnames';
+import { useRouter } from 'next/router';
 
 import { Link as ScrollLink } from 'react-scroll';
 
@@ -27,13 +28,14 @@ const MastHeadLanding = ({
   landingChallengeCard3,
   loading,
 }: MastHeadLandingProps) => {
+  const router = useRouter();
   const isS = useMediaQuery(sizes.small);
-  const isXL = useMediaQuery(sizes.xLarge);
   const isXS = useMediaQuery(sizes.xSmall);
   const isM = useMediaQuery(sizes.medium);
+  const isL = useMediaQuery(sizes.large);
 
-  const description = `enables data science experts and enthusiasts
-  to collaboratively solve real-world problems, through challenges `;
+  const description = `enables data science experts and enthusiasts 
+  to collaboratively solve real-world problems, through challenges.`;
 
   return (
     <>
@@ -41,30 +43,32 @@ const MastHeadLanding = ({
         <div style={{ position: 'relative' }}>
           <LandingHeaderContent
             hero
-            url="/landing_page/host"
             description={description}
             buttonText="Host a Challenge"
-            descriptionWidth={isXS ? '288px' : isS ? '368px' : isM ? '500px' : '624px'}
+            url="/challenges"
+            descriptionWidth={isXS ? '288px' : isS ? '368px' : isL ? '581px' : '624px'}
           />
           <div className={statListContainer}>
             <LandingStatList statListData={statListData} />
           </div>
-          <div className={glowDecor}></div>
         </div>
-        {!isM && (
-          <div className={cardWrapper}>
-            <div data-card="card1">
-              <LandingChallengeCard loading={loading} {...landingChallengeCard2} />
-            </div>
+        <div className={cardWrapper}>
+          <div className={glowDecor}></div>
+          {!isM && (
+            <>
+              <div data-card="card1">
+                <LandingChallengeCard loading={loading} {...landingChallengeCard2} />
+              </div>
 
-            <div data-card="card2">
-              <LandingChallengeCard loading={loading} {...landingChallengeCard1} />
-            </div>
-            <div data-card="card3">
-              <LandingChallengeCard loading={loading} {...landingChallengeCard3} />
-            </div>
-          </div>
-        )}
+              <div data-card="card2">
+                <LandingChallengeCard loading={loading} {...landingChallengeCard1} />
+              </div>
+              <div data-card="card3">
+                <LandingChallengeCard loading={loading} {...landingChallengeCard3} />
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </>
   );

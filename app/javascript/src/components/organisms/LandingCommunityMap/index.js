@@ -4,7 +4,7 @@ import worldMap from './worldGeo.json';
 
 import styles from './map.module.scss';
 
-const Map = ({ communityMembersList }) => {
+const LandingCommunityMap = ({ communityMembersList }) => {
   const [data, setData] = useState(worldMap);
   const [dimensions, setDimensions] = React.useState({});
   const canvasRef = useRef();
@@ -38,16 +38,6 @@ const Map = ({ communityMembersList }) => {
       const mapContainer = communityMembersMapRef.current;
       let canvas = canvasRef.current;
 
-      // const context = canvas.getContext('2d');
-      // context.clearRect(0, 0, canvas.width, canvas.height);
-      // mapContainer.removeChild(canvas);
-
-      // const canvas = document.createElement('canvas');
-      // canvas.setAttribute('id', 'map-canvas');
-      // canvas.setAttribute('height', canvas.scrollHeight);
-      // canvas.setAttribute('width', canvas.scrollWidth);
-      // mapContainer.appendChild(canvas);
-
       canvas.height = canvas.scrollHeight;
       canvas.width = canvas.scrollWidth;
 
@@ -68,7 +58,7 @@ const Map = ({ communityMembersList }) => {
 
       var i;
       let el;
-      for (i = 0; i < communityMembersList.length; i++) {
+      for (i = 0; i < communityMembersList?.length; i++) {
         el = communityMembersList[i];
         const lat = el.lat * 1.0;
         const long = el.lon * 1.0;
@@ -106,4 +96,4 @@ const Map = ({ communityMembersList }) => {
   );
 };
 
-export default Map;
+export default LandingCommunityMap;

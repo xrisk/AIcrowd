@@ -54,7 +54,7 @@ $gradient-color: linear-gradient(168.26295deg, #f0524d, #f04d7e, #ec4cb1, #e94be
 }
 
 // mixin for custom scrollbar
-@mixin customScrollbar($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
+@mixin customScrollbar($size: 6px, $foreground-color: #d1d1d1, $background-color: mix($foreground-color, white, 50%)) {
   // For Google Chrome
   &::-webkit-scrollbar {
     width: $size;
@@ -78,6 +78,23 @@ $gradient-color: linear-gradient(168.26295deg, #f0524d, #f04d7e, #ec4cb1, #e94be
   // For Firefox
   scrollbar-width: $size;
   scrollbar-color: $foreground-color $background-color;
+}
+
+// mixin for truncating single line text (adding "..." at end).
+@mixin truncateSingle($max-width: 150px) {
+  max-width: $max-width;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// mixin for truncating multi line text
+@mixin truncateMulti($line: 2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
 }
 
 // mixins for typography

@@ -1,0 +1,38 @@
+.notification-item-user {
+  position: relative;
+  .notification-item-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  a {
+    pointer-events: all;
+  }
+  .notification-item-content {
+    display: flex;
+  }
+  .notification-item-image {
+    flex: 0 0 auto;
+    margin-right: 12px;
+    height: 30px;
+    width: 30px;
+  }
+  .notification-item-text {
+    line-height: 1.25;
+  }
+  .notification-item-description {
+    display: block;
+  }
+  .notification-item-time {
+    color: var(--color-text-light);
+  }
+  &:hover {
+    .notification-item-description {
+      strong {
+        text-decoration: underline;
+      }
+    }
+  }
+}

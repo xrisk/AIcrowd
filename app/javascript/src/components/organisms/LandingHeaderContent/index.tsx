@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 
 import useMediaQuery from 'src/hooks/useMediaQuery';
 import { sizes } from 'src/constants/screenSizes';
@@ -11,7 +12,6 @@ import ActionButton from 'src/components/atoms/Button/ActionButton';
 const { main, titleText, descriptionText, heroTitle, buttonWrapper, registerButtonWrapper } = styles;
 
 export type LandingHeaderContentProps = {
-  url?: string
   title?: string;
   description: any;
   buttonText: string;
@@ -19,10 +19,11 @@ export type LandingHeaderContentProps = {
   descriptionWidth?: string;
   logo?: boolean;
   buttonType?: string;
+  isLoggedIn?: boolean;
+  url?: string;
 };
 
 const LandingHeaderContent = ({
-  url,
   title,
   description,
   buttonText,
@@ -30,15 +31,18 @@ const LandingHeaderContent = ({
   descriptionWidth,
   logo,
   buttonType,
+  isLoggedIn,
+  url,
 }: LandingHeaderContentProps) => {
+  const router = useRouter();
   const { wide, xLarge, xSmall, small, medium, large, smallMedium } = sizes;
 
   const isS = useMediaQuery(small);
   const isXL = useMediaQuery(xLarge);
   const isXS = useMediaQuery(xSmall);
+  const isL = useMediaQuery(large);
 
-  const isJoinCommunity = title === 'Join our Global Community';
-  const isWelcomeAicrowd = title === 'Welcome to AIcrowd Community'
+  const isJoinCommunity = title === 'Welcome to AIcrowd Community' || title === 'Join our Global Community';
   return (
     <>
       <div className={main}>
@@ -60,9 +64,9 @@ const LandingHeaderContent = ({
             {logo && (
               <AicrowdLogo
                 type="text"
-                size={isS ? 28 : isXL ? 40 : 48}
+                size={isS ? 28 : isL ? 34 : isXL ? 40 : 48}
                 fontFamily="Inter"
-                fontWeight={isS ? 500 : 600}
+                fontWeight={isL ? 500 : 600}
               />
             )}{' '}
             <span className={titleText} style={{ width: descriptionWidth }}>
@@ -77,7 +81,6 @@ const LandingHeaderContent = ({
           {/* Show in hero only */}
           {hero && (
             <div style={{ paddingRight: '26px' }}>
-              <a href="/challenges">
               <ButtonDefault
                 text="Our Challenges"
                 iconClass="arrow-right"
@@ -87,94 +90,95 @@ const LandingHeaderContent = ({
                 paddingBottom="8px"
                 iconSize="18px"
                 fontFamily="Inter"
+                handleClick={() => router.push('/challenges')}
               />
-              </a>
             </div>
           )}
           {/* Hide button for hero in small screen */}
-          {(hero && isS) || isJoinCommunity || isWelcomeAicrowd ? (
+          {(hero && isS) || isJoinCommunity ? (
             <></>
           ) : (
-            <a href={url}>
             <ButtonDefault
               text={buttonText}
               iconClass="arrow-right"
-              iconColor={buttonType === 'primary' ? '#fffff' : '#F0524D'}
+              iconColor={buttonType === 'primary' ? '#ffffff' : '#F0524D'}
               type={buttonType || 'secondary'}
               paddingTop="8px"
               paddingBottom="8px"
               iconSize="18px"
               fontFamily="Inter"
+              handleClick={() => router.push(url || '/')}
             />
-            </a>
           )}
         </div>
         {/* Show only on join our community section */}
         {isJoinCommunity && (
           <div className={registerButtonWrapper}>
-            <a href="/participants/auth/google_oauth2" style={{marginBottom: '16px'}}>
-              <ActionButton type="google" size="large" fontFamily="Inter" />
-            </a>
-            <a href="/participants/auth/github" style={{marginBottom: "16px"}}>
-              <ActionButton type="github" size="large" fontFamily="Inter" />
-            </a>
-            <a href="/participants/sign_up">
-            <ButtonDefault
-              text={isS ? 'Register Now' : 'Sign Up With Email'}
-              iconClass={isS ? '' : 'envelope'}
-              iconColor="#F0524D"
-              type="secondary"
-              iconSize="24px"
-              size="large"
-              iconLeft={!isS}
-              fontSize="12px"
-              fontWeight="500"
-              fontFamily="Inter"
-            />
-            </a>
+            {!isLoggedIn && (
+              <>
+                <ActionButton type="google" size="large" fontFamily="Inter" />
+                <ActionButton type="github" size="large" fontFamily="Inter" />
+                <ButtonDefault
+                  text="Sign Up With Email"
+                  iconClass="envelope"
+                  iconColor="#F0524D"
+                  type="secondary"
+                  iconSize="24px"
+                  size="large"
+                  iconLeft
+                  fontSize="12px"
+                  fontWeight="500"
+                  fontFamily="Inter"
+                  justifyContent="flex-end"
+                  handleClick={() => router.push('/register')}
+                />
+              </>
+            )}
+            {isLoggedIn && (
+              <>
+                <ButtonDefault
+                  text="Explore Challenges"
+                  iconClass="arrow-right"
+                  iconColor="#F0524D"
+                  type="secondary"
+                  iconSize="24px"
+                  size="large"
+                  fontSize="12px"
+                  fontWeight="500"
+                  fontFamily="Inter"
+                  justifyContent="flex-end"
+                  handleClick={() => router.push('/challenges')}
+                />
+                <ButtonDefault
+                  text="Explore Notebooks"
+                  iconClass="arrow-right"
+                  iconColor="#F0524D"
+                  type="secondary"
+                  iconSize="24px"
+                  size="large"
+                  fontSize="12px"
+                  fontWeight="500"
+                  fontFamily="Inter"
+                  justifyContent="flex-end"
+                  handleClick={() => router.push('/notebooks')}
+                />
+                <ButtonDefault
+                  text="Explore Discussions"
+                  iconClass="arrow-right"
+                  iconColor="#F0524D"
+                  type="secondary"
+                  iconSize="24px"
+                  size="large"
+                  fontSize="12px"
+                  fontWeight="500"
+                  fontFamily="Inter"
+                  justifyContent="flex-end"
+                  handleClick={() => router.push('/discussions')}
+                />
+              </>
+            )}
           </div>
         )}
-        {isWelcomeAicrowd && (
-          <div className={registerButtonWrapper}>
-            <a href="/challenges" style={{marginBottom: '16px'}}>
-              <ButtonDefault
-                text="Explore Challenges"
-                iconClass="arrow-right"
-                iconColor={buttonType === 'primary' ? '#fffff' : '#F0524D'}
-                type={buttonType || 'secondary'}
-                paddingTop="8px"
-                paddingBottom="8px"
-                iconSize="18px"
-                fontFamily="Inter"
-              />
-            </a>
-            <a href='/showcase' style={{marginBottom: '16px'}}>
-            <ButtonDefault
-              text='Explore Notebooks'
-              iconClass="arrow-right"
-              iconColor={buttonType === 'primary' ? '#fffff' : '#F0524D'}
-              type={buttonType || 'secondary'}
-              paddingTop="8px"
-              paddingBottom="8px"
-              iconSize="18px"
-              fontFamily="Inter"
-            />
-            </a>
-            <a href='//discourse.aicrowd.com'>
-            <ButtonDefault
-              text='Explore Discussions'
-              iconClass="arrow-right"
-              iconColor={buttonType === 'primary' ? '#fffff' : '#F0524D'}
-              type={buttonType || 'secondary'}
-              paddingTop="8px"
-              paddingBottom="8px"
-              iconSize="18px"
-              fontFamily="Inter"
-            />
-            </a>
-          </div>
-        )}
-
       </div>
     </>
   );
