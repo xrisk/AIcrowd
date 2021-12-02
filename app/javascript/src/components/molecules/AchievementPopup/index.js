@@ -22,8 +22,6 @@ const AchievementPopup = ({ title, description, icon, handleClick, url, badgeTit
         <div className={iconWrapper}>
           {/* Show shining animation after badge popup animation */}
           <div className={shineWrapper}>
-            <span></span>
-            <span></span>
           </div>
           <img src={icon} alt="badge icon" className={badgeIcon}></img>
         </div>

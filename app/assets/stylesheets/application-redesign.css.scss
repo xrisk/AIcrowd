@@ -15106,6 +15106,10 @@ input.width-185 {
   margin-left: 12px;
 }
 
+.border-bottom-dotted {
+  border-bottom-style: dotted !important;
+} 
+
 @media (max-width: 767.98px) {
   .app-header .member-options img {
     height: 36px;
@@ -15130,7 +15134,6 @@ input.width-185 {
     margin-left: 14px!important;
   }
 }
-
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';

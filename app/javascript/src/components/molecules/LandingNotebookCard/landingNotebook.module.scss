@@ -14,6 +14,12 @@
     transform: translate(0, -5px);
     box-shadow: $shadow;
   }
+  @include media-query("large") {
+    width: 100%;
+    height: 80px;
+    padding: $spacing-xx-small $spacing-xxx-small;
+    height: auto;
+  }
   @include media-query("small") {
     width: 100%;
     height: 108px;
@@ -31,11 +37,7 @@
   color: $color-text-dark;
   margin-left: $spacing-xxx-small;
   width: 250px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  @include truncateMulti(2);
   @include media-query("small") {
     // font-size: 14px;
     font-weight: 400;

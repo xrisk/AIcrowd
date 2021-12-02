@@ -10,6 +10,9 @@ $section-gap: 150px;
   @include media-query("x-large") {
     padding-bottom: 97px;
   }
+  @include media-query("large") {
+    padding-bottom: 0px;
+  }
 
   @include media-query("small") {
     padding-bottom: 55px;
@@ -25,6 +28,9 @@ $section-gap: 150px;
   }
   .sectionGap {
     padding-top: $section-gap;
+    @include media-query("large") {
+      padding: 80px 0px 0px 0px;
+    }
     @include media-query("small") {
       padding: 40px 0px 0px 0px;
     }
@@ -97,6 +103,10 @@ $section-gap: 150px;
     margin-bottom: 133px;
     justify-content: center;
 
+    @include media-query("large") {
+      margin-top: 151px;
+    }
+
     @include media-query("small") {
       margin-top: 150px;
       margin-bottom: 40px;
@@ -111,9 +121,23 @@ $section-gap: 150px;
     margin-top: 120px;
     margin-bottom: 80px;
 
+    @include media-query("large") {
+      margin-top: 16px;
+      margin-bottom: 0px;
+    }
     @include media-query("small") {
       margin-top: 0px;
-      margin-bottom: 40px;
+      margin-bottom: 0px;
+    }
+  }
+
+  .sectionGapOrganizerLogos {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 0px;
+
+    @include media-query("large") {
+      justify-content: center;
     }
   }
 
@@ -123,14 +147,17 @@ $section-gap: 150px;
     height: 100%;
     top: 0%;
 
-    @include media-query("medium") {
-      display: flex;
-      flex-direction: column;
+    @include media-query("large") {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 20px;
       position: unset;
       width: 100%;
     }
 
     @include media-query("small") {
+      display: flex;
+      flex-direction: column;
       position: unset;
       width: 100%;
     }
@@ -140,13 +167,16 @@ $section-gap: 150px;
       &:hover {
         z-index: 9;
       }
+      @include media-query("large") {
+        position: unset;
+      }
       @include media-query("medium") {
         position: unset;
         margin-top: $spacing-x-small;
       }
       @include media-query("small") {
         position: unset;
-        margin-top: 0px;
+        margin-top: 16px;
       }
     }
     [data-notebook="2"] {
@@ -157,13 +187,16 @@ $section-gap: 150px;
       &:hover {
         z-index: 9;
       }
+      @include media-query("large") {
+        position: unset;
+      }
       @include media-query("medium") {
         position: unset;
         margin-top: $spacing-x-small;
       }
       @include media-query("small") {
         position: unset;
-        margin-top: $spacing-xx-small;
+        margin-top: 0px;
       }
     }
     [data-notebook="3"] {
@@ -173,7 +206,11 @@ $section-gap: 150px;
       &:hover {
         z-index: 9;
       }
-      @include media-query("medium") {
+      @include media-query("large") {
+        position: unset;
+      }
+
+      @include media-query("small") {
         display: none;
       }
     }
@@ -184,8 +221,8 @@ $section-gap: 150px;
       &:hover {
         z-index: 9;
       }
-      @include media-query("medium") {
-        display: none;
+      @include media-query("large") {
+        position: unset;
       }
       @include media-query("small") {
         display: none;
@@ -199,6 +236,10 @@ $section-gap: 150px;
 
     @include media-query("x-large") {
       justify-content: flex-start;
+    }
+    @include media-query("large") {
+      justify-content: center;
+      padding-top: 24px;
     }
 
     @include media-query("small") {
@@ -222,6 +263,10 @@ $section-gap: 150px;
     height: 400px;
     margin-bottom: 130px;
 
+    @include media-query("large") {
+      margin-top: 40px;
+    }
+
     @include media-query("small") {
       height: 260px;
       margin-bottom: 0px;
@@ -241,17 +286,25 @@ $section-gap: 150px;
         width: 227px;
         position: absolute;
         right: 0%;
+
         @include media-query("x-large") {
           right: 0%;
+        }
+
+        @include media-query("large") {
+          width: 190px;
+          top: 12%;
+          right: 3%;
         }
         @include media-query("small") {
           right: 20%;
           bottom: -40%;
           width: 40%;
+          top: 80%;
           transform: translateX(0%);
         }
         @include media-query("x-small") {
-          bottom: -12%;
+          top: 60%;
         }
       }
       &:nth-child(2) {
@@ -264,6 +317,11 @@ $section-gap: 150px;
           left: 0;
           width: 40%;
         }
+
+        @include media-query("large") {
+          width: 306px;
+        }
+
         @include media-query("small") {
           left: 0;
           top: 0;
@@ -280,6 +338,13 @@ $section-gap: 150px;
           width: 40%;
           top: 140px;
         }
+
+        @include media-query("large") {
+          width: 300px;
+          top: 230px;
+          right: 12%;
+        }
+
         @include media-query("small") {
           width: 45%;
           top: 140px;
@@ -297,6 +362,11 @@ $section-gap: 150px;
         @include media-query("x-large") {
           width: 40%;
         }
+
+        @include media-query("large") {
+          width: 255px;
+        }
+
         @include media-query("small") {
           right: 10%;
           width: 45%;
@@ -324,14 +394,29 @@ $section-gap: 150px;
     color: $color-text-light;
     padding-bottom: 3px;
     font-weight: 500;
+    padding-top: 54px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 19px;
+    color: #1f1f1f;
+
+    @include media-query("large") {
+      max-width: 523px;
+      font-size: 16px;
+    }
   }
 
   .organizerLogos1 {
     img {
       width: 100%;
       justify-self: flex-start;
-      @include media-query("medium") {
-        width: 100px;
+
+      @include media-query("x-large") {
+        width: 187px;
+      }
+
+      @include media-query("large") {
+        width: 100%;
         justify-self: center;
       }
       @include media-query("small") {
@@ -347,9 +432,9 @@ $section-gap: 150px;
     align-items: center;
     width: 100%;
 
-    @include media-query("medium") {
-      grid-template-columns: repeat(4, 1fr);
-      row-gap: 50px;
+    @include media-query("large") {
+      grid-template-columns: repeat(3, 1fr);
+      row-gap: 0px;
     }
     @include media-query("small") {
       grid-template-columns: repeat(3, 1fr);
@@ -364,6 +449,11 @@ $section-gap: 150px;
     img {
       width: 100%;
       justify-self: flex-start;
+
+      @include media-query("x-large") {
+        width: 187px;
+      }
+
       @include media-query("small") {
         width: 80px;
         justify-self: center;
