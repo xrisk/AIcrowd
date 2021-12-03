@@ -210,6 +210,9 @@ color: #292C2D;
 .filter{
     padding-right: 10px!important;
 }
+.dropdown .filter{
+    border-radius: 1.5rem;
+}
 .img-side{
     margin-top: 35px;
 }
@@ -376,4 +379,15 @@ color: #1F1F1F;
   padding-right: 0;
 }
 }
-
+.pl-14{
+    padding-left: 14px!important;
+}
+.ml-lg-80{
+    margin-left: 80px;
+}  
+@media only screen and (max-width: 992px) {
+.ml-lg-80{
+margin-left: 14px!important;
+}
+}
+  
