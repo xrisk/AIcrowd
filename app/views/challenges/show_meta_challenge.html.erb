@@ -8,7 +8,7 @@
       <div class="row col-lg-9">
         <header class="section-header">
           <div>
-            <h4>Problem Statements</h4>
+            <h4 class="pl-14">Problem Statements</h4>
           </div>
         </header>
         <div class="row col-md-12">
@@ -41,7 +41,7 @@
           <!-- md content -->
           <div class="col-md-12" id="description-wrapper">
             <div class="markdown-wrap">
-              <div class="md-content ck-content" data-controller="challenge-overview">
+              <div class="md-content ck-content pl-14" data-controller="challenge-overview">
                 <%= sanitize_html(@challenge.description) %>
                 <% if controller_name == 'challenges' && show_action? && @partners.present? %>
                 <h2>Sponsors and Partners</h2>

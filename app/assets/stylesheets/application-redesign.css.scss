@@ -2062,7 +2062,7 @@ pre code {
   .table-responsive-sm {
     display: block;
     width: 100%;
-    overflow-x: auto;
+    overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
   }
@@ -2075,7 +2075,7 @@ pre code {
   .table-responsive-md {
     display: block;
     width: 100%;
-    overflow-x: auto;
+    overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
   }
@@ -2655,6 +2655,7 @@ select.form-control-lg:not([size]):not([multiple]) {
 .form-rg .form-check {
   color: #292C2D;
   margin-bottom: .5rem;
+  margin-left: 0;
 }
 
 .form-rg .toggle-switch-container {
@@ -4432,6 +4433,8 @@ input[type="button"].btn-block {
   font-size: .875rem !important;
   padding-top: .75rem;
   padding-bottom: .75rem;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .card-challenge .card-footer img {
@@ -4444,7 +4447,6 @@ input[type="button"].btn-block {
   color: #292C2D;
   display: flex;
   align-items: center;
-  width: 100%;
 }
 
 .card-challenge .card-footer a span:hover {
@@ -5773,6 +5775,11 @@ video {
 .list-group-users .avatar {
   width: 44px;
   height: auto;
+}
+
+.list-group-users .list-group-item-user .avatar{
+  width: 44px;
+  height: 44px;
 }
 
 .list-group-users .text-link {
@@ -9416,7 +9423,7 @@ button.bg-bronze:focus {
   .my-md-7 {
     margin-bottom: 5rem !important;
   }
-  .ml-md-7,
+  .ml-0 ml-md-7 fdkfjdml-0 ml-md-7 fdkfjd,
   .mx-md-7 {
     margin-left: 5rem !important;
   }
@@ -10968,6 +10975,9 @@ body {
   .app-header .member-options img {
     height: 36px;
     width: 36px;
+  }  .app-header .member-options .dropdown {
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 
@@ -12690,7 +12700,7 @@ body {
 @media (max-width: 575.98px) {
   .sub-nav-bar .nav-link-04,
   .sub-nav-bar .nav-link-03,
-  .sub-nav-bar .nav-link-07, {
+  .sub-nav-bar .nav-link-07 {
     display: none;
   }
 }
@@ -14019,7 +14029,7 @@ html {
 .user-rating-2,
 .user-rating-3,
 .user-rating-4,
-.user-rating-5, {
+.user-rating-5 {
   border: 2px solid white;
   box-shadow: 0px 0px 0px 2px rgba(72,187,0,1);
 }
@@ -15098,6 +15108,31 @@ input.width-185 {
 
 .border-bottom-dotted {
   border-bottom-style: dotted !important;
+} 
+
+@media (max-width: 767.98px) {
+  .app-header .member-options img {
+    height: 36px;
+    width: 36px;
+  }
+  .app-header .member-options .dropdown {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.pl-14{
+  padding-left: 14px!important;
+}
+
+.ml-lg-80{
+  margin-left: 80px!important;
+}
+
+@media only screen and (max-width: 992px) {
+  .ml-lg-80{
+    margin-left: 14px!important;
+  }
 }
 
 
