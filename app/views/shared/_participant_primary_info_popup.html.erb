@@ -1,0 +1,70 @@
+<% if current_participant && show_participant_edit_popup?(current_participant) %>
+  <div class="modal participant_primary_info_modal" id="participant_primary_info_modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="max-width: 43%; margin-top: 8%;">
+      <div class="modal-content">
+          <div id="detail-modal">
+            <div class="">
+              <img class="top" src="/assets/img/aicrowd logo 1.png" alt="">
+              <span class="fa fa-times cross"></span>
+            </div>
+            <div class="modal-welcome">
+              <div class="">
+                <div class="">
+                  <span class="dot1"></span>
+                </div>
+                <div class="">
+                  <h5 class="text-center">Excited about your AI journey?</h5>
+                  <p class="sub mb-2">You’re almost ready to make your first submission!<br>
+                    Please fill up these details, a shiny new badge awaits you!</p>
+                </div>
+                <div class="">
+                  <span class="dot4"></span>
+                </div>
+              </div>
+            </div><span class="dot5 float-right"></span>
+            <%= form_for Participant.find(16171), validate: true do |f| %>
+            <div class="modal-detail-form" style="margin-left: 20%; margin-right: 20%;">
+                <form class="detail-form">
+                  <div class="form-group">
+                    <label class="float-left" for="country">Country</label>
+                    <!-- <input type="country" class="form-control" id="country" placeholder="Select your country"> -->
+                    <%= f.country_select :country_cd, { include_blank: '--- Select your country ---'}, { class: 'form-control' }  %>
+                    <span toggle="#password-field" class="fa fa-chevron-down field-icon  mr-3 mb-3 py-new"></span></input>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="float-left" for="gender">Gender</label>
+                    <!-- <input type="gender" class="form-control" id="gender" placeholder="Enter your gender"> -->
+                    <%= f.select :gender, options_for_select([["Male", "male"], ["Female", "female"], ["Prefer not to say", "dont_prefer"]], Participant.find(16171).gender), {}, {class: 'form-control'} %>
+                    <span toggle="#gender-field" class="fa fa-chevron-down field-icon  mr-3 mb-3 py-new"></span></input>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="float-left" for="Organization">Institution/Organization</label>
+                    <%= f.text_field :affiliation, class: "form-control", placeholder:  "Enter where do you study/work at" %>
+                  </div>
+                  <div class="float-left">
+                    <!-- <input type="checkbox" id="selfemployed" name="selfemployed"> -->
+                                 <!-- <label for="selfemployed">Self Employed</label> -->
+                             </div><span  class="dot3 float-right"></span>
+
+                </form>
+                <div class="newbutton mb-5">
+                  <!-- <button type="submit" class="btn btn-red-submit btn-lg mt-4" style="margin-bottom: 12%;">Save and Continue</button> -->
+                  <%= f.button "Save and Continue", class: "btn btn-red-submit btn-lg mt-2" %>
+                </div>
+                <div class="">
+                  <img class="float-right img-left" src="/assets/img/Frame 52.png" alt="" srcset="">
+                  <img class="float-left img-right" src="/assets/img/Frame 53.png" alt="" srcset="">
+
+                </div>
+            </div>
+            <% end %>
+          </div>
+          <div>
+    </div>
+  </div>
+  <script>
+    $('#participant_primary_info_modal').modal('show');
+  </script>
+<% end %>
