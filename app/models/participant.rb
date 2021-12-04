@@ -159,6 +159,10 @@ class Participant < ApplicationRecord
             allow_blank: true
   validates :uuid, uniqueness: true
 
+  as_enum :gender,
+            %i[male female dont_prefer],
+            map: :string
+
   after_update do
     ParticipantBadgeJob.perform_later(name: "profileupdate", participant_id: id)
   end

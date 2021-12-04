@@ -50,7 +50,13 @@ class ParticipantsController < ApplicationController
     if @participant.errors.none? && @participant.save
       flash[:success] = "Profile updated"
       Mixpanel::SyncJob.perform_later(@participant, request.remote_ip)
-      redirect_to @participant
+      last_page = request.referrer
+      last_page = last_page.delete_prefix(ENV['DOMAIN_NAME'])
+      if last_page == "/participants/#{@participant.name}/edit"
+        redirect_to @participant
+      else
+        redirect_back(fallback_location: root_path)
+      end
     else
       flash[:error] = @participant.errors.full_messages.to_sentence
       render :edit
