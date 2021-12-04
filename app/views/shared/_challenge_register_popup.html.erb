@@ -1,0 +1,106 @@
+<style>
+    body{
+position: relative;
+}
+.signup-popup{
+position: absolute;
+top: 30%;
+left: 0%;
+}
+button:focus{
+outline: none;
+}
+    .signup-popup{
+      position: relative;
+    }
+    .close{
+position: absolute;
+top: 15px;
+right: 30px;
+}
+@media only screen and (max-width: 992px) {
+  .close{
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+}
+@media only screen and (max-width: 768px) {
+  .close{
+  position: absolute;
+  top: 5px;
+  right: 15px;
+}
+}
+</style>
+<div class="modal register_modal" id="register_modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="margin-top: 45%;">
+
+      <div id="login-modal" class="signup-popup">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modal-welcome" style="margin-top: 8%;">
+          <h3 class="text-center" style="font-size: 1.3rem;">The challenge got you curious?</h5>
+          <p class="text-center sub">Sign up to solve the problem</p>
+        </div>
+        <div class="modal-logins mt-4" style="text-align: -webkit-center;">
+          <%= link_to participant_google_oauth2_omniauth_authorize_path, {class: "btn btn-modal-login py-2", style: "width: 68%;", data: { controller: "mixpanel", type: "loginGoogle" }} do%>
+          <!-- <button class="btn-modal-login py-2" style="width: 68%;"> -->
+            <i><img class="btn-modal-login-img mr-2" src="https://images.aicrowd.com/images/landing_page/google.svg" /></i>
+            Continue with Google
+          <!-- </button> -->
+          <% end %>
+          <%= link_to participant_github_omniauth_authorize_path, {class: "btn btn-modal-login bg-dark py-2 clr-white mt-3", style: "width: 68%;", data: { controller: "mixpanel", type: "loginGitHub" }} do%>
+          <!-- <button class="btn-modal-login bg-dark py-2 clr-white mt-3" style="width: 68%;"> -->
+            <i><img class="btn-modal-login-img mr-2" src="/assets/img/icon-github.svg" /></i>
+            Continue with Github
+          <!-- </button> -->
+          <% end %>
+          <%= link_to new_participant_registration_path, {class: "btn btn-modal-login mt-3", style: "width: 68%;"} do%>
+          <!-- <button class="btn-modal-login mt-3" style="width: 68%;"> -->
+            <i><img class="btn-modal-login-img mr-2" src="/assets/img/email.png" /></i>
+            Sign Up with Email
+          <!-- </button> -->
+          <% end %>
+        </div>
+
+        <div class="modal-login-form" style="text-align: -webkit-center; margin-bottom: 11%;">
+          <div class="modal-oldaccount">
+            <p class="f-14">Already Have an Account ? <a href="/participants/sign_in" onclick="showLogin()" class="modal-styling"><u>Log In</u></a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).scroll(function(e){
+
+    // grab the scroll amount and the window height
+      var scrollAmount = $(window).scrollTop();
+      var documentHeight = $(document).height();
+
+      // calculate the percentage the user has scrolled down the page
+      var scrollPercent = (scrollAmount / documentHeight) * 100;
+      var c = 0
+
+    if(scrollPercent > 50 && c = 0) {
+      // run a function called doSomething
+      doSomething();
+    }
+
+    function doSomething() {
+      debugger;
+      var executed = false;
+      return funtion() {
+        $('#register_modal').modal('show');
+        executed = true;
+      }
+    }
+
+  });
+</script>
+
