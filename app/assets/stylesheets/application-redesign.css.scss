@@ -15725,8 +15725,38 @@ label .float-left{
     display: none;
 }
 .img-right2{
-display: none;
+  display: none;
+  }
 }
+.signup-popup{
+  position: absolute;
+  top: 30%;
+  left: 0%;
+}
+button:focus{
+  outline: none;
+}
+.signup-popup{
+  position: relative;
+}
+.close{
+  position: absolute;
+  top: 15px;
+  right: 30px;
+}
+@media only screen and (max-width: 992px) {
+  .close{
+    position: absolute;
+    top: 10px;
+    right: 15px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .close{
+    position: absolute;
+    top: 5px;
+    right: 15px;
+  }
 }
 
 
