@@ -1,38 +1,3 @@
-<style>
-    body{
-position: relative;
-}
-.signup-popup{
-position: absolute;
-top: 30%;
-left: 0%;
-}
-button:focus{
-outline: none;
-}
-    .signup-popup{
-      position: relative;
-    }
-    .close{
-position: absolute;
-top: 15px;
-right: 30px;
-}
-@media only screen and (max-width: 992px) {
-  .close{
-  position: absolute;
-  top: 10px;
-  right: 15px;
-}
-}
-@media only screen and (max-width: 768px) {
-  .close{
-  position: absolute;
-  top: 5px;
-  right: 15px;
-}
-}
-</style>
 <div class="modal register_modal" id="register_modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content" style="margin-top: 45%;">
@@ -78,29 +43,23 @@ right: 30px;
 
 <script>
   $(document).scroll(function(e){
+    var scrollAmount = $(window).scrollTop();
+    var documentHeight = $(document).height();
 
-    // grab the scroll amount and the window height
-      var scrollAmount = $(window).scrollTop();
-      var documentHeight = $(document).height();
+    var scrollPercent = (scrollAmount / documentHeight) * 100;
 
-      // calculate the percentage the user has scrolled down the page
-      var scrollPercent = (scrollAmount / documentHeight) * 100;
-      var c = 0
-
-    if(scrollPercent > 50 && c = 0) {
-      // run a function called doSomething
-      doSomething();
+    if(scrollPercent > 50) {
+      console.log("Scrolled 50 percent")
+      myFunc();
     }
-
-    function doSomething() {
-      debugger;
-      var executed = false;
-      return funtion() {
-        $('#register_modal').modal('show');
-        executed = true;
-      }
-    }
-
   });
+
+  function myFunc(){
+    myFunc = function(){console.log("Called function")};
+    window.setTimeout(function(){
+      debugger;
+      $('#register_modal').modal('show');
+    }, 20 * 1000);
+  };
 </script>
 
