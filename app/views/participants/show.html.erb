@@ -1,6 +1,6 @@
 <%
-  active_tab = params[:tab]
-  active_tab = 'insights' unless ['teams','bio'].include?(active_tab)
+  active_tab = @current_tab
+  active_tab = 'insights' unless ['teams','bio', 'achievements'].include?(active_tab)
 %>
 
 <%= render partial: 'masthead', locals: { participant: @participant } %>

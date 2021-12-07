@@ -1,237 +1,66 @@
-<div data-controller="landing-page">
-  <div class="masthead masthead-home bg-white">
-    <div class="container-fluid">
-      <div class="row">
+<%
+  org_1 = 'https://images.aicrowd.com/images/landing_page/partner-logo-org-1.png';
+  org_2 = 'https://images.aicrowd.com/images/landing_page/partner-logo-org-2.png';
+  org_3 = 'https://images.aicrowd.com/images/landing_page/partner-logo-org-3.png';
+  org_4 = 'https://images.aicrowd.com/images/landing_page/partner-logo-org-4.png';
+  org_5 = 'https://images.aicrowd.com/images/landing_page/partner-logo-org-5.png';
+  org_6 = 'https://images.aicrowd.com/images/landing_page/partner-logo-org-6.png';
+  org_7 = 'https://images.aicrowd.com/images/landing_page/partner-logo-org-7.png';
 
-        <div class="col-lg-12 col-xl-6">
-          <h1><span class="text-primary">Crowdsourcing AI</span> to solve real-world problems</h1>
-          <p>AIcrowd enables data science experts and enthusiasts to collaboratively solve real-world problems, through challenges.</p>
-            <%= link_to "Organize a challenge", landing_page_host_path , :class=>"btn btn-secondary mt-4"%>
-        </div>
+%>
 
-        <% if @partners.present? %>
-          <div class="col-lg-12 col-xl-6">
-            <div class="logos-organizers">
-              <% @partners.each_with_index do |partner,index| %>
-              <div class="logo-organizer">
-                <%= image_tag partner.image_file.url, class: "img-fluid" %>
-              </div>
-              <% end %>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
+<%
+  contributorCardData = [
+    {
+      username: 'A_user_name',
+      count: '5,054',
+      image: 'https://images.aicrowd.com/images/landing_page/custom-avatar-3.png',
+      onCard: false,
+    },
+    {
+      username: 'A_user_name',
+      count: '5,054',
+      image: 'https://images.aicrowd.com/images/landing_page/custom-avatar-3.png',
+      onCard: false,
+    },
+    {
+      username: 'A_user_name',
+      count: '5,054',
+      image: 'https://images.aicrowd.com/images/landing_page/custom-avatar-3.png',
+      onCard: false,
+    }
+  ]
 
-  <!-- section -->
-  <section class="section-p-md bg-light">
+  cardBadge = {
+    cardBadge: true,
+    badgeColor: '#44B174',
+    challengeEndDate: '2021/10/30',
+  }
 
-    <!-- challenge cards -->
-    <div class="container-fluid">
-      <div class="row">
-        <!-- section header -->
-        <div class="col-12">
-          <header class="section-header">
-            <div>
-              <h4>Featured challenges</h4>
-            </div>
+  image_url = current_participant.present? ? current_participant.image_url : ''
 
-            <%= link_to 'See all',
-              challenges_path,
-              class: "btn btn-secondary btn-sm" %>
+  userNotification = [
+      {
+        image: 'https://images.aicrowd.com/images/landing_page/custom-avatar-3.png',
+        tier: '2',
+        userName: 'username',
+        time: '2 hours ago',
+        url: '/',
+      },
+      {
+        image: 'https://images.aicrowd.com/images/landing_page/custom-avatar-3.png',
+        tier: '2',
+        userName: 'username',
+        time: '2 hours ago',
+        url: '/',
+      },
+    ]
+%>
 
-          </header>
-        </div>
-      </div>
-      <!-- /section header -->
-      <div class='row challenge-list'>
-        <%= render partial: 'shared/challenges/listing', locals: { challenges: @challenges } %>
-      </div>
-    </div>
-    <!-- /challenge cards -->
-  </section>
-  <!-- section -->
+<% if current_participant %>
+  <%= react_component("pages/Landing/index", {loading: false, logos: [org_1, org_2, org_3, org_4, org_5, org_6, org_7], challengeListData: @challenge_list_data, statListData: @stat_list_data, moreMenuItem: @more_menu_item, communityMenuItem: @community_menu_item, challengesMenuItem: @challenges_menu_item, researchMenuItem: @research_menu_item, communityMap: @community_map, communityMapAvatar: @community_map_avatar, landingChallengeCard1: @landing_challenge_card_1, landingChallengeCard2: @landing_challenge_card_2, landingChallengeCard3: @landing_challenge_card_3, notebookCardData: @notebook_card_data, submissionCardData: @submission_card_data, contributorCardData: contributorCardData, quotes: @quotes, cardBadge: cardBadge, communityMembersList: @community_members_list, profileMenuItem: @profile_menu_item, tier: 0, image: image_url, isLoggedIn: true, userNotification: userNotification}) %>
 
-  <!-- section -->
-  <section class="section-p-md border-top">
-    <div class="container-fluid">
-      <div class="row">
+<% else %>
+  <%= react_component("pages/Landing/index", {loading: false, logos: [org_1, org_2, org_3, org_4, org_5, org_6, org_7], challengeListData: @challenge_list_data, statListData: @stat_list_data, moreMenuItem: @more_menu_item, communityMenuItem: @community_menu_item, challengesMenuItem: @challenges_menu_item, researchMenuItem: @research_menu_item, communityMap: @community_map, communityMapAvatar: @community_map_avatar, landingChallengeCard1: @landing_challenge_card_1, landingChallengeCard2: @landing_challenge_card_2, landingChallengeCard3: @landing_challenge_card_3, notebookCardData: @notebook_card_data, submissionCardData: @submission_card_data, contributorCardData: contributorCardData, quotes: @quotes, cardBadge: cardBadge, communityMembersList: @community_members_list, profileMenuItem: @profile_menu_item, tier: 0, image: image_url, isLoggedIn: false, userNotification: userNotification}) %>
+<% end %>
 
-        <!-- testimonial carousel -->
-        <div class="col-sm-12 col-md-8">
-
-          <div id="carouselTestimonial" class="carousel carousel-testimonials slide carousel-fade" data-ride="carousel">
-            <ol class="carousel-indicators">
-              <li data-target="#carouselTestimonial" data-slide-to="0" class="active"></li>
-              <li data-target="#carouselTestimonial" data-slide-to="1"></li>
-            </ol>
-
-            <div class="carousel-inner">
-
-              <!-- testimonial -->
-              <div id="testimonial-1" class="carousel-item active">
-                <blockquote class="blockquote-testimonial">
-                  <img class="avatar" src="/assets/img/testimonial-1.jpeg">
-                  <p class="mb-0">"Crowdsourcing far exceeded our expectations - you not only get new solutions, but also a deeper insight to the problem you are trying to solve."</p>
-                  <footer class="blockquote-footer">Erik Nygren, Deep Learning and Artificial Intelligence Research, SBB CFF FFS</footer>
-                </blockquote>
-              </div>
-              <!-- /testimonial -->
-
-              <!-- testimonial -->
-              <div id="testimonial-2" class="carousel-item">
-                <blockquote class="blockquote-testimonial">
-                  <img class="avatar" src="/assets/img/testimonial-2.jpeg">
-                  <p class="mb-0">Thanks to the agile structure of the platform, it was easy to design an ML challenge outside of the standard framework of the training/test data challenges. For new challenges, I would choose AIcrowd over other platforms.</p>
-                  <footer class="blockquote-footer">Łukasz Kidziński, Postdoctoral Researcher, Stanford</footer>
-                </blockquote>
-              </div>
-              <!-- /testimonial -->
-            </div>
-          </div>
-        </div>
-        <!-- /testimonial carousel -->
-
-        <!-- top rated participants -->
-        <div class="col-sm-12 col-md-4">
-          <header class="section-header">
-            <div>
-              <h4>
-                <%= link_to 'Top Participants', leaderboard_path, {:class => "nav-link"} %>
-              </h4>
-            </div>
-          </header>
-
-          <div class="card">
-            <ul class="list-group list-group-flush list-group-latest-contributors">
-              <% @participants.each do |participant| %>
-                <li class="list-group-item">
-                  <%= render partial: 'participants/get_user_profile', locals: { participant: participant, truncate: 'true' } %>
-                  <%= render partial: 'participants/show_reputation', locals: { participant: participant } %>
-                </li>
-              <% end %>
-            </ul>
-          </div>
-        </div>
-        <!-- /top rated participants -->
-
-      </div>
-    </div>
-  </section>
-  <!-- /section -->
-
-  <% if ENV['DISCOURSE_DOMAIN_NAME'].present? %>
-  <!-- section -->
-  <section class="section-p-md border-top">
-    <div class="container-fluid">
-      <div class="row">
-        <!-- discourse latest posts list -->
-        <div class="col-sm-12 col-md-4">
-          <header class="section-header">
-            <div>
-              <h4>Latest Discussions</h4>
-            </div>
-
-            <%= link_to 'See all', ENV['DISCOURSE_DOMAIN_NAME'], class: "btn btn-secondary btn-sm" %>
-          </header>
-
-          <% if @discourse_topics_fetch.success? %>
-            <%= render partial: 'shared/discourse/topics_list', locals: { discourse_topics: @discourse_topics } %>
-          <% else %>
-            <p><%= @discourse_topics_fetch.value %></p>
-          <% end %>
-        </div>
-
-        <!-- /discourse latest posts list -->
-        <!-- Top posts list -->
-        <div class="col-sm-12 col-md-4">
-          <header class="section-header">
-            <div>
-              <h4>AIcrowd Showcase</h4>
-            </div>
-
-            <%= link_to 'See all', posts_path, class: "btn btn-secondary btn-sm" %>
-          </header>
-
-          <% if @top_posts.count > 0 %>
-            <%= render partial: 'shared/posts/post_list', locals: { posts: @top_posts } %>
-          <% else %>
-            <p><%= @discourse_topics_fetch.value %></p>
-          <% end %>
-        </div>
-        <!-- /top latest posts list -->
-
-
-        <div class="col-sm-12 col-md-4">
-          <header class="section-header">
-            <div>
-              <h4>Top Community Contributors</h4>
-            </div>
-          </header>
-
-          <% if @discourse_top_contributors_fetch.success? %>
-            <%= render partial: 'discourse_top_contributors', locals: { discourse_top_contributors: @discourse_top_contributors } %>
-          <% else %>
-            <p><%= @discourse_top_contributors_fetch.value %></p>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- /section -->
-  <% end %>
-
-  <!-- section -->
-  <section class="section-p-md border-top">
-
-    <!-- blog post previews -->
-    <div class="container-fluid">
-      <div class="row">
-
-        <!-- section header -->
-        <div class="col-12">
-          <header class="section-header">
-            <div>
-              <h4>From the blog</h4>
-            </div>
-            <%= button_to 'See all', blogs_path, class: "btn btn-secondary btn-sm", method: :get %>
-          </header>
-        </div>
-        <!-- /section header -->
-        <% @blog_posts.each do |post| %>
-              <%= render partial: 'blog_post', locals: {post: post} %>
-        <% end %>
-      </div>
-    </div>
-    <!-- /blog post previews -->
-  </section>
-  <!-- /section -->
-
-  <!-- section -->
-  <section class="section-p-md bg-light border-top">
-    <div class="logo-grid">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <header class="section-header">
-              <div>
-                <h4>Thank you</h4>
-              </div>
-            </header>
-          </div>
-          <div class="col-sm-12 col-md-6">
-            <% if @partners.present? %>
-                <% @partners.each_with_index do |partner,index| %>
-                  <div class="logo">
-                    <%= image_tag partner.image_file.url, class: "img-fluid" %>
-                  </div>
-                <% end %>
-            <% end %>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- /section -->
-</div>

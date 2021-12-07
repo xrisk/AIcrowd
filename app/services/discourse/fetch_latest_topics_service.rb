@@ -6,18 +6,9 @@ module Discourse
 
     def call
       with_discourse_errors_handling do
-        response      = client.get(latest_topics_path)
-        participants  = get_participants(response.body['users'])
-        latest_topics = topics_with_participant(
-                          response.body['topic_list']['topics'],
-                          response.body['users'],
-                          participants
-                        )
+        response      = client.post(latest_topics_path)
 
-        # Remove Welcome to Discourse topic if it gets inserted as first element
-        latest_topics.shift if latest_topics.first['title'] == 'Welcome to Discourse'
-
-        success(latest_topics.take(4))
+        return response.body['rows']
       end
     end
 
@@ -26,7 +17,7 @@ module Discourse
     attr_reader :client
 
     def latest_topics_path
-      '/latest.json'
+      '/admin/plugins/explorer/queries/16/run.json'
     end
   end
 end

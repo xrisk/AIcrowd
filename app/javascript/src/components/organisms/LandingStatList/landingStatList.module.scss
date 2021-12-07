@@ -1,0 +1,34 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../styles/base/__base-dir.scss";
+
+.main {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(176px, 176px));
+  row-gap: $spacing-xx-large;
+  column-gap: $spacing-xx-small;
+
+  @include media-query("x-large") {
+    row-gap: $spacing-large;
+  }
+
+  @include media-query("large") {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: $spacing-medium;
+  }
+
+  @include media-query("small-medium") {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: $spacing-medium;
+  }
+
+  @include media-query("small") {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: $spacing-x-small;
+    column-gap: 16px;
+  }
+  @include media-query("x-small") {
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: $spacing-x-small;
+    column-gap: 12px;
+  }
+}

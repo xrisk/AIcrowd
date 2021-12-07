@@ -10,7 +10,7 @@ class Leaderboard < SqlView
   belongs_to :ml_challenge, optional: true, class_name: 'Challenge'
 
   as_enum :leaderboard_type,
-          [:leaderboard, :ongoing, :disentanglement],
+          [:leaderboard, :ongoing, :disentanglement, :reputation],
           map: :string
 
   default_scope { order(seq: :asc) }

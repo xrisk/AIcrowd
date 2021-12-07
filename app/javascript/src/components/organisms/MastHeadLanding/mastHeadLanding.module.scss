@@ -1,0 +1,116 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../styles/base/__base-dir.scss";
+
+.main {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+
+  @include media-query("small") {
+    grid-template-columns: 1fr;
+  }
+
+  .statListContainer {
+    padding-top: 128px;
+
+    @include media-query("x-large") {
+      padding-top: 80px;
+    }
+    @include media-query("small") {
+      padding-top: 40px;
+    }
+  }
+
+  .glowDecor {
+    position: absolute;
+    width: 331px;
+    height: 353px;
+    right: 0%;
+    top: 250px;
+    background: linear-gradient(
+      141.26deg,
+      rgba(240, 82, 77, 0.1) 15.43%,
+      rgba(240, 77, 126, 0.1) 26.83%,
+      rgba(236, 76, 177, 0.1) 44.12%,
+      rgba(233, 75, 228, 0.1) 58.28%,
+      rgba(188, 75, 233, 0.1) 70.32%,
+      rgba(137, 75, 233, 0.5) 84.76%
+    );
+    mix-blend-mode: normal;
+    filter: blur(100px);
+    transform: rotate(15.12deg);
+
+    @include media-query("x-large") {
+      padding-top: 80px;
+      right: 5%;
+      top: 200px;
+    }
+
+    @include media-query("medium") {
+      width: 231px;
+      height: 253px;
+      right: 5%;
+      top: 200px;
+    }
+
+    @include media-query("small") {
+      width: 231px;
+      height: 253px;
+      right: 5%;
+      top: -200px;
+      filter: blur(60px);
+    }
+    @include media-query("x-small") {
+      width: 200px;
+      height: 200px;
+      right: 5%;
+      top: -200px;
+    }
+  }
+
+  .cardWrapper {
+    position: relative;
+
+    [data-card="card1"] {
+      position: absolute;
+      top: 5%;
+      right: 10%;
+      z-index: 6;
+
+      @include media-query("x-large") {
+        right: 10%;
+      }
+
+      &:hover {
+        z-index: 9;
+      }
+    }
+    [data-card="card2"] {
+      position: absolute;
+      top: 35%;
+      right: 80%;
+      z-index: 5;
+      @include media-query("x-large") {
+        z-index: 5;
+        right: 105%;
+      }
+      &:hover {
+        z-index: 9;
+      }
+    }
+    [data-card="card3"] {
+      position: absolute;
+      top: 50%;
+      right: 36%;
+      z-index: 5;
+      @include media-query("x-large") {
+        top: 55%;
+        left: -10%;
+      }
+      &:hover {
+        z-index: 9;
+      }
+    }
+  }
+}

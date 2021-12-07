@@ -74,7 +74,7 @@ ActiveAdmin.register ChallengeCall do
       row :slug
       row :crowdai
       row 'link' do |res|
-        "https://www.crowdai.org/call-for-challenges/#{res.slug}/apply"
+        "https://www.aicrowd.com/call-for-challenges/#{res.slug}/apply"
       end
       row :acknowledged
     end

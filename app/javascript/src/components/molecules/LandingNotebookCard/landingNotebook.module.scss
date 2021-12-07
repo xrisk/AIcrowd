@@ -1,0 +1,82 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../styles/base/__base-dir.scss";
+
+.mainWrapper {
+  width: 368px;
+  height: 105px;
+  background: #ffffff;
+  box-shadow: 0px 4px 24px rgba(163, 163, 163, 0.25);
+  border-radius: 8px;
+  padding: $spacing-xx-small;
+  transition: 0.2s ease-in-out all;
+
+  &:hover {
+    transform: translate(0, -5px);
+    box-shadow: $shadow;
+  }
+  @include media-query("large") {
+    width: 100%;
+    height: 80px;
+    padding: $spacing-xx-small $spacing-xxx-small;
+    height: auto;
+  }
+  @include media-query("small") {
+    width: 100%;
+    height: 108px;
+    padding: $spacing-xxx-small;
+    height: auto;
+  }
+}
+
+.titleText {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: $font-weight-medium;
+  font-size: 16px;
+  line-height: 24px;
+  color: $color-text-dark;
+  margin-left: $spacing-xxx-small;
+  width: 250px;
+  @include truncateMulti(2);
+  @include media-query("small") {
+    // font-size: 14px;
+    font-weight: 400;
+    width: 100%;
+  }
+}
+
+.mainWrapper {
+  .subWrapper {
+    display: flex;
+    align-items: center;
+  }
+  img {
+    width: 73px;
+    height: 73px;
+    @include media-query("small") {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  .time {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 19px;
+    color: $color-text-light;
+  }
+
+  .statusWrapper {
+    display: flex;
+    align-items: center;
+    margin-left: $spacing-xxx-small;
+    column-gap: $spacing-xxx-small;
+    margin-top: 5px;
+
+    @include media-query("small") {
+      margin: 0px;
+      margin-left: $spacing-xxx-small;
+    }
+  }
+}

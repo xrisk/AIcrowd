@@ -1,0 +1,52 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../styles/base/__base-dir.scss";
+
+.brand {
+  background: url("/assets/img/logo-aicrowd.svg") no-repeat;
+  background-size: cover;
+  display: block;
+  height: 24px;
+  width: 126px;
+  @include media-query("medium") {
+    height: 20px;
+    width: 105px;
+  }
+  @include media-query("small") {
+    height: 18px;
+    width: 95px;
+  }
+  &:active {
+    margin-top: -2px;
+  }
+}
+
+[data-theme="dark"] {
+  .brand {
+    background: url("/assets/img/logo-aicrowd-dark.svg") no-repeat;
+    background-size: contain;
+  }
+}
+
+.logomark {
+  background: url("/assets/img/logomark-aicrowd.svg") no-repeat;
+  background-size: contain;
+  display: block;
+  height: 24px;
+  width: 26px;
+  &:active {
+    margin-top: -2px;
+  }
+}
+
+.text {
+  font-size: 18px;
+  color: #292c2d;
+  font-weight: 500;
+  font-family: Inter;
+
+  .aiText {
+    color: #f0524d;
+    font-family: Montserrat;
+    font-weight: 600;
+  }
+}

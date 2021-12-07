@@ -1,0 +1,57 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../styles/base/__base-dir.scss";
+
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  max-width: 350px;
+  box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.14);
+  border-radius: 6px;
+  animation-name: fade;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  position: absolute;
+  background-color: #ffffff;
+
+  .socialIconWrapper {
+    display: flex;
+    padding-bottom: 32px;
+    padding-left: 32px;
+    padding-right: 32px;
+    width: 250px;
+    justify-content: space-between;
+    img {
+      width: 22px;
+      cursor: pointer;
+    }
+  }
+
+  ul {
+    padding: 0px;
+
+    li {
+      padding-bottom: 32px;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: 0.15px;
+      font-weight: 400;
+      list-style: none;
+      padding: 16px 32px;
+      transition: 0.2s ease-in-out all;
+      cursor: pointer;
+      &:hover {
+        background: $color-bg-dark;
+      }
+    }
+  }
+}

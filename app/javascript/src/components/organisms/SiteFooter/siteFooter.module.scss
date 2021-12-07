@@ -1,0 +1,105 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../styles/base/__base-dir.scss";
+
+.site-footer {
+  border-top: 1px solid var(--color-border-light);
+  color: var(--color-text-light);
+  line-height: 1.25;
+  margin-top: 80px;
+  padding-top: 50px; // given for landing page
+  @include media-query("small-medium") {
+    margin-top: 60px;
+  }
+  .site-footer-content {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (1fr) [12];
+    grid-template-columns: repeat(12, 1fr);
+    padding: 20px 0 80px 0;
+    @include column-gap;
+    @include media-query("medium") {
+      padding: 20px 0 60px 0;
+    }
+    @include media-query("small-medium") {
+      padding: 16px 0 60px 0;
+    }
+  }
+  .site-footer-brand {
+    grid-area: 1 / 1 / 2 / 3;
+    @include media-query("medium") {
+      grid-area: 1 / 1 / 2 / 4;
+    }
+    @include media-query("small-medium") {
+      display: none;
+    }
+  }
+  .site-footer-platform {
+    grid-area: 1 / 3 / 2 / 5;
+    @include media-query("medium") {
+      grid-area: 1 / 4 / 2 / 7;
+    }
+    @include media-query("small-medium") {
+      display: none;
+    }
+  }
+  .site-footer-connect {
+    grid-area: 1 / 5 / 2 / 7;
+    @include media-query("medium") {
+      grid-area: 1 / 7 / 2 / 10;
+    }
+    @include media-query("small-medium") {
+      grid-area: 1 / 1 / 2 / 7;
+    }
+  }
+  .site-footer-legal {
+    grid-area: 1 / 7 / 2 / 11;
+    @include media-query("medium") {
+      grid-area: 1 / 10 / 2 / 13;
+    }
+    @include media-query("small-medium") {
+      grid-area: 1 / 7 / 2 / 13;
+    }
+  }
+  .site-footer-language {
+    grid-area: 1 / 9 / 2 / 11;
+    @include media-query("medium") {
+      grid-area: 1 / 10 / 2 / 13;
+    }
+    @include media-query("small-medium") {
+      grid-area: 1 / 7 / 2 / 13;
+    }
+  }
+  .site-footer-end {
+    display: grid;
+    grid-area: 1 / 11 / 2 / 13;
+    justify-content: end;
+    @include media-query("medium") {
+      display: none;
+    }
+    @include media-query("small-medium") {
+      display: none;
+    }
+  }
+  .site-footer-title {
+    color: var(--color-text-light);
+    font-weight: 400;
+    margin: 0 0 10px 0;
+  }
+  .site-footer-nav {
+    margin: 0;
+    padding: 0;
+    .site-footer-nav-item {
+      list-style-type: none;
+      margin-bottom: 10px;
+      .site-footer-nav-link {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  .site-footer-text {
+    display: block;
+    margin-top: 20px;
+  }
+}

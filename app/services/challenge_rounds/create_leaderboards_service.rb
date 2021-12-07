@@ -1,17 +1,18 @@
 module ChallengeRounds
   class CreateLeaderboardsService < ::BaseService
-    def initialize(challenge_round:, meta_challenge_id: nil, ml_challenge_id: nil, challenge_leaderboard_extra: nil)
+    def initialize(challenge_round:, meta_challenge_id: nil, ml_challenge_id: nil, challenge_leaderboard_extra: nil, is_freeze: nil, reputation_freeze_time: nil)
       @challenge_round       = challenge_round
       @challenge             = @challenge_round.challenge
       @submissions           = @challenge_round.submissions.reorder(created_at: :desc)
       @meta_challenge_id     = meta_challenge_id
       @ml_challenge_id       = ml_challenge_id
+      @reputation_freeze_time= reputation_freeze_time
       @challenge_leaderboard_extra = challenge_leaderboard_extra
       if challenge_leaderboard_extra.nil?
         @challenge_leaderboard_extra = @challenge_round.default_leaderboard
       end
 
-      @is_freeze             = @challenge_leaderboard_extra.freeze_flag
+      @is_freeze             = is_freeze || @challenge_leaderboard_extra.freeze_flag
       @is_borda_ranking      = false
 
       if @meta_challenge_id.blank? && @ml_challenge_id.blank?
@@ -49,6 +50,11 @@ module ChallengeRounds
         previous_ongoing_leaderboards = build_base_leaderboards('ongoing', [true, false], window_border_dttm([true, false]))
 
         create_leaderboards(ongoing_leaderboards, previous_ongoing_leaderboards)
+
+        if @reputation_freeze_time.present?
+          reputation_leaderboard = build_base_leaderboards('reputation', [true, false], @reputation_freeze_time)
+          create_reputation_leaderboard(reputation_leaderboard)
+        end
       end
       success
     end
@@ -361,6 +367,7 @@ module ChallengeRounds
     end
 
     def freeze_time
+      return @reputation_freeze_time if @reputation_freeze_time
       @is_freeze ? freeze_dttm : Time.current
     end
 
@@ -382,6 +389,10 @@ module ChallengeRounds
 
         MlChallenge::AwardPointJob.perform_now(leaderboard, 'leaderboard_rank_change') if leaderboard.previous_row_num < leaderboard.row_num
       end
+    end
+
+    def create_reputation_leaderboard(leaderboards)
+      BaseLeaderboard.import!(leaderboards)
     end
   end
 end

@@ -1,0 +1,132 @@
+@import "../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../styles/base/__base-dir.scss";
+
+/* Slideshow container */
+.slideshowContainer {
+  position: relative;
+  max-width: 1137px;
+}
+
+/* Slides */
+.mySlides {
+  @include media-query("large") {
+    padding: 0px;
+  }
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  width: auto;
+  color: #747474;
+  font-weight: bold;
+  user-select: none;
+
+  i {
+    font-size: 26px;
+  }
+
+  /* On hover, add a black background color with a little bit see-through */
+  &:hover {
+    color: rgba(0, 0, 0, 0.8);
+  }
+}
+/* Position the "next button" to the right */
+
+.next {
+  position: absolute;
+  right: 15%;
+}
+.prev {
+  left: 15%;
+}
+
+/* The dot/bullet/indicator container */
+.dotContainer {
+  text-align: center;
+  padding: 20px;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 8px;
+  background-color: #333;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+
+  &:hover {
+    background-color: rgb(248, 222, 222);
+  }
+}
+
+/* Add a background color to the active dot/circle */
+.active {
+  background-color: #050505;
+  height: 17px;
+  width: 17px;
+}
+
+/* Add an italic font style to all quotes */
+.quoteText {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: $font-weight-medium;
+  font-size: 34px;
+  line-height: 48px;
+  text-align: center;
+  letter-spacing: 0.1px;
+  color: #1f1f1f;
+  // min-height: 155px;
+
+  @include media-query("large") {
+    font-size: 23px;
+    line-height: 32px;
+  }
+  @include media-query("small") {
+    font-size: 23px;
+    line-height: 32px;
+  }
+}
+
+.author {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: $font-weight-medium;
+  font-size: 19px;
+  line-height: 32px;
+  color: #1f1f1f;
+  margin: 0px;
+  @include media-query("small") {
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+  }
+}
+.post {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+  margin: 0px;
+  color: #1f1f1f;
+}
+
+.authorContainer {
+  position: relative;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  padding-top: 29px;
+  justify-content: center;
+  align-items: center;
+  @include media-query("small") {
+    flex-direction: column;
+  }
+}

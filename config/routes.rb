@@ -12,6 +12,7 @@ def challenge_routes
     get :remove_social_media_image
     get :remove_banner
     get :remove_banner_mobile
+    get :remove_square_image
     get :clef_task
     get :export
     post :import
@@ -182,6 +183,7 @@ Rails.application.routes.draw do
     patch :accept_terms
     get :impersonate, on: :collection
     get :stop_impersonating, on: :collection
+    get 'switch_tab/:tab' => 'participants#switch_tab', :as => :switch_tab
     get '/read_notification/:id' => 'participants#read_notification', :as => :read_notification
     match '/notifications', to: 'email_preferences#edit', via: :get
     match '/notifications', to: 'email_preferences#update', via: :patch
@@ -192,7 +194,7 @@ Rails.application.routes.draw do
 
   resources :job_postings, path: "jobs", only: [:index, :show]
   resources :gdpr_exports, only: [:create]
-  resources :landing_page, only: [:index]
+  match '/landing_page/home', to: 'landing_page#index', via: :get
   match '/landing_page/host', to: 'landing_page#host', via: :get
 
   resources :organizer_applications, only: [:create]
@@ -274,7 +276,17 @@ Rails.application.routes.draw do
   resources :publications, path: :research, only: [:index, :show] do
     get :all, on: :collection
   end
+
   resources :post_bookmarks, only: [:create, :destroy]
+  resources :badges, only: [:index] do
+    post :shared_notebook, on: :collection
+    post :downloaded_notebook, on: :collection
+    post :executed_notebook, on: :collection
+  end
+
+  resources :ratings, only: [:index, :create] do
+    get :search, on: :collection
+  end
 
   match '/contact', to: 'pages#contact', via: :get
   match '/privacy', to: 'pages#privacy', via: :get

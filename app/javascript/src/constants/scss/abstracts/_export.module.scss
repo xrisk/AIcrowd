@@ -1,0 +1,76 @@
+@import "variables";
+
+:export {
+  //
+  // Colors
+  //
+  // Brand
+  colorPrimary: $color-primary;
+  colorSecondary: $color-secondary;
+  // Grey
+  colorGrey: $color-grey;
+  colorBorder: $color-border;
+  colorBorderLight: $color-border-light;
+  colorBgLight: $color-bg-light;
+  colorBgDark: $color-bg-dark;
+  // Text
+  colorTextDark: $color-text-dark;
+  colorTextLight: $color-text-light;
+  colorTextInfoBar: $color-text-info-bar;
+  colorTextAccent: $color-text-accent;
+  colorLink: $color-link;
+  // Status
+  colorSuccess: $color-success;
+  colorInfoBar: $color-info-bar;
+  colorError: $color-error;
+  // Tier
+  colorTierLegend: $color-tier-legend;
+  colorTierMaster: $color-tier-master;
+  colorTierPro: $color-tier-pro;
+  colorTierElite: $color-tier-elite;
+  colorTierVeteran: $color-tier-veteran;
+  colorTierRookie: $color-tier-rookie;
+  // Badge
+  colorBadgeGold: $color-badge-gold;
+  colorBadgeSilver: $color-badge-silver;
+  colorBadgeBronze: $color-badge-bronze;
+  colorBadgeFirst: $color-badge-first;
+  // Badge icon
+  colorBadgeIconGold: $color-badge-icon-gold;
+  colorBadgeIconSilver: $color-badge-icon-silver;
+  colorBadgeIconBronze: $color-badge-icon-bronze;
+  colorBadgeIconFirst: $color-badge-icon-first;
+  //
+  // Font sizes
+  //
+  fontXXLarge: $font-xx-large;
+  fontXLarge: $font-x-large;
+  fontLarge: $font-large;
+  fontMedium: $font-medium;
+  fontSmall: $font-small;
+  fontXSmall: $font-x-small;
+  fontXXSmall: $font-xx-small;
+
+  // Font weight
+  fontWeightSemibold: $font-weight-semibold;
+  fontWeightMedium: $font-weight-medium;
+
+  // Radius
+  radiusNormal: $radius-normal;
+  radiusCircle: $radius-circle;
+
+  // Box shadow
+  shadow: $shadow;
+
+  // Spacing
+  spacingXXXSmall: $spacing-xxx-small;
+  spacingXXSmall: $spacing-xx-small;
+  spacingXSmall: $spacing-x-small;
+  spacingSmall: $spacing-small;
+  spacingMedium: $spacing-medium;
+  spacingLarge: $spacing-large;
+  spacingXLarge: $spacing-x-large;
+  spacingXXLarge: $spacing-xx-large;
+  spacingXXXLarge: $spacing-xxx-large;
+  spacingHuge: $spacing-huge;
+}

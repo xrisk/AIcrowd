@@ -62,6 +62,21 @@
         <small id="partnerLogoHelp" class="form-text text-muted">Your image will be cropped if necessary. 5 MB limit</small>
     </div>
 
+    <div class="form-group">
+        <span class="label-text">Landing page image</span>
+        <% if challenge.landing_square_image_file.present? %>
+            <%= image_tag challenge.landing_square_image_file.url, id: 'challenges-form-card-image', class: 'form-challenge-card-image' %>
+        <% end %>
+    </div>
+
+    <div class="form-group">
+        <%= f.file_field :landing_square_image_file %>
+        <% if @challenge.persisted? %>
+            <%= link_to 'Delete', remove_square_image_challenge_path(@challenge), remote: true, id: 'challenges-form-remove-card-image', class: "form-text" %>
+        <% end %>
+        <small id="partnerLogoHelp" class="form-text text-muted">Your image will be cropped if necessary. 5 MB limit</small>
+    </div>
+
     <div class='form-group'>
         <span class="label-text">Banner Color (Hex Color)</span>
         <%= f.text_field :banner_color, placeholder: "F8F9F9", class: "form-control" %>
