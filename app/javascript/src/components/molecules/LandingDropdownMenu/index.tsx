@@ -3,6 +3,9 @@ import Link from 'next/link';
 
 import styles from './landingDropdownMenu.module.scss';
 import SocialButtons from 'src/components/atoms/Button/SocialButtons';
+import UserItem from '../notificationItem/UserItem';
+import ChallengeItem from '../notificationItem/ChallengeItem';
+import GenericItem from '../notificationItem/GenericItem';
 const { main, socialIconWrapper } = styles;
 
 export type LandingDropdownMenuProps = {
@@ -15,6 +18,9 @@ export type LandingDropdownMenuProps = {
   setIsOpen?: any;
   enterMenu?: () => void;
   leaveMenu?: () => void;
+  loading?: boolean;
+  notificationData: any;
+  isNotification: boolean;
 };
 
 const LandingDropdownMenu = ({

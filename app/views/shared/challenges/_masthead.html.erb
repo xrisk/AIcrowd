@@ -19,7 +19,7 @@
     <style>
     .masthead-banner {
       background-image: url('<%= challenge.banner_file.url %>');
-      background-color: #<%= challenge.banner_color.presence || "F8F9F9" %>
+      background-color: <%= challenge.banner_color.presence || "F8F9F9" %>
     }
     @media (max-width: 768px) {
       .masthead-banner {
