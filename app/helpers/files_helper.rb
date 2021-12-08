@@ -17,7 +17,7 @@ module FilesHelper
                                 dataset_folder_path: file.title,
                                 downloaded: false
     )
-    return "?unique_download_uri=#{dfd.id}"
+    return "?unique_download_uri=#{dfd.id}&challenge_id=#{@challenge.id}"
   end
 
   def file_expiring_url(file)
