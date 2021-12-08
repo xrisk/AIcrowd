@@ -1,11 +1,11 @@
-<% if current_participant && show_submission_popup?(current_participant) %>
+<% if current_participant.present? && show_submission_popup?(current_participant) %>
   <div class="modal participant_secondary_info_modal" id="participant_secondary_info_modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" style="max-width: 50%;">
       <div class="modal-content" style="width: 90%;margin-left: 5%;margin-top: 16%;">
       <div id="detail-modal2" style="margin-left: 5%;margin-right: 5%;">
         <div class="">
           <img class="top" src="/assets/img/aicrowd logo 1.png" alt="">
-          <span class="fa fa-times cross"></span>
+          <span class="fa fa-times cross" data-dismiss="modal" aria-label="Close" style="cursor: pointer"></span>
         </div>
 
         <div class="">
