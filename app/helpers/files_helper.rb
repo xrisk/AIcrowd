@@ -15,7 +15,8 @@ module FilesHelper
                                 dataset_file_id: file&.id.presence || 0,
                                 dataset_folder_id: folder&.id.presence || 0,
                                 dataset_folder_path: file.title,
-                                downloaded: false
+                                downloaded: false,
+                                challenge_id: @challenge.id
     )
     return "?unique_download_uri=#{dfd.id}&challenge_id=#{@challenge.id}"
   end
