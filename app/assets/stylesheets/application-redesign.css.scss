@@ -3452,13 +3452,14 @@ input[type="button"].btn-block {
   }
 }
 
-.btn-set-social {
+.btn-set-social .btn-google{
   margin-bottom: 40px;
 }
 
-.btn-set-social .btn {
-  margin-bottom: 12px;
+.btn-set-social .btn-github{
+  margin-bottom: 20px;
 }
+
 
 .btn-set-social img {
   width: 16px;
@@ -15121,17 +15122,20 @@ input.width-185 {
   }
 }
 
-.pl-14{
-  padding-left: 14px!important;
-}
-
 .ml-lg-80{
-  margin-left: 80px!important;
+  margin-left: 98px!important;
 }
 
 @media only screen and (max-width: 992px) {
   .ml-lg-80{
-    margin-left: 14px!important;
+    margin-left: 0px!important;
+    margin-left: 0px!important;
+  }
+  .overflow-md-x{
+    overflow-x: scroll!important;
+  }
+  .table-responsive-md{
+    overflow-x: scroll;
   }
 }
 
