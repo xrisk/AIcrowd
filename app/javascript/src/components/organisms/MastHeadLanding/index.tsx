@@ -1,8 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import cx from 'classnames';
-import { useRouter } from 'next/router';
-
-import { Link as ScrollLink } from 'react-scroll';
+import React from 'react';
 
 import styles from './mastHeadLanding.module.scss';
 import useMediaQuery from 'src/hooks/useMediaQuery';
@@ -28,10 +24,8 @@ const MastHeadLanding = ({
   landingChallengeCard3,
   loading,
 }: MastHeadLandingProps) => {
-  const router = useRouter();
   const isS = useMediaQuery(sizes.small);
   const isXS = useMediaQuery(sizes.xSmall);
-  const isM = useMediaQuery(sizes.medium);
   const isL = useMediaQuery(sizes.large);
 
   const description = `enables data science experts and enthusiasts 
@@ -54,20 +48,18 @@ const MastHeadLanding = ({
         </div>
         <div className={cardWrapper}>
           <div className={glowDecor}></div>
-          {!isM && (
-            <>
-              <div data-card="card1">
-                <LandingChallengeCard loading={loading} {...landingChallengeCard2} priority />
-              </div>
+          <>
+            <div data-card="card1">
+              <LandingChallengeCard loading={loading} {...landingChallengeCard2} priority />
+            </div>
 
-              <div data-card="card2">
-                <LandingChallengeCard loading={loading} {...landingChallengeCard1} priority />
-              </div>
-              <div data-card="card3">
-                <LandingChallengeCard loading={loading} {...landingChallengeCard3} priority />
-              </div>
-            </>
-          )}
+            <div data-card="card2">
+              <LandingChallengeCard loading={loading} {...landingChallengeCard1} priority />
+            </div>
+            <div data-card="card3">
+              <LandingChallengeCard loading={loading} {...landingChallengeCard3} priority />
+            </div>
+          </>
         </div>
       </div>
     </>

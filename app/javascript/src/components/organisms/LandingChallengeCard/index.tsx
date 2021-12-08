@@ -104,7 +104,14 @@ const LandingChallengeCard = ({
               </div>
 
               <div className={participantsWrapper}>
-                <AvatarGroup users={users} size="sm" onCard={true} borderColor={color} loading={loading} />
+                <AvatarGroup
+                  users={users}
+                  size="sm"
+                  onCard={true}
+                  borderColor={color}
+                  loading={loading}
+                  priority={priority}
+                />
                 <div className={circleValue}>
                   <CircleValue value={userCount} size="sm" onCard={true} borderColor={color} />
                 </div>
@@ -120,7 +127,14 @@ const LandingChallengeCard = ({
                 <div className={organizerWrapper}>
                   <Tooltip position="down" label={name}>
                     <div className={logoWrapper}>
-                      <img src={logo} className={organizerLogo}></img>
+                      <img
+                        src={logo}
+                        placeholder="blur"
+                        blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                        layout="fill"
+                        objectFit="contain"
+                        priority={priority}
+                      />
                     </div>
                   </Tooltip>
                   {/* Hide names if organizers are more then 1 */}

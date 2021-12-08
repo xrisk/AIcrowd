@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useLayoutEffect } from 'react';
 import { ParticleMap } from 'src/libs/particleMap';
 import worldMap from './worldGeo.json';
 
@@ -11,7 +11,7 @@ const LandingCommunityMap = ({ communityMembersList }) => {
   const communityMemberRef = useRef();
   const communityMembersMapRef = useRef();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     function handleResize() {
       setDimensions({
         height: window.innerHeight,
@@ -26,7 +26,7 @@ const LandingCommunityMap = ({ communityMembersList }) => {
     };
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     var filteredFeatures = data.features.filter(function(feature) {
       return feature.id !== 'ATA';
     });

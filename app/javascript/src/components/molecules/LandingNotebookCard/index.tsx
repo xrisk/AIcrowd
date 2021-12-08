@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'src/components/atoms/Link';
+import Image from 'next/image';
 
 import styles from './landingNotebook.module.scss';
 
@@ -22,7 +23,14 @@ const LandingNotebookCard = ({ title, image, author, url }: LandingNotebookCardP
           <div className={mainWrapper}>
             <div className={subWrapper}>
               <div className={imgWrapper}>
-                <img src={image}></img>
+                <img
+                  src={image}
+                  placeholder="blur"
+                  blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                  layout="fill"
+                  objectFit="contain"
+                  alt="notebook image"
+                />
               </div>
               <div className={textWrapper}>
                 <div className={titleText}>{title} </div>

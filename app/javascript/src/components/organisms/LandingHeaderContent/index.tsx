@@ -62,12 +62,7 @@ const LandingHeaderContent = ({
         {!hero && (
           <div>
             {logo && (
-              <AicrowdLogo
-                type="text"
-                size={isS ? 28 : isL ? 34 : isXL ? 40 : 48}
-                fontFamily="Inter"
-                fontWeight={isL ? 500 : 600}
-              />
+              <AicrowdLogo type="text" size={isS ? 28 : isL ? 34 : isXL ? 40 : 48} fontWeight={isL ? 500 : 600} />
             )}{' '}
             <span className={titleText} style={{ width: descriptionWidth }}>
               {title}
@@ -75,7 +70,7 @@ const LandingHeaderContent = ({
           </div>
         )}
         <div className={descriptionText} style={{ width: descriptionWidth }}>
-          {hero && <AicrowdLogo type="text" size={isXL ? 16 : 19} fontFamily="Inter" />} {description}
+          {hero && <AicrowdLogo type="text" size={isXL ? 16 : 19} />} {description}
         </div>
         <div className={buttonWrapper}>
           {/* Show in hero only */}
@@ -89,7 +84,6 @@ const LandingHeaderContent = ({
                 paddingTop="8px"
                 paddingBottom="8px"
                 iconSize="18px"
-                fontFamily="Inter"
                 handleClick={() => (window.location.href='/challenges')}
               />
             </div>
@@ -106,7 +100,6 @@ const LandingHeaderContent = ({
               paddingTop="8px"
               paddingBottom="8px"
               iconSize="18px"
-              fontFamily="Inter"
               handleClick={() => (window.location.href=url || '/')}
             />
           )}
@@ -116,8 +109,8 @@ const LandingHeaderContent = ({
           <div className={registerButtonWrapper}>
             {!isLoggedIn && (
               <>
-                <ActionButton type="google" size="large" fontFamily="Inter" handleClick={() => (window.location.href='/participants/auth/google_oauth2')} />
-                <ActionButton type="github" size="large" fontFamily="Inter" handleClick={() => (window.location.href='/participants/auth/github')} />
+                <ActionButton type="google" size="large" handleClick={() => (window.location.href='/participants/auth/google_oauth2')} />
+                <ActionButton type="github" size="large" handleClick={() => (window.location.href='/participants/auth/github')} />
                 <ButtonDefault
                   text="Sign Up With Email"
                   iconClass="envelope"
@@ -128,7 +121,6 @@ const LandingHeaderContent = ({
                   iconLeft
                   fontSize="12px"
                   fontWeight="500"
-                  fontFamily="Inter"
                   justifyContent="flex-end"
                   handleClick={() => (window.location.href='/participants/sign_up')}
                 />
@@ -145,7 +137,6 @@ const LandingHeaderContent = ({
                   size="large"
                   fontSize="12px"
                   fontWeight="500"
-                  fontFamily="Inter"
                   justifyContent="flex-end"
                   handleClick={() => (window.location.href='/challenges')}
                 />
@@ -158,7 +149,6 @@ const LandingHeaderContent = ({
                   size="large"
                   fontSize="12px"
                   fontWeight="500"
-                  fontFamily="Inter"
                   justifyContent="flex-end"
                   handleClick={() => (window.location.href='/showcase')}
                 />
@@ -171,7 +161,6 @@ const LandingHeaderContent = ({
                   size="large"
                   fontSize="12px"
                   fontWeight="500"
-                  fontFamily="Inter"
                   justifyContent="flex-end"
                   handleClick={() => (window.location.href='https://discourse.aicrowd.com/')}
                 />

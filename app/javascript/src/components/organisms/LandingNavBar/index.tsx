@@ -123,7 +123,7 @@ const LandingNavBar = ({
               <AicrowdLogo type="full" />
             </div>
           </a>
-          
+
           {/* Hamburger icon Show only on small screens */}
           {isM && (
             <div className={iconWrapper} onClick={handleMenu} onMouseEnter={() => setMenu(true)}>
@@ -133,7 +133,7 @@ const LandingNavBar = ({
               </div>
             </div>
           )}
-          
+
           {/* Show only on large screens */}
           {!isM && (
             <div className={navLinkWrapper}>
@@ -161,10 +161,10 @@ const LandingNavBar = ({
                   leaveMenu={leaveMenu}
                 />
               )}
-          
+
               <div className={dropdownNavItemWrapper} onMouseLeave={leaveButton}>
                 <div className={navItem}>
-                  <a href={challengesMenuItem.link}>
+                  <a href={challengesMenuItem?.link}>
                     <a>Challenges</a>
                   </a>
                 </div>
@@ -172,7 +172,7 @@ const LandingNavBar = ({
                   Community
                 </div>
                 <div className={navItem}>
-                  <a href={researchMenuItem.link}>
+                  <a href={researchMenuItem?.link}>
                     <a>Research</a>
                   </a>
                 </div>
@@ -205,7 +205,6 @@ const LandingNavBar = ({
                       iconClass="arrow-right"
                       iconColor="#F0524D"
                       fontWeight="500"
-                      fontFamily="Inter"
                       paddingTop="8px"
                       paddingBottom="8px"
                       handleClick={() => (window.location.href='/participants/sign_up')}

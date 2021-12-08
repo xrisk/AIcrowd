@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import cx from 'classnames';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 
 import LandingNavBar from 'src/components/organisms/LandingNavBar/index';
 import MastHeadLanding from 'src/components/organisms/MastHeadLanding/index';
 import PartnerBarLanding from 'src/components/organisms/PartnerBarLanding/index';
-import LandingCommunityMap from 'src/components/organisms/LandingCommunityMap';
+// import LandingCommunityMap from 'src/components/organisms/LandingCommunityMap';
 import useBoolean from 'src/hooks/useBoolean';
 import LandingMenu from 'src/components/organisms/LandingMenu/index';
 import { LandingStatItemProps } from 'src/components/molecules/LandingStatItem';
@@ -17,6 +18,11 @@ import LandingSubmissionCard, { LandingSubmissionCardProps } from 'src/component
 import LandingCarousel from 'src/components/organisms/LandingCarousel';
 import useMediaQuery from 'src/hooks/useMediaQuery';
 import { sizes } from 'src/constants/screenSizes';
+import useWindowDimensions from 'src/hooks/useWindowDimensions';
+
+const LandingCommunityMap = dynamic(() => import('src/components/organisms/LandingCommunityMap'), {
+  loading: () => <p>Loading ...</p>,
+});
 
 import styles from './landing.module.scss';
 
@@ -38,6 +44,8 @@ const {
   organizerText,
   sectionGapOrganizerLogos,
   carouselWrapper,
+  main,
+  bannerImage,
 } = styles;
 
 type LandingProps = {
@@ -94,6 +102,7 @@ const Landing = ({
   const isXL = useMediaQuery(sizes.xLarge);
   const isM = useMediaQuery(sizes.medium);
   const isL = useMediaQuery(sizes.large);
+  const { height, width } = useWindowDimensions();
   const { value: isMenuOpen, toggle, setValue: setMenu } = useBoolean();
 
   const challengeDescription = `AIcrowd hosts challenges that tackle diverse problems in Artificial Intelligence with real-world impact.  AIcrowd Community spearheads the state of the art, be it advanced RL innovation or applications of ML in scientific research. There is an interesting problem for everyone.`;
@@ -135,7 +144,7 @@ const Landing = ({
   const allOrganizerLogos = [...organizerLogoList1, ...organizerLogoList2];
 
   return (
-    <>
+    <div className={main}>
       <LandingNavBar
         handleMenu={toggle}
         isMenuOpen={isMenuOpen}
@@ -176,13 +185,16 @@ const Landing = ({
                   descriptionWidth={isL ? '100%' : isXL ? '389px' : '560px'}
                 />
                 {/* aicrowd large logo */}
-                {!isS && (
+                <div className={aicrowdLargeLogo}>
                   <img
                     src="https://images.aicrowd.com/images/landing_page/landingAicrowdSketch.png"
-                    alt="aicrowd logo"
-                    className={aicrowdLargeLogo}
-                    width="100%"></img>
-                )}
+                    placeholder="blur"
+                    blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                    layout="fill"
+                    objectFit="contain"
+                    quality={1}
+                    alt="aicrowd logo"></Image>
+                </div>
               </div>
               <LandingChallengeCardList challengeListData={challengeListData} loading={loading} />
             </section>
@@ -194,7 +206,7 @@ const Landing = ({
                   description={[
                     notebookDescription,
                     ' ',
-                    <span role="img" aria-label="sheep" key={'heart'}>
+                    <span role="img" aria-label="heart" key={'heart'} style={{ color: '#f0524d' }}>
                       {'\u2764\uFE0F'}
                     </span>,
                     ' ',
@@ -265,10 +277,16 @@ const Landing = ({
 
             {/* AIcrowd Banner  */}
             <section className={cx(challengesWrapper)}>
-              <img
-                src={`https://images.aicrowd.com/images/landing_page/${isS ? 'aicrowdBannerMobile' : 'aicrowdBanner'}.png`}
-                alt="aicrowd banner"
-                width="100%"></img>
+              <div className={bannerImage}>
+                <img
+                  src={`https://images.aicrowd.com/images/landing_page/${isS ? 'aicrowdBannerMobile' : 'aicrowdBanner'}.png`}
+                  placeholder="blur"
+                  blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                  layout="fill"
+                  objectFit={isS ? 'cover' : 'contain'}
+                  alt="aicrowd banner"
+                />
+              </div>
             </section>
 
             {/* AIcrowd Research  */}
@@ -289,9 +307,16 @@ const Landing = ({
                 />
               </div>
               <div className={researchImageWrapper}>
-                <img src="https://images.aicrowd.com/images/landing_page/learning_run.gif"></img>
-                <img src="https://images.aicrowd.com/images/landing_page/mars_demo.gif"></img>
-                <img src="https://images.aicrowd.com/images/landing_page/flatland.gif"></img>
+                <video loop autoPlay muted>
+                  <source src="https://images.aicrowd.com/images/landing_page/learning_run.mp4" type="video/mp4"></source>
+                  Your browser does not support the video tag.
+                </video>
+                <video loop autoPlay muted>
+                  <source src="https://images.aicrowd.com/images/landing_page/mars_demo.mp4" type="video/mp4"></source>
+                </video>
+                <video loop autoPlay muted>
+                  <source src="https://images.aicrowd.com/images/landing_page/flatland.mp4" type="video/mp4"></source>
+                </video>
                 <img src="https://images.aicrowd.com/images/landing_page/bill-gates-tweet.png"></img>
               </div>
             </section>
@@ -327,7 +352,9 @@ const Landing = ({
               <div>
                 {/* Organizers logo1  */}
                 {!isL && (
-                  <div className={organizerLogos1}>
+                  <div
+                    className={organizerLogos1}
+                    style={{ columnGap: width > 1280 && width < 1441 && `${(width - 1202) / 5}px` }}>
                     {organizerLogoList1.map(fileName => {
                       return (
                         <img
@@ -346,7 +373,6 @@ const Landing = ({
                 {isL && (
                   <div className={organizerLogos1}>
                     {allOrganizerLogos.map(fileName => {
-                      // return <img src={`https://images.aicrowd.com/images/landing_page/${fileName}`} key={fileName}></img>;
                       return (
                         <img
                           src={`https://images.aicrowd.com/images/landing_page/${fileName}`}
@@ -374,10 +400,13 @@ const Landing = ({
                 buttonText="Get In Touch"
                 url="/landing_page/host"
                 buttonType="primary"
-                descriptionWidth={isL ? '100%' : isXL ? '541px' : '752px'}
+                descriptionWidth={'auto'}
+                // descriptionWidth={isL ? '100%' : isXL ? '541px' : '752px'}
               />
               {/* Organizers logo2  */}
-              <div className={organizerLogos2}>
+              <div
+                className={organizerLogos2}
+                style={{ columnGap: width > 1280 && width < 1441 && `${(width - 1202) / 5}px` }}>
                 {organizerLogoList2.map(fileName => {
                   // return <img src={`https://images.aicrowd.com/images/landing_page/${fileName}`} key={fileName}></img>;
                   return (
@@ -396,7 +425,7 @@ const Landing = ({
           </div>
         </main>
       </div>
-    </>
+    </div>
   );
 };
 

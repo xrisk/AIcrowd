@@ -6,7 +6,7 @@ import SocialButtons from 'src/components/atoms/Button/SocialButtons';
 import UserItem from '../notificationItem/UserItem';
 import ChallengeItem from '../notificationItem/ChallengeItem';
 import GenericItem from '../notificationItem/GenericItem';
-const { main, socialIconWrapper } = styles;
+const { main, socialIconWrapper, placeholderText } = styles;
 
 export type LandingDropdownMenuProps = {
   menu: Array<{ name: string; link: string }>;
@@ -36,13 +36,24 @@ const LandingDropdownMenu = ({
   loading,
   isNotification,
 }: LandingDropdownMenuProps) => {
-  let { userNotification, challengeNotification, genericNotification } = notificationData;
+  let { genericNotification } = notificationData;
+
+  // Check if hovered on notification icon & notification data is available
+  const isNoNotification =
+    (isNotification && !genericNotification) || (isNotification && genericNotification?.length === 0);
 
   return (
     <>
       <div
         className={main}
-        style={{ top: top, left: left, right: right, bottom: bottom }}
+        style={{
+          top: top,
+          left: left,
+          right: right,
+          bottom: bottom,
+          width: isNoNotification && '300px',
+          height: isNoNotification && '100px',
+        }}
         onMouseEnter={enterMenu}
         onMouseLeave={leaveMenu}>
         <ul>
@@ -60,7 +71,7 @@ const LandingDropdownMenu = ({
         {/* Show only for notification dropdown */}
         {isNotification && (
           <ul>
-            {userNotification?.map((userNotification, i) => {
+            {/* {userNotification?.map((userNotification, i) => {
               const { url } = userNotification;
               return (
                 <li key={i}>
@@ -84,12 +95,12 @@ const LandingDropdownMenu = ({
                   </a>
                 </li>
               );
-            })}
+            })} */}
             {genericNotification?.map((genericNotification, i) => {
               const { url } = genericNotification;
               return (
                 <li key={i}>
-                  <a href={url}>
+                  <a href={url || ''}>
                     <a>
                       <GenericItem genericNotification={genericNotification} loading={loading} />
                     </a>
@@ -97,10 +108,7 @@ const LandingDropdownMenu = ({
                 </li>
               );
             })}
-
-            <li>
-              <ChallengeItem challengeNotification={challengeNotification} loading={loading} />
-            </li>
+            {isNoNotification && <div className={placeholderText}>No Notifications</div>}
           </ul>
         )}
 
