@@ -1,4 +1,25 @@
 module FilesHelper
+  def file_track_url(file, folder)
+    data = {
+      'file': file.id,
+      'file_path': file.title,
+      'folder': folder&.id.presence || '',
+    }
+    if !current_participant.present?
+      return new_participant_session_path
+    end
+
+    dfd = DatasetFileDownload.create!(participant_id: current_participant.id,
+                                ip_address: request.remote_ip,
+                                external_url: file_expiring_url(file),
+                                dataset_file_id: file&.id.presence || 0,
+                                dataset_folder_id: folder&.id.presence || 0,
+                                dataset_folder_path: file.title,
+                                downloaded: false
+    )
+    return "?unique_download_uri=#{dfd.id}"
+  end
+
   def file_expiring_url(file)
     if file.try(:hosting_location) == 'External' || file.try(:hosting_location) == 'Own S3' || file.new_record?
       return file.external_url

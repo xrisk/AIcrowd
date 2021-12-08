@@ -80,8 +80,6 @@ class Participant < ApplicationRecord
            dependent: :destroy
   has_many :challenges,
            through: :challenge_participants
-  has_many :dataset_file_downloads,
-           dependent: :destroy
   has_many :task_dataset_file_downloads,
            dependent: :destroy
   has_many :email_preferences,
