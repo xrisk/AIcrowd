@@ -37,19 +37,20 @@
         font-family: "Inter";
         // Text truncate
         @include truncateSingle(167px);
+
+        @include media-query("small") {
+          @include truncateSingle(260px);
+        }
       }
 
       .logoWrapper {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
         margin-right: 8px;
         width: 24px;
         height: 24px;
-        .organizerLogo {
-          width: 100%;
-          height: 100%;
-        }
       }
     }
   }
@@ -67,7 +68,6 @@
     padding: $spacing-xx-small;
     padding-top: $spacing-xxx-small;
     cursor: pointer;
-    font-family: Inter;
     border: 1px solid $color-border-light;
     border-bottom: none;
     position: relative;
@@ -125,6 +125,7 @@
       @include media-query("small") {
         font-size: 14px;
         margin-bottom: 10px;
+        width: 100%;
       }
     }
 
@@ -144,7 +145,8 @@
       display: flex;
       justify-self: flex-end;
       .circleValue {
-        margin-left: -18px;
+        margin-left: -8px;
+        z-index: 2;
       }
     }
   }

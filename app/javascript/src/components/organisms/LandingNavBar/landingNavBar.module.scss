@@ -2,19 +2,41 @@
 @import "../../../styles/base/__base-dir.scss";
 
 .main {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   position: fixed;
   padding: 20px 40px;
   width: 100%;
   top: 0px;
   background-color: #fff;
-  z-index: 10;
   left: 50%;
-  font-family: Inter;
-  max-width: 1680px;
+  height: 98px;
   transform: translateX(-50%);
+  z-index: 99;
+
+  @include media-query("small") {
+    padding: 20px 20px;
+    height: 60px;
+  }
+
+  .subWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    padding: 20px 40px;
+    width: 100%;
+    top: 0px;
+    background-color: #fff;
+    left: 50%;
+    max-width: 1680px;
+    transform: translateX(-50%);
+
+    @include media-query("small") {
+      padding: 20px 20px;
+      .logo {
+        display: block;
+      }
+    }
+  }
 
   .navLinkWrapper {
     display: flex;
@@ -33,12 +55,36 @@
         line-height: 24px;
         letter-spacing: 0.15px;
         cursor: pointer;
+        color: #1f1f1f; //temporarily adding this here
       }
 
       .moreText {
         border-right: 1px solid #e7e7e7;
         padding-right: 40px;
         cursor: pointer;
+      }
+
+      .btn-notifications { display: none;
+        cursor: pointer;
+        font-size: 20px;
+        margin-left: 20px;
+        position: relative;
+        background-color: transparent;
+        @include media-query("large") {
+          margin-left: 16px;
+        }
+        .alert-notification {
+          background-color: var(--color-accent);
+          border: 2px solid #fff;
+          border-radius: 50%;
+          box-sizing: content-box;
+          display: inline-block;
+          height: 6px;
+          width: 6px;
+          position: absolute;
+          right: -2px;
+          top: 0;
+        }
       }
     }
 
@@ -93,13 +139,6 @@
           transform: translateY(-3px) rotate(-135deg);
         }
       }
-    }
-  }
-
-  @include media-query("small") {
-    padding: 30px 20px;
-    .logo {
-      display: block;
     }
   }
 }

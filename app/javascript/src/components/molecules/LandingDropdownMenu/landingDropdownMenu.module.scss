@@ -1,7 +1,6 @@
 @import "../../../constants/scss/abstracts/__abstracts-dir.scss";
 @import "../../../styles/base/__base-dir.scss";
 
-
 @keyframes fade {
   from {
     opacity: 0;
@@ -14,6 +13,8 @@
 .main {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   max-width: 350px;
   box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.14);
   border-radius: 6px;
@@ -22,6 +23,9 @@
   animation-timing-function: ease-in-out;
   position: absolute;
   background-color: #ffffff;
+  max-height: 400px;
+  overflow-y: auto;
+  @include customScrollbar(6px, #d1d1d1);
 
   .socialIconWrapper {
     display: flex;
@@ -38,8 +42,15 @@
 
   ul {
     padding: 0px;
+    width: 100%;
+
+    .placeholderText {
+      @include body-text-normal;
+      text-align: center;
+    }
 
     li {
+      width: 100%;
       padding-bottom: 32px;
       font-size: 16px;
       line-height: 24px;

@@ -1,17 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import { ParticleMap } from 'src/libs/particleMap';
 import worldMap from './worldGeo.json';
 
-import styles from './map.module.scss';
+import styles from './landingCommunityMap.module.scss';
 
-const LandingCommunityMap = ({ communityMembersList }) => {
-  const [data, setData] = useState(worldMap);
+const LandingCommunityMap = ({ communityMembersList, width }) => {
+  const [data, setData] = useState({});
   const [dimensions, setDimensions] = React.useState({});
   const canvasRef = useRef();
   const communityMemberRef = useRef();
   const communityMembersMapRef = useRef();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     function handleResize() {
       setDimensions({
         height: window.innerHeight,
@@ -27,14 +27,16 @@ const LandingCommunityMap = ({ communityMembersList }) => {
   });
 
   useEffect(() => {
-    var filteredFeatures = data.features.filter(function(feature) {
+    var filteredFeatures = worldMap.features.filter(function(feature) {
       return feature.id !== 'ATA';
     });
 
     // setData(worldMap);
     setData({ type: 'FeatureCollection', features: filteredFeatures });
+  }, []);
 
-    if (canvasRef && communityMemberRef && communityMembersMapRef && data) {
+  useEffect(() => {
+    if (canvasRef && communityMemberRef && communityMembersMapRef && data?.features) {
       const mapContainer = communityMembersMapRef.current;
       let canvas = canvasRef.current;
 
@@ -58,6 +60,16 @@ const LandingCommunityMap = ({ communityMembersList }) => {
 
       var i;
       let el;
+
+      const memberNodeList = communityMembersMapRef.current.childNodes;
+
+      // Remove all member before creating new
+      [...memberNodeList].map(node => {
+        if (node.className === styles['community-member']) {
+          node?.remove();
+        }
+      });
+
       for (i = 0; i < communityMembersList?.length; i++) {
         el = communityMembersList[i];
         const lat = el.lat * 1.0;
@@ -66,6 +78,7 @@ const LandingCommunityMap = ({ communityMembersList }) => {
         var translateString = 'translate(' + screenCoords[0] + 'px, ' + -1 * screenCoords[1] + 'px)';
 
         const member = document.createElement('div');
+
         const img = document.createElement('img');
         img.setAttribute('src', el.image);
         member.classList.add(styles['community-member']);
@@ -77,15 +90,10 @@ const LandingCommunityMap = ({ communityMembersList }) => {
         member.style['-webkit-transform'] = translateString;
         member.style['display'] = 'block';
 
-        const membersNodeLength = communityMembersMapRef.current.childNodes.length;
-
-        // Prevent duplicate members display on re-render.
-        if (membersNodeLength <= communityMembersList.length) {
-          communityMembersMapRef.current.appendChild(member);
-        }
+        communityMembersMapRef.current.append(member);
       }
     }
-  }, [dimensions]);
+  }, [width, data]);
 
   return (
     <div className={styles['community-members']}>

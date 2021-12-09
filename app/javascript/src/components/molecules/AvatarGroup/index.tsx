@@ -13,9 +13,10 @@ export type AvatarGroupProps = {
   size?: 'sm' | 'lg' | 'md' | 'ml';
   onCard?: boolean;
   borderColor?: string;
+  priority?: boolean;
 };
 
-const AvatarGroup = ({ users, loading, size, onCard, borderColor }: AvatarGroupProps) => (
+const AvatarGroup = ({ users, loading, size, onCard, borderColor, priority }: AvatarGroupProps) => (
   <>
     <div className={cx(styles['avatar-group'])}>
       {users.map((user, index) => {
@@ -29,6 +30,7 @@ const AvatarGroup = ({ users, loading, size, onCard, borderColor }: AvatarGroupP
               size={size}
               onCard={onCard}
               borderColor={borderColor}
+              priority={priority}
             />
           </div>
         );

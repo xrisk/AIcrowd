@@ -76,19 +76,16 @@ const ButtonDefault = ({
   }
   return (
     <>
-      {/* <motion.button type="button">Some text</motion.button> */}
-
       {/* Show button with icon */}
       {iconClass && iconClass.length > 0 ? (
-        <button
+        <motion.button
           // eslint-disable-next-line react/button-has-type
           type={buttonType}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           className={`${styles[`btn-${type}`]} ${largeButton} ${wideButton}`}
           disabled={disabled}
-          // whileTap={{ scale: disableAnimation ? 1 : 0.98 }}
-          // layout="position"
+          whileTap={{ scale: disableAnimation ? 1 : 0.98 }}
           style={{
             fontWeight: fontWeight,
             paddingRight: paddingRight,
@@ -114,16 +111,15 @@ const ButtonDefault = ({
               fontSize: iconSize,
             }}
           />
-        </button>
+        </motion.button>
       ) : (
-        <button
+        <motion.button
           // eslint-disable-next-line react/button-has-type
           type={buttonType}
           className={`${styles[`btn-${type}`]} ${largeButton} ${wideButton}`}
           disabled={disabled}
           onClick={handleClick}
-          // whileTap={{ scale: disableAnimation ? 1 : 0.98 }}
-          // layout="position"
+          whileTap={{ scale: disableAnimation ? 1 : 0.98 }}
           style={{
             fontWeight: fontWeight,
             paddingRight: paddingRight,
@@ -138,7 +134,7 @@ const ButtonDefault = ({
             justifyContent,
           }}>
           {text}
-        </button>
+        </motion.button>
       )}
     </>
   );

@@ -1,10 +1,12 @@
 import React from 'react';
 import cx from 'classnames';
+import Image from 'next/image';
+import dynamic from 'next/dynamic';
 
 import LandingNavBar from 'src/components/organisms/LandingNavBar/index';
 import MastHeadLanding from 'src/components/organisms/MastHeadLanding/index';
 import PartnerBarLanding from 'src/components/organisms/PartnerBarLanding/index';
-import LandingCommunityMap from 'src/components/organisms/LandingCommunityMap';
+// import LandingCommunityMap from 'src/components/organisms/LandingCommunityMap';
 import useBoolean from 'src/hooks/useBoolean';
 import LandingMenu from 'src/components/organisms/LandingMenu/index';
 import { LandingStatItemProps } from 'src/components/molecules/LandingStatItem';
@@ -16,6 +18,11 @@ import LandingSubmissionCard, { LandingSubmissionCardProps } from 'src/component
 import LandingCarousel from 'src/components/organisms/LandingCarousel';
 import useMediaQuery from 'src/hooks/useMediaQuery';
 import { sizes } from 'src/constants/screenSizes';
+import useWindowDimensions from 'src/hooks/useWindowDimensions';
+
+const LandingCommunityMap = dynamic(() => import('src/components/organisms/LandingCommunityMap'), {
+  loading: () => <p>Loading ...</p>,
+});
 
 import styles from './landing.module.scss';
 
@@ -37,6 +44,8 @@ const {
   organizerText,
   sectionGapOrganizerLogos,
   carouselWrapper,
+  main,
+  bannerImage,
 } = styles;
 
 type LandingProps = {
@@ -65,6 +74,7 @@ type LandingProps = {
   image: string;
   isLoggedIn: boolean;
   notificationData: any;
+  width: number;
 };
 
 const Landing = ({
@@ -93,6 +103,7 @@ const Landing = ({
   const isXL = useMediaQuery(sizes.xLarge);
   const isM = useMediaQuery(sizes.medium);
   const isL = useMediaQuery(sizes.large);
+  const { height, width } = useWindowDimensions();
   const { value: isMenuOpen, toggle, setValue: setMenu } = useBoolean();
 
   const challengeDescription = `AIcrowd hosts challenges that tackle diverse problems in Artificial Intelligence with real-world impact.  AIcrowd Community spearheads the state of the art, be it advanced RL innovation or applications of ML in scientific research. There is an interesting problem for everyone.`;
@@ -100,7 +111,7 @@ const Landing = ({
   const notebookDescription = `Browse winning solutions created with`;
   const notebookDescription2 = `by the community. Learn, discuss and grow your AI skills.`;
 
-  const discussionsDescription = `Join our vibrant community of problem solvers like you. Partner with AIcrew members to solve unique challenges or find co-authors for your next research project.
+  const discussionsDescription = `Join our vibrant community of problem solvers like you. Partner with AIcrew members to solve unique challenges or find co-authors for your next research project.  
 `;
 
   const researchDescriptionPara1 = `At AIcrowd Research, we explore our scientific curiosities through challenges while engaging a diverse group of researchers.`;
@@ -134,7 +145,7 @@ const Landing = ({
   const allOrganizerLogos = [...organizerLogoList1, ...organizerLogoList2];
 
   return (
-    <>
+    <div className={main}>
       <LandingNavBar
         handleMenu={toggle}
         isMenuOpen={isMenuOpen}
@@ -175,25 +186,29 @@ const Landing = ({
                   descriptionWidth={isL ? '100%' : isXL ? '389px' : '560px'}
                 />
                 {/* aicrowd large logo */}
-                {!isS && (
+                <div className={aicrowdLargeLogo}>
                   <img
-                    src="/assets/misc/landingAicrowdSketch.png"
+                    src="https://images.aicrowd.com/images/landing_page/landingAicrowdSketch.png"
+                    placeholder="blur"
+                    blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                    layout="fill"
+                    objectFit="contain"
+                    
                     alt="aicrowd logo"
-                    className={aicrowdLargeLogo}
-                    width="100%"></img>
-                )}
+                  width="100%"/>
+                </div>
               </div>
               <LandingChallengeCardList challengeListData={challengeListData} loading={loading} />
             </section>
             {/* Your solutions */}
-            <section className={cx(challengesWrapper, sectionGap)} style={{ paddingBottom: isM ? '64px' : '200px' }}>
+            <section className={cx(challengesWrapper, sectionGap)} style={{ paddingBottom: isL ? '64px' : '200px' }}>
               <div>
                 <LandingHeaderContent
                   title="Your Solutions"
                   description={[
                     notebookDescription,
                     ' ',
-                    <span role="img" aria-label="sheep" key={'heart'}>
+                    <span role="img" aria-label="heart" key={'heart'} style={{ color: '#f0524d' }}>
                       {'\u2764\uFE0F'}
                     </span>,
                     ' ',
@@ -208,16 +223,16 @@ const Landing = ({
                 {/* Notebook cards */}
                 <div className={notebookCardWrapper}>
                   {notebookCardData.map((item, i) => {
-                    const { slug, title, description, lastUpdated, image, author } = item;
+                    const { title, description, lastUpdated, image, author, url } = item;
                     return (
                       <div key={i} data-notebook={i + 1}>
                         <LandingNotebookCard
-                          slug={slug}
                           title={title}
                           description={description}
                           lastUpdated={lastUpdated}
                           image={image}
                           author={author}
+                          url={url}
                         />
                       </div>
                     );
@@ -231,9 +246,9 @@ const Landing = ({
               <div>
                 <LandingHeaderContent
                   title="The Community"
-                  url="//discourse.aicrowd.com"
                   description={[discussionsDescription, <br />, <br />, 'On AIcrowd forums, find your AI tribe.']}
                   buttonText="Explore Discussions"
+                  url="https://discourse.aicrowd.com/"
                   descriptionWidth={isL ? '100%' : isXL ? '541px' : '621px'}
                 />
               </div>
@@ -241,12 +256,10 @@ const Landing = ({
                 <div className={submissionCardWrapper}>
                   <div>
                     {submissionCardData.map((item, i) => {
-                      const { url, title, description, comment_count, tier, image, loading, borderColor } = item;
+                      const { title, description, comment_count, tier, image, loading, borderColor, url } = item;
                       return (
                         <div key={i} data-submission={i + 1} className={submissionCard}>
-                        <a href={url}>
                           <LandingSubmissionCard
-                            url={url}
                             title={title}
                             description={description}
                             comment_count={comment_count}
@@ -254,8 +267,8 @@ const Landing = ({
                             image={image}
                             loading={loading}
                             borderColor={borderColor}
+                            url={url}
                           />
-                          </a>
                         </div>
                       );
                     })}
@@ -266,10 +279,16 @@ const Landing = ({
 
             {/* AIcrowd Banner  */}
             <section className={cx(challengesWrapper)}>
-              <img
-                src={`https://images.aicrowd.com/images/landing_page/${isS ? 'aicrowdBannerMobile' : 'aicrowdBanner'}.png`}
-                alt="aicrowd banner"
-                width="100%"></img>
+              <div className={bannerImage}>
+                <img
+                  src={`https://images.aicrowd.com/images/landing_page/${isS ? 'aicrowdBannerMobile' : 'aicrowdBanner'}.png`}
+                  placeholder="blur"
+                  blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                  layout="fill"
+                  objectFit={isS ? 'cover' : 'contain'}
+                  alt="aicrowd banner"
+                width="100%"/>
+              </div>
             </section>
 
             {/* AIcrowd Research  */}
@@ -277,7 +296,6 @@ const Landing = ({
               <div>
                 <LandingHeaderContent
                   title="Research"
-                  url="/research"
                   description={[
                     researchDescriptionPara1,
                     <br key={'br1'} />,
@@ -285,14 +303,22 @@ const Landing = ({
                     researchDescriptionPara2,
                   ]}
                   buttonText="Research Papers"
+                  url="/research"
                   logo
                   descriptionWidth={isL ? '100%' : isXL ? '541px' : '560px'}
                 />
               </div>
               <div className={researchImageWrapper}>
-                <img src="https://images.aicrowd.com/images/landing_page/learning_run.gif"></img>
-                <img src="https://images.aicrowd.com/images/landing_page/mars_demo.gif"></img>
-                <img src="https://images.aicrowd.com/images/landing_page/flatland.gif"></img>
+                <video loop autoPlay muted>
+                  <source src="https://images.aicrowd.com/images/landing_page/learning_run.mp4" type="video/mp4"></source>
+                  Your browser does not support the video tag.
+                </video>
+                <video loop autoPlay muted>
+                  <source src="https://images.aicrowd.com/images/landing_page/mars_demo.mp4" type="video/mp4"></source>
+                </video>
+                <video loop autoPlay muted>
+                  <source src="https://images.aicrowd.com/images/landing_page/flatland.mp4" type="video/mp4"></source>
+                </video>
                 <img src="https://images.aicrowd.com/images/landing_page/bill-gates-tweet.png"></img>
               </div>
             </section>
@@ -318,19 +344,30 @@ const Landing = ({
                 />
               </div>
               <div style={{ paddingTop: isS && '64px', width: '100%' }}>
-                <LandingCommunityMap communityMembersList={communityMembersList} />
+                <LandingCommunityMap communityMembersList={communityMembersList} width={width} />
               </div>
             </section>
 
             {/* Organizers logos section */}
-            <div className={organizerText}>Trusted and Used by</div>
+            <div className={organizerText}>Trusted and used by</div>
             <section className={cx(sectionGapOrganizerLogos)}>
               <div>
                 {/* Organizers logo1  */}
                 {!isL && (
-                  <div className={organizerLogos1}>
+                  <div
+                    className={organizerLogos1}
+                    style={{ columnGap: width > 1280 && width < 1441 && `${(width - 1202) / 5}px` }}>
                     {organizerLogoList1.map(fileName => {
-                      return <img src={`https://images.aicrowd.com/images/landing_page/${fileName}`} key={fileName}></img>;
+                      return (
+                        <img
+                          src={`https://images.aicrowd.com/images/landing_page/${fileName}`}
+                          placeholder="blur"
+                          blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                          key={fileName}
+                          width={isXL ? 187 : 240}
+                          height={isXL ? 124 : 160}
+                        />
+                      );
                     })}
                   </div>
                 )}
@@ -338,7 +375,16 @@ const Landing = ({
                 {isL && (
                   <div className={organizerLogos1}>
                     {allOrganizerLogos.map(fileName => {
-                      return <img src={`https://images.aicrowd.com/images/landing_page/${fileName}`} key={fileName}></img>;
+                      return (
+                        <img
+                          src={`https://images.aicrowd.com/images/landing_page/${fileName}`}
+                          placeholder="blur"
+                          blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                          key={fileName}
+                          width={isXL ? 187 : 240}
+                          height={isXL ? 124 : 160}
+                        />
+                      );
                     })}
                   </div>
                 )}
@@ -348,27 +394,39 @@ const Landing = ({
             <section className={cx(challengesWrapper, sectionGap)} style={{ paddingTop: '40px' }}>
               <LandingHeaderContent
                 title="Host a Challenge"
-                url="/landing_page/host"
                 description={[
                   'Have an interesting out-of-box problem you want to solve?',
                   <br key={'br1'} />,
                   'Get in touch to host a customized challenge and unlock an array of exclusive features.',
                 ]}
                 buttonText="Get In Touch"
+                url="/landing_page/host"
                 buttonType="primary"
-                descriptionWidth={isL ? '100%' : isXL ? '541px' : '833px'}
+                descriptionWidth={'auto'}
               />
               {/* Organizers logo2  */}
-              <div className={organizerLogos2}>
+              <div
+                className={organizerLogos2}
+                style={{ columnGap: width > 1280 && width < 1441 && `${(width - 1202) / 5}px` }}>
                 {organizerLogoList2.map(fileName => {
-                  return <img src={`https://images.aicrowd.com/images/landing_page/${fileName}`} key={fileName}></img>;
+                  // return <img src={`https://images.aicrowd.com/images/landing_page/${fileName}`} key={fileName}></img>;
+                  return (
+                    <img
+                      src={`https://images.aicrowd.com/images/landing_page/${fileName}`}
+                      placeholder="blur"
+                      blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                      key={fileName}
+                      width={isXL ? 187 : 240}
+                      height={isXL ? 124 : 160}
+                    />
+                  );
                 })}
               </div>
             </section>
           </div>
         </main>
       </div>
-    </>
+    </div>
   );
 };
 
