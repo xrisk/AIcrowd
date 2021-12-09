@@ -72,7 +72,7 @@ class LandingPageController < ApplicationController
         }
       end
       users = []
-      challenge.challenge_participants.includes(:participant).sample(20).map(&:participant).sample(5).each do |participant|
+      challenge.challenge_participants.includes(:participant).sample(20).map(&:participant).sample(4).each do |participant|
         users << {id: participant.id, image: participant.image_url, tier: 0}
       end
 
@@ -108,7 +108,7 @@ class LandingPageController < ApplicationController
         .first
 
     users = []
-    challenge_1.challenge_participants.sample(20).map(&:participant).sample(5).each do |participant|
+    challenge_1.challenge_participants.sample(20).map(&:participant).sample(4).each do |participant|
       users << {id: participant.id, image: participant.image_url, tier: 0}
     end
 
@@ -152,7 +152,7 @@ class LandingPageController < ApplicationController
         .first
 
     users = []
-    challenge_2.challenge_participants.sample(20).map(&:participant).sample(5).each do |participant|
+    challenge_2.challenge_participants.sample(20).map(&:participant).sample(4).each do |participant|
       users << {id: participant.id, image: participant.image_url, tier: 0}
     end
 
@@ -196,7 +196,7 @@ class LandingPageController < ApplicationController
         .first
 
     users = []
-    challenge_3.challenge_participants.sample(20).map(&:participant).sample(5).each do |participant|
+    challenge_3.challenge_participants.sample(20).map(&:participant).sample(4).each do |participant|
       users << {id: participant.id, image: participant.image_url, tier: 0}
     end
 
