@@ -70,7 +70,7 @@ def sync_folders(localstream, upstream):
         ["/assets/social/", "https://images.aicrowd.com/images/landing_page/"],
         ["/assets/images/logos/", "https://images.aicrowd.com/images/landing_page/"],
         ["/assets/home/", "https://images.aicrowd.com/images/landing_page/"],
-        ["<Image", "<img"],
+        ["<Image", "<img style={{ display: 'block' }}"],
         ["</Image", "</img"],
         ["url=\"/notebooks\"", "url=\"/showcase\""],
         ["/discussions", "https://discourse.aicrowd.com/"],
