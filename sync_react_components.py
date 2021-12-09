@@ -73,7 +73,7 @@ def sync_folders(localstream, upstream):
         ["<Image", "<img"],
         ["</Image", "</img"],
         ["url=\"/notebooks\"", "url=\"/showcase\""],
-        ["'/discussions", "'https://discourse.aicrowd.com/"],
+        ["/discussions", "https://discourse.aicrowd.com/"],
         ["'/notebooks", "'/showcase"],
         ["'/register", "'/participants/sign_up"],
         ["/login", "/participants/sign_in"],

@@ -248,7 +248,7 @@ const Landing = ({
                   title="The Community"
                   description={[discussionsDescription, <br />, <br />, 'On AIcrowd forums, find your AI tribe.']}
                   buttonText="Explore Discussions"
-                  url="/discussions"
+                  url="https://discourse.aicrowd.com/"
                   descriptionWidth={isL ? '100%' : isXL ? '541px' : '621px'}
                 />
               </div>
