@@ -6,6 +6,7 @@ class TaskDatasetFilesController < ApplicationController
   before_action :authenticate_participant!
   before_action :set_task_dataset_file, only: [:destroy, :edit, :update]
   before_action :set_clef_task
+  before_action :redirect_for_download, only: :index
   before_action :set_s3_direct_post, only: [:new, :create, :edit, :update]
 
   def index
@@ -23,6 +24,17 @@ class TaskDatasetFilesController < ApplicationController
   end
 
   def show; end
+
+  def redirect_for_download
+    if params[:unique_download_uri].present?
+      dfd = DatasetFileDownload.find(params[:unique_download_uri])
+      if dfd.participant_id == current_participant.id
+        dfd.downloaded = true
+        dfd.save!
+        redirect_to dfd.external_url
+      end
+    end
+  end
 
   def new
     @task_dataset_file = @clef_task.task_dataset_files.new

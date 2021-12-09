@@ -210,6 +210,9 @@ color: #292C2D;
 .filter{
     padding-right: 10px!important;
 }
+.dropdown .filter{
+    border-radius: 1.5rem;
+}
 .img-side{
     margin-top: 35px;
 }
@@ -222,6 +225,7 @@ color: #292C2D;
 }
 .img-red{
     width: 15px!important;
+    height: 15px!important;
     margin-right: 5px;
 }
 .hide-button{
@@ -281,8 +285,8 @@ color: #292C2D;
         .new-row{
             margin-left: 10px;
         }
- .dropdown{
-     margin: 5px 20px;
+ .hide{
+     display: none;
  }
  /* .p-red1{
      margin-top: 62px;
@@ -376,4 +380,13 @@ color: #1F1F1F;
   padding-right: 0;
 }
 }
-
+.ml-lg-80{
+    margin-left: 98px;
+}  
+@media only screen and (max-width: 992px) {
+.ml-lg-80{
+margin-left: 0px!important;
+margin-right: 0px!important;
+}
+}
+  

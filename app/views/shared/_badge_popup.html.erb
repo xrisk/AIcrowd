@@ -3,8 +3,8 @@
   <% aicrowd_badge = current_participant&.awaiting_toasts.last %>
     <% if aicrowd_badge.present? %>
       <div class="modal badges-modal" id="badges-modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document" style="max-width: 30%;">
-          <div class="modal-content" style="max-width: 94%; margin-top: 30%;">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content" style="max-width: 404px; margin-top: 150px;">
             <%= react_component("molecules/AchievementPopup/index", { icon: aicrowd_badge.image, title: "Congratulations!", description: aicrowd_badge.description, url: request.original_url, badgeTitle: aicrowd_badge.name, socialMessage: aicrowd_badge.social_message }) %>
 
           </div>

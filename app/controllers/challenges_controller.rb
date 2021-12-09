@@ -76,7 +76,11 @@ class ChallengesController < ApplicationController
     @challenge                = Challenge.new(challenge_params)
     @challenge.clef_challenge = true if @challenge.organizers.any?(&:clef_organizer?)
 
-    authorize @challenge
+    if not (current_participant.organizer_ids & params[:challenge][:organizer_ids].map(&:to_i)).any?
+      authorize @challenge
+    end
+
+    skip_authorization
 
     if @challenge.save
       update_challenges_organizers if params[:challenge][:organizer_ids].present?
@@ -258,6 +262,9 @@ class ChallengesController < ApplicationController
   def set_organizers_for_select
     # We'll need refactor to select2 with API endpoint when we'll have a lot of organizers.
     @organizers_for_select = Organizer.pluck(:organizer, :id)
+    if current_participant.organizer_ids.present? and !current_participant.admin?
+      @organizers_for_select = Organizer.where(id: current_participant.organizer_ids).pluck(:organizer, :id)
+    end
   end
 
   def set_s3_direct_post
@@ -404,6 +411,7 @@ class ChallengesController < ApplicationController
       :submission_freezing_order,
       :show_submission,
       :organizer_notebook_access,
+      :organizer_ids,
       image_attributes: [
         :id,
         :image,

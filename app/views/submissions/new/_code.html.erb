@@ -1,7 +1,7 @@
 <div class="col-md-12" data-controller="code-based-submission">
   <% if @challenge.completed? %>
     <br/>
-    <p>This challenge is now completed. You may continue to make submissions and your entries will appear on the Ongoing Leaderboard.</p>
+    <p class="pl-3">This challenge is now completed. You may continue to make submissions and your entries will appear on the Ongoing Leaderboard.</p>
   <% end %>
   <%= form_for [@challenge,@submission], html: { class: "directUpload dbl-col col-12", multipart: true },
         data: { 'form-data' => (@s3_direct_post.fields), 'url' => @s3_direct_post.url, 'host' => URI.parse(@s3_direct_post.url).host } do |f| %>

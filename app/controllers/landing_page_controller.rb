@@ -77,6 +77,7 @@ class LandingPageController < ApplicationController
       end
 
       challenge_list_data << {
+        userCount: challenge.challenge_participants.count,
         image: challenge.landing_square_image_file.url,
         url: "/challenges/" + challenge.slug,
         name: challenge.challenge,
@@ -87,7 +88,7 @@ class LandingPageController < ApplicationController
         onCard: false,
         size: 'default',
         color: challenge.banner_color.presence ||'#FFFFFF',
-        cardBadge: true,
+        cardBadge: (challenge.status_cd == "running"),
         badgeColor: '#44B174',
         challengeEndDate: challenge.active_round.end_dttm,
         organizers: challenge_organizers,
@@ -121,6 +122,7 @@ class LandingPageController < ApplicationController
     end
 
     landing_challenge_card_1 = {
+      userCount: challenge_1.challenge_participants.count,
       image: challenge_1.landing_square_image_file.url,
       url: "/challenges/" + challenge_1.slug,
       name: challenge_1.challenge,
@@ -132,7 +134,7 @@ class LandingPageController < ApplicationController
       onCard: false,
       size: 'default',
       color: challenge_1.banner_color.presence ||'#FFFFFF',
-      cardBadge: true,
+      cardBadge: (challenge_1.status_cd == "running"),
       badgeColor: '#44B174',
       challengeEndDate: challenge_1.active_round.end_dttm,
       organizers: challenge_organizers,
@@ -164,6 +166,7 @@ class LandingPageController < ApplicationController
     end
 
     landing_challenge_card_2 = {
+      userCount: challenge_2.challenge_participants.count,
       image: challenge_2.landing_square_image_file.url,
       url: "/challenges/" +challenge_2.slug,
       name: challenge_2.challenge,
@@ -175,7 +178,7 @@ class LandingPageController < ApplicationController
       onCard: false,
       size: 'default',
       color: challenge_2.banner_color.presence || '#FFFFFF',
-      cardBadge: true,
+      cardBadge: (challenge_2.status_cd == "running"),
       badgeColor: '#44B174',
       challengeEndDate: challenge_2.active_round.end_dttm,
       organizers: challenge_organizers,
@@ -207,6 +210,7 @@ class LandingPageController < ApplicationController
     end
 
     landing_challenge_card_3 = {
+      userCount: challenge_3.challenge_participants.count,
       image: challenge_3.landing_square_image_file.url,
       url: "/challenges/" + challenge_3.slug,
       name: challenge_3.challenge,
@@ -218,7 +222,7 @@ class LandingPageController < ApplicationController
       onCard: false,
       size: 'default',
       color: challenge_3.banner_color.presence || '#FFF',
-      cardBadge: true,
+      cardBadge: (challenge_3.status_cd == "running"),
       badgeColor: '#44B174',
       challengeEndDate: challenge_3.active_round.end_dttm,
       organizers: challenge_organizers,
@@ -282,6 +286,11 @@ class LandingPageController < ApplicationController
     @challenges_menu_item = {
       name: 'challenges',
       link: challenges_path,
+    }
+
+    @research_menu_item = {
+      name: 'Research',
+      link: publications_path,
     }
 
     @profile_menu_item = [
