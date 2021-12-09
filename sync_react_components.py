@@ -71,12 +71,14 @@ def sync_folders(localstream, upstream):
         ["/assets/images/logos/", "https://images.aicrowd.com/images/landing_page/"],
         ["/assets/home/", "https://images.aicrowd.com/images/landing_page/"],
         ["<Image", "<img"],
+        ["</Image", "</img"],
         ["url=\"/notebooks\"", "url=\"/showcase\""],
         ["'/discussions", "'https://discourse.aicrowd.com/"],
         ["'/notebooks", "'/showcase"],
         ["'/register", "'/participants/sign_up"],
         ["/login", "/participants/sign_in"],
         ["/signup", "/participants/sign_up"],
+        ["quality={1}", ""],
         ["/community", "/showcase"],
         ["/blog", "https://blog.aicrowd.com/"],
         ["/host-a-Challenge", "/landing_page/host"],
@@ -88,11 +90,30 @@ def sync_folders(localstream, upstream):
     ]
 
     last_line = ""
+    attach = False
     for scss_file in glob.glob(os.path.join(localstream, '*.scss')) + glob.glob(os.path.join(localstream, 'index.*')):
         with fileinput.FileInput(scss_file, inplace = True) as f:
-            for line in f:
+            for idx, line in enumerate(f):
                 for r in replacements:
+                    if attach:
+                        result_string += line
+
+                    if '<Image' in line:
+                        result_string = line
+                        attach = True
+
+                    if '</Image' in line or ('/>' in line and attach):
+                        attach = False
+                        if not 'width' in result_string:
+                            if '/>' in line:
+                                line = line.replace('/>', 'width="100%"/>')
+                            else:
+                                line = line.replace('</Image', "")
+                        result_string = ""
+
                     line = line.replace(r[0], r[1])
+
+
                 
                 skip = False
                 for nop in nops:

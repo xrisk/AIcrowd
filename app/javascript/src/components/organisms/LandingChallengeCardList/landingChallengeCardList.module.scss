@@ -11,7 +11,7 @@
   row-gap: $spacing-x-small;
   // border: 1px solid red;
 
-  @include media-query("medium") {
+  @include media-query("large") {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     row-gap: $spacing-small;
@@ -38,7 +38,7 @@
         top: 0px;
       }
 
-      @include media-query("medium") {
+      @include media-query("large") {
         position: unset;
       }
     }
@@ -52,7 +52,7 @@
         top: 0px;
       }
 
-      @include media-query("medium") {
+      @include media-query("large") {
         position: unset;
       }
     }
@@ -66,7 +66,7 @@
         top: 0px;
       }
 
-      @include media-query("medium") {
+      @include media-query("large") {
         position: unset;
       }
     }

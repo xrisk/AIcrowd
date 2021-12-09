@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import cx from 'classnames';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
@@ -74,6 +74,7 @@ type LandingProps = {
   image: string;
   isLoggedIn: boolean;
   notificationData: any;
+  width: number;
 };
 
 const Landing = ({
@@ -192,14 +193,15 @@ const Landing = ({
                     blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
                     layout="fill"
                     objectFit="contain"
-                    quality={1}
-                    alt="aicrowd logo"></Image>
+                    
+                    alt="aicrowd logo"
+                  width="100%"/>
                 </div>
               </div>
               <LandingChallengeCardList challengeListData={challengeListData} loading={loading} />
             </section>
             {/* Your solutions */}
-            <section className={cx(challengesWrapper, sectionGap)} style={{ paddingBottom: isM ? '64px' : '200px' }}>
+            <section className={cx(challengesWrapper, sectionGap)} style={{ paddingBottom: isL ? '64px' : '200px' }}>
               <div>
                 <LandingHeaderContent
                   title="Your Solutions"
@@ -285,7 +287,7 @@ const Landing = ({
                   layout="fill"
                   objectFit={isS ? 'cover' : 'contain'}
                   alt="aicrowd banner"
-                />
+                width="100%"/>
               </div>
             </section>
 
@@ -342,7 +344,7 @@ const Landing = ({
                 />
               </div>
               <div style={{ paddingTop: isS && '64px', width: '100%' }}>
-                <LandingCommunityMap communityMembersList={communityMembersList} />
+                <LandingCommunityMap communityMembersList={communityMembersList} width={width} />
               </div>
             </section>
 
@@ -401,7 +403,6 @@ const Landing = ({
                 url="/landing_page/host"
                 buttonType="primary"
                 descriptionWidth={'auto'}
-                // descriptionWidth={isL ? '100%' : isXL ? '541px' : '752px'}
               />
               {/* Organizers logo2  */}
               <div

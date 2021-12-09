@@ -30,7 +30,7 @@ const LandingNotebookCard = ({ title, image, author, url }: LandingNotebookCardP
                   layout="fill"
                   objectFit="contain"
                   alt="notebook image"
-                />
+                width="100%"/>
               </div>
               <div className={textWrapper}>
                 <div className={titleText}>{title} </div>

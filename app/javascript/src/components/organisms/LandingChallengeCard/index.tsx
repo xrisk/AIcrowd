@@ -134,7 +134,7 @@ const LandingChallengeCard = ({
                         layout="fill"
                         objectFit="contain"
                         priority={priority}
-                      />
+                      width="100%"/>
                     </div>
                   </Tooltip>
                   {/* Hide names if organizers are more then 1 */}

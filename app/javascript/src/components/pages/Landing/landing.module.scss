@@ -43,7 +43,7 @@ $section-gap: 150px;
     justify-content: space-between;
     position: relative;
 
-    @include media-query("medium") {
+    @include media-query("large") {
       flex-direction: column;
     }
 
@@ -123,12 +123,12 @@ $section-gap: 150px;
     min-height: 350px;
     justify-content: center;
 
-    @include media-query("medium") {
-      min-height: 300px;
+    @include media-query("large") {
+      margin-top: 140px;
     }
 
-    @include media-query("large") {
-      margin-top: 151px;
+    @include media-query("medium") {
+      min-height: 300px;
     }
 
     @include media-query("small") {
@@ -195,6 +195,7 @@ $section-gap: 150px;
       }
       @include media-query("large") {
         position: unset;
+        margin-top: $spacing-x-small;
       }
       @include media-query("medium") {
         position: unset;
@@ -215,6 +216,7 @@ $section-gap: 150px;
       }
       @include media-query("large") {
         position: unset;
+        margin-top: $spacing-x-small;
       }
       @include media-query("medium") {
         position: unset;
@@ -313,17 +315,29 @@ $section-gap: 150px;
         position: absolute;
         right: 0%;
 
+        @include media-query("wide") {
+          width: 210px;
+          top: 5%;
+          right: 5%;
+        }
         @include media-query("x-large") {
-          right: 0%;
+          width: 190px;
+          top: 12%;
+          right: 3%;
         }
 
         @include media-query("large") {
           width: 190px;
           top: 12%;
+          right: 5%;
+        }
+        @include media-query("medium") {
+          width: 190px;
+          top: 12%;
           right: 3%;
         }
         @include media-query("small") {
-          right: 20%;
+          right: 15%;
           bottom: -40%;
           width: 40%;
           top: 80%;
@@ -339,17 +353,28 @@ $section-gap: 150px;
         width: 365px;
         top: 55%;
         left: 10%;
+
+        @include media-query("wide") {
+          width: 365px;
+          top: 60%;
+          left: 3%;
+        }
+
         @include media-query("x-large") {
           left: 0;
           width: 40%;
         }
 
         @include media-query("large") {
+          left: 0%;
+          width: 340px;
+        }
+        @include media-query("medium") {
           width: 306px;
         }
 
         @include media-query("small") {
-          left: 0;
+          left: 5%;
           top: 0;
           width: 60%;
         }
@@ -360,9 +385,12 @@ $section-gap: 150px;
         top: 220px;
         right: 15%;
         width: 358px;
+        @include media-query("wide") {
+          width: 320px;
+        }
         @include media-query("x-large") {
-          width: 40%;
-          top: 140px;
+          width: 35%;
+          top: 210px;
         }
 
         @include media-query("large") {
@@ -374,7 +402,7 @@ $section-gap: 150px;
         @include media-query("small") {
           width: 45%;
           top: 140px;
-          left: 0px;
+          left: 5%;
         }
         @include media-query("x-small") {
           top: 100px;
@@ -387,15 +415,18 @@ $section-gap: 150px;
       position: absolute;
       right: 35%;
       @include media-query("x-large") {
-        width: 40%;
+        width: 255px;
       }
 
       @include media-query("large") {
+        width: 300px;
+      }
+      @include media-query("medium") {
         width: 255px;
       }
 
       @include media-query("small") {
-        right: 10%;
+        right: 5%;
         width: 45%;
         top: 10%;
       }
@@ -478,7 +509,7 @@ $section-gap: 150px;
   }
 
   .organizerLogos2 {
-    @include media-query("medium") {
+    @include media-query("large") {
       display: none;
     }
     img {

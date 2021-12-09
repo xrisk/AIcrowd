@@ -17,6 +17,7 @@
   .title {
     @include heading-5;
     font-family: "Inter";
+    font-weight: $font-weight-medium;
     @include media-query("small") {
       @include body-text-normal;
       font-weight: normal;
@@ -48,6 +49,12 @@
       min-width: 80px;
       width: 80px;
       height: 100px;
+
+      @include media-query("large") {
+        min-width: 70px;
+        width: 70px;
+        height: 70px;
+      }
 
       @include media-query("small") {
         width: 65px;

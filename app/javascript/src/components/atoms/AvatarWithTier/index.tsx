@@ -34,7 +34,7 @@ const AvatarWithTier = ({ tier, image, size, loading, onCard, borderColor, prior
               layout="fill"
               objectFit="contain"
               priority={priority}
-            />
+            width="100%"/>
           </div>
         )}
       </>
@@ -48,17 +48,17 @@ const AvatarWithTier = ({ tier, image, size, loading, onCard, borderColor, prior
           </div>
         ) : (
           <div className={`${styles[`user-rating-${tier}`]} ${styles[size ? `user-rating-${size}` : 'user-rating']}`}>
-            <div className={styles.avatar} style={{ position: 'relative' }}>
-              {/* <img src={image} className={styles.avatar}></img> */}
-              <img
+            {/* <div className={styles.avatar} style={{ position: 'relative' }}> */}
+            <img src={image} className={styles.avatar}></img>
+            {/* <img
                 src={image}
                 placeholder="blur"
                 blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
                 layout="fill"
                 objectFit="contain"
                 alt="User avatar"
-              />
-            </div>
+              width="100%"/> */}
+            {/* </div> */}
           </div>
         )}
       </>
