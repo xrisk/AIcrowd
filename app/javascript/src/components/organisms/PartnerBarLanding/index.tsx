@@ -25,7 +25,7 @@ const PartnerBarLanding = ({ logos, color }: PartnerBarLandingProps) => {
           {logos.map(logo => (
             <div className={styles['partners-bar-item']} key={logo}>
               <div className={styles['partners-bar-image']}>
-                <img
+                <img style={{ display: 'block' }}
                   src={logo}
                   placeholder="blur"
                   blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="

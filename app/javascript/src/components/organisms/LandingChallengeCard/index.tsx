@@ -78,7 +78,7 @@ const LandingChallengeCard = ({
               <div className={cardBadgeWrapper}>
                 <CardBadge badgeColor={badgeColor} challengeEndDate={challengeEndDate} cardBadge={cardBadge} />
               </div>
-              <img
+              <img style={{ display: 'block' }}
                 src={image}
                 placeholder="blur"
                 blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
@@ -127,7 +127,7 @@ const LandingChallengeCard = ({
                 <div className={organizerWrapper}>
                   <Tooltip position="down" label={name}>
                     <div className={logoWrapper}>
-                      <img
+                      <img style={{ display: 'block' }}
                         src={logo}
                         placeholder="blur"
                         blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="

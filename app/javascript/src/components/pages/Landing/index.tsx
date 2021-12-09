@@ -187,7 +187,7 @@ const Landing = ({
                 />
                 {/* aicrowd large logo */}
                 <div className={aicrowdLargeLogo}>
-                  <img
+                  <img style={{ display: 'block' }}
                     src="https://images.aicrowd.com/images/landing_page/landingAicrowdSketch.png"
                     placeholder="blur"
                     blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
@@ -280,7 +280,7 @@ const Landing = ({
             {/* AIcrowd Banner  */}
             <section className={cx(challengesWrapper)}>
               <div className={bannerImage}>
-                <img
+                <img style={{ display: 'block' }}
                   src={`https://images.aicrowd.com/images/landing_page/${isS ? 'aicrowdBannerMobile' : 'aicrowdBanner'}.png`}
                   placeholder="blur"
                   blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
@@ -359,7 +359,7 @@ const Landing = ({
                     style={{ columnGap: width > 1280 && width < 1441 && `${(width - 1202) / 5}px` }}>
                     {organizerLogoList1.map(fileName => {
                       return (
-                        <img
+                        <img style={{ display: 'block' }}
                           src={`https://images.aicrowd.com/images/landing_page/${fileName}`}
                           placeholder="blur"
                           blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
@@ -376,7 +376,7 @@ const Landing = ({
                   <div className={organizerLogos1}>
                     {allOrganizerLogos.map(fileName => {
                       return (
-                        <img
+                        <img style={{ display: 'block' }}
                           src={`https://images.aicrowd.com/images/landing_page/${fileName}`}
                           placeholder="blur"
                           blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
@@ -411,7 +411,7 @@ const Landing = ({
                 {organizerLogoList2.map(fileName => {
                   // return <img src={`https://images.aicrowd.com/images/landing_page/${fileName}`} key={fileName}></img>;
                   return (
-                    <img
+                    <img style={{ display: 'block' }}
                       src={`https://images.aicrowd.com/images/landing_page/${fileName}`}
                       placeholder="blur"
                       blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="

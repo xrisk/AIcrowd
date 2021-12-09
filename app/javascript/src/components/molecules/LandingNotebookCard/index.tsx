@@ -23,7 +23,7 @@ const LandingNotebookCard = ({ title, image, author, url }: LandingNotebookCardP
           <div className={mainWrapper}>
             <div className={subWrapper}>
               <div className={imgWrapper}>
-                <img
+                <img style={{ display: 'block' }}
                   src={image}
                   placeholder="blur"
                   blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
