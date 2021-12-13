@@ -1,6 +1,6 @@
 <div class="body1" data-controller="registration-form">
   <div class="container-fluid page">
-    <div id="<%= login_modal %>">
+    <div id="<%= login_modal %>" class="login-modal">
       <div class="modal-welcome">
         <h5 class="text-center">Welcome to <span class="red" style="margin-right: 0px;">AI</span>crowd</h5>
         <p class="text-center sub">Log In To Explore New Challenges!</p>
@@ -17,8 +17,8 @@
       <%= form_for resource, as: resource_name, url: session_path(resource_name), html: { class: "login-form", data: { controller: "mixpanel", type: "loginEmail" }}, validate: true do |f| %>
         <div class="modal-login-form">
             <div class="form-group">
-              <label class="float-left" for="email">Email or Username</label>
-              <%= f.text_field :email, placeholder: "Enter your email or username", class: "form-control"%>
+              <label class="float-left" for="email">Email</label>
+              <%= f.text_field :email, placeholder: "Enter your email", class: "form-control"%>
             </div>
             <div class="form-group">
               <label class="float-left" for="password">Password</label>
@@ -43,7 +43,7 @@
         <p>Can't Log In ? <%= link_to "Verify Account", new_confirmation_path(resource_name), {class: "modal-styling mx-2"} %> <%= link_to "Recover Account", new_unlock_path(resource_name), {class: "modal-styling right-margin"} %></p>
       </div>
     </div>
-    <div id="<%= signup_modal%>">
+    <div id="<%= signup_modal%>" class="signup-modal">
       <div class="modal-welcome">
         <h5 class="text-center">Hey There! Excited to have you here.</h5>
         <p class="sub">Get ready to solve some real-world AI problems!</p>
@@ -118,13 +118,11 @@
   function showSignup() {
     document.getElementById("<%= login_modal %>").style.display = "none";
     document.getElementById("<%= signup_modal %>").style.display = "block";
-
   }
 </script>
 <script type="text/javascript">
   function showLogin() {
     document.getElementById("<%= login_modal %>").style.display = "block";
     document.getElementById("<%= signup_modal %>").style.display = "none";
-
   }
 </script>

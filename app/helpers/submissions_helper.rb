@@ -78,6 +78,6 @@ module SubmissionsHelper
   # no social profile filled
   # probability 10%
   def show_submission_popup?(participant)
-    participant.present? && rand(100) > 10 && participant.bio && participant.github.blank? && participant.twitter.blank? && participant.linkedin.blank? && participant.website.blank? && (Time.now - (participant.submissions.order(:created_at)&.last&.created_at || Time.now - 1.hours) <= 2.hours)
+    participant.present? && rand(10) < 2 && participant.bio.blank? && participant.github.blank? && participant.twitter.blank? && participant.linkedin.blank? && participant.website.blank? && ((Time.now - (participant.submissions.order(:created_at)&.last&.created_at || Time.now - 26.hours)) <= 24.hours)
   end
 end

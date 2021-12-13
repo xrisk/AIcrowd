@@ -15150,10 +15150,8 @@ input.width-185 {
 
 
 .body1{
-
-    background:  url(/assets/img/Background.png);
-    background-size: cover;
-
+  background:  url(/assets/img/Background.png);
+  background-size: cover;
 }
 .modal-separator {
   display: flex;
@@ -15216,26 +15214,6 @@ input.width-185 {
   margin-top: 0.6rem;
 }
 
-#sign_open_modal{
-    display: block;
-   margin: 2%;
-    width: 40%;
-    text-align: center;
-    padding: 40px 80px;
-    box-shadow: 0px 0px 14px rgba(65, 13, 12, 0.1);
-    background-color: white;
-}
-
-#sign_close_modal{
-    display: none;
-      margin: 2%;
-    width: 40%;
-    text-align: center;
-    padding: 40px 80px;
-    box-shadow: 0px 0px 14px rgba(65, 13, 12, 0.1);
-    background-color: white;
-}
-
 #sign_close_modal .btn, #sign_open_modal .btn {
   font-weight: 400;
 }
@@ -15256,6 +15234,44 @@ input.width-185 {
     position: relative;
 }
 
+.popup-image-upload {
+  position: absolute;
+  right: 5%;
+  top: 0%;
+  z-index: 1;
+  input {
+    display: none;
+    + label {
+        display: inline-block;
+        width: 34px;
+        height: 34px;
+        margin-bottom: 0;
+        border-radius: 100%;
+        background: #FFFFFF;
+        border: 1px solid transparent;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.12);
+        cursor: pointer;
+        font-weight: normal;
+        transition: all .2s ease-in-out;
+        &:hover {
+            background: #f1f1f1;
+            border-color: #d6d6d6;
+        }
+        &:after {
+            content: "\f040";
+            font-family: 'FontAwesome';
+            color: #757575;
+            position: absolute;
+            top: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            margin: auto;
+        }
+    }
+  }
+}
+
 .page{
   display: flex;
   justify-content: center;
@@ -15271,6 +15287,7 @@ input.width-185 {
     justify-content: center;
     margin: 0 auto;
     font-size: 16px;
+    clear: both;
 }
 .login-form .form-control{
   background-color:#f1f3f3b7 !important;
@@ -15285,7 +15302,7 @@ input.width-185 {
     justify-content: center;
     margin:20px auto;
 }
-#detail-modal{
+#detail-modal, #detail-modal2{
   display: block;
   margin: 5%;
   width: 65%;
@@ -15447,6 +15464,7 @@ border: 1px solid #F1F3F3, 100%;
     background: #F2F2F2;
     border-radius: 50%;
     display: inline-block;
+    margin-top: -10px;
   }
   .dot2 {
     height: 90px;
@@ -15514,6 +15532,23 @@ border: 1px solid #F1F3F3, 100%;
 .py-new{
     padding: 7px auto;
 }
+.login-modal {
+    display: block;
+    margin: 2%;
+    width: 40%;
+    text-align: center;
+    padding: 40px 80px;
+    box-shadow: 0px 0px 14px rgba(65, 13, 12, 0.1);
+    background-color: white;
+}
+.signup-modal {
+    margin: 2%;
+    width: 40%;
+    text-align: center;
+    padding: 40px 80px;
+    box-shadow: 0px 0px 14px rgba(65, 13, 12, 0.1);
+    background-color: white;
+}
 @media only screen and (max-width: 1200px){
     .dot1 {
         height: 141px;
@@ -15544,7 +15579,12 @@ border: 1px solid #F1F3F3, 100%;
         border-radius: 50%;
         display: inline-block;
       }
-
+      .popup-image-upload {
+        position: absolute;
+        right: -30px;
+        top: 0%;
+        z-index: 1;
+      }
 }
 @media only screen and (max-width: 992px){
     .ms-t1{
@@ -15563,7 +15603,7 @@ border: 1px solid #F1F3F3, 100%;
     bottom: 20px;
     width: 20%;
   }
-    #login-modal{
+    .login-modal{
         display: block;
        margin: 2%;
         width: 45%;
@@ -15571,7 +15611,7 @@ border: 1px solid #F1F3F3, 100%;
         padding: 40px;
         box-shadow: 0px 0px 14px rgba(65, 13, 12, 0.1);
     }
-    #signup-modal{
+    .signup-modal{
         display: none;
           margin: 2%;
         width: 45%;
@@ -15613,7 +15653,7 @@ border: 1px solid #F1F3F3, 100%;
     }
 }
 
-.modal-welcome h5 {
+.modal-welcome h5, #detail-modal2 h5, #detail-modal h5 {
   font-size: 1.25rem;
 }
 
@@ -15621,7 +15661,7 @@ border: 1px solid #F1F3F3, 100%;
     .ms-t1{
         margin-top: 12px;
     }
-    .modal-welcome h5{
+    .modal-welcome h5, #detail-modal2 h5, #detail-modal h5 {
         font-size: 18px;
     }
   .login-modal {
@@ -15631,7 +15671,7 @@ border: 1px solid #F1F3F3, 100%;
     padding: 15px;
     box-shadow: 1px 1px 8px #767676;
   }
-.modal-welcome h5{
+.modal-welcome h5, #detail-modal2 h5, #detail-modal h5 {
   font-size: 1rem;
 }
 .modal-styling{
@@ -15666,6 +15706,12 @@ label .float-left{
     box-shadow: 0px 0px 14px rgba(65, 13, 12, 0.1);
 
 }
+.popup-image-upload {
+  position: absolute;
+  right: 20px;
+  top: 0%;
+  z-index: 1;
+}
 .form-field{
   margin-top: 0rem;
 }
@@ -15689,7 +15735,7 @@ label .float-left{
 .modal-oldaccount p {
     font-size: 0.8rem;
 }
-#login-modal{
+.login-modal{
     display: block;
    margin: 10px;
     width: 100%;
@@ -15697,7 +15743,7 @@ label .float-left{
     padding: 20px;
     box-shadow: 0px 0px 14px rgba(65, 13, 12, 0.1);
 }
-#signup-modal{
+.signup-modal{
     display: none;
       margin: 10px;
     width: 100%;
@@ -15792,6 +15838,17 @@ button:focus{
   appearance: none !important;
   -webkit-appearance: none !important;
   -moz-appearance: none !important;
+}
+#sign_close_modal {
+  display: none;
+}
+@media only screen and (max-width: 576px) {
+  .popup-image-upload {
+    position: absolute;
+    right: 28%;
+    top: 0%;
+    z-index: 1;
+  }
 }
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
