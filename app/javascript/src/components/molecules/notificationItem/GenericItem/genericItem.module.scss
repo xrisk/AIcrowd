@@ -2,17 +2,6 @@
 @import "../../../../styles/base/__base-dir.scss";
 
 .notification-item-challenge {
-  position: relative;
-  .notification-item-overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-  a {
-    pointer-events: all;
-  }
   .notification-item-content {
     display: flex;
   }
@@ -29,12 +18,14 @@
     }
   }
   .notification-item-text {
-    line-height: 1.25;
+    @include body-text-normal;
+    @include truncateMulti(2);
   }
   .notification-item-description {
     display: block;
   }
   .notification-item-time {
+    @include body-text-small;
     color: var(--color-text-light);
   }
   &:hover {

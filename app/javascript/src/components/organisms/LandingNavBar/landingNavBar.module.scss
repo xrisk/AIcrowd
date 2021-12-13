@@ -50,15 +50,16 @@
       padding: 10px 0px;
 
       .navItem {
+        @include body-text-normal;
         padding-right: 48px;
         font-size: 16px;
         line-height: 24px;
         letter-spacing: 0.15px;
         cursor: pointer;
-        color: #1f1f1f; //temporarily adding this here
       }
 
       .moreText {
+        @include body-text-normal;
         border-right: 1px solid #e7e7e7;
         padding-right: 40px;
         cursor: pointer;
@@ -89,6 +90,7 @@
     }
 
     .loginText {
+      @include body-text-normal;
       padding-left: 40px;
       padding-right: 32px;
     }

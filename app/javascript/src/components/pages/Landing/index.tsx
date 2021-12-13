@@ -101,9 +101,8 @@ const Landing = ({
 }: LandingProps) => {
   const isS = useMediaQuery(sizes.small);
   const isXL = useMediaQuery(sizes.xLarge);
-  const isM = useMediaQuery(sizes.medium);
   const isL = useMediaQuery(sizes.large);
-  const { height, width } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const { value: isMenuOpen, toggle, setValue: setMenu } = useBoolean();
 
   const challengeDescription = `AIcrowd hosts challenges that tackle diverse problems in Artificial Intelligence with real-world impact.  AIcrowd Community spearheads the state of the art, be it advanced RL innovation or applications of ML in scientific research. There is an interesting problem for everyone.`;
