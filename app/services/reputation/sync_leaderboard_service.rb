@@ -6,7 +6,6 @@ module Reputation
     end
 
     def call
-      # last_updated_time = get_last_updated_time
       sync_data
     end
 

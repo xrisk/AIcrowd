@@ -3,7 +3,7 @@ module Reputation
     queue_as :default
 
     def perform
-      # Reputation::SyncChallengeLeaderbaordExtraService.new.call
+      Reputation::SyncChallengeLeaderbaordExtraService.new.call
     end
   end
 end
