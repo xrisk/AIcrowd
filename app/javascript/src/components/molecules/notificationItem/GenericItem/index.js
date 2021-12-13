@@ -9,7 +9,6 @@ const GenericItem = ({ genericNotification, loading }) => {
   return (
     <>
       <div className={styles['notification-item-challenge']}>
-        <a className={styles['notification-item-overlay']} href="/"></a>
         <div className={styles['notification-item-content']}>
           <div className={styles['notification-item-image']}>
             {loading ? (
