@@ -29,12 +29,8 @@
                   <div class="row">
                     <div class="col-12">
                       <div>
-                        <span class="leaderboard-profile-img" style="margin-right: 32px;">
-                          <% if ranking.participant.country_cd.blank?%>
-                            <%= render partial: 'participants/get_user_profile', locals: { participant: ranking.participant, username: 'false' } %>
-                          <% else %>
-                            <%= render partial: 'participants/get_user_profile_with_flag', locals: { participant: ranking.participant, username: 'false' } %>
-                          <% end %>
+                        <span class="leaderboard-profile-img">
+                          <%= render partial: 'participants/get_user_profile_with_flag', locals: { participant: ranking.participant, username: 'false' } %>
                         </span>
                       </div>
                     </div>

@@ -1,4 +1,6 @@
 <% if !defined?(avatar) || (defined?(avatar) && avatar && avatar != 'false') %>
   <%= participant_avatar(participant, "avatar profile-image") %>
-  <%= image_tag("/assets/flags/#{participant.country_cd}.svg", class: "country-flag #{flag_class}") %>
+  <% if participant.country_cd.present? %>
+    <%= image_tag("/assets/flags/#{participant.country_cd}.svg", class: "country-flag #{flag_class}") %>
+  <% end %>
 <% end %>

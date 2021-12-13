@@ -31,7 +31,7 @@ module Reputation
       base_leaderboards = BaseLeaderboard.where(leaderboard_type_cd: "reputation", challenge_leaderboard_extra_id: @cle_id)
       result = []
       base_leaderboards.each do |bl|
-        if true
+        if true # ChallengeLeaderboardExtra.where(id: bl.challenge_leaderboard_extra_id).first.challenge_round.present?
           if bl.challenge_round_id && bl.row_num && bl.created_at && bl.submitter_id
             if bl.submitter_type == "Team"
               TeamParticipant.where(team_id: bl.submitter_id).each do |tp|
