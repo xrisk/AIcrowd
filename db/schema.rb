@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_03_215648) do
+ActiveRecord::Schema.define(version: 2021_12_08_175514) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -700,6 +700,11 @@ ActiveRecord::Schema.define(version: 2021_12_03_215648) do
     t.string "ip_address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "challenge_id"
+    t.integer "dataset_folder_id"
+    t.string "dataset_folder_path"
+    t.boolean "downloaded", default: false
+    t.string "external_url"
     t.index ["dataset_file_id"], name: "index_dataset_file_downloads_on_dataset_file_id"
     t.index ["participant_id"], name: "index_dataset_file_downloads_on_participant_id"
   end
@@ -1143,7 +1148,7 @@ ActiveRecord::Schema.define(version: 2021_12_03_215648) do
     t.boolean "mixpanel_done", default: false
     t.integer "sash_id"
     t.integer "level", default: 0
-    t.integer "gender_cd"
+    t.string "gender_cd"
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["name"], name: "index_participants_on_name", unique: true

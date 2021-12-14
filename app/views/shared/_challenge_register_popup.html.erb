@@ -41,25 +41,25 @@
   </div>
 </div>
 
-<script>
-  $(document).scroll(function(e){
-    var scrollAmount = $(window).scrollTop();
-    var documentHeight = $(document).height();
+<% if !current_participant %>
+  <script>
+    $(document).scroll(function(e){
+      var scrollAmount = $(window).scrollTop();
+      var documentHeight = $(document).height();
 
-    var scrollPercent = (scrollAmount / documentHeight) * 100;
+      var scrollPercent = (scrollAmount / documentHeight) * 100;
 
-    if(scrollPercent > 50) {
-      console.log("Scrolled 50 percent")
-      myFunc();
-    }
-  });
+      if(scrollPercent > 50) {
+        myFunc();
+      }
+    });
 
-  function myFunc(){
-    myFunc = function(){console.log("Called function")};
-    window.setTimeout(function(){
-      debugger;
-      $('#register_modal').modal('show');
-    }, 20 * 1000);
-  };
-</script>
+    function myFunc(){
+      myFunc = function(){};
+      window.setTimeout(function(){
+        $('#register_modal').modal('show');
+      }, 20 * 1000);
+    };
+  </script>
+<% end %>
 
