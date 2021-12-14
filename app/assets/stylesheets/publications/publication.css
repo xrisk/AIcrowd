@@ -76,12 +76,6 @@ color: #666666;
 .small-text{
     font-size: 12px!important;
 }
-.red{
-    color: #DE4B46;
-    margin-right: 10px;
-    font-size: 14px;
-    line-height: 20px;
-}
 .p-red{
     cursor: default;
     font-size: 14px;

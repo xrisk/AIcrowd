@@ -1,16 +1,4 @@
 <%= render 'header' %>
-<!-- masthead -->
-<div class="masthead masthead-open">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12">
-        <h1>Edit profile</h1>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /masthead -->
-
 <!-- section -->
 <div class="section-p-md">
   <div class="container-fluid">
@@ -37,6 +25,11 @@
           <div class="form-group">
             <label for="lastName">Last name</label>
             <%= f.text_field :last_name, class: "form-control" %>
+          </div>
+
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            <%= f.select :gender_cd, Participant::GENDER_TYPES, {include_blank: 'Enter your gender'}, {class: 'form-control'} %>
           </div>
 
           <div class="form-group">
@@ -69,7 +62,7 @@
 
           <div class="form-group">
             <label for="location">Country</label>
-                  <%= f.country_select :country_cd, { include_blank: '--- Select a country ---'}, { class: 'form-control' }  %>
+                  <%= f.country_select :country_cd, { include_blank: 'Select a country'}, { class: 'form-control' }  %>
           </div>
 
           <div class="form-group">

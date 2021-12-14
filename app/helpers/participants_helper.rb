@@ -88,4 +88,11 @@ module ParticipantsHelper
         title: "+#{previous_rank - current_rank} change, previous rank #{previous_rank}")
     end
   end
+
+  # country gender affiliation empty
+  # Probability 1%
+  # Have at least one challenge participant
+  def show_participant_edit_popup?(participant)
+    participant.present? && rand(100) < 2 && participant.gender_cd.blank? && participant.affiliation.blank? && participant.challenge_participants.where(registered: true).exists?
+  end
 end
