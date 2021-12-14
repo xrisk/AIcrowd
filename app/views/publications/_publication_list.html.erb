@@ -1,5 +1,5 @@
 <div class="col-12 px-1">
-  <ul class="list-group list-group-flush-px-1 list-group-contributions list-group-publications">
+  <ul id="publications-div" class="list-group list-group-flush-px-1 list-group-contributions list-group-publications" data-page="1" data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data">
     <% publications.each_with_index do |publication, idx| %>
     <div class="col-12 px-1">
       <li class="list-group-item py-4 flex-wrap <% if idx == publications.size - 1 %>border-0<% end %>">
