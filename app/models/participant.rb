@@ -225,6 +225,7 @@ class Participant < ApplicationRecord
   end
 
   def badge_stats
+    return [0, 0, 0]
     badge_ids = badges.map(&:id)
     bronze_badge_count = AicrowdBadge.where(id: badge_ids, level: 1).count
     silver_badge_count = AicrowdBadge.where(id: badge_ids, level: 2).count
