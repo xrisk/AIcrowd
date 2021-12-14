@@ -475,14 +475,14 @@ select::-ms-expand {
  * 1. Show the overflow in Edge.
  */
 
-button,
-input {
-  /* 1 */
-  overflow: visible;
-  border: none;
-  background: white;
-  outline: none;
-}
+// button,
+// input {
+//   /* 1 */
+//   overflow: visible;
+//   border: none;
+//   background: white;
+//   outline: none;
+// }
 
 /**
  * Remove the inheritance of text transform in Edge, Firefox, and IE.

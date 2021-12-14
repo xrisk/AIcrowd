@@ -19,7 +19,7 @@
           <% @dataset_folders.each do |dataset_folder| %>
             <%= render partial: 'dataset_files/dataset_folder', locals: { dataset_folder: dataset_folder, challenge: @challenge } %>
             <% dataset_folder.dataset_files&.each do |dataset_file| %>
-              <%= render partial: 'shared/challenges/dataset_file', locals: { dataset_file: dataset_file, challenge: @challenge, folder_item: true } %>
+              <%= render partial: 'shared/challenges/dataset_file', locals: { dataset_file: dataset_file, challenge: @challenge, folder_item: true, dataset_folder: dataset_folder } %>
             <% end %>
           <% end %>
           <% @dataset_files.each do |dataset_file| %>

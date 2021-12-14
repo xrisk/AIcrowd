@@ -1,0 +1,41 @@
+@import "../../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../../styles/base/__base-dir.scss";
+
+.btn-expand-alt {
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  color: var(--color-text);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 600;
+  height: 36px;
+  justify-content: center;
+  padding: 0;
+  text-decoration: none;
+  user-select: none;
+  width: 36px;
+  @include transition;
+  @include media-query("small-medium") {
+    font-size: 13px;
+    height: 32px;
+    width: 32px;
+  }
+  &:focus,
+  &.focus {
+    outline: 0;
+    -moz-transform: scale(1, -1);
+    -webkit-transform: scale(1, -1);
+    -o-transform: scale(1, -1);
+    -ms-transform: scale(1, -1);
+    transform: scale(1, -1);
+  }
+  &.disabled,
+  &:disabled {
+    opacity: 0.6;
+  }
+  .las {
+    font-size: 16px;
+  }
+}

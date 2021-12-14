@@ -80,3 +80,13 @@ export type WinningTeamCardProps = {
   size?: 'sm' | 'lg' | 'md' | 'ml';
   hideActionItem: boolean;
 };
+
+declare module 'react' {
+  interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+    // extends React's HTMLAttributes
+    objectFit?: any;
+    priority?: any;
+    blurDataURL?: string;
+    layout?: string;
+  }
+}

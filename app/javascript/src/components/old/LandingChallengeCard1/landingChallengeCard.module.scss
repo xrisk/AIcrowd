@@ -1,147 +1,204 @@
 @import "../../../constants/scss/abstracts/__abstracts-dir.scss";
 @import "../../../styles/base/__base-dir.scss";
 
-.container {
-  width: 100%;
-  width: 256px;
+.main {
+  height: 270px;
+  display: flex;
+  flex-direction: row;
+  border-radius: 6px;
+  border: 1px solid #e7e7e7;
+  box-sizing: border-box;
   transition: 0.2s ease;
-  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+
   &:hover {
-    transform: translate(0, -5px);
-    box-shadow: $shadow;
+    box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.14);
   }
-  .cardFooter {
+
+  @include media-query("small") {
+    flex-direction: column;
     width: 100%;
-    height: 32px;
-    background: white;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    border: 1px solid #e7e7e7;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0px 16px;
+    height: 385px;
+  }
 
-    .organizerWrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      .organizerName {
-        font-size: 10px;
-        line-height: 16px;
-        color: $color-text-light;
-        font-family: "Inter";
-      }
+  @include media-query("x-small") {
+    margin: 10px auto;
+    width: 95%;
+  }
 
-      .organizerLogo {
-        padding-right: 8px;
-        width: 24px;
-      }
+  .leftImg {
+    border-right: 1px solid #e7e7e7;
+    border-bottom: 1px solid #e7e7e7;
+    display: grid;
+    place-items: center;
+    width: 191px;
+    border-radius: 6px 0px 0px 6px;
+    @include media-query("small") {
+      border-radius: 6px 6px 0px 0px;
+      width: 100%;
+      height: 158px;
     }
   }
-
-  .main {
-    width: 256px;
-    height: 320px;
+  .rightContent {
     display: flex;
     flex-direction: column;
-    border-radius: 8px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    align-items: center;
     justify-content: space-between;
-    padding: $spacing-xx-small;
-    padding-top: $spacing-xxx-small;
-    cursor: pointer;
-    font-family: Inter;
-    border: 1px solid $color-border-light;
-    border-bottom: none;
-    position: relative;
+    padding: 10px;
+    padding-left: 32px;
+    padding-bottom: 0px;
+    @include media-query("x-large") {
+      padding-left: 12px;
+    }
     @include media-query("small") {
-      max-width: 288px;
-      height: 272px;
-      align-items: left;
+      padding: 8px;
     }
-
-    .cardBadgeWrapper {
-      position: absolute;
-      top: 16px;
-      left: -13px;
-    }
-
-    .challengeImage {
-      height: 180px;
-      width: 180px;
-      @include media-query("small") {
-        width: 112px;
-        height: 112px;
-      }
-    }
-
-    // @include media-query("x-large") {
-    //   width: 278px;
-
-    //   .challengeImage {
-    //     width: 220px;
-    //   }
-    // }
-
-    .titleText {
-      width: 208px;
-      text-align: center;
-      color: #fff;
-      font-size: 16px;
-      line-height: 24px;
-      font-weight: $font-weight-medium;
-      margin-bottom: 8px;
-      // show ellipsis after 2 lines
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      // @include media-query("x-large") {
-      //   font-size: 18px;
-      // }
-      @include media-query("small") {
-        font-size: 16px;
-        font-weight: $font-weight-semibold;
-        line-height: 24px;
-      }
-    }
-
-    .prizeText {
-      text-align: center;
-      width: 224px;
-      font-size: 14px;
-      line-height: 24px;
-      color: $color-text-light;
-      margin-bottom: 8px;
-      // show ellipsis after 2 lines
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      @include media-query("small") {
-        font-size: 14px;
-        padding-bottom: 10px;
-      }
-    }
-
-    .cardBottomWrapper {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .participantsWrapper {
-      display: flex;
-      justify-self: flex-end;
-      .circleValue {
-        margin-left: -18px;
+  }
+  .challengeImage {
+    width: 150px;
+    height: 150px;
+  }
+  .statsBox {
+    display: flex;
+    div {
+      &:nth-last-child(1) {
+        // remove organizers padding right
+        padding-right: 0px;
       }
     }
   }
+
+  .textWrapper {
+    max-width: 498px;
+    @include media-query("x-large") {
+      max-width: 498px;
+    }
+    @include media-query("small") {
+      max-width: 100%;
+    }
+  }
+
+  .titleText {
+    font-size: 24px;
+    color: #5c4f4f;
+    line-height: 31px;
+    font-weight: 400;
+    padding-bottom: 5px;
+    @include media-query("x-large") {
+      font-size: 18px;
+      padding-bottom: 2px;
+    }
+
+    @include media-query("small") {
+      line-height: 25px;
+    }
+    @include media-query("x-small") {
+      font-size: 18px;
+    }
+  }
+
+  .descriptionText {
+    font-size: 16px;
+    line-height: 21px;
+    letter-spacing: 0.25px;
+    color: #747474;
+    margin-bottom: 10px;
+    @include media-query("small") {
+      font-size: 12px;
+      margin-bottom: 7px;
+      line-height: 18px;
+    }
+    @include media-query("x-small") {
+      font-size: 12px;
+      line-height: 15px;
+    }
+  }
+  .descriptionBox {
+    width: 100%;
+  }
+
+  .submissioncountText {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: 0.15px;
+    color: #1f1f1f;
+    @include media-query("small") {
+      font-size: 16px;
+    }
+  }
+
+  .statTitleText {
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 15px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #747474;
+    @include media-query("small") {
+      font-size: 8px;
+      line-height: 10px;
+      letter-spacing: 1px;
+    }
+  }
+
+  .submissionText {
+    @include media-query("x-small") {
+      display: none;
+    }
+  }
+  .prizeText {
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+    color: #1f1f1f;
+    padding-bottom: 10px;
+    @include media-query("small") {
+      margin-left: 0;
+      font-size: 14px;
+    }
+  }
+
+  .hashtagText {
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0.4px;
+    margin-bottom: 2px;
+    color: #747474;
+  }
+
+  .participantsWrapper {
+    display: flex;
+    padding-bottom: 8px;
+
+    .circleValue {
+      margin-left: -8px;
+      z-index: 2;
+    }
+  }
+}
+
+.cardItemWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-right: 70px;
+
+  @include media-query("x-large") {
+    padding-right: 20px;
+  }
+
+  @include media-query("small") {
+    padding-right: 40px;
+  }
+  @include media-query("x-small") {
+    padding-right: 20px;
+  }
+}
+
+.cardBadgeWrapper {
+  position: absolute;
+  top: 16px;
+  left: -13px;
 }

@@ -74,7 +74,6 @@
 
 /* Add an italic font style to all quotes */
 .quoteText {
-  font-family: Inter;
   font-style: normal;
   font-weight: $font-weight-medium;
   font-size: 34px;
@@ -95,7 +94,6 @@
 }
 
 .author {
-  font-family: Inter;
   font-style: normal;
   font-weight: $font-weight-medium;
   font-size: 19px;
@@ -109,7 +107,6 @@
   }
 }
 .post {
-  font-family: Inter;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;

@@ -159,6 +159,12 @@ class ParticipantsController < ApplicationController
       end
     end
 
+    if params[:id].downcase == 'sign_out'
+      if params[:key].present? and current_participant.present? and params[:key] == Digest::MD5.hexdigest(current_participant.confirmation_token)
+        return sign_out_and_redirect(current_participant)
+      end
+    end
+
     @participant = Participant.friendly.find_by_friendly_id(params[:id].downcase)
     authorize @participant
   end

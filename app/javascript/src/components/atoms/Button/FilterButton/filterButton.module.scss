@@ -1,0 +1,59 @@
+@import "../../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../../styles/vendor/__vendor-dir.scss";
+@import "../../../../styles/base/__base-dir.scss";
+
+.checkboxWrapper {
+  input[type="checkbox"]:checked + label {
+    border: 1px solid #252627;
+    background-color: #fff;
+    color: #000;
+    transition: all 0.2s;
+  }
+
+  input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+  }
+
+  label {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #e7e7e7;
+    color: #747474;
+    border-radius: 25px;
+    white-space: nowrap;
+    margin: 3px 0px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.2s;
+    padding: 7px 21px;
+    @include media-query("small-medium") {
+      padding: 4px 8px;
+    }
+    cursor: pointer;
+
+    .icon-wrapper {
+      padding-left: 15px;
+    }
+  }
+}
+
+// @include transition;
+// @include media-query("large") {
+//   font-size: 13px;
+//   height: 72px;
+//   width: 72px;
+// }
+// @include media-query("medium") {
+//   height: 60px;
+//   width: 60px;
+// }
+// @include media-query("small-medium") {
+//   font-size: 12px;
+//   height: 48px;
+//   width: 48px;
+// }

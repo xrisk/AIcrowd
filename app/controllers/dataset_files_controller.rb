@@ -4,6 +4,7 @@ class DatasetFilesController < ApplicationController
   challenge_masthead_actions [:index, :new, :create, :edit, :update, :destroy]
 
   before_action :authenticate_participant!
+  before_action :redirect_for_download, only: :index
   before_action :set_dataset_file, only: [:destroy, :edit, :update]
   before_action :check_participation_terms
   before_action :set_s3_direct_post, only: [:new, :create, :edit, :update]
@@ -36,6 +37,17 @@ class DatasetFilesController < ApplicationController
   end
 
   def edit; end
+
+  def redirect_for_download
+    if params[:unique_download_uri].present?
+      dfd = DatasetFileDownload.find(params[:unique_download_uri])
+      if dfd.participant_id == current_participant.id
+        dfd.downloaded = true
+        dfd.save!
+        redirect_to dfd.external_url
+      end
+    end
+  end
 
   def update
     @dataset_file.assign_attributes(dataset_file_params)

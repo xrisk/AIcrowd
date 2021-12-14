@@ -1,8 +1,10 @@
 <!-- item -->
+<% dataset_folder = defined?(dataset_folder)? dataset_folder: nil %>
 <li class="list-group-item">
   <div class="dataset-file__info <%= defined?(folder_item) && folder_item ? 'dataset_file__from-folder' : '' %>">
     <div>
-      <%= link_to file_expiring_url(dataset_file), class: 'text-link', data: { :'dataset-file-id' => dataset_file.id } do %>
+      <% download_uri = file_track_url(dataset_file, dataset_folder) %>
+      <%= link_to download_uri, class: 'text-link', target: '_blank', data: { :'dataset-file-id' => dataset_file.id } do %>
         <%= file_title(dataset_file) %> <% if file_size(dataset_file).present? %>(<%= file_size(dataset_file) %>)<% end %>
       <% end %>
 
@@ -24,7 +26,7 @@
 
   <div style="display:flex">
     <% if dataset_file.error_message.blank? %>
-      <%= link_to 'Download', file_expiring_url(dataset_file), class: 'btn btn-secondary', target: '_blank', data: { :'dataset-file-id' => dataset_file.id.to_i } %>
+      <%= link_to 'Download', download_uri, class: 'btn btn-secondary', target: '_blank', data: { :'dataset-file-id' => dataset_file.id.to_i } %>
     <% end %>
     <% if (!defined?(folder_item) || !folder_item) && Pundit.policy(current_participant, dataset_file).destroy? && dataset_file.persisted? %>
       <%= link_to 'Edit', edit_challenge_dataset_file_path(challenge, dataset_file), class: 'btn btn-secondary' %>

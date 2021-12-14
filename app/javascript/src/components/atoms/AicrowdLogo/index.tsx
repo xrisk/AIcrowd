@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import Link from 'src/components/atoms/Link';
 import classnames from 'classnames';
 
 import styles from './aicrowdLogo.module.scss';
@@ -25,7 +25,7 @@ const AicrowdLogo = ({ type, size, fontFamily, fontWeight }: AicrowdLogoProps) =
   const isText = type === 'text';
   return (
     <>
-      <Link href="/">
+      <a href="/">
         <a
           className={classnames({ [brand]: isFull, [logomark]: isMark, [text]: isText })}
           style={{ width: isMark && `${size}px`, height: isMark && `${size}px` }}>
@@ -38,7 +38,7 @@ const AicrowdLogo = ({ type, size, fontFamily, fontWeight }: AicrowdLogoProps) =
             </span>
           )}
         </a>
-      </Link>
+      </a>
     </>
   );
 };

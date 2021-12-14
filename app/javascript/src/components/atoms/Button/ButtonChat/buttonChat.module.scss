@@ -1,0 +1,50 @@
+@import "../../../../constants/scss/abstracts/__abstracts-dir.scss";
+@import "../../../../styles/base/__base-dir.scss";
+
+.btn-chat {
+  border: 1px solid transparent;
+  border-radius: 24px;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.08);
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  user-select: none;
+  @include transition;
+  @include media-query("large") {
+    font-size: 13px;
+  }
+  @include media-query("small-medium") {
+    font-size: 12px;
+  }
+  &:focus,
+  &.focus {
+    outline: 0;
+  }
+  &:hover {
+    border: 1px solid #c9c9c9;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+  }
+  .btn-content-left,
+  .btn-content-right {
+    align-items: center;
+    background-color: #1b1f23;
+    display: inline-flex;
+    height: 36px;
+    @include media-query("small-medium") {
+      height: 32px;
+    }
+  }
+  .btn-content-left {
+    border-radius: 24px 0 0 24px;
+    font-weight: 400;
+    padding: 0 8px 0 20px;
+  }
+  .btn-content-right {
+    background-color: var(--color-positive);
+    border-radius: 0 24px 24px 0;
+    padding: 0 20px 0 8px;
+  }
+}

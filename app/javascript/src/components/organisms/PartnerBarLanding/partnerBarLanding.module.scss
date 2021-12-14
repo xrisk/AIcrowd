@@ -16,10 +16,21 @@
 
   .title {
     @include heading-5;
+    font-family: "Inter";
+    font-weight: $font-weight-medium;
+    @include media-query("small") {
+      @include body-text-normal;
+      font-weight: normal;
+    }
   }
 
   @include media-query("x-large") {
     padding: 82px 12px;
+  }
+
+  @include media-query("large") {
+    padding-bottom: 18px;
+    padding-top: 64px;
   }
 
   @include media-query("small") {
@@ -33,9 +44,17 @@
       padding-right: 40px;
     }
 
-    img {
-      width: 80px;
+    .partners-bar-image {
+      position: relative;
       min-width: 80px;
+      width: 80px;
+      height: 100px;
+
+      @include media-query("large") {
+        min-width: 70px;
+        width: 70px;
+        height: 70px;
+      }
 
       @include media-query("small") {
         width: 65px;
@@ -52,3 +71,14 @@
     }
   }
 }
+
+            
+            .partners-bar-image {
+                height: unset !important;
+            }
+            
+            .partners-bar-image img {
+                width: 80px;
+            }
+            
+            

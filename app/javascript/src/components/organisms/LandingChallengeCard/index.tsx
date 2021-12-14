@@ -1,11 +1,13 @@
 import React from 'react';
 import isDarkColor from 'is-dark-color';
 import Image from 'next/image';
-import Link from 'next/link';
+import Link from 'src/components/atoms/Link';
 
 import AvatarGroup from 'src/components/molecules/AvatarGroup';
 import CircleValue from 'src/components/atoms/CircleValue';
 import CardBadge from 'src/components/atoms/CardBadge';
+import useMediaQuery from 'src/hooks/useMediaQuery';
+import { sizes } from 'src/constants/screenSizes';
 
 import styles from './landingChallengeCard.module.scss';
 const {
@@ -29,7 +31,6 @@ import { Users } from 'src/types';
 import Tooltip from 'src/components/atoms/Tooltip';
 
 export type LandingChallengeCardProps = {
-  slug: string;
   image: string;
   name: string;
   prize: [string];
@@ -41,11 +42,11 @@ export type LandingChallengeCardProps = {
   cardBadge: boolean;
   organizers: [{ name: string; logo: string; link: string }];
   userCount: number;
-  isOngoing: boolean;
+  url: string;
+  priority?: boolean;
 };
 
 const LandingChallengeCard = ({
-  slug,
   image,
   name,
   prize,
@@ -57,8 +58,11 @@ const LandingChallengeCard = ({
   cardBadge,
   organizers,
   userCount,
-  isOngoing,
+  url,
+  priority,
 }: LandingChallengeCardProps) => {
+  const { wide, xLarge, xSmall, small, medium, large, smallMedium } = sizes;
+  const isS = useMediaQuery(small);
   const isWhite = color === '#FFFFFF';
 
   // Detects the dark color
@@ -68,35 +72,52 @@ const LandingChallengeCard = ({
   return (
     <>
       <div className={container}>
-        <a href= {`/challenges/${slug}`}>
-          <div className={main} style={{ background: color }}>
-            <div className={cardBadgeWrapper}>
-              <CardBadge badgeColor={badgeColor} challengeEndDate={challengeEndDate} cardBadge={cardBadge} />
-            </div>
-            <img src={image} className={challengeImage}></img>
-            <div className={cardBottomWrapper}>
-              <div className={titleText} style={{ color: invertedColor }}>
-                {name}
+        <a href={url}>
+          <a>
+            <div className={main} style={{ background: color }}>
+              <div className={cardBadgeWrapper}>
+                <CardBadge badgeColor={badgeColor} challengeEndDate={challengeEndDate} cardBadge={cardBadge} />
               </div>
-              <div className={prizeText} style={{ color: isWhite ? '#747474' : invertedColor }}>
-                {/* {prize} */}
-                {prize.map((priz, i) => {
-                  return (
-                    <span key={i} style={{ color: isWhite ? '#747474' : invertedColor }}>
-                      {priz} {i + 1 < prize.length && '•'}&nbsp;
-                    </span>
-                  );
-                })}
+              <img style={{ display: 'block' }}
+                src={image}
+                placeholder="blur"
+                blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                width={isS ? 112 : 180}
+                height={isS ? 112 : 180}
+                className={challengeImage}
+                priority={priority}
+              />
+              <div className={cardBottomWrapper}>
+                <div className={titleText} style={{ color: invertedColor }}>
+                  {name}
+                </div>
+                <div className={prizeText} style={{ color: isWhite ? '#747474' : invertedColor }}>
+                  {/* {prize} */}
+                  {prize.map((priz, i) => {
+                    return (
+                      <span key={i} style={{ color: isWhite ? '#747474' : invertedColor }}>
+                        {priz} {i + 1 < prize.length && '•'}&nbsp;
+                      </span>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
 
-            <div className={participantsWrapper}>
-              <AvatarGroup users={users} size="sm" onCard={true} borderColor={color} loading={loading} />
-              <div className={circleValue}>
-                <CircleValue value={userCount} size="sm" onCard={true} borderColor={color} />
+              <div className={participantsWrapper}>
+                <AvatarGroup
+                  users={users}
+                  size="sm"
+                  onCard={true}
+                  borderColor={color}
+                  loading={loading}
+                  priority={priority}
+                />
+                <div className={circleValue}>
+                  <CircleValue value={userCount} size="sm" onCard={true} borderColor={color} />
+                </div>
               </div>
             </div>
-          </div>
+          </a>
         </a>
         <div className={cardFooter}>
           {organizers.map(organizer => {
@@ -106,7 +127,14 @@ const LandingChallengeCard = ({
                 <div className={organizerWrapper}>
                   <Tooltip position="down" label={name}>
                     <div className={logoWrapper}>
-                      <img src={logo} className={organizerLogo}></img>
+                      <img style={{ display: 'block' }}
+                        src={logo}
+                        placeholder="blur"
+                        blurDataURL="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="
+                        layout="fill"
+                        objectFit="contain"
+                        priority={priority}
+                      width="100%"/>
                     </div>
                   </Tooltip>
                   {/* Hide names if organizers are more then 1 */}
