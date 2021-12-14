@@ -76,12 +76,6 @@ color: #666666;
 .small-text{
     font-size: 12px!important;
 }
-.red{
-    color: #DE4B46;
-    margin-right: 10px;
-    font-size: 14px;
-    line-height: 20px;
-}
 .p-red{
     cursor: default;
     font-size: 14px;
@@ -225,6 +219,7 @@ color: #292C2D;
 }
 .img-red{
     width: 15px!important;
+    height: 15px!important;
     margin-right: 5px;
 }
 .hide-button{
@@ -284,8 +279,8 @@ color: #292C2D;
         .new-row{
             margin-left: 10px;
         }
- .dropdown{
-     margin: 5px 20px;
+ .hide{
+     display: none;
  }
  /* .p-red1{
      margin-top: 62px;
@@ -379,15 +374,13 @@ color: #1F1F1F;
   padding-right: 0;
 }
 }
-.pl-14{
-    padding-left: 14px!important;
-}
 .ml-lg-80{
-    margin-left: 80px;
+    margin-left: 98px;
 }  
 @media only screen and (max-width: 992px) {
 .ml-lg-80{
-margin-left: 14px!important;
+margin-left: 0px!important;
+margin-right: 0px!important;
 }
 }
   

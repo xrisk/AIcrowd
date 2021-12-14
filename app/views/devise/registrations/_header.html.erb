@@ -15,13 +15,13 @@
   <div class="container-fluid">
     <ul class="nav">
       <li class="nav-item">
+        <%= link_to "Edit Profile", edit_participant_path(current_participant), class: "nav-link nav-link-03" %>
+      </li>
+      <li class="nav-item">
         <%= link_to "Email & password", edit_participant_registration_path, class: "nav-link nav-link-01 active" %>
       </li>
       <li class="nav-item">
         <%= link_to "Notifications", participant_notifications_path(@participant), class: "nav-link nav-link-02" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "Edit Profile", edit_participant_path(current_participant), class: "nav-link nav-link-03" %>
       </li>
 
 

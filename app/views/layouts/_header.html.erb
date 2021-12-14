@@ -94,7 +94,7 @@
 								<strong><%= current_participant.name %></strong><br>
 								View profile
 							<% end %>
-							<%= link_to 'Account Settings', edit_participant_registration_path, {class: "dropdown-item"} %>
+							<%= link_to 'Account Settings', edit_participant_path(current_participant), {class: "dropdown-item"} %>
 							<div class="dropdown-divider"></div>
               <%= link_to 'Log Out', destroy_participant_session_path, class: "dropdown-item", :method => :delete, :id => 'logout', data: { controller: "mixpanel", action: "click->mixpanel#logout" } %>
                                                         <div class="dropdown-divider"></div>

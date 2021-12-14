@@ -196,6 +196,7 @@ class ParticipantsController < ApplicationController
         :country_cd,
         :first_name,
         :last_name,
+        :gender_cd,
         # NATE: we might need to allow this if for some reason a user has been created without agreeing,
         # for example during the oauth flow
         # :agreed_to_terms_of_use_and_privacy,

@@ -85,22 +85,22 @@
                   </header>
                   <div class="d-flex">
                     <% if participant.twitter.present? %>
-                      <%= link_to url_for(participant.twitter) do %>
+                      <%= link_to url_for(participant.twitter), rel: 'nofollow' do %>
                         <span class="mr-3"><i class="fa fa-twitter" aria-hidden="true"></i></span>
                       <% end %>
                     <% end %>
                     <% if participant.github.present? %>
-                      <%= link_to url_for(participant.github) do %>
+                      <%= link_to url_for(participant.github), rel: 'nofollow' do %>
                         <span class="mr-3"><i class="fa fa-github" aria-hidden="true"></i></span>
                       <% end %>
                     <% end %>
                     <% if participant.linkedin.present? %>
-                      <%= link_to url_for(participant.linkedin) do %>
+                      <%= link_to url_for(participant.linkedin), rel: 'nofollow' do %>
                         <span class="mr-3"><i class="fa fa-linkedin" aria-hidden="true"></i></span>
                       <% end %>
                     <% end %>
                     <% if participant.website.present? %>
-                      <%= link_to url_for(participant.website) do %>
+                      <%= link_to url_for(participant.website), rel: 'nofollow' do %>
                         <span class="mr-3"><i class="fa fa-globe" aria-hidden="true"></i></span>
                       <% end %>
                     <% end %>

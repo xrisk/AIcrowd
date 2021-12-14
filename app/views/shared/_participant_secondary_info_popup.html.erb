@@ -1,69 +1,72 @@
-<% if current_participant && show_submission_popup?(current_participant) %>
+<% if current_participant.present? && show_submission_popup?(current_participant) %>
   <div class="modal participant_secondary_info_modal" id="participant_secondary_info_modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="max-width: 50%;">
-      <div class="modal-content" style="width: 90%;margin-left: 5%;margin-top: 16%;">
-      <div id="detail-modal2" style="margin-left: 5%;margin-right: 5%;">
+    <div class="container-fluid page" role="document">
+      <div id="detail-modal2">
         <div class="">
           <img class="top" src="/assets/img/aicrowd logo 1.png" alt="">
-          <span class="fa fa-times cross"></span>
+          <span class="fa fa-times cross" data-dismiss="modal" aria-label="Close" style="cursor: pointer"></span>
         </div>
 
         <div class="">
           <div class="">
             <div class=""><span class="dot11"></span></div>
-            <div class="">        <h5 class="text-center">Kudos for Making Your First Submission!</h5>
+            <div class="">        <h5 class="text-center">Kudos for Making Submission!</h5>
               <p class="sub ">Meet innovative problem solvers like you! <br>
                 Fill the form to join the AIcrowd community</p></div>
             <div class=""><span class="dot4"></span></div>
           </div>
 
         </div>
-        <%= form_for Participant.find(16171), validate: true do |f| %>
         <div class="modal-detail-form">
-          <form class="detail-form2">
+          <%= form_for current_participant, validate: true do |f| %>
+          <div class="detail-form2">
             <span class="dot3 float-right"></span>
-            <div class="row" style="margin-left: 14%;">
+            <div class="row">
               <div class="col-lg-3 col-md-3">
-                <span class="dot22"></span>
+                <%= participant_avatar(current_participant, 'avatar dot22') %>
+                <div class="popup-image-upload">
+                  <%= f.file_field :image_file, class: 'custom-file-input' %>
+                  <label for="participant_image_file"></label>
+                </div>
               </div>
-              <div class="col-lg-7 col-md-9">
+              <div class="col-lg-9 col-md-9">
                 <div class="form-group mt-2">
                   <%= f.text_area :bio, class: "form-control", placeholder: "Add a short bio to your profile" %>
                 </div>
               </div>
             </div>
-            <div class="row" style="margin-left: 10%;">
-              <div class="col-lg-5">
+            <div class="row">
+              <div class="col-lg-6">
                 <div class="form-group mt-2">
                   <label class="float-left" for="github">Github Profile</label>
-                  <%= f.text_field :github, class: 'form-control', placeholder: "e.g. https://github.com/johndoe"%>
+                  <%= f.text_field :github, class: 'form-control', placeholder: "e.g. https://github.com/aicrowd"%>
                 </div>
 
                 <div class="form-group">
                   <label class="float-left" for="twitter">Twitter Account</label>
-                  <%= f.text_field :twitter, class: 'form-control', placeholder: "e.g. https://twitter.com/johndoe" %>
+                  <%= f.text_field :twitter, class: 'form-control', placeholder: "e.g. https://twitter.com/aicrowdHQ" %>
                 </div>
 
               </div>
-              <div class="col-lg-5">
+              <div class="col-lg-6">
                 <div class="form-group mt-2">
                   <label class="float-left" for="linkedin">LinkedIn Profile</label>
-                  <%= f.text_field :linkedin, class: 'form-control', placeholder: "e.g. https://linkedin.com/johndoe" %>
+                  <%= f.text_field :linkedin, class: 'form-control', placeholder: "e.g. https://www.linkedin.com/company/aicrowd" %>
 
                 </div>
 
                 <div class="form-group">
                   <label class="float-left" for="website">Personal Website</label>
-                  <%= f.text_field :website, class: 'form-control', placeholder: "e.g. https://johndoe" %>
+                  <%= f.text_field :website, class: 'form-control', placeholder: "e.g. https://www.aicrowd.com" %>
                 </div>
 
               </div>
             </div>
-          </form>
+          </div>
           <div class="newbutton mb-5">
             <div class="row">
               <div class="col-lg-6">
-                <button type="submit" class="btn btn-white-submit2  mt-2" style="width: 100%;">Skip for now</button>
+                <button type="submit" class="btn btn-white-submit2  mt-2" style="width: 100%;" data-dismiss="modal" aria-label="Close" onclick="return false;">Skip for now</button>
 
               </div>
               <div class="col-lg-6">
@@ -75,13 +78,29 @@
             <img class="float-right img-left2" src="/assets/img/Frame 52.png" alt="" srcset="">
             <img class="float-left img-right2" src="/assets/img/Frame 53.png" alt="" srcset="">
           </div>
+          <% end %>
         </div>
-        <% end %>
       </div>
-    </div>
     </div>
   </div>
   <script>
     $('#participant_secondary_info_modal').modal('show');
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          console.log(input);
+          ele = $(input).closest('.row').find('.dot22').first();
+          ele.attr('src', e.target.result);
+          ele.hide();
+          ele.fadeIn(650);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    $("#participant_image_file").change(function() {
+      console.log("here");
+      readURL(this);
+    });
   </script>
 <% end %>
