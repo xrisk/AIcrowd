@@ -6,10 +6,10 @@
         <p class="text-center sub">Log In To Explore New Challenges!</p>
       </div>
       <div class="modal-logins mt-4">
-        <%= button_to participant_google_oauth2_omniauth_authorize_path, {class: "btn btn-modal-login py-2", data: { controller: "mixpanel", type: "loginGoogle" }} do %>
+        <%= button_to participant_google_oauth2_omniauth_authorize_path, {class: "btn btn-modal-login py-2", data: { controller: "mixpanel", type: "loginGoogle" }}, method: :get do %>
           <i><img class="btn-modal-login-img mr-2" src="https://images.aicrowd.com/images/landing_page/google.svg" /></i>Continue with Google
         <% end %>
-        <%= button_to participant_github_omniauth_authorize_path, {class: "btn btn-modal-login bg-dark py-2 clr-white mt-3", data: { controller: "mixpanel", type: "loginGitHub" }} do %>
+        <%= button_to participant_github_omniauth_authorize_path, {class: "btn btn-modal-login bg-dark py-2 clr-white mt-3", data: { controller: "mixpanel", type: "loginGitHub" }}, method: :get do %>
           <i><img class="btn-modal-login-img mr-2" src="/assets/img/icon-github.svg" /></i>Continue with Github
         <% end %>
       </div>
@@ -49,10 +49,10 @@
         <p class="sub">Get ready to solve some real-world AI problems!</p>
       </div>
       <div class="modal-logins mt-4">
-        <%= button_to participant_google_oauth2_omniauth_authorize_path, {class: "btn btn-modal-login py-2", data: { controller: "mixpanel", type: "loginGoogle" }} do%>
+        <%= button_to participant_google_oauth2_omniauth_authorize_path, {class: "btn btn-modal-login py-2", data: { controller: "mixpanel", type: "loginGoogle" }}, method: :get do%>
           <i><img class="btn-modal-login-img mr-2" src="https://images.aicrowd.com/images/landing_page/google.svg" /></i>Continue with Google
         <% end %>
-        <%= button_to participant_github_omniauth_authorize_path, {class: "btn btn-modal-login bg-dark py-2 clr-white mt-3", data: { controller: "mixpanel", type: "loginGitHub" }} do%>
+        <%= button_to participant_github_omniauth_authorize_path, {class: "btn btn-modal-login bg-dark py-2 clr-white mt-3", data: { controller: "mixpanel", type: "loginGitHub" }}, method: :get do%>
           <i><img class="btn-modal-login-img mr-2" src="/assets/img/icon-github.svg" /></i>Continue with Github
         <% end %>
       </div>
