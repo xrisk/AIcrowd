@@ -11,13 +11,13 @@
           <p class="text-center sub">Sign up to solve the problem</p>
         </div>
         <div class="modal-logins mt-4" style="text-align: -webkit-center;">
-          <%= link_to participant_google_oauth2_omniauth_authorize_path, {class: "btn btn-modal-login py-2", style: "width: 68%;", data: { controller: "mixpanel", type: "loginGoogle" }} do%>
+          <%= link_to participant_google_oauth2_omniauth_authorize_path, {class: "btn btn-modal-login py-2", style: "width: 68%;", data: { controller: "mixpanel", type: "challengeLoginGoogle" }} do%>
           <!-- <button class="btn-modal-login py-2" style="width: 68%;"> -->
             <i><img class="btn-modal-login-img mr-2" src="https://images.aicrowd.com/images/landing_page/google.svg" /></i>
             Continue with Google
           <!-- </button> -->
           <% end %>
-          <%= link_to participant_github_omniauth_authorize_path, {class: "btn btn-modal-login bg-dark py-2 clr-white mt-3", style: "width: 68%;", data: { controller: "mixpanel", type: "loginGitHub" }} do%>
+          <%= link_to participant_github_omniauth_authorize_path, {class: "btn btn-modal-login bg-dark py-2 clr-white mt-3", style: "width: 68%;", data: { controller: "mixpanel", type: "challengeLoginGitHub" }} do%>
           <!-- <button class="btn-modal-login bg-dark py-2 clr-white mt-3" style="width: 68%;"> -->
             <i><img class="btn-modal-login-img mr-2" src="/assets/img/icon-github.svg" /></i>
             Continue with Github

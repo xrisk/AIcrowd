@@ -64,6 +64,14 @@ export default class extends Controller {
         });
     }
 
+    challengeLoginGitHub(element) {
+        this.loginExternal(element, 'Challenge Page GitHub')
+    }
+
+    challengeLoginGoogle(element) {
+        this.loginExternal(element, 'Challenge Page Google')
+    }
+
     logout() {
         mixpanel.track('Logout', {
             "Logged In": false
