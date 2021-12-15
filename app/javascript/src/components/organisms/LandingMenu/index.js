@@ -9,34 +9,34 @@ const LandingMenu = ({ profileMenuItem, isLoggedIn }) => (
   <>
     <div className={main}>
       <div className={menuWrapper}>
-        <Link href="/landing_page/host">
+        <a href="/landing_page/host">
           <a>Host a Challenge</a>
-        </Link>
-        <Link href="/challenges">
+        </a>
+        <a href="/challenges">
           <a>Challenges</a>
-        </Link>
-        <Link href="/showcase">
+        </a>
+        <a href="/showcase">
           <a>Showcase</a>
-        </Link>
-        <Link href="/research">
+        </a>
+        <a href="/research">
           <a>Research</a>
-        </Link>
-        <Link href="https://discourse.aicrowd.com/">
+        </a>
+        <a href="https://discourse.aicrowd.com/">
           <a>Forum</a>
-        </Link>
-        <Link href="https://blog.aicrowd.com/">
+        </a>
+        <a href="https://blog.aicrowd.com/">
           <a>Blog</a>
-        </Link>
+        </a>
         {!isLoggedIn && (
           <>
             <div className={loginText}>
-              <Link href="/participants/sign_in">
+              <a href="/participants/sign_in">
                 <a>Log In</a>
-              </Link>
+              </a>
             </div>
-            <Link href="/participants/sign_up">
+            <a href="/participants/sign_up">
               <a>Signup</a>
-            </Link>
+            </a>
           </>
         )}
 
@@ -45,9 +45,9 @@ const LandingMenu = ({ profileMenuItem, isLoggedIn }) => (
             const { name, link } = item;
             return (
               <div className={name === 'Profile' ? loginText : ''} key={name}>
-                <Link href={link}>
+                <a href={link}>
                   <a>{name}</a>
-                </Link>
+                </a>
               </div>
             );
           })}

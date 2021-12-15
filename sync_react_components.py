@@ -87,6 +87,8 @@ def sync_folders(localstream, upstream):
         ["<a>Community</a>", "<a>Showcase</a>"],
         [".btn-notifications {", ".btn-notifications { display: none;"],
         ["router.push(", "(window.location.href="],
+        ["<Link", "<a"],
+        ["</Link", "</a"],
     ]
 
     last_line = ""
