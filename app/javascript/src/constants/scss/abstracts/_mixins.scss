@@ -88,7 +88,6 @@ $gradient-color: linear-gradient(168.26295deg, #f0524d, #f04d7e, #ec4cb1, #e94be
   text-overflow: ellipsis;
 }
 
-// mixin for truncating multi line text
 @mixin truncateMulti($line: 2) {
   overflow: hidden;
   text-overflow: ellipsis;

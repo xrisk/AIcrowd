@@ -281,7 +281,7 @@ module Merit
 
       # Followed their first Aicrew member
       grant_on 'follows#create', badge: 'Followed First Member', level: 4 do |follow|
-        follow.following.where(followable_type: "Participant").count >= 1
+        follow.participant.following.where(followable_type: "Participant").count >= 1
       end
 
       # Got First Follower
