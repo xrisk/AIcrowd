@@ -1,0 +1,128 @@
+<div class="body1" data-controller="registration-form">
+  <div class="container-fluid page">
+    <div id="<%= login_modal %>" class="login-modal">
+      <div class="modal-welcome">
+        <h5 class="text-center">Welcome to <span class="red" style="margin-right: 0px;">AI</span>crowd</h5>
+        <p class="text-center sub">Log In To Explore New Challenges!</p>
+      </div>
+      <div class="modal-logins mt-4">
+        <%= link_to participant_google_oauth2_omniauth_authorize_path, {class: "btn btn-modal-login py-2", data: { controller: "mixpanel", type: "loginGoogle" }} do %>
+          <i><img class="btn-modal-login-img mr-2" src="https://images.aicrowd.com/images/landing_page/google.svg" /></i>Continue with Google
+        <% end %>
+        <%= link_to participant_github_omniauth_authorize_path, {class: "btn btn-modal-login bg-dark py-2 clr-white mt-3", data: { controller: "mixpanel", type: "loginGitHub" }} do %>
+          <i><img class="btn-modal-login-img mr-2" src="/assets/img/icon-github.svg" /></i>Continue with Github
+        <% end %>
+      </div>
+      <div class="modal-separator mt-4">or</div>
+      <%= form_for resource, as: resource_name, url: session_path(resource_name), html: { class: "login-form", data: { controller: "mixpanel", type: "loginEmail" }}, validate: true do |f| %>
+        <div class="modal-login-form">
+            <div class="form-group">
+              <label class="float-left" for="email">Email</label>
+              <%= f.text_field :email, placeholder: "Enter your email", class: "form-control"%>
+            </div>
+            <div class="form-group">
+              <label class="float-left" for="password">Password</label>
+              <%= f.password_field :password, placeholder: "Enter your password", class: "form-control" %>
+              <span toggle="#participant_password" class="fa fa-fw fa-eye field-icon toggle-password mr-2"></span>
+            </div>
+
+             <div class="float-left ms-t">
+                <%= f.check_box :remember_me %>
+                <%= f.label :remember_me, class: "f_14 text-capitalize" %>
+              </div>
+              <div class="float-right ms-t1">
+                <a href="<%= new_password_path(resource_name) %>" class="float-right  modal-styling f_14"><u>Forgot Password?</u></a>
+              </div>
+            <div class="newbutton">
+              <%= f.button 'Log In', type: 'submit', class: 'btn btn-red-submit mt-3 btn-lg' %>
+            </div>
+        </div>
+      <% end %>
+      <div class="modal-newaccount">
+        <p class="f-14">Don't Have an Account ? <a href="#" onclick="showSignup()" id="show" class="modal-styling"><u>Create New Account</u></a></p>
+        <p>Can't Log In ? <%= link_to "Verify Account", new_confirmation_path(resource_name), {class: "modal-styling mx-2"} %> <%= link_to "Recover Account", new_unlock_path(resource_name), {class: "modal-styling right-margin"} %></p>
+      </div>
+    </div>
+    <div id="<%= signup_modal%>" class="signup-modal">
+      <div class="modal-welcome">
+        <h5 class="text-center">Hey There! Excited to have you here.</h5>
+        <p class="sub">Get ready to solve some real-world AI problems!</p>
+      </div>
+      <div class="modal-logins mt-4">
+        <%= link_to participant_google_oauth2_omniauth_authorize_path, {class: "btn btn-modal-login py-2", data: { controller: "mixpanel", type: "loginGoogle" }} do%>
+          <i><img class="btn-modal-login-img mr-2" src="https://images.aicrowd.com/images/landing_page/google.svg" /></i>Continue with Google
+        <% end %>
+        <%= link_to participant_github_omniauth_authorize_path, {class: "btn btn-modal-login bg-dark py-2 clr-white mt-3", data: { controller: "mixpanel", type: "loginGitHub" }} do%>
+          <i><img class="btn-modal-login-img mr-2" src="/assets/img/icon-github.svg" /></i>Continue with Github
+        <% end %>
+      </div>
+      <div class="modal-separator mt-2">or</div>
+      <%= form_for resource, as: resource_name, url: registration_path(resource_name), html: { data: { controller: "mixpanel", type: "signupEmail" }}, validate: true do |f| %>
+        <div class="modal-login-form">
+          <%= render partial: 'shared/error_messages', locals: { target: resource } %>
+          <form class="login-form">
+            <div class="form-group">
+              <label class="float-left" for="Name">Name</label>
+              <!-- <input type="text" class="form-control" id="name" aria-describedby="usernameHelp" placeholder="Enter your full name"> -->
+              <%= f.text_field :full_name, class: "form-control", placeholder: "Enter your full name", type: 'text', id: "full_name" %>
+            </div>
+            <div class="form-group">
+              <label class="float-left" for="username">User Name </label><div class="float-right"><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Username may only contain alphanumeric characters or hyphens"></i></div>
+              <!-- <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Choose a username"> -->
+              <%= f.text_field :name, class: "form-control", type: 'text', id: "username", placeholder: "Choose a username" %>
+            </div>
+
+            <div class="form-group">
+              <label class="float-left" for="email">Email</label>
+              <!-- <input type="email" class="form-control" id="email" placeholder="Enter email"> -->
+              <%= f.text_field :email, class: 'form-control', id: "email", placeholder: "Enter email" %>
+            </div>
+
+            <div class="form-group">
+              <label class="float-left" for="password">Password </label><div class="float-right"><i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Min. of 8 characters"></i></div>
+              <!-- <input type="password" class="form-control" id="password" aria-describedby="newPasswordHelp" placeholder="Create new password"> -->
+              <%= f.password_field :password, class: 'form-control', id: "password", placeholder: "Create new password" %>
+            </div>
+
+            <div class="form-group">
+              <label class="float-left" for="retypePassword">Confirm Password</label>
+              <!-- <input type="password" class="form-control" id="retypePassword" placeholder="Re-enter Password"> -->
+              <%= f.password_field :password_confirmation, class: "form-control", id: "retypePassword", placeholder: "Re-enter Password" %>
+            </div>
+
+            <%= hidden_field_tag :referred_by_uuid, value: '' %>
+
+            <% if Rails.env.production? %>
+              <div class="form-group form-check mb-4">
+                <%= recaptcha_tags %>
+              </div>
+            <% end %>
+
+
+            <div class="newbutton">
+              <!-- <button type="submit" class="btn btn-red-submit mt-3 btn-lg">Create Account</button> -->
+              <%= f.button 'Create account', type: 'submit', class: 'btn btn-red-submit mt-3 btn-lg', id: "sign-up-button"%>
+            </div>
+           </form>
+        </div>
+      <% end %>
+      <div class="modal-oldaccount">
+        <p class="f-14">Already Have an Account ? <a href="#" onclick="showLogin()" class="modal-styling"><u>Log In</u></a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  function showSignup() {
+    document.getElementById("<%= login_modal %>").style.display = "none";
+    document.getElementById("<%= signup_modal %>").style.display = "block";
+  }
+</script>
+<script type="text/javascript">
+  function showLogin() {
+    document.getElementById("<%= login_modal %>").style.display = "block";
+    document.getElementById("<%= signup_modal %>").style.display = "none";
+  }
+</script>

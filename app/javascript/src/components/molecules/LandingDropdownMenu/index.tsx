@@ -3,8 +3,6 @@ import Link from 'src/components/atoms/Link';
 
 import styles from './landingDropdownMenu.module.scss';
 import SocialButtons from 'src/components/atoms/Button/SocialButtons';
-import UserItem from '../notificationItem/UserItem';
-import ChallengeItem from '../notificationItem/ChallengeItem';
 import GenericItem from '../notificationItem/GenericItem';
 const { main, socialIconWrapper, placeholderText } = styles;
 
@@ -71,41 +69,16 @@ const LandingDropdownMenu = ({
         {/* Show only for notification dropdown */}
         {isNotification && (
           <ul>
-            {/* {userNotification?.map((userNotification, i) => {
-              const { url } = userNotification;
-              return (
-                <li key={i}>
-                  <a href={url}>
-                    <a>
-                      <UserItem userNotification={userNotification} loading={loading} />
-                    </a>
-                  </a>
-                </li>
-              );
-            })}
-
-            {challengeNotification?.map((challengeNotification, i) => {
-              const { url } = challengeNotification;
-              return (
-                <li key={i}>
-                  <a href={url}>
-                    <a>
-                      <ChallengeItem challengeNotification={challengeNotification} loading={loading} />
-                    </a>
-                  </a>
-                </li>
-              );
-            })} */}
             {genericNotification?.map((genericNotification, i) => {
               const { url } = genericNotification;
               return (
-                <li key={i}>
-                  <a href={url || ''}>
+                <a href={url || ''} key={i}>
+                  <li>
                     <a>
                       <GenericItem genericNotification={genericNotification} loading={loading} />
                     </a>
-                  </a>
-                </li>
+                  </li>
+                </a>
               );
             })}
             {isNoNotification && <div className={placeholderText}>No Notifications</div>}

@@ -9,6 +9,7 @@ ActiveAdmin.register ChallengeCallResponse do
     column :contact_name
     column :organization
     column :phone
+    column :created_at
     actions
   end
 end

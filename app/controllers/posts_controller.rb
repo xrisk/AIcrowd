@@ -39,10 +39,10 @@ class PostsController < InheritedResources::Base
 
   def index
     if params[:private].present?
-      @post = Post.all.where(private: true).limit(30).includes(:participant, :challenge)
+      @post = Post.all.where(private: true).includes(:participant, :challenge).per_page_kaminari(params[:page]).per(10)
       @private_checked = true
     else
-      @post = Post.all.where(private: false).limit(30).includes(:participant, :challenge)
+      @post = Post.all.where(private: false).includes(:participant, :challenge).per_page_kaminari(params[:page]).per(10)
     end
   end
 

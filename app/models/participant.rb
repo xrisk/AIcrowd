@@ -19,6 +19,7 @@ class Participant < ApplicationRecord
     :twitter,
     :image_file,
     :affiliation,
+    :gender_cd,
     :country_cd,
     :address,
     :first_name,
@@ -50,6 +51,8 @@ class Participant < ApplicationRecord
   acts_as_commontator
 
   default_scope { order('participants.name ASC') }
+
+  attr_accessor :full_name
 
   scope :rated_users_count, -> { Participant.where("ranking > 0").count }
   scope :admins, -> { where(admin: true) }
@@ -151,9 +154,17 @@ class Participant < ApplicationRecord
             length:      { in: 2...100 },
             allow_blank: true
   validates :last_name,
-            length:      { in: 2...100 },
+            length:      { in: 1...100 },
             allow_blank: true
   validates :uuid, uniqueness: true
+
+  GENDER_TYPES = {
+    'Male' => :male,
+    'Female' => :female,
+    'Prefer not to say' => :dont_prefer,
+  }.freeze
+
+  as_enum :gender, GENDER_TYPES.keys(), map: :string
 
   after_update do
     ParticipantBadgeJob.perform_later(name: "profileupdate", participant_id: id)

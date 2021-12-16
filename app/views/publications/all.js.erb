@@ -1,0 +1,7 @@
+<% if @publications.count < 18 %>
+  $('#publications-div').attr("data-request-completed", false);
+<% else %>
+  $('#publications-div').attr("data-request-completed", true);
+<% end %>
+$("#loader-container").hide();
+$("#publications-div").append("<%= j render partial: 'publication_list', locals: { publications: @publications } %>");

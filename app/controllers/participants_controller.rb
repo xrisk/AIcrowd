@@ -50,7 +50,13 @@ class ParticipantsController < ApplicationController
     if @participant.errors.none? && @participant.save
       flash[:success] = "Profile updated"
       Mixpanel::SyncJob.perform_later(@participant, request.remote_ip)
-      redirect_to @participant
+      last_page = request.referrer
+      last_page = last_page.delete_prefix(ENV['DOMAIN_NAME'])
+      if last_page == "/participants/#{@participant.name}/edit"
+        redirect_to @participant
+      else
+        redirect_back(fallback_location: root_path)
+      end
     else
       flash[:error] = @participant.errors.full_messages.to_sentence
       render :edit
@@ -196,6 +202,7 @@ class ParticipantsController < ApplicationController
         :country_cd,
         :first_name,
         :last_name,
+        :gender_cd,
         # NATE: we might need to allow this if for some reason a user has been created without agreeing,
         # for example during the oauth flow
         # :agreed_to_terms_of_use_and_privacy,

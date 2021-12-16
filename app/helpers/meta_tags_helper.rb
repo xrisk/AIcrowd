@@ -99,7 +99,13 @@ module MetaTagsHelper
   end
 
   def content_for_meta_image
-    meta_image = (content_for?(:meta_image) ? content_for(:meta_image) : DEFAULT_META["meta_image"])
+    meta_image = if content_for?(:meta_image)
+      content_for(:meta_image)
+    elsif Setting.first.home_page_social_image.url.present?
+      Setting.first.home_page_social_image.url
+    else
+      DEFAULT_META["meta_image"]
+    end
     # little twist to make it work equally with an asset or a url
     meta_image.starts_with?("http") ? meta_image : url_to_image(meta_image)
   end

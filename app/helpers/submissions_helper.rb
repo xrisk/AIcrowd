@@ -73,4 +73,11 @@ module SubmissionsHelper
     participant_ids = team.team_participants.pluck(:participant_id)
     participant_ids.include?(participant.id)
   end
+
+  # last submission < 2hrs ago
+  # no social profile filled
+  # probability 10%
+  def show_submission_popup?(participant)
+    participant.present? && rand(10) < 2 && participant.bio.blank? && participant.github.blank? && participant.twitter.blank? && participant.linkedin.blank? && participant.website.blank? && ((Time.now - (participant.submissions.order(:created_at)&.last&.created_at || Time.now - 26.hours)) <= 24.hours)
+  end
 end
