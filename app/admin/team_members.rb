@@ -30,7 +30,7 @@ ActiveAdmin.register TeamMember do
       f.input :title
       f.input :description
       f.input :section
-      f.input :participant, as: :string, input_html: { value: f.object.participant.name }
+      f.input :participant, as: :string, input_html: { value: f.object&.participant&.name.presence || '' }
       f.input :seq
     end
     f.actions
