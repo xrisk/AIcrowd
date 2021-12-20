@@ -30,7 +30,7 @@ ActiveAdmin.register TeamMember do
       f.input :title
       f.input :description
       f.input :section
-      f.input :participant, as: :searchable_select
+      f.input :participant, as: :searchable_select, collection: TeamMember.all.sort.map { |team_member| [team_member.participant.name, team_member.participant.id] }
       f.input :seq
     end
     f.actions
