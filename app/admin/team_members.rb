@@ -38,6 +38,16 @@ ActiveAdmin.register TeamMember do
 
   controller do
 
+    def create
+      participant = Participant.find_by_name(params[:team_member][:participant])
+      if participant.blank?
+        flash[:info] = "Participant not found"
+        return redirect_to admin_team_members_path
+      end
+      params[:team_member][:participant] = participant
+      super
+    end
+
     def update
       model = :team_member
       participant = Participant.find_by_name(params[:team_member][:participant])
