@@ -30,9 +30,23 @@ ActiveAdmin.register TeamMember do
       f.input :title
       f.input :description
       f.input :section
-      f.input :participant, as: :searchable_select, collection: TeamMember.all.sort.map { |team_member| [team_member.participant.name, team_member.participant.id] }
+      f.input :participant, as: :string, input_html: { value: f.object.participant.name }
       f.input :seq
     end
     f.actions
+  end
+
+  controller do
+
+    def update
+      model = :team_member
+      participant = Participant.find_by_name(params[:team_member][:participant])
+      if participant.blank?
+        flash[:info] = "Participant not found"
+        return redirect_to admin_team_members_path
+      end
+      params[:team_member][:participant] = participant
+      super
+    end
   end
 end
