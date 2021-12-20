@@ -95,4 +95,13 @@ module ParticipantsHelper
   def show_participant_edit_popup?(participant)
     participant.present? && rand(100) < 2 && participant.gender_cd.blank? && participant.affiliation.blank? && participant.challenge_participants.where(registered: true).exists?
   end
+
+  # participant logged out
+  # or
+  # participant logged in and hasn't interacted with popup
+  def show_weekly_challenge_popup(participant)
+    return true if participant.blank?
+    return true if participant.weekly_popup_last_shown_at.blank? || (participant.weekly_popup_last_shown_at < Setting.first.weekly_popup_start_date)
+    return false
+  end
 end
