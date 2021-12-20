@@ -25,6 +25,7 @@ class Api::ExternalGradersController < Api::BaseController
   end
 
   def create # POST
+    params.permit!
     Rails.logger.info "[api] Api::ExternalGradersController#create"
     Rails.logger.info "[api] params: #{params}"
     message               = nil
@@ -126,6 +127,7 @@ class Api::ExternalGradersController < Api::BaseController
   end
 
   def update # PATCH
+    params.permit!
     Rails.logger.info "[api] Api::ExternalGradersController#update"
     Rails.logger.info "[api] params: #{params}"
     message               = nil
