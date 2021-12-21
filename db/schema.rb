@@ -1149,7 +1149,6 @@ ActiveRecord::Schema.define(version: 2021_12_20_135237) do
     t.integer "sash_id"
     t.integer "level", default: 0
     t.string "gender_cd"
-    t.datetime "weekly_popup_last_shown_at"
     t.index ["confirmation_token"], name: "index_participants_on_confirmation_token", unique: true
     t.index ["email"], name: "index_participants_on_email", unique: true
     t.index ["name"], name: "index_participants_on_name", unique: true
