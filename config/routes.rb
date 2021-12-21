@@ -183,7 +183,6 @@ Rails.application.routes.draw do
     patch :accept_terms
     get :impersonate, on: :collection
     get :stop_impersonating, on: :collection
-    get :interacted_with_popup, on: :collection
     get 'switch_tab/:tab' => 'participants#switch_tab', :as => :switch_tab
     get '/read_notification/:id' => 'participants#read_notification', :as => :read_notification
     match '/notifications', to: 'email_preferences#edit', via: :get

@@ -96,12 +96,7 @@ module ParticipantsHelper
     participant.present? && rand(100) < 2 && participant.gender_cd.blank? && participant.affiliation.blank? && participant.challenge_participants.where(registered: true).exists?
   end
 
-  # participant logged out
-  # or
-  # participant logged in and hasn't interacted with popup
-  def show_weekly_challenge_popup(participant)
-    return true if participant.blank?
-    return true if participant.weekly_popup_last_shown_at.blank? || (participant.weekly_popup_last_shown_at < Setting.first.weekly_popup_start_date)
-    return false
+  def show_weekly_challenge_popup
+    cookies && cookies['_cookie_eu_consented'] == 'true' && (cookies['_cookie_weekly_challenge'].blank? || (cookies['_cookie_weekly_challenge'] && Date.parse(cookies['_cookie_weekly_challenge']) < Setting.first.weekly_popup_start_date ))
   end
 end

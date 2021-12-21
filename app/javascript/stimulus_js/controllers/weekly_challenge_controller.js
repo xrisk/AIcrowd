@@ -3,12 +3,9 @@ import { Controller } from "stimulus"
 export default class extends Controller {
 
   interactedPopup(){
-    const participant_id = this.data.get('participant-id')
-    if(participant_id !== '' ){
-      $.ajax({
-        url: "/participants/interacted_with_popup?participant_id="+participant_id,
-        success: function(){}
-      });
-    }
+    const endDate = this.data.get('end-date')
+
+    document.cookie =
+            "_cookie_weekly_challenge=" + endDate + "; expires=Fri, 31 Dec 9999 23:58:59 GMT; path=/";
   }
 }

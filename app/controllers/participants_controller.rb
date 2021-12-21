@@ -147,15 +147,6 @@ class ParticipantsController < ApplicationController
     end
   end
 
-  def interacted_with_popup
-    return if params[:participant_id].blank?
-    participant = Participant.find_by_id(params[:participant_id])
-    participant.weekly_popup_last_shown_at = Time.now
-    participant.save!
-
-    render json: {}, status: :ok
-  end
-
   private
 
   def set_participant
