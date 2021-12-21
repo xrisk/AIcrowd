@@ -15851,6 +15851,48 @@ button:focus{
   }
 }
 
+.challenge-week{
+  position: relative;
+  padding: 16px 24px 10px 10px;
+}
+
+.challenge-week .close{
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.challenge-week .head{
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #de4b46;
+  margin-bottom: 5px;
+}
+
+.challenge-week .sub-head{
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  padding-bottom: 8px;
+}
+
+.challenge-week .btn-set{
+  padding-top: 10px;
+  vertical-align: middle;
+}
+
+.challenge-week .las{
+  color: white;
+  font-size: 18px;
+  padding-top: 4px;
+  margin-left: 5px;
+}
+
+.challenge-week button:focus{
+  outline: none;
+}
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';

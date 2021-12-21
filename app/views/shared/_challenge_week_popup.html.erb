@@ -1,0 +1,15 @@
+<% if show_weekly_challenge_popup %>
+  <div class="alert alert-cookie alert-dismissible fade show" role="alert">
+    <div class="challenge-week">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close" data-controller="weekly-challenge" data-action="click->weekly-challenge#interactedPopup"data-weekly-challenge-end-date="<%= Setting.first.weekly_popup_end_date %>">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <p class="head m-0 "><%= Setting.first.weekly_popup_title.to_s.to_html.html_safe %></p>
+      <p class="sub-head m-0"><%= Setting.first.weekly_popup_subtitle.to_s.to_html.html_safe %></p>
+      <%= Setting.first.weekly_popup_description.to_s.to_html.html_safe %>
+      <div class="btn-set" aria-hidden="true">
+        <a href="<%= Setting.first.weekly_popup_link %>" type="button" class="btn btn-primary btn-sm" data-controller="weekly-challenge" data-action="click->weekly-challenge#interactedPopup"data-weekly-challenge-end-date="<%= Setting.first.weekly_popup_end_date %>"><%= Setting.first.weekly_popup_button.to_html.html_safe %> <i class="las la-arrow-right" style="color: white; font-size: 18px;"></i></a>
+     </div>
+    </div>
+  </div>
+<% end %>
