@@ -97,6 +97,7 @@ module ParticipantsHelper
   end
 
   def show_weekly_challenge_popup
+    return false if (Setting.first.weekly_popup_title.blank? || Setting.first.weekly_popup_description.blank? || Setting.first.weekly_popup_button.blank? || Setting.first.weekly_popup_link.blank?)
     cookies && cookies['_cookie_eu_consented'] == 'true' && (cookies['_cookie_weekly_challenge'].blank? || (cookies['_cookie_weekly_challenge'] && Date.parse(cookies['_cookie_weekly_challenge']) < Setting.first.weekly_popup_start_date ))
   end
 end
