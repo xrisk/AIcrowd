@@ -30,9 +30,33 @@ ActiveAdmin.register TeamMember do
       f.input :title
       f.input :description
       f.input :section
-      f.input :participant, as: :searchable_select
+      f.input :participant, as: :string, input_html: { value: f.object&.participant&.name.presence || '' }
       f.input :seq
     end
     f.actions
+  end
+
+  controller do
+
+    def create
+      participant = Participant.find_by_name(params[:team_member][:participant])
+      if participant.blank?
+        flash[:info] = "Participant not found"
+        return redirect_to admin_team_members_path
+      end
+      params[:team_member][:participant] = participant
+      super
+    end
+
+    def update
+      model = :team_member
+      participant = Participant.find_by_name(params[:team_member][:participant])
+      if participant.blank?
+        flash[:info] = "Participant not found"
+        return redirect_to admin_team_members_path
+      end
+      params[:team_member][:participant] = participant
+      super
+    end
   end
 end

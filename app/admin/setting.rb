@@ -22,6 +22,16 @@ ActiveAdmin.register Setting do
         f.input :enable_footer
         f.input :footer_text
       end
+
+      panel 'Weekly Popup' do
+        f.input :weekly_popup_title
+        f.input :weekly_popup_subtitle
+        f.input :weekly_popup_description
+        f.input :weekly_popup_link
+        f.input :weekly_popup_button
+        f.input :weekly_popup_start_date
+        f.input :weekly_popup_end_date
+      end
       f.actions
     end
   end

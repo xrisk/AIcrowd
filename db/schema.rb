@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_08_175514) do
+ActiveRecord::Schema.define(version: 2021_12_20_135237) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -1310,6 +1310,13 @@ ActiveRecord::Schema.define(version: 2021_12_08_175514) do
     t.text "footer_text"
     t.boolean "enable_footer", default: false
     t.string "home_page_social_image"
+    t.text "weekly_popup_title"
+    t.text "weekly_popup_subtitle"
+    t.text "weekly_popup_description"
+    t.text "weekly_popup_link"
+    t.text "weekly_popup_button"
+    t.datetime "weekly_popup_start_date"
+    t.datetime "weekly_popup_end_date"
   end
 
   create_table "submission_file_definitions", id: :serial, force: :cascade do |t|
