@@ -16,7 +16,9 @@
 </div>
 <div>
   <div class="container-fluid">
-    <%= render partial: 'publication_list', locals: {publications: @publications} %>
+    <ul id="publications-div" class="list-group list-group-flush-px-1 list-group-contributions list-group-publications" data-page="1" data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data">
+      <%= render partial: 'publication_list', locals: {publications: @publications} %>
+    </ul>
     <p class="mt-5 mb-5 text-muted">
       <%= link_to publications_path, class: 'text-decoration-none' do %>
         <small><span class="fa fa-chevron-left mr-1"></span>Back to AIcrowd Research</small>

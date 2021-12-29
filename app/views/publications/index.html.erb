@@ -54,7 +54,9 @@ Check out the research we're proud to facilitate below.</p>
       <p class="short-head my-4">FEATURED PUBLICATIONS <button class="btn-white-submit2 float-right" onclick="location.href='/research/all'">See all</button></p>
     </div>
     <div class="col-12 px-1">
-      <%= render partial: 'publication_list', locals: {publications: Publication.limit(6).order('sequence asc') } %>
+      <ul id="publications-div" class="list-group list-group-flush-px-1 list-group-contributions list-group-publications">
+        <%= render partial: 'publication_list', locals: {publications: Publication.limit(6).order('sequence asc') } %>
+      </ul>
     </div>
     <a class="pb-1 border-bottom border-bottom-dotted ml-3" href="/research/all">See all Publications →</a>
   </div>
