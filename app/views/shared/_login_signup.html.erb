@@ -39,8 +39,8 @@
         </div>
       <% end %>
       <div class="modal-newaccount">
-        <p class="f-14">Don't Have an Account ? <a href="#" onclick="showSignup()" id="show" class="modal-styling"><u>Create New Account</u></a></p>
-        <p>Can't Log In ? <%= link_to "Verify Account", new_confirmation_path(resource_name), {class: "modal-styling mx-2"} %> <%= link_to "Recover Account", new_unlock_path(resource_name), {class: "modal-styling right-margin"} %></p>
+        <p class="f-14">Don't Have an Account? <a href="#" onclick="showSignup()" id="show" class="modal-styling"><u>Create New Account</u></a></p>
+        <p>Can't Log In? <%= link_to "Verify Account", new_confirmation_path(resource_name), {class: "modal-styling mx-2"} %> <%= link_to "Recover Account", new_unlock_path(resource_name), {class: "modal-styling right-margin"} %></p>
       </div>
     </div>
     <div id="<%= signup_modal%>" class="signup-modal">
@@ -107,7 +107,7 @@
         </div>
       <% end %>
       <div class="modal-oldaccount">
-        <p class="f-14">Already Have an Account ? <a href="#" onclick="showLogin()" class="modal-styling"><u>Log In</u></a></p>
+        <p class="f-14">Already Have an Account? <a href="#" onclick="showLogin()" class="modal-styling"><u>Log In</u></a></p>
       </div>
     </div>
   </div>
