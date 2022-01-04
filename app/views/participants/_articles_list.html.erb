@@ -8,7 +8,9 @@
           <a class="btn btn-primary" href="<%= new_post_path %>"><span class="fa fa-plus-circle mr-2"></span>Create Notebook</a>
       </div>
       <%= render 'shared/posts/filters' %>
-      <%= render partial: 'shared/posts/index', locals: { posts: posts } %>
+      <ul id="posts-div" class="list-group list-group-flush-px-0 list-group-contributions col-12" data-page="1" data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data">
+        <%= render partial: 'shared/posts/index', locals: { posts: posts } %>
+      </ul>
     </div>
   </div>
 </div>
