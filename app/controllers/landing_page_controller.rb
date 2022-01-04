@@ -405,23 +405,50 @@ class LandingPageController < ApplicationController
   end
 
   def get_community_members_list
-    sql = "select country_cd, id from (select distinct on (country_cd) country_cd, id, random() as rank, name, image_file from participants where country_cd IN (select distinct country_cd from participants where country_cd is not null and country_cd!='') and image_file is not null and image_file !='' order by country_cd, rank desc) data order by random() limit 15"
-    participants = ActiveRecord::Base.connection.execute(sql)
+    participants = []
+    continent_wise_countries.each do |continent, countries|
+      sql = "select country_cd, id from
+      (select distinct on (country_cd) country_cd, id, random() as rank, name, image_file from participants where country_cd IN
+      (select distinct country_cd from participants where country_cd is not null and country_cd!='' and country_cd IN (#{continent_wise_countries[continent]}))
+      and image_file is not null and image_file !=''
+      order by country_cd, rank desc) data
+      order by random()
+      limit 3"
 
+      participants << ActiveRecord::Base.connection.execute(sql).values
+    end
     community_members_list = []
-    participants.each do |p|
-      user = Participant.find_by_id(p["id"])
-      lon, lat = Geocoder.search(p["country_cd"]).first.coordinates rescue nil
-      next if lon.blank?
+    participants.reject(&:empty?).each do |participant_obj|
+      participant_obj.each do |p|
+        user = Participant.find_by_id(p[1])
+        lon, lat = Geocoder.search(p[0]).first.coordinates rescue nil
+        next if lon.blank?
 
-      community_members_list << {
-        lat: lat.to_s,
-        lon: lon.to_s,
-        image: user.image_url,
-        name: user.name
-      }
+        community_members_list << {
+          lat: lat.to_s,
+          lon: lon.to_s,
+          image: user.image_url,
+          name: user.name
+        }
+      end
     end
     return community_members_list
+  end
+
+  def continent_wise_countries
+    {
+      "AF": "'DZ', 'AO', 'BW', 'BI', 'CM', 'CV', 'CF', 'TD', 'KM', 'YT', 'CG', 'CD', 'BJ', 'GQ', 'ET', 'ER', 'DJ', 'GA', 'GM', 'GH', 'GN', 'CI', 'KE', 'LS', 'LR', 'LY', 'MG', 'MW', 'ML', 'MR', 'MU', 'MA', 'MZ', 'NA', 'NE', 'NG', 'GW', 'RE', 'RW', 'SH', 'ST', 'SN'",
+
+      "AS": "'AF' ,'AZ' ,'BH' ,'BD' ,'AM' ,'BT' ,'IO' ,'BN' ,'MM' ,'KH' ,'LK' ,'CN' ,'TW' ,'CX' ,'CC' ,'CY' ,'GE' ,'PS' ,'HK' ,'IN' ,'ID' ,'IR' ,'IQ' ,'IL' ,'JP' ,'KZ' ,'JO' ,'KP' ,'KR' ,'KW' ,'KG' ,'LA' ,'LB' ,'MO' ,'MY' ,'MV' ,'MN' ,'OM' ,'NP' ,'PK' ,'PH' ,'TL' ,'QA' ,'RU' ,'SA'",
+
+      "EU": "'AL' ,'AD' ,'AZ' ,'AT' ,'AM' ,'BE' ,'BA' ,'BG' ,'BY' ,'HR' ,'CY' ,'CZ' ,'DK' ,'EE' ,'FO' ,'FI' ,'AX' ,'FR' ,'GE' ,'DE' ,'GI' ,'GR' ,'VA' ,'HU' ,'IS' ,'IE' ,'IT' ,'KZ' ,'LV' ,'LI' ,'LT' ,'LU' ,'MT' ,'MC' ,'MD' ,'ME' ,'NL' ,'NO' ,'PL' ,'PT' ,'RO' ,'RU' ,'SM'",
+
+      "NA": "'AG' ,'BS' ,'BB' ,'BM' ,'BZ' ,'VG' ,'CA' ,'KY' ,'CR' ,'CU' ,'DM' ,'DO' ,'SV' ,'GL' ,'GD' ,'GP' ,'GT' ,'HT' ,'HN' ,'JM' ,'MQ' ,'MX' ,'MS' ,'AN' ,'CW' ,'AW' ,'SX' ,'BQ' ,'NI' ,'UM' ,'PA' ,'PR' ,'BL' ,'KN' ,'AI' ,'LC' ,'MF' ,'PM' ,'VC'",
+
+      "OC": "'AS' ,'AU' ,'SB' ,'CK' ,'FJ' ,'PF' ,'KI' ,'GU' ,'NR' ,'NC' ,'VU' ,'NZ' ,'NU' ,'NF' ,'MP' ,'UM' ,'FM' ,'MH' ,'PW' ,'PG' ,'PN'",
+
+      "SA": "'AR' ,'BO' ,'BR' ,'CL' ,'CO' ,'EC' ,'FK' ,'GF' ,'GY' ,'PY' ,'PE'"
+    }
   end
 
 end
