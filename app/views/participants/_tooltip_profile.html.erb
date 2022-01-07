@@ -1,7 +1,7 @@
 <div class="tooltip-inner-top">
 <%= participant_avatar participant %>
     <div>
-        <strong><%= participant.name %></strong>
+        <strong class="ml-2"><%= participant.name %></strong>
         <br>
         <div class="reputation-info">
             <%= render partial: 'participants/show_reputation', locals: { participant: participant, full: true, partial_class: 'reputation-top' } %>
@@ -12,7 +12,7 @@
     </div>
 </div>
 <hr>
-<div class="badge badge-achievement-gold"><%= participant.aicrowd_user_badges.badges_stat_count[BadgeType.gold&.id].to_i %></div><div class="badge badge-achievement-silver"><%= participant.aicrowd_user_badges.badges_stat_count[BadgeType.silver&.id].to_i %></div><div class="badge badge-achievement-bronze"><%= participant.aicrowd_user_badges.badges_stat_count[ BadgeType.bronze&.id].to_i %></div>
+<div class="badge badge-achievement-gold mr-1"><%= participant.aicrowd_user_badges.badges_stat_count[BadgeType.gold&.id].to_i %></div><div class="badge badge-achievement-silver mr-1"><%= participant.aicrowd_user_badges.badges_stat_count[BadgeType.silver&.id].to_i %></div><div class="badge badge-achievement-bronze"><%= participant.aicrowd_user_badges.badges_stat_count[ BadgeType.bronze&.id].to_i %></div>
 <hr>
 <div class="user-location">
     <%= render partial: 'participants/location', locals: { participant: participant } %>

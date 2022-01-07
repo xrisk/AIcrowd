@@ -15150,8 +15150,7 @@ input.width-185 {
 
 
 .body1{
-  background:  url(/assets/img/Background.png);
-  background-size: cover;
+  background-color: white;
 }
 .modal-separator {
   display: flex;
@@ -15195,6 +15194,9 @@ input.width-185 {
 }
 .clr-white{
   color: white;
+}
+.clr-white:hover{
+  color: white!important;
 }
 .details-modal{
    margin:0 2%;
