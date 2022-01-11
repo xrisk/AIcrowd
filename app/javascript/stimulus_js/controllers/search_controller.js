@@ -36,6 +36,21 @@ export default class extends Controller {
 
     removeSearchPillsActiveClass();
     event.target.classList.add('active');
+
+    switch (pillType) {
+      case 'see-all-challenges':
+        challengesResults.style.display = 'block';
+        usersResults.style.display = 'none';
+        discussionsResults.style.display = 'none';
+        document.getElementById('challenge-nav-search').classList.add('active');
+        break;
+      case 'see-all-users':
+        challengesResults.style.display = 'none';
+        usersResults.style.display = 'block';
+        discussionsResults.style.display = 'none';
+        document.getElementById('users-nav-search').classList.add('active');
+        break;
+    }
   }
 }
 

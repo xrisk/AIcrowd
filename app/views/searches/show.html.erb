@@ -7,10 +7,10 @@
             <%= link_to 'All', '#', class: "search-nav-link nav-link active", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "all" %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Challenges', '#', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "challenges" %>
+            <%= link_to 'Challenges', '#', id: 'challenge-nav-search', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "challenges" %>
           </li>
           <li class="nav nav-pills">
-            <%= link_to 'Users', '#', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "users" %>
+            <%= link_to 'Users', '#', id: 'users-nav-search', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "users" %>
           </li>
           <li class="nav nav-pills">
             <%= link_to 'Discussions', '#', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "discussions" %>
@@ -24,7 +24,7 @@
             </div>
 
             <% if @challenges.any? %>
-              <%= link_to 'See all', challenges_path({challenge_filter: 'search', query: params[:q]}), class: "btn btn-secondary btn-sm" %>
+              <%= link_to 'See all', '#', class: "btn btn-secondary btn-sm", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "see-all-challenges" %>
             <% end %>
           </header>
 
@@ -43,7 +43,7 @@
               <h4>Users</h4>
             </div>
             <% if @participants.any? %>
-              <%= link_to 'See all', discourse_search_url(params[:q]), class: "btn btn-secondary btn-sm" %>
+              <%= link_to 'See all', '#', class: "btn btn-secondary btn-sm", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "see-all-users" %>
             <% end %>
           </header>
 
