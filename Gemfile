@@ -113,6 +113,7 @@ gem 'pretender'
 gem 'merit'
 gem 'react-rails'
 gem 'geocoder'
+gem 'pg_search'
 
 # HTTP clients
 gem 'faraday', '~> 1.0'

@@ -4,6 +4,8 @@ class Participant < ApplicationRecord
   include FriendlyId
   include ApiKey
   include Countries
+  include PgSearch
+  multisearchable against: [:name]
 
   GDPR_FIELDS = [
     :id,

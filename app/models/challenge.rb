@@ -2,6 +2,8 @@ class Challenge < ApplicationRecord
   include Challenges::ImportConstants
   include FriendlyId
   include Markdownable
+  include PgSearch::Model
+  multisearchable against: [:challenge]
 
   friendly_id :challenge,
               use: %i[slugged finders history]

@@ -22,6 +22,10 @@
             <div>
               <h4>Challenges</h4>
             </div>
+
+            <% if @challenges.any? %>
+              <%= link_to 'See all', challenges_path({challenge_filter: 'search', query: params[:q]}), class: "btn btn-secondary btn-sm" %>
+            <% end %>
           </header>
 
           <% if @challenges.any? %>
@@ -38,6 +42,9 @@
             <div>
               <h4>Users</h4>
             </div>
+            <% if @participants.any? %>
+              <%= link_to 'See all', discourse_search_url(params[:q]), class: "btn btn-secondary btn-sm" %>
+            <% end %>
           </header>
 
           <% if @participants.any? %>
