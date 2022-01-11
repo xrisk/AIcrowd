@@ -14391,7 +14391,11 @@ html {
 
 @media (max-width: 575.98px) {
   .leaderboard-filters form select {
-    width: auto;
+    width: 100%;
+  }
+  
+  .leaderboard-filters form {
+    display: block;
   }
 }
 
@@ -15149,9 +15153,11 @@ input.width-185 {
 }
 
 
-.body1{
-  background-color: white;
+.body1 {
+  background: url(/assets/img/Background-login.png) center;
+  background-size: cover;
 }
+
 .modal-separator {
   display: flex;
   align-items: center;
@@ -15586,6 +15592,9 @@ border: 1px solid #F1F3F3, 100%;
         right: -30px;
         top: 0%;
         z-index: 1;
+      }
+      .login-modal, .signup-modal{
+        padding:40px;
       }
 }
 @media only screen and (max-width: 992px){
