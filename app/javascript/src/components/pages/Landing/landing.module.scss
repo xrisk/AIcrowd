@@ -505,6 +505,7 @@ $section-gap: 150px;
     @include media-query("small") {
       grid-template-columns: repeat(3, 1fr);
       row-gap: 0px;
+      column-gap: 0px;
     }
   }
 
