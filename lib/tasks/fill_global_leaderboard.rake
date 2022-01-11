@@ -7,7 +7,9 @@ namespace :global_leaderboard do
       puts "both lb calculation started"
       ids.each do |id|
         cle = ChallengeLeaderboardExtra.find(id)
+        next if cle.blank?
         c = cle.challenge_round
+        next if c.blank? || c.start_dttm.blank?
         date = c.start_dttm
         while(date < c.end_dttm.to_date) do
           puts "Calculation for id: #{id} and date: #{date}"
