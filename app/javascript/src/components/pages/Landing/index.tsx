@@ -390,7 +390,7 @@ const Landing = ({
               </div>
             </section>
             {/* Host a Challenge */}
-            <section className={cx(challengesWrapper, sectionGap)} style={{ paddingTop: '40px' }}>
+            <section className={cx(challengesWrapper, sectionGap)} style={{ paddingTop: '40px', paddingBottom: '40px' }}>
               <LandingHeaderContent
                 title="Host a Challenge"
                 description={[

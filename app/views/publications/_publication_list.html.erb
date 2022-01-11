@@ -1,166 +1,161 @@
-<div class="col-12 px-1">
-  <ul id="publications-div" class="list-group list-group-flush-px-1 list-group-contributions list-group-publications" data-page="1" data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data">
-    <% publications.each_with_index do |publication, idx| %>
-    <div class="col-12 px-1">
-      <li class="list-group-item py-4 flex-wrap <% if idx == publications.size - 1 %>border-0<% end %>">
+<% publications.each_with_index do |publication, idx| %>
+  <div class="col-12 px-1">
+    <li class="list-group-item py-4 flex-wrap <% if idx == publications.size - 1 %>border-0<% end %>">
 
-        <div class="col-md-10 d-flex mb-2 offset-md-2 pl-0">
-          <% publication.categories.each_with_index do |category, index| %>
-            <%= link_to all_publications_path(categories: category.name) do %>
-              <% if index == 0 %>
-                <span class="badge  badge-outline-new text-muted border ml-0">#<%= category.name %></span>
-              <% else %>
-                <span class="badge  badge-outline-new text-muted border">#<%= category.name %></span>
-              <% end %>
+      <div class="col-md-10 d-flex mb-2 offset-md-2 pl-0">
+        <% publication.categories.each_with_index do |category, index| %>
+          <%= link_to all_publications_path(categories: category.name) do %>
+            <% if index == 0 %>
+              <span class="badge  badge-outline-new text-muted border ml-0">#<%= category.name %></span>
+            <% else %>
+              <span class="badge  badge-outline-new text-muted border">#<%= category.name %></span>
             <% end %>
           <% end %>
-        </div>
+        <% end %>
+      </div>
 
-        <div class="contribution-details col-md-2 pb-3 mb-2 pl-0">
-          <a href="<%= publication_path(publication) %>">
-            <% if publication.thumbnail.present? %>
-              <%= image_tag publication.thumbnail.url, class: "img-fluid img-1 mr-2", alt: "" %>
-            <% else %>
-              <%= image_tag '/assets/img/user-avatar-default.svg', class: 'img-fluid img-1 mr-2' %>
-            <% end %>
-          </a>
-        </div>
+      <div class="contribution-details col-md-2 pb-3 mb-2 pl-0">
+        <a href="<%= publication_path(publication) %>">
+          <% if publication.thumbnail.present? %>
+            <%= image_tag publication.thumbnail.url, class: "img-fluid img-1 mr-2", alt: "" %>
+          <% else %>
+            <%= image_tag '/assets/img/user-avatar-default.svg', class: 'img-fluid img-1 mr-2' %>
+          <% end %>
+        </a>
+      </div>
 
-        <div class="contribution-details details col-md-10 pl-0 mb-auto">
-          <div class="contribution-text col-12 pl-0">
-            <span class="contribution-subtitle">
-            <a class="text-link" href="<%= publication_path(publication) %>"><%= publication.title %></a>
+      <div class="contribution-details details col-md-10 pl-0 mb-auto">
+        <div class="contribution-text col-12 pl-0">
+          <span class="contribution-subtitle">
+          <a class="text-link" href="<%= publication_path(publication) %>"><%= publication.title %></a>
 
-              <div class="avatar-group mt-2 list-group-research new-author1">
+            <div class="avatar-group mt-2 list-group-research new-author1">
 
-                <% if publication.authors.present? %>
-                  <% if publication.authors[0].participant_id.present? %>
-                    <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: publication.authors[0].participant, username: publication.authors[0].name } %>
-                  <% else %>
-                      <span class="text-link mr-new1">
-                      <%= image_tag '/assets/img/user-avatar-default.svg', class: 'mr-1 img-sm avatar' %>
-                        <small><%= publication.authors[0].name %></small>
-                      </span>
-                  <% end %>
+              <% if publication.authors.present? %>
+                <% if publication.authors[0].participant_id.present? %>
+                  <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: publication.authors[0].participant, username: publication.authors[0].name } %>
+                <% else %>
+                    <span class="text-link mr-new1">
+                    <%= image_tag '/assets/img/user-avatar-default.svg', class: 'mr-1 img-sm avatar' %>
+                      <small><%= publication.authors[0].name %></small>
+                    </span>
                 <% end %>
+              <% end %>
 
-                <% if publication.authors.length > 1 %>
-                  <div class="mob">
-                    <% publication.authors[1..2].each do |author| %>
-                      <% if author.participant_id.present? %>
-                        <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
-                      <% else %>
+              <% if publication.authors.length > 1 %>
+                <div class="mob">
+                  <% publication.authors[1..2].each do |author| %>
+                    <% if author.participant_id.present? %>
+                      <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
+                    <% else %>
+                      <span class="text-link mr-new">
+                      <%= image_tag '/assets/img/user-avatar-default.svg', class: 'mr-1 img-sm avatar' %>
+                        <small><%= author.name %></small>
+                      </span>
+                    <% end %>
+                  <% end %>
+                  <% if publication.authors.length > 3 %>
+                    <div class="tab">
+                      <% publication.authors[3..4].each do |author| %>
+                        <% if author.participant_id.present? %>
+                          <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
+                        <% else %>
                         <span class="text-link mr-new">
                         <%= image_tag '/assets/img/user-avatar-default.svg', class: 'mr-1 img-sm avatar' %>
                           <small><%= author.name %></small>
                         </span>
-                      <% end %>
-                    <% end %>
-                    <% if publication.authors.length > 3 %>
-                      <div class="tab">
-                        <% publication.authors[3..4].each do |author| %>
-                          <% if author.participant_id.present? %>
-                            <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
-                          <% else %>
-                          <span class="text-link mr-new">
-                          <%= image_tag '/assets/img/user-avatar-default.svg', class: 'mr-1 img-sm avatar' %>
-                            <small><%= author.name %></small>
-                          </span>
-                          <% end %>
                         <% end %>
-                      </div>
-                    <% end %>
-                  </div>
-                  <% if publication.authors.length > 5 %>
-                    <div class="new-row">
-                      <span class="small-text mr-new"><small>+<%= publication.authors.offset(5).length %> more</small></span>
+                      <% end %>
                     </div>
                   <% end %>
+                </div>
+                <% if publication.authors.length > 5 %>
+                  <div class="new-row">
+                    <span class="small-text mr-new"><small>+<%= publication.authors.offset(5).length %> more</small></span>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </span>
+          <div class="row mt-4">
+            <div class="col-lg-6 col-sm-6">
+              <div class="float-left ">
+                <p class="p-red">
+                  <%= image_tag "img/icon-calendar.png", class: "img-red" %>
+                  <% if publication.publication_date.present? %>
+                    <%= publication.publication_date.strftime("%b %Y") %>
+                  <% end %>
+                </p>
+
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6">
+              <div class="float-left ">
+                <p class="p-red d-flex">
+                  <%= image_tag "img/icon-venue.png", class: "img-red" %>
+                  <% if publication.venues.present? %>
+                    <%= link_to all_publications_path(venues: publication.venues.first.short_name), style: 'text-decoration: none;font-weight: normal;line-height: initial;' do %>
+                      <%= publication.venues.first.venue %>
+                    <% end %>
+                  <% end %>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- <div class="col-lg-6 col-sm-6">
+              <div class="float-left ">
+
+                <p class="p-red p-red1">
+                  <%= image_tag "img/icon-citations.png", class: "img-red" %>
+                  <% if publication.no_of_citations.present? %>
+                    <%= publication.no_of_citations %> Citations
+                  <% end %>
+                </p>
+              </div>
+            </div> -->
+            <div class="col-lg-6 col-sm-6">
+              <div class="float-left">
+                <% if publication.challenge.present? %>
+                <p class="p-red d-flex">
+                  <%= image_tag "img/icon-challenge.png", class: "img-red" %>
+                    <%= link_to publication.challenge.challenge, challenge_path(publication.challenge), style: 'text-decoration: none;font-weight: normal;line-height: initial;' %>
+                </p>
                 <% end %>
               </div>
-            </span>
-            <div class="row mt-4">
-              <div class="col-lg-6 col-sm-6">
-                <div class="float-left ">
-                  <p class="p-red">
-                    <%= image_tag "img/icon-calendar.png", class: "img-red" %>
-                    <% if publication.publication_date.present? %>
-                      <%= publication.publication_date.strftime("%b %Y") %>
-                    <% end %>
-                  </p>
-
-                </div>
-              </div>
-              <div class="col-lg-6 col-sm-6">
-                <div class="float-left ">
-                  <p class="p-red d-flex">
-                    <%= image_tag "img/icon-venue.png", class: "img-red" %>
-                    <% if publication.venues.present? %>
-                      <%= link_to all_publications_path(venues: publication.venues.first.short_name), style: 'text-decoration: none;font-weight: normal;line-height: initial;' do %>
-                        <%= publication.venues.first.venue %>
-                      <% end %>
-                    <% end %>
-                  </p>
-                </div>
-              </div>
             </div>
-            <div class="row">
-              <div class="col-lg-6 col-sm-6">
-                <div class="float-left ">
-
-                  <p class="p-red p-red1">
-                    <%= image_tag "img/icon-citations.png", class: "img-red" %>
-                    <% if publication.no_of_citations.present? %>
-                      <%= publication.no_of_citations %> Citations
-                    <% end %>
-                  </p>
-                </div>
-              </div>
-              <div class="col-lg-6 col-sm-6">
-                <div class="float-left">
-                  <% if publication.challenge.present? %>
-                  <p class="p-red d-flex">
-                    <%= image_tag "img/icon-challenge.png", class: "img-red" %>
-                      <%= link_to publication.challenge.challenge, challenge_path(publication.challenge), style: 'text-decoration: none;font-weight: normal;line-height: initial;' %>
-                  </p>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-
           </div>
-        </div>
-
-      <div class="col-md-1">
-        <div class="float-right">
 
         </div>
       </div>
-      <div class="col-md-10 d-flex offset-md-2 pl-0">
-        <div class="contribution-user-time small cursor-pointer"
-             data-action="click->publications#expandAbstract"
-             data-controller="publications">
-          <p>
-            <a aria-controls="multiCollapseExample1" aria-expanded="false" class="b small"
-               data-toggle="collapse"
-               href="#multiCollapseExample<%= idx %>" role="button"><i
-              class="fa fa-caret-right mr-2"></i><u>Abstract</u></a>
-          </p>
-          <div class="row">
-            <div class="col">
-              <div class="collapse multi-collapse" id="multiCollapseExample<%= idx %>">
-                <div class="">
-                  <%= publication.abstract.html_safe %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      </li>
+    <div class="col-md-1">
+      <div class="float-right">
+
+      </div>
     </div>
-    <% end %>
-  </ul>
-    <!-- /list-group-contributions -->
-</div>
+    <div class="col-md-10 d-flex offset-md-2 pl-0">
+      <div class="contribution-user-time small cursor-pointer"
+           data-action="click->publications#expandAbstract"
+           data-controller="publications">
+        <p>
+          <a aria-controls="multiCollapseExample1" aria-expanded="false" class="b small"
+             data-toggle="collapse"
+             href="#multiCollapseExample<%= idx %>" role="button"><i
+            class="fa fa-caret-right mr-2"></i><u>Abstract</u></a>
+        </p>
+        <div class="row">
+          <div class="col">
+            <div class="collapse multi-collapse" id="multiCollapseExample<%= idx %>">
+              <div class="">
+                <%= publication.abstract.html_safe %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </li>
+  </div>
+<% end %>

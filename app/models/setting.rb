@@ -1,5 +1,4 @@
 class Setting < ApplicationRecord
-
   mount_uploader :home_page_social_image, RawImageUploader
 
   def self.banner_record

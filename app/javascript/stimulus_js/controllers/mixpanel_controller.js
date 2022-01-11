@@ -75,4 +75,12 @@ export default class extends Controller {
     challenge_participation_start() {
         mixpanel.track('Challenge Participation Start');
     }
+
+    weeklyPopupClosed(){
+        mixpanel.track('Weekly Popup Closed');
+    }
+
+    weeklyPopupClicked(){
+        mixpanel.track('Weekly Popup Clicked');
+    }
 }
