@@ -12,7 +12,7 @@ module Reputation
     end
 
     def sync_challenge_leaderboard_extra_data
-      Reputation::SyncChallengeLeaderbaordExtraService.new(@challenge_leaderboard_extra_id).call
+      Reputation::SyncChallengeLeaderboardExtraService.new(@challenge_leaderboard_extra_id).call
     end
 
     def sync_leaderboard_data

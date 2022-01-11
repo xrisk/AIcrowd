@@ -68,7 +68,7 @@ namespace :global_leaderboard do
         date = c.start_dttm
         while(date < c.end_dttm.to_date) do
           ChallengeRounds::CreateLeaderboardsService.new(challenge_round: c, challenge_leaderboard_extra: cle, is_freeze: date + 7.days).call
-          Reputation::SyncChallengeLeaderbaordExtraService.new(cle.id).call
+          Reputation::SyncChallengeLeaderboardExtraService.new(cle.id).call
           Reputation::RatingService.new(cle.id).call
           date = date + 7.days
         end
