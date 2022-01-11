@@ -16,14 +16,14 @@ namespace :global_leaderboard do
             cle.save!
 
             ChallengeRounds::CreateLeaderboardsService.new(challenge_round: c, challenge_leaderboard_extra: cle, is_freeze: date + 7.days, reputation_freeze_time: date + 7.days).call
-            Reputation::SyncChallengeLeaderbaordExtraService.new(cle.id).call
+            Reputation::SyncChallengeLeaderboardExtraService.new(cle.id).call
             Reputation::RatingService.new(cle.id).call
 
             cle.weight = 0.005
             cle.save!
           else
             ChallengeRounds::CreateLeaderboardsService.new(challenge_round: c, challenge_leaderboard_extra: cle, is_freeze: date + 7.days, reputation_freeze_time: date + 7.days).call
-            Reputation::SyncChallengeLeaderbaordExtraService.new(cle.id).call
+            Reputation::SyncChallengeLeaderboardExtraService.new(cle.id).call
             Reputation::RatingService.new(cle.id).call
           end
           puts "Calculation Ended"

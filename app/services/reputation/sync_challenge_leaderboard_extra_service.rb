@@ -1,5 +1,5 @@
 module Reputation
-  class SyncChallengeLeaderbaordExtraService
+  class SyncChallengeLeaderboardExtraService
 
     def initialize cle_id
       @cle_id = cle_id
