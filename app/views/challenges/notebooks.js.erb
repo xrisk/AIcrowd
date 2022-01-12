@@ -1,0 +1,7 @@
+<% if @notebooks.count < 10 %>
+  $('#posts-div').attr("data-request-completed", false);
+<% else %>
+  $('#posts-div').attr("data-request-completed", true);
+<% end %>
+$("#loader-container").hide();
+$("#posts-div").append("<%= j render partial: 'shared/posts/index', locals: { posts: @notebooks } %>");
