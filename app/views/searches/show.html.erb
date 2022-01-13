@@ -1,23 +1,54 @@
+<%
+all_active = ''
+challenge_active = ''
+participant_active = ''
+discussion_active = ''
+
+challenge_result = ''
+participant_result = ''
+discussion_result = ''
+
+
+if params[:show_all_challenges]
+  challenge_active = 'active'
+  participant_result = 'd-none'
+  discussion_result = 'd-none'
+elsif params[:show_all_participants]
+  challenge_result = 'd-none'
+  participant_active = 'active'
+  discussion_result = 'd-none'
+elsif params[:show_all_discussions]
+  challenge_result = 'd-none'
+  participant_result = 'd-none'
+  discussion_active = 'active'
+else
+  all_active = 'active'
+end
+
+%>
+
+
+
 <section data-controller="search" class="section-p-sm">
   <div class="container-fluid">
     <div class="row">
       <div class="col-12">
         <ul class="nav nav-pills">
           <li class="nav-item">
-            <%= link_to 'All', '#', id: 'all-nav-search', class: "search-nav-link nav-link active", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "all" %>
+            <%= link_to 'All', '#', id: 'all-nav-search', class: "search-nav-link nav-link #{all_active}", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "all" %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Challenges', '#', id: 'challenge-nav-search', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "challenges" %>
+            <%= link_to 'Challenges', '#', id: 'challenge-nav-search', class: "search-nav-link nav-link #{challenge_active}", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "challenges" %>
           </li>
           <li class="nav nav-pills">
-            <%= link_to 'Users', '#', id: 'participant-nav-search', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "users" %>
+            <%= link_to 'Users', '#', id: 'participant-nav-search', class: "search-nav-link nav-link #{participant_active}", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "users" %>
           </li>
           <li class="nav nav-pills">
-            <%= link_to 'Discussions', '#', id: 'discussion-nav-search', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "discussions" %>
+            <%= link_to 'Discussions', '#', id: 'discussion-nav-search', class: "search-nav-link nav-link #{discussion_active}", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "discussions" %>
           </li>
         </ul>
 
-        <div id="search-challenges-results">
+        <div id="search-challenges-results" class="<%= challenge_result %>">
           <header class="section-header">
             <div>
               <h4>Challenges</h4>
@@ -37,7 +68,7 @@
           <% end %>
         </div>
 
-        <div id="search-users-results">
+        <div id="search-users-results" class="<%= participant_result %>">
           <header class="section-header">
             <div>
               <h4>Users</h4>
@@ -63,7 +94,7 @@
           <% end %>
         </div>
 
-        <div id="search-discussions-results">
+        <div id="search-discussions-results" class="<%= discussion_result %>">
           <header class="section-header">
             <div>
               <h4>Discussions</h4>
