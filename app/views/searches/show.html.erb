@@ -4,16 +4,16 @@
       <div class="col-12">
         <ul class="nav nav-pills">
           <li class="nav-item">
-            <%= link_to 'All', '#', class: "search-nav-link nav-link active", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "all" %>
+            <%= link_to 'All', '#', id: 'all-nav-search', class: "search-nav-link nav-link active", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "all" %>
           </li>
           <li class="nav-item">
             <%= link_to 'Challenges', '#', id: 'challenge-nav-search', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "challenges" %>
           </li>
           <li class="nav nav-pills">
-            <%= link_to 'Users', '#', id: 'users-nav-search', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "users" %>
+            <%= link_to 'Users', '#', id: 'participant-nav-search', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "users" %>
           </li>
           <li class="nav nav-pills">
-            <%= link_to 'Discussions', '#', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "discussions" %>
+            <%= link_to 'Discussions', '#', id: 'discussion-nav-search', class: "search-nav-link nav-link", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "discussions" %>
           </li>
         </ul>
 

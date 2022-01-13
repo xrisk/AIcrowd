@@ -6,8 +6,10 @@ class SearchesController < ApplicationController
     challenge_ids = records.where(searchable_type: "Challenge").pluck(:searchable_id)
     participant_ids =  records.where(searchable_type: "Participant").pluck(:searchable_id)
 
-    @challenges = Challenge.where(id: challenge_ids).limit(DEFAULT_LIMIT)
-    @participants = Participant.where(id: participant_ids).limit(DEFAULT_LIMIT)
+    @challenges = Challenge.where(id: challenge_ids)
+    @participants = Participant.where(id: participant_ids)
+    @challenges = @challenges.limit(DEFAULT_LIMIT) unless params[:show_all_challenges]
+    @participants = Participant.where(id: participant_ids).limit(DEFAULT_LIMIT) unless params[:show_all_participants]
     @discussions_fetch = Rails.cache.fetch("discourse-search-discussions/#{params[:q]}", expires_in: 5.minutes) do
       Discourse::FetchSearchResultsService.new(q: params[:q]).call
     end
