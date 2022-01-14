@@ -51,7 +51,7 @@ end
               <h4>Challenges</h4>
             </div>
 
-            <% if @challenges.any? %>
+            <% if @challenges.any? && !params[:show_all_challenges] %>
               <%= link_to 'See all', '#', class: "btn btn-secondary btn-sm", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "see-all-challenges" %>
             <% end %>
           </header>
@@ -70,7 +70,7 @@ end
             <div>
               <h4>Users</h4>
             </div>
-            <% if @participants.any? %>
+            <% if @participants.any? && !params[:show_all_participants] %>
               <%= link_to 'See all', '#', class: "btn btn-secondary btn-sm", 'data-action': "click->search#showSelectedResults", 'data-search-pill-type': "see-all-users" %>
             <% end %>
           </header>
