@@ -32,18 +32,10 @@ export default class extends Controller {
 
     switch (pillType) {
       case 'see-all-challenges':
-        window.location.search += '&show_all_challenges=true';
-        challengesResults.style.display = 'block';
-        usersResults.style.display = 'none';
-        discussionsResults.style.display = 'none';
-        document.getElementById('challenge-nav-search').classList.add('active');
+        window.location.href = window.location.origin + window.location.pathname + '?q=' + urlParams.get('q') + '&show_all_challenges=true';
         break;
       case 'see-all-users':
-        window.location.search += '&show_all_participants=true';
-        challengesResults.style.display = 'none';
-        usersResults.style.display = 'block';
-        discussionsResults.style.display = 'none';
-        document.getElementById('users-nav-search').classList.add('active');
+        window.location.href = window.location.origin + window.location.pathname + '?q=' + urlParams.get('q') + '&show_all_participants=true';
         break;
     }
   }
@@ -52,8 +44,6 @@ export default class extends Controller {
 function removeSearchPillsActiveClass() {
   const urlParams = new URLSearchParams(location.search);
   const searchPills = document.querySelectorAll('.search-nav-link');
-  urlParams.delete('show_all_challenges');
-  urlParams.delete('show_all_participants');
 
   searchPills.forEach(element => {
     element.classList.remove('active');
