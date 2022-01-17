@@ -11416,7 +11416,7 @@ body {
 .maintenance-mode .logomark,
 .polar-question .logomark {
   display: block;
-  background: url("../../assets/img/logo.png") no-repeat left center;
+  background: url("../../assets/img/logo-sad.svg") no-repeat left center;
   background-size: 256px 238px;
   width: 256px;
   height: 238px;
@@ -11480,8 +11480,8 @@ body {
 
 .maintenance-mode .logomark {
   display: block;
-  background: url("../../assets/img/logo.png") no-repeat left center;
-  background-size: contain;
+  background: url("../../assets/img/logo-sad.svg") no-repeat left center;
+  background-size: 256px 238px;
   width: 120px;
   height: 113px;
   margin-bottom: 48px;
@@ -14417,8 +14417,8 @@ a.table-fancy-links {
   //max-width: 720px;
   .logomark {
     display: block;
-    background: url('../../assets/img/logo.png') no-repeat left center;
-    background-size: contain;
+    background: url("../../assets/img/logo-sad.svg") no-repeat left center;
+    background-size: 256px 238px;
     width: 120px;
     height: 113px;
     margin-bottom: 48px;
