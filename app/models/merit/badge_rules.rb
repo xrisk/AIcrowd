@@ -314,9 +314,9 @@ module Merit
       # Shared First Challenge
 
       # Followed First Challenge
-      grant_on 'follows#create', badge: 'Followed Challenge', level: 4 do |follow|
-        Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").count >= 5
-      end
+      # grant_on 'follows#create', badge: 'Followed Challenge', level: 4 do |follow|
+      #   Follow.where(participant_id: follow.participant_id, followable_type: "Challenge").count >= 5
+      # end
 
       # Accepted Rules
 
