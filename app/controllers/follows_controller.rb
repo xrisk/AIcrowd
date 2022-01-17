@@ -6,8 +6,7 @@ class FollowsController < ApplicationController
   respond_to :js
 
   def create
-    @follow             = @followable.follows.new
-    @follow.participant = current_participant
+    @follow             = @followable.follows.find_or_create_by(participant: current_participant)
     @follow.save!
     respond_to do |format|
       format.js { render :refresh }
