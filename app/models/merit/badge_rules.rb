@@ -286,7 +286,7 @@ module Merit
 
       # Got First Follower
       grant_on 'follows#create', badge: 'Got First Follower', level: 4, to: :followable do |follow|
-        follow.where(followable_id: follow.followable_id, followable_type: "Participant").count >= 1
+        Follow.where(followable_id: follow.followable_id, followable_type: "Participant").count >= 1
       end
 
       # Liked a blogpost
