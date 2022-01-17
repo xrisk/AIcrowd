@@ -301,7 +301,7 @@ $section-gap: 150px;
       margin-top: 20px;
     }
 
-    video {
+    .videoStyle {
       border-radius: 4px;
       @include media-query("x-large") {
         width: 30%;
@@ -311,6 +311,9 @@ $section-gap: 150px;
         width: 50%;
       }
       &:nth-child(1) {
+        video {
+          width: 100%;
+        }
         width: 227px;
         position: absolute;
         right: 0%;
@@ -348,6 +351,9 @@ $section-gap: 150px;
         }
       }
       &:nth-child(2) {
+        video {
+          width: 100%;
+        }
         z-index: 2;
         position: absolute;
         width: 365px;
@@ -380,6 +386,9 @@ $section-gap: 150px;
         }
       }
       &:nth-child(3) {
+        video {
+          width: 100%;
+        }
         z-index: 3;
         position: absolute;
         top: 220px;

@@ -46,6 +46,7 @@ const {
   carouselWrapper,
   main,
   bannerImage,
+  videoStyle,
 } = styles;
 
 type LandingProps = {
@@ -308,16 +309,22 @@ const Landing = ({
                 />
               </div>
               <div className={researchImageWrapper}>
-                <video loop autoPlay muted>
-                  <source src="https://images.aicrowd.com/images/landing_page/learning_run.mp4" type="video/mp4"></source>
-                  Your browser does not support the video tag.
-                </video>
-                <video loop autoPlay muted>
-                  <source src="https://images.aicrowd.com/images/landing_page/mars_demo.mp4" type="video/mp4"></source>
-                </video>
-                <video loop autoPlay muted>
-                  <source src="https://images.aicrowd.com/images/landing_page/flatland.mp4" type="video/mp4"></source>
-                </video>
+                <div className={videoStyle}>
+                  <video loop autoPlay muted>
+                    <source src="https://images.aicrowd.com/images/landing_page/learning_run.mp4" type="video/mp4"></source>
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                <div className={videoStyle}>
+                  <video loop autoPlay muted>
+                    <source src="https://images.aicrowd.com/images/landing_page/mars_demo.mp4" type="video/mp4"></source>
+                  </video>
+                </div>
+                <div className={videoStyle}>
+                  <video loop autoPlay muted>
+                    <source src="https://images.aicrowd.com/images/landing_page/flatland.mp4" type="video/mp4"></source>
+                  </video>
+                </div>
                 <img src="https://images.aicrowd.com/images/landing_page/bill-gates-tweet.png"></img>
               </div>
             </section>
