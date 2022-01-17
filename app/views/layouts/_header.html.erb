@@ -23,14 +23,15 @@
 				</a>
       </div>
 
-      <%= form_with url: search_path, method: :get, local: true, html: { 'data-controller': 'search-form', 'data-action': 'submit->search-form#handleSubmit' } do |f| %>
+      <%= form_with url: search_path, method: :get, local: true, html: { 'data-controller': 'search-form autocomplete', 'data-action': 'submit->search-form#handleSubmit click->challenge-rounds#toogleSubtab' } do |f| %>
         <%= f.text_field :q,
           value: params[:q],
+          id: 'search-form',
           class: 'form-control search-input',
           placeholder: 'Search...',
           'aria-label': 'Search',
           'aria-describedby': 'Search',
-          'data-target': 'search-form.searchQuery'
+          'data-target': 'search-form.searchQuery autocomplete.field'
          %>
       <% end %>
 		</div>

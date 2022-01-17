@@ -22,6 +22,9 @@ class ChallengesController < ApplicationController
                           @all_challenges.where(status_cd: 'completed')
                         when 'draft'
                           @all_challenges.where(status_cd: 'draft')
+                        when 'search'
+                          challenge_ids = PgSearch.multisearch(params[:query]).where(searchable_type: "Challenge").limit(10).pluck(:searchable_id)
+                          @all_challenges.where(id: challenge_ids)
                         else
                           @all_challenges
                         end

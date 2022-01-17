@@ -309,7 +309,9 @@ Rails.application.routes.draw do
   resources :challenge_calls, only: [] do
     resources :challenge_call_responses, only: [:create]
   end
-  resource :search, only: :show
+  resource :search, only: :show do
+    get :autocomplete, on: :collection
+  end
   resources :daily_practice_goals, only: [:index]
   resources :participant_ml_challenge_goals, only: [:create, :update]
   resources :baselines, only: [:index]
