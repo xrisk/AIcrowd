@@ -15934,6 +15934,24 @@ button:focus{
   font-style: normal;
 }
 
+.notification-dropdown .dropdown-item{
+  padding: 8px 16px;
+}
+.notification-dropdown .text-muted{
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+  color: #747474;
+  margin: 0px 0px;
+  margin-top: -2px;
+}
+.notification-dropdown .dropdown-text{
+  font-size: 16px;
+  line-height: 24px;
+  color: #1F1F1F;
+  margin: 0px; 
+}
+
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';
 @import 'challenges/datatable';
