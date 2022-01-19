@@ -1,5 +1,5 @@
 <!-- notifications -->
-<div class="app-header-notifications">
+<div class="app-header-notifications notification-dropdown">
   <div class="dropdown">
     <a class="dropdown-toggle <%= check_notification_status(notifications) if notifications %>"
        data-toggle="dropdown"
@@ -19,13 +19,13 @@
             <div class="dropdown-item-img">
               <%= image_tag notification.thumbnail_url if notification.thumbnail_url.present? %>
             </div>
-            <div>
+            <div class="dropdown-text">
               <% if notification.notifiable_type == "AicrowdBadge"%>
-                <span><strong><%= notification.notifiable.name %></strong> <%= notification.message %></span><br>
+                <span><strong><%= notification.notifiable.name %></strong> <%= notification.message %></span>
               <% else %>
-                <span><strong><%= notification.notifiable_type %></strong> <%= notification.message %></span><br>
+                <span><strong><%= notification.notifiable_type %></strong> <%= notification.message %></span>
               <% end %>
-              <span class="text-muted"><%= notification_time(notification.created_at) %></span>
+              <span class="text-muted d-block"><%= notification_time(notification.created_at) %></span>
             </div>
           <% end %>
           <div class="dropdown-divider"></div>
@@ -39,7 +39,7 @@
           <div class="dropdown-item-img">
             <img class="award" src="/assets/img/icon-refresh.svg">
           </div>
-          <div>
+          <div class="dropdown-text">
             <span><strong>No Record found</strong></span>
           </div>
         </a>
