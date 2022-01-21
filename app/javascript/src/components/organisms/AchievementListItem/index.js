@@ -14,7 +14,7 @@ const AchievementListItem = ({ icon, progress, target, title, description, hideF
         <div style={{ paddingTop: '32px' }}>
           <AchievementDetail title={title} description={description} />
         </div>
-         {showShare && <button type="button" className={shareText} onClick={()=>openShareBadgesModal(badgeId)}>Share</button>}
+         {showShare && <span type="button" className={shareText} onClick={()=>openShareBadgesModal(badgeId)}>Share</span>}
       </div>
     </div>
   );

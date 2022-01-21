@@ -484,6 +484,7 @@ $section-gap: 150px;
   .organizerLogos1 {
     img {
       width: 100%;
+      height: 100%;
       justify-self: flex-start;
 
       @include media-query("x-large") {
@@ -514,7 +515,6 @@ $section-gap: 150px;
     @include media-query("small") {
       grid-template-columns: repeat(3, 1fr);
       row-gap: 0px;
-      column-gap: 0px;
     }
   }
 
