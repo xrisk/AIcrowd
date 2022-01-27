@@ -81,7 +81,7 @@ gem 'sprockets'
 gem 'social-share-button'
 gem 'sass-rails'
 gem "safely_block", "~> 0.2.2"
-gem 'sidekiq', '~> 5.1.1'
+gem 'sidekiq', '~> 6.4.0'
 gem 'sidekiq-cron', '~> 0.6.3'
 gem 'sidekiq-history'
 gem 'sidekiq-failures'
