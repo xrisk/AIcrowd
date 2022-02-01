@@ -10,7 +10,7 @@
           <h3 class="text-center" style="font-size: 1.3rem;">The challenge got you curious?</h5>
           <p class="text-center sub">Sign up to solve the problem</p>
         </div>
-        <div class="modal-logins mt-4" style="text-align: -webkit-center;">
+        <div class="modal-logins text-center mt-4" >
           <%= link_to participant_google_oauth2_omniauth_authorize_path, {class: "btn btn-modal-login py-2", style: "width: 68%;", data: { controller: "mixpanel", type: "loginGoogle" }} do%>
           <!-- <button class="btn-modal-login py-2" style="width: 68%;"> -->
             <i><img class="btn-modal-login-img mr-2" src="https://images.aicrowd.com/images/landing_page/google.svg" /></i>
@@ -31,9 +31,9 @@
           <% end %>
         </div>
 
-        <div class="modal-login-form" style="text-align: -webkit-center; margin-bottom: 11%;">
+        <div class="modal-login-form text-center" style="margin-bottom: 11%;">
           <div class="modal-oldaccount">
-            <p class="f-14">Already Have an Account ? <a href="/participants/sign_in" onclick="showLogin()" class="modal-styling"><u>Log In</u></a></p>
+            <p class="f-14">Already Have an Account? <a href="/participants/sign_in" onclick="showLogin()" class="modal-styling"><u>Log In</u></a></p>
           </div>
         </div>
       </div>
