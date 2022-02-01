@@ -375,6 +375,22 @@ class LandingPageController < ApplicationController
           post: 'Postdoctoral Researcher, Stanford',
           image: 'https://www.aicrowd.com/assets/img/testimonial-2.jpeg',
         },
+        {
+          quote:
+            'AIcrowd was the #only platform# that was #flexible enough# to adapt to our #research vision# & execute the required interactive simulation to the specs. The team was #constantly on-call# & implemented #new ideas# to improve the challenge experience. Will definitely #work with them again#.',
+          author: 'Ali Farzanehfar',
+          post: 'Organizer, Insurance Pricing Game | PhD Student, Imperial College London',
+          image:
+            'https://media-exp1.licdn.com/dms/image/D4D03AQEUWkCeTN6jCQ/profile-displayphoto-shrink_800_800/0/1639168635336?e=1648080000&v=beta&t=mX8oJz2EV8_7V4afqk_bQsX_BHJOwRBLglxOzQzb1e0 ',
+        },
+        {
+          quote:
+            'AIcrowd allows more #flexibility# of evaluation metrics than #other platforms#. We also got #great support# from AIcrowd Research in establishing all #baseline codes#, which made it #easier# for people to join the challenge. Overall, the challenge has been #great for our lab!#',
+          author: 'Ann Kennedy',
+          post: 'Assistant Professor, Department of Neuroscience, Northwestern University',
+          image: 'https://cpb-us-e1.wpmucdn.com/sites.northwestern.edu/dist/6/5099/files/2020/11/Ann_new.width-350.jpg ',
+        }
+
       ],
     }
   end

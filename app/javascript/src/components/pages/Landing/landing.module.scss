@@ -120,7 +120,7 @@ $section-gap: 150px;
   .sectionGapReview {
     margin-top: 221px;
     margin-bottom: 133px;
-    min-height: 350px;
+    min-height: 400px;
     justify-content: center;
 
     @include media-query("large") {
@@ -134,13 +134,13 @@ $section-gap: 150px;
     @include media-query("small") {
       margin-top: 150px;
       margin-bottom: 40px;
-      min-height: 400px;
+      min-height: 500px;
     }
 
     @include media-query("x-small") {
       margin-top: 90px;
       margin-bottom: 40px;
-      min-height: 550px;
+      min-height: 600px;
     }
   }
   .sectionGapCommunity {
