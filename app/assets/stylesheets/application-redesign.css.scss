@@ -15444,69 +15444,13 @@ border: 1px solid #F1F3F3, 100%;
     right: 10px;
     font-size: 1.5rem;
 }
-.dot1 {
-    height: 151px;
-    width: 151px;
-    background: #F2F2F2;
-    border-radius: 50%;
-    display: inline-block;
-    position: absolute;
-    top: 30px;
-    left: 20px;
-
-  }
-  .dot11 {
-    height: 141px;
-    width: 141px;
-    background: #F2F2F2;
-    border-radius: 50%;
-    display: inline-block;
-    position: absolute;
-    top: 60px;
-    left: 50px;
-
-  }
-  .dot22 {
+  .profile-dot {
     height: 90px;
     width: 90px;
     background: #F2F2F2;
     border-radius: 50%;
     display: inline-block;
     margin-top: -10px;
-  }
-  .dot2 {
-    height: 90px;
-    width: 90px;
-    background: #F2F2F2;
-    border-radius: 50%;
-    display: inline-block;
-    position: absolute;
-    top: 50px;
-    right: 30px;
-
-  }.dot3 {
-    height: 18px;
-    width: 18px;
-    background: #F2F2F2;
-    border-radius: 50%;
-    display: inline-block;
-  }
-  .dot4 {
-    height: 81px;
-    width: 81px;
-    background: #F2F2F2;
-    border-radius: 50%;
-    display: inline-block;
-    position: absolute;
-    top: 70px;
-    right: 40px;
-  }
-  .dot5 {
-    height: 31px;
-    width: 31px;
-    background: #F2F2F2;
-    border-radius: 50%;
-    display: inline-block;
   }
   .f_14{
       font-size: 14px;
@@ -15558,29 +15502,7 @@ border: 1px solid #F1F3F3, 100%;
     background-color: white;
 }
 @media only screen and (max-width: 1200px){
-    .dot1 {
-        height: 141px;
-        width: 141px;
-        background: #F2F2F2;
-        border-radius: 50%;
-        display: inline-block;
-        position: absolute;
-        top: 20px;
-        left: 10px;
-
-      }
-      .dot11 {
-        height: 101px;
-        width: 101px;
-        background: #F2F2F2;
-        border-radius: 50%;
-        display: inline-block;
-        position: absolute;
-        top: 30px;
-        left: 30px;
-
-      }
-      .dot22 {
+      .profile-dot {
         height: 90px;
         width: 90px;
         background: #F2F2F2;
@@ -15630,9 +15552,6 @@ border: 1px solid #F1F3F3, 100%;
         padding: 40px;
         box-shadow: 0px 0px 14px rgba(65, 13, 12, 0.1);
 
-    }
-    .dot1, .dot4, .dot11{
-        display: none;
     }
     #detail-modal2{
         display: block;

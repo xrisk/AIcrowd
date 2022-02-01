@@ -2,28 +2,23 @@
   <div class="modal participant_secondary_info_modal" id="participant_secondary_info_modal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
     <div class="container-fluid page" role="document">
       <div id="detail-modal2">
-        <div class="">
+        <div>
           <img class="top" src="/assets/img/aicrowd logo 1.png" alt="">
           <span class="fa fa-times cross" data-dismiss="modal" aria-label="Close" style="cursor: pointer"></span>
         </div>
 
-        <div class="">
-          <div class="">
-            <div class=""><span class="dot11"></span></div>
-            <div class="">        <h5 class="text-center">Kudos for Making Submission!</h5>
+        <div>
+              <h5 class="text-center">Kudos for Making Submission!</h5>
               <p class="sub ">Meet innovative problem solvers like you! <br>
-                Fill the form to join the AIcrowd community</p></div>
-            <div class=""><span class="dot4"></span></div>
-          </div>
+                Fill the form to join the AIcrowd community</p>
 
         </div>
         <div class="modal-detail-form">
           <%= form_for current_participant, validate: true do |f| %>
           <div class="detail-form2">
-            <span class="dot3 float-right"></span>
             <div class="row">
               <div class="col-lg-3 col-md-3">
-                <%= participant_avatar(current_participant, 'avatar dot22') %>
+                <%= participant_avatar(current_participant, 'avatar profile-dot') %>
                 <div class="popup-image-upload">
                   <%= f.file_field :image_file, class: 'custom-file-input' %>
                   <label for="participant_image_file"></label>
@@ -67,14 +62,13 @@
             <div class="row">
               <div class="col-lg-6">
                 <button type="submit" class="btn btn-white-submit2  mt-2" style="width: 100%;" data-dismiss="modal" aria-label="Close" onclick="return false;">Skip for now</button>
-
               </div>
               <div class="col-lg-6">
                 <%= f.button "Save Details", class: "btn btn-red-submit btn-lg mt-2" %>
               </div>
             </div>
           </div>
-          <div class="">
+          <div>
             <img class="float-right img-left2" src="/assets/img/Frame 52.png" alt="" srcset="">
             <img class="float-left img-right2" src="/assets/img/Frame 53.png" alt="" srcset="">
           </div>
@@ -90,7 +84,7 @@
         var reader = new FileReader();
         reader.onload = function(e) {
           console.log(input);
-          ele = $(input).closest('.row').find('.dot22').first();
+          ele = $(input).closest('.row').find('.profile-dot').first();
           ele.attr('src', e.target.result);
           ele.hide();
           ele.fadeIn(650);
