@@ -93,7 +93,7 @@ module ParticipantsHelper
   # Probability 1%
   # Have at least one challenge participant
   def show_participant_edit_popup?(participant)
-    participant.present? && rand(100) < 2 && participant.gender_cd.blank? && participant.affiliation.blank? && participant.challenge_participants.where(registered: true).exists?
+    participant.present? && rand(10) < 2 && participant.gender_cd.blank? && participant.affiliation.blank? && participant.challenge_participants.where(registered: true).exists?
   end
 
   def show_weekly_challenge_popup
