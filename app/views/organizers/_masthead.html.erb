@@ -5,9 +5,11 @@
       <div class="col-12">
         <div class="d-flex align-items-start">
           <%= image_tag organizer.image_file_url, class: 'avatar-organizer' %>
-          <div>
+          <div class="d-table">
+          <div class="organizer-details">
             <h1><%= organizer.organizer %></h1>
             <p><%= organizer.description %></p>
+          </div>
           </div>
         </div>
       </div>
