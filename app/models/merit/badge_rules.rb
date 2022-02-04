@@ -128,7 +128,7 @@ module Merit
 
       # Won Challenge Community Explainer
       grant_on 'posts#update', badge: 'Won Challenge Community Explainer', level: 1, to: :participant do |post|
-        post.community_explainer_winner
+        post.community_contribution_winner
       end
 
       # Shared Notebook

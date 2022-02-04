@@ -65,7 +65,7 @@ module Merit
       end
 
       score 1, :on => 'posts#update', category: 'Won Challenge Community Explainer', to: :participant do |post|
-        post.community_explainer_winner
+        post.community_contribution_winner
       end
 
       # Shared Notebook
