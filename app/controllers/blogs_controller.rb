@@ -6,10 +6,7 @@ class BlogsController < ApplicationController
   before_action :set_follow, only: [:show]
 
   def index
-    @blogs = policy_scope(Blog)
-      .order(seq: :asc, posted_at: :desc)
-      .per_page_kaminari(params[:page])
-      .per(100)
+    redirect_to "https://blog.aicrowd.com/"
   end
 
   def show
