@@ -297,11 +297,6 @@ Rails.application.routes.draw do
   match '/crowdai_migration', to: 'crowdai_migration#new', via: :get
   match '/crowdai_migration/save', to: 'crowdai_migration#create', via: :post
 
-  # Custom Redirect
-  get '/food', to: redirect('/challenges/food-recognition-challenge', status: 302)
-  get '/derk', to: redirect('/challenges/dr-derk-s-battleground', status: 302)
-  get '/flatland', to: redirect('/challenges/neurips-2020-flatland-challenge', status: 302)
-
   resources :markdown_editors, only: [:index, :create] do
     put :presign, on: :collection
   end
