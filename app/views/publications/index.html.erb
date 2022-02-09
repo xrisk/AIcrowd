@@ -16,13 +16,13 @@ Check out the research we're proud to facilitate below.</p>
   <div class="publication-cards">
     <div class="container-fluid">
       <div class="">
-        <p class="short-head my-4">HOW CAN YOU CONTRIBUTE?</p>
+        <p class="short-head my-5">HOW CAN YOU CONTRIBUTE?</p>
       </div>
       <div class="row mb-5">
         <div class="col-lg-4 col-md-6">
           <div class="card my-2">
             <div class="card-body" onclick="location.href='https://www.aicrowd.com/challenges/?&prizes=prize_academic'">
-              <h5 class="card-title"><i class="fa float-l-fa fa-rocket mr-2"></i> CHALLENGE <div class="float-right float-r-fa"><i class="fa fa-long-arrow-right"></i></div></h5>
+              <h5 class="card-title"> <%= image_tag image_path('img/research-puzzle-piece-solid.svg'), class: "img-red" %> CHALLENGE <div class="float-right float-r-fa"><i class="fa fa-long-arrow-right"></i></div></h5>
               <hr>
               <p class="card-text">Participate in challenges and see your contributions turn into published research papers.</p>
             </div>
@@ -31,7 +31,7 @@ Check out the research we're proud to facilitate below.</p>
         <div class="col-lg-4 col-md-6">
           <div class="card my-2">
             <div class="card-body" onclick="location.href='https://forms.gle/TtnLrr4MFa5wSqRt7'">
-              <h5 class="card-title"><i class="fa float-l-fa fa-pencil-square-o mr-2"></i> BUILD <div class="float-right float-r-fa"><i class="fa fa-long-arrow-right"></i></div></h5>
+              <h5 class="card-title"> <%= image_tag image_path('img/research-edit.svg'), class: "img-red" %> Write <div class="float-right float-r-fa"><i class="fa fa-long-arrow-right"></i></div></h5>
               <hr>
               <p class="card-text">Contribute with your engineering or writing skills to AIcrowd’s ongoing research projects.</p>
             </div>
@@ -40,7 +40,7 @@ Check out the research we're proud to facilitate below.</p>
         <div class="col-lg-4 col-md-12">
           <div class="card my-2">
             <div class="card-body" onclick="location.href='https://discourse.aicrowd.com/'">
-              <h5 class="card-title"><i class="fa float-l-fa fa-comment-o mr-2"></i> DISCUSS <div class="float-right float-r-fa"><i class="fa fa-long-arrow-right"></i></div></h5>
+              <h5 class="card-title"> <%= image_tag image_path('img/research-comments-solid.svg'), class: "img-red" %> PARTICIPATE <div class="float-right float-r-fa"><i class="fa fa-long-arrow-right"></i></div></h5>
               <hr>
               <p class="card-text">Jump into ongoing research discussions and share your ideas with the AIcrowd community.</p>
             </div>
@@ -53,8 +53,8 @@ Check out the research we're proud to facilitate below.</p>
     <div class="my-5">
       <p class="short-head my-4">FEATURED PUBLICATIONS <button class="btn-white-submit2 float-right" onclick="location.href='/research/all'">See all</button></p>
     </div>
-    <div class="col-12 px-1">
-      <ul id="publications-div" class="list-group list-group-flush-px-1 list-group-contributions list-group-publications">
+    <div class="col-12 px-0">
+      <ul id="publications-div" class="list-group list-group-flush-px-0 list-group-contributions list-group-publications">
         <%= render partial: 'publication_list', locals: {publications: Publication.limit(6).order('sequence asc') } %>
       </ul>
     </div>
