@@ -22,4 +22,8 @@ class PagesController < ApplicationController
   def community_guidelines
     @page_title = "Community Guidelines"
   end
+
+  def ai_ethics
+    @page_title = "AI & Ethics"
+  end
 end
