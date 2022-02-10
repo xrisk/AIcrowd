@@ -32,6 +32,7 @@ const SiteFooter = ({ removeMargin }) => {
     { name: 'Participation Terms', link: 'participation_terms' },
     { name: 'Privacy Policy', link: '/privacy' },
     { name: 'Terms of Use', link: '/terms' },
+    { name: 'AI & Ethics', link: '/ai_ethics' },
   ];
 
   const languages = [

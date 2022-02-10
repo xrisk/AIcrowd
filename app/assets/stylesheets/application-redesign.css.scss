@@ -4467,7 +4467,6 @@ input[type="button"].btn-block {
   padding: 5px;
   min-width: 0;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .card-blog-post,
@@ -15875,6 +15874,10 @@ button:focus{
   vertical-align: middle;
   display: table-cell;
 }
+.ai-ethics .red{
+  color: #DE4B46;
+}
+
 
 @import '../javascripts/ckeditor/plugins/codesnippet/lib/highlight/styles/sunburst';
 @import 'challenges/form';

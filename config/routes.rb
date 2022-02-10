@@ -294,6 +294,7 @@ Rails.application.routes.draw do
   match '/faq',     to: 'pages#faq',     via: :get
   match '/cookies', to: 'pages#cookies_info', via: :get
   match '/community_guidelines', to: 'pages#community_guidelines', via: :get
+  match '/ai_ethics', to: 'pages#ai_ethics', via: :get
   match '/crowdai_migration', to: 'crowdai_migration#new', via: :get
   match '/crowdai_migration/save', to: 'crowdai_migration#create', via: :post
 
