@@ -19,12 +19,6 @@ module ChallengeRounds
       if ! defined? @first_submission['meta']['private_borda_ranking_enabled']
         raise "Borda ranking isn't enabled for this challenge"
       end
-  
-      overall_rank = 'private_borda_ranking_rank_sum'
-      @submissions.each do |submission|
-        submission['meta'][overall_rank] = 0
-        submission['meta'][overall_rank + '_self'] = 0
-      end
 
       @uniq_map = {}
       team_mapping = @challenge.team_participants.pluck(:participant_id, :team_id).to_h
@@ -46,6 +40,10 @@ module ChallengeRounds
         elsif @round.id > 800
           selected_submissions = selected_submissions.where("meta->>'private_borda_selected_for_leaderboard'='1'")
         end
+        
+        selected_submissions.each do |submission|
+          submission['meta'][overall_rank] = 0
+        end
 
         1.upto(@first_submission['meta']['private_borda_ranking_scores_count'].to_i) { |i|
           score_field = 'private_borda_ranking_score_' + i.to_s
@@ -63,7 +61,7 @@ module ChallengeRounds
               last_value = submission['meta'][score_field].to_f
             end
             submission['meta'][rank_field] = rank
-            submission['meta'][overall_rank] = (submission['meta'][overall_rank] || 0) + rank
+            submission['meta'][overall_rank] = submission['meta'][overall_rank] + rank
           end
         }
 
