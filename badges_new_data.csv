@@ -1,0 +1,259 @@
+name,description,badge_type_id,code,badges_event_id,image,level,target,social_message,sub_module,active,Points Flow Checked/Fixed,Target Checked/Fixed,Description Checked,Badge Flow Checked
+Participated In Practice Challenge,Big moves! You have participated in 10 practice problem! Here's a bronze medal to celebrate!,4,,5,/assets/challenge_badges/practice_problem_participate_Active_bronze.png,1,10,I unlocked the bronze badge for participating in 10 @AIcrowdHQ challenges. Check out my profile to know more [link],challenge,TRUE,,YES,YES,
+Participated In Practice Challenge,Keep it up! You've participated in 20 practice problem. Here's a silver medal to celebrate.,4,,5,/assets/challenge_badges/practice_problem_participate_Active_silver.png,2,20,I unlocked the silver badge for participating in 20 @AIcrowdHQ practise problems. Check out my profile to know more [link],challenge,TRUE,,YES,YES,
+Participated In Practice Challenge,"Congratulations, you've participated in 30 practice problem. Here's a gold medal to celebrate!",4,,5,/assets/challenge_badges/practice_problem_participate_Active_gold.png,3,30,"Woohoo, I unlocked the gold badge for participating in 30 @AIcrowdHQ practise problems! Check out my profile to know more [link]",challenge,TRUE,,YES,YES,
+Shared Practice Problem,You shared 5 practice problem,4,,5,/assets/challenge_badges/practice_problem_Share_Active_bronze.png,1,15,N/A,challenge,TRUE,,YES,YES,
+Shared Practice Problem,You shared 15 practice problem,4,,5,/assets/challenge_badges/practice_problem_Share_Active_silver.png,2,35,N/A,challenge,TRUE,,YES,YES,
+Top of Leaderboard,"Good job, you are top third participant on the leaderboard. Woohoo, here's your bronze badge!",4,,5,/assets/challenge_badges/challenges_Win_Active_bronze.png,1,3,I received a bronze badge for being the top third participant on leaderboard. Find my code here [link],challenge,FALSE,,,,
+Made Successful Submission,"Good job, you've made 80 submissions. Here's your gold badge. ",4,,5,/assets/challenge_badges/challenges_successful_submission_Active_gold.png,3,80,I unlocked gold badge for making 80 successful submissions. Know more about my journey here [link],challenge,FALSE,,,,
+Participated Challenge,Big moves! You have participated in 3 challenges! Here's a bronze medal to celebrate!,4,,5,/assets/challenge_badges/challenges_participate_Active_bronze.png,1,3,I unlocked the bronze badge for participating in 5 @AIcrowdHQ challenges. Check out my profile to know more [link],challenge,TRUE,,YES,YES,
+Made Successful Submission,Baby steps! You've made 20 submission unlocking bronze badge. Keep them coming!,4,,5,/assets/challenge_badges/challenges_successful_submission_Active_bronze.png,1,20,I unlocked bronze badge for making 20 successful submissions and I am just getting started! See my submissions here [link],challenge,FALSE,,,,
+Liked Practice Problem,You liked 30 practice problem,4,,5,/assets/challenge_badges/practice_problem_like_Active_gold.png,3,20,@AIcrowdHQ has a great collection of practise problems. Check out some of my liked challenges over here [link],challenge,FALSE,,,,
+Participated Challenge,Keep it up! You've participated in 9 challenges. Here's a silver medal to celebrate.,4,,5,/assets/challenge_badges/challenges_participate_Active_silver.png,2,9,I unlocked the silver badge for participating in 10 @AIcrowdHQ challenges. Check out my profile to know more [link],challenge,TRUE,,YES,YES,
+Participated Challenge,"Congratulations, you've participated in 21 challenges. Here's a gold medal to celebrate!",4,,5,/assets/challenge_badges/challenges_participate_Active_gold.png,3,21,"Woohoo, I unlocked the gold badge for participating in 40 @AIcrowdHQ challenges! Check out my profile to know more [link]",challenge,TRUE,,YES,YES,
+Made Submission,"Good job, you've made 10 submission unlocking bronze badge.",4,,5,/assets/challenge_badges/challenges_submit_Active_bronze.png,1,10,I have made 10 submissions on @AIcrowdHQ and unlocked the bronze badge!,challenge,TRUE,,YES,YES,
+Made Submission,"Good job, you've made 100 submission unlocking silver badge.",4,,5,/assets/challenge_badges/challenges_submit_Active_silver.png,2,100,I have made 100 submissions on @AIcrowdHQ and unlocked the silver badge!,challenge,TRUE,,YES,YES,
+Made Submission,"Woohoo, you've made 300 submission unlocking bronze badge.",4,,5,/assets/challenge_badges/challenges_submit_Active_gold.png,3,300,"Woohoo, I have made 300 submissions on @AIcrowdHQ and unlocked the gold badge! ",challenge,TRUE,,YES,YES,
+Top of Leaderboard,"Good job, you are number one participant on the leaderboard. Woohoo, here's your gold badge!",4,,5,/assets/challenge_badges/challenges_Win_Active_gold.png,3,1,I received a gold badge for being the number one participant on leaderboard. Find my winning code here [link],challenge,FALSE,,,,
+Shared Practice Problem,You shared 35 practice problem,4,,5,/assets/challenge_badges/practice_problem_Share_Active_gold.png,3,35,I unlocked the gold badge for sharing cool practise problems on @AIcrowdHQ. Here are some of my favourites [link],challenge,TRUE,,YES,YES,
+Made Successful Submission,"Keep it up, you've made 50 submissions. You've unlocked the silver badge. ",4,,5,/assets/challenge_badges/challenges_successful_submission_Active_silver.png,2,50,I unlocked silver badge for making 50 successful submissions and I am just getting started! See my submissions here [link],challenge,FALSE,,,,
+"Participated in one challenge, made 2 submissions and liked 2 challenges. ","Congratulations, you are AIcrowd New User of the Month! We love your active participation and enthusiasm. Keep it up :D",4,,5,,2,1,"I am the @AIcrowdHQ New User of the Month and received a silver badge! Curious about my journey, check out my profile [link]",challenge,FALSE,,,,
+Successful Practice Practise Submission,"Good job, you've made 50 successful submission unlocking silver badge.",4,,5,/assets/challenge_badges/practice_problem_successful_submission_Active_silver.png,2,50,I unlocked silver badge for making 50 successful submissions and I am just getting started! See my submissions here [link],challenge,FALSE,,,,
+Top of Leaderboard,"Good job, you are second on the leaderboard. Woohoo, here's your silver badge!",4,,5,/assets/challenge_badges/challenges_Win_Active_silver.png,2,2,I received a silver badge for being the second participant on leaderboard. Find my code here [link],challenge,FALSE,,,,
+Liked Challenge,You liked 5 challenges.,4,,5,/assets/challenge_badges/challenges_like_Active_bronze.png,1,5,N/A,challenge,FALSE,,,,
+Liked Challenge,You liked 10 challenges.,4,,5,/assets/challenge_badges/challenges_like_Active_silver.png,2,10,N/A,challenge,FALSE,,,,
+Liked Challenge,You liked 20 challenges,4,,5,/assets/challenge_badges/challenges_like_Active_gold.png,3,20,@AIcrowdHQ has a great collection of challenges. Check out some of my liked challenges over here [link],challenge,FALSE,,,,
+Followed Challenge,You followed 5 challenges,4,,5,/assets/challenge_badges/challenges_follow_Active_bronze.png,1,5,N/A,challenge,FALSE,,,,
+Shared Challenge,You shared 5 challenges.,4,,5,/assets/challenge_badges/challenges_Share_Active_bronze.png,1,5,N/A,challenge,TRUE,,YES,YES,
+Shared Challenge,You shared 15 challenges.,4,,5,/assets/challenge_badges/challenges_Share_Active_silver.png,2,15,N/A,challenge,TRUE,,YES,YES,
+Liked Practice Problem,You liked 10 practice problem,4,,5,/assets/challenge_badges/practice_problem_like_Active_bronze.png,1,10,N/A,challenge,FALSE,,,,
+Liked Practice Problem,You liked 20 practice problem,4,,5,/assets/challenge_badges/practice_problem_like_Active_silver.png,2,20,N/A,challenge,FALSE,,,,
+Followed Challenge,You followed 10 challenges,4,,5,/assets/challenge_badges/challenges_follow_Active_silver.png,2,10,N/A,challenge,FALSE,,,,
+Followed Challenge,You followed 20 challenges,4,,5,/assets/challenge_badges/challenges_follow_Active_gold.png,3,20,I unlocked the gold badge for following interesting AI challenges on @AIcrowdHQ. Here are some of my favourites [link],challenge,FALSE,,,,
+Shared Challenge,You shared 35 challenges.,4,,5,/assets/challenge_badges/challenges_Share_Active_gold.png,3,35,I unlocked the gold badge for sharing cool challenges on @AIcrowdHQ. Here are some of my favourites [link],challenge,TRUE,,YES,YES,
+Invited User,Challenges are more fun with friends. Here's your bronze badge for inviting a user to this challenge.,4,,5,/assets/challenge_badges/campaign_invite_Active_bronze.png,1,1,I unlocked a bronze badge for inviting a new user to a challenge. Want to join my team? Click here [link],challenge,TRUE,,YES,YES,
+Invited User,Challenges are more fun with friends. Here's your silver badge for inviting 5 users to this challenge.,4,,5,/assets/challenge_badges/campaign_invite_Active_silver.png,2,5,I unlocked a silver badge for inviting 5 new users to a challenge. Want to join my team? Click here [link],challenge,TRUE,,YES,YES,
+Invited User,Challenges are more fun with friends. Here's your gold badge for inviting 15 users to this challenge.,4,,5,/assets/challenge_badges/campaign_invite_Active_gold.png,3,15,I unlocked a gold badge for inviting 15 new users to a challenge. Want to join my team? Click here [link],challenge,TRUE,,YES,YES,
+Improved Score,Keep up that never give up attitude! You've improved your score thrice in this challenge. Here's a silver badge to celebrate!,4,,5,/assets/challenge_badges/leaderboard_improve_score_Active_silver.png,2,3,I improved my score thrice in this challenge and won the bronze badge! Never give up. Here's my code [link]`,challenge,TRUE,,,,
+Improved Score,Keep up that never give up attitude! You've improved your score five times in this challenge. Here's a gold badge to celebrate!,4,,5,/assets/challenge_badges/leaderboard_improve_score_Active_gold.png,3,5,I improved my score five times in this challenge and won the silver badge! Never give up. Here's my code [link],challenge,TRUE,,,,
+Followed Practice Problem,You followed 10 practice problem,4,,5,/assets/challenge_badges/practice_problem_follow_Active_bronze.png,1,10,N/A,challenge,FALSE,,,,
+Followed Practice Problem,You followed 20 practice problem,4,,5,/assets/challenge_badges/practice_problem_follow_Active_silver.png,2,20,N/A,challenge,FALSE,,,,
+Successful Practice Practise Submission,"Good job, you've made 20 successful submission unlocking bronze badge.",4,,5,/assets/challenge_badges/practice_problem_successful_submission_Active_bronze.png,1,20,I unlocked bronze badge for making 20 successful submissions and I am just getting started! See my submissions here [link],challenge,FALSE,,,,
+Successful Practice Practise Submission,"Woohoo, you've made 80 successful submission unlocking bronze badge.",4,,5,/assets/challenge_badges/practice_problem_successful_submission_Active_gold.png,3,80,I unlocked gold badge for making 80 successful submissions! Know more about my journey here [link],challenge,FALSE,,,,
+Submission Streak,Good going! You've made submission for 3 straight days!  Here's a gold badge to celebrate!,4,,5,/assets/challenge_badges/activity_time_frequency_Active_bronze.png,1,3,I unlocked the bronze badge by making consecutive submissions for 3 straight days! Check out the interesting challenge for yourself [link],challenge,TRUE,,YES,YES,
+Submission Streak,"Keep it up, you've made submissions for 7 consecutive days! Here's a gold badge to celebrate!",4,,5,/assets/challenge_badges/activity_time_frequency_Active_silver.png,2,7,I unlocked the silver badge by making consecutive submissions for 7 straight days! Check out the interesting challenge for yourself [link],challenge,TRUE,,YES,YES,
+Submission Streak,"Bravo, this is amazing. You've made submission for 30 consecutive day. Here's a gold badge to celebrate!",4,,5,/assets/challenge_badges/activity_time_frequency_Active_gold.png,3,30,"Wow, I unlocked the gold badge by making consecutive submissions for 30 straight days! Check out the interesting challenge for yourself [link]",challenge,TRUE,,YES,YES,
+Leaderboard Ninja,Movers and shakers! You've jumped 5 ranks on the leaderboard. Here's a bronze badge to celebrate that!,4,,5,/assets/challenge_badges/leaderboard_improve_rank_Active_bronze.png,1,5,I moved up 5 positions in the leaderboard one week before the deadline! Hard work pays off - here's my bronze badge!,challenge,TRUE,,,,
+Leaderboard Ninja,Movers and shakers! You've jumped 15 ranks on the leaderboard. Here's a silver badge to celebrate that!,4,,5,/assets/challenge_badges/leaderboard_improve_rank_Active_silver.png,2,15,I moved up 15 positions in the leaderboard one week before the deadline! Hard work pays off - here's my silver badge!,challenge,TRUE,,,,
+Leaderboard Ninja,Movers and shakers! You've jumped 35 ranks on the leaderboard. Here's a gold badge to celebrate that!,4,,5,/assets/challenge_badges/leaderboard_improve_rank_Active_gold.png,3,35,I moved up 35 positions in the leaderboard one week before the deadline! Hard work pays off - here's my gold badge!,challenge,TRUE,,,,
+Followed Practice Problem,You followed 40 practice problem,4,,5,/assets/challenge_badges/practice_problem_follow_Active_gold.png,3,40,I unlocked the gold badge for following interesting AI practise problems on @AIcrowdHQ. Here are some of my favourites [link],challenge,FALSE,,,,
+Liked Topic,You liked 40 topics. Here's your gold badge.,4,,5,/assets/discussion_badges/post_like_Active_gold.png,3,40,I received a gold medal for interacting with @AIcrowdHQ posts! Check out the challenge forum here [link],community,FALSE,,,,
+Liked Topic,You liked 20 topics. Here's your silver badge. 20 more left to unlock next level,4,,5,/assets/discussion_badges/post_like_Active_silver.png,2,20,I received a silver medal for interacting with @AIcrowdHQ posts! Check out the challenge forum here [link],community,TRUE,,,,
+Liked Topic,You liked 10 topics. Here's your bronze badge. 10 more left to unlock next level,4,,5,/assets/discussion_badges/post_like_passive_bronze.png,1,10,I received a bronze medal for interacting with @AIcrowdHQ posts! Check out the challenge forum here [link],community,TRUE,,,,
+Topic got likes,Your topic received 20 likes. Here's your silver badge!,4,,5,/assets/discussion_badges/post_like_passive_silver.png,2,20,My post received 20 likes on @AIcrowdHQ forum! I also unlocked a silver badge! Check out my contribution to AI discussions. :) [link],community,TRUE,,,,
+Liked Replies,We love an active community member. Here's a bronze badge for liking 10 replies.,4,,5,/assets/discussion_badges/post_comment_Active_bronze.png,1,10,I received a bronze badge for active participation on @AIcrowdHQ forum. Join the latest discussions on AI and Machine Learning over here [link],community,TRUE,,,,
+Reply Received Likes,The community enjoys interacting with you. Here's a bronze badge for 5 likes on replies.,4,,5,/assets/discussion_badges/post_comment_passive_bronze.png,1,5,I received a bronze badge as @AIcrowdHQ community members are enjoying my posts on their forum! Check them out [link],community,TRUE,,,,
+Commented On Post,You've unlocked bronze badge by commenting on 10 posts. You are 15 more comments away from the next level.,4,,5,/assets/discussion_badges/post_comment_Active_bronze.png,1,10,N/A,community,TRUE,,,,
+Received Comment On Post,"Your posts has received 25 comments, here's your gold badge.",4,,5,/assets/discussion_badges/post_comment_passive_gold.png,3,25,My post on @AIcrowdHQ forum is garnering a lot of attention!  I even unlocked a gold badge.Check out the post here [link],community,TRUE,,,,
+Reply Received Likes,The community enjoys interacting with you. Here's a gold badge for 35 likes on replies.,4,,5,/assets/discussion_badges/post_comment_passive_gold.png,3,35,I received a gold badge as @AIcrowdHQ community members are enjoying my posts on their forum! Check them out [link],community,TRUE,,,,
+Received Comment On Post,"Your posts has received 5 comments, here's your bronze badge.",4,,5,/assets/discussion_badges/post_comment_passive_bronze.png,1,5,My post on @AIcrowdHQ forum is garnering a lot of attention!  I even unlocked a bronze badge.Check out the post here [link],community,TRUE,,,,
+Topic got likes,Your topic received 35 likes. Here's your gold badge!,4,,5,/assets/discussion_badges/post_like_passive_gold.png,3,35,My post received 35 likes on @AIcrowdHQ forum! I also unlocked a gold badge! Check out my contribution to AI discussions. :) [link],community,TRUE,,,,
+Liked Replies,We love an active community member. Here's a silver badge for liking 20 replies.,4,,5,/assets/discussion_badges/post_comment_Active_silver.png,2,20,I received a silver badge for active participation on @AIcrowdHQ forum. Join the latest discussions on AI and Machine Learning over here [link],community,TRUE,,,,
+Reply Received Likes,The community enjoys interacting with you. Here's a silver badge for 20 likes on replies.,4,,5,/assets/discussion_badges/post_comment_passive_silver.png,2,20,I received a silver badge as @AIcrowdHQ community members are enjoying my posts on their forum! Check them out [link],community,TRUE,,,,
+Commented On Post,You've unlocked silver badge by commenting on 25 posts. You are 15 more comments away from the next level.,4,,5,/assets/discussion_badges/post_comment_Active_silver.png,2,25,N/A,community,TRUE,,,,
+Received Comment On Post,"Your posts has received 15 comments, here's your silver badge.",4,,5,/assets/discussion_badges/post_comment_passive_silver.png,2,15,My post on @AIcrowdHQ forum is garnering a lot of attention!  I even unlocked a silver badge.Check out the post here [link],community,TRUE,,,,
+Liked Replies,We love an active community member. Here's a gold badge for liking 40 replies.,4,,5,/assets/discussion_badges/post_comment_Active_gold.png,3,40,I received a gold badge for active participation on @AIcrowdHQ forum. Join the latest discussions on AI and Machine Learning over here [link],community,FALSE,,,,
+Commented On Post,You've unlocked gold badge for commenting on 40 posts!,4,,5,/assets/discussion_badges/post_comment_Active_gold.png,3,40,N/A,community,FALSE,,,,
+First Flag,,4,,5,/assets/first_badges/badges-93.png,4,1,,induction,TRUE,,,,
+Commented on a post for first time,,4,,5,/assets/first_badges/badges-86,4,1,,induction,TRUE,,,,
+Shared a post for the first time,,4,,5,/assets/first_badges/badges-88,4,1,,induction,TRUE,,,,
+Liked a post for first time,,4,,5,/assets/first_badges/badges-84,4,1,,induction,TRUE,,,,
+Notebook Received Bookmark,"Woohoo, you got your first bookmark! Continue to create more resources to engage with the community. :)",4,,5,/assets/notebook_badges/Notebook_bookmark_passive_first,4,1,,induction,TRUE,,,,
+Notebook Received Download,"Woohoo, your notebook was downloaded for the first time. Continue to create more resources that helps the community, they love it! :)",4,,5,/assets/notebook_badges/Notebook_download_passive_first,4,1,,induction,TRUE,,,,
+Participated In First Challenge,You participated in your first challenge!,4,,5,/assets/challenge_badges/challenges_participate_Active_first,4,1,I just participated in my first @AIcrowdHQ challenge. Check it out,induction,TRUE,,,,
+Participated In First Practice Problem,You participated in your first practise problem.,4,,5,/assets/challenge_badges/practice_problem_participate_Active_first,4,1,I just participated in my first @AIcrowdHQ practise. Check it out.,induction,TRUE,,,,
+Shared First Notebook,Look at you interacting with the community! You are 9 more shares away from winning your bronze badge. Keep at it. :),4,,5,/assets/notebook_badges/Notebook_Share_Active_first,4,1,"I find this notebook on @AIcrowdHQ very interesting, check it out.",induction,TRUE,,,,
+Created First Team,"Woohoo, you're a team players! Congratulation on your first team. All the best to you and your teammates [emoji]",4,,5,/assets/first_badges/made_team_first,4,1,I teamed up with a fellow AIcrew member for my newest challenges. Solving AI puzzles on @AIcrowdHQ is better together. Here’s what I am talking about [link to the puzzle],induction,TRUE,,,,
+Clicked a link for the first time,,4,,5,/assets/first_badges/badges-90,4,1,,induction,TRUE,,,,
+Bookmarked a post for the first time,,4,,5,/assets/first_badges/badges-92,4,1,,induction,TRUE,,,,
+Mentioned someone for the first time,,4,,5,/assets/first_badges/badges-85,4,1,,induction,TRUE,,,,
+Filled your discourse bio,,4,,5,/assets/first_badges/badges-87,4,1,,induction,TRUE,,,,
+Edited post for the first time,,4,,5,/assets/first_badges/badges-89,4,1,,induction,TRUE,,,,
+Liked First Notebook,We grow by appreciating work of others. Good to see you interact with resources created by community members. You are 9 more likes away from unlocking bronze badge. Keep up the good work!,4,,5,/assets/notebook_badges/Notebook_like_Active_first,4,1,I liked this notebook on @AIcrowdHQ [link],induction,TRUE,,,,
+Bookmarked First Notebook,You followed your first notebook. You are 4 subscriptions away from unlocking bronze badge. Keep it up!,4,,5,/assets/notebook_badges/Notebook_bookmark_Active_first,4,1,I just subscribed to this notebook on @AIcrowdHQ. Check it out [link],induction,TRUE,,,,
+Followed First Practice Problem,,4,,5,/assets/challenge_badges/practice_problem_follow_Active_first,4,1,,induction,FALSE,,,,
+Created First Notebook,"Yay, you’ve created your first notebook! You’re only two more notebooks away from winning your bronze badge. Keep up the good work",4,,5,/assets/notebook_badges/Notebook_Creation_Active_first,4,1,I created my first notebook on @AIcrowdHQ. Check it out [link],induction,TRUE,,,,
+Accepted Rules,,4,,5,/assets/challenge_badges/challenges_rules_Active_first,4,1,,induction,FALSE,,,,
+Used emoji for the first time,,4,,5,/assets/first_badges/badges-91,4,1,,induction,TRUE,,,,
+Used flag for the first time,,4,,5,/assets/first_badges/badges-93,4,1,,induction,TRUE,,,,
+Notebook Received Like,"Yay, your notebook received a like! The community appreciates your contributions. Keep creating and sharing your resources with us. :)",4,,5,/assets/notebook_badges/Notebook_like_passive_first,4,1,"My notebook was liked by @AIcrowdHQ community member, check it out [link]",induction,TRUE,,,,
+Commented on Notebook,Nice to see you interact with other members! You are four comments away from unlocking the bronze badge. Keep up the good work.,4,,5,/assets/notebook_badges/Notebook_comment_Active_first,4,1,,induction,TRUE,,,,
+Downloaded First Notebook,We love to see active participation on this platform. Good job on your first download. You are 9 more downloads away from unlocking the bronze badge. Keep up the good work.,4,,5,/assets/notebook_badges/Notebook_download_Active_first,4,1,"I dowloaded this notebook on AIcrowd as I found it helpful. Might be useful in your AI journey too, check it out.",induction,TRUE,,,,
+Notebook Was Shared First Time,"Woohoo! Your notebook was shared by a community member. Keep creating amazing resources, the AIcrew community loved it. :)",4,,5,/assets/notebook_badges/Notebook_Share_passive_first,4,1,My notebook was shared on AIcrowd. Give it a look.,induction,TRUE,,,,
+Completed Profile,You're a social animal! Thanks for sharing your work with the community. Check out projects and resources by others.,4,,5,/assets/first_badges/User profile_bio_first,1,1,Find my projects links and more on aicrowd.com.,induction,TRUE,,,,
+Notebook Received First Comment,"Hey, your notebook caught the attention of our community member! Congratulations on your first comment. Keep creating valuable resources and engaging with the community. :)",4,,5,/assets/notebook_badges/Notebook_comment_passive_first,4,1,,induction,TRUE,,,,
+Sign Up,,4,,5,User profile_Sign Up_first,4,1,,induction,FALSE,,,,
+Completed Profile,You're a social animal! Thanks for sharing your work with the community. Check out projects and resources by others.,4,,5,/assets/first_badges/User profile_Country_first,2,2,Find my projects links and more on aicrowd.com.,induction,TRUE,,,,
+Completed Profile,You're a social animal! Thanks for sharing your work with the community. Check out projects and resources by others.,4,,5,/assets/first_badges/User profile_links_first,3,3,Find my projects links and more on aicrowd.com.,induction,TRUE,,,,
+Liked First Blog,"Hey, thanks for letting us know what you like to read. I hope you're enjoying these blogs. What would you like to see in our future blogs? ",4,,5,/assets/first_badges/community_like_first,4,1,I enjoyed reading this blogpost by @AIcrowdHQ [link]. Definitely worth a read!,induction,TRUE,,,,
+Followed First Member,Congratulations for making your first AIcrew friend! Find more people with similar interests to follow over here [discord server link],4,,5,/assets/first_badges/community_follow_first,4,1,,induction,TRUE,,,,
+Logged First Feedback,"We appreciate your effforts to make AIcrowd better. Thanks for your feedback. We'll try our best to incorporate it. For more urgent issues, leave a message on our (discourse) or tweet us @AIcrowdHQ.",4,,5,/assets/first_badges/community_feedback_first,4,1,,induction,TRUE,,,,
+Attended First Townhall/Workshop,Congratulations on attending your first live AIcrowd event! I hope you had a fun time learning and connecting with community members. Have you checked out the group-selfie yet?,4,,5,/assets/first_badges/community_live_first,4,1,I participated in my first @AIcrowdHQ live-event and it was fun! Great time learning and connecting with like-minded AI community members. Find me in this selfie!,induction,TRUE,,,,
+Got First Follower,"Congratulations on your first follower, you're one step closer to being an AI influencer [emoji?]! Say hi to your new friend by following them back.",4,,5,/assets/first_badges/community_follower_first,4,1,"I got my first AIcrowd follower. Want to know about my latest notebooks and AI solutions, check out my profile and follow to stay updated",induction,TRUE,,,,
+First Emoji,,4,,5,/assets/first_badges/badges-91.png,4,1,,induction,TRUE,,,,
+First Link,,4,,5,/assets/first_badges/badges-90.png,4,1,,induction,TRUE,,,,
+First Like,,4,,5,/assets/first_badges/badges-84.png,4,1,,induction,TRUE,,,,
+Editor,,4,,5,/assets/first_badges/badges-89.png,4,1,,induction,TRUE,,,,
+First Share,,4,,5,/assets/first_badges/badges-88.png,4,1,,induction,TRUE,,,,
+First Mention,,4,,5,/assets/first_badges/badges-85.png,4,1,,induction,TRUE,,,,
+Liked First Practice Problem,You liked your first practice problem.,4,,5,/assets/challenge_badges/practice_problem_like_Active_first,4,1,,induction,TRUE,,,,
+Shared First Practice Problem,You shared your first practice problem.,4,,5,/assets/challenge_badges/practice_problem_Share_Active_first,4,1,,induction,TRUE,,,,
+First Submission With Baseline,,4,,5,/assets/challenge_badges/challenges_baseline_submission_Active_first,4,1,,induction,FALSE,,,,
+Followed First Challenge,,4,,5,/assets/challenge_badges/challenges_follow_Active_first,4,1,,induction,FALSE,,,,
+First Submission,"Yay, you made your first submission. ",4,,5,/assets/challenge_badges/challenges_submit_Active_first,4,1,I just made my first submission on @AIcrowdHQ. Find the code here.,induction,TRUE,,,,
+First Successful Submission,"Woohoo, you made your first successful submission!",4,,5,/assets/challenge_badges/challenges_successful_submission_Active_first,4,1,"Woohoo, I made my first sucessful submission on @AIcrowdHQ! Find the code on my profile [link]",induction,TRUE,,,,
+Liked First Challenge,You liked your first challenge.,4,,5,/assets/challenge_badges/challenges_like_Active_first,4,1,,induction,TRUE,,,,
+Shared First Challenge,You shared your first challenge.,4,,5,/assets/challenge_badges/challenges_Share_Active_first,4,1,,induction,TRUE,,,,
+Notebook Received Bookmark,You’ve unlocked the bronze badge! The community is noticing you! Keep creating and sharing your resources.,4,,5,/assets/notebook_badges/Notebook_bookmark_passive_bronze.png,1,3,n/a,notebook,TRUE,,YES,YES,
+Notebook Received Bookmark,"Woohoo, you receive a silver badge! 15 people have subscribed to your notebook. The community liked your resources, keep up the good work. :)",4,,5,/assets/notebook_badges/Notebook_bookmark_passive_silver.png,2,15,I received the silver badge for my notebook on @AIcrowdHQ. Check out the notebook that my subscribers are using [link],notebook,TRUE,,YES,YES,
+Created Notebook,Good job! You’ve unlocked the bronze badge by creating 3 notebooks on AIcrowd. You are 7 notebooks away from unclocking silver badge. Keep up the good work!,4,,5,/assets/notebook_badges/Notebook_Creation_Active_bronze.png,1,3,I unlocked the bronze badge on @AIcrowdHQ for creating notebooks. Check out all the resources I created [link],notebook,TRUE,,YES,YES,
+Created Notebook,Amazing! You have created 10 notebooks on AIcrowd. We want to appreciate this achievment by giving you the silver badge. Next level - 25 notebooks. Let’s go!,4,,5,/assets/notebook_badges/Notebook_Creation_Active_silver.png,2,10,I’ve unlocked the silver badge by creating 10 notebooks on @AIcrowdHQ. You can see all my work over here [link],notebook,TRUE,,YES,YES,
+Created Notebook,"Congratualtions, you’ve unlocked the gold badge! This calls for a celebrations. We are so proud to have you as an AIcrowd member. Great job :)",4,,5,/assets/notebook_badges/Notebook_Creation_Active_gold.png,3,25,"Wow, I unlocked the prestigious gold badge by creating 25 notebooks @AIcrowdHQ. What do you think about all my notebooks? [link]",notebook,TRUE,,YES,YES,
+Created Blitz Notebook,Good job! You’ve unlocked the bronze badge by creating 5 blitz notebooks on AIcrowd. You are 10 notebooks away from unclocking the silver badge. Keep up the good work!,4,,5,/assets/notebook_badges/Blitz_Creation_Active_bronze.png,1,5,,notebook,TRUE,,YES,YES,
+Community Contribution Winner,"Congratulations, a double-win! You unlocked a gold badge for winning the Community Explainer. We are delighted to have you as a part of AIcrowd. Continue to create resources, our community loves them!",4,,5,/assets/notebook_badges/badges-100.png,3,1,I unlocked the prestigious gold badge on @AIcrowdHQ by winning the Community Explainer prize. Check out my winning notebook over here [link],notebook,TRUE,,,,
+Notebook Received Bookmark,"Wow, you receive a gold badge as your notebooks have 30 subscribers! Your work is quite popular! Keep creating and sharing more notebooks.:) ",4,,5,/assets/notebook_badges/Notebook_bookmark_passive_gold.png,3,30,"Yay, I received the prestigious gold badge for my notebook on @AIcrowdHQ. Check out my notebook that is popular among AIcrowd community members [link]",notebook,TRUE,,YES,YES,
+Liked Notebook,"Wow, you’re a busy bee. Here’s your gold badge for interacting with 40 notebooks. You’re awesome. :)",4,,5,/assets/notebook_badges/Notebook_like_Active_gold.png,3,40,I unlocked the prestigious gold badge on @AIcrowdHQ for interacting with resources on the platform. Check out some of my favourite notebooks here [link],notebook,FALSE,,,,
+Shared Notebook,Great to see you interact with community! You have unlocked bronze badge! Keep sharing your favourite resources. 15 more to go for the next level!,4,,5,/assets/notebook_badges/Notebook_Share_Active_bronze.png,1,10,"I received bronze badge on @AIcrowdHQ for sharing 10 wonderful resources. Looking for useful AI and ML notebooks, see this [link]",notebook,TRUE,,YES,YES,
+Shared Notebook,"Hooray, you have unlocked the silver badge for sharing 25 notebooks! Delighted to see your active participation, keep going. Next Level - Gold! ",4,,5,/assets/notebook_badges/Notebook_Share_Active_silver.png,2,25,"I received silver badge on @AIcrowdHQ for sharing 25 wonderful resources. Looking for useful AI and ML notebooks, see this [link]",notebook,TRUE,,YES,YES,
+Shared Notebook,"Woohoo! You have shared 40 notebooks, that’s amazing! We love your active participation in the community — here’s a gold badge for you! Keep it up. :)",4,,5,/assets/notebook_badges/Notebook_Share_Active_gold.png,3,40,"Wow, I received the prestigious gold badge on  @AIcrowdHQ for sharing 40 amazing AI notebooks! Check out more useful Machine learning resources at [link]",notebook,TRUE,,YES,YES,
+Notebook Was Shared,"Woohoo! You receive a bronze medal! Your notebook was shared by 3 community members. Keep creating amazing resources, the AIcrew community loved it. :)",4,,5,/assets/notebook_badges/Notebook_Share_passive_bronze.png,1,3,I received the bronze badge as my notebooks were shared by @AIcrowdHQ community members. Give it a look [link],notebook,TRUE,,YES,YES,
+Notebook Was Shared,"Woohoo! You receive a silver medal! Your notebook was shared by 15 community members. Keep creating amazing resources, the AIcrew community loved it. :)",4,,5,/assets/notebook_badges/Notebook_Share_passive_silver.png,2,15,"I received the silver badge as my notebooks were shared by @AIcrowdHQ community members. You might find it helpful too, check it out  [link]",notebook,TRUE,,YES,YES,
+Notebook Was Shared,"Wow, you are popular! Here’s your gold badge. Your notebook was shared by 30 AIcrowd members. We are delighted to have you on our platform. Keep creating :)",4,,5,/assets/notebook_badges/Notebook_Share_passive_gold.png,3,30,"Wow, I just unlocked the gold badge on @AIcrowdHQ as my notebook was shared by 40 people. It’s a favourite in the community, find out why [link] ",notebook,TRUE,,YES,YES,
+Commented On Notebook,"You’re a busy bee, interacting with other community members. Here’s your bronze badge to show our appreciation for your work. Keep it up. :)",4,,5,/assets/notebook_badges/Notebook_comment_Active_bronze.png,1,5,n/a,notebook,TRUE,,YES,YES,
+Notebook Received Comment,Your notebook has caught attention of our community members! You’ve unlocked bronze badge. Keep creating and sharing!,4,,5,/assets/notebook_badges/Notebook_comment_passive_bronze.png,1,3,n/a,notebook,TRUE,,,,
+Bookmarked Notebook,You’ve followed 5 notebooks and unlocked bronze badge. 10 more follows away from levelling up to silver. Keep going on!,4,,5,/assets/notebook_badges/Notebook_bookmark_Active_bronze.png,1,5,n/a,notebook,TRUE,,YES,YES,
+Bookmarked Notebook,"You’ve followed 15 notebooks and unlocked silver badge! Keep going, 20 more and you’ll level up. ",4,,5,/assets/notebook_badges/Notebook_bookmark_Active_silver.png,2,15,n/a,notebook,TRUE,,YES,YES,
+Bookmarked Notebook,"Wow, you are an active member of our community. Here’s a gold badge to appreciate your effort. Keep interacting with resources created by the resources. ",4,,5,/assets/notebook_badges/Notebook_bookmark_Active_gold.png,3,35,n/a,notebook,FALSE,,YES,YES,
+Community Contribution Winner,"Congratulations, you’ve unlocked the silver badge by winning Blitz Community Explainer! Thank you for creating helpful resources for the users, the community loved it. Keep it up :) ",4,,5,/assets/notebook_badges/badges-99.png,2,1,"I unlocked the silver badge on @AIcrowdHQ by winning the Blitz Community Explainer.If you are starting your AI journey, you will find this resource helpful [link]",notebook,TRUE,,,,
+Liked Notebook,Lovely to see you interact with other members. You’ve unlocked a bronze badge! Next level - 15 more likes for silver. Keep it up!,4,,5,/assets/notebook_badges/Notebook_like_Active_bronze.png,1,10,N/A,notebook,FALSE,,,,
+Liked Notebook,"You’re an active AIcrew member, here’s your silver badge! At AIcrowd we grow by learning from our peers. 15 more likes for the next level! Let’s go!",4,,5,/assets/notebook_badges/Notebook_like_Active_silver.png,2,25,N/A,notebook,FALSE,,,,
+Commented On Notebook,"1. Wow, you are committed to the craft! A gold badge to applaud your active involvement in this community. Thank you for your efforts! Keep it up.",4,,5,/assets/notebook_badges/Notebook_comment_Active_gold.png,3,35,2. I received the prestigious gold badge for engagement and resource sharing on @AIcrowdHQ. Here are some of my favourite resources [link],notebook,FALSE,,,,
+Executed Notebook,"You receive a bronze badge for downloading 10 notebooks. Good job, you’re 15 downloads away from a level up ",4,,5,/assets/notebook_badges/Notebook_download_Active_bronze.png,1,10,n/a,notebook,FALSE,,,,
+Notebook Was Liked,"Your notebook received 10 likes - with this, you’ve unlocked bronze badge! The community appreciates your contribution, keep creating. :)",4,,5,/assets/notebook_badges/Notebook_like_passive_bronze.png,1,5,"2. Hi, my notebook has received 10 likes and a bronze badge, check it out [link]",notebook,TRUE,,YES,YES,
+Notebook Was Liked,"Your notebook on @AIcrowdHQ received 20 likes - with this, you’ve unlocked silver badge! The community appreciates your contribution, keep creating. :)",4,,5,/assets/notebook_badges/Notebook_like_passive_silver.png,2,20,"2.  My notebook on @AIcrowdHQ has received a silver badge, check out my AI resource [link]",notebook,TRUE,,YES,YES,
+Notebook Was Liked,"Wow, your notebook has received 35 likes —  with this, you’ve unlocked gold badge! Your notebook is popular! The community appreciates your contribution, keep creating. :)",4,,5,/assets/notebook_badges/Notebook_like_passive_gold.png,3,35,"2. My notebook on @AIcrowdHQ is popular! It has a golden badge, check it out now [link]",notebook,TRUE,,YES,YES,
+Commented On Notebook,Your involvement in the community is brilliant! Here’s a silver badge to celebrate that! Keep up the good work.,4,,5,/assets/notebook_badges/Notebook_comment_Active_silver.png,2,15,2. I unlocked the silver badge for my active participation on @AIcrowdHQ. Here are my favourite resources created by the community [link],notebook,TRUE,,YES,YES,
+Notebook Received Comment,You notebook is getting attention! You have unlocked the silver badge by receiving 15 comments. Keep up the good work. :),4,,5,/assets/notebook_badges/Notebook_comment_passive_silver.png,2,15,2. I received the silver badge as my notebook on @AIcrowdHQ is garnering some attention. Check it out [link],notebook,TRUE,,YES,YES,
+Notebook Received Comment,"Wow, you have received the gold badge! Your notebook is really population. Great work, keep creating! :)",4,,5,/assets/notebook_badges/Notebook_comment_passive_gold.png,3,30,2. I received the prestigious gold badge for my notebook! Check out the resource over here [link],notebook,TRUE,,YES,YES,
+Notebook Was Executed,You’ve unlocked the bronze badge! The community is noticing you! Keep creating and sharing your resources.,4,,5,/assets/notebook_badges/Notebook_download_passive_bronze.png,1,5,n/a,notebook,TRUE,,YES,YES,
+Notebook Was Executed,"Woohoo, you receive a silver badge! 15 people have downloaded to your notebook. The community liked your resources, keep up the good work. :)",4,,5,/assets/notebook_badges/Notebook_download_passive_silver.png,2,15,I received the silver badge for my notebook on @AIcrowdHQ. Check out the notebook [link],notebook,TRUE,,YES,YES,
+Notebook Was Executed,"Wow, you receive a gold badge as your notebooks have 35 downloads. Your work is quite popular! Keep creating and sharing more notebooks.:) ",4,,5,/assets/notebook_badges/Notebook_download_passive_gold.png,3,35,"Yay, I received the prestigious gold badge for my notebook on @AIcrowdHQ. Check out my notebook that is popular among AIcrowd community members [link]",notebook,TRUE,,YES,YES,
+"Created one notebook, like 3 notebooks, shared 2 notebooks ",,4,,5,,2,1,,notebook,FALSE,,,,
+Executed Notebook,You have unlocked silver badge by downloading 25 notebooks. We appreciate your active participation on this platform. Keep up the good work.,4,,5,/assets/notebook_badges/Notebook_download_Active_silver.png,2,25,n/a,notebook,FALSE,,,,
+Executed Notebook,"Wow, you’re a busy bee. Here’s a gold badge to reward your hard work! Our community appreciates your active participation. ",4,,5,/assets/notebook_badges/Notebook_download_Active_gold.png,3,40,n/a,notebook,FALSE,,,,
+Created Blitz Notebook,Amazing! You have created 15 blitz notebooks on AIcrowd. We want to appreciate this achievment by giving you the silver badge. Next level - 30 notebooks. Let’s go!,4,,5,/assets/notebook_badges/Blitz_Creation_Active_silver.png,2,15,,notebook,TRUE,,YES,YES,
+Created Blitz Notebook,"Congratualtions, you’ve unlocked the gold badge! This calls for a celebrations. We are so proud to have you as an AIcrowd member. Great job :)",4,,5,/assets/notebook_badges/Blitz_Creation_Active_gold.png,3,30,,notebook,TRUE,,YES,YES,
+Basic User,,4,,5,,,,,,TRUE,,,,
+Certified,,4,,1,,,,,,TRUE,,,,
+First Onebox,,4,,5,,,,,,TRUE,,,,
+Wiki Editor,,4,,5,,,,,,TRUE,,,,
+First Reply By Email,,4,,5,,,,,,TRUE,,,,
+Licensed,,4,,5,,,,,,TRUE,,,,
+New User of the Month,,4,,5,,,,,,TRUE,,,,
+First Quote,,4,,5,,,,,,TRUE,,,,
+Popular Link,,4,,5,,,,,,TRUE,,,,
+Aficionado,,4,,5,,,,,,TRUE,,,,
+Trustable,Has filled their profile page,3,"@participant.add_badge(""Trustable"")",1,,,,,,TRUE,,,,
+Newtonian,Kudos! You've won a bronze badge in this challenge. Keep up the great work!,3," challenge_round = ChallengeRound.find_by(id:round_id)
+round_name = challenge_round.challenge.challenge + ' ' + challenge_round.challenge_round
+if max_rank <= 250
+  if participant_ranks>=0.2 && participant_ranks < 0.4
+    Participant.find_by(id: participant_id).add_badge('gold-challenge-end', {challenge_round: round_name})
+  end
+elsif max_rank > 250
+  if participant_ranks >=0.05 && participant_ranks < 0.1
+    Participant.find_by(id: participant_id).add_badge('gold-challenge-end', {challenge_round: round_name})
+  end
+end",6,,,,,,TRUE,,,,
+test_badge,test,1,,1,,,,,,TRUE,,,,
+Rookie,You've made your first successful submission with us. Keep going!,4,"if Submission.where(participant_id: participant_id, grading_status_cd: 'graded').count == 1
+  Participant.find_by(id: participant_id)&.add_badge(""Learner"")
+end",1,,,,,,TRUE,,,,
+Enduring,You've made more than 10 submissions. Here's a bronze badge for you!,3,"if grading_status_cd == 'graded'
+  participant_submission_count = Submission.where(participant_id: participant_id, grading_status_cd: 'graded').count
+  if participant_submission_count == 10
+    Participant.find_by(id: participant_id).add_badge(""bronze-submitter"")
+  end
+end",1,,,,,,TRUE,,,,
+Beginner,You've made your first submission with us. Keep the learning coming in!,4,"if Submission.where(participant_id: participant_id).count == 1
+  Participant.find_by(id: participant_id)&.add_badge(""Beginner"")
+end",1,,,,,,TRUE,,,,
+BeastMode,Wow! You've made over 1000 successful submissions. Here's a gold badge for you. Keep going!,1,"if grading_status_cd == 'graded'
+  participant_submission_count = Submission.where(participant_id: participant_id, grading_status_cd: 'graded').count
+  if participant_submission_count == 1000
+    Participant.find_by(id: participant_id).add_badge(""gold-submitter"")
+  end
+end",1,,,,,,TRUE,,,,
+Persistant,Great work! You've made more than 100 successful submissions. Here's a silver badge for you.,2,"if grading_status_cd == 'graded'
+  participant_submission_count = Submission.where(participant_id: participant_id, grading_status_cd: 'graded').count
+  if participant_submission_count == 100
+    Participant.find_by(id: participant_id).add_badge(""silver-submitter"")
+  end
+end",1,,,,,,TRUE,,,,
+Boltzmann's Favourite,Kudos! You've been awarded a silver badge for this challenge. Keep up the great work!,2," challenge_round = ChallengeRound.find_by(id:round_id)
+round_name = challenge_round.challenge.challenge + ' ' + challenge_round.challenge_round
+
+if max_rank <= 250
+  if participant_ranks>=0.1 && participant_ranks < 0.2
+    Participant.find_by(id: participant_id).add_badge('silver-challenge-end', {challenge_round: round_name})
+  end
+elsif max_rank > 250
+  if participant_ranks >= 0.01 && participant_ranks < 0.05
+    Participant.find_by(id: participant_id).add_badge('silver-challenge-end', {challenge_round: round_name})
+  end
+end",6,,,,,,TRUE,,,,
+Anniversary,,4,,5,,,,,,TRUE,,,,
+Regular,,4,,5,,,,,,TRUE,,,,
+Member,,4,,5,,,,,,TRUE,,,,
+Enthusiast,,4,,5,,,,,,TRUE,,,,
+Reader,,4,,5,,,,,,TRUE,,,,
+Read Guidelines,,4,,5,,,,,,TRUE,,,,
+Devotee,,4,,5,,,,,,TRUE,,,,
+Promoter,,4,,5,,,,,,TRUE,,,,
+Campaigner,,4,,5,,,,,,TRUE,,,,
+Leader,,4,,5,,,,,,TRUE,,,,
+Champion,,4,,5,,,,,,TRUE,,,,
+Nice Share,,4,,5,,,,,,TRUE,,,,
+Good Share,,4,,5,,,,,,TRUE,,,,
+Great Share,,4,,5,,,,,,TRUE,,,,
+Autobiographer,,4,,5,,,,,,TRUE,,,,
+Nice Post,,4,,5,,,,,,TRUE,,,,
+Good Post,,4,,5,,,,,,TRUE,,,,
+Great Post,,4,,5,,,,,,TRUE,,,,
+Nice Topic,,4,,5,,,,,,TRUE,,,,
+Good Topic,,4,,5,,,,,,TRUE,,,,
+Great Topic,,4,,5,,,,,,TRUE,,,,
+Hot Link,,4,,5,,,,,,TRUE,,,,
+Famous Link,,4,,5,,,,,,TRUE,,,,
+Appreciated,,4,,5,,,,,,TRUE,,,,
+Respected,,4,,5,,,,,,TRUE,,,,
+Admired,,4,,5,,,,,,TRUE,,,,
+Thank You,,4,,5,,,,,,TRUE,,,,
+Gives Back,,4,,5,,,,,,TRUE,,,,
+Empathetic,,4,,5,,,,,,TRUE,,,,
+Out of Love,,4,,5,,,,,,TRUE,,,,
+Higher Love,,4,,5,,,,,,TRUE,,,,
+Crazy in Love,,4,,5,,,,,,TRUE,,,,
+Welcome,,4,,5,,,,,,TRUE,,,,
+EulerLearner,Great work! You're one of the top participants in this challenge. Here's a gold badge to celebrate the acheivement.,1,"challenge_round = ChallengeRound.find_by(id:round_id)
+round_name = challenge_round.challenge.challenge + ' ' + challenge_round.challenge_round
+if max_rank <= 250
+  if participant_ranks < 0.1
+    Participant.find_by(id: participant_id).add_badge('bronze-challenge-end', {challenge_round: round_name})
+  end
+elsif max_rank > 250
+  if participant_ranks < 0.01
+    Participant.find_by(id: participant_id).add_badge('bronze-challenge-end', {challenge_round: round_name})
+  end
+end
+",6,,,,,,TRUE,,,,

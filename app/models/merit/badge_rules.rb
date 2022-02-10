@@ -28,29 +28,29 @@ module Merit
       # Participated in n number of challenges
 
       grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'Participated Challenge', level: 1 do |challenge_participant|
-        challenge_participant.participant.challenge_participants.count >= 5
+        challenge_participant.participant.challenge_participants.count >= 3
       end
 
       grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'Participated Challenge', level: 2 do |challenge_participant|
-        challenge_participant.participant.challenge_participants.count >= 10
+        challenge_participant.participant.challenge_participants.count >= 9
       end
 
       grant_on ['challenge_participants#create', 'challenge_participants#update'], badge: 'Participated Challenge', level: 3 do |challenge_participant|
-        challenge_participant.participant.challenge_participants.count >= 20
+        challenge_participant.participant.challenge_participants.count >= 21
       end
 
       # Badges for number of submissions
 
       grant_on 'submissions#create', badge: 'Made Submission', level: 1 do |submission|
-        submission.participant.submissions.count >= 40
+        submission.participant.submissions.count >= 10
       end
 
       grant_on 'submissions#create', badge: 'Made Submission', level: 2 do |submission|
-        submission.participant.submissions.count >= 80
+        submission.participant.submissions.count >= 100
       end
 
       grant_on 'submissions#create', badge: 'Made Submission', level: 3 do |submission|
-        submission.participant.submissions.count >= 120
+        submission.participant.submissions.count >= 300
       end
 
       # Finished in top 20 percentile
