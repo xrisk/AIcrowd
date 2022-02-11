@@ -13,7 +13,7 @@
           <%= render partial: 'insights/_charts/top_score_vs_time', locals: {challenge: @challenge, challenge_rounds: @challenge_rounds, index: 2} %>
           <% if current_participant && policy(@challenge).edit? %>
             <%= render partial: 'insights/_charts/participant_count', locals: {challenge: @challenge, challenge_rounds: @challenge_rounds, index: 3} %>
-            <%= render partial: 'insights/_charts/graded_vs_failed', locals: {challenge: @challenge, challenge_rounds: @challenge_rounds, index: 4} %>
+            <%= render partial: 'insights/_charts/success_vs_total', locals: {challenge: @challenge, challenge_rounds: @challenge_rounds, index: 4} %>
           <% end %>
         <% else %>
           <p class="text-center">There is no active round for this challenge.</p>

@@ -86,23 +86,30 @@ class InsightsController < ApplicationController
   def participant_count
     @participant_data = {}
     (@current_round.start_dttm.to_date..@current_round.end_dttm.to_date).each do |dt|
-      count = ChallengeParticipant.where(challenge_id: @current_round.challenge_id).where('created_at > ?', dt).where('created_at < ?', dt+1.day).count
+      if dt > Time.now.to_date
+        break
+      end
+      count = ChallengeParticipant.where(challenge_id: @current_round.challenge_id).where('created_at < ?', dt+1.day).count
       @participant_data[dt] = count
+    end
+
+    if @participant_data.length == 0
+      @participant_data[Time.now.to_date] = ChallengeParticipant.where(challenge_id: @current_round.challenge_id).count
     end
 
     render json: @participant_data
   end
 
-  def graded_vs_failed
+  def success_vs_total
     graded = @collection.where(grading_status_cd: "graded").group_by_day(:created_at).count
-    failed = @collection.where(grading_status_cd: "failed").group_by_day(:created_at).count
+    total = @collection.group_by_day(:created_at).count
     result = [
       {
-        name: "Failed Submissions",
-        data: failed
+        name: "Total Submissions",
+        data: total
       },
       {
-        name: "Graded Submissions",
+        name: "Successful Submissions",
         data: graded
       }
     ]
