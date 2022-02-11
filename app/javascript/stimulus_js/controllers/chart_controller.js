@@ -61,9 +61,14 @@ export default class extends Controller {
         progressBar.value = 0.05;
         $(progressBar).removeClass('display-none');
         
+        var colors = ["#44B174"];
+        if (baseUrl.includes("success_vs_total")) {
+            var colors = ["#DDDDDD", "#44B174"];
+        }
+        
         new Chartkick[this.type]("chart-" + this.index, url,
             {
-                colors: ["#44B174"],
+                colors: colors,
                 xtitle: 'Time',
                 ytitle: this.selectedScoreTitle || this.defaultYTitle,
                 library: { animation: {
