@@ -114,6 +114,7 @@ gem 'merit'
 gem 'react-rails'
 gem 'geocoder'
 gem 'pg_search'
+gem 'foreman'
 
 # HTTP clients
 gem 'faraday', '~> 1.0'
