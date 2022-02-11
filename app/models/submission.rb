@@ -151,7 +151,7 @@ class Submission < ApplicationRecord
     LEFT OUTER JOIN submissions ON submissions.participant_id = :participant_id AND
                              submissions.created_at::date = series_date
     GROUP BY series_date
-    HAVING COUNT(submissions.id) = 0
+    HAVING COUNT(submissions.id) > 0
     ORDER BY series_date DESC
     LIMIT 1
   SQL
