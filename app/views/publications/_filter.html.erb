@@ -1,10 +1,10 @@
 <%= form_with url: path, local: true, method: :get, enforce_utf8: false, data: {controller: "publications" }, class: 'filter-dropdown-form col-12', id: 'filterForm' do |f| %>
-  <div class="d-flex col-12">
+  
 
     <div class="pr-2 d-none" >
       <div class="dropdown">
         <div aria-expanded="false" aria-haspopup="true"
-             class="filter dropdown-toggle m-2 p-1 pl-3 <% if params[:categories].present? %>filter-active<% end %>" data-toggle="dropdown"
+             class="filter dropdown-toggle  <% if params[:categories].present? %>filter-active<% end %>" data-toggle="dropdown"
              id="publication-categories"
              style="width: 100%;">
           Tags <i class="fa fa-chevron-down float-right py-1"></i>
@@ -22,11 +22,12 @@
       </div>
     </div>
 
-    <div class="pr-2">
+
+    <div class="col-lg-9 col-md-6 col-sm-6 col-xs-12 d-flex publication-drop" >
       <div class="dropdown">
-        <div aria-expanded="false" aria-haspopup="true" class="filter dropdown-toggle m-2 p-1 pl-3 <% if params[:years].present? %>filter-active<% end %>"
+        <div aria-expanded="false" aria-haspopup="true" class="filter dropdown-toggle  <% if params[:years].present? %>filter-active<% end %>"
              data-toggle="dropdown" id="publication-years" style="width: 100%;">
-          Year <i class="fa fa-chevron-down float-right py-1"></i>
+          Year <i class="fa fa-chevron-down float-right pl-2 py-0.5 mr-auto" style="margin-top:2px"></i>
         </div>
         <div class="dropdown-menu form-dropdown">
           <% @years.uniq.sort.each do |year| %>
@@ -40,13 +41,13 @@
         </div>
       </div>
 
-    </div>
 
-    <div class="mr-auto pr-2">
+
+
       <div class="dropdown">
-        <div aria-expanded="false" aria-haspopup="true" class="filter dropdown-toggle m-2 p-1 pl-3 <% if params[:venues].present? %>filter-active<% end %>"
+        <div aria-expanded="false" aria-haspopup="true" class="filter dropdown-toggle  <% if params[:venues].present? %>filter-active<% end %>"
              data-toggle="dropdown" id="publication-venues" style="width: 100%;">
-          Venue <i class="fa fa-chevron-down float-right py-1"></i>
+          Venue <i class="fa fa-chevron-down float-right pl-2 mr-auto" style="margin-top:2px"></i>
         </div>
         <div class="dropdown-menu form-dropdown">
           <% @venues.sort.uniq.each do |venue| %>
@@ -60,17 +61,21 @@
         </div>
 
       </div>
-    </div>
+  </div>    
+  
 
-    <div class="ml-2">
-      <input class="btn btn-red-submit mt-1" data-action="click->publications#filterUrl" data-disable-with="Apply"
+  <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+    <div class="d-flex filter-btn mr-0" 
+      <div class="ml-2">
+        <input class="btn btn-red-submit mt-0 btn-sm" data-action="click->publications#filterUrl" data-disable-with="Apply"
              type="submit" value="Apply Filters">
-
-    </div>
-    <div class="ml-2 hide-sm">
-      <input class="btn btn-white-submit mt-1" data-action="click->publications#clearFilter" data-disable-with="Clear"
+      </div>
+      <div class="ml-2">
+        <input class="btn btn-sm btn-white-submit mt-0" data-action="click->publications#clearFilter" data-disable-with="Clear"
              type="reset" value="Clear Filters">
+      </div>
     </div>
-
   </div>
+
+
 <% end %>

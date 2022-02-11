@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <!-- title/description/prizes -->
-    <div class="row">
+    <div class="row mt-4">
       <div class="col-sm-12 mt-sm1">
         <% @publication.categories.each_with_index do |category, index| %>
           <%= link_to all_publications_path(categories: category.name) do %>
@@ -15,13 +15,14 @@
         <% end %>
 
         <h1 class="research-head" style="max-width: unset;text-transform: capitalize;"><%= @publication.title %></h1>
-        <div class="avatar-group mt-4 mb-n4 list-group-research-big new-author1 ">
-          <h5>
+        <div class="avatar-groups mt-4 mb-4 ">
+        <div class="box" style="display: inline-flex;flex-wrap: wrap;vertical-align: middle;">
+          <div class="mr-2 mb-2 avatar-text">
             <% @publication.authors[0..3].each do |author| %>
               <% if author.participant_id.present? %>
                 <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
               <% else %>
-                  <span class="text-link mr-1">
+                  <span class="text-link">
                   <%= image_tag '/assets/img/user-avatar-default.svg', class: 'mr-1 img-sm avatar' %>
                     <small><%= author.name %></small>
                   </span>
@@ -33,7 +34,7 @@
                   <% if author.participant_id.present? %>
                     <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
                   <% else %>
-                  <span class="text-link mr-1">
+                  <span class="text-link">
                   <%= image_tag '/assets/img/user-avatar-default.svg', class: 'mr-1 img-sm avatar' %>
                     <small><%= author.name %></small>
                   </span>
@@ -42,22 +43,27 @@
               </div>
             <% end %>
             <% if @publication.authors.length > 8 %>
-              <div class="inline">
-                <div class="inline" data-controller="publications">
-                  <h5 class="collapse multi-collapse" id="multiCollapseExample2">
+              <div>
+                <div  data-controller="publications">
+                  <div class="collapse multi-collapse" id="multiCollapseExample2">
+                  <div class="" style="display: inline-flex;flex-wrap: wrap;vertical-align: middle;">
                     <% @publication.authors.offset(8).each do |author| %>
                       <% if author.participant_id.present? %>
                         <%= render partial: 'participants/get_user_profile_for_research', locals: { participant: author.participant, username: author.name } %>
                       <% else %>
-                        <span class="text-link mr-1">
+                        <span class="text-link">
                         <%= image_tag '/assets/img/user-avatar-default.svg', class: 'mr-1 img-sm avatar' %>
                           <small><%= author.name %></small>
                         </span>
                       <% end %>
                     <% end %>
-                  </h5>
-                  <a aria-controls="multiCollapseExample2" aria-expanded="false"
-                     class="b small hide-button mt-3 ml-1 d-block" data-toggle="collapse"
+                  </div>
+                  </div>
+                  <div style="display:unset">
+                  <div class="d-block">
+                  <div class="row m-0 p-0">
+                  <a  aria-controls="multiCollapseExample2" aria-expanded="false"
+                     class="b small hide-button mt-3 ml-2 d-block" data-toggle="collapse"
                      href="#multiCollapseExample2" id="hide-button" role="button">
                     <i class="fa fa-caret-right mr-2"></i>
                     <u>
@@ -65,9 +71,11 @@
                     </u>
                   </a>
                 </div>
+                </div>
+                </div>
               </div>
             <% end %>
-          </h5>
+          </div>
         </div>
       </div>
     </div>
@@ -102,19 +110,19 @@
 </div>
 
 <section class="section-p-md">
-  <div class="container-fluid">
+  <div class="container-fluid publication-cards-new">
     <div class="row flex-sm-row-reverse">
       <div class="col-lg-3 col-md-push-6 mt-sm">
         <% if @publication.publication_date.present? %>
           <div class="py-2">
-            <h5 class="red-head d-flex"><%= image_tag "img/icon-calendar.png", class: "img-red" %>DATE PUBLISHED </h5>
+            <h5 class="red-head d-flex"><%= image_tag "img/research-calendar.svg", class: "img-red" %>DATE PUBLISHED </h5>
             <h5 class="grey-head"><%= @publication.publication_date.strftime("%d %b %Y") %></h5>
             <hr>
           </div>
         <% end %>
         <% if @publication.venues.present? %>
           <div class="py-2">
-            <h5 class="red-head d-flex"><%= image_tag "img/icon-venue.png", class: "img-red" %>VENUE</h5>
+            <h5 class="red-head d-flex"><%= image_tag "img/research-globe-solid.svg", class: "img-red" %>VENUE</h5>
             <%= link_to all_publications_path(venues: @publication.venues.first.short_name) do %>
               <h5 class="grey-head"><%= @publication.venues.first.venue %></h5>
             <% end %>
@@ -123,14 +131,14 @@
         <% end %>
         <% if @publication.challenge.present? %>
           <div class="py-2">
-            <h5 class="red-head d-flex"><%= image_tag "img/icon-challenge.png", class: "img-red" %>Challenge </h5>
+            <h5 class="red-head d-flex"><%= image_tag "img/research-puzzle-piece-solid.svg", class: "img-red" %>Challenge </h5>
             <h5 class="grey-head"><%= link_to @publication.challenge.challenge, challenge_path(@publication.challenge) %></h5>
             <hr>
           </div>
         <% end %>
         <% if @publication.no_of_citations.present? %>
           <div class="py-2">
-            <h5 class="red-head d-flex"><%= image_tag "img/icon-citations.png", class: "img-red" %>Citations</h5>
+            <h5 class="red-head d-flex"><%= image_tag "img/research-quote-left-solid.svg", class: "img-red" %>Citations</h5>
             <h5 class="grey-head"><%= @publication.no_of_citations %></h5>
             <hr>
           </div>
