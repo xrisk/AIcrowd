@@ -7,16 +7,16 @@
     </div>
   </div>
 </div>
-<div class="filter-bar publication-dropdown">
-  <div class="container-fluid">
-    <div class="row m-sm-x d-flex">
+<div class="filter-bar">
+  <div class="container">
+    <div class="row mt-3 mb-3">
     <%= render partial: 'filter', locals: { years: @years, categories: @categories, venues: @venues, path: all_publications_path} %>
     </div>
   </div>
 </div>
 <div>
   <div class="container-fluid">
-    <ul id="publications-div" class="list-group list-group-flush-px-0 list-group-contributions list-group-publications" data-page="1" data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data">
+    <ul id="publications-div" class="list-group list-group-flush-px-1 list-group-contributions list-group-publications" data-page="1" data-request-completed='true' data-controller="load-more" data-action="scroll@window->load-more#load_more_data">
       <%= render partial: 'publication_list', locals: {publications: @publications} %>
     </ul>
     <p class="mt-5 mb-5 text-muted">

@@ -1,8 +1,8 @@
 <% publications.each_with_index do |publication, idx| %>
-  <div class="col-12 px-0">
+  <div class="col-12 px-1">
     <li class="list-group-item py-4 flex-wrap <% if idx == publications.size - 1 %>border-0<% end %>">
 
-      <div class="col-md-10 d-flex mb-2 offset-md-2 pl-0 tags">
+      <div class="col-md-10 d-flex mb-2 offset-md-2 pl-0">
         <% publication.categories.each_with_index do |category, index| %>
           <%= link_to all_publications_path(categories: category.name) do %>
             <% if index == 0 %>
@@ -17,15 +17,15 @@
       <div class="contribution-details col-md-2 pb-3 mb-2 pl-0">
         <a href="<%= publication_path(publication) %>">
           <% if publication.thumbnail.present? %>
-            <%= image_tag publication.thumbnail.url, class: "img-fluid img-1 mr-4", alt: "" %>
+            <%= image_tag publication.thumbnail.url, class: "img-fluid img-1 mr-2", alt: "" %>
           <% else %>
-            <%= image_tag '/assets/img/user-avatar-default.svg', class: 'img-fluid img-1 mr-4' %>
+            <%= image_tag '/assets/img/user-avatar-default.svg', class: 'img-fluid img-1 mr-2' %>
           <% end %>
         </a>
       </div>
 
-      <div class="contribution-details details col-md-10 px-0 mb-auto">
-        <div class="contribution-text">
+      <div class="contribution-details details col-md-10 pl-0 mb-auto">
+        <div class="contribution-text col-12 pl-0">
           <span class="contribution-subtitle">
           <a class="text-link" href="<%= publication_path(publication) %>"><%= publication.title %></a>
 
@@ -77,11 +77,11 @@
               <% end %>
             </div>
           </span>
-          <div class="row mt-4 publication-cards-new">
+          <div class="row mt-4">
             <div class="col-lg-6 col-sm-6">
               <div class="float-left ">
                 <p class="p-red">
-                  <%= image_tag "img/research-calendar.svg", class: "img-red" %>
+                  <%= image_tag "img/icon-calendar.png", class: "img-red" %>
                   <% if publication.publication_date.present? %>
                     <%= publication.publication_date.strftime("%b %Y") %>
                   <% end %>
@@ -92,7 +92,7 @@
             <div class="col-lg-6 col-sm-6">
               <div class="float-left ">
                 <p class="p-red d-flex">
-                  <%= image_tag "img/research-globe-solid.svg", class: "img-red" %>
+                  <%= image_tag "img/icon-venue.png", class: "img-red" %>
                   <% if publication.venues.present? %>
                     <%= link_to all_publications_path(venues: publication.venues.first.short_name), style: 'text-decoration: none;font-weight: normal;line-height: initial;' do %>
                       <%= publication.venues.first.venue %>
@@ -102,12 +102,12 @@
               </div>
             </div>
           </div>
-          <div class="row publication-cards-new">
+          <div class="row">
             <!-- <div class="col-lg-6 col-sm-6">
               <div class="float-left ">
+
                 <p class="p-red p-red1">
-                <img src="assets/img/quote-left-solid.svg" class="img-red">
-                  <%= image_tag "img/research-quote-left-solid.svg", class: "img-red" %>
+                  <%= image_tag "img/icon-citations.png", class: "img-red" %>
                   <% if publication.no_of_citations.present? %>
                     <%= publication.no_of_citations %> Citations
                   <% end %>
@@ -118,7 +118,7 @@
               <div class="float-left">
                 <% if publication.challenge.present? %>
                 <p class="p-red d-flex">
-                  <%= image_tag "img/research-puzzle-piece-solid.svg", class: "img-red" %>
+                  <%= image_tag "img/icon-challenge.png", class: "img-red" %>
                     <%= link_to publication.challenge.challenge, challenge_path(publication.challenge), style: 'text-decoration: none;font-weight: normal;line-height: initial;' %>
                 </p>
                 <% end %>
@@ -134,7 +134,7 @@
 
       </div>
     </div>
-    <div class="col-md-10 d-flex mt-n4 offset-md-2 pl-0">
+    <div class="col-md-10 d-flex offset-md-2 pl-0">
       <div class="contribution-user-time small cursor-pointer"
            data-action="click->publications#expandAbstract"
            data-controller="publications">
