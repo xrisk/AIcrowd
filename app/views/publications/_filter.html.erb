@@ -1,26 +1,26 @@
 <%= form_with url: path, local: true, method: :get, enforce_utf8: false, data: {controller: "publications" }, class: 'filter-dropdown-form col-12', id: 'filterForm' do |f| %>
   
 
-    # <div class="pr-2 d-none" >
-    #   <div class="dropdown">
-    #     <div aria-expanded="false" aria-haspopup="true"
-    #          class="filter dropdown-toggle  <% if params[:categories].present? %>filter-active<% end %>" data-toggle="dropdown"
-    #          id="publication-categories"
-    #          style="width: 100%;">
-    #       Tags <i class="fa fa-chevron-down float-right py-1"></i>
-    #     </div>
-    #     <div class="dropdown-menu form-dropdown">
-    #       <% @categories.uniq.sort.each do |category| %>
-    #         <div class="form-check">
-    #           <%= label_tag do %>
-    #             <%= f.check_box :category, { checked: check_selected_category(category), class: 'form-check-input' }, category.name %>
-    #             <%= category.name %>
-    #           <% end %>
-    #         </div>
-    #       <% end %>
-    #     </div>
-    #   </div>
-    # </div>
+    <div class="pr-2 d-none" >
+      <div class="dropdown">
+        <div aria-expanded="false" aria-haspopup="true"
+             class="filter dropdown-toggle  <% if params[:categories].present? %>filter-active<% end %>" data-toggle="dropdown"
+             id="publication-categories"
+             style="width: 100%;">
+          Tags <i class="fa fa-chevron-down float-right py-1"></i>
+        </div>
+        <div class="dropdown-menu form-dropdown">
+          <% @categories.uniq.sort.each do |category| %>
+            <div class="form-check">
+              <%= label_tag do %>
+                <%= f.check_box :category, { checked: check_selected_category(category), class: 'form-check-input' }, category.name %>
+                <%= category.name %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
 
 
     <div class="col-lg-9 col-md-6 col-sm-6 col-xs-12 d-flex publication-drop" >
