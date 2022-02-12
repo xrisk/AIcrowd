@@ -1,5 +1,5 @@
 import { Controller } from 'stimulus';
-import mermaid from 'mermaid';
+//import mermaid from 'mermaid';
 
 export default class extends Controller {
   connect() {

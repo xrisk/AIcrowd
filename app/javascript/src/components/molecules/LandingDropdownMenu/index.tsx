@@ -95,7 +95,7 @@ const LandingDropdownMenu = ({
               iconType="outline"
               link="https://www.youtube.com/channel/UCUWbe23kxbwpaAP9AlzZQbQ"
             />
-            <SocialButtons socialType="discord" iconType="outline" link="https://discord.com/invite/XEa56FP" />
+            <SocialButtons socialType="discord" iconType="outline" link="https://discord.gg/8jb55SpVJg" />
           </div>
         )}
       </div>

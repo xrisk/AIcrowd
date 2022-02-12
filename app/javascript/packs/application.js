@@ -1,12 +1,10 @@
 /* eslint no-console:0 */
 
-require('datatables');
 require('chartkick');
 require("chart.js");
 
 import 'regenerator-runtime/runtime'
 
-import '../react_components/index.js';
 import '../stimulus_js/index.js';
 // Support component names relative to this directory:
 var componentRequireContext = require.context("src/components", true);
