@@ -67,18 +67,18 @@ class LandingPageController < ApplicationController
       challenge.organizers.each do |organizer|
         challenge_organizers << {
           name: organizer.organizer,
-          logo: organizer.image_file.url.gsub('.com/images', '.com/180x180/images'),
+          logo: organizer.image_file.url.gsub('.com/images', '.com/25x25/images'),
           link: organizer_path(organizer),
         }
       end
       users = []
       challenge.challenge_participants.includes(:participant).sample(20).map(&:participant).sample(4).each do |participant|
-        users << {id: participant.id, image: participant.image_url, tier: 0}
+        users << {id: participant.id, image: participant.image_url.gsub('.com/images', '.com/32x32/images'), tier: 0}
       end
 
       challenge_list_data << {
         userCount: challenge.challenge_participants.count,
-        image: challenge.landing_square_image_file.url,
+        image: challenge.landing_square_image_file.url.gsub('.com/images', '.com/180x180/images'),
         url: "/challenges/" + challenge.slug,
         name: challenge.challenge,
         prize: challenge.landing_card_prize.split(', '),
@@ -109,22 +109,21 @@ class LandingPageController < ApplicationController
 
     users = []
     challenge_1.challenge_participants.sample(20).map(&:participant).sample(4).each do |participant|
-      image_url = participant.image_url.gsub('.com/images', '.com/25x25/images')
-      users << {id: participant.id, image: image_url, tier: 0}
+      users << {id: participant.id, image: participant.image_url.gsub('.com/images', '.com/32x32/images'), tier: 0}
     end
 
     challenge_organizers = []
     challenge_1.organizers.each do |organizer|
       challenge_organizers << {
         name: organizer.organizer,
-        logo: organizer.image_file.url.gsub('.com/images', '.com/180x180/images'),
+        logo: organizer.image_file.url.gsub('.com/images', '.com/25x25/images'),
         link: organizer_path(organizer),
       }
     end
 
     landing_challenge_card_1 = {
       userCount: challenge_1.challenge_participants.count,
-      image: challenge_1.landing_square_image_file.url,
+      image: challenge_1.landing_square_image_file.url.gsub('.com/images', '.com/180x180/images'),
       url: "/challenges/" + challenge_1.slug,
       name: challenge_1.challenge,
       prize: challenge_1.landing_card_prize.split(', '),
@@ -154,21 +153,21 @@ class LandingPageController < ApplicationController
 
     users = []
     challenge_2.challenge_participants.sample(20).map(&:participant).sample(4).each do |participant|
-      users << {id: participant.id, image: participant.image_url, tier: 0}
+      users << {id: participant.id, image: participant.image_url.gsub('.com/images', '.com/32x32/images'), tier: 0}
     end
 
     challenge_organizers = []
     challenge_2.organizers.each do |organizer|
       challenge_organizers << {
         name: organizer.organizer,
-        logo: organizer.image_file.url.gsub('.com/images', '.com/180x180/images'),
+        logo: organizer.image_file.url.gsub('.com/images', '.com/25x25/images'),
         link: organizer_path(organizer),
       }
     end
 
     landing_challenge_card_2 = {
       userCount: challenge_2.challenge_participants.count,
-      image: challenge_2.landing_square_image_file.url,
+      image: challenge_2.landing_square_image_file.url.gsub('.com/images', '.com/180x180/images'),
       url: "/challenges/" +challenge_2.slug,
       name: challenge_2.challenge,
       prize: challenge_2.landing_card_prize.split(', '),
@@ -198,21 +197,21 @@ class LandingPageController < ApplicationController
 
     users = []
     challenge_3.challenge_participants.sample(20).map(&:participant).sample(4).each do |participant|
-      users << {id: participant.id, image: participant.image_url, tier: 0}
+      users << {id: participant.id, image: participant.image_url.gsub('.com/images', '.com/32x32/images'), tier: 0}
     end
 
     challenge_organizers = []
     challenge_3.organizers.each do |organizer|
       challenge_organizers << {
         name: organizer.organizer,
-        logo: organizer.image_file.url.gsub('.com/images', '.com/180x180/images'),
+        logo: organizer.image_file.url.gsub('.com/images', '.com/25x25/images'),
         link: organizer_path(organizer),
       }
     end
 
     landing_challenge_card_3 = {
       userCount: challenge_3.challenge_participants.count,
-      image: challenge_3.landing_square_image_file.url,
+      image: challenge_3.landing_square_image_file.url.gsub('.com/images', '.com/180x180/images'),
       url: "/challenges/" + challenge_3.slug,
       name: challenge_3.challenge,
       prize: challenge_3.landing_card_prize.split(', '),
@@ -246,7 +245,7 @@ class LandingPageController < ApplicationController
         title: post.title,
         description: post.tagline,
         lastUpdated: helpers.discourse_time_ago(post.updated_at),
-        image: post.thumbnail_url,
+        image: post.thumbnail_url.gsub('.com/raw_images', '.com/75x75/raw_images'),
         author: post.participant.name
       }
     end
@@ -345,7 +344,7 @@ class LandingPageController < ApplicationController
         description: val[3],
         comment_count: val[4],
         isComment: true,
-        image: (Participant.find_by_name(val[5]).image_url),
+        image: (Participant.find_by_name(val[5]).image_url.gsub('.com/images', '.com/32x32/images')),
         onCard: true,
         borderColor: '#fff',
         tier: 0

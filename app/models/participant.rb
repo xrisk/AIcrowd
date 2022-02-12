@@ -305,7 +305,15 @@ class Participant < ApplicationRecord
 
   def get_default_image
     num = id % 5
-    "/assets/users/AIcrowd-DarkerBG (#{num}).png"
+    path = "/images/participants/image_file/default/#{num}.png"
+    if ENV['CLOUDFRONT_IMAGES_DOMAIN'].present?
+      domain = ENV['CLOUDFRONT_IMAGES_DOMAIN']
+      unless domain.include?("http")
+        domain = "https://" + domain
+      end
+      path = domain + path
+    end
+    return path
   end
 
   def process_urls

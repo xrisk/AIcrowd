@@ -239,8 +239,7 @@ class ParticipantsController < ApplicationController
   end
 
   def get_default_image
-    num = current_user.id % 8
-    "/assets/users/AIcrowd-DarkerBG (#{num}).png"
+    current_user.get_default_image
   end
 
   def validate_name_length

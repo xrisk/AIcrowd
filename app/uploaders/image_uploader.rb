@@ -22,8 +22,8 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   def get_default_image
     if model.class.name == 'Participant'
-      num = model.id % 8
-      "/assets/users/AIcrowd-DarkerBG (#{num}).png"
+      num = model.id % 5
+      "/images/participants/image_file/default/#{num}.png"
     elsif model.class.name == 'Challenge' && model.id
       num = model.id % 2
       "/assets/challenges/AIcrowd-ProblemStatements-#{num}.jpg"

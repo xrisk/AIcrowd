@@ -18,10 +18,7 @@ class LogoImageUploader < CarrierWave::Uploader::Base
   end
 
   def get_default_image
-    if model.class.name == 'Participant'
-      num = model.id % 8
-      "/assets/users/AIcrowd-DarkerBG (#{num}).png"
-    elsif model.class.name == 'Challenge' && model.id
+    if model.class.name == 'Challenge' && model.id
       num = model.id % 2
       "challenges/AIcrowd-ProblemStatements-#{num}.jpg"
     else
