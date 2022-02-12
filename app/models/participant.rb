@@ -34,7 +34,6 @@ class Participant < ApplicationRecord
   before_save { self.email = email.downcase }
   before_save :process_urls
   after_create :set_email_preferences
-  after_save :publish_to_prometheus
   after_commit :upsert_discourse_user, on: [:create, :update]
   after_commit :update_gitlab_user, on: [:update, :create]
 
@@ -340,10 +339,6 @@ class Participant < ApplicationRecord
     super
   rescue StandardError
     nil
-  end
-
-  def publish_to_prometheus
-    Prometheus::ParticipantCounterService.new.call
   end
 
   def detect_country

@@ -38,7 +38,11 @@ module ParticipantsHelper
 
   def participant_avatar(participant, base_class='avatar')
     classes = base_class + ' ' + rating_tier_class(participant)
-    return image_tag participant.image_url, class: classes
+    image_url = participant.image_url
+    unless base_class.include?('original')
+      image_url = image_url.gsub('.com/images', '.com/100x100/images')
+    end
+    return image_tag image_url, class: classes
   end
 
   def avatar

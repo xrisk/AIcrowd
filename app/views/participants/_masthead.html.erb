@@ -6,7 +6,7 @@
         <div class="d-flex">
           <div class="column" style="margin-right: 40px;">
 
-            <div class="row"><%= participant_avatar participant %></div>
+            <div class="row"><%= participant_avatar participant, 'avatar original' %></div>
             <div style="text-align: center; justify-content: center;">
               <div class="row ml-4 mt-3"><%= @participant.followers_participant_count %> Follower</div>
               <div class="row ml-3"><%= @participant.following_participant_count %> Following</div>

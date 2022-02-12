@@ -61,10 +61,9 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'omniauth-oauth2-generic'
 gem 'paper_trail', '~> 10.3', '>= 10.3.1'
-gem 'pg'
+gem 'pg', '~> 1.2.3'
 gem 'puma', '~> 4.3'
 gem 'pundit'
-gem 'prometheus-client'
 gem "rack", ">= 2.0.6"
 gem "rack-cors"
 gem 'recaptcha'
@@ -97,9 +96,7 @@ gem "select2-rails"
 gem 'dalli', '~> 2.7', '>= 2.7.10' # Memcache client
 gem 'csv'
 gem 'activeadmin-searchable_select'
-gem 'airbrake-ruby'
 gem 'onebox'
-gem 'airbrake'
 gem 'gist'
 gem 'commontator'
 gem 'carrierwave-imageoptimizer'

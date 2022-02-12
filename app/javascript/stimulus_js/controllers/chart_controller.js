@@ -62,7 +62,7 @@ export default class extends Controller {
         $(progressBar).removeClass('display-none');
         
         var colors = ["#44B174"];
-        if (baseUrl.includes("success_vs_total")) {
+        if (this.baseUrl.includes("success_vs_total")) {
             var colors = ["#DDDDDD", "#44B174"];
         }
         

@@ -1,22 +1,22 @@
 class LandingPageController < ApplicationController
   def index
-    @challenge_list_data = Rails.cache.fetch('challenge-list-data', expires_in: 5.minutes) do
+    @challenge_list_data = Rails.cache.fetch('challenge-list-data', expires_in: 20.minutes) do
       get_challenge_list_data
     end
 
-    @landing_challenge_card_1 = Rails.cache.fetch('featured-challenge-1', expires_in: 5.minutes) do
+    @landing_challenge_card_1 = Rails.cache.fetch('featured-challenge-1', expires_in: 20.minutes) do
       get_featured_challenge_1
     end
 
-    @landing_challenge_card_2 = Rails.cache.fetch('featured-challenge-2', expires_in: 5.minutes) do
+    @landing_challenge_card_2 = Rails.cache.fetch('featured-challenge-2', expires_in: 20.minutes) do
       get_featured_challenge_2
     end
 
-    @landing_challenge_card_3 = Rails.cache.fetch('featured-challenge-3', expires_in: 5.minutes) do
+    @landing_challenge_card_3 = Rails.cache.fetch('featured-challenge-3', expires_in: 20.minutes) do
       get_featured_challenge_3
     end
 
-    @notebook_card_data = Rails.cache.fetch('featured-notebooks', expires_in: 5.minutes) do
+    @notebook_card_data = Rails.cache.fetch('featured-notebooks', expires_in: 20.minutes) do
       get_featured_notebooks
     end
 
@@ -24,11 +24,11 @@ class LandingPageController < ApplicationController
     get_stat_list_data
     get_quotes
 
-    @submission_card_data = Rails.cache.fetch('featured-discussions', expires_in: 5.minutes) do
+    @submission_card_data = Rails.cache.fetch('featured-discussions', expires_in: 20.minutes) do
       get_discourse_data
     end
 
-    @community_members_list = Rails.cache.fetch('community-members-list', expires_in: 2.minutes) do
+    @community_members_list = Rails.cache.fetch('community-members-list', expires_in: 20.minutes) do
       get_community_members_list
     end
 
@@ -67,7 +67,7 @@ class LandingPageController < ApplicationController
       challenge.organizers.each do |organizer|
         challenge_organizers << {
           name: organizer.organizer,
-          logo: organizer.image_file.url,
+          logo: organizer.image_file.url.gsub('.com/images', '.com/180x180/images'),
           link: organizer_path(organizer),
         }
       end
@@ -109,14 +109,15 @@ class LandingPageController < ApplicationController
 
     users = []
     challenge_1.challenge_participants.sample(20).map(&:participant).sample(4).each do |participant|
-      users << {id: participant.id, image: participant.image_url, tier: 0}
+      image_url = participant.image_url.gsub('.com/images', '.com/25x25/images')
+      users << {id: participant.id, image: image_url, tier: 0}
     end
 
     challenge_organizers = []
     challenge_1.organizers.each do |organizer|
       challenge_organizers << {
         name: organizer.organizer,
-        logo: organizer.image_file.url,
+        logo: organizer.image_file.url.gsub('.com/images', '.com/180x180/images'),
         link: organizer_path(organizer),
       }
     end
@@ -160,7 +161,7 @@ class LandingPageController < ApplicationController
     challenge_2.organizers.each do |organizer|
       challenge_organizers << {
         name: organizer.organizer,
-        logo: organizer.image_file.url,
+        logo: organizer.image_file.url.gsub('.com/images', '.com/180x180/images'),
         link: organizer_path(organizer),
       }
     end
@@ -204,7 +205,7 @@ class LandingPageController < ApplicationController
     challenge_3.organizers.each do |organizer|
       challenge_organizers << {
         name: organizer.organizer,
-        logo: organizer.image_file.url,
+        logo: organizer.image_file.url.gsub('.com/images', '.com/180x180/images'),
         link: organizer_path(organizer),
       }
     end
@@ -443,7 +444,7 @@ class LandingPageController < ApplicationController
         community_members_list << {
           lat: lat.to_s,
           lon: lon.to_s,
-          image: user.image_url,
+          image: user.image_url.gsub('.com/images', '.com/32x32/images'),
           name: user.name
         }
       end
