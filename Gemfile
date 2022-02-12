@@ -175,3 +175,5 @@ group :test do
 end
 
 gem 'aicrowd_evaluations', :git => 'http://gitlab.aicrowd.com/aicrowd/evaluations-api-clients.git', :branch => 'rails', glob: 'ruby/*.gemspec'
+
+gem "foreman", "~> 0.87.2"
