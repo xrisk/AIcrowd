@@ -7,8 +7,8 @@ Rails.application.configure do
   config.public_file_server.enabled        = true
   config.assets.js_compressor              = Uglifier.new(harmony: true)
   config.assets.css_compressor             = :sass
-  config.assets.compile                    = true
-  config.force_ssl                         = true
+  config.assets.compile                    = false
+  config.force_ssl                         = false
   config.log_level                         = :warn
   config.log_tags                          = [:request_id]
   config.i18n.fallbacks                    = true
@@ -46,14 +46,12 @@ Rails.application.configure do
   }
   config.action_mailer.default_url_options = { host: ENV["SMTP_DOMAIN"] }
   config.cache_store = :mem_cache_store,
-                       (ENV['MEMCACHEDCLOUD_SERVERS'].to_s).split(','),
-                       {
-                         username: ENV['MEMCACHEDCLOUD_USERNAME'],
-                         password: ENV['MEMCACHEDCLOUD_PASSWORD'],
-                         failover: true,
-                         socket_timeout: 1.5,
-                         socket_failure_delay: 0.2,
-                         down_retry_delay: 60
-                       }
+                        '127.0.0.1:11211'
+                        {
+                          failover: true,
+                          socket_timeout: 1.5,
+                          socket_failure_delay: 0.2,
+                          down_retry_delay: 60
+                        }
 end
 Rails.application.routes.default_url_options[:host] = ENV['DOMAIN_NAME']
