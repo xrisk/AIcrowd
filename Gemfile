@@ -61,7 +61,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'omniauth-oauth2-generic'
 gem 'paper_trail', '~> 10.3', '>= 10.3.1'
-gem 'pg', '~> 1.2.3'
+gem 'pg'
 gem 'puma', '~> 4.3'
 gem 'pundit'
 gem "rack", ">= 2.0.6"
