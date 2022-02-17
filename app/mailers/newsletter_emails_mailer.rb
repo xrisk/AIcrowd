@@ -1,6 +1,8 @@
 class NewsletterEmailsMailer < ApplicationMailer
   add_template_helper(SanitizationHelper)
 
+  default from: 'connect@aicrowd.com'
+
   def organizer_email(newsletter_email)
     @newsletter_email = newsletter_email
     @challenge        = newsletter_email.challenge
