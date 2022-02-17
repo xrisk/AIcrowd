@@ -287,7 +287,7 @@ module ChallengeRounds
     end
 
     def sort_leaderboards(all_leaderboards)
-      return all_leaderboards.sort_by { |leaderboard| leaderboard['meta']['private_borda_ranking_rank_sum'].to_i } if @is_borda_ranking
+      return all_leaderboards.sort_by { |leaderboard| leaderboard['meta']['private_borda_ranking_rank_sum'].to_f } if @is_borda_ranking
 
       score_sort_order = sort_map(@challenge_leaderboard_extra.primary_sort_order_cd)
 
