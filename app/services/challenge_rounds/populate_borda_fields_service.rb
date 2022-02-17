@@ -64,6 +64,12 @@ module ChallengeRounds
             submission['meta'][overall_rank] = submission['meta'][overall_rank] + rank
           end
         }
+        
+        selected_submissions.each do |submission|
+          rank_count = submission['meta']['private_borda_ranking_scores_count'].to_f
+          rank_sum = submission['meta'][overall_rank].to_f
+          submission['meta'][overall_rank] = (rank_sum / rank_count).round(2)
+        end
 
         if team_id.present?
           selected_submissions.each do |submission|
