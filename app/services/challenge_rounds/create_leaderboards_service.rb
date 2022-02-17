@@ -259,7 +259,7 @@ module ChallengeRounds
     def submissions_order
       return 'updated_at desc' if challenge.latest_submission == true
 
-      return "(meta->>'private_borda_ranking_rank_sum')::integer asc" if @is_borda_ranking
+      return "(meta->>'private_borda_ranking_rank_sum')::float asc" if @is_borda_ranking
 
       score_field = "score"
       if @challenge_leaderboard_extra.dynamic_score_field.present?
